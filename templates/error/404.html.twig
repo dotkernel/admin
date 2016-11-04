@@ -1,0 +1,12 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}404 Not Found{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">Oops!</h1>
+    <h2>This is awkward.</h2>
+    <p><b>We encountered a 404 Not Found error.</b></p>
+    <p>
+        You are looking for something that doesn't exist or may have been moved. Check out the menu links or head back to <a href="{{ path('dashboard') }}">Dashboard</a>.
+    </p>
+{% endblock %}

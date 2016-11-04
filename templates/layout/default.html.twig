@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} - DotKernel</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="{{ asset('js/html5shiv.js') }}"></script>
+    <script src="{{ asset('js/respond.min.js') }}"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span>&nbsp;DotKernel</span>Admin</a>
+            <div class="collapse navbar-collapse">
+
+                {% if hasIdentity() %}
+                    <!-- navbar-right with login form or account menu -->
+                    {{ navigationPartial('account_menu', 'partial::account-menu') }}
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+{% if hasIdentity() %}
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <form role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+    </form>
+
+    {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu', 'ulId': '', 'depth': 0}) }}
+
+</div><!--/.sidebar-->
+{% endif %}
+
+<main class="container-fluid">
+    {% set mainClass = 'col-sm-12 col-lg-12' %}
+    {% if hasIdentity() %}
+        {% set mainClass = 'col-sm-9 col-lg-10 col-sm-offset-3 col-lg-offset-2' %}
+    {% endif %}
+
+    <div class="main {{ mainClass }}">
+
+        {% if hasIdentity() %}
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+                <li class="active">Icons</li>
+            </ol>
+        </div><!--/.row-->
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </div>	<!--/.main-->
+</main>
+
+<script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chart.min.js') }}"></script>
+<script src="{{ asset('js/chart-data.js') }}"></script>
+<script src="{{ asset('js/easypiechart.js') }}"></script>
+<script src="{{ asset('js/easypiechart-data.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+<script>
+    $('#calendar').datepicker({
+    });
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("fa fa-minus-circle");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("fa fa-plus-circle");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}{{ status }} {{ reason }}{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">Oops!</h1>
+    <h2>This is awkward.</h2>
+    <p><b>We encountered a {{ status }} {{ reason }} error.</b></p>
+    {% if status == 404 %}
+        <p>
+            You are looking for something that doesn't exist or may have been moved. Check out the menu links or head back to <a href="{{ path('dashboard') }}">Dashboard</a>.
+        </p>
+    {% elseif status == 403 %}
+        <p>
+            You don't have enough permissions to view this page. You can <a href="{{ path('logout') }}">Sign out</a>
+            and try with a more permissive user. <br />
+            Another reason for this error could be that the page you want to access is not available for authenticated users. You should <a href="{{ path('logout') }}">Sign out</a> before.
+        </p>
+    {% endif %}
+{% endblock %}

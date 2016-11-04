@@ -1,0 +1,80 @@
+{
+  "name": "dotkernel/dot-admin",
+  "description": "DotKernel Admin interface to be paired with dot-frontend",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "n3vrax",
+      "email": "tibi@apidemia.com"
+    }
+  ],
+  "require": {
+    "php": "^5.5 || ^7.0",
+    "roave/security-advisories": "dev-master",
+    "zendframework/zend-expressive": "^1.0",
+    "zendframework/zend-expressive-helpers": "^2.0",
+    "zendframework/zend-stdlib": "^2.7 || ^3.0",
+    "zendframework/zend-expressive-fastroute": "^1.0",
+    "zendframework/zend-servicemanager": "^2.7.3 || ^3.0",
+    "zendframework/zend-expressive-twigrenderer": "^1.0",
+
+    "zendframework/zend-db": "^2.8",
+    "zendframework/zend-hydrator": "^2.2",
+    "zendframework/zend-filter": "^2.6",
+    "zendframework/zend-i18n": "^2.7",
+    "zendframework/zend-i18n-resources": "^2.5",
+    "zendframework/zend-captcha": "^2.6",
+    "zendframework/zendservice-recaptcha": "^2.0",
+    "zendframework/zend-text": "^2.6",
+    "dotkernel/dot-helpers": "0.6.x-dev",
+    "dotkernel/dot-mapper": "0.6.x-dev",
+    "dotkernel/dot-event": "0.6.x-dev",
+    "dotkernel/dot-session": "0.6.x-dev",
+    "dotkernel/dot-flashmessenger": "0.6.x-dev",
+    "dotkernel/dot-controller": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-flashmessenger": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-mail": "0.6.x-dev",
+    "dotkernel/dot-authentication": "0.6.x-dev",
+    "dotkernel/dot-authentication-service": "0.6.x-dev",
+    "dotkernel/dot-authentication-web": "0.6.x-dev",
+    "dotkernel/dot-authorization": "0.6.x-dev",
+    "dotkernel/dot-rbac": "0.6.x-dev",
+    "dotkernel/dot-rbac-guard": "0.6.x-dev",
+    "dotkernel/dot-user": "0.6.x-dev",
+    "dotkernel/dot-mail": "0.6.x-dev",
+    "dotkernel/dot-navigation": "0.6.x-dev",
+    "dotkernel/dot-twigrenderer": "0.6.x-dev",
+
+    "mtymek/expressive-config-manager": "^0.4.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8",
+    "squizlabs/php_codesniffer": "^2.3",
+    "filp/whoops": "^1.1 || ^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dot\\Admin\\": "src/Admin/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dot\\AdminTest\\": "test/AdminTest/"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@cs",
+      "@test"
+    ],
+    "cs-check": "phpcs",
+    "cs-fix": "phpcbf",
+    "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
+    "test": "phpunit --colors=always",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+    "upload-coverage": "coveralls -v"
+  }
+}

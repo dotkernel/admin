@@ -1,0 +1,24 @@
+<ul class="user-menu">
+    <li class="dropdown pull-right">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user"></i>
+            Welcome, {{ getIdentity().getName() }} <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+
+        {% for page in container %}
+
+            {% if navigation.isAllowed(page) %}
+
+                <li>
+                    <a href="{{ navigation.getHref(page) }}"><i class="{{ page.getOption('icon') }}"></i>
+                        {{ page.getOption('label') }}
+                    </a>
+                </li>
+
+            {% endif %}
+
+        {% endfor %}
+
+        </ul>
+    </li>
+</ul>
