@@ -8,8 +8,12 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
     <link href="{{ asset('css/datepicker3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
+    <!--Icons-->
+    <script src="{{ asset('js/lumino.glyphs.js') }}"></script>
 
     <!--[if lt IE 9]>
     <script src="{{ asset('js/html5shiv.js') }}"></script>
@@ -66,7 +70,7 @@
         {% if hasIdentity() %}
         <div class="row">
             <ol class="breadcrumb">
-                <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+                <li><a href="#"><i class="fa fa-home"></i></a></li>
                 <li class="active">Icons</li>
             </ol>
         </div><!--/.row-->
@@ -84,6 +88,7 @@
 <script src="{{ asset('js/easypiechart.js') }}"></script>
 <script src="{{ asset('js/easypiechart-data.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('js/bootstrap-table.js') }}"></script>
 <script>
     $('#calendar').datepicker({
     });

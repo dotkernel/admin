@@ -9,7 +9,11 @@
 
 namespace Dot\Admin\Admin\Controller;
 
+use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Dot\Controller\AbstractActionController;
+use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Class AdminController
@@ -17,6 +21,18 @@ use Dot\Controller\AbstractActionController;
  */
 class AdminController extends AbstractActionController
 {
+    /** @var  AdminServiceInterface */
+    protected $adminService;
+
+    /**
+     * AdminController constructor.
+     * @param AdminServiceInterface $adminService
+     */
+    public function __construct(AdminServiceInterface $adminService)
+    {
+        $this->adminService = $adminService;
+    }
+
     public function indexAction()
     {
 
@@ -24,10 +40,27 @@ class AdminController extends AbstractActionController
 
     public function listAction()
     {
+        $formats = ['html', 'json'];
+        $output = isset($this->request->getQueryParams()['output']) ? $this->request->getQueryParams()['output'] : 'html';
+        if(!in_array($output, $formats)) {
+            $output = 'html';
+        }
+
+        switch($output) {
+            case 'json':
+                /** @var HydratingResultSet $admins */
+                $admins = $this->adminService->getAdmins();
+                return new JsonResponse($admins->toArray());
+                break;
+
+            default:
+                return new HtmlResponse($this->template()->render('app::admin-list'));
+                break;
+        }
 
     }
 
-    public function addAction()
+    /*public function addAction()
     {
 
     }
@@ -40,5 +73,5 @@ class AdminController extends AbstractActionController
     public function editAction()
     {
 
-    }
+    }*/
 }

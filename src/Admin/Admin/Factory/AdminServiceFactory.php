@@ -2,30 +2,30 @@
 /**
  * @copyright: DotKernel
  * @library: dotkernel/dot-admin
- * @author: n3vrax
- * Date: 11/4/2016
- * Time: 7:45 PM
+ * @author: n3vra
+ * Date: 11/6/2016
+ * Time: 9:50 PM
  */
 
 namespace Dot\Admin\Admin\Factory;
 
-use Dot\Admin\Admin\Controller\AdminController;
-use Dot\Admin\Admin\Service\AdminServiceInterface;
+
+use Dot\Admin\Admin\Service\AdminService;
+use Dot\User\Mapper\UserMapperInterface;
 use Interop\Container\ContainerInterface;
 
 /**
- * Class AdminControllerFactory
+ * Class AdminServiceFactory
  * @package Dot\Admin\Admin\Factory
  */
-class AdminControllerFactory
+class AdminServiceFactory
 {
     /**
      * @param ContainerInterface $container
-     * @return AdminController
+     * @return AdminService
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new AdminController($container->get(AdminServiceInterface::class));
+        return new AdminService($container->get(UserMapperInterface::class));
     }
-
 }

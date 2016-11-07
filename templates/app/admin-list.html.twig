@@ -1,0 +1,41 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Manage admins{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Manage admins</h1>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Admin list</div>
+                <div class="panel-body">
+                    <table data-toggle="table" data-url="{{ path('user', {'action':'list'}) ~ '?output=json' }}"
+                           data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                           data-search="true" data-select-item-name="toolbar1" data-pagination="true"
+                           data-sort-name="dateCreated" data-sort-order="desc">
+                        <thead>
+
+                            <tr>
+                                <th data-field="state" data-checkbox="true" >Admin ID</th>
+                                <th data-field="username"  data-sortable="true">Username</th>
+                                <th data-field="firstName" data-sortable="true">First Name</th>
+                                <th data-field="lastName" data-sortable="true">Last Name</th>
+                                <th data-field="role" data-sortable="true">Role</th>
+                                <th data-field="status" data-sortable="true">Status</th>
+                                <th data-field="dateCreated" data-sortable="true">Created</th>
+                            </tr>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+{% endblock %}

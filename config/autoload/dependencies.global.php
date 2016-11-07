@@ -19,6 +19,9 @@ return [
         'factories' => [
             Application::class => ApplicationFactory::class,
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
+
+            \Dot\Admin\Admin\Service\AdminServiceInterface::class =>
+                \Dot\Admin\Admin\Factory\AdminServiceFactory::class,
         ],
     ],
 ];

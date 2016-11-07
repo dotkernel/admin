@@ -37,9 +37,13 @@
                     </a>
 
                     {% if page.hasChildren() %}
+                        {% set subitemUlClass = 'children collapse' %}
+                        {% if navigation.isActive(page) %}
+                            {% set subitemUlClass = subitemUlClass ~ ' in' %}
+                        {% endif %}
 
                         {% set ulId = 'sub-item-' ~ loop.index %}
-                        {{ navigationPartial(page, 'partial::menu', {'ulClass' : 'children collapse', 'ulId': ulId, 'depth' : depth + 1}) }}
+                        {{ navigationPartial(page, 'partial::menu', {'ulClass' : subitemUlClass, 'ulId': ulId, 'depth' : depth + 1}) }}
 
                     {% endif %}
 
