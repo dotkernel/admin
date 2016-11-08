@@ -13,7 +13,7 @@ return [
     'routes' => [
         [
             'name' => 'dashboard',
-            'path' => '/[dashboard[/{action}]]',
+            'path' => '/dashboard[/{action}]',
             'middleware' => \Dot\Admin\Controller\DashboardController::class,
         ],
         [

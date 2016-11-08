@@ -8,7 +8,6 @@
  */
 
 namespace Dot\Admin\Admin\Service;
-use Dot\Admin\Admin\Entity\AdminEntity;
 
 /**
  * Interface AdminServiceInterface
@@ -17,8 +16,16 @@ use Dot\Admin\Admin\Entity\AdminEntity;
 interface AdminServiceInterface
 {
     /**
-     * Get list of all admins
-     * @return AdminEntity[]|null
+     * @param array $filters
+     * @return mixed
      */
-    public function getAdmins();
+    public function getAdmins(array $filters = []);
+
+    /**
+     * @param array $filters
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    public function getAdminsPaginated(array $filters = [], $limit = 30, $offset = 0);
 }

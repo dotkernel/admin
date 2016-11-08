@@ -15,6 +15,12 @@ return [
 
             \Dot\Admin\Admin\Entity\AdminEntityHydrator::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
+
+            //overwrite user mapper with our admin mapper, we extended it mostly for convenience
+            //it does offer in addition paginated results
+            \Dot\User\Mapper\UserMapperInterface::class =>
+                \Dot\Admin\Admin\Factory\AdminDbMapperFactory::class,
+
         ],
 
         'shared' => [

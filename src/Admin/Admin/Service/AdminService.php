@@ -8,8 +8,10 @@
  */
 
 namespace Dot\Admin\Admin\Service;
+
 use Dot\Admin\Admin\Entity\AdminEntity;
-use Dot\User\Mapper\UserMapperInterface;
+use Dot\Admin\Admin\Mapper\AdminMapperInterface;
+use Zend\Db\ResultSet\HydratingResultSet;
 
 /**
  * Class AdminService
@@ -17,18 +19,38 @@ use Dot\User\Mapper\UserMapperInterface;
  */
 class AdminService implements AdminServiceInterface
 {
-    /** @var  UserMapperInterface */
+    /** @var  AdminMapperInterface */
     protected $mapper;
 
-    public function __construct(UserMapperInterface $mapper)
+    public function __construct(AdminMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
 
-    public function getAdmins()
+    /**
+     * @param array $filters
+     * @return AdminEntity[]
+     */
+    public function getAdmins(array $filters = [])
     {
-        /** @var AdminEntity[] $admins */
+        /** @var HydratingResultSet $admins */
         $admins = $this->mapper->findAllUsers();
-        return $admins;
+        return $admins->toArray();
+    }
+
+    /**
+     * @param array $filters
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function getAdminsPaginated(array $filters = [], $limit = 30, $offset = 0)
+    {
+        /** @var HydratingResultSet $admins */
+        $admins = $this->mapper->findUsersPaginated($filters, $limit, $offset);
+        $total = $admins['total'];
+        /** @var HydratingResultSet $rows */
+        $rows = $admins['rows'];
+        return ['total' => (int) $total, 'rows' => $rows->toArray()];
     }
 }

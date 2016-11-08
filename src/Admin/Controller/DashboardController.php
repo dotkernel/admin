@@ -11,6 +11,7 @@ namespace Dot\Admin\Controller;
 
 use Dot\Controller\AbstractActionController;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Class DashboardController
@@ -18,9 +19,11 @@ use Zend\Diactoros\Response\HtmlResponse;
  */
 class DashboardController extends AbstractActionController
 {
+    /**
+     * @return HtmlResponse|RedirectResponse
+     */
     public function indexAction()
     {
-        //var_dump($this->authentication()->getIdentity());
         return new HtmlResponse($this->template()->render('app::dashboard'));
     }
 }
