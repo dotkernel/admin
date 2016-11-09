@@ -12,6 +12,7 @@ namespace Dot\Admin\Admin\Factory;
 
 use Dot\Admin\Admin\Service\AdminService;
 use Dot\User\Mapper\UserMapperInterface;
+use Dot\User\Service\PasswordInterface;
 use Interop\Container\ContainerInterface;
 
 /**
@@ -26,6 +27,9 @@ class AdminServiceFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new AdminService($container->get(UserMapperInterface::class));
+        return new AdminService(
+            $container->get(UserMapperInterface::class),
+            $container->get(PasswordInterface::class)
+        );
     }
 }

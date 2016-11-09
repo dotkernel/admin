@@ -9,12 +9,15 @@
 
 namespace Dot\Admin\Admin\Controller;
 
+use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Dot\Controller\AbstractActionController;
+use Dot\User\Result\UserOperationResult;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Form\Form;
 
 /**
  * Class AdminController
@@ -25,13 +28,21 @@ class AdminController extends AbstractActionController
     /** @var  AdminServiceInterface */
     protected $adminService;
 
+    /** @var  Form */
+    protected $adminForm;
+
+    /** @var  AdminEntity */
+    protected $adminEntityPrototype;
+
     /**
      * AdminController constructor.
      * @param AdminServiceInterface $adminService
+     * @param Form $adminForm
      */
-    public function __construct(AdminServiceInterface $adminService)
+    public function __construct(AdminServiceInterface $adminService, Form $adminForm)
     {
         $this->adminService = $adminService;
+        $this->adminForm = $adminForm;
     }
 
     /**
@@ -47,7 +58,7 @@ class AdminController extends AbstractActionController
      * json response is used by table to fetch data through ajax
      * @return HtmlResponse|JsonResponse
      */
-    public function listAction()
+    public function manageAction()
     {
         $formats = ['html', 'json'];
         $output = isset($this->request->getQueryParams()['output'])
@@ -71,18 +82,67 @@ class AdminController extends AbstractActionController
                 break;
 
             default:
-                return new HtmlResponse($this->template()->render('app::admin-list'));
+                return new HtmlResponse($this->template()->render('app::admin-manage', ['form' => $this->adminForm]));
                 break;
         }
 
     }
 
-    /*public function addAction()
+    public function addAction()
     {
+        $request = $this->request;
 
+        if($request->getMethod() === 'POST') {
+            $form = $this->adminForm;
+            $data = $request->getParsedBody();
+
+            $form->bind($this->getAdminEntityPrototype());
+            $form->setData($data);
+
+            if($form->isValid()) {
+                /** @var AdminEntity $admin */
+                $admin = $form->getData();
+                /** @var UserOperationResult $result */
+                $result = $this->adminService->saveAdmin($admin);
+                if($result->isValid()) {
+                    $data = ['success' => (array) $result->getMessages()];
+                } else {
+                    $data = ['error' => (array) $result->getMessages()];
+                }
+            }
+            else {
+                $data = ['form_error' => $form->getMessages()];
+            }
+
+            return new JsonResponse($data);
+        }
+
+        //if not a POST, redirect to manage page, there is nothing HTML here
+        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
     }
 
-    public function deleteAction()
+    /**
+     * @return AdminEntity
+     */
+    public function getAdminEntityPrototype()
+    {
+        if(!$this->adminEntityPrototype) {
+            $this->adminEntityPrototype = new AdminEntity();
+        }
+        return $this->adminEntityPrototype;
+    }
+
+    /**
+     * @param AdminEntity $adminEntityPrototype
+     * @return AdminController
+     */
+    public function setAdminEntityPrototype($adminEntityPrototype)
+    {
+        $this->adminEntityPrototype = $adminEntityPrototype;
+        return $this;
+    }
+
+    /*public function deleteAction()
     {
 
     }
@@ -91,4 +151,6 @@ class AdminController extends AbstractActionController
     {
 
     }*/
+
+
 }

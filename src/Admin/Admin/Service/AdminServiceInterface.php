@@ -9,6 +9,8 @@
 
 namespace Dot\Admin\Admin\Service;
 
+use Dot\Admin\Admin\Entity\AdminEntity;
+
 /**
  * Interface AdminServiceInterface
  * @package Dot\Admin\Admin\Service
@@ -28,4 +30,10 @@ interface AdminServiceInterface
      * @return mixed
      */
     public function getAdminsPaginated(array $filters = [], $limit = 30, $offset = 0);
+
+    /**
+     * @param AdminEntity $admin
+     * @return mixed
+     */
+    public function saveAdmin(AdminEntity $admin);
 }

@@ -26,52 +26,18 @@ return [
                 [
                     'options' => [
                         'label' => 'Manage admins',
-                        'uri' => '#',
+                        'route' => 'user',
+                        'params' => ['action' => 'manage'],
                         'icon' => 'fa fa-user-circle-o',
                     ],
-                    'pages' => [
-                        [
-                            'options' => [
-                                'label' => 'List admins',
-                                'route' => 'user',
-                                'params' => ['action' => 'list'],
-                                'icon' => 'fa fa-list',
-                            ],
-                        ],
-                        [
-                            'options' => [
-                                'label' => 'Add admin',
-                                'route' => 'user',
-                                'params' => ['action' => 'add'],
-                                'icon' => 'fa fa-plus',
-                            ],
-                        ]
-                    ]
                 ],
                 [
                     'options' => [
                         'label' => 'Manage users',
-                        'uri' => '#',
+                        'route' => 'f_user',
+                        'params' => ['action' => 'manage'],
                         'icon' => 'fa fa-user-o',
                     ],
-                    'pages' => [
-                        [
-                            'options' => [
-                                'label' => 'List users',
-                                'route' => 'f_user',
-                                'params' => ['action' => 'list'],
-                                'icon' => 'fa fa-list',
-                            ],
-                        ],
-                        [
-                            'options' => [
-                                'label' => 'Add user',
-                                'route' => 'f_user',
-                                'params' => ['action' => 'add'],
-                                'icon' => 'fa fa-plus',
-                            ],
-                        ]
-                    ]
                 ],
             ],
 

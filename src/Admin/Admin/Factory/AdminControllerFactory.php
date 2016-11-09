@@ -10,6 +10,7 @@
 namespace Dot\Admin\Admin\Factory;
 
 use Dot\Admin\Admin\Controller\AdminController;
+use Dot\Admin\Admin\Form\AdminForm;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Interop\Container\ContainerInterface;
 
@@ -25,7 +26,10 @@ class AdminControllerFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new AdminController($container->get(AdminServiceInterface::class));
+        return new AdminController(
+            $container->get(AdminServiceInterface::class),
+            $container->get(AdminForm::class)
+        );
     }
 
 }

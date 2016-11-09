@@ -11,6 +11,8 @@ namespace Dot\Admin\Admin\Service;
 
 use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Mapper\AdminMapperInterface;
+use Dot\User\Result\UserOperationResult;
+use Dot\User\Service\PasswordInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 
 /**
@@ -22,9 +24,13 @@ class AdminService implements AdminServiceInterface
     /** @var  AdminMapperInterface */
     protected $mapper;
 
-    public function __construct(AdminMapperInterface $mapper)
+    /** @var  PasswordInterface */
+    protected $passwordService;
+
+    public function __construct(AdminMapperInterface $mapper, PasswordInterface $passwordService)
     {
         $this->mapper = $mapper;
+        $this->passwordService = $passwordService;
     }
 
     /**
@@ -51,6 +57,45 @@ class AdminService implements AdminServiceInterface
         $total = $admins['total'];
         /** @var HydratingResultSet $rows */
         $rows = $admins['rows'];
-        return ['total' => (int) $total, 'rows' => $rows->toArray()];
+        return ['total' => (int)$total, 'rows' => $rows->toArray()];
+    }
+
+    /**
+     * @param AdminEntity $admin
+     * @return UserOperationResult
+     */
+    public function saveAdmin(AdminEntity $admin)
+    {
+        $operation = 'create';
+        try {
+            if ($admin->getId()) {
+                $operation = 'update';
+
+                $admin->setPassword($this->hashPassword($admin->getPassword()));
+                $this->mapper->updateUser($admin);
+
+                return new UserOperationResult(true, 'Admin updated successfully');
+            } else {
+                $operation = 'create';
+
+                $admin->setPassword($this->hashPassword($admin->getPassword()));
+                $this->mapper->createUser($admin);
+
+                return new UserOperationResult(true, 'Admin account created successfully');
+            }
+        } catch (\Exception $e) {
+            error_log('Admin account creation/update error: ' . $e->getMessage());
+            return  new UserOperationResult(false, 'Admin ' . $operation === 'update' ? 'update' : 'create'
+                . ' error. Please try again');
+        }
+    }
+
+    protected function hashPassword($clearPassword)
+    {
+        if($clearPassword) {
+            return $this->passwordService->create($clearPassword);
+        }
+
+        return $clearPassword;
     }
 }

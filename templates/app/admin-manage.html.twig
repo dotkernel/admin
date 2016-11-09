@@ -1,0 +1,112 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Manage admins{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Manage admins</h1>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="tableToolbar" class="btn-group">
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addAdminModal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <table data-toggle="table" data-url="{{ path('user', {'action':'manage'}) ~ '?output=json' }}"
+                           data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                           data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
+                           data-side-pagination="server" data-page-list="[10, 30, 50, 100]"
+                           data-sort-name="dateCreated" data-sort-order="desc">
+                        <thead>
+
+                            <tr>
+                                <th data-field="id" data-checkbox="true" >Id</th>
+                                <th data-field="username"  data-sortable="true">Username</th>
+                                <th data-field="email"  data-sortable="true">E-mail</th>
+                                <th data-field="firstName" data-sortable="true">First Name</th>
+                                <th data-field="lastName" data-sortable="true">Last Name</th>
+                                <th data-field="role" data-sortable="true">Role</th>
+                                <th data-field="status" data-sortable="true">Status</th>
+                                <th data-field="dateCreated" data-sortable="true">Created</th>
+                            </tr>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="addAdminModal" aria-labelledby="addAdminModule">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Add admin</h4>
+                </div>
+                <div class="modal-body">
+                    {{ flashMessagesPartial('dot-partial::alerts') }}
+
+                    {% set dummy = form.setAttribute('method', 'post') %}
+                    {% set dummy = form.setAttribute('id', 'addAdminForm') %}
+                    {% set dummy = form.setAttribute('action', path('user', {'action': 'add'})) %}
+                    {% set dummy = form.prepare() %}
+
+                    {{ form().openTag(form) | raw }}
+                    {% include '@dot-form/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
+                    {{ form().closeTag() | raw }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addAdminSubmit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        $("#addAdminSubmit").click(function() {
+            var form = $("#addAdminForm");
+            $.post(form.attr('action'), form.serialize())
+                    .done(function(data) {
+                        if(typeof data.success !== 'undefined') {
+                            console.log('Admin account created');
+                        }
+                        if(typeof data.error !== 'undefined') {
+                            console.log('Admin create error ' + data.error);
+                        }
+                        if(typeof data.form_error !== 'undefined') {
+                            console.log('Form errors' + data.form_error);
+                        }
+                    })
+                    .fail(function() {
+                        console.log('Error adding admin user');
+                    });
+        });
+
+        $('#addAdminModal').on('shown.bs.modal', function () {
+            $('#adminUsername').focus()
+        });
+
+    </script>
+{% endblock %}

@@ -22,6 +22,9 @@ return [
 
             \Dot\Admin\Admin\Service\AdminServiceInterface::class =>
                 \Dot\Admin\Admin\Factory\AdminServiceFactory::class,
+
+            \Dot\Admin\Admin\Form\AdminForm::class =>
+                \Dot\Admin\Admin\Factory\AdminFormFactory::class,
         ],
     ],
 ];
