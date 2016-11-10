@@ -22,7 +22,7 @@ class AdminDbMapper extends UserDbMapper   implements AdminMapperInterface
 {
     /** @var array  */
     protected $sortableColumns = [
-        'id' => 'INT', 'username' => 'CHAR', 'firstName' => 'CHAR', 'lastName' => 'CHAR',
+        'id' => 'INT', 'email' => 'CHAR', 'username' => 'CHAR', 'firstName' => 'CHAR', 'lastName' => 'CHAR',
         'role' => 'CHAR', 'status' => 'CHAR', 'dateCreated' => 'DATE'
     ];
 

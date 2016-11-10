@@ -12,6 +12,7 @@ namespace Dot\Admin\Admin\Controller;
 use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Dot\Controller\AbstractActionController;
+use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\User\Result\UserOperationResult;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -106,12 +107,21 @@ class AdminController extends AbstractActionController
                 $result = $this->adminService->saveAdmin($admin);
                 if($result->isValid()) {
                     $data = ['success' => (array) $result->getMessages()];
+                    //render the alerts partial to send it through ajax to be inserted into the DOM
+                    $data['html'] = $this->template()->render('dot-partial::alerts',
+                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $data['success']]]);
                 } else {
                     $data = ['error' => (array) $result->getMessages()];
+                    $data['html'] = $this->template()->render('dot-partial::alerts',
+                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $data['error']]]);
                 }
             }
             else {
-                $data = ['form_error' => $form->getMessages()];
+                $data = ['validation' => $form->getMessages()];
+                $data['html'] = $this->template()->render('dot-partial::alerts',
+                    ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
+                        $this->getFormMessages($form->getMessages())]]);
+
             }
 
             return new JsonResponse($data);
@@ -142,15 +152,28 @@ class AdminController extends AbstractActionController
         return $this;
     }
 
-    /*public function deleteAction()
+    /**
+     * @param array $formMessages
+     * @return array
+     */
+    protected function getFormMessages(array $formMessages)
     {
+        $messages = [];
+        foreach ($formMessages as $message) {
+            if (is_array($message)) {
+                foreach ($message as $m) {
+                    if (is_string($m)) {
+                        $messages[] = $m;
+                    } elseif (is_array($m)) {
+                        $messages = array_merge($messages, $this->getFormMessages($message));
+                        break;
+                    }
+                }
+            }
+        }
 
+        return $messages;
     }
-
-    public function editAction()
-    {
-
-    }*/
 
 
 }

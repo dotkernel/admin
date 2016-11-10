@@ -12,6 +12,12 @@
 
     <div class="row">
         <div class="col-lg-12">
+            <div id="messages"></div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="tableToolbar" class="btn-group">
@@ -30,7 +36,7 @@
                            data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
                            data-side-pagination="server" data-page-list="[10, 30, 50, 100]"
-                           data-sort-name="dateCreated" data-sort-order="desc">
+                           data-sort-name="dateCreated" data-sort-order="desc" id="adminTable">
                         <thead>
 
                             <tr>
@@ -61,7 +67,8 @@
                     <h4 class="modal-title">Add admin</h4>
                 </div>
                 <div class="modal-body">
-                    {{ flashMessagesPartial('dot-partial::alerts') }}
+
+                    <div id="formMessages"></div>
 
                     {% set dummy = form.setAttribute('method', 'post') %}
                     {% set dummy = form.setAttribute('id', 'addAdminForm') %}
@@ -85,27 +92,56 @@
 {% block javascript %}
     <script>
 
-        $("#addAdminSubmit").click(function() {
-            var form = $("#addAdminForm");
-            $.post(form.attr('action'), form.serialize())
+        var addAdminModal = $("#addAdminModal");
+        var addAdminForm = $("#addAdminForm");
+        var addAdminSubmit =  $("#addAdminSubmit");
+
+        addAdminSubmit.click(function() {
+            $.post(addAdminForm.attr('action'), addAdminForm.serialize())
                     .done(function(data) {
                         if(typeof data.success !== 'undefined') {
-                            console.log('Admin account created');
+                            console.log('Admin account created successfully');
+                            addAdminModal.modal('hide');
+                            $("#messages").html(data.html);
+                            $("#adminTable").bootstrapTable('refresh');
                         }
                         if(typeof data.error !== 'undefined') {
-                            console.log('Admin create error ' + data.error);
+                            console.log('Admin create error: ' + data.error);
+                            addAdminModal.modal('hide');
+                            $("#messages").html(data.html);
                         }
-                        if(typeof data.form_error !== 'undefined') {
-                            console.log('Form errors' + data.form_error);
+                        if(typeof data.validation !== 'undefined') {
+                            console.log(data.validation);
+                            $("#formMessages").html(data.html);
+
+                            //mark form input with errors
+                            $.each(data.validation, function(name, value) {
+                                console.log(name);
+                                $("#addAdminForm input[name='" + name + "']")
+                                        .closest('.form-group').addClass('has-error');
+                            });
                         }
                     })
                     .fail(function() {
                         console.log('Error adding admin user');
+                        addAdminModal.modal('hide');
+                        $("#messages").html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
+                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                                "<span aria-hidden='true'>&times;</span>" +
+                                "</button>" +
+                                "<ul><li>Unexpected error. Please try again.</li></ul></div>");
                     });
         });
 
-        $('#addAdminModal').on('shown.bs.modal', function () {
+        addAdminModal.on('shown.bs.modal', function () {
             $('#adminUsername').focus()
+        });
+
+        addAdminModal.on('hidden.bs.modal', function () {
+            addAdminForm[0].reset();
+            $("#formMessages").html('');
+            $("#addAdminForm :input")
+                    .closest('.form-group').removeClass('has-error');
         });
 
     </script>
