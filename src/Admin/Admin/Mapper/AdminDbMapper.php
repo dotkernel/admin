@@ -23,7 +23,7 @@ class AdminDbMapper extends UserDbMapper   implements AdminMapperInterface
     /** @var array  */
     protected $sortableColumns = [
         'id' => 'INT', 'email' => 'CHAR', 'username' => 'CHAR', 'firstName' => 'CHAR', 'lastName' => 'CHAR',
-        'role' => 'CHAR', 'status' => 'CHAR', 'dateCreated' => 'DATE'
+        'role' => 'ENUM', 'status' => 'ENUM', 'dateCreated' => 'DATE'
     ];
 
     /**
@@ -96,8 +96,13 @@ class AdminDbMapper extends UserDbMapper   implements AdminMapperInterface
 
         //sort only if we have a value and it is a valid field
         if(!empty($sort) && in_array($sort, array_keys($this->sortableColumns))) {
-            $select->order(new Expression('CAST(' . $this->getAdapter()->getPlatform()->quoteIdentifier($sort)
-                . ' as ' . $this->sortableColumns[$sort] . ') ' . $order));
+            if(in_array($this->sortableColumns[$sort], ['ENUM'])) {
+                $select->order(new Expression('CAST(' . $this->getAdapter()->getPlatform()->quoteIdentifier($sort)
+                    . ' as CHAR) ' . $order));
+            }
+            else {
+                $select->order([$sort => $order]);
+            }
         }
 
         return $select;

@@ -89,6 +89,9 @@ class AdminController extends AbstractActionController
 
     }
 
+    /**
+     * @return JsonResponse|RedirectResponse
+     */
     public function addAction()
     {
         $request = $this->request;
@@ -96,6 +99,7 @@ class AdminController extends AbstractActionController
         if($request->getMethod() === 'POST') {
             $form = $this->adminForm;
             $data = $request->getParsedBody();
+
 
             $form->bind($this->getAdminEntityPrototype());
             $form->setData($data);
@@ -125,6 +129,30 @@ class AdminController extends AbstractActionController
             }
 
             return new JsonResponse($data);
+        }
+
+        //if not a POST, redirect to manage page, there is nothing HTML here
+        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
+    }
+
+    public function editAction()
+    {
+
+        $request = $this->getRequest();
+        //var_dump($this->request->getParsedBody());exit;
+
+        if($request->getMethod() === 'POST') {
+            $data = $request->getParsedBody();
+            if(isset($data['ids'])) {
+                //get selected admins and display edit form
+                $ids = explode(',', $data['ids']);
+
+
+                return new HtmlResponse($this->template()->render('app::admin-edit'));
+            }
+            else {
+
+            }
         }
 
         //if not a POST, redirect to manage page, there is nothing HTML here

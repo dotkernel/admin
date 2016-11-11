@@ -3,27 +3,26 @@
  * @copyright: DotKernel
  * @library: dotkernel/dot-admin
  * @author: n3vrax
- * Date: 11/4/2016
- * Time: 7:38 PM
+ * Date: 11/10/2016
+ * Time: 8:00 PM
  */
 
 namespace Dot\Admin\Admin\Form;
 
-use Zend\Form\Element\Csrf;
-use Zend\Form\Form;
+use Zend\Form\Fieldset;
 
 /**
- * Class AdminForm
+ * Class AdminFieldset
  * @package Dot\Admin\Admin\Form
  */
-class AdminForm extends Form
+class AdminFieldset extends Fieldset
 {
     /**
-     * AdminForm constructor.
-     * @param int|null|string $name
+     * AdminFieldset constructor.
+     * @param string $name
      * @param array $options
      */
-    public function __construct($name = 'admin_form', array $options = [])
+    public function __construct($name = 'admin_fieldset', array $options = [])
     {
         parent::__construct($name, $options);
     }
@@ -124,13 +123,5 @@ class AdminForm extends Form
                 ]
             ],
         ]);
-
-        $csrf = new Csrf('admin_add_csrf', [
-            'csrf_options' => [
-                'timeout' => 3600,
-                'message' => 'Add admin form has expired'
-            ]
-        ]);
-        $this->add($csrf);
     }
 }
