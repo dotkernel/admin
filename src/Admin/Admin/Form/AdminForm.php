@@ -17,7 +17,7 @@ use Zend\Form\Form;
  * Class AdminForm
  * @package Dot\Admin\Admin\Form
  */
-class CreateAdminForm extends Form
+class AdminForm extends Form
 {
     /** @var  Fieldset */
     protected $adminFieldset;
@@ -40,10 +40,10 @@ class CreateAdminForm extends Form
         $this->adminFieldset->setUseAsBaseFieldset(true);
         $this->add($this->adminFieldset);
 
-        $csrf = new Csrf('admin_add_csrf', [
+        $csrf = new Csrf('admin_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,
-                'message' => 'Add admin form has expired. Please refresh page'
+                'message' => 'The form has expired. Refresh page and try again'
             ]
         ]);
         $this->add($csrf);

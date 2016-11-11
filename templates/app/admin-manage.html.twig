@@ -21,7 +21,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="tableToolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" id="addAdminButton" data-toggle="modal" data-target="#addAdminModal">
+                        <button type="button" class="btn btn-default" id="addAdminButton">
                             <i class="fa fa-plus"></i>
                         </button>
                         <button type="button" class="btn btn-default" id="editAdminButton">
@@ -32,7 +32,7 @@
                         </button>
                     </div>
 
-                    <table data-toggle="table" data-url="{{ path('user', {'action':'manage'}) ~ '?output=json' }}"
+                    <table data-toggle="table" data-url="{{ path('user', {'action':'list'}) }}"
                            data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
                            data-side-pagination="server" data-page-list="[10, 30, 50, 100]" data-page-size="30"
@@ -58,73 +58,79 @@
         </div>
     </div><!--/.row-->
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="addAdminModal" aria-labelledby="addAdminModule">
+    <div class="modal fade" tabindex="-1" role="dialog" id="adminModal" aria-labelledby="adminModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">Add admin</h4>
+                    <h4 class="modal-title" id="modalTitle"></h4>
                 </div>
                 <div class="modal-body">
 
                     <div id="formMessages"></div>
+                    <div id="adminFormPlaceholder"></div>
 
-                    {% set dummy = form.setAttribute('method', 'post') %}
-                    {% set dummy = form.setAttribute('id', 'addAdminForm') %}
-                    {% set dummy = form.setAttribute('action', path('user', {'action': 'add'})) %}
-                    {% set dummy = form.prepare() %}
-
-                    {{ form().openTag(form) | raw }}
-                    {% include '@dot-form/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
-                    {{ form().closeTag() | raw }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="addAdminSubmit">Save</button>
+                    <button type="button" class="btn btn-primary" id="adminSubmit">Save</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="insetForm" style="visibility: hidden"></div>
-
 {% endblock %}
 
 {% block javascript %}
     <script>
+        var currentAction = '';
 
-        var addAdminModal = $("#addAdminModal");
-        var addAdminForm = $("#addAdminForm");
-        var addAdminSubmit =  $("#addAdminSubmit");
+        $("#addAdminButton").click(function() {
+            if(!$("#adminForm").length || currentAction != 'add') {
+                currentAction = 'add';
+                $.get('{{ path('user', {'action' : 'add'}) }}')
+                        .done(function(data) {
+                            $("#modalTitle").html('Add admin');
+                            $("#adminFormPlaceholder").html(data);
+                            $("#adminModal").modal('show');
+                        })
+                        .fail(function(data) {
+                            console.log("Add admin for could not be loaded");
+                        });
+            }
+            else {
+                $("#adminModal").modal('show');
+            }
+        });
 
-        addAdminSubmit.click(function() {
-            $.post(addAdminForm.attr('action'), addAdminForm.serialize())
+        $("#adminSubmit").click(function() {
+            console.log($("#adminForm").attr('action'));
+            $.post($("#adminForm").attr('action'), $("#adminForm").serialize())
                     .done(function(data) {
                         if(typeof data.success !== 'undefined') {
                             console.log('Admin account created successfully');
 
-                            addAdminModal.modal('hide');
+                            $("#adminModal").modal('hide');
 
-                            $("#messages").html(data.html);
+                            $("#messages").html(data.alerts);
                             $("#adminTable").bootstrapTable('refresh');
                         }
                         if(typeof data.error !== 'undefined') {
                             console.log('Admin create error: ' + data.error);
 
-                            addAdminModal.modal('hide');
+                            $("#adminModal").modal('hide');
 
-                            $("#messages").html(data.html);
+                            $("#messages").html(data.alerts);
                         }
                         if(typeof data.validation !== 'undefined') {
                             console.log(data.validation);
 
-                            $("#formMessages").html(data.html);
+                            $("#formMessages").html(data.alerts);
                             //mark form input with errors
                             $.each(data.validation.admin, function(name, value) {
-                                console.log(name);
-                                $("#addAdminForm input[name='admin[" + name + "]']")
+                                $("#adminForm input[name='admin[" + name + "]']")
                                         .closest('.form-group').addClass('has-error');
                             });
                         }
@@ -132,7 +138,7 @@
                     .fail(function() {
                         console.log('Error adding admin user');
 
-                        addAdminModal.modal('hide');
+                        $("#adminModal").modal('hide');
                         $("#messages").html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
                                 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
                                 "<span aria-hidden='true'>&times;</span>" +
@@ -141,27 +147,15 @@
                     });
         });
 
-        addAdminModal.on('shown.bs.modal', function () {
+        $("#adminModal").on('shown.bs.modal', function () {
             $('#adminUsername').focus()
         });
 
-        addAdminModal.on('hidden.bs.modal', function () {
-            addAdminForm[0].reset();
+        $("#adminModal").on('hidden.bs.modal', function () {
+            $("#adminForm")[0].reset();
             $("#formMessages").html('');
-            $("#addAdminForm :input")
+            $("#adminForm :input")
                     .closest('.form-group').removeClass('has-error');
-        });
-
-        $("#editAdminButton").click(function() {
-            var selections = $("#adminTable").bootstrapTable('getSelections');
-            var ids = [];
-            $.each(selections, function(key, value) {
-                ids.push(value.id);
-            });
-            console.log(ids);
-            $("#insetForm").html("<form name='adminEdit' action='{{ path('user', {'action': 'edit'}) }}' method='post'>" +
-                "<input type='text' name='ids' value='" + ids.join(',') + "' /></form>");
-            document.forms['adminEdit'].submit();
         });
 
     </script>

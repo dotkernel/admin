@@ -10,7 +10,7 @@
 namespace Dot\Admin\Admin\Factory;
 
 use Dot\Admin\Admin\Controller\AdminController;
-use Dot\Admin\Admin\Form\CreateAdminForm;
+use Dot\Admin\Admin\Form\AdminForm;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Interop\Container\ContainerInterface;
 
@@ -28,7 +28,7 @@ class AdminControllerFactory
     {
         return new AdminController(
             $container->get(AdminServiceInterface::class),
-            $container->get(CreateAdminForm::class)
+            $container->get(AdminForm::class)
         );
     }
 

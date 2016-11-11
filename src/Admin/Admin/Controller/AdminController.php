@@ -61,37 +61,22 @@ class AdminController extends AbstractActionController
      */
     public function manageAction()
     {
-        $formats = ['html', 'json'];
-        $output = isset($this->request->getQueryParams()['output'])
-            ? $this->request->getQueryParams()['output']
-            : 'html';
-
-        if(!in_array($output, $formats)) {
-            $output = 'html';
-        }
-
-        switch($output) {
-            case 'json':
-                //get query params as sent by bootstrap-table
-                $params = $this->request->getQueryParams();
-                $limit = isset($params['limit']) ? (int) $params['limit'] : 30;
-                $offset = isset($params['offset']) ? (int) $params['offset'] : 0;
-
-                /** @var HydratingResultSet $admins */
-                $admins = $this->adminService->getAdminsPaginated($params, $limit, $offset);
-                return new JsonResponse($admins);
-                break;
-
-            default:
-                return new HtmlResponse($this->template()->render('app::admin-manage', ['form' => $this->adminForm]));
-                break;
-        }
-
+        return new HtmlResponse($this->template()->render('app::admin-manage', ['form' => $this->adminForm]));
     }
 
-    /**
-     * @return JsonResponse|RedirectResponse
-     */
+    public function listAction()
+    {
+        //get query params as sent by bootstrap-table
+        $params = $this->request->getQueryParams();
+        $limit = isset($params['limit']) ? (int) $params['limit'] : 30;
+        $offset = isset($params['offset']) ? (int) $params['offset'] : 0;
+
+        /** @var HydratingResultSet $admins */
+        $admins = $this->adminService->getAdminsPaginated($params, $limit, $offset);
+        return new JsonResponse($admins);
+    }
+
+
     public function addAction()
     {
         $request = $this->request;
@@ -112,17 +97,17 @@ class AdminController extends AbstractActionController
                 if($result->isValid()) {
                     $data = ['success' => (array) $result->getMessages()];
                     //render the alerts partial to send it through ajax to be inserted into the DOM
-                    $data['html'] = $this->template()->render('dot-partial::alerts',
+                    $data['alerts'] = $this->template()->render('dot-partial::alerts',
                             ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $data['success']]]);
                 } else {
                     $data = ['error' => (array) $result->getMessages()];
-                    $data['html'] = $this->template()->render('dot-partial::alerts',
+                    $data['alerts'] = $this->template()->render('dot-partial::alerts',
                             ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $data['error']]]);
                 }
             }
             else {
                 $data = ['validation' => $form->getMessages()];
-                $data['html'] = $this->template()->render('dot-partial::alerts',
+                $data['alerts'] = $this->template()->render('dot-partial::alerts',
                     ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
                         $this->getFormMessages($form->getMessages())]]);
 
@@ -131,8 +116,8 @@ class AdminController extends AbstractActionController
             return new JsonResponse($data);
         }
 
-        //if not a POST, redirect to manage page, there is nothing HTML here
-        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
+        return new HtmlResponse($this->template()->render('partial::admin-form',
+            ['form' => $this->adminForm, 'formAction' => $this->url()->generate('user', ['action' => 'add'])]));
     }
 
     public function editAction()
