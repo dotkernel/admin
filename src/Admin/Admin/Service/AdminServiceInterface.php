@@ -36,4 +36,10 @@ interface AdminServiceInterface
      * @return mixed
      */
     public function saveAdmin(AdminEntity $admin);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getAdminById($id);
 }

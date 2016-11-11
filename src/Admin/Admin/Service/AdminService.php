@@ -74,22 +74,35 @@ class AdminService implements AdminServiceInterface
                 $admin->setPassword($this->hashPassword($admin->getPassword()));
                 $this->mapper->updateUser($admin);
 
-                return new UserOperationResult(true, 'Admin updated successfully');
+                return new UserOperationResult(true, 'Admin successfully updated');
             } else {
                 $operation = 'create';
 
                 $admin->setPassword($this->hashPassword($admin->getPassword()));
                 $this->mapper->createUser($admin);
 
-                return new UserOperationResult(true, 'Admin account created successfully');
+                return new UserOperationResult(true, 'Admin account successfully created');
             }
         } catch (\Exception $e) {
             error_log('Admin account creation/update error: ' . $e->getMessage());
             return  new UserOperationResult(false, 'Admin ' . $operation === 'update' ? 'update' : 'create'
-                . ' error. Please try again');
+                . ' unexpected server error. Please try again');
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getAdminById($id)
+    {
+        return $this->mapper->findUser($id);
+    }
+
+    /**
+     * @param $clearPassword
+     * @return mixed
+     */
     protected function hashPassword($clearPassword)
     {
         if($clearPassword) {

@@ -31,7 +31,7 @@ return [
             'path' => '/admin/logout',
         ],
         'user_route' => [
-            'path' => '/admin[/{action}]',
+            'path' => '/admin[/{action}[/{id:\d+}]]',
             'middleware' => [\Dot\Admin\Admin\Controller\AdminController::class],
         ]
     ],

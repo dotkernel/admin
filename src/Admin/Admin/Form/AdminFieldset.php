@@ -30,6 +30,11 @@ class AdminFieldset extends Fieldset
     public function init()
     {
         $this->add([
+            'name' => 'id',
+            'type' => 'hidden',
+        ]);
+
+        $this->add([
             'name' => 'username',
             'type' => 'text',
             'options' => [

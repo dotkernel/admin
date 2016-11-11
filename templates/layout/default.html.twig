@@ -78,6 +78,8 @@
 
         {% block content %}{% endblock %}
 
+        {% include '@partial/modals.html.twig' %}
+
     </div>	<!--/.main-->
 </main>
 
@@ -106,6 +108,28 @@
     $(window).on('resize', function () {
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     })
+
+    var showAlertDialog = function (title, message, type) {
+        var iconClass = 'fa-info-circle color-blue';
+        if(type == 'error') {
+            iconClass = 'fa-exclamation-circle color-red';
+        }
+
+        var modal = $("#modalAlert");
+        modal.find("#modalAlertIcon").addClass(iconClass);
+        modal.find("#modalAlertTitle").append(title);
+        modal.find("#modalAlertMessage").append(message);
+        modal.modal('show');
+    }
+
+    var showLoading = function() {
+        $("#loading").modal('show');
+    }
+
+    var hideLoading = function() {
+        $("#loading").modal('hide');
+    }
+
 </script>
 
 {% block javascript %}{% endblock %}

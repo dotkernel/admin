@@ -47,6 +47,15 @@ h3, h4 {
 	margin-top: 15px;
 }
 
+#modalAlertIcon {
+    padding-right: 10px;
+}
+
+#modalAlertMessage {
+    font-size: 16px;
+    padding: 20px;
+}
+
 .large {
 	font-size: 2em;
 }

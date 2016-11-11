@@ -88,32 +88,33 @@ class AdminController extends AbstractActionController
 
             $form->bind($this->getAdminEntityPrototype());
             $form->setData($data);
-
+            //var_dump($data);exit;
             if($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
+                var_dump($admin);exit;
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
                 if($result->isValid()) {
-                    $data = ['success' => (array) $result->getMessages()];
+                    $output = ['success' => (array) $result->getMessages()];
                     //render the alerts partial to send it through ajax to be inserted into the DOM
-                    $data['alerts'] = $this->template()->render('dot-partial::alerts',
-                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $data['success']]]);
+                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $output['success']]]);
                 } else {
-                    $data = ['error' => (array) $result->getMessages()];
-                    $data['alerts'] = $this->template()->render('dot-partial::alerts',
-                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $data['error']]]);
+                    $output = ['error' => (array) $result->getMessages()];
+                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
                 }
             }
             else {
-                $data = ['validation' => $form->getMessages()];
-                $data['alerts'] = $this->template()->render('dot-partial::alerts',
+                $output = ['validation' => $form->getMessages()];
+                $output['alerts'] = $this->template()->render('dot-partial::alerts',
                     ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
                         $this->getFormMessages($form->getMessages())]]);
 
             }
 
-            return new JsonResponse($data);
+            return new JsonResponse($output);
         }
 
         return new HtmlResponse($this->template()->render('partial::admin-form',
@@ -124,24 +125,60 @@ class AdminController extends AbstractActionController
     {
 
         $request = $this->getRequest();
-        //var_dump($this->request->getParsedBody());exit;
+        $id = $request->getAttribute('id');
+        if(!$id) {
+            $output = ['error' => 'No admin id selected for editing'];
+            $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
+
+            return new JsonResponse($output);
+        }
+
+        $admin = $this->adminService->getAdminById($id);
+
+        if(!$admin) {
+            $output = ['error' => 'Cannot load an admin with the specified ID'];
+            $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
+
+            return new JsonResponse($output);
+        }
+
+        $form = $this->adminForm;
+        $form->bind($admin);
 
         if($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
-            if(isset($data['ids'])) {
-                //get selected admins and display edit form
-                $ids = explode(',', $data['ids']);
+            $form->setData($data);
 
-
-                return new HtmlResponse($this->template()->render('app::admin-edit'));
+            if($form->isValid()) {
+                /** @var AdminEntity $admin */
+                $admin = $form->getData();
+                /** @var UserOperationResult $result */
+                $result = $this->adminService->saveAdmin($admin);
+                if($result->isValid()) {
+                    $output = ['success' => (array) $result->getMessages()];
+                    //render the alerts partial to send it through ajax to be inserted into the DOM
+                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                        ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $output['success']]]);
+                } else {
+                    $output = ['error' => (array) $result->getMessages()];
+                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                        ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
+                }
             }
             else {
-
+                $output = ['validation' => $form->getMessages()];
+                $output['alerts'] = $this->template()->render('dot-partial::alerts',
+                    ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
+                        $this->getFormMessages($form->getMessages())]]);
             }
+
+            return new JsonResponse($output);
         }
 
-        //if not a POST, redirect to manage page, there is nothing HTML here
-        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
+        return new HtmlResponse($this->template()->render('partial::admin-form',
+            ['form' => $this->adminForm, 'formAction' => $this->url()->generate('user', ['action' => 'edit', 'id' => $id])]));
     }
 
     /**

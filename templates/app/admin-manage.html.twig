@@ -90,14 +90,16 @@
         $("#addAdminButton").click(function() {
             if(!$("#adminForm").length || currentAction != 'add') {
                 currentAction = 'add';
+                showLoading();
                 $.get('{{ path('user', {'action' : 'add'}) }}')
                         .done(function(data) {
+                            hideLoading();
                             $("#modalTitle").html('Add admin');
                             $("#adminFormPlaceholder").html(data);
                             $("#adminModal").modal('show');
                         })
                         .fail(function(data) {
-                            console.log("Add admin for could not be loaded");
+                            console.log("Add admin form could not be loaded");
                         });
             }
             else {
@@ -105,12 +107,36 @@
             }
         });
 
+        $("#editAdminButton").click(function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            if(selections.length != 1) {
+                showAlertDialog('Selection error',
+                        'Multiple or no admins selected. Only one admin can be edited a time',
+                        'error');
+            }
+            else {
+                currentAction = 'edit';
+                showLoading();
+                $.get('{{ path('user', {'action': 'edit'}) }}/'+selections[0].id)
+                        .done(function(data) {
+                            hideLoading();
+                            $("#modalTitle").html('Edit admin');
+                            $("#adminFormPlaceholder").html(data);
+                            $("#adminModal").modal('show');
+                        })
+                        .fail(function(data) {
+                            console.log("Edit admin form could not be loaded");
+                        });
+            }
+
+        });
+
         $("#adminSubmit").click(function() {
             console.log($("#adminForm").attr('action'));
             $.post($("#adminForm").attr('action'), $("#adminForm").serialize())
                     .done(function(data) {
                         if(typeof data.success !== 'undefined') {
-                            console.log('Admin account created successfully');
+                            console.log('Admin account successfully created');
 
                             $("#adminModal").modal('hide');
 
