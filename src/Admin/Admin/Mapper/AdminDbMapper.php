@@ -60,6 +60,32 @@ class AdminDbMapper extends UserDbMapper implements AdminMapperInterface
     }
 
     /**
+     * @param int|\int[] $id
+     * @param bool $markAsDeleted
+     * @return mixed
+     */
+    public function deleteAdminsById($id, $markAsDeleted = true)
+    {
+        if(!is_array($id)) {
+            $id = (array) $id;
+        }
+
+        $sql = $this->getSql();
+        if($markAsDeleted) {
+            $update = $sql->update()->set(['status' => 'deleted'])->where(function(Where $where) use ($id){
+                $where->in('id', $id);
+            });
+            return $this->updateWith($update);
+        }
+        else {
+            $delete = $sql->delete()->where(function(Where $where) use ($id) {
+                $where->in('id', $id);
+            });
+            return $this->deleteWith($delete);
+        }
+    }
+
+    /**
      * @param Select $select
      * @param array $filters
      * @return Select
@@ -106,6 +132,6 @@ class AdminDbMapper extends UserDbMapper implements AdminMapperInterface
         }
 
         return $select;
-
     }
+
 }

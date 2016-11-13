@@ -70,7 +70,7 @@
                 <div class="modal-body">
 
                     <div id="formMessages"></div>
-                    <div id="adminFormPlaceholder"></div>
+                    <div id="formPlaceholder"></div>
 
                 </div>
                 <div class="modal-footer">
@@ -91,11 +91,15 @@
                     .done(function(data) {
                         hideLoading();
                         $("#modalTitle").html('Add admin');
-                        $("#adminFormPlaceholder").html(data);
+                        $("#formPlaceholder").html(data);
                         $("#adminModal").modal('show');
                     })
                     .fail(function(data) {
                         console.log("Add admin form could not be loaded");
+                        hideLoading();
+                        showAlertDialog('Unexpected server error',
+                                'Could not load form due to a server error. Please try again',
+                                'error');
                     });
         });
 
@@ -107,44 +111,61 @@
                         'error');
             }
             else {
-                currentAction = 'edit';
                 showLoading();
                 $.get('{{ path('user', {'action': 'edit'}) }}/'+selections[0].id)
                         .done(function(data) {
                             hideLoading();
                             $("#modalTitle").html('Edit admin');
-                            $("#adminFormPlaceholder").html(data);
+                            $("#formPlaceholder").html(data);
                             $("#adminModal").modal('show');
                         })
                         .fail(function(data) {
+                            hideLoading();
                             console.log("Edit admin form could not be loaded");
+                            showAlertDialog('Unexpected server error',
+                                    'Could not load admin edit form due to a server error. Please try again',
+                                    'error');
                         });
             }
 
         });
 
+        $("#deleteAdminButton").click(function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            if(selections.length === 0) {
+                return;
+            }
+            showLoading();
+            $.post('{{ path('user', {'action': 'delete'}) }}', {'admins': selections})
+                    .done(function(data) {
+                        hideLoading();
+                        $("#adminSubmit").text('Delete').removeClass('btn-primary').addClass('btn-danger');
+                        $("#modalTitle").html('Delete admins');
+                        $("#formPlaceholder").html(data);
+                        $("#adminModal").modal('show');
+                    })
+                    .fail(function(data) {
+                        hideLoading();
+                        showAlertDialog('Unexpected server error',
+                                'Could not complete delete request due to a server error. Please try again',
+                                'error');
+                    });
+
+        });
+
         $("#adminSubmit").click(function() {
-            console.log($("#adminForm").attr('action'));
             $.post($("#adminForm").attr('action'), $("#adminForm").serialize())
                     .done(function(data) {
                         if(typeof data.success !== 'undefined') {
-                            console.log('Admin account successfully created');
-
                             $("#adminModal").modal('hide');
-
                             $("#messages").html(data.alerts);
                             $("#adminTable").bootstrapTable('refresh');
                         }
-                        if(typeof data.error !== 'undefined') {
-                            console.log('Admin create error: ' + data.error);
-
+                        if(typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
                             $("#adminModal").modal('hide');
-
                             $("#messages").html(data.alerts);
                         }
                         if(typeof data.validation !== 'undefined') {
-                            console.log(data.validation);
-
                             $("#formMessages").html(data.alerts);
                             //mark form input with errors
                             $.each(data.validation.admin, function(name, value) {
@@ -161,7 +182,7 @@
                                 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
                                 "<span aria-hidden='true'>&times;</span>" +
                                 "</button>" +
-                                "<ul><li>Unexpected server error. Please try again.</li></ul></div>");
+                                "<ul><li>Could not complete the request due to a server error. Please try again.</li></ul></div>");
                     });
         });
 
@@ -170,6 +191,7 @@
         });
 
         $("#adminModal").on('hidden.bs.modal', function () {
+            $("#adminSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
             $("#adminForm")[0].reset();
             $("#formMessages").html('');
             $("#adminForm :input")

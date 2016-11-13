@@ -23,7 +23,7 @@ class AdminForm extends Form
     /** @var  Fieldset */
     protected $adminFieldset;
 
-    protected $validationGroup = [
+    protected $currentValidationGroups = [
         'id' => true, 'username' => true, 'email' => true, 'firstName' => true, 'lastName' => true,
         'password' => true, 'passwordVerify' => true,
         'role' => true, 'status' => true
@@ -58,18 +58,18 @@ class AdminForm extends Form
 
     public function removeUsernameValidation()
     {
-        $this->validationGroup['username'] = false;
+        $this->currentValidationGroups['username'] = false;
     }
 
     public function removeEmailValidation()
     {
-        $this->validationGroup['email'] = false;
+        $this->currentValidationGroups['email'] = false;
     }
 
     public function resetValidationGroup()
     {
-        foreach ($this->validationGroup as $key => $value) {
-            $this->validationGroup[$key] = true;
+        foreach ($this->currentValidationGroups as $key => $value) {
+            $this->currentValidationGroups[$key] = true;
         }
         $this->setValidationGroup(FormInterface::VALIDATE_ALL);
     }
@@ -77,7 +77,7 @@ class AdminForm extends Form
     public function applyValidationGroup()
     {
         $validationGroup = [];
-        foreach ($this->validationGroup as $key => $value) {
+        foreach ($this->currentValidationGroups as $key => $value) {
             if($value) {
                 $validationGroup[] = $key;
             }

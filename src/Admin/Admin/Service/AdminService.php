@@ -96,6 +96,32 @@ class AdminService implements AdminServiceInterface
         }
     }
 
+
+    public function deleteAdminsById($id, $markAsDeleted = true)
+    {
+        if(!is_array($id)) {
+            $id = [$id];
+        }
+        $ids = [];
+        foreach ($id as $i) {
+            if(is_numeric($i)) {
+                $ids[] = (int) $i;
+            }
+        }
+
+        if(empty($ids)) {
+            return new UserOperationResult(true, 'There were no valid accounts selected for removal. Nothing was done');
+        }
+
+        try {
+            $this->mapper->deleteAdminsById($ids, $markAsDeleted);
+            return new UserOperationResult(true, 'Admin accounts successfully removed');
+        } catch (\Exception $e) {
+            error_log('Error deleting admin account: ' . $e->getMessage());
+            return new UserOperationResult(false, 'Could not remove selected accounts due to a server error. Please try again');
+        }
+    }
+
     /**
      * @param $id
      * @return mixed

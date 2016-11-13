@@ -42,4 +42,11 @@ interface AdminServiceInterface
      * @return mixed
      */
     public function getAdminById($id);
+
+    /**
+     * @param $id
+     * @param bool $markAsDeleted
+     * @return mixed
+     */
+    public function deleteAdminsById($id, $markAsDeleted = true);
 }

@@ -25,4 +25,11 @@ interface AdminMapperInterface extends UserMapperInterface
      * @return mixed
      */
     public function findUsersPaginated(array $filters = [], $limit = 30, $offset = 0);
+
+    /**
+     * @param int|int[] $id
+     * @param bool $markAsDeleted
+     * @return mixed
+     */
+    public function deleteAdminsById($id, $markAsDeleted = true);
 }

@@ -34,6 +34,9 @@ class AdminController extends AbstractActionController
     /** @var  Form */
     protected $adminForm;
 
+    /** @var  Form */
+    protected $confirmDeleteForm;
+
     /** @var  AdminEntity */
     protected $adminEntityPrototype;
 
@@ -41,11 +44,13 @@ class AdminController extends AbstractActionController
      * AdminController constructor.
      * @param AdminServiceInterface $adminService
      * @param Form $adminForm
+     * @param Form $confirmDeleteForm
      */
-    public function __construct(AdminServiceInterface $adminService, Form $adminForm)
+    public function __construct(AdminServiceInterface $adminService, Form $adminForm, Form $confirmDeleteForm)
     {
         $this->adminService = $adminService;
         $this->adminForm = $adminForm;
+        $this->confirmDeleteForm = $confirmDeleteForm;
     }
 
     /**
@@ -66,19 +71,24 @@ class AdminController extends AbstractActionController
         return new HtmlResponse($this->template()->render('app::admin-manage', ['form' => $this->adminForm]));
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function listAction()
     {
         //get query params as sent by bootstrap-table
         $params = $this->request->getQueryParams();
-        $limit = isset($params['limit']) ? (int) $params['limit'] : 30;
-        $offset = isset($params['offset']) ? (int) $params['offset'] : 0;
+        $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
+        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
 
         /** @var HydratingResultSet $admins */
         $admins = $this->adminService->getAdminsPaginated($params, $limit, $offset);
         return new JsonResponse($admins);
     }
 
-
+    /**
+     * @return HtmlResponse|JsonResponse
+     */
     public function addAction()
     {
         $request = $this->request;
@@ -97,74 +107,57 @@ class AdminController extends AbstractActionController
         $options[1]['selected'] = true;
         $statusSelect->setValueOptions($options);
 
-        if($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
 
             $data = $request->getParsedBody();
 
             $form->bind($this->getAdminEntityPrototype());
             $form->setData($data);
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
 
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
 
-                if($result->isValid()) {
-                    $output = ['success' => (array) $result->getMessages()];
-                    //render the alerts partial to send it through ajax to be inserted into the DOM
-                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $output['success']]]);
+                if ($result->isValid()) {
+                    return $this->generateJsonOutput((array)$result->getMessages());
                 } else {
-                    $output = ['error' => (array) $result->getMessages()];
-                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                            ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
+                    return $this->generateJsonOutput((array)$result->getMessages(), 'error');
                 }
+            } else {
+                return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
             }
-            else {
-                $output = ['validation' => $form->getMessages()];
-                $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                    ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
-                        $this->getFormMessages($form->getMessages())]]);
-
-            }
-
-            return new JsonResponse($output);
         }
 
         return new HtmlResponse($this->template()->render('partial::admin-form',
             ['form' => $form, 'formAction' => $this->url()->generate('user', ['action' => 'add'])]));
     }
 
+    /**
+     * @return HtmlResponse|JsonResponse
+     */
     public function editAction()
     {
         $request = $this->getRequest();
         $id = $request->getAttribute('id');
-        if(!$id) {
-            $output = ['error' => 'No admin id selected for editing'];
-            $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
-
-            return new JsonResponse($output);
+        if (!$id) {
+            return $this->generateJsonOutput(['No admin id selected for editing'], 'error');
         }
 
         /** @var AdminEntity $admin */
         $admin = $this->adminService->getAdminById($id);
 
-        if(!$admin) {
-            $output = ['error' => 'Cannot load an admin with the specified ID'];
-            $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
-
-            return new JsonResponse($output);
+        if (!$admin) {
+            return $this->generateJsonOutput(['Cannot load an admin with the specified ID'], 'error');
         }
 
         /** @var AdminForm $form */
         $form = $this->adminForm;
         $form->bind($admin);
 
-        if($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
 
             //make password field optional for updates
@@ -172,11 +165,11 @@ class AdminController extends AbstractActionController
             $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
 
             //remove username and email checks if the value has not changed relative to the original
-            if($admin->getUsername() === $data['admin']['username']) {
+            if ($admin->getUsername() === $data['admin']['username']) {
                 $form->removeUsernameValidation();
             }
 
-            if($admin->getEmail() === $data['admin']['email']) {
+            if ($admin->getEmail() === $data['admin']['email']) {
                 $form->removeEmailValidation();
             }
 
@@ -184,32 +177,21 @@ class AdminController extends AbstractActionController
 
             $form->setData($data);
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
 
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
 
-                if($result->isValid()) {
-                    $output = ['success' => (array) $result->getMessages()];
-                    //render the alerts partial to send it through ajax to be inserted into the DOM
-                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                        ['dismissible' => true, 'messages' => [FlashMessengerInterface::SUCCESS_NAMESPACE => $output['success']]]);
+                if ($result->isValid()) {
+                    return $this->generateJsonOutput((array)$result->getMessages(), 'success');
                 } else {
-                    $output = ['error' => (array) $result->getMessages()];
-                    $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                        ['dismissible' => true, 'messages' => [FlashMessengerInterface::ERROR_NAMESPACE => $output['error']]]);
+                    return $this->generateJsonOutput((array)$result->getMessages(), 'error');
                 }
+            } else {
+                return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
             }
-            else {
-                $output = ['validation' => $form->getMessages()];
-                $output['alerts'] = $this->template()->render('dot-partial::alerts',
-                    ['messages' => [FlashMessengerInterface::ERROR_NAMESPACE =>
-                        $this->getFormMessages($form->getMessages())]]);
-            }
-
-            return new JsonResponse($output);
         }
 
         return new HtmlResponse($this->template()->render('partial::admin-form',
@@ -217,11 +199,89 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * @return HtmlResponse|JsonResponse|RedirectResponse
+     */
+    public function deleteAction()
+    {
+        $request = $this->getRequest();
+        $form = $this->confirmDeleteForm;
+
+        if ($request->getMethod() === 'POST') {
+            $data = $request->getParsedBody();
+
+            if (isset($data['admins']) && is_array($data['admins'])) {
+                return new HtmlResponse($this->template()
+                    ->render('partial::confirm-delete-form',
+                        ['form' => $form, 'admins' => $data['admins']]));
+            } else {
+                //used to validate CSRF token
+                $form->setData($data);
+
+                if($form->isValid()) {
+                    $ids = isset($data['ids']) && is_array($data['ids']) ? $data['ids'] : [];
+                    $confirm = isset($data['confirm']) ? $data['confirm'] : 'no';
+                    $markAsDeleted = isset($data['markAsDeleted']) ? $data['markAsDeleted'] : 'yes';
+
+                    if (!empty($ids) && $confirm === 'yes') {
+                        $markAsDeleted = $markAsDeleted === 'no' ? false : true;
+
+                        /** @var UserOperationResult $result */
+                        $result = $this->adminService->deleteAdminsById($ids, $markAsDeleted);
+
+                        if ($result->isValid()) {
+                            return $this->generateJsonOutput((array) $result->getMessages());
+                        } else {
+                            return $this->generateJsonOutput((array) $result->getMessages(), 'error');
+                        }
+                    }
+                    else {
+                        //do nothing
+                        return $this->generateJsonOutput(['Operation was not confirmed. No changes were made'], 'info');
+                    }
+                } else {
+                    return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
+                }
+            }
+        }
+
+        //redirect to manage page if trying to access this action via GET
+        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
+    }
+
+    /**
+     * @param array $messages
+     * @param string $type
+     * @param Form|null $form
+     * @return JsonResponse
+     */
+    protected function generateJsonOutput(array $messages, $type = 'success', Form $form = null)
+    {
+        $typeToNamespace = [
+            'success' => FlashMessengerInterface::SUCCESS_NAMESPACE,
+            'error' => FlashMessengerInterface::ERROR_NAMESPACE,
+            'info' => FlashMessengerInterface::INFO_NAMESPACE,
+            'warning' => FlashMessengerInterface::WARNING_NAMESPACE,
+            'validation' => FlashMessengerInterface::ERROR_NAMESPACE
+        ];
+
+        $alerts = $messages;
+        if($type === 'validation' && $form) {
+            $alerts = $this->getFormMessages($form->getMessages());
+        }
+
+        $output = [$type => $messages];
+        //render the alerts partial to send it through ajax to be inserted into the DOM
+        $output['alerts'] = $this->template()->render('dot-partial::alerts',
+            ['dismissible' => true, 'messages' => [$typeToNamespace[$type] => $alerts]]);
+        return new JsonResponse($output);
+    }
+
+    /**
      * @return AdminEntity
      */
     public function getAdminEntityPrototype()
     {
-        if(!$this->adminEntityPrototype) {
+        if (!$this->adminEntityPrototype) {
             $this->adminEntityPrototype = new AdminEntity();
         }
         return $this->adminEntityPrototype;
