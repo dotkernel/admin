@@ -18,7 +18,7 @@ use Zend\Db\Sql\Where;
  * Class AdminDbMapper
  * @package Dot\Admin\Admin\Mapper
  */
-class AdminDbMapper extends UserDbMapper   implements AdminMapperInterface
+class AdminDbMapper extends UserDbMapper implements AdminMapperInterface
 {
     /** @var array  */
     protected $sortableColumns = [

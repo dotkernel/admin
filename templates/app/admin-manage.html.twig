@@ -85,26 +85,18 @@
 
 {% block javascript %}
     <script>
-        var currentAction = '';
-
         $("#addAdminButton").click(function() {
-            if(!$("#adminForm").length || currentAction != 'add') {
-                currentAction = 'add';
-                showLoading();
-                $.get('{{ path('user', {'action' : 'add'}) }}')
-                        .done(function(data) {
-                            hideLoading();
-                            $("#modalTitle").html('Add admin');
-                            $("#adminFormPlaceholder").html(data);
-                            $("#adminModal").modal('show');
-                        })
-                        .fail(function(data) {
-                            console.log("Add admin form could not be loaded");
-                        });
-            }
-            else {
-                $("#adminModal").modal('show');
-            }
+            showLoading();
+            $.get('{{ path('user', {'action' : 'add'}) }}')
+                    .done(function(data) {
+                        hideLoading();
+                        $("#modalTitle").html('Add admin');
+                        $("#adminFormPlaceholder").html(data);
+                        $("#adminModal").modal('show');
+                    })
+                    .fail(function(data) {
+                        console.log("Add admin form could not be loaded");
+                    });
         });
 
         $("#editAdminButton").click(function() {

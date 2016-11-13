@@ -10,6 +10,7 @@
 namespace Dot\Admin\Admin\Controller;
 
 use Dot\Admin\Admin\Entity\AdminEntity;
+use Dot\Admin\Admin\Form\AdminForm;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -18,6 +19,7 @@ use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Form\Element\Select;
 use Zend\Form\Form;
 
 /**
@@ -80,21 +82,35 @@ class AdminController extends AbstractActionController
     public function addAction()
     {
         $request = $this->request;
+        $form = $this->adminForm;
+
+        //set default select values
+        /** @var Select $roleSelect */
+        $roleSelect = $form->getBaseFieldset()->get('role');
+        $options = $roleSelect->getValueOptions();
+        $options[1]['selected'] = true;
+        $roleSelect->setValueOptions($options);
+
+        /** @var Select $statusSelect */
+        $statusSelect = $form->getBaseFieldset()->get('status');
+        $options = $statusSelect->getValueOptions();
+        $options[1]['selected'] = true;
+        $statusSelect->setValueOptions($options);
 
         if($request->getMethod() === 'POST') {
-            $form = $this->adminForm;
-            $data = $request->getParsedBody();
 
+            $data = $request->getParsedBody();
 
             $form->bind($this->getAdminEntityPrototype());
             $form->setData($data);
-            //var_dump($data);exit;
+
             if($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
-                var_dump($admin);exit;
+
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
+
                 if($result->isValid()) {
                     $output = ['success' => (array) $result->getMessages()];
                     //render the alerts partial to send it through ajax to be inserted into the DOM
@@ -118,12 +134,11 @@ class AdminController extends AbstractActionController
         }
 
         return new HtmlResponse($this->template()->render('partial::admin-form',
-            ['form' => $this->adminForm, 'formAction' => $this->url()->generate('user', ['action' => 'add'])]));
+            ['form' => $form, 'formAction' => $this->url()->generate('user', ['action' => 'add'])]));
     }
 
     public function editAction()
     {
-
         $request = $this->getRequest();
         $id = $request->getAttribute('id');
         if(!$id) {
@@ -134,6 +149,7 @@ class AdminController extends AbstractActionController
             return new JsonResponse($output);
         }
 
+        /** @var AdminEntity $admin */
         $admin = $this->adminService->getAdminById($id);
 
         if(!$admin) {
@@ -144,18 +160,37 @@ class AdminController extends AbstractActionController
             return new JsonResponse($output);
         }
 
+        /** @var AdminForm $form */
         $form = $this->adminForm;
         $form->bind($admin);
 
         if($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
+
+            //make password field optional for updates
+            $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
+            $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
+
+            //remove username and email checks if the value has not changed relative to the original
+            if($admin->getUsername() === $data['admin']['username']) {
+                $form->removeUsernameValidation();
+            }
+
+            if($admin->getEmail() === $data['admin']['email']) {
+                $form->removeEmailValidation();
+            }
+
+            $form->applyValidationGroup();
+
             $form->setData($data);
 
             if($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
+
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
+
                 if($result->isValid()) {
                     $output = ['success' => (array) $result->getMessages()];
                     //render the alerts partial to send it through ajax to be inserted into the DOM
@@ -178,7 +213,7 @@ class AdminController extends AbstractActionController
         }
 
         return new HtmlResponse($this->template()->render('partial::admin-form',
-            ['form' => $this->adminForm, 'formAction' => $this->url()->generate('user', ['action' => 'edit', 'id' => $id])]));
+            ['form' => $form, 'formAction' => $this->url()->generate('user', ['action' => 'edit', 'id' => $id])]));
     }
 
     /**

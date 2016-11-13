@@ -110,7 +110,7 @@ class AdminFieldset extends Fieldset
                 'label' => 'Admin Role',
                 'value_options' => [
                     ['value' => 'superuser', 'label' => 'superuser'],
-                    ['value' => 'admin', 'label' => 'admin', 'selected' => true],
+                    ['value' => 'admin', 'label' => 'admin'],
                 ]
             ],
         ]);
@@ -122,7 +122,7 @@ class AdminFieldset extends Fieldset
                 'label' => 'Account Status',
                 'value_options' => [
                     ['value' => 'pending', 'label' => 'pending'],
-                    ['value' => 'active', 'label' => 'active', 'selected' => true],
+                    ['value' => 'active', 'label' => 'active'],
                     ['value' => 'inactive', 'label' => 'inactive'],
                     ['value' => 'deleted', 'label' => 'deleted'],
                 ]

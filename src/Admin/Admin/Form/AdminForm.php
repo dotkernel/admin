@@ -12,6 +12,7 @@ namespace Dot\Admin\Admin\Form;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
+use Zend\Form\FormInterface;
 
 /**
  * Class AdminForm
@@ -21,6 +22,12 @@ class AdminForm extends Form
 {
     /** @var  Fieldset */
     protected $adminFieldset;
+
+    protected $validationGroup = [
+        'id' => true, 'username' => true, 'email' => true, 'firstName' => true, 'lastName' => true,
+        'password' => true, 'passwordVerify' => true,
+        'role' => true, 'status' => true
+    ];
 
     /**
      * AdminForm constructor.
@@ -48,4 +55,35 @@ class AdminForm extends Form
         ]);
         $this->add($csrf);
     }
+
+    public function removeUsernameValidation()
+    {
+        $this->validationGroup['username'] = false;
+    }
+
+    public function removeEmailValidation()
+    {
+        $this->validationGroup['email'] = false;
+    }
+
+    public function resetValidationGroup()
+    {
+        foreach ($this->validationGroup as $key => $value) {
+            $this->validationGroup[$key] = true;
+        }
+        $this->setValidationGroup(FormInterface::VALIDATE_ALL);
+    }
+
+    public function applyValidationGroup()
+    {
+        $validationGroup = [];
+        foreach ($this->validationGroup as $key => $value) {
+            if($value) {
+                $validationGroup[] = $key;
+            }
+        }
+        $this->setValidationGroup(['admin' => $validationGroup]);
+    }
+
+
 }

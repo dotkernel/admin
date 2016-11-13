@@ -117,8 +117,8 @@
 
         var modal = $("#modalAlert");
         modal.find("#modalAlertIcon").addClass(iconClass);
-        modal.find("#modalAlertTitle").append(title);
-        modal.find("#modalAlertMessage").append(message);
+        modal.find("#modalAlertTitle").text(title);
+        modal.find("#modalAlertMessage").text(message);
         modal.modal('show');
     }
 

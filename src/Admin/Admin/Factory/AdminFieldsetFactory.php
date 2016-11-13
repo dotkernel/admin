@@ -11,6 +11,7 @@ namespace Dot\Admin\Admin\Factory;
 
 
 use Dot\Admin\Admin\Form\AdminFieldset;
+use Dot\Admin\Admin\Form\InputFilter\AdminInputFilter;
 use Dot\User\Options\UserOptions;
 use Interop\Container\ContainerInterface;
 

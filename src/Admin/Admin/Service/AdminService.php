@@ -71,7 +71,13 @@ class AdminService implements AdminServiceInterface
             if ($admin->getId()) {
                 $operation = 'update';
 
-                $admin->setPassword($this->hashPassword($admin->getPassword()));
+                //var_dump($admin);exit;
+                if(!empty($admin->getPassword())) {
+                    $admin->setPassword($this->hashPassword($admin->getPassword()));
+                }
+                //remove date created from update
+                $admin->setDateCreated(null);
+
                 $this->mapper->updateUser($admin);
 
                 return new UserOperationResult(true, 'Admin successfully updated');

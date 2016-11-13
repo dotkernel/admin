@@ -37,6 +37,11 @@ class AdminInputFilter extends InputFilter
 
     public function init()
     {
+        $this->add([
+            'name' => 'id',
+            'required' => false,
+        ]);
+
         $username = [
             'name' => 'username',
             'filters' => [
@@ -185,5 +190,12 @@ class AdminInputFilter extends InputFilter
             ],
         ]);
 
+        $this->add([
+            'name' => 'role',
+        ]);
+
+        $this->add([
+            'name' => 'status',
+        ]);
     }
 }
