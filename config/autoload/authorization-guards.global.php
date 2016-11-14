@@ -36,8 +36,11 @@ return [
                     ],
                     [
                         'route' => 'user',
-                        'actions' => ['add', 'edit'],
-                        'permissions' => ['superuser'],
+                        'actions' => ['add', 'edit', 'delete'],
+                        'permissions' => [
+                            'permissions' => ['superuser', 'admin-manager'],
+                            'condition' => \Dot\Rbac\Guard\GuardInterface::CONDITION_OR,
+                        ],
                     ],
 
                     [

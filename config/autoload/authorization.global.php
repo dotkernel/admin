@@ -36,7 +36,7 @@ return [
                 'admin' => [
                     'permissions' => [
                         'admin',
-                        'authenticated'
+                        'authenticated',
                     ]
                 ],
 

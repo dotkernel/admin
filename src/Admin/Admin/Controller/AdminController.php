@@ -12,6 +12,7 @@ namespace Dot\Admin\Admin\Controller;
 use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Form\AdminForm;
 use Dot\Admin\Admin\Service\AdminServiceInterface;
+use Dot\Admin\Admin\UIMessages;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\User\Result\UserOperationResult;
@@ -143,14 +144,14 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         $id = $request->getAttribute('id');
         if (!$id) {
-            return $this->generateJsonOutput(['No admin id selected for editing'], 'error');
+            return $this->generateJsonOutput([UIMessages::ADMIN_ACCOUNT_EDIT_NO_ID], 'error');
         }
 
         /** @var AdminEntity $admin */
         $admin = $this->adminService->getAdminById($id);
 
         if (!$admin) {
-            return $this->generateJsonOutput(['Cannot load an admin with the specified ID'], 'error');
+            return $this->generateJsonOutput([UIMessages::ADMIN_ACCOUNT_EDIT_INVALID_ID], 'error');
         }
 
         /** @var AdminForm $form */
@@ -212,7 +213,7 @@ class AdminController extends AbstractActionController
             if (isset($data['admins']) && is_array($data['admins'])) {
                 return new HtmlResponse($this->template()
                     ->render('partial::confirm-delete-form',
-                        ['form' => $form, 'admins' => $data['admins']]));
+                        ['form' => $form, 'admins' => $data['admins'], 'formId' => 'adminForm']));
             } else {
                 //used to validate CSRF token
                 $form->setData($data);
@@ -256,6 +257,7 @@ class AdminController extends AbstractActionController
      */
     protected function generateJsonOutput(array $messages, $type = 'success', Form $form = null)
     {
+        $dismissible = true;
         $typeToNamespace = [
             'success' => FlashMessengerInterface::SUCCESS_NAMESPACE,
             'error' => FlashMessengerInterface::ERROR_NAMESPACE,
@@ -267,12 +269,13 @@ class AdminController extends AbstractActionController
         $alerts = $messages;
         if($type === 'validation' && $form) {
             $alerts = $this->getFormMessages($form->getMessages());
+            $dismissible = false;
         }
 
         $output = [$type => $messages];
         //render the alerts partial to send it through ajax to be inserted into the DOM
         $output['alerts'] = $this->template()->render('dot-partial::alerts',
-            ['dismissible' => true, 'messages' => [$typeToNamespace[$type] => $alerts]]);
+            ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]);
         return new JsonResponse($output);
     }
 

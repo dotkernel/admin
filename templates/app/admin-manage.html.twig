@@ -85,6 +85,39 @@
 
 {% block javascript %}
     <script>
+
+        $("#editAdminButton").prop('disabled', true);
+        $("#deleteAdminButton").prop('disabled', true);
+
+        var showFailDialog = function(data) {
+            if(data.status == 403) {
+                showAlertDialog('Authorization error',
+                        'You are not authorized to run this operation',
+                        'error');
+            }
+            else {
+                showAlertDialog('Unexpected server error',
+                        'Could not load form due to a server error. Please try again',
+                        'error');
+            }
+        };
+
+        var uiButtons = function(selections) {
+            var count = selections.length;
+            if(count == 0) {
+                $("#editAdminButton").prop('disabled', true);
+                $("#deleteAdminButton").prop('disabled', true);
+            }
+            else if(count == 1) {
+                $("#editAdminButton").prop('disabled', false);
+                $("#deleteAdminButton").prop('disabled', false);
+            }
+            else {
+                $("#editAdminButton").prop('disabled', true);
+                $("#deleteAdminButton").prop('disabled', false);
+            }
+        };
+
         $("#addAdminButton").click(function() {
             showLoading();
             $.get('{{ path('user', {'action' : 'add'}) }}')
@@ -95,11 +128,8 @@
                         $("#adminModal").modal('show');
                     })
                     .fail(function(data) {
-                        console.log("Add admin form could not be loaded");
                         hideLoading();
-                        showAlertDialog('Unexpected server error',
-                                'Could not load form due to a server error. Please try again',
-                                'error');
+                        showFailDialog(data);
                     });
         });
 
@@ -121,10 +151,7 @@
                         })
                         .fail(function(data) {
                             hideLoading();
-                            console.log("Edit admin form could not be loaded");
-                            showAlertDialog('Unexpected server error',
-                                    'Could not load admin edit form due to a server error. Please try again',
-                                    'error');
+                            showFailDialog(data);
                         });
             }
 
@@ -146,26 +173,28 @@
                     })
                     .fail(function(data) {
                         hideLoading();
-                        showAlertDialog('Unexpected server error',
-                                'Could not complete delete request due to a server error. Please try again',
-                                'error');
+                        showFailDialog(data);
                     });
 
         });
 
         $("#adminSubmit").click(function() {
+            showLoading();
             $.post($("#adminForm").attr('action'), $("#adminForm").serialize())
                     .done(function(data) {
                         if(typeof data.success !== 'undefined') {
+                            hideLoading();
                             $("#adminModal").modal('hide');
                             $("#messages").html(data.alerts);
                             $("#adminTable").bootstrapTable('refresh');
                         }
                         if(typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
+                            hideLoading();
                             $("#adminModal").modal('hide');
                             $("#messages").html(data.alerts);
                         }
                         if(typeof data.validation !== 'undefined') {
+                            hideLoading();
                             $("#formMessages").html(data.alerts);
                             //mark form input with errors
                             $.each(data.validation.admin, function(name, value) {
@@ -174,15 +203,10 @@
                             });
                         }
                     })
-                    .fail(function() {
-                        console.log('Error adding admin user');
-
+                    .fail(function(data) {
+                        hideLoading();
                         $("#adminModal").modal('hide');
-                        $("#messages").html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
-                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                                "<span aria-hidden='true'>&times;</span>" +
-                                "</button>" +
-                                "<ul><li>Could not complete the request due to a server error. Please try again.</li></ul></div>");
+                        showFailDialog(data);
                     });
         });
 
@@ -196,6 +220,36 @@
             $("#formMessages").html('');
             $("#adminForm :input")
                     .closest('.form-group').removeClass('has-error');
+        });
+
+        $("#adminTable").on('load-success.bs.table', function() {
+            $("#editAdminButton").prop('disabled', true);
+            $("#deleteAdminButton").prop('disabled', true);
+        });
+
+        $("#adminTable").on('load-error.bs.table', function() {
+            $("#editAdminButton").prop('disabled', true);
+            $("#deleteAdminButton").prop('disabled', true);
+        });
+
+        $("#adminTable").on('check.bs.table', function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            uiButtons(selections);
+        });
+
+        $("#adminTable").on('uncheck.bs.table', function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            uiButtons(selections);
+        });
+
+        $("#adminTable").on('check-all.bs.table', function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            uiButtons(selections);
+        });
+
+        $("#adminTable").on('uncheck-all.bs.table', function() {
+            var selections = $("#adminTable").bootstrapTable('getSelections');
+            uiButtons(selections);
         });
 
     </script>

@@ -9,6 +9,7 @@
 
 namespace Dot\Admin\Admin\Form\InputFilter;
 
+use Dot\Admin\Admin\UIMessages;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\AbstractValidator;
 
@@ -52,7 +53,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Username is required and cannot be empty',
+                        'message' => UIMessages::USERNAME_REQUIRED,
                     ]
                 ],
                 [
@@ -60,21 +61,21 @@ class AdminInputFilter extends InputFilter
                     'options' => [
                         'min' => 3,
                         'max' => 150,
-                        'message' => 'Username must have at least 3 up to 150 characters',
+                        'message' => UIMessages::USERNAME_LENGTH_LIMIT,
                     ]
                 ],
                 [
                     'name' => 'Regex',
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_]+$/',
-                        'message' => 'Username has some invalid characters',
+                        'message' => UIMessages::USERNAME_INVALID_CHARS,
                     ]
                 ]
             ],
         ];
 
         if ($this->usernameValidator) {
-            $this->usernameValidator->setMessage('Username is already in use');
+            $this->usernameValidator->setMessage(UIMessages::USERNAME_ALREADY_TAKEN);
             $username['validators'][] = $this->usernameValidator;
         }
 
@@ -90,20 +91,20 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Email is required and cannot be empty',
+                        'message' => UIMessages::EMAIL_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'message' => 'Email address is invalid',
+                        'message' => UIMessages::EMAIL_INVALID,
                     ]
                 ],
             ],
         ];
 
         if ($this->emailValidator) {
-            $this->emailValidator->setMessage('Email address is already in use');
+            $this->emailValidator->setMessage(UIMessages::EMAIL_ALREADY_REGISTERED);
             $email['validators'][] = $this->emailValidator;
         }
 
@@ -120,7 +121,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'max' => 150,
-                        'message' => 'First name exceeds the limit of 150 characters'
+                        'message' => UIMessages::FIRSTNAME_CHARACTER_LIMIT,
                     ]
                 ]
             ],
@@ -137,7 +138,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'max' => 150,
-                        'message' => 'Last name exceeds the limit of 150 characters'
+                        'message' => UIMessages::LASTNAME_CHARACTER_LIMIT,
                     ]
                 ]
             ],
@@ -153,7 +154,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Password is required and cannot be empty'
+                        'message' => UIMessages::PASSWORD_REQUIRED
                     ]
                 ],
                 [
@@ -161,7 +162,7 @@ class AdminInputFilter extends InputFilter
                     'options' => [
                         'min' => 4,
                         'max' => 150,
-                        'message' => 'Password length must have at least 4 up to 150 characters'
+                        'message' => UIMessages::PASSWORD_CHARACTER_LIMIT,
                     ],
                 ],
             ],
@@ -177,14 +178,14 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Password confirmation is required and cannot be empty'
+                        'message' => UIMessages::PASSWORD_VERIFY_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'Identical',
                     'options' => [
                         'token' => 'password',
-                        'message' => 'Password confirmation does not match'
+                        'message' => UIMessages::PASSWORD_VERIFY_MISMATCH
                     ],
                 ],
             ],

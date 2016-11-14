@@ -9,6 +9,7 @@
 
 namespace Dot\Admin\Admin\Form;
 
+use Dot\Admin\Admin\UIMessages;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Form;
 
@@ -28,7 +29,7 @@ class ConfirmDeleteForm extends Form
         $csrf = new Csrf('delete_confirm_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,
-                'message' => 'The form has expired. Refresh page and try again'
+                'message' => UIMessages::CSRF_EXPIRED
             ]
         ]);
         $this->add($csrf);

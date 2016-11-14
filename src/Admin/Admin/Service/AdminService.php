@@ -11,6 +11,7 @@ namespace Dot\Admin\Admin\Service;
 
 use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Mapper\AdminMapperInterface;
+use Dot\Admin\Admin\UIMessages;
 use Dot\User\Result\UserOperationResult;
 use Dot\User\Service\PasswordInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
@@ -77,26 +78,31 @@ class AdminService implements AdminServiceInterface
                 }
                 //remove date created from update
                 $admin->setDateCreated(null);
-
                 $this->mapper->updateUser($admin);
 
-                return new UserOperationResult(true, 'Admin successfully updated');
+                return new UserOperationResult(true, UIMessages::ADMIN_ACCOUNT_UPDATE_OK);
             } else {
                 $operation = 'create';
 
                 $admin->setPassword($this->hashPassword($admin->getPassword()));
                 $this->mapper->createUser($admin);
 
-                return new UserOperationResult(true, 'Admin account successfully created');
+                return new UserOperationResult(true, UIMessages::ADMIN_ACCOUNT_CREATE_OK);
             }
         } catch (\Exception $e) {
             error_log('Admin account creation/update error: ' . $e->getMessage());
-            return  new UserOperationResult(false, 'Admin ' . $operation === 'update' ? 'update' : 'create'
-                . ' unexpected server error. Please try again');
+
+            return  new UserOperationResult(false, $operation === 'update'
+                ? UIMessages::ADMIN_ACCOUNT_UPDATE_ERROR
+                : UIMessages::ADMIN_ACCOUNT_CREATE_ERROR);
         }
     }
 
-
+    /**
+     * @param $id
+     * @param bool $markAsDeleted
+     * @return UserOperationResult
+     */
     public function deleteAdminsById($id, $markAsDeleted = true)
     {
         if(!is_array($id)) {
@@ -110,15 +116,16 @@ class AdminService implements AdminServiceInterface
         }
 
         if(empty($ids)) {
-            return new UserOperationResult(true, 'There were no valid accounts selected for removal. Nothing was done');
+            return new UserOperationResult(true, UIMessages::ADMIN_ACCOUNT_DELETE_NO_IDS);
         }
 
         try {
             $this->mapper->deleteAdminsById($ids, $markAsDeleted);
-            return new UserOperationResult(true, 'Admin accounts successfully removed');
+            return new UserOperationResult(true, UIMessages::ADMIN_ACCOUNT_DELETE_OK);
         } catch (\Exception $e) {
             error_log('Error deleting admin account: ' . $e->getMessage());
-            return new UserOperationResult(false, 'Could not remove selected accounts due to a server error. Please try again');
+
+            return new UserOperationResult(false, UIMessages::ADMIN_ACCOUNT_DELETE_ERROR);
         }
     }
 
