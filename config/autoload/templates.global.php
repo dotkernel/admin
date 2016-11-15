@@ -18,6 +18,7 @@ return [
             'layout' => ['templates/layout'],
             'error'  => ['templates/error'],
             'partial' => ['templates/partial'],
+            'entity-manage' => ['templates/entity-manage'],
         ],
     ],
 

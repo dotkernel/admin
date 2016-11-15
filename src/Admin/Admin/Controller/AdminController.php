@@ -59,7 +59,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new RedirectResponse($this->url()->generate('user', ['action' => 'list']));
+        return new RedirectResponse($this->url()->generate('user', ['action' => 'manage']));
     }
 
     /**
@@ -69,7 +69,14 @@ class AdminController extends AbstractActionController
      */
     public function manageAction()
     {
-        return new HtmlResponse($this->template()->render('app::admin-manage', ['form' => $this->adminForm]));
+        $listUri = $this->url()->generate('user', ['action' => 'list']);
+        $addUri = $this->url()->generate('user', ['action' => 'add']);
+        $editUri = $this->url()->generate('user', ['action' => 'edit']);
+        $deleteUri = $this->url()->generate('user', ['action' => 'delete']);
+
+        return new HtmlResponse($this->template()->render('entity-manage::admin-table',
+            ['listUri' => $listUri, 'editUri' => $editUri, 'addUri' => $addUri,
+                'deleteUri' => $deleteUri, 'entityNameSingular' => 'admin', 'entityNamePlural' => 'admins']));
     }
 
     /**
@@ -132,7 +139,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::admin-form',
+        return new HtmlResponse($this->template()->render('partial::ajax-form',
             ['form' => $form, 'formAction' => $this->url()->generate('user', ['action' => 'add'])]));
     }
 
@@ -195,7 +202,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::admin-form',
+        return new HtmlResponse($this->template()->render('partial::ajax-form',
             ['form' => $form, 'formAction' => $this->url()->generate('user', ['action' => 'edit', 'id' => $id])]));
     }
 
@@ -212,8 +219,8 @@ class AdminController extends AbstractActionController
 
             if (isset($data['admins']) && is_array($data['admins'])) {
                 return new HtmlResponse($this->template()
-                    ->render('partial::confirm-delete-form',
-                        ['form' => $form, 'admins' => $data['admins'], 'formId' => 'adminForm']));
+                    ->render('partial::delete-form',
+                        ['form' => $form, 'admins' => $data['admins']]));
             } else {
                 //used to validate CSRF token
                 $form->setData($data);
