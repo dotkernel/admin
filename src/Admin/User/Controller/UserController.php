@@ -10,8 +10,11 @@
 namespace Dot\Admin\User\Controller;
 
 use Dot\Controller\AbstractActionController;
+use Dot\Ems\Service\EntityService;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Paginator\Paginator;
 
 /**
  * Class UserController
@@ -19,6 +22,14 @@ use Zend\Diactoros\Response\RedirectResponse;
  */
 class UserController extends AbstractActionController
 {
+    /** @var  EntityService */
+    protected $userService;
+
+    public function __construct(EntityService $service)
+    {
+        $this->userService = $service;
+    }
+
     public function indexAction()
     {
         return new RedirectResponse($this->url()->generate('f_user', ['action' => 'manage']));
@@ -38,7 +49,19 @@ class UserController extends AbstractActionController
 
     public function listAction()
     {
+        //get query params as sent by bootstrap-table
+        $params = $this->request->getQueryParams();
+        $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
+        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
 
+        /** @var Paginator $paginator */
+        $paginator = $this->userService->findAll([], $params, true);
+        $paginator->setItemCountPerPage($limit);
+        $paginator->setCurrentPageNumber(intval($offset/$limit));
+
+        return new JsonResponse([
+            'total' => $paginator->getTotalItemCount(),
+            'rows' => (array) $paginator->getCurrentItems()]);
     }
 
     public function addAction()

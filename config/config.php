@@ -31,12 +31,14 @@ $configManager = new \Zend\Expressive\ConfigManager\ConfigManager([
     \Zend\Validator\ConfigProvider::class,
     \Zend\Form\ConfigProvider::class,
     \Zend\Mail\ConfigProvider::class,
+    \Zend\Paginator\ConfigProvider::class,
 
     //dk modules config providers
     \Dot\Event\ConfigProvider::class,
     \Dot\FlashMessenger\ConfigProvider::class,
     \Dot\Helpers\ConfigProvider::class,
     \Dot\Mail\ConfigProvider::class,
+    \Dot\Ems\ConfigProvider::class,
     \Dot\Navigation\ConfigProvider::class,
     \Dot\Authentication\ConfigProvider::class,
     \Dot\Authentication\Web\ConfigProvider::class,

@@ -22,8 +22,26 @@
         <th data-field="id" data-sortable="true">#ID</th>
         <th data-field="username"  data-sortable="true">Username</th>
         <th data-field="email"  data-sortable="true">E-mail</th>
+        <th data-field="details.firstName" data-formatter="firstNameFormatter" data-sortable="true">First name</th>
+        <th data-field="details.lastName" data-formatter="lastNameFormatter" data-sortable="true">Last name</th>
         <th data-field="role" data-sortable="true">Role</th>
         <th data-field="status" data-sortable="true">Status</th>
         <th data-field="dateCreated" data-sortable="true">Created</th>
     </tr>
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+        var firstNameFormatter = function(value, row) {
+            return row.details.lastName;
+        };
+
+        var lastNameFormatter = function(value, row) {
+            return row.details.firstName;
+        }
+    </script>
+
 {% endblock %}
