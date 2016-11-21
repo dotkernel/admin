@@ -7,8 +7,8 @@ return [
             \Dot\Admin\Controller\DashboardController::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
 
-            \Dot\Admin\User\Controller\UserController::class =>
-                \Dot\Admin\User\Factory\UserControllerFactory::class,
+            \Dot\Admin\Controller\UserController::class =>
+                \Dot\Admin\Factory\User\UserControllerFactory::class,
 
             \Dot\Admin\Admin\Controller\AdminController::class =>
                 \Dot\Admin\Admin\Factory\AdminControllerFactory::class,

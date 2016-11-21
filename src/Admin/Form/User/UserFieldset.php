@@ -1,28 +1,28 @@
 <?php
 /**
  * @copyright: DotKernel
- * @library: dotkernel/dot-admin
+ * @package: dotkernel/dot-admin
  * @author: n3vrax
- * Date: 11/10/2016
- * Time: 8:00 PM
+ * Date: 11/20/2016
+ * Time: 4:54 AM
  */
 
-namespace Dot\Admin\Admin\Form;
+namespace Dot\Admin\Form\User;
 
 use Zend\Form\Fieldset;
 
 /**
- * Class AdminFieldset
- * @package Dot\Admin\Admin\Form
+ * Class UserFieldset
+ * @package Dot\Admin\Form\User
  */
-class AdminFieldset extends Fieldset
+class UserFieldset extends Fieldset
 {
     /**
      * AdminFieldset constructor.
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = 'admin_fieldset', array $options = [])
+    public function __construct($name = 'user_fieldset', array $options = [])
     {
         parent::__construct($name, $options);
     }
@@ -57,28 +57,6 @@ class AdminFieldset extends Fieldset
             ]
         ]);
 
-        $this->add([
-            'name' => 'firstName',
-            'type' => 'text',
-            'options' => [
-                'label' => 'First name',
-            ],
-            'attributes' => [
-                'placeholder' => 'First name...'
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'lastName',
-            'type' => 'text',
-            'options' => [
-                'label' => 'Last name',
-            ],
-            'attributes' => [
-                'placeholder' => 'Last name...'
-            ]
-        ]);
-
         $this->add(array(
             'type' => 'password',
             'name' => 'password',
@@ -89,7 +67,7 @@ class AdminFieldset extends Fieldset
                 'placeholder' => 'Password',
                 //'required' => true,
             ),
-        ));
+        ), ['priority' => -10]);
 
         $this->add(array(
             'type' => 'password',
@@ -101,19 +79,19 @@ class AdminFieldset extends Fieldset
                 'placeholder' => 'Confirm Password',
                 //'required' => true,
             ),
-        ));
+        ), ['priority' => -11]);
 
         $this->add([
             'name' => 'role',
             'type' => 'select',
             'options' => [
-                'label' => 'Admin Role',
+                'label' => 'User Role',
                 'value_options' => [
-                    ['value' => 'superuser', 'label' => 'superuser'],
-                    ['value' => 'admin', 'label' => 'admin'],
+                    ['value' => 'member', 'label' => 'member'],
+                    ['value' => 'user', 'label' => 'user'],
                 ]
             ],
-        ]);
+        ], ['priority' => -20]);
 
         $this->add([
             'name' => 'status',
@@ -127,6 +105,6 @@ class AdminFieldset extends Fieldset
                     ['value' => 'deleted', 'label' => 'deleted'],
                 ]
             ],
-        ]);
+        ], ['priority' => -21]);
     }
 }

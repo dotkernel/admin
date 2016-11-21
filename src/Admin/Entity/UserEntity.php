@@ -7,7 +7,7 @@
  * Time: 9:27 PM
  */
 
-namespace Dot\Admin\User\Entity;
+namespace Dot\Admin\Entity;
 
 use Dot\Ems\Entity\IgnorePropertyProvider;
 use Dot\Ems\Entity\SortableColumnsProvider;
@@ -29,6 +29,9 @@ class UserEntity extends \Dot\User\Entity\UserEntity implements
      */
     public function getDetails()
     {
+        if(!$this->details) {
+            $this->details = new UserDetailsEntity();
+        }
         return $this->details;
     }
 

@@ -1,47 +1,50 @@
 <?php
 /**
  * @copyright: DotKernel
- * @library: dotkernel/dot-admin
+ * @package: dotkernel/dot-admin
  * @author: n3vrax
- * Date: 11/18/2016
- * Time: 9:24 PM
+ * Date: 11/20/2016
+ * Time: 12:10 PM
  */
 
-namespace Dot\Admin\User\Factory;
+namespace Dot\Admin\Factory\User;
 
-use Dot\Admin\User\Controller\UserController;
-use Dot\Admin\User\Entity\UserDetailsEntity;
-use Dot\Admin\User\Entity\UserEntity;
+use Dot\Admin\Entity\UserDetailsEntity;
+use Dot\Admin\Entity\UserEntity;
 use Dot\Ems\Mapper\DbMapper;
 use Dot\Ems\Mapper\Relation\OneToOneRelation;
 use Dot\Ems\Mapper\RelationalDbMapper;
 use Dot\Ems\Service\EntityService;
-use Dot\User\Entity\UserEntityHydrator;
 use Interop\Container\ContainerInterface;
+use Zend\Hydrator\ClassMethods;
 use Zend\Paginator\AdapterPluginManager;
 
 /**
- * Class UserControllerFactory
- * @package Dot\Admin\User\Factory
+ * Class UserServiceFactory
+ * @package Dot\Admin\Factory\User
  */
-class UserControllerFactory
+class UserServiceFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return EntityService
+     */
     public function __invoke(ContainerInterface $container)
     {
         $dbAdapter = $container->get('database');
         $paginatorAdapterManager = $container->get(AdapterPluginManager::class);
 
-        $userMapper = new RelationalDbMapper('user', $dbAdapter, new UserEntity(), new UserEntityHydrator());
+        $userMapper = new RelationalDbMapper('user', $dbAdapter, new UserEntity(), new ClassMethods(false));
         $userMapper->setPaginatorAdapterManager($paginatorAdapterManager);
 
         $userDetailsMapper = new DbMapper('user_details', $dbAdapter, new UserDetailsEntity());
+        $userDetailsMapper->setIdentifierName('userId');
         $userDetailsMapper->setPaginatorAdapterManager($paginatorAdapterManager);
 
         $relation = new OneToOneRelation($userDetailsMapper, 'userId');
         $userMapper->addRelation('details', $relation);
 
         $service = new EntityService($userMapper);
-
-        return new UserController($service);
+        return $service;
     }
 }

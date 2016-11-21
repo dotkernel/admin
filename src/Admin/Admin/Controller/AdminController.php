@@ -125,7 +125,7 @@ class AdminController extends AbstractActionController
             if ($form->isValid()) {
                 /** @var AdminEntity $admin */
                 $admin = $form->getData();
-
+                //var_dump($admin);exit;
                 /** @var UserOperationResult $result */
                 $result = $this->adminService->saveAdmin($admin);
 

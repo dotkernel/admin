@@ -20,7 +20,7 @@ return [
             //there is already a route named `user` from dot-user package, so we use a diff one for the frontend user management
             'name' => 'f_user',
             'path' => '/user[/{action}]',
-            'middleware' => \Dot\Admin\User\Controller\UserController::class,
+            'middleware' => \Dot\Admin\Controller\UserController::class,
         ],
         //change default route paths for user related stuff into admin
         //we will use 'user' for frontend users

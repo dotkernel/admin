@@ -7,7 +7,7 @@
  * Time: 9:55 PM
  */
 
-namespace Dot\Admin\User\Entity;
+namespace Dot\Admin\Entity;
 
 /**
  * Class UserDetailsEntity

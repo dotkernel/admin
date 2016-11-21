@@ -25,6 +25,25 @@ return [
             \Dot\Admin\Admin\Form\AdminForm::class => \Dot\Admin\Admin\Factory\AdminFormFactory::class,
             \Dot\Admin\Admin\Form\AdminFieldset::class => \Dot\Admin\Admin\Factory\AdminFieldsetFactory::class,
             \Dot\Admin\Admin\Form\InputFilter\AdminInputFilter::class => \Dot\Admin\Admin\Factory\AdminInputFilterFactory::class,
+
+            /** User entity related dependencies */
+            'dot.entity.service.user' => \Dot\Admin\Factory\User\UserServiceFactory::class,
+
+            \Dot\Admin\Form\User\UserDetailsInputFilter::class =>
+                \Dot\Admin\Factory\User\UserDetailsInputFilterFactory::class,
+
+            \Dot\Admin\Form\User\UserInputFilter::class =>
+                \Dot\Admin\Factory\User\UserInputFilterFactory::class,
+
+            \Dot\Admin\Form\User\UserDetailsFieldset::class =>
+                \Dot\Admin\Factory\User\UserDetailsFieldsetFactory::class,
+
+            \Dot\Admin\Form\User\UserFieldset::class =>
+                \Dot\Admin\Factory\User\UserFieldsetFactory::class,
+
+            \Dot\Admin\Form\User\UserForm::class =>
+                \Dot\Admin\Factory\User\UserFormFactory::class,
+
         ],
     ],
 ];

@@ -36,11 +36,15 @@
 
     <script>
         var firstNameFormatter = function(value, row) {
-            return row.details.lastName;
+            if(row.details != null) {
+                return row.details.lastName;
+            }
         };
 
         var lastNameFormatter = function(value, row) {
-            return row.details.firstName;
+            if(row.details != null) {
+                return row.details.firstName;
+            }
         }
     </script>
 

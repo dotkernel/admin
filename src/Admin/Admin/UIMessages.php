@@ -49,5 +49,5 @@ class UIMessages
     const PASSWORD_VERIFY_REQUIRED = 'Password confirmation is required and cannot be empty';
     const PASSWORD_VERIFY_MISMATCH = 'Password confirmation does not match';
 
-    const CSRF_EXPIRED = 'The for used to make the request has expired. Try again now';
+    const CSRF_EXPIRED = 'The form used to make the request has expired. Try again now';
 }
