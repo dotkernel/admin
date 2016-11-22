@@ -11,7 +11,6 @@ namespace Dot\Admin\Controller;
 
 use Dot\Admin\Entity\UserEntity;
 use Dot\Admin\Form\User\UserForm;
-use Dot\User\Service\PasswordInterface;
 
 /**
  * Class UserController
@@ -24,53 +23,26 @@ class UserController extends EntityManageBaseController
     const ENTITY_ROUTE_NAME = 'f_user';
     const ENTITY_TEMPLATE_NAME = 'entity-manage::user-table';
 
-    /** @var  PasswordInterface */
-    protected $passwordService;
-
     /**
-     * @return PasswordInterface
+     * @param UserForm $form
+     * @param UserEntity $entity
+     * @param array $data
      */
-    public function getPasswordService()
+    public function customizeEditValidation(UserForm $form, UserEntity $entity, array $data)
     {
-        return $this->passwordService;
-    }
+        //make password field optional for updates
+        $form->getInputFilter()->get('user')->get('password')->setRequired(false);
+        $form->getInputFilter()->get('user')->get('passwordVerify')->setRequired(false);
 
-    /**
-     * @param PasswordInterface $passwordService
-     * @return UserController
-     */
-    public function setPasswordService(PasswordInterface $passwordService)
-    {
-        $this->passwordService = $passwordService;
-        return $this;
-    }
-
-    public function editAction()
-    {
-        $request = $this->getRequest();
-        /** @var UserForm $form */
-        $form = $this->entityForm;
-        if($request->getMethod() === 'POST') {
-            $data = $request->getParsedBody();
-
-            //make password field optional for updates
-            $form->getInputFilter()->get('user')->get('password')->setRequired(false);
-            $form->getInputFilter()->get('user')->get('passwordVerify')->setRequired(false);
-
-            /** @var UserEntity $entity */
-            $entity = $form->getObject();
-            //remove username and email checks if the value has not changed relative to the original
-            if ($entity->getUsername() === $data['user']['username']) {
-                $form->removeUsernameValidation();
-            }
-
-            if ($entity->getEmail() === $data['user']['email']) {
-                $form->removeEmailValidation();
-            }
-
-            $form->applyValidationGroup();
+        //remove username and email checks if the value has not changed relative to the original
+        if ($entity->getUsername() === $data['user']['username']) {
+            $form->removeUsernameValidation();
         }
 
-        return parent::editAction();
+        if ($entity->getEmail() === $data['user']['email']) {
+            $form->removeEmailValidation();
+        }
+
+        $form->applyValidationGroup();
     }
 }

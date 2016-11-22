@@ -77,13 +77,22 @@ class AdminForm extends Form
 
     public function applyValidationGroup()
     {
+        $validationGroup = $this->getActiveValidationGroup($this->currentValidationGroups);
+        $this->setValidationGroup(['admin' => $validationGroup]);
+    }
+
+    public function getActiveValidationGroup($groups)
+    {
         $validationGroup = [];
-        foreach ($this->currentValidationGroups as $key => $value) {
-            if($value) {
+        foreach ($groups as $key => $value) {
+            if(is_array($value)) {
+                $validation[$key] = $this->getActiveValidationGroup($value);
+            }
+            elseif($value === true) {
                 $validationGroup[] = $key;
             }
         }
-        $this->setValidationGroup(['admin' => $validationGroup]);
+        return $validationGroup;
     }
 
 

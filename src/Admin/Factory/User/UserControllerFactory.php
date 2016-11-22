@@ -12,8 +12,8 @@ namespace Dot\Admin\Factory\User;
 use Dot\Admin\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Controller\UserController;
 use Dot\Admin\Form\User\UserForm;
-use Dot\Ems\Service\EntityService;
-use Dot\User\Service\PasswordInterface;
+use Dot\Admin\Service\EntityServiceExtensionInterface;
+use Dot\Admin\Service\UserService;
 use Interop\Container\ContainerInterface;
 
 /**
@@ -24,17 +24,16 @@ class UserControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        /** @var EntityService $service */
-        $service = $container->get('dot.entity.service.user');
+        /** @var EntityServiceExtensionInterface $service */
+        $service = $container->get(UserService::class);
         $userForm = $container->get(UserForm::class);
-        $passwordService = $container->get(PasswordInterface::class);
 
         $confirmDeleteForm = new ConfirmDeleteForm();
         $confirmDeleteForm->init();
 
         $controller = new UserController($service, $userForm, $confirmDeleteForm);
-        $controller->setPasswordService($passwordService);
         $controller->setDebug($container->get('config')['debug']);
+
         return $controller;
     }
 }

@@ -220,7 +220,8 @@ class AdminController extends AbstractActionController
             if (isset($data['admins']) && is_array($data['admins'])) {
                 return new HtmlResponse($this->template()
                     ->render('partial::delete-form',
-                        ['form' => $form, 'admins' => $data['admins']]));
+                        ['form' => $form, 'deleteUri' => $this->url()->generate('user', ['action' => 'delete']),
+                            'entities' => $data['admins']]));
             } else {
                 //used to validate CSRF token
                 $form->setData($data);

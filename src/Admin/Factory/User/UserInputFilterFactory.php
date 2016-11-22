@@ -10,6 +10,7 @@
 namespace Dot\Admin\Factory\User;
 
 use Dot\Admin\Form\User\UserInputFilter;
+use Dot\Admin\Service\UserService;
 use Dot\Admin\Validator\NoRecordsExists;
 use Interop\Container\ContainerInterface;
 
@@ -21,7 +22,7 @@ class UserInputFilterFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $service = $container->get('dot.entity.service.user');
+        $service = $container->get(UserService::class);
         $inputFilter = new UserInputFilter(
             new NoRecordsExists([
                 'service' => $service,

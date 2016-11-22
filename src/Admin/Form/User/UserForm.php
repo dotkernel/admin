@@ -26,9 +26,8 @@ class UserForm extends Form
     protected $userDetailsFieldset;
 
     protected $currentValidationGroups = [
-        'id' => true, 'username' => true, 'email' => true, 'firstName' => true, 'lastName' => true,
-        'password' => true, 'passwordVerify' => true,
-        'role' => true, 'status' => true
+        'id' => true, 'username' => true, 'email' => true, 'details' => ['firstName' => true, 'lastName' => true],
+        'password' => true, 'passwordVerify' => true, 'role' => true, 'status' => true
     ];
 
     public function __construct(Fieldset $userFieldset, Fieldset $userDetailsFieldset, $options = [])
@@ -78,12 +77,21 @@ class UserForm extends Form
 
     public function applyValidationGroup()
     {
+        $validationGroup = $this->getActiveValidationGroup($this->currentValidationGroups);
+        $this->setValidationGroup(['user' => $validationGroup]);
+    }
+
+    public function getActiveValidationGroup($groups)
+    {
         $validationGroup = [];
-        foreach ($this->currentValidationGroups as $key => $value) {
-            if($value) {
+        foreach ($groups as $key => $value) {
+            if(is_array($value)) {
+                $validation[$key] = $this->getActiveValidationGroup($value);
+            }
+            elseif($value === true) {
                 $validationGroup[] = $key;
             }
         }
-        $this->setValidationGroup(['admin' => $validationGroup]);
+        return $validationGroup;
     }
 }

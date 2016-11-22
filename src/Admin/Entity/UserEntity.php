@@ -58,7 +58,7 @@ class UserEntity extends \Dot\User\Entity\UserEntity implements
      */
     public function ignoredProperties()
     {
-        return ['dateCreated'];
+        return ['roles', 'name', 'dateCreated'];
     }
 
     public function sortableColumns()

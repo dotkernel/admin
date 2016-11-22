@@ -27,7 +27,8 @@ return [
             \Dot\Admin\Admin\Form\InputFilter\AdminInputFilter::class => \Dot\Admin\Admin\Factory\AdminInputFilterFactory::class,
 
             /** User entity related dependencies */
-            'dot.entity.service.user' => \Dot\Admin\Factory\User\UserServiceFactory::class,
+            \Dot\Admin\Service\UserService::class =>
+                \Dot\Admin\Factory\User\UserServiceFactory::class,
 
             \Dot\Admin\Form\User\UserDetailsInputFilter::class =>
                 \Dot\Admin\Factory\User\UserDetailsInputFilterFactory::class,

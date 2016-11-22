@@ -12,8 +12,11 @@ namespace Dot\Admin\Controller;
 
 use Dot\Admin\Admin\Entity\AdminEntity;
 use Dot\Admin\Admin\Form\AdminForm;
-use Dot\User\Service\PasswordInterface;
 
+/**
+ * Class AdminController
+ * @package Dot\Admin\Controller
+ */
 class AdminController extends EntityManageBaseController
 {
     const ENTITY_NAME_SINGULAR = 'admin';
@@ -21,53 +24,26 @@ class AdminController extends EntityManageBaseController
     const ENTITY_ROUTE_NAME = 'user';
     const ENTITY_TEMPLATE_NAME = 'entity-manage::admin-table';
 
-    /** @var  PasswordInterface */
-    protected $passwordService;
-
     /**
-     * @return PasswordInterface
+     * @param AdminForm $form
+     * @param AdminEntity $entity
+     * @param array $data
      */
-    public function getPasswordService()
+    public function customizeEditValidation(AdminForm $form, AdminEntity $entity, array $data)
     {
-        return $this->passwordService;
-    }
+        //make password field optional for updates
+        $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
+        $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
 
-    /**
-     * @param PasswordInterface $passwordService
-     * @return $this
-     */
-    public function setPasswordService(PasswordInterface $passwordService)
-    {
-        $this->passwordService = $passwordService;
-        return $this;
-    }
-
-    public function editAction()
-    {
-        $request = $this->getRequest();
-        /** @var AdminForm $form */
-        $form = $this->entityForm;
-        if($request->getMethod() === 'POST') {
-            $data = $request->getParsedBody();
-
-            //make password field optional for updates
-            $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
-            $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
-
-            /** @var AdminEntity $entity */
-            $entity = $form->getObject();
-            //remove username and email checks if the value has not changed relative to the original
-            if ($entity->getUsername() === $data['admin']['username']) {
-                $form->removeUsernameValidation();
-            }
-
-            if ($entity->getEmail() === $data['admin']['email']) {
-                $form->removeEmailValidation();
-            }
-
-            $form->applyValidationGroup();
+        //remove username and email checks if the value has not changed relative to the original
+        if ($entity->getUsername() === $data['admin']['username']) {
+            $form->removeUsernameValidation();
         }
 
-        return parent::editAction();
+        if ($entity->getEmail() === $data['admin']['email']) {
+            $form->removeEmailValidation();
+        }
+
+        $form->applyValidationGroup();
     }
 }
