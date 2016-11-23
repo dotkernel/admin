@@ -20,11 +20,18 @@ return [
             Application::class => ApplicationFactory::class,
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
 
-            \Dot\Admin\Admin\Service\AdminServiceInterface::class => \Dot\Admin\Admin\Factory\AdminServiceFactory::class,
+            /** Admin entity related dependencies */
+            \Dot\Admin\Service\AdminService::class =>
+                \Dot\Admin\Factory\Admin\AdminServiceFactory::class,
 
-            \Dot\Admin\Admin\Form\AdminForm::class => \Dot\Admin\Admin\Factory\AdminFormFactory::class,
-            \Dot\Admin\Admin\Form\AdminFieldset::class => \Dot\Admin\Admin\Factory\AdminFieldsetFactory::class,
-            \Dot\Admin\Admin\Form\InputFilter\AdminInputFilter::class => \Dot\Admin\Admin\Factory\AdminInputFilterFactory::class,
+            \Dot\Admin\Form\Admin\AdminForm::class =>
+                \Dot\Admin\Factory\Admin\AdminFormFactory::class,
+
+            \Dot\Admin\Form\Admin\AdminFieldset::class =>
+                \Dot\Admin\Factory\Admin\AdminFieldsetFactory::class,
+
+            \Dot\Admin\Form\Admin\AdminInputFilter::class =>
+                \Dot\Admin\Factory\Admin\AdminInputFilterFactory::class,
 
             /** User entity related dependencies */
             \Dot\Admin\Service\UserService::class =>

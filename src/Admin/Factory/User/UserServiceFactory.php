@@ -11,7 +11,7 @@ namespace Dot\Admin\Factory\User;
 
 use Dot\Admin\Entity\UserDetailsEntity;
 use Dot\Admin\Entity\UserEntity;
-use Dot\Admin\Mapper\EntityDbMapper;
+use Dot\Admin\Mapper\EntityOperationsDbMapper;
 use Dot\Admin\Service\UserService;
 use Dot\Ems\Mapper\DbMapper;
 use Dot\Ems\Mapper\Relation\OneToOneRelation;
@@ -24,7 +24,7 @@ use Zend\Paginator\AdapterPluginManager;
 
 /**
  * Class UserServiceFactory
- * @package Dot\Admin\Factory\User
+ * @package Dot\Authentication\Factory\User
  */
 class UserServiceFactory
 {
@@ -44,13 +44,13 @@ class UserServiceFactory
         $userDetailsMapper->setIdentifierName('userId');
         $userDetailsMapper->setPaginatorAdapterManager($paginatorAdapterManager);
 
-        $extensionMapper = new EntityDbMapper('user', $dbAdapter, new UserEntity(), new ClassMethods(false));
-
         $relation = new OneToOneRelation($userDetailsMapper, 'userId');
         $userMapper->addRelation('details', $relation);
 
         $service = new UserService($userMapper);
-        $service->setEntityExtensionMapper($extensionMapper);
+        $entityOperationsMapper = new EntityOperationsDbMapper('user', $dbAdapter);
+        $service->setEntityOperationsMapper($entityOperationsMapper);
+
         $service->setPasswordService($container->get(PasswordInterface::class));
 
         return $service;

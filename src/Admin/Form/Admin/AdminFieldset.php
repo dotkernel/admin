@@ -7,13 +7,13 @@
  * Time: 8:00 PM
  */
 
-namespace Dot\Admin\Admin\Form;
+namespace Dot\Admin\Form\Admin;
 
 use Zend\Form\Fieldset;
 
 /**
  * Class AdminFieldset
- * @package Dot\Admin\Admin\Form
+ * @package Dot\Authentication\Authentication\Form
  */
 class AdminFieldset extends Fieldset
 {
@@ -107,7 +107,7 @@ class AdminFieldset extends Fieldset
             'name' => 'role',
             'type' => 'select',
             'options' => [
-                'label' => 'Admin Role',
+                'label' => 'Authentication Role',
                 'value_options' => [
                     ['value' => 'superuser', 'label' => 'superuser'],
                     ['value' => 'admin', 'label' => 'admin'],

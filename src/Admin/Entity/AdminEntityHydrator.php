@@ -3,17 +3,18 @@
  * @copyright: DotKernel
  * @library: dotkernel/dot-admin
  * @author: n3vrax
- * Date: 10/26/2016
- * Time: 7:39 PM
+ * Date: 11/23/2016
+ * Time: 2:51 AM
  */
 
-namespace Dot\Admin\Admin\Entity;
+namespace Dot\Admin\Entity;
+
 
 use Dot\User\Entity\UserEntityHydrator;
 
 /**
  * Class AdminEntityHydrator
- * @package Dot\Admin\Admin\Entity
+ * @package Dot\Admin\Entity
  */
 class AdminEntityHydrator extends UserEntityHydrator
 {

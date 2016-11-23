@@ -16,7 +16,7 @@ use Zend\Hydrator\ClassMethods;
 
 /**
  * Class UserDetailsFieldsetFactory
- * @package Dot\Admin\Factory\User
+ * @package Dot\Authentication\Factory\User
  */
 class UserDetailsFieldsetFactory
 {

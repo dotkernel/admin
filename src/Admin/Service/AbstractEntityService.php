@@ -9,35 +9,52 @@
 
 namespace Dot\Admin\Service;
 
-use Dot\Admin\Mapper\EntityMapperExtensionInterface;
+use Dot\Admin\Mapper\EntityOperationsMapperInterface;
 use Dot\Ems\Service\EntityService;
 
 /**
  * Class AbstractEntityService
- * @package Dot\Admin\Service
+ * @package Dot\Authentication\Service
  */
 abstract class AbstractEntityService extends EntityService implements EntityServiceExtensionInterface
 {
-    /** @var  EntityMapperExtensionInterface */
-    protected $entityExtensionMapper;
+    /** @var  EntityOperationsMapperInterface */
+    protected $entityOperationsMapper;
 
     /**
-     * @return EntityMapperExtensionInterface
+     * @return EntityOperationsMapperInterface
      */
-    public function getEntityExtensionMapper()
+    public function getEntityOperationsMapper()
     {
-        return $this->entityExtensionMapper;
+        return $this->entityOperationsMapper;
     }
 
     /**
-     * @param EntityMapperExtensionInterface $entityExtensionMapper
-     * @return $this
+     * @param EntityOperationsMapperInterface $entityOperationsMapper
+     * @return AbstractEntityService
      */
-    public function setEntityExtensionMapper(EntityMapperExtensionInterface $entityExtensionMapper)
+    public function setEntityOperationsMapper(EntityOperationsMapperInterface $entityOperationsMapper)
     {
-        $this->entityExtensionMapper = $entityExtensionMapper;
+        $this->entityOperationsMapper = $entityOperationsMapper;
         return $this;
     }
 
+    /**
+     * @param $ids
+     * @return mixed
+     */
+    public function markAsDeleted($ids)
+    {
+        return $this->entityOperationsMapper->markAsDeleted($ids, 'status', 'deleted');
+    }
+
+    /**
+     * @param array $ids
+     * @return mixed
+     */
+    public function bulkDelete($ids)
+    {
+        return $this->entityOperationsMapper->bulkDelete($ids);
+    }
 
 }

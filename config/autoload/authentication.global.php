@@ -4,8 +4,8 @@ return [
     'dot_authentication' => [
         //required by the auth adapters, it may be optional for your custom adapters
         //specify the identity entity to use and its hydrator
-        'identity_class' => \Dot\Admin\Admin\Entity\AdminEntity::class,
-        'identity_hydrator_class' => \Dot\Admin\Admin\Entity\AdminEntityHydrator::class,
+        'identity_class' => \Dot\Admin\Entity\AdminEntity::class,
+        'identity_hydrator_class' => \Dot\Admin\Entity\AdminEntityHydrator::class,
 
         //this is adapter specific
         //currently we support HTTP basic and digest

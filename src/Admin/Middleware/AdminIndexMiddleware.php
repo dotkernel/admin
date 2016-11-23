@@ -18,7 +18,7 @@ use Zend\Expressive\Helper\UrlHelper;
 
 /**
  * Class AdminIndexMiddleware
- * @package Dot\Admin\Middleware
+ * @package Dot\Authentication\Middleware
  */
 class AdminIndexMiddleware
 {

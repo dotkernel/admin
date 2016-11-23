@@ -13,7 +13,7 @@ use Zend\Form\Fieldset;
 
 /**
  * Class UserFieldset
- * @package Dot\Admin\Form\User
+ * @package Dot\Authentication\Form\User
  */
 class UserFieldset extends Fieldset
 {

@@ -7,18 +7,34 @@
  * Time: 7:43 PM
  */
 
-namespace Dot\Admin\Admin\Form\InputFilter;
+namespace Dot\Admin\Form\Admin;
 
-use Dot\Admin\Admin\UIMessages;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\AbstractValidator;
 
 /**
  * Class AdminInputFilter
- * @package Dot\Admin\Admin\Form\InputFilter
+ * @package Dot\Authentication\Authentication\Form\InputFilter
  */
 class AdminInputFilter extends InputFilter
 {
+    const USERNAME_REQUIRED = 'Username is required and cannot be empty';
+    const USERNAME_LENGTH_LIMIT = 'Username must have at least 3 and up to 150 characters';
+    const USERNAME_INVALID = 'Username contains invalid characters';
+    const USERNAME_TAKEN = 'Username is already taken';
+
+    const EMAIL_REQUIRED = 'Email address is required and cannot be empty';
+    const EMAIL_INVALID = 'Email address format is invalid';
+    const EMAIL_TAKEN = 'Email address is already registered';
+
+    const FIRSTNAME_LIMIT = 'First name cannot have more than 150 characters';
+    const LASTNAME_LIMIT = 'Last name cannot have more than 150 characters';
+
+    const PASSWORD_REQUIRED = 'Password is required and cannot be empty';
+    const PASSWORD_LENGTH_LIMIT = 'Password must have at least 4 and up to 150 characters';
+    const PASSWORD_VERIFY_REQUIRED = 'Password confirmation is required and cannot be empty';
+    const PASSWORD_VERIFY_MISMATCH = 'Password confirmation does not match';
+
     /** @var  AbstractValidator */
     protected $emailValidator;
 
@@ -53,7 +69,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => UIMessages::USERNAME_REQUIRED,
+                        'message' => static::USERNAME_REQUIRED,
                     ]
                 ],
                 [
@@ -61,21 +77,21 @@ class AdminInputFilter extends InputFilter
                     'options' => [
                         'min' => 3,
                         'max' => 150,
-                        'message' => UIMessages::USERNAME_LENGTH_LIMIT,
+                        'message' => static::USERNAME_LENGTH_LIMIT,
                     ]
                 ],
                 [
                     'name' => 'Regex',
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_]+$/',
-                        'message' => UIMessages::USERNAME_INVALID_CHARS,
+                        'message' => static::USERNAME_INVALID,
                     ]
                 ]
             ],
         ];
 
         if ($this->usernameValidator) {
-            $this->usernameValidator->setMessage(UIMessages::USERNAME_ALREADY_TAKEN);
+            $this->usernameValidator->setMessage(static::USERNAME_TAKEN);
             $username['validators'][] = $this->usernameValidator;
         }
 
@@ -91,20 +107,20 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => UIMessages::EMAIL_REQUIRED,
+                        'message' => static::EMAIL_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'message' => UIMessages::EMAIL_INVALID,
+                        'message' => static::EMAIL_INVALID,
                     ]
                 ],
             ],
         ];
 
         if ($this->emailValidator) {
-            $this->emailValidator->setMessage(UIMessages::EMAIL_ALREADY_REGISTERED);
+            $this->emailValidator->setMessage(static::EMAIL_TAKEN);
             $email['validators'][] = $this->emailValidator;
         }
 
@@ -121,7 +137,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'max' => 150,
-                        'message' => UIMessages::FIRSTNAME_CHARACTER_LIMIT,
+                        'message' => static::FIRSTNAME_LIMIT,
                     ]
                 ]
             ],
@@ -138,7 +154,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'max' => 150,
-                        'message' => UIMessages::LASTNAME_CHARACTER_LIMIT,
+                        'message' => static::LASTNAME_LIMIT,
                     ]
                 ]
             ],
@@ -154,7 +170,7 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => UIMessages::PASSWORD_REQUIRED
+                        'message' => static::PASSWORD_REQUIRED
                     ]
                 ],
                 [
@@ -162,7 +178,7 @@ class AdminInputFilter extends InputFilter
                     'options' => [
                         'min' => 4,
                         'max' => 150,
-                        'message' => UIMessages::PASSWORD_CHARACTER_LIMIT,
+                        'message' => static::PASSWORD_LENGTH_LIMIT,
                     ],
                 ],
             ],
@@ -178,14 +194,14 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => UIMessages::PASSWORD_VERIFY_REQUIRED,
+                        'message' => static::PASSWORD_VERIFY_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'Identical',
                     'options' => [
                         'token' => 'password',
-                        'message' => UIMessages::PASSWORD_VERIFY_MISMATCH
+                        'message' => static::PASSWORD_VERIFY_MISMATCH
                     ],
                 ],
             ],

@@ -7,16 +7,16 @@
  * Time: 9:08 PM
  */
 
-namespace Dot\Admin\Admin\Factory;
+namespace Dot\Admin\Factory\Admin;
 
-use Dot\Admin\Admin\Form\InputFilter\AdminInputFilter;
-use Dot\User\Mapper\UserMapperInterface;
-use Dot\User\Validator\NoRecordsExists;
+use Dot\Admin\Form\Admin\AdminInputFilter;
+use Dot\Admin\Service\AdminService;
+use Dot\Ems\Validator\NoRecordsExists;
 use Interop\Container\ContainerInterface;
 
 /**
  * Class AdminInputFilterFactory
- * @package Dot\Admin\Admin\Factory
+ * @package Dot\Authentication\Authentication\Factory
  */
 class AdminInputFilterFactory
 {
@@ -28,11 +28,11 @@ class AdminInputFilterFactory
     {
         $filter = new AdminInputFilter(
             new NoRecordsExists([
-                'mapper' => $container->get(UserMapperInterface::class),
+                'service' => $container->get(AdminService::class),
                 'key' => 'email'
             ]),
             new NoRecordsExists([
-                'mapper' => $container->get(UserMapperInterface::class),
+                'service' => $container->get(AdminService::class),
                 'key' => 'username'
             ])
         );

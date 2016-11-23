@@ -7,15 +7,20 @@
  * Time: 7:38 PM
  */
 
-namespace Dot\Admin\Admin\Entity;
+namespace Dot\Admin\Entity;
 
+use Dot\Ems\Entity\IgnorePropertyProvider;
+use Dot\Ems\Entity\SortableColumnsProvider;
 use Dot\User\Entity\UserEntity;
 
 /**
  * Class AdminEntity
- * @package Dot\Admin\Admin\Entity
+ * @package Dot\Authentication\Authentication\Entity
  */
-class AdminEntity extends UserEntity
+class AdminEntity extends UserEntity implements
+    \JsonSerializable,
+    IgnorePropertyProvider,
+    SortableColumnsProvider
 {
     /** @var  string */
     protected $firstName;
@@ -59,5 +64,25 @@ class AdminEntity extends UserEntity
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @return array
+     */
+    public function ignoredProperties()
+    {
+        return ['roles', 'name', 'dateCreated'];
+    }
+
+    public function sortableColumns()
+    {
+        return ['username', 'email', 'dateCreated', 'role', 'status', 'firstName', 'lastName'];
+    }
 
 }

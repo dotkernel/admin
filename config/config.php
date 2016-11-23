@@ -1,8 +1,5 @@
 <?php
 
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Glob;
-
 /**
  * Configuration files are loaded in a specific order. First ``global.php``, then ``*.global.php``.
  * then ``local.php`` and finally ``*.local.php``. This way local settings overwrite global settings.

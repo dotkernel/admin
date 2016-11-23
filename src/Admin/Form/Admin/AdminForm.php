@@ -7,9 +7,8 @@
  * Time: 7:38 PM
  */
 
-namespace Dot\Admin\Admin\Form;
+namespace Dot\Admin\Form\Admin;
 
-use Dot\Admin\Admin\UIMessages;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
@@ -17,7 +16,7 @@ use Zend\Form\FormInterface;
 
 /**
  * Class AdminForm
- * @package Dot\Admin\Admin\Form
+ * @package Dot\Authentication\Authentication\Form
  */
 class AdminForm extends Form
 {
@@ -51,7 +50,7 @@ class AdminForm extends Form
         $csrf = new Csrf('admin_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,
-                'message' => UIMessages::CSRF_EXPIRED
+                'message' => 'The form used to make the request has expired. Please try again now'
             ]
         ]);
         $this->add($csrf);

@@ -14,7 +14,7 @@ use Dot\User\Service\PasswordInterface;
 
 /**
  * Class UserService
- * @package Dot\Admin\Service
+ * @package Dot\Authentication\Service
  */
 class UserService extends AbstractEntityService
 {
@@ -32,24 +32,6 @@ class UserService extends AbstractEntityService
             $entity->setPassword($this->passwordService->create($entity->getPassword()));
         }
         return parent::save($entity);
-    }
-
-    /**
-     * @param $ids
-     * @return mixed
-     */
-    public function markAsDeleted($ids)
-    {
-        return $this->entityExtensionMapper->markAsDeleted($ids, 'status', 'deleted');
-    }
-
-    /**
-     * @param array $ids
-     * @return mixed
-     */
-    public function bulkDelete($ids)
-    {
-        return $this->entityExtensionMapper->bulkDelete($ids);
     }
 
     /**

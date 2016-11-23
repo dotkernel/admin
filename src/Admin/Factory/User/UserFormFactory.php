@@ -19,7 +19,7 @@ use Zend\InputFilter\InputFilter;
 
 /**
  * Class UserFormFactory
- * @package Dot\Admin\Factory\User
+ * @package Dot\Authentication\Factory\User
  */
 class UserFormFactory
 {

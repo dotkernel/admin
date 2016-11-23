@@ -14,7 +14,7 @@ use Dot\Ems\Service\ServiceInterface;
 
 /**
  * Interface EntityServiceInterface
- * @package Dot\Admin\Service
+ * @package Dot\Authentication\Service
  */
 interface EntityServiceExtensionInterface extends ServiceInterface
 {

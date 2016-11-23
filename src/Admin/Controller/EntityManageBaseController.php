@@ -20,7 +20,7 @@ use Zend\Paginator\Paginator;
 
 /**
  * Class EntityManageBaseController
- * @package Dot\Admin\Controller
+ * @package Dot\Authentication\Controller
  */
 abstract class EntityManageBaseController extends AbstractActionController
 {

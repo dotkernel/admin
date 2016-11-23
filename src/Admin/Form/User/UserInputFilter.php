@@ -14,10 +14,24 @@ use Zend\Validator\AbstractValidator;
 
 /**
  * Class UserInputFilter
- * @package Dot\Admin\Form\User
+ * @package Dot\Authentication\Form\User
  */
 class UserInputFilter extends InputFilter
 {
+    const USERNAME_REQUIRED = 'Username is required and cannot be empty';
+    const USERNAME_LENGTH_LIMIT = 'Username must have at least 3 and up to 150 characters';
+    const USERNAME_INVALID = 'Username contains invalid characters';
+    const USERNAME_TAKEN = 'Username is already taken';
+
+    const EMAIL_REQUIRED = 'Email address is required and cannot be empty';
+    const EMAIL_INVALID = 'Email address format is invalid';
+    const EMAIL_TAKEN = 'Email address is already registered';
+
+    const PASSWORD_REQUIRED = 'Password is required and cannot be empty';
+    const PASSWORD_LENGTH_LIMIT = 'Password must have at least 4 and up to 150 characters';
+    const PASSWORD_VERIFY_REQUIRED = 'Password confirmation is required and cannot be empty';
+    const PASSWORD_VERIFY_MISMATCH = 'Password confirmation does not match';
+
     /** @var  AbstractValidator */
     protected $emailValidator;
 
@@ -52,7 +66,7 @@ class UserInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Username is required and cannot be empty',
+                        'message' => static::USERNAME_REQUIRED,
                     ]
                 ],
                 [
@@ -60,21 +74,21 @@ class UserInputFilter extends InputFilter
                     'options' => [
                         'min' => 3,
                         'max' => 150,
-                        'message' => 'Username must have at least 3 and up to 150 characters',
+                        'message' => static::USERNAME_LENGTH_LIMIT,
                     ]
                 ],
                 [
                     'name' => 'Regex',
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_]+$/',
-                        'message' => 'Username contains some invalid characters',
+                        'message' => static::USERNAME_INVALID,
                     ]
                 ]
             ],
         ];
 
         if ($this->usernameValidator) {
-            $this->usernameValidator->setMessage('Username is already taken');
+            $this->usernameValidator->setMessage(static::USERNAME_TAKEN);
             $username['validators'][] = $this->usernameValidator;
         }
 
@@ -90,20 +104,20 @@ class UserInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Email address is required and cannot be empty',
+                        'message' => static::EMAIL_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'EmailAddress',
                     'options' => [
-                        'message' => 'Email address format is invalid',
+                        'message' => static::EMAIL_INVALID,
                     ]
                 ],
             ],
         ];
 
         if ($this->emailValidator) {
-            $this->emailValidator->setMessage('Email is already registered');
+            $this->emailValidator->setMessage(static::EMAIL_TAKEN);
             $email['validators'][] = $this->emailValidator;
         }
 
@@ -119,7 +133,7 @@ class UserInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Password is required and cannot be empty'
+                        'message' => static::PASSWORD_REQUIRED
                     ]
                 ],
                 [
@@ -127,7 +141,7 @@ class UserInputFilter extends InputFilter
                     'options' => [
                         'min' => 4,
                         'max' => 150,
-                        'message' => 'Password must have at least 4 and up to 150 characters',
+                        'message' => static::PASSWORD_LENGTH_LIMIT,
                     ],
                 ],
             ],
@@ -143,14 +157,14 @@ class UserInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => 'Password verification is required and cannot be empty',
+                        'message' => static::PASSWORD_VERIFY_REQUIRED,
                     ]
                 ],
                 [
                     'name' => 'Identical',
                     'options' => [
                         'token' => 'password',
-                        'message' => 'Password verification does not match'
+                        'message' => static::PASSWORD_VERIFY_MISMATCH
                     ],
                 ],
             ],

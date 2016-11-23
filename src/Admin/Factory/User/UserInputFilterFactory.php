@@ -11,12 +11,12 @@ namespace Dot\Admin\Factory\User;
 
 use Dot\Admin\Form\User\UserInputFilter;
 use Dot\Admin\Service\UserService;
-use Dot\Admin\Validator\NoRecordsExists;
+use Dot\Ems\Validator\NoRecordsExists;
 use Interop\Container\ContainerInterface;
 
 /**
  * Class UserInputFilterFactory
- * @package Dot\Admin\Factory\User
+ * @package Dot\Authentication\Factory\User
  */
 class UserInputFilterFactory
 {

@@ -14,7 +14,7 @@ use Dot\Ems\Entity\SortableColumnsProvider;
 
 /**
  * Class UserEntity
- * @package Dot\Admin\User\Entity
+ * @package Dot\Authentication\User\Entity
  */
 class UserEntity extends \Dot\User\Entity\UserEntity implements
     \JsonSerializable,

@@ -32,7 +32,7 @@ return [
         ],
         'user_route' => [
             'path' => '/admin[/{action}[/{id:\d+}]]',
-            'middleware' => [\Dot\Admin\Admin\Controller\AdminController::class],
+            'middleware' => [\Dot\Admin\Controller\AdminController::class],
         ]
     ],
 ];

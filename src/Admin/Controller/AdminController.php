@@ -9,13 +9,13 @@
 
 namespace Dot\Admin\Controller;
 
+use Dot\Admin\Entity\AdminEntity;
+use Dot\Admin\Form\Admin\AdminForm;
 
-use Dot\Admin\Admin\Entity\AdminEntity;
-use Dot\Admin\Admin\Form\AdminForm;
 
 /**
  * Class AdminController
- * @package Dot\Admin\Controller
+ * @package Dot\Authentication\Controller
  */
 class AdminController extends EntityManageBaseController
 {
@@ -31,9 +31,11 @@ class AdminController extends EntityManageBaseController
      */
     public function customizeEditValidation(AdminForm $form, AdminEntity $entity, array $data)
     {
-        //make password field optional for updates
-        $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
-        $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
+        //make password field optional for updates if both are empty in the POST data
+        if(empty($data['admin']['password']) && empty($data['user']['passwordVerify'])) {
+            $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
+            $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
+        }
 
         //remove username and email checks if the value has not changed relative to the original
         if ($entity->getUsername() === $data['admin']['username']) {

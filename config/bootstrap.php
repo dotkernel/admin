@@ -13,5 +13,5 @@ $eventManager = $container->get(\Zend\EventManager\EventManagerInterface::class)
  * This authentication listener prepares the request for authentication adapter
  */
 /** @var  $authenticationListeners */
-$authenticationListeners = $container->get(\Dot\Admin\Admin\Listener\AuthenticationListener::class);
+$authenticationListeners = $container->get(\Dot\Admin\Authentication\Listener\AuthenticationListener::class);
 $authenticationListeners->attach($eventManager);

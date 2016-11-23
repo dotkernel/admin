@@ -11,9 +11,9 @@ namespace Dot\Admin\Mapper;
 
 /**
  * Interface EntityMapperExtensionInterface
- * @package Dot\Admin\Mapper
+ * @package Dot\Authentication\Mapper
  */
-interface EntityMapperExtensionInterface
+interface EntityOperationsMapperInterface
 {
     /**
      * @param $fieldName

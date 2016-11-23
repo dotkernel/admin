@@ -14,7 +14,7 @@ use Interop\Container\ContainerInterface;
 
 /**
  * Class UserDetailsInputFilterFactory
- * @package Dot\Admin\Factory\User
+ * @package Dot\Authentication\Factory\User
  */
 class UserDetailsInputFilterFactory
 {

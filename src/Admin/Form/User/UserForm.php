@@ -15,7 +15,7 @@ use Zend\Form\FormInterface;
 
 /**
  * Class UserForm
- * @package Dot\Admin\User\Form
+ * @package Dot\Authentication\User\Form
  */
 class UserForm extends Form
 {

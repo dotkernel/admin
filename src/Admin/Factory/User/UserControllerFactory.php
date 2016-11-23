@@ -9,8 +9,8 @@
 
 namespace Dot\Admin\Factory\User;
 
-use Dot\Admin\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Controller\UserController;
+use Dot\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Form\User\UserForm;
 use Dot\Admin\Service\EntityServiceExtensionInterface;
 use Dot\Admin\Service\UserService;
@@ -18,7 +18,7 @@ use Interop\Container\ContainerInterface;
 
 /**
  * Class UserControllerFactory
- * @package Dot\Admin\User\Factory
+ * @package Dot\Authentication\User\Factory
  */
 class UserControllerFactory
 {

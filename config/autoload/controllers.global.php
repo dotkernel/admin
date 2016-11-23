@@ -10,8 +10,8 @@ return [
             \Dot\Admin\Controller\UserController::class =>
                 \Dot\Admin\Factory\User\UserControllerFactory::class,
 
-            \Dot\Admin\Admin\Controller\AdminController::class =>
-                \Dot\Admin\Admin\Factory\AdminControllerFactory::class,
+            \Dot\Admin\Controller\AdminController::class =>
+                \Dot\Admin\Factory\Admin\AdminControllerFactory::class,
         ]
     ],
 

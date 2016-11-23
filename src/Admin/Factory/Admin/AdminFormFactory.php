@@ -7,17 +7,16 @@
  * Time: 10:13 PM
  */
 
-namespace Dot\Admin\Admin\Factory;
+namespace Dot\Admin\Factory\Admin;
 
-
-use Dot\Admin\Admin\Form\AdminFieldset;
-use Dot\Admin\Admin\Form\AdminForm;
-use Dot\Admin\Admin\Form\InputFilter\AdminInputFilter;
+use Dot\Admin\Form\Admin\AdminFieldset;
+use Dot\Admin\Form\Admin\AdminForm;
+use Dot\Admin\Form\Admin\AdminInputFilter;
 use Interop\Container\ContainerInterface;
 
 /**
  * Class AdminFormFactory
- * @package Dot\Admin\Admin\Factory
+ * @package Dot\Authentication\Authentication\Factory
  */
 class AdminFormFactory
 {

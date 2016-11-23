@@ -5,26 +5,21 @@ return [
     'dependencies' => [
         //whatever dependencies you need additionally
         'factories' => [
-            \Dot\Admin\Admin\Listener\AuthenticationListener::class =>
+            \Dot\Admin\Authentication\Listener\AuthenticationListener::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
 
             //****************************
             //we overwrite the default user entity with this ones, to include details field
-            \Dot\Admin\Admin\Entity\AdminEntity::class =>
+            \Dot\Admin\Entity\AdminEntity::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
 
-            \Dot\Admin\Admin\Entity\AdminEntityHydrator::class =>
+            \Dot\Admin\Entity\AdminEntityHydrator::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
-
-            //overwrite user mapper with our admin mapper, we extended it mostly for convenience
-            //it does offer in addition paginated results
-            \Dot\User\Mapper\UserMapperInterface::class =>
-                \Dot\Admin\Admin\Factory\AdminDbMapperFactory::class,
 
         ],
 
         'shared' => [
-            \Dot\Admin\Admin\Entity\AdminEntity::class => false,
+            \Dot\Admin\Entity\AdminEntity::class => false,
         ],
     ],
 
@@ -35,8 +30,8 @@ return [
         ],
 
         //user entity and its hydrator to use for user transactions
-        'user_entity' => \Dot\Admin\Admin\Entity\AdminEntity::class,
-        'user_entity_hydrator' => \Dot\Admin\Admin\Entity\AdminEntityHydrator::class,
+        'user_entity' => \Dot\Admin\Entity\AdminEntity::class,
+        'user_entity_hydrator' => \Dot\Admin\Entity\AdminEntityHydrator::class,
 
         //bcrypt cost, default to 11
         'password_cost' => 11,

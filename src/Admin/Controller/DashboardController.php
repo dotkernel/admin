@@ -15,7 +15,7 @@ use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Class DashboardController
- * @package Dot\Admin\Controller
+ * @package Dot\Authentication\Controller
  */
 class DashboardController extends AbstractActionController
 {
