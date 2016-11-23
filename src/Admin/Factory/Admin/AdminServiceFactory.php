@@ -14,8 +14,8 @@ use Dot\Admin\Entity\AdminEntityHydrator;
 use Dot\Admin\Mapper\EntityOperationsDbMapper;
 use Dot\Admin\Service\AdminService;
 use Dot\Ems\Mapper\DbMapper;
-use Dot\User\Service\PasswordInterface;
 use Interop\Container\ContainerInterface;
+use Zend\Crypt\Password\PasswordInterface;
 use Zend\Paginator\AdapterPluginManager;
 
 /**

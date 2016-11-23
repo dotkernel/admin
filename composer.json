@@ -30,7 +30,6 @@
     "zendframework/zend-paginator": "^2.7",
 
     "dotkernel/dot-helpers": "0.6.x-dev",
-    "dotkernel/dot-mapper": "0.6.x-dev",
     "dotkernel/dot-ems": "0.6.x-dev",
     "dotkernel/dot-event": "0.6.x-dev",
     "dotkernel/dot-session": "0.6.x-dev",

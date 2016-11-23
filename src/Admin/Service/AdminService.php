@@ -10,7 +10,7 @@
 namespace Dot\Admin\Service;
 
 use Dot\Admin\Entity\AdminEntity;
-use Dot\User\Service\PasswordInterface;
+use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService

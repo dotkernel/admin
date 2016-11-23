@@ -9,7 +9,6 @@
 
 namespace Dot\Admin\Entity;
 
-use Dot\Ems\Entity\IgnorePropertyProvider;
 use Dot\Ems\Entity\SortableColumnsProvider;
 use Dot\User\Entity\UserEntity;
 
@@ -18,8 +17,6 @@ use Dot\User\Entity\UserEntity;
  * @package Dot\Authentication\Authentication\Entity
  */
 class AdminEntity extends UserEntity implements
-    \JsonSerializable,
-    IgnorePropertyProvider,
     SortableColumnsProvider
 {
     /** @var  string */

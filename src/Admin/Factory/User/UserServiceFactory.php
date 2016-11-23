@@ -17,8 +17,8 @@ use Dot\Ems\Mapper\DbMapper;
 use Dot\Ems\Mapper\Relation\OneToOneRelation;
 use Dot\Ems\Mapper\RelationalDbMapper;
 use Dot\Ems\Service\EntityService;
-use Dot\User\Service\PasswordInterface;
 use Interop\Container\ContainerInterface;
+use Zend\Crypt\Password\PasswordInterface;
 use Zend\Hydrator\ClassMethods;
 use Zend\Paginator\AdapterPluginManager;
 
