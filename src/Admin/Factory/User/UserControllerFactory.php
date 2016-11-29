@@ -25,7 +25,7 @@ class UserControllerFactory
     public function __invoke(ContainerInterface $container)
     {
         /** @var EntityServiceExtensionInterface $service */
-        $service = $container->get(UserService::class);
+        $service = $container->get('dot-ems.service.user');
         $userForm = $container->get(UserForm::class);
 
         $confirmDeleteForm = new ConfirmDeleteForm();

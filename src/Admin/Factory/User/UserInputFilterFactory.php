@@ -22,7 +22,7 @@ class UserInputFilterFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $service = $container->get(UserService::class);
+        $service = $container->get('dot-ems.service.user');
         $inputFilter = new UserInputFilter(
             new NoRecordsExists([
                 'service' => $service,

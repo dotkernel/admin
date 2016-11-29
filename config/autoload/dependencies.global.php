@@ -34,9 +34,6 @@ return [
                 \Dot\Admin\Factory\Admin\AdminInputFilterFactory::class,
 
             /** User entity related dependencies */
-            \Dot\Admin\Service\UserService::class =>
-                \Dot\Admin\Factory\User\UserServiceFactory::class,
-
             \Dot\Admin\Form\User\UserDetailsInputFilter::class =>
                 \Dot\Admin\Factory\User\UserDetailsInputFilterFactory::class,
 
@@ -52,6 +49,12 @@ return [
             \Dot\Admin\Form\User\UserForm::class =>
                 \Dot\Admin\Factory\User\UserFormFactory::class,
 
+        ],
+
+        'delegators' => [
+            'dot-ems.service.user' => [
+                \Dot\Admin\Factory\User\UserServiceDelegator::class,
+            ]
         ],
     ],
 ];
