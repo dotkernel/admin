@@ -21,9 +21,6 @@ return [
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
 
             /** Admin entity related dependencies */
-            \Dot\Admin\Service\AdminService::class =>
-                \Dot\Admin\Factory\Admin\AdminServiceFactory::class,
-
             \Dot\Admin\Form\Admin\AdminForm::class =>
                 \Dot\Admin\Factory\Admin\AdminFormFactory::class,
 
@@ -54,6 +51,9 @@ return [
         'delegators' => [
             'dot-ems.service.user' => [
                 \Dot\Admin\Factory\User\UserServiceDelegator::class,
+            ],
+            'dot-ems.service.admin' => [
+                \Dot\Admin\Factory\Admin\AdminServiceDelegator::class,
             ]
         ],
     ],

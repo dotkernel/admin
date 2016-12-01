@@ -10,7 +10,6 @@
 namespace Dot\Admin\Factory\Admin;
 
 use Dot\Admin\Form\Admin\AdminInputFilter;
-use Dot\Admin\Service\AdminService;
 use Dot\Ems\Validator\NoRecordsExists;
 use Interop\Container\ContainerInterface;
 
@@ -26,13 +25,14 @@ class AdminInputFilterFactory
      */
     public function __invoke(ContainerInterface $container)
     {
+        $service = $container->get('dot-ems.service.admin');
         $filter = new AdminInputFilter(
             new NoRecordsExists([
-                'service' => $container->get(AdminService::class),
+                'service' => $service,
                 'key' => 'email'
             ]),
             new NoRecordsExists([
-                'service' => $container->get(AdminService::class),
+                'service' => $service,
                 'key' => 'username'
             ])
         );

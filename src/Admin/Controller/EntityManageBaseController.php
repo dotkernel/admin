@@ -9,7 +9,7 @@
 
 namespace Dot\Admin\Controller;
 
-use Dot\Admin\Service\EntityServiceExtensionInterface;
+use Dot\Admin\Service\EntityServiceInterface;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -29,7 +29,7 @@ abstract class EntityManageBaseController extends AbstractActionController
     const ENTITY_ROUTE_NAME = '';
     const ENTITY_TEMPLATE_NAME = '';
 
-    /** @var  EntityServiceExtensionInterface */
+    /** @var  EntityServiceInterface */
     protected $service;
 
     /** @var  Form */
@@ -43,12 +43,12 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     /**
      * UserController constructor.
-     * @param EntityServiceExtensionInterface $service
+     * @param EntityServiceInterface $service
      * @param Form $entityForm
      * @param Form $deleteForm
      */
     public function __construct(
-        EntityServiceExtensionInterface $service,
+        EntityServiceInterface $service,
         Form $entityForm,
         Form $deleteForm)
     {

@@ -16,7 +16,7 @@ use Dot\Ems\Service\EntityService;
  * Class AbstractEntityService
  * @package Dot\Authentication\Service
  */
-abstract class AbstractEntityService extends EntityService implements EntityServiceExtensionInterface
+abstract class AbstractEntityService extends EntityService implements EntityServiceInterface
 {
     /** @var  EntityOperationsMapperInterface */
     protected $entityOperationsMapper;

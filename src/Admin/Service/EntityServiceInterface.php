@@ -16,7 +16,7 @@ use Dot\Ems\Service\ServiceInterface;
  * Interface EntityServiceInterface
  * @package Dot\Authentication\Service
  */
-interface EntityServiceExtensionInterface extends ServiceInterface
+interface EntityServiceInterface extends ServiceInterface
 {
     /**
      * @param $ids

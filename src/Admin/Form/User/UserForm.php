@@ -86,7 +86,7 @@ class UserForm extends Form
         $validationGroup = [];
         foreach ($groups as $key => $value) {
             if(is_array($value)) {
-                $validation[$key] = $this->getActiveValidationGroup($value);
+                $validationGroup[$key] = $this->getActiveValidationGroup($value);
             }
             elseif($value === true) {
                 $validationGroup[] = $key;

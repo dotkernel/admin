@@ -12,7 +12,7 @@ namespace Dot\Admin\Factory\User;
 use Dot\Admin\Controller\UserController;
 use Dot\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Form\User\UserForm;
-use Dot\Admin\Service\EntityServiceExtensionInterface;
+use Dot\Admin\Service\EntityServiceInterface;
 use Dot\Admin\Service\UserService;
 use Interop\Container\ContainerInterface;
 
@@ -24,7 +24,7 @@ class UserControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        /** @var EntityServiceExtensionInterface $service */
+        /** @var EntityServiceInterface $service */
         $service = $container->get('dot-ems.service.user');
         $userForm = $container->get(UserForm::class);
 
