@@ -134,7 +134,7 @@ abstract class EntityManageBaseController extends AbstractActionController
                     return $this->generateJsonOutput($message, 'error');
                 }
             } else {
-                return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
+                return $this->generateJsonOutput($this->getFormErrors($form->getMessages()), 'validation', $form);
             }
         }
 
@@ -186,7 +186,7 @@ abstract class EntityManageBaseController extends AbstractActionController
                     return $this->generateJsonOutput($message, 'error');
                 }
             } else {
-                return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
+                return $this->generateJsonOutput($this->getFormErrors($form->getMessages()), 'validation', $form);
             }
         }
 
@@ -251,7 +251,7 @@ abstract class EntityManageBaseController extends AbstractActionController
                         return $this->generateJsonOutput($this->getEntityDeleteNoChangesMessage(), 'info');
                     }
                 } else {
-                    return $this->generateJsonOutput($form->getMessages(), 'validation', $form);
+                    return $this->generateJsonOutput($this->getFormErrors($form->getMessages()), 'validation', $form);
                 }
             }
         }
@@ -321,14 +321,47 @@ abstract class EntityManageBaseController extends AbstractActionController
                     if (is_string($m)) {
                         $messages[] = $m;
                     } elseif (is_array($m)) {
-                        $messages = array_merge($messages, $this->getFormMessages($message));
-                        break;
+                        $messages = array_merge($messages, $this->getFormMessages($m));
                     }
                 }
+            }
+            elseif (is_string($message)) {
+                $messages[] = $message;
             }
         }
 
         return $messages;
+    }
+
+    /**
+     * @param array $formMessages
+     * @return array
+     */
+    protected function getFormErrors(array $formMessages)
+    {
+        $errors = [];
+        foreach ($formMessages as $key => $message) {
+            if(is_array($message)) {
+
+                if(!isset($errors[$key])) {
+                    $errors[$key] = array();
+                }
+
+                foreach ($message as $k => $m) {
+                    if(is_string($m)) {
+                        $errors[$key][] = $m;
+                    }
+                    elseif (is_array($m)) {
+                        $errors[$key][$k] = $this->getFormErrors($m);
+                    }
+                }
+            }
+            elseif (is_string($message)) {
+                $errors[] = $message;
+            }
+        }
+
+        return $errors;
     }
 
     protected function getEntityCreateSuccessMessage()

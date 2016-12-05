@@ -80,6 +80,10 @@
         }
     };
 
+    /**
+     * disables UI buttons based on the selection count
+     * @param selections
+     */
     var uiButtons = function(selections) {
         var count = selections.length;
         if(count == 0) {
@@ -156,8 +160,30 @@
 
     });
 
+    var formInputErrors = function(data, prevName) {
+        //mark form input with errors
+        $.each(data, function(name, value) {
+            if($.isArray(value)) {
+                $("#ajaxForm input[name='" + prevName + "[" + name + "]']")
+                        .closest('.form-group').addClass('has-error');
+            }
+            else if($.isPlainObject(value)) {
+                formInputErrors(value, prevName + "[" + name + "]");
+            }
+        });
+    };
+
+    var resetFormInputErrors = function() {
+        $("#ajaxForm :input").closest('.form-group').removeClass('has-error');
+    };
+
+    var hideWithReset = true;
     $("#formModalSubmit").click(function() {
+        hideWithReset = false;
+        $("#formModal").modal('hide');
+
         showLoading();
+        resetFormInputErrors();
         $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
                 .done(function(data) {
                     if(typeof data.success !== 'undefined') {
@@ -174,11 +200,8 @@
                     if(typeof data.validation !== 'undefined') {
                         hideLoading();
                         $("#formMessages").html(data.alerts);
-                        //mark form input with errors
-                        $.each(data.validation.{{ entityNameSingular }}, function(name, value) {
-                            $("#ajaxForm input[name='{{ entityNameSingular }}[" + name + "]']")
-                                    .closest('.form-group').addClass('has-error');
-                        });
+                        formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
+                        $("#formModal").modal('show');
                     }
                 })
                 .fail(function(data) {
@@ -188,16 +211,23 @@
                 });
     });
 
+
+
     $("#formModal").on('shown.bs.modal', function () {
 
     });
 
+
     $("#formModal").on('hidden.bs.modal', function () {
-        $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
-        $("#ajaxForm")[0].reset();
-        $("#formMessages").html('');
-        $("#ajaxForm :input")
-                .closest('.form-group').removeClass('has-error');
+        if(hideWithReset) {
+            $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
+            $("#ajaxForm")[0].reset();
+            $("#formMessages").html('');
+            $("#ajaxForm :input")
+                    .closest('.form-group').removeClass('has-error');
+        }
+
+        hideWithReset = true;
     });
 
     var resetUiButtonState = function() {

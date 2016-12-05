@@ -10,6 +10,7 @@
 namespace Dot\Admin\Entity;
 
 use Dot\Ems\Entity\IgnorePropertyProvider;
+use Dot\Ems\Entity\SearchableColumnsProvider;
 use Dot\Ems\Entity\SortableColumnsProvider;
 
 /**
@@ -19,7 +20,8 @@ use Dot\Ems\Entity\SortableColumnsProvider;
 class UserEntity extends \Dot\User\Entity\UserEntity implements
     \JsonSerializable,
     IgnorePropertyProvider,
-    SortableColumnsProvider
+    SortableColumnsProvider,
+    SearchableColumnsProvider
 {
     /** @var  UserDetailsEntity */
     protected $details;
@@ -63,6 +65,11 @@ class UserEntity extends \Dot\User\Entity\UserEntity implements
 
     public function sortableColumns()
     {
-        return ['username', 'email', 'dateCreated', 'role', 'status'];
+        return ['id', 'username', 'email', 'dateCreated', 'role', 'status'];
+    }
+
+    public function searchableColumns()
+    {
+        return ['id', 'username', 'email', 'role', 'status'];
     }
 }
