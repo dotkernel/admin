@@ -27,6 +27,9 @@ class UserDetailsEntity implements \JsonSerializable
     /** @var  string */
     protected $phone;
 
+    /** @var  string */
+    protected $address;
+
     /**
      * @return int
      */
@@ -96,6 +99,24 @@ class UserDetailsEntity implements \JsonSerializable
     public function setPhone($phone)
     {
         $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     * @return UserDetailsEntity
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
         return $this;
     }
 

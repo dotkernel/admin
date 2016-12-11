@@ -13,6 +13,7 @@ return [
                         'table' => 'user',
 
                         'entity_prototype' => \Dot\Admin\Entity\UserEntity::class,
+                        'entity_hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
 
                         'relations' => [
                             \Dot\Ems\Mapper\Relation\OneToOneRelation::class => [
@@ -43,7 +44,7 @@ return [
                         'table' => 'admin',
 
                         'entity_prototype' => \Dot\Admin\Entity\AdminEntity::class,
-                        'entity_hydrator' => \Dot\Admin\Entity\AdminEntityHydrator::class,
+                        'entity_hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
                     ]
                 ],
             ],

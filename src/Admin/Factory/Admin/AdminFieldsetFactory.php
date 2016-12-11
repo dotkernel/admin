@@ -10,6 +10,7 @@
 namespace Dot\Admin\Factory\Admin;
 
 use Dot\Admin\Form\Admin\AdminFieldset;
+use Dot\Helpers\DependencyHelperTrait;
 use Dot\User\Entity\UserEntityInterface;
 use Dot\User\Options\UserOptions;
 use Interop\Container\ContainerInterface;
@@ -22,6 +23,8 @@ use Zend\Hydrator\HydratorInterface;
  */
 class AdminFieldsetFactory
 {
+    use DependencyHelperTrait;
+
     /**
      * @param ContainerInterface $container
      * @return AdminFieldset
@@ -32,35 +35,13 @@ class AdminFieldsetFactory
         /** @var UserOptions $moduleOptions */
         $options = $container->get(UserOptions::class);
 
-        $prototype = $options->getUserEntity();
-        if($container->has($prototype)) {
-            $prototype = $container->get($prototype);
-        }
-
-        if(is_string($prototype) && class_exists($prototype)) {
-            $prototype = new $prototype;
-        }
-
+        $prototype = $this->getDependencyObject($container, $options->getUserEntity());
         if(!$prototype instanceof UserEntityInterface) {
             throw new \Exception('User entity prototype not valid');
         }
-
-        if(!$options->getUserEntityHydrator()) {
+        $hydrator = $this->getDependencyObject($container, $options->getUserEntityHydrator());
+        if(!$hydrator instanceof HydratorInterface) {
             $hydrator = new ClassMethods(false);
-        }
-        else {
-            $hydrator = $options->getUserEntityHydrator();
-            if($container->has($hydrator)) {
-                $hydrator = $container->get($hydrator);
-            }
-
-            if(is_string($hydrator) && class_exists($hydrator)) {
-                $hydrator = new $hydrator;
-            }
-
-            if(!$hydrator instanceof HydratorInterface) {
-                throw new \Exception('Invalid user entity hydrator');
-            }
         }
 
         $adminFieldset = new AdminFieldset();

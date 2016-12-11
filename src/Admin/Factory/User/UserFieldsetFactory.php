@@ -11,6 +11,7 @@ namespace Dot\Admin\Factory\User;
 
 use Dot\Admin\Entity\UserEntity;
 use Dot\Admin\Form\User\UserFieldset;
+use Dot\User\Entity\UserEntityHydrator;
 use Interop\Container\ContainerInterface;
 use Zend\Hydrator\ClassMethods;
 
@@ -25,7 +26,7 @@ class UserFieldsetFactory
         $fieldset = new UserFieldset();
 
         $fieldset->setObject(new UserEntity());
-        $fieldset->setHydrator(new ClassMethods(false));
+        $fieldset->setHydrator(new UserEntityHydrator());
         $fieldset->init();
 
         return $fieldset;

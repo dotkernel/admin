@@ -31,6 +31,7 @@ class UserFormFactory
         /** @var InputFilter $userInputFilter */
         $userInputFilter = $container->get(UserInputFilter::class);
         $userDetailsInputFilter = $container->get(UserDetailsInputFilter::class);
+
         $userInputFilter->add($userDetailsInputFilter, 'details');
 
         $form = new UserForm($userFieldset, $userDetailsFieldset);

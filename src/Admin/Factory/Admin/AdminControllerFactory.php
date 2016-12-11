@@ -9,11 +9,9 @@
 
 namespace Dot\Admin\Factory\Admin;
 
-
 use Dot\Admin\Controller\AdminController;
 use Dot\Admin\Form\Admin\AdminForm;
 use Dot\Admin\Form\ConfirmDeleteForm;
-use Dot\Admin\Service\AdminService;
 use Dot\Admin\Service\EntityServiceInterface;
 use Interop\Container\ContainerInterface;
 

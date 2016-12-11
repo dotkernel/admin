@@ -13,7 +13,6 @@ use Dot\Admin\Controller\UserController;
 use Dot\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Form\User\UserForm;
 use Dot\Admin\Service\EntityServiceInterface;
-use Dot\Admin\Service\UserService;
 use Interop\Container\ContainerInterface;
 
 /**

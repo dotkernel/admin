@@ -7,19 +7,6 @@ return [
         'factories' => [
             \Dot\Admin\Authentication\Listener\AuthenticationListener::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
-
-            //****************************
-            //we overwrite the default user entity with this ones, to include details field
-            \Dot\Admin\Entity\AdminEntity::class =>
-                \Zend\ServiceManager\Factory\InvokableFactory::class,
-
-            \Dot\Admin\Entity\AdminEntityHydrator::class =>
-                \Zend\ServiceManager\Factory\InvokableFactory::class,
-
-        ],
-
-        'shared' => [
-            \Dot\Admin\Entity\AdminEntity::class => false,
         ],
     ],
 
@@ -31,10 +18,6 @@ return [
 
         //user entity and its hydrator to use for user transactions
         'user_entity' => \Dot\Admin\Entity\AdminEntity::class,
-        'user_entity_hydrator' => \Dot\Admin\Entity\AdminEntityHydrator::class,
-
-        //bcrypt cost, default to 11
-        'password_cost' => 11,
 
         'enable_user_status' => true,
 
@@ -54,8 +37,6 @@ return [
         ],
 
         'login_options' => [
-            'login_form_timeout' => 1800,
-
             'enable_remember_me' => false,
 
             'auth_identity_fields' => ['username', 'email'],

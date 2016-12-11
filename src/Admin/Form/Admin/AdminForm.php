@@ -11,6 +11,7 @@ namespace Dot\Admin\Form\Admin;
 
 use Zend\Form\Element\Csrf;
 use Zend\Form\Fieldset;
+use Zend\Form\FieldsetInterface;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
 
@@ -23,7 +24,7 @@ class AdminForm extends Form
     /** @var  Fieldset */
     protected $adminFieldset;
 
-    protected $currentValidationGroups = [
+    protected $currentValidationGroup = [
         'id' => true, 'username' => true, 'email' => true, 'firstName' => true, 'lastName' => true,
         'password' => true, 'passwordVerify' => true,
         'role' => true, 'status' => true
@@ -58,41 +59,41 @@ class AdminForm extends Form
 
     public function removeUsernameValidation()
     {
-        $this->currentValidationGroups['username'] = false;
+        $this->currentValidationGroup['username'] = false;
     }
 
     public function removeEmailValidation()
     {
-        $this->currentValidationGroups['email'] = false;
+        $this->currentValidationGroup['email'] = false;
     }
 
     public function resetValidationGroup()
     {
-        foreach ($this->currentValidationGroups as $key => $value) {
-            $this->currentValidationGroups[$key] = true;
+        foreach ($this->currentValidationGroup as $key => $value) {
+            $this->currentValidationGroup[$key] = true;
         }
         $this->setValidationGroup(FormInterface::VALIDATE_ALL);
     }
 
     public function applyValidationGroup()
     {
-        $validationGroup = $this->getActiveValidationGroup($this->currentValidationGroups);
+        $validationGroup = $this->getActiveValidationGroup($this->currentValidationGroup, $this->getBaseFieldset());
         $this->setValidationGroup(['admin' => $validationGroup]);
     }
 
-    public function getActiveValidationGroup($groups)
+    public function getActiveValidationGroup($groups, FieldsetInterface $prevElement)
     {
         $validationGroup = [];
         foreach ($groups as $key => $value) {
             if(is_array($value)) {
-                $validationGroup[$key] = $this->getActiveValidationGroup($value);
+                if($prevElement->has($key)) {
+                    $validationGroup[$key] = $this->getActiveValidationGroup($value, $prevElement->get($key));
+                }
             }
-            elseif($value === true) {
+            elseif($value === true && $prevElement->has($key)) {
                 $validationGroup[] = $key;
             }
         }
         return $validationGroup;
     }
-
-
 }
