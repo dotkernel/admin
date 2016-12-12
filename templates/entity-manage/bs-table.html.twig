@@ -68,7 +68,15 @@
     $("#deleteButton").prop('disabled', true);
 
     var showFailDialog = function(data) {
-        if(data.status == 403) {
+        if(data.status == 401) {
+            $("#modalCloseButton").click(function() {
+                window.location.reload();
+            });
+            showAlertDialog('Authorization error',
+                'You session has expired. The page will be reloaded in order to re-authenticate',
+                'error');
+        }
+        else if(data.status == 403) {
             showAlertDialog('Authorization error',
                     'You are not authorized to run this operation',
                     'error');
@@ -239,7 +247,8 @@
         resetUiButtonState();
     });
 
-    $("#bsTable").on('load-error.bs.table', function() {
+    $("#bsTable").on('load-error.bs.table', function(status, res) {
+        showFailDialog({'status' : res});
         resetUiButtonState();
     });
 
