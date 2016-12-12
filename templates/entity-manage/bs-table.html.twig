@@ -192,12 +192,12 @@
                         $("#messages").html(data.alerts);
                         $("#bsTable").bootstrapTable('refresh');
                     }
-                    if(typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
+                    else if(typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
                         hideLoading();
                         $("#formModal").modal('hide');
                         $("#messages").html(data.alerts);
                     }
-                    if(typeof data.validation !== 'undefined') {
+                    else if(typeof data.validation !== 'undefined') {
                         hideLoading();
                         $("#formMessages").html(data.alerts);
                         formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
