@@ -20,6 +20,9 @@ return [
                                 'field_name' => 'details',
                                 'ref_name' => 'userId',
 
+                                'delete_refs' => true,
+                                'change_refs' => true,
+
                                 'mapper' => [
                                     \Dot\Ems\Mapper\DbMapper::class => [
                                         'adapter' => 'database',
@@ -48,6 +51,7 @@ return [
                     ]
                 ],
             ],
+
         ],
     ]
 ];
