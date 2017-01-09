@@ -1,6 +1,6 @@
 {
   "name": "dotkernel/dot-admin",
-  "description": "DotKernel Admin interface to be paired with dot-frontend",
+  "description": "Dotkernel Admin Application",
   "type": "project",
   "license": "MIT",
   "authors": [
