@@ -36,11 +36,11 @@ class AdminFieldsetFactory
         $options = $container->get(UserOptions::class);
 
         $prototype = $this->getDependencyObject($container, $options->getUserEntity());
-        if(!$prototype instanceof UserEntityInterface) {
+        if (!$prototype instanceof UserEntityInterface) {
             throw new \Exception('User entity prototype not valid');
         }
         $hydrator = $this->getDependencyObject($container, $options->getUserEntityHydrator());
-        if(!$hydrator instanceof HydratorInterface) {
+        if (!$hydrator instanceof HydratorInterface) {
             $hydrator = new ClassMethods(false);
         }
 

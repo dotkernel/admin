@@ -17,7 +17,7 @@ use Zend\Db\Sql\Where;
  * Class DbMapper
  * @package Dot\Authentication\Mapper
  */
-class EntityOperationsDbMapper  implements EntityOperationsMapperInterface
+class EntityOperationsDbMapper implements EntityOperationsMapperInterface
 {
     /** @var  Adapter */
     protected $adapter;
@@ -48,7 +48,7 @@ class EntityOperationsDbMapper  implements EntityOperationsMapperInterface
      */
     public function markAsDeleted(array $ids, $fieldName, $deletedValue = 'deleted')
     {
-        $update = $this->sql->update()->set([$fieldName => $deletedValue])->where(function(Where $where) use ($ids){
+        $update = $this->sql->update()->set([$fieldName => $deletedValue])->where(function (Where $where) use ($ids) {
             $where->in('id', $ids);
         });
         $stmt = $this->sql->prepareStatementForSqlObject($update);
@@ -61,7 +61,7 @@ class EntityOperationsDbMapper  implements EntityOperationsMapperInterface
      */
     public function bulkDelete(array $ids)
     {
-        $delete = $this->sql->delete()->where(function(Where $where) use ($ids) {
+        $delete = $this->sql->delete()->where(function (Where $where) use ($ids) {
             $where->in('id', $ids);
         });
         $stmt = $this->sql->prepareStatementForSqlObject($delete);

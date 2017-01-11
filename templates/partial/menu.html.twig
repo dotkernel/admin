@@ -21,14 +21,14 @@
                     <a href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ navigationPageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
                         {% if page.hasChildren() and depth == 0 %}
                             <div data-toggle="collapse" href="#sub-item-{{ loop.index }}">
-                                <i class="{{ page.getOption('icon') }}" ></i>&nbsp;
+                                <i class="{{ page.getOption('icon') }}"></i>&nbsp;
                                 {{ page.getOption('label') }}
                                 <i class="fa fa-chevron-circle-down pull-right"></i>
                             </div>
                         {% else %}
                             {% if page.getOption('icon') %}
 
-                                <i class="{{ page.getOption('icon') }}" ></i>
+                                <i class="{{ page.getOption('icon') }}"></i>
 
                             {% endif %}
 

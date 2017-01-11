@@ -25,9 +25,15 @@ class AdminForm extends Form
     protected $adminFieldset;
 
     protected $currentValidationGroup = [
-        'id' => true, 'username' => true, 'email' => true, 'firstName' => true, 'lastName' => true,
-        'password' => true, 'passwordVerify' => true,
-        'role' => true, 'status' => true
+        'id' => true,
+        'username' => true,
+        'email' => true,
+        'firstName' => true,
+        'lastName' => true,
+        'password' => true,
+        'passwordVerify' => true,
+        'role' => true,
+        'status' => true
     ];
 
     /**
@@ -85,12 +91,11 @@ class AdminForm extends Form
     {
         $validationGroup = [];
         foreach ($groups as $key => $value) {
-            if(is_array($value)) {
-                if($prevElement->has($key)) {
+            if (is_array($value)) {
+                if ($prevElement->has($key)) {
                     $validationGroup[$key] = $this->getActiveValidationGroup($value, $prevElement->get($key));
                 }
-            }
-            elseif($value === true && $prevElement->has($key)) {
+            } elseif ($value === true && $prevElement->has($key)) {
                 $validationGroup[] = $key;
             }
         }

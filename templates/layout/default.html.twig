@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - DotKernel</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
     <link href="{{ asset('css/datepicker3.css') }}" rel="stylesheet">
@@ -26,7 +26,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -47,16 +48,16 @@
 </nav>
 
 {% if hasIdentity() %}
-<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-    <form role="search">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-        </div>
-    </form>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <form role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+        </form>
 
-    {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu', 'ulId': '', 'depth': 0}) }}
+        {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu', 'ulId': '', 'depth': 0}) }}
 
-</div><!--/.sidebar-->
+    </div><!--/.sidebar-->
 {% endif %}
 
 <main class="container-fluid">
@@ -68,19 +69,19 @@
     <div class="main {{ mainClass }}">
 
         {% if hasIdentity() %}
-        <div class="row">
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-home"></i></a></li>
-                <li class="active">Icons</li>
-            </ol>
-        </div><!--/.row-->
+            <div class="row">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-home"></i></a></li>
+                    <li class="active">Icons</li>
+                </ol>
+            </div><!--/.row-->
         {% endif %}
 
         {% block content %}{% endblock %}
 
         {% include '@partial/modals.html.twig' %}
 
-    </div>	<!--/.main-->
+    </div>    <!--/.main-->
 </main>
 
 <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
@@ -92,11 +93,10 @@
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('js/bootstrap-table.js') }}"></script>
 <script>
-    $('#calendar').datepicker({
-    });
+    $('#calendar').datepicker({});
 
     !function ($) {
-        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
             $(this).find('em:first').toggleClass("fa fa-minus-circle");
         });
         $(".sidebar span.icon").find('em:first').addClass("fa fa-plus-circle");
@@ -111,7 +111,7 @@
 
     var showAlertDialog = function (title, message, type) {
         var iconClass = 'fa-info-circle color-blue';
-        if(type == 'error') {
+        if (type == 'error') {
             iconClass = 'fa-exclamation-circle color-red';
         }
 
@@ -122,11 +122,11 @@
         modal.modal('show');
     }
 
-    var showLoading = function() {
+    var showLoading = function () {
         $("#loading").modal('show');
     }
 
-    var hideLoading = function() {
+    var hideLoading = function () {
         $("#loading").modal('hide');
     }
 

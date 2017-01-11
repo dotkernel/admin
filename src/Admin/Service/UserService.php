@@ -28,7 +28,7 @@ class UserService extends AbstractEntityService
     public function save($entity)
     {
         /** @var UserEntity $entity */
-        if(!empty($entity->getPassword())) {
+        if (!empty($entity->getPassword())) {
             $entity->setPassword($this->passwordService->create($entity->getPassword()));
         }
         return parent::save($entity);

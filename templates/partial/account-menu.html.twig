@@ -5,19 +5,19 @@
             Welcome, {{ getIdentity().getName() }} <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
 
-        {% for page in container %}
+            {% for page in container %}
 
-            {% if navigation.isAllowed(page) %}
+                {% if navigation.isAllowed(page) %}
 
-                <li>
-                    <a href="{{ navigation.getHref(page) }}"><i class="{{ page.getOption('icon') }}"></i>
-                        {{ page.getOption('label') }}
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ navigation.getHref(page) }}"><i class="{{ page.getOption('icon') }}"></i>
+                            {{ page.getOption('label') }}
+                        </a>
+                    </li>
 
-            {% endif %}
+                {% endif %}
 
-        {% endfor %}
+            {% endfor %}
 
         </ul>
     </li>

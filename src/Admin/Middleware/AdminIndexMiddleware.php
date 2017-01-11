@@ -49,11 +49,10 @@ class AdminIndexMiddleware
     {
         //if root path is accessed and not authenticated send to login page
         //we do this to make interface more user-friendly, by bypassing the authorization guards
-        if($request->getUri()->getPath() === '/') {
-            if(!$this->authentication->hasIdentity()) {
+        if ($request->getUri()->getPath() === '/') {
+            if (!$this->authentication->hasIdentity()) {
                 return new RedirectResponse($this->urlHelper->generate('login'));
-            }
-            else {
+            } else {
                 return new RedirectResponse($this->urlHelper->generate('dashboard'));
             }
 

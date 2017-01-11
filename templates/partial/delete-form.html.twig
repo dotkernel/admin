@@ -5,28 +5,28 @@
 
 {{ form().openTag(form) | raw }}
 
-    <div class="form-group">
-        {% for entity in entities %}
-            <input type="hidden" name="ids[]" value="{{ entity.id }}">
-        {% endfor %}
-    </div>
+<div class="form-group">
+    {% for entity in entities %}
+        <input type="hidden" name="ids[]" value="{{ entity.id }}">
+    {% endfor %}
+</div>
 
-    <div class="checkbox">
-        <label>
-            <input type="hidden" name="confirm" value="no">
-            <input type="checkbox" name="confirm" value="yes"> Are you sure you want to delete selected items?
-        </label>
-    </div>
+<div class="checkbox">
+    <label>
+        <input type="hidden" name="confirm" value="no">
+        <input type="checkbox" name="confirm" value="yes"> Are you sure you want to delete selected items?
+    </label>
+</div>
 
-    <div class="checkbox">
-        <label>
-            <input type="hidden" name="markAsDeleted" value="yes">
-            <input type="checkbox" name="markAsDeleted" value="no"> Delete items completely(mark them deleted otherwise)?
-        </label>
-    </div>
+<div class="checkbox">
+    <label>
+        <input type="hidden" name="markAsDeleted" value="yes">
+        <input type="checkbox" name="markAsDeleted" value="no"> Delete items completely(mark them deleted otherwise)?
+    </label>
+</div>
 
-    <div class="form-group">
-        {{ formElement(form.get('delete_confirm_csrf')) }}
-    </div>
+<div class="form-group">
+    {{ formElement(form.get('delete_confirm_csrf')) }}
+</div>
 
 {{ form().closeTag() | raw }}
