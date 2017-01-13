@@ -9,8 +9,11 @@
 
 namespace Dot\Admin\Service\Listener;
 
+use Dot\Authentication\AuthenticationInterface;
 use Dot\Ems\Event\AbstractEntityServiceListener;
 use Dot\Ems\Event\EntityServiceEvent;
+use Dot\Ems\Service\EntityService;
+use Zend\Log\Logger;
 
 /**
  * Class AdminServiceListener
@@ -19,6 +22,23 @@ use Dot\Ems\Event\EntityServiceEvent;
  */
 class AdminServiceListener extends AbstractEntityServiceListener
 {
+    /** @var  Logger */
+    protected $actionLogger;
+
+    /** @var  AuthenticationInterface */
+    protected $authenticationService;
+
+    /**
+     * AdminServiceListener constructor.
+     * @param Logger $actionLogger
+     * @param AuthenticationInterface $authenticationService
+     */
+    public function __construct(Logger $actionLogger, AuthenticationInterface $authenticationService)
+    {
+        $this->actionLogger = $actionLogger;
+        $this->authenticationService = $authenticationService;
+    }
+
     /**
      * @param EntityServiceEvent $e
      * @return void
@@ -34,7 +54,23 @@ class AdminServiceListener extends AbstractEntityServiceListener
      */
     public function onPostCreate(EntityServiceEvent $e)
     {
-        // TODO: Implement onPostCreate() method.
+        /** @var EntityService $service */
+        $service = $e->getTarget();
+        $target = $e->getData();
+
+        $extra = [
+            'type' => 'create',
+            'status' => 'ok',
+        ];
+
+        $this->actionLogger->info(
+            'Entity created successfully',
+            array_merge(
+                $extra,
+                $this->getConstantExtra(),
+                $this->getTargetExtra($service, $target)
+            )
+        );
     }
 
     /**
@@ -57,7 +93,23 @@ class AdminServiceListener extends AbstractEntityServiceListener
      */
     public function onPostUpdate(EntityServiceEvent $e)
     {
-        // TODO: Implement onPostUpdate() method.
+        /** @var EntityService $service */
+        $service = $e->getTarget();
+        $target = $e->getData();
+
+        $extra = [
+            'type' => 'update',
+            'status' => 'ok',
+        ];
+
+        $this->actionLogger->info(
+            'Entity updated successfully',
+            array_merge(
+                $extra,
+                $this->getConstantExtra(),
+                $this->getTargetExtra($service, $target)
+            )
+        );
     }
 
     /**
@@ -94,5 +146,43 @@ class AdminServiceListener extends AbstractEntityServiceListener
     public function onDeleteError(EntityServiceEvent $e)
     {
         // TODO: Implement onDeleteError() method.
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConstantExtra()
+    {
+        return [
+            'ip' => $_SERVER['REMOTE_ADDR'],
+            'agentId' => $this->authenticationService->hasIdentity()
+                ? $this->authenticationService->getIdentity()->getId()
+                : null,
+            'agentName' => $this->authenticationService->hasIdentity()
+                ? $this->authenticationService->getIdentity()->getName()
+                : null,
+        ];
+    }
+
+    /**
+     * @param EntityService $service
+     * @param $target
+     * @return array
+     */
+    protected function getTargetExtra(EntityService $service, $target)
+    {
+        $targetId = null;
+        if (is_object($target)) {
+            $getter = 'get' . ucfirst($service->getMapper()->getIdentifierName());
+            if (method_exists($target, $getter)) {
+                $targetId = call_user_func([$target, $getter]);
+            }
+            $target = get_class($target);
+        }
+
+        return [
+            'target' => $target,
+            'targetId' => $targetId,
+        ];
     }
 }

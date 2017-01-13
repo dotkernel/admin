@@ -46,6 +46,9 @@ return [
             \Dot\Admin\Form\User\UserForm::class =>
                 \Dot\Admin\Factory\User\UserFormFactory::class,
 
+            \Dot\Admin\Service\Listener\AdminServiceListener::class =>
+                \Dot\Admin\Factory\AdminServiceListenerFactory::class,
+
         ],
 
         'delegators' => [

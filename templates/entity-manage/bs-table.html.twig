@@ -196,13 +196,13 @@
                     .done(function (data) {
                         if (typeof data.success !== 'undefined') {
                             hideLoading();
-                            $("#formModal").modal('hide');
+                            modalReset();
                             $("#messages").html(data.alerts);
                             $("#bsTable").bootstrapTable('refresh');
                         }
                         else if (typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
                             hideLoading();
-                            $("#formModal").modal('hide');
+                            modalReset();
                             $("#messages").html(data.alerts);
                         }
                         else if (typeof data.validation !== 'undefined') {
@@ -214,7 +214,7 @@
                     })
                     .fail(function (data) {
                         hideLoading();
-                        $("#formModal").modal('hide');
+                        modalReset();
                         showFailDialog(data);
                     });
         });
@@ -227,15 +227,19 @@
 
         $("#formModal").on('hidden.bs.modal', function () {
             if (hideWithReset) {
-                $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
-                $("#ajaxForm")[0].reset();
-                $("#formMessages").html('');
-                $("#ajaxForm :input")
-                        .closest('.form-group').removeClass('has-error');
+                modalReset();
             }
 
             hideWithReset = true;
         });
+
+        var modalReset = function() {
+            $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
+            $("#ajaxForm")[0].reset();
+            $("#formMessages").html('');
+            $("#ajaxForm :input")
+                    .closest('.form-group').removeClass('has-error');
+        }
 
         var resetUiButtonState = function () {
             $("#editButton").prop('disabled', true);

@@ -44,9 +44,10 @@
     "dotkernel/dot-rbac": "0.6.x-dev",
     "dotkernel/dot-rbac-guard": "0.6.x-dev",
     "dotkernel/dot-user": "0.6.x-dev",
-    "dotkernel/dot-mail": "0.6.x-dev",
+    "dotkernel/dot-mail": "dev-development as 0.6.x-dev",
     "dotkernel/dot-navigation": "0.6.x-dev",
     "dotkernel/dot-twigrenderer": "0.6.x-dev",
+    "dotkernel/dot-log": "0.6.x-dev",
     "mtymek/expressive-config-manager": "^0.4.0"
   },
   "require-dev": {
@@ -58,6 +59,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/dotkernel/dot-ems"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dotkernel/dot-log"
     }
   ],
   "autoload": {
