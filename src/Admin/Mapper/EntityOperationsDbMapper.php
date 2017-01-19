@@ -52,7 +52,7 @@ class EntityOperationsDbMapper implements EntityOperationsMapperInterface
             $where->in('id', $ids);
         });
         $stmt = $this->sql->prepareStatementForSqlObject($update);
-        return $stmt->execute();
+        return $stmt->execute()->getAffectedRows();
     }
 
     /**
@@ -65,6 +65,6 @@ class EntityOperationsDbMapper implements EntityOperationsMapperInterface
             $where->in('id', $ids);
         });
         $stmt = $this->sql->prepareStatementForSqlObject($delete);
-        return $stmt->execute();
+        return $stmt->execute()->getAffectedRows();
     }
 }

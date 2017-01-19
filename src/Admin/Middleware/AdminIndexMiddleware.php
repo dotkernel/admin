@@ -9,7 +9,6 @@
 
 namespace Dot\Admin\Middleware;
 
-
 use Dot\Authentication\AuthenticationInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

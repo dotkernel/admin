@@ -5,7 +5,8 @@ return [
     /**
      * Dk mail module configuration
      * Note that many of these options can be set programmaticaly too, when sending mail messages
-     * actually that is what you'll usually do, these config provide just default and options that remain the same for all mails
+     * actually that is what you'll usually do, these config provide just default and
+     * options that remain the same for all mails
      */
 
     'dot_mail' => [
@@ -118,8 +119,9 @@ return [
                 //default value is 'data/mail/output'
                 'path' => 'data/mail/output',
 
-                //a callable that will get the Zend\Mail\Transport\File object as an argument and should return the filename
-                //if null is used, and empty callable will be used
+                // a callable that will get the Zend\Mail\Transport\File object
+                // as an argument and should return the filename
+                // if null is used, and empty callable will be used
                 //'callback' => null,
             ],*/
 

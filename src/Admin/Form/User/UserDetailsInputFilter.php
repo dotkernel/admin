@@ -24,11 +24,6 @@ class UserDetailsInputFilter extends InputFilter
 
     const PHONE_INVALID = 'Phone number format is invalid';
 
-    public function __construct()
-    {
-
-    }
-
     public function init()
     {
         $this->add([

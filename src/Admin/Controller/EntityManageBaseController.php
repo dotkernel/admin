@@ -75,15 +75,19 @@ abstract class EntityManageBaseController extends AbstractActionController
         $editUri = $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'edit']);
         $deleteUri = $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'delete']);
 
-        return new HtmlResponse($this->template()->render(static::ENTITY_TEMPLATE_NAME,
-            [
-                'listUri' => $listUri,
-                'editUri' => $editUri,
-                'addUri' => $addUri,
-                'deleteUri' => $deleteUri,
-                'entityNameSingular' => static::ENTITY_NAME_SINGULAR,
-                'entityNamePlural' => static::ENTITY_NAME_PLURAL
-            ]));
+        return new HtmlResponse(
+            $this->template()->render(
+                static::ENTITY_TEMPLATE_NAME,
+                [
+                    'listUri' => $listUri,
+                    'editUri' => $editUri,
+                    'addUri' => $addUri,
+                    'deleteUri' => $deleteUri,
+                    'entityNameSingular' => static::ENTITY_NAME_SINGULAR,
+                    'entityNamePlural' => static::ENTITY_NAME_PLURAL
+                ]
+            )
+        );
     }
 
     /**
@@ -131,7 +135,6 @@ abstract class EntityManageBaseController extends AbstractActionController
                     } else {
                         return $this->generateJsonOutput($this->getEntityCreateErrorMessage(), 'error');
                     }
-
                 } catch (\Exception $e) {
                     $message = $this->getEntityCreateErrorMessage();
                     if ($this->isDebug()) {
@@ -144,8 +147,13 @@ abstract class EntityManageBaseController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::ajax-form',
-            ['form' => $form, 'formAction' => $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])]));
+        return new HtmlResponse(
+            $this->template()->render(
+                'partial::ajax-form',
+                ['form' => $form, 'formAction' =>
+                    $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])]
+            )
+        );
     }
 
     /**
@@ -173,8 +181,11 @@ abstract class EntityManageBaseController extends AbstractActionController
 
         $output = [$type => $messages];
         //render the alerts partial to send it through ajax to be inserted into the DOM
-        $output['alerts'] = $this->template()->render('dot-partial::alerts',
-            ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]);
+        $output['alerts'] = $this->template()->render(
+            'dot-partial::alerts',
+            ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]
+        );
+
         return new JsonResponse($output);
     }
 
@@ -209,7 +220,8 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityCreateErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' could not be created due to a server error. Please try again'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be created due to a server error. Please try again'];
     }
 
     /**
@@ -239,7 +251,6 @@ abstract class EntityManageBaseController extends AbstractActionController
         $errors = [];
         foreach ($formMessages as $key => $message) {
             if (is_array($message)) {
-
                 if (!isset($errors[$key])) {
                     $errors[$key] = array();
                 }
@@ -291,10 +302,8 @@ abstract class EntityManageBaseController extends AbstractActionController
             if ($form->isValid()) {
                 $entity = $form->getData();
                 try {
-
                     $this->service->save($entity);
                     return $this->generateJsonOutput($this->getEntityUpdateSuccessMessage());
-
                 } catch (\Exception $e) {
                     $message = $this->getEntityUpdateErrorMessage();
                     if ($this->isDebug()) {
@@ -307,12 +316,18 @@ abstract class EntityManageBaseController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::ajax-form',
-            [
-                'form' => $form,
-                'formAction' => $this->url()->generate(static::ENTITY_ROUTE_NAME,
-                    ['action' => 'edit', 'id' => $id])
-            ]));
+        return new HtmlResponse(
+            $this->template()->render(
+                'partial::ajax-form',
+                [
+                    'form' => $form,
+                    'formAction' => $this->url()->generate(
+                        static::ENTITY_ROUTE_NAME,
+                        ['action' => 'edit', 'id' => $id]
+                    )
+                ]
+            )
+        );
     }
 
     protected function getEntityEditNoIdErrorMessage()
@@ -332,7 +347,8 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityUpdateErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' could not be updated due to a server error. Please try again'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be updated due to a server error. Please try again'];
     }
 
     /**
@@ -347,15 +363,16 @@ abstract class EntityManageBaseController extends AbstractActionController
             $data = $request->getParsedBody();
 
             if (isset($data[static::ENTITY_NAME_PLURAL]) && is_array($data[static::ENTITY_NAME_PLURAL])) {
-
-                return new HtmlResponse($this->template()
-                    ->render('partial::delete-form',
+                return new HtmlResponse(
+                    $this->template()->render(
+                        'partial::delete-form',
                         [
                             'form' => $form,
                             'deleteUri' => $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'delete']),
                             'entities' => $data[static::ENTITY_NAME_PLURAL]
-                        ]));
-
+                        ]
+                    )
+                );
             } else {
                 //used to validate CSRF token
                 $form->setData($data);
@@ -413,6 +430,7 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityDeleteErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' could not be removed due to a server error. Please try again'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be removed due to a server error. Please try again'];
     }
 }

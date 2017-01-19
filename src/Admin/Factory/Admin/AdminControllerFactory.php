@@ -39,5 +39,4 @@ class AdminControllerFactory
 
         return $controller;
     }
-
 }

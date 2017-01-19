@@ -23,6 +23,5 @@ class UserDetailsInputFilterFactory
         $inputFilter = new UserDetailsInputFilter();
         $inputFilter->init();
         return $inputFilter;
-
     }
 }

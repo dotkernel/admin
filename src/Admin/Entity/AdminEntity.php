@@ -88,5 +88,4 @@ class AdminEntity extends UserEntity implements
     {
         return ['id', 'username', 'email', 'firstName', 'lastName', 'role', 'status'];
     }
-
 }
