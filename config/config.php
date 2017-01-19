@@ -49,6 +49,7 @@ $configManager = new \Zend\Expressive\ConfigManager\ConfigManager([
     \Dot\Session\ConfigProvider::class,
     \Dot\Twig\ConfigProvider::class,
     \Dot\User\ConfigProvider::class,
+    \Dot\Log\ConfigProvider::class,
 
     new \Zend\Expressive\ConfigManager\PhpFileProvider(__DIR__ . '/autoload/{{,*.}global,{,*.}local}.php'),
 ], $cachedConfigFile);

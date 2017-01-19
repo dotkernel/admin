@@ -56,5 +56,4 @@ abstract class AbstractEntityService extends EntityService implements EntityServ
     {
         return $this->entityOperationsMapper->bulkDelete($ids);
     }
-
 }

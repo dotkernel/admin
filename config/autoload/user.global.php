@@ -85,5 +85,4 @@ return [
             'after_logout_route' => 'login',
         ]
     ],
-
 ];

@@ -24,7 +24,7 @@ class AdminServiceDelegator implements DelegatorFactoryInterface
     public function __invoke(ContainerInterface $container, $name, callable $callback, array $options = null)
     {
         $service = $callback();
-        if($service instanceof AdminService) {
+        if ($service instanceof AdminService) {
             $dbAdapter = $container->get('database');
             $entityOperationsMapper = new EntityOperationsDbMapper('admin', $dbAdapter);
             $service->setEntityOperationsMapper($entityOperationsMapper);

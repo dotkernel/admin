@@ -9,7 +9,6 @@
 
 namespace Dot\Admin\Factory;
 
-
 use Dot\Admin\Middleware\AdminIndexMiddleware;
 use Dot\Authentication\AuthenticationInterface;
 use Interop\Container\ContainerInterface;

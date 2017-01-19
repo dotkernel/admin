@@ -24,7 +24,7 @@ class UserServiceDelegator implements DelegatorFactoryInterface
     public function __invoke(ContainerInterface $container, $name, callable $callback, array $options = null)
     {
         $service = $callback();
-        if($service instanceof UserService) {
+        if ($service instanceof UserService) {
             $dbAdapter = $container->get('database');
             $entityOperationsMapper = new EntityOperationsDbMapper('user', $dbAdapter);
             $service->setEntityOperationsMapper($entityOperationsMapper);

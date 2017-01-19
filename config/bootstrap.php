@@ -21,4 +21,5 @@ $sharedEventManager->attach(
     \Dot\Authentication\Web\ErrorHandler\UnauthorizedHandler::class,
     \Dot\Authentication\Web\Event\AuthenticationEvent::EVENT_AUTHENTICATION_UNAUTHORIZED,
     new \Dot\Admin\Authentication\Listener\UnauthorizedListener(),
-    10);
+    10
+);

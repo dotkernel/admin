@@ -35,7 +35,8 @@ class AuthenticationListener extends AbstractListenerAggregate
             LoginAction::class,
             AuthenticationEvent::EVENT_AUTHENTICATION_AUTHENTICATE,
             [$this, 'prepareAdapter'],
-            10);
+            10
+        );
 
         //more listeners if you want to customize the flow...
     }
@@ -66,5 +67,4 @@ class AuthenticationListener extends AbstractListenerAggregate
             $e->setRequest($request->withAttribute(DbCredentials::class, $dbCredentials));
         }
     }
-
 }

@@ -41,6 +41,11 @@ return [
             'admin' => [
                 'atomic_operations' => true,
                 'type' => \Dot\Admin\Service\AdminService::class,
+
+                'service_listeners' => [
+                    \Dot\Admin\Service\Listener\AdminServiceListener::class,
+                ],
+
                 'mapper' => [
                     \Dot\Ems\Mapper\DbMapper::class => [
                         'adapter' => 'database',

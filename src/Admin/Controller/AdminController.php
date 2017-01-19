@@ -32,7 +32,7 @@ class AdminController extends EntityManageBaseController
     public function customizeEditValidation(AdminForm $form, AdminEntity $entity, array $data)
     {
         //make password field optional for updates if both are empty in the POST data
-        if(empty($data['admin']['password']) && empty($data['user']['passwordVerify'])) {
+        if (empty($data['admin']['password']) && empty($data['user']['passwordVerify'])) {
             $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
             $form->getInputFilter()->get('admin')->get('passwordVerify')->setRequired(false);
         }

@@ -10,8 +10,8 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-4 col-lg-4">
 
-        <div class="login-panel panel panel-default">
-            <div class="panel-heading">Sign In</div>
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">Sign In</div>
                 <div class="panel-body">
 
                     {{ flashMessagesPartial('dot-partial::alerts') }}
@@ -25,7 +25,7 @@
 
                     {% if passwordRecoveryEnabled is defined and passwordRecoveryEnabled %}
                         <div style="margin-top: 5px;">
-                            <a href="{{ path('user', {'action':'forgot-password'}) }}" >Forgot Password?</a>
+                            <a href="{{ path('user', {'action':'forgot-password'}) }}">Forgot Password?</a>
                         </div>
                     {% endif %}
                 </div>

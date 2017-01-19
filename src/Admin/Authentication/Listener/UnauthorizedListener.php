@@ -31,12 +31,12 @@ class UnauthorizedListener
         /** @var RouteResult $routeMatch */
         $routeMatch = $request->getAttribute(RouteResult::class, null);
 
-        if($routeMatch) {
+        if ($routeMatch) {
             $routeName = $routeMatch->getMatchedRouteName();
             $params = $routeMatch->getMatchedParams();
             $action = isset($params['action']) ? $params['action'] : '';
 
-            if(in_array($routeName, $this->routes) && in_array($action, $this->actions)) {
+            if (in_array($routeName, $this->routes) && in_array($action, $this->actions)) {
                 return new Response\EmptyResponse(401);
             }
         }

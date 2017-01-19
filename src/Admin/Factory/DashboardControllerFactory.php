@@ -9,7 +9,6 @@
 
 namespace Dot\Admin\Factory;
 
-
 use Dot\Admin\Controller\DashboardController;
 use Interop\Container\ContainerInterface;
 

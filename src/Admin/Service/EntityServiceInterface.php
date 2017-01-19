@@ -11,7 +11,6 @@ namespace Dot\Admin\Service;
 
 use Dot\Ems\Service\ServiceInterface;
 
-
 /**
  * Interface EntityServiceInterface
  * @package Dot\Authentication\Service

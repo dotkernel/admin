@@ -27,9 +27,14 @@ class UserForm extends Form
     protected $userDetailsFieldset;
 
     protected $currentValidationGroup = [
-        'id' => true, 'username' => true, 'email' => true,
+        'id' => true,
+        'username' => true,
+        'email' => true,
         'details' => ['firstName' => true, 'lastName' => true, 'address' => true, 'phone' => true],
-        'password' => true, 'passwordVerify' => true, 'role' => true, 'status' => true
+        'password' => true,
+        'passwordVerify' => true,
+        'role' => true,
+        'status' => true
     ];
 
     public function __construct(Fieldset $userFieldset, Fieldset $userDetailsFieldset, $options = [])
@@ -87,12 +92,11 @@ class UserForm extends Form
     {
         $validationGroup = [];
         foreach ($groups as $key => $value) {
-            if(is_array($value)) {
-                if($prevElement->has($key)) {
+            if (is_array($value)) {
+                if ($prevElement->has($key)) {
                     $validationGroup[$key] = $this->getActiveValidationGroup($value, $prevElement->get($key));
                 }
-            }
-            elseif($value === true && $prevElement->has($key)) {
+            } elseif ($value === true && $prevElement->has($key)) {
                 $validationGroup[] = $key;
             }
         }

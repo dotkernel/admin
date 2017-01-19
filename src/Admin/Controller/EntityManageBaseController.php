@@ -50,8 +50,8 @@ abstract class EntityManageBaseController extends AbstractActionController
     public function __construct(
         EntityServiceInterface $service,
         Form $entityForm,
-        Form $deleteForm)
-    {
+        Form $deleteForm
+    ) {
         $this->service = $service;
         $this->entityForm = $entityForm;
         $this->deleteForm = $deleteForm;
@@ -75,10 +75,19 @@ abstract class EntityManageBaseController extends AbstractActionController
         $editUri = $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'edit']);
         $deleteUri = $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'delete']);
 
-        return new HtmlResponse($this->template()->render(static::ENTITY_TEMPLATE_NAME,
-            ['listUri' => $listUri, 'editUri' => $editUri, 'addUri' => $addUri,
-                'deleteUri' => $deleteUri, 'entityNameSingular' => static::ENTITY_NAME_SINGULAR,
-                'entityNamePlural' => static::ENTITY_NAME_PLURAL]));
+        return new HtmlResponse(
+            $this->template()->render(
+                static::ENTITY_TEMPLATE_NAME,
+                [
+                    'listUri' => $listUri,
+                    'editUri' => $editUri,
+                    'addUri' => $addUri,
+                    'deleteUri' => $deleteUri,
+                    'entityNameSingular' => static::ENTITY_NAME_SINGULAR,
+                    'entityNamePlural' => static::ENTITY_NAME_PLURAL
+                ]
+            )
+        );
     }
 
     /**
@@ -94,11 +103,12 @@ abstract class EntityManageBaseController extends AbstractActionController
         /** @var Paginator $paginator */
         $paginator = $this->service->findAll([], $params, true);
         $paginator->setItemCountPerPage($limit);
-        $paginator->setCurrentPageNumber(intval($offset/$limit));
+        $paginator->setCurrentPageNumber(intval($offset / $limit));
 
         return new JsonResponse([
             'total' => $paginator->getTotalItemCount(),
-            'rows' => (array) $paginator->getCurrentItems()]);
+            'rows' => (array)$paginator->getCurrentItems()
+        ]);
     }
 
     /**
@@ -125,11 +135,10 @@ abstract class EntityManageBaseController extends AbstractActionController
                     } else {
                         return $this->generateJsonOutput($this->getEntityCreateErrorMessage(), 'error');
                     }
-
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     $message = $this->getEntityCreateErrorMessage();
-                    if($this->isDebug()) {
-                        $message = (array) $e->getMessage();
+                    if ($this->isDebug()) {
+                        $message = (array)$e->getMessage();
                     }
                     return $this->generateJsonOutput($message, 'error');
                 }
@@ -138,8 +147,127 @@ abstract class EntityManageBaseController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::ajax-form',
-            ['form' => $form, 'formAction' => $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])]));
+        return new HtmlResponse(
+            $this->template()->render(
+                'partial::ajax-form',
+                ['form' => $form, 'formAction' =>
+                    $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])]
+            )
+        );
+    }
+
+    /**
+     * @param array $messages
+     * @param string $type
+     * @param Form|null $form
+     * @return JsonResponse
+     */
+    protected function generateJsonOutput(array $messages, $type = 'success', Form $form = null)
+    {
+        $dismissible = true;
+        $typeToNamespace = [
+            'success' => FlashMessengerInterface::SUCCESS_NAMESPACE,
+            'error' => FlashMessengerInterface::ERROR_NAMESPACE,
+            'info' => FlashMessengerInterface::INFO_NAMESPACE,
+            'warning' => FlashMessengerInterface::WARNING_NAMESPACE,
+            'validation' => FlashMessengerInterface::ERROR_NAMESPACE
+        ];
+
+        $alerts = $messages;
+        if ($type === 'validation' && $form) {
+            $alerts = $this->getFormMessages($form->getMessages());
+            $dismissible = false;
+        }
+
+        $output = [$type => $messages];
+        //render the alerts partial to send it through ajax to be inserted into the DOM
+        $output['alerts'] = $this->template()->render(
+            'dot-partial::alerts',
+            ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]
+        );
+
+        return new JsonResponse($output);
+    }
+
+    /**
+     * @param array $formMessages
+     * @return array
+     */
+    protected function getFormMessages(array $formMessages)
+    {
+        $messages = [];
+        foreach ($formMessages as $message) {
+            if (is_array($message)) {
+                foreach ($message as $m) {
+                    if (is_string($m)) {
+                        $messages[] = $m;
+                    } elseif (is_array($m)) {
+                        $messages = array_merge($messages, $this->getFormMessages($m));
+                    }
+                }
+            } elseif (is_string($message)) {
+                $messages[] = $message;
+            }
+        }
+
+        return $messages;
+    }
+
+    protected function getEntityCreateSuccessMessage()
+    {
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully created'];
+    }
+
+    protected function getEntityCreateErrorMessage()
+    {
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be created due to a server error. Please try again'];
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
+     * @param boolean $debug
+     * @return $this
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+        return $this;
+    }
+
+    /**
+     * @param array $formMessages
+     * @return array
+     */
+    protected function getFormErrors(array $formMessages)
+    {
+        $errors = [];
+        foreach ($formMessages as $key => $message) {
+            if (is_array($message)) {
+                if (!isset($errors[$key])) {
+                    $errors[$key] = array();
+                }
+
+                foreach ($message as $k => $m) {
+                    if (is_string($m)) {
+                        $errors[$key][] = $m;
+                    } elseif (is_array($m)) {
+                        $errors[$key][$k] = $this->getFormErrors($m);
+                    }
+                }
+            } elseif (is_string($message)) {
+                $errors[] = $message;
+            }
+        }
+
+        return $errors;
     }
 
     /**
@@ -165,7 +293,7 @@ abstract class EntityManageBaseController extends AbstractActionController
             $data = $request->getParsedBody();
 
             //customize form validation callback
-            if(method_exists($this, 'customizeEditValidation')) {
+            if (method_exists($this, 'customizeEditValidation')) {
                 call_user_func([$this, 'customizeEditValidation'], $form, $entity, $data);
             }
 
@@ -174,14 +302,12 @@ abstract class EntityManageBaseController extends AbstractActionController
             if ($form->isValid()) {
                 $entity = $form->getData();
                 try {
-
                     $this->service->save($entity);
                     return $this->generateJsonOutput($this->getEntityUpdateSuccessMessage());
-
                 } catch (\Exception $e) {
                     $message = $this->getEntityUpdateErrorMessage();
-                    if($this->isDebug()) {
-                        $message = (array) $e->getMessage();
+                    if ($this->isDebug()) {
+                        $message = (array)$e->getMessage();
                     }
                     return $this->generateJsonOutput($message, 'error');
                 }
@@ -190,188 +316,18 @@ abstract class EntityManageBaseController extends AbstractActionController
             }
         }
 
-        return new HtmlResponse($this->template()->render('partial::ajax-form',
-            ['form' => $form, 'formAction' => $this->url()->generate(static::ENTITY_ROUTE_NAME,
-                ['action' => 'edit', 'id' => $id])]));
-    }
-
-    /**
-     * @return HtmlResponse|JsonResponse|RedirectResponse
-     */
-    public function deleteAction()
-    {
-        $request = $this->getRequest();
-        $form = $this->deleteForm;
-
-        if ($request->getMethod() === 'POST') {
-            $data = $request->getParsedBody();
-
-            if (isset($data[static::ENTITY_NAME_PLURAL]) && is_array($data[static::ENTITY_NAME_PLURAL])) {
-
-                return new HtmlResponse($this->template()
-                    ->render('partial::delete-form',
-                        ['form' => $form, 'deleteUri' => $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'delete']),
-                            'entities' => $data[static::ENTITY_NAME_PLURAL]]));
-
-            } else {
-                //used to validate CSRF token
-                $form->setData($data);
-
-                if($form->isValid()) {
-                    $ids = isset($data['ids']) && is_array($data['ids']) ? $data['ids'] : [];
-                    $confirm = isset($data['confirm']) ? $data['confirm'] : 'no';
-                    $markAsDeleted = isset($data['markAsDeleted']) ? $data['markAsDeleted'] : 'yes';
-
-                    if (!empty($ids) && $confirm === 'yes') {
-                        $markAsDeleted = $markAsDeleted === 'no' ? false : true;
-
-                        try {
-                            if($markAsDeleted) {
-                                $result = $this->service->markAsDeleted($ids);
-                            }
-                            else {
-                                $result = $this->service->bulkDelete($ids);
-                            }
-
-                            if ($result) {
-                                return $this->generateJsonOutput($this->getEntityDeleteSuccessMessage());
-                            } else {
-                                return $this->generateJsonOutput($this->getEntityDeleteNoChangesMessage(), 'info');
-                            }
-                        } catch (\Exception $e) {
-                            $message = $this->getEntityDeleteErrorMessage();
-                            if($this->isDebug()) {
-                                $message = (array) $e->getMessage();
-                            }
-                            return $this->generateJsonOutput($message, 'error');
-                        }
-                    }
-                    else {
-                        //do nothing
-                        return $this->generateJsonOutput($this->getEntityDeleteNoChangesMessage(), 'info');
-                    }
-                } else {
-                    return $this->generateJsonOutput($this->getFormErrors($form->getMessages()), 'validation', $form);
-                }
-            }
-        }
-
-        //redirect to manage page if trying to access this action via GET
-        return new RedirectResponse($this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'manage']));
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isDebug()
-    {
-        return $this->debug;
-    }
-
-    /**
-     * @param boolean $debug
-     * @return $this
-     */
-    public function setDebug($debug)
-    {
-        $this->debug = $debug;
-        return $this;
-    }
-
-    /**
-     * @param array $messages
-     * @param string $type
-     * @param Form|null $form
-     * @return JsonResponse
-     */
-    protected function generateJsonOutput(array $messages, $type = 'success', Form $form = null)
-    {
-        $dismissible = true;
-        $typeToNamespace = [
-            'success' => FlashMessengerInterface::SUCCESS_NAMESPACE,
-            'error' => FlashMessengerInterface::ERROR_NAMESPACE,
-            'info' => FlashMessengerInterface::INFO_NAMESPACE,
-            'warning' => FlashMessengerInterface::WARNING_NAMESPACE,
-            'validation' => FlashMessengerInterface::ERROR_NAMESPACE
-        ];
-
-        $alerts = $messages;
-        if($type === 'validation' && $form) {
-            $alerts = $this->getFormMessages($form->getMessages());
-            $dismissible = false;
-        }
-
-        $output = [$type => $messages];
-        //render the alerts partial to send it through ajax to be inserted into the DOM
-        $output['alerts'] = $this->template()->render('dot-partial::alerts',
-            ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]);
-        return new JsonResponse($output);
-    }
-
-    /**
-     * @param array $formMessages
-     * @return array
-     */
-    protected function getFormMessages(array $formMessages)
-    {
-        $messages = [];
-        foreach ($formMessages as $message) {
-            if (is_array($message)) {
-                foreach ($message as $m) {
-                    if (is_string($m)) {
-                        $messages[] = $m;
-                    } elseif (is_array($m)) {
-                        $messages = array_merge($messages, $this->getFormMessages($m));
-                    }
-                }
-            }
-            elseif (is_string($message)) {
-                $messages[] = $message;
-            }
-        }
-
-        return $messages;
-    }
-
-    /**
-     * @param array $formMessages
-     * @return array
-     */
-    protected function getFormErrors(array $formMessages)
-    {
-        $errors = [];
-        foreach ($formMessages as $key => $message) {
-            if(is_array($message)) {
-
-                if(!isset($errors[$key])) {
-                    $errors[$key] = array();
-                }
-
-                foreach ($message as $k => $m) {
-                    if(is_string($m)) {
-                        $errors[$key][] = $m;
-                    }
-                    elseif (is_array($m)) {
-                        $errors[$key][$k] = $this->getFormErrors($m);
-                    }
-                }
-            }
-            elseif (is_string($message)) {
-                $errors[] = $message;
-            }
-        }
-
-        return $errors;
-    }
-
-    protected function getEntityCreateSuccessMessage()
-    {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully created'];
-    }
-
-    protected function getEntityCreateErrorMessage()
-    {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' could not be created due to a server error. Please try again'];
+        return new HtmlResponse(
+            $this->template()->render(
+                'partial::ajax-form',
+                [
+                    'form' => $form,
+                    'formAction' => $this->url()->generate(
+                        static::ENTITY_ROUTE_NAME,
+                        ['action' => 'edit', 'id' => $id]
+                    )
+                ]
+            )
+        );
     }
 
     protected function getEntityEditNoIdErrorMessage()
@@ -391,7 +347,75 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityUpdateErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' could not be updated due to a server error. Please try again'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be updated due to a server error. Please try again'];
+    }
+
+    /**
+     * @return HtmlResponse|JsonResponse|RedirectResponse
+     */
+    public function deleteAction()
+    {
+        $request = $this->getRequest();
+        $form = $this->deleteForm;
+
+        if ($request->getMethod() === 'POST') {
+            $data = $request->getParsedBody();
+
+            if (isset($data[static::ENTITY_NAME_PLURAL]) && is_array($data[static::ENTITY_NAME_PLURAL])) {
+                return new HtmlResponse(
+                    $this->template()->render(
+                        'partial::delete-form',
+                        [
+                            'form' => $form,
+                            'deleteUri' => $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'delete']),
+                            'entities' => $data[static::ENTITY_NAME_PLURAL]
+                        ]
+                    )
+                );
+            } else {
+                //used to validate CSRF token
+                $form->setData($data);
+
+                if ($form->isValid()) {
+                    $ids = isset($data['ids']) && is_array($data['ids']) ? $data['ids'] : [];
+                    $confirm = isset($data['confirm']) ? $data['confirm'] : 'no';
+                    $markAsDeleted = isset($data['markAsDeleted']) ? $data['markAsDeleted'] : 'yes';
+
+                    if (!empty($ids) && $confirm === 'yes') {
+                        $markAsDeleted = $markAsDeleted === 'no' ? false : true;
+
+                        try {
+                            if ($markAsDeleted) {
+                                $result = $this->service->markAsDeleted($ids);
+                            } else {
+                                $result = $this->service->bulkDelete($ids);
+                            }
+
+                            if ($result) {
+                                return $this->generateJsonOutput($this->getEntityDeleteSuccessMessage());
+                            } else {
+                                return $this->generateJsonOutput($this->getEntityDeleteNoChangesMessage(), 'info');
+                            }
+                        } catch (\Exception $e) {
+                            $message = $this->getEntityDeleteErrorMessage();
+                            if ($this->isDebug()) {
+                                $message = (array)$e->getMessage();
+                            }
+                            return $this->generateJsonOutput($message, 'error');
+                        }
+                    } else {
+                        //do nothing
+                        return $this->generateJsonOutput($this->getEntityDeleteNoChangesMessage(), 'info');
+                    }
+                } else {
+                    return $this->generateJsonOutput($this->getFormErrors($form->getMessages()), 'validation', $form);
+                }
+            }
+        }
+
+        //redirect to manage page if trying to access this action via GET
+        return new RedirectResponse($this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'manage']));
     }
 
     protected function getEntityDeleteSuccessMessage()
@@ -399,13 +423,14 @@ abstract class EntityManageBaseController extends AbstractActionController
         return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully removed'];
     }
 
-    protected function getEntityDeleteErrorMessage()
-    {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR). ' could not be removed due to a server error. Please try again'];
-    }
-
     protected function getEntityDeleteNoChangesMessage()
     {
         return ['Delete operation was canceled. No changes were made'];
+    }
+
+    protected function getEntityDeleteErrorMessage()
+    {
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be removed due to a server error. Please try again'];
     }
 }

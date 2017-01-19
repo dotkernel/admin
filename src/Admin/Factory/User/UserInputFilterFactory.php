@@ -10,7 +10,6 @@
 namespace Dot\Admin\Factory\User;
 
 use Dot\Admin\Form\User\UserInputFilter;
-use Dot\Admin\Service\UserService;
 use Dot\Ems\Validator\NoRecordsExists;
 use Interop\Container\ContainerInterface;
 
