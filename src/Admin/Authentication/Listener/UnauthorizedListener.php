@@ -1,7 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vra
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-admin
+ * @author: n3vrax
  * Date: 12/12/2016
  * Time: 3:23 PM
  */
