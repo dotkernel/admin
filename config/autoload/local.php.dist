@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'debug' => true,
-
-    'config_cache_enabled' => false,
-
     //zend-db database adapters
     'db' => [
         'adapters' => [

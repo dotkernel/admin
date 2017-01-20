@@ -1,25 +1,18 @@
 <?php
+use Zend\ConfigAggregator\ArrayProvider;
+use Zend\ConfigAggregator\ConfigAggregator;
+use Zend\ConfigAggregator\PhpFileProvider;
 
-/**
- * Configuration files are loaded in a specific order. First ``global.php``, then ``*.global.php``.
- * then ``local.php`` and finally ``*.local.php``. This way local settings overwrite global settings.
- *
- * The configuration can be cached. This can be done by setting ``config_cache_enabled`` to ``true``.
- *
- * Obviously, if you use closures in your config you can't cache it.
- */
+// To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
+// `config/autoload/local.php`.
+$cacheConfig = [
+    'config_cache_path' => __DIR__ . '/../data/config-cache.php',
+];
+$aggregator = new ConfigAggregator([
+    // Include cache configuration
+    new ArrayProvider($cacheConfig),
 
-$cachedConfigFile = __DIR__ . '/../data/cache/app_config.php';
-$cachedConfigFile = __DIR__ . '/../data/cache/app_config.php';
-if (!is_dir(__DIR__ . '/../data/cache')) {
-    mkdir(__DIR__ . '/../data/cache');
-    chmod(__DIR__ . '/../data/cache', 755);
-}
-
-$configManager = new \Zend\Expressive\ConfigManager\ConfigManager([
-    //*************************************
-    //zend framework enabled modules, might come in handy to have all these services in the DI
-    //zend-db dependencies, as we use it
+    //zend framework enabled modules
     \Zend\Db\ConfigProvider::class,
     \Zend\Filter\ConfigProvider::class,
     \Zend\Hydrator\ConfigProvider::class,
@@ -51,7 +44,15 @@ $configManager = new \Zend\Expressive\ConfigManager\ConfigManager([
     \Dot\User\ConfigProvider::class,
     \Dot\Log\ConfigProvider::class,
 
-    new \Zend\Expressive\ConfigManager\PhpFileProvider(__DIR__ . '/autoload/{{,*.}global,{,*.}local}.php'),
-], $cachedConfigFile);
+    // Load application config in a pre-defined order in such a way that local settings
+    // overwrite global settings. (Loaded as first to last):
+    //   - `global.php`
+    //   - `*.global.php`
+    //   - `local.php`
+    //   - `*.local.php`
+    new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
 
-return new ArrayObject($configManager->getMergedConfig());
+    // Load development config if it exists
+    new PhpFileProvider('config/development.config.php'),
+], $cacheConfig['config_cache_path']);
+return $aggregator->getMergedConfig();

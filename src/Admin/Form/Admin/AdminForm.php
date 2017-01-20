@@ -10,6 +10,7 @@
 namespace Dot\Admin\Form\Admin;
 
 use Zend\Form\Element\Csrf;
+use Zend\Form\ElementInterface;
 use Zend\Form\Fieldset;
 use Zend\Form\FieldsetInterface;
 use Zend\Form\Form;
@@ -87,11 +88,16 @@ class AdminForm extends Form
         $this->setValidationGroup(['admin' => $validationGroup]);
     }
 
-    public function getActiveValidationGroup($groups, FieldsetInterface $prevElement)
+    /**
+     * @param $groups
+     * @param ElementInterface $prevElement
+     * @return array
+     */
+    public function getActiveValidationGroup($groups, ElementInterface $prevElement)
     {
         $validationGroup = [];
         foreach ($groups as $key => $value) {
-            if (is_array($value)) {
+            if (is_array($value) && $prevElement instanceof FieldsetInterface) {
                 if ($prevElement->has($key)) {
                     $validationGroup[$key] = $this->getActiveValidationGroup($value, $prevElement->get($key));
                 }
