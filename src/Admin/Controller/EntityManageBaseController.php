@@ -150,8 +150,11 @@ abstract class EntityManageBaseController extends AbstractActionController
         return new HtmlResponse(
             $this->template()->render(
                 'partial::ajax-form',
-                ['form' => $form, 'formAction' =>
-                    $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])]
+                [
+                    'form' => $form,
+                    'formAction' =>
+                        $this->url()->generate(static::ENTITY_ROUTE_NAME, ['action' => 'add'])
+                ]
             )
         );
     }
@@ -220,8 +223,10 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityCreateErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be created due to a server error. Please try again'];
+        return [
+            ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be created due to a server error. Please try again'
+        ];
     }
 
     /**
@@ -347,8 +352,10 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityUpdateErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be updated due to a server error. Please try again'];
+        return [
+            ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be updated due to a server error. Please try again'
+        ];
     }
 
     /**
@@ -430,7 +437,9 @@ abstract class EntityManageBaseController extends AbstractActionController
 
     protected function getEntityDeleteErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be removed due to a server error. Please try again'];
+        return [
+            ucfirst(static::ENTITY_NAME_SINGULAR) .
+            ' could not be removed due to a server error. Please try again'
+        ];
     }
 }

@@ -74,6 +74,44 @@ class AdminServiceListener extends AbstractEntityServiceListener
     }
 
     /**
+     * @return array
+     */
+    protected function getConstantExtra()
+    {
+        return [
+            'ip' => $_SERVER['REMOTE_ADDR'],
+            'agentId' => $this->authenticationService->hasIdentity()
+                ? $this->authenticationService->getIdentity()->getId()
+                : null,
+            'agentName' => $this->authenticationService->hasIdentity()
+                ? $this->authenticationService->getIdentity()->getName()
+                : null,
+        ];
+    }
+
+    /**
+     * @param EntityService $service
+     * @param $target
+     * @return array
+     */
+    protected function getTargetExtra(EntityService $service, $target)
+    {
+        $targetId = null;
+        if (is_object($target)) {
+            $getter = 'get' . ucfirst($service->getMapper()->getIdentifierName());
+            if (method_exists($target, $getter)) {
+                $targetId = call_user_func([$target, $getter]);
+            }
+            $target = get_class($target);
+        }
+
+        return [
+            'target' => $target,
+            'targetId' => $targetId,
+        ];
+    }
+
+    /**
      * @param EntityServiceEvent $e
      * @return void
      */
@@ -146,43 +184,5 @@ class AdminServiceListener extends AbstractEntityServiceListener
     public function onDeleteError(EntityServiceEvent $e)
     {
         // TODO: Implement onDeleteError() method.
-    }
-
-    /**
-     * @return array
-     */
-    protected function getConstantExtra()
-    {
-        return [
-            'ip' => $_SERVER['REMOTE_ADDR'],
-            'agentId' => $this->authenticationService->hasIdentity()
-                ? $this->authenticationService->getIdentity()->getId()
-                : null,
-            'agentName' => $this->authenticationService->hasIdentity()
-                ? $this->authenticationService->getIdentity()->getName()
-                : null,
-        ];
-    }
-
-    /**
-     * @param EntityService $service
-     * @param $target
-     * @return array
-     */
-    protected function getTargetExtra(EntityService $service, $target)
-    {
-        $targetId = null;
-        if (is_object($target)) {
-            $getter = 'get' . ucfirst($service->getMapper()->getIdentifierName());
-            if (method_exists($target, $getter)) {
-                $targetId = call_user_func([$target, $getter]);
-            }
-            $target = get_class($target);
-        }
-
-        return [
-            'target' => $target,
-            'targetId' => $targetId,
-        ];
     }
 }
