@@ -64,215 +64,258 @@
 {% block javascript %}
     <script>
 
-        $("#editButton").prop('disabled', true);
-        $("#deleteButton").prop('disabled', true);
+        $( document ).ready(function(){
+            $("#editButton").prop('disabled', true);
+            $("#deleteButton").prop('disabled', true);
 
-        var showFailDialog = function (data) {
-            if (data.status == 401) {
-                $("#modalCloseButton").click(function () {
-                    window.location.reload();
-                });
-                showAlertDialog('Authorization error',
+            var showFailDialog = function (data) {
+                if (data.status == 401) {
+                    $("#modalCloseButton").click(function () {
+                        window.location.reload();
+                    });
+                    showAlertDialog('Authorization error',
                         'You session has expired. The page will be reloaded in order to re-authenticate',
                         'error');
-            }
-            else if (data.status == 403) {
-                showAlertDialog('Authorization error',
+                }
+                else if (data.status == 403) {
+                    showAlertDialog('Authorization error',
                         'You are not authorized to run this operation',
                         'error');
-            }
-            else {
-                showAlertDialog('Unexpected server error',
+                }
+                else {
+                    showAlertDialog('Unexpected server error',
                         'Could not load form due to a server error. Please try again',
                         'error');
-            }
-        };
+                }
+            };
 
-        /**
-         * disables UI buttons based on the selection count
-         * @param selections
-         */
-        var uiButtons = function (selections) {
-            var count = selections.length;
-            if (count == 0) {
-                $("#editButton").prop('disabled', true);
-                $("#deleteButton").prop('disabled', true);
-            }
-            else if (count == 1) {
-                $("#editButton").prop('disabled', false);
-                $("#deleteButton").prop('disabled', false);
-            }
-            else {
-                $("#editButton").prop('disabled', true);
-                $("#deleteButton").prop('disabled', false);
-            }
-        };
+            /**
+             * disables UI buttons based on the selection count
+             * @param selections
+             */
+            var uiButtons = function (selections) {
+                var count = selections.length;
+                if (count == 0) {
+                    $("#editButton").prop('disabled', true);
+                    $("#deleteButton").prop('disabled', true);
+                }
+                else if (count == 1) {
+                    $("#editButton").prop('disabled', false);
+                    $("#deleteButton").prop('disabled', false);
+                }
+                else {
+                    $("#editButton").prop('disabled', true);
+                    $("#deleteButton").prop('disabled', false);
+                }
+            };
 
-        $("#addButton").click(function () {
-            showLoading();
-            $.get('{{ addUri }}')
+            $("#addButton").click(function () {
+                showLoading();
+                $.get('{{ addUri }}')
                     .done(function (data) {
                         hideLoading();
                         $("#formModalTitle").html('Add {{ entityNameSingular }}');
                         $("#formPlaceholder").html(data);
-                        $("#formModal").modal('show');
+
+                        $("#loading").on('hidden.bs.modal', function () {
+                            $("#loading").off('hidden')
+                            $("#formModal").modal('show');
+                        });
                     })
                     .fail(function (data) {
                         hideLoading();
-                        showFailDialog(data);
-                    });
-        });
 
-        $("#editButton").click(function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            if (selections.length != 1) {
-                showAlertDialog('Selection error',
+                        $("#loading").on('hidden.bs.modal', function () {
+                            $("#loading").off('hidden')
+                            showFailDialog(data);
+                        });
+
+                    });
+            });
+
+            $("#editButton").click(function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                if (selections.length != 1) {
+                    showAlertDialog('Selection error',
                         'Multiple or no {{ entityNamePlural }} selected. Only one {{ entityNameSingular }} can be edited a time',
                         'error');
-            }
-            else {
-                showLoading();
-                $.get('{{ editUri }}/' + selections[0].id)
+                }
+                else {
+                    showLoading();
+                    $.get('{{ editUri }}/' + selections[0].id)
                         .done(function (data) {
                             hideLoading();
                             $("#formModalTitle").html('Edit {{ entityNameSingular }}');
                             $("#formPlaceholder").html(data);
-                            $("#formModal").modal('show');
+
+                            $("#loading").on('hidden.bs.modal', function () {
+                                $("#loading").off('hidden')
+                                $("#formModal").modal('show');
+                            });
                         })
                         .fail(function (data) {
                             hideLoading();
-                            showFailDialog(data);
+
+                            $("#loading").on('hidden.bs.modal', function () {
+                                $("#loading").off('hidden')
+                                showFailDialog(data);
+                            });
                         });
-            }
+                }
 
-        });
+            });
 
-        $("#deleteButton").click(function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            if (selections.length === 0) {
-                return;
-            }
-            showLoading();
-            $.post('{{ deleteUri }}', {'{{ entityNamePlural }}': selections})
+            $("#deleteButton").click(function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                if (selections.length === 0) {
+                    return;
+                }
+                showLoading();
+                $.post('{{ deleteUri }}', {'{{ entityNamePlural }}': selections})
                     .done(function (data) {
                         hideLoading();
                         $("#formModalSubmit").text('Delete').removeClass('btn-primary').addClass('btn-danger');
                         $("#formModalTitle").html('Delete {{ entityNamePlural }}');
                         $("#formPlaceholder").html(data);
-                        $("#formModal").modal('show');
-                    })
-                    .fail(function (data) {
-                        hideLoading();
-                        showFailDialog(data);
-                    });
 
-        });
-
-        var formInputErrors = function (data, prevName) {
-            //mark form input with errors
-            $.each(data, function (name, value) {
-                if ($.isArray(value)) {
-                    $("#ajaxForm input[name='" + prevName + "[" + name + "]']")
-                            .closest('.form-group').addClass('has-error');
-                }
-                else if ($.isPlainObject(value)) {
-                    formInputErrors(value, prevName + "[" + name + "]");
-                }
-            });
-        };
-
-        var resetFormInputErrors = function () {
-            $("#ajaxForm :input").closest('.form-group').removeClass('has-error');
-        };
-
-        var hideWithReset = true;
-        $("#formModalSubmit").click(function () {
-            hideWithReset = false;
-            $("#formModal").modal('hide');
-
-            showLoading();
-            resetFormInputErrors();
-            $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
-                    .done(function (data) {
-                        if (typeof data.success !== 'undefined') {
-                            hideLoading();
-                            modalReset();
-                            $("#messages").html(data.alerts);
-                            $("#bsTable").bootstrapTable('refresh');
-                        }
-                        else if (typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
-                            hideLoading();
-                            modalReset();
-                            $("#messages").html(data.alerts);
-                        }
-                        else if (typeof data.validation !== 'undefined') {
-                            hideLoading();
-                            $("#formMessages").html(data.alerts);
-                            formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
+                        $("#loading").on('hidden.bs.modal', function () {
+                            $("#loading").off('hidden')
                             $("#formModal").modal('show');
-                        }
+                        });
                     })
                     .fail(function (data) {
                         hideLoading();
-                        modalReset();
-                        showFailDialog(data);
+
+                        $("#loading").on('hidden.bs.modal', function () {
+                            $("#loading").off('hidden')
+                            showFailDialog(data);
+                        });
                     });
-        });
+
+            });
+
+            var formInputErrors = function (data, prevName) {
+                //mark form input with errors
+                $.each(data, function (name, value) {
+                    if ($.isArray(value)) {
+                        $("#ajaxForm input[name='" + prevName + "[" + name + "]']")
+                            .closest('.form-group').addClass('has-error');
+                    }
+                    else if ($.isPlainObject(value)) {
+                        formInputErrors(value, prevName + "[" + name + "]");
+                    }
+                });
+            };
+
+            var resetFormInputErrors = function () {
+                $("#ajaxForm :input").closest('.form-group').removeClass('has-error');
+            };
+
+            var hideWithReset = true;
+            $("#formModalSubmit").click(function () {
+                hideWithReset = false;
+                $("#formModal").modal('hide');
+                $("#formModal").on('hidden.bs.modal', function() {
+                    $("#formModal").off('hidden');
+                    restoreFormModalListeners();
+                    showLoading();
+
+                    resetFormInputErrors();
+                    $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
+                        .done(function (data) {
+                            if (typeof data.success !== 'undefined') {
+                                hideLoading();
+                                modalReset();
+                                $("#messages").html(data.alerts);
+                                $("#bsTable").bootstrapTable('refresh');
+                            }
+                            else if (typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
+                                hideLoading();
+                                modalReset();
+                                $("#messages").html(data.alerts);
+                            }
+                            else if (typeof data.validation !== 'undefined') {
+                                hideLoading();
+                                $("#formMessages").html(data.alerts);
+                                formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
+
+                                $("#loading").on('hidden.bs.modal', function() {
+                                    $("#loading").off('hidden');
+                                    $("#formModal").modal('show');
+                                });
+                            }
+                        })
+                        .fail(function (data) {
+                            hideLoading();
+                            modalReset();
+                            $("#loading").on('hidden.bs.modal', function() {
+                                $("#loading").off('hidden');
+                                showFailDialog(data);
+                            });
+
+                        });
+                });
+            });
+
+            var restoreFormModalListeners = function()
+            {
+                $("#formModal").on('shown.bs.modal', function () {
+
+                });
 
 
-        $("#formModal").on('shown.bs.modal', function () {
+                $("#formModal").on('hidden.bs.modal', function () {
+                    if (hideWithReset) {
+                        console.log('reset form');
+                        modalReset();
+                    }
 
-        });
+                    hideWithReset = true;
+                });
+            };
+            restoreFormModalListeners();
 
-
-        $("#formModal").on('hidden.bs.modal', function () {
-            if (hideWithReset) {
-                modalReset();
+            var modalReset = function() {
+                $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
+                $("#ajaxForm")[0].reset();
+                $("#formMessages").html('');
+                $("#ajaxForm :input")
+                    .closest('.form-group').removeClass('has-error');
             }
 
-            hideWithReset = true;
-        });
+            var resetUiButtonState = function () {
+                $("#editButton").prop('disabled', true);
+                $("#deleteButton").prop('disabled', true);
+            };
 
-        var modalReset = function() {
-            $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');
-            $("#ajaxForm")[0].reset();
-            $("#formMessages").html('');
-            $("#ajaxForm :input")
-                    .closest('.form-group').removeClass('has-error');
-        }
+            $("#bsTable").on('load-success.bs.table', function () {
+                resetUiButtonState();
+            });
 
-        var resetUiButtonState = function () {
-            $("#editButton").prop('disabled', true);
-            $("#deleteButton").prop('disabled', true);
-        };
+            $("#bsTable").on('load-error.bs.table', function (status, res) {
+                showFailDialog({'status': res});
+                resetUiButtonState();
+            });
 
-        $("#bsTable").on('load-success.bs.table', function () {
-            resetUiButtonState();
-        });
+            $("#bsTable").on('check.bs.table', function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                uiButtons(selections);
+            });
 
-        $("#bsTable").on('load-error.bs.table', function (status, res) {
-            showFailDialog({'status': res});
-            resetUiButtonState();
-        });
+            $("#bsTable").on('uncheck.bs.table', function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                uiButtons(selections);
+            });
 
-        $("#bsTable").on('check.bs.table', function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            uiButtons(selections);
-        });
+            $("#bsTable").on('check-all.bs.table', function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                uiButtons(selections);
+            });
 
-        $("#bsTable").on('uncheck.bs.table', function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            uiButtons(selections);
-        });
-
-        $("#bsTable").on('check-all.bs.table', function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            uiButtons(selections);
-        });
-
-        $("#bsTable").on('uncheck-all.bs.table', function () {
-            var selections = $("#bsTable").bootstrapTable('getSelections');
-            uiButtons(selections);
+            $("#bsTable").on('uncheck-all.bs.table', function () {
+                var selections = $("#bsTable").bootstrapTable('getSelections');
+                uiButtons(selections);
+            });
         });
 
     </script>
