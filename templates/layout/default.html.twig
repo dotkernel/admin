@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
     <!--Icons-->
@@ -48,7 +48,7 @@
 </nav>
 
 {% if hasIdentity() %}
-    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <div id="sidebar-collapse" class="col-sm-3 col-md-2 col-lg-2 sidebar">
         <form role="search">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
@@ -61,9 +61,9 @@
 {% endif %}
 
 <main class="container-fluid">
-    {% set mainClass = 'col-sm-12 col-lg-12' %}
+    {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
     {% if hasIdentity() %}
-        {% set mainClass = 'col-sm-9 col-lg-10 col-sm-offset-3 col-lg-offset-2' %}
+        {% set mainClass = 'col-sm-9 col-md-10 col-lg-10 col-sm-offset-3 col-md-offset-2 col-lg-offset-2' %}
     {% endif %}
 
     <div class="main {{ mainClass }}">
@@ -84,14 +84,15 @@
     </div>    <!--/.main-->
 </main>
 
-<script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chart.min.js') }}"></script>
 <script src="{{ asset('js/chart-data.js') }}"></script>
-<script src="{{ asset('js/easypiechart.js') }}"></script>
+<script src="{{ asset('js/jquery.easypiechart.js') }}"></script>
 <script src="{{ asset('js/easypiechart-data.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('js/bootstrap-table.js') }}"></script>
+<script src="{{ asset('js/bootstrap-table/bootstrap-table.js') }}"></script>
+<script src="{{ asset('js/bootstrap-table/extension/bootstrap-table-mobile.js') }}"></script>
 <script>
     $('#calendar').datepicker({});
 
