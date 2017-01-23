@@ -213,69 +213,50 @@
                 $("#ajaxForm :input").closest('.form-group').removeClass('has-error');
             };
 
-            var hideWithReset = true;
             $("#formModalSubmit").click(function () {
-                hideWithReset = false;
-                $("#formModal").on('hidden.bs.modal', function() {
-                    $("#formModal").off('hidden');
-                    restoreFormModalListeners();
-                    showLoading();
+                $('#formModal').modal('handleUpdate');
+                showLoading();
+                resetFormInputErrors();
 
-                    resetFormInputErrors();
-                    $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
-                        .done(function (data) {
-                            if (typeof data.success !== 'undefined') {
-                                hideLoading();
-                                modalReset();
-                                $("#messages").html(data.alerts);
-                                $("#bsTable").bootstrapTable('refresh');
-                            }
-                            else if (typeof data.validation !== 'undefined') {
-                                $("#formMessages").html(data.alerts);
-                                formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
-
-                                $("#loading").on('hidden.bs.modal', function() {
-                                    $("#loading").off('hidden');
-                                    $("#formModal").modal('show');
-                                });
-                                hideLoading();
-                            }
-                            else {
-                                hideLoading();
-                                modalReset();
-                                if (data.alerts !== 'undefined') {
-                                    $("#messages").html(data.alerts);
-                                }
-                            }
-                        })
-                        .fail(function (data) {
-                            modalReset();
-                            $("#loading").on('hidden.bs.modal', function() {
-                                $("#loading").off('hidden');
-                                showFailDialog(data);
-                            });
+                $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
+                    .done(function (data) {
+                        if (typeof data.success !== 'undefined') {
                             hideLoading();
-                        });
-                });
-                $("#formModal").modal('hide');
+                            $('#formModal').modal('hide');
+                            modalReset();
+                            $("#messages").html(data.alerts);
+                            $("#bsTable").bootstrapTable('refresh');
+                        }
+                        else if (typeof data.validation !== 'undefined') {
+                            hideLoading();
+                            $("#formMessages").html(data.alerts);
+                            formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
+                            $('#formModal').modal('handleUpdate');
+                        }
+                        else {
+                            hideLoading();
+                            $('#formModal').modal('hide');
+                            modalReset();
+                            if (data.alerts !== 'undefined') {
+                                $("#messages").html(data.alerts);
+                            }
+                        }
+                    })
+                    .fail(function (data) {
+                        hideLoading();
+                        $('#formModal').modal('hide');
+                        modalReset();
+                    });
             });
 
-            var restoreFormModalListeners = function()
-            {
-                $("#formModal").on('shown.bs.modal', function () {
+            $("#formModal").on('shown.bs.modal', function () {
 
-                });
+            });
 
 
-                $("#formModal").on('hidden.bs.modal', function () {
-                    if (hideWithReset) {
-                        modalReset();
-                    }
-
-                    hideWithReset = true;
-                });
-            };
-            restoreFormModalListeners();
+            $("#formModal").on('hidden.bs.modal', function () {
+                    modalReset();
+            });
 
             var modalReset = function() {
                 $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');

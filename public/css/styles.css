@@ -46,6 +46,11 @@ h3, h4 {
     margin-top: 15px;
 }
 
+.modal {
+    -webkit-overflow-scrolling: auto !important;
+    overflow-y: auto !important;
+}
+
 #modalAlertIcon {
     padding-right: 10px;
 }
