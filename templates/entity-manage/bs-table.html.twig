@@ -20,7 +20,8 @@
                         </button>
                     </div>
 
-                    <table data-toggle="table" data-url="{{ listUri }}"
+                    <table data-toggle="table" data-url="{{ listUri }}" data-click-to-select="true"
+                           data-mobile-responsive="true" data-check-on-init="true" data-min-width="800"
                            data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
                            data-side-pagination="server" data-page-list="[10, 30, 50, 100]" data-page-size="30"
@@ -69,6 +70,9 @@
             $("#deleteButton").prop('disabled', true);
 
             var showFailDialog = function (data) {
+                if(data.status == 0 && data.statusText == 'abort')
+                    return;
+
                 if (data.status == 401) {
                     $("#modalCloseButton").click(function () {
                         window.location.reload();
@@ -113,7 +117,6 @@
                 showLoading();
                 $.get('{{ addUri }}')
                     .done(function (data) {
-                        hideLoading();
                         $("#formModalTitle").html('Add {{ entityNameSingular }}');
                         $("#formPlaceholder").html(data);
 
@@ -121,14 +124,15 @@
                             $("#loading").off('hidden')
                             $("#formModal").modal('show');
                         });
+
+                        hideLoading();
                     })
                     .fail(function (data) {
-                        hideLoading();
-
                         $("#loading").on('hidden.bs.modal', function () {
                             $("#loading").off('hidden')
                             showFailDialog(data);
                         });
+                        hideLoading();
 
                     });
             });
@@ -144,7 +148,6 @@
                     showLoading();
                     $.get('{{ editUri }}/' + selections[0].id)
                         .done(function (data) {
-                            hideLoading();
                             $("#formModalTitle").html('Edit {{ entityNameSingular }}');
                             $("#formPlaceholder").html(data);
 
@@ -152,14 +155,14 @@
                                 $("#loading").off('hidden')
                                 $("#formModal").modal('show');
                             });
+                            hideLoading();
                         })
                         .fail(function (data) {
-                            hideLoading();
-
                             $("#loading").on('hidden.bs.modal', function () {
                                 $("#loading").off('hidden')
                                 showFailDialog(data);
                             });
+                            hideLoading();
                         });
                 }
 
@@ -173,7 +176,6 @@
                 showLoading();
                 $.post('{{ deleteUri }}', {'{{ entityNamePlural }}': selections})
                     .done(function (data) {
-                        hideLoading();
                         $("#formModalSubmit").text('Delete').removeClass('btn-primary').addClass('btn-danger');
                         $("#formModalTitle").html('Delete {{ entityNamePlural }}');
                         $("#formPlaceholder").html(data);
@@ -182,14 +184,14 @@
                             $("#loading").off('hidden')
                             $("#formModal").modal('show');
                         });
+                        hideLoading();
                     })
                     .fail(function (data) {
-                        hideLoading();
-
                         $("#loading").on('hidden.bs.modal', function () {
                             $("#loading").off('hidden')
                             showFailDialog(data);
                         });
+                        hideLoading();
                     });
 
             });
@@ -214,7 +216,6 @@
             var hideWithReset = true;
             $("#formModalSubmit").click(function () {
                 hideWithReset = false;
-                $("#formModal").modal('hide');
                 $("#formModal").on('hidden.bs.modal', function() {
                     $("#formModal").off('hidden');
                     restoreFormModalListeners();
@@ -229,13 +230,7 @@
                                 $("#messages").html(data.alerts);
                                 $("#bsTable").bootstrapTable('refresh');
                             }
-                            else if (typeof data.error !== 'undefined' || typeof data.info !== 'undefined') {
-                                hideLoading();
-                                modalReset();
-                                $("#messages").html(data.alerts);
-                            }
                             else if (typeof data.validation !== 'undefined') {
-                                hideLoading();
                                 $("#formMessages").html(data.alerts);
                                 formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
 
@@ -243,18 +238,26 @@
                                     $("#loading").off('hidden');
                                     $("#formModal").modal('show');
                                 });
+                                hideLoading();
+                            }
+                            else {
+                                hideLoading();
+                                modalReset();
+                                if (data.alerts !== 'undefined') {
+                                    $("#messages").html(data.alerts);
+                                }
                             }
                         })
                         .fail(function (data) {
-                            hideLoading();
                             modalReset();
                             $("#loading").on('hidden.bs.modal', function() {
                                 $("#loading").off('hidden');
                                 showFailDialog(data);
                             });
-
+                            hideLoading();
                         });
                 });
+                $("#formModal").modal('hide');
             });
 
             var restoreFormModalListeners = function()
@@ -266,7 +269,6 @@
 
                 $("#formModal").on('hidden.bs.modal', function () {
                     if (hideWithReset) {
-                        console.log('reset form');
                         modalReset();
                     }
 
@@ -292,8 +294,8 @@
                 resetUiButtonState();
             });
 
-            $("#bsTable").on('load-error.bs.table', function (status, res) {
-                showFailDialog({'status': res});
+            $("#bsTable").on('load-error.bs.table', function (e, status, res) {
+                showFailDialog(res);
                 resetUiButtonState();
             });
 
