@@ -10,7 +10,6 @@
 namespace Dot\Admin\Factory\Admin;
 
 use Dot\Admin\Controller\AdminController;
-use Dot\Admin\Form\Admin\AdminForm;
 use Dot\Admin\Form\ConfirmDeleteForm;
 use Dot\Admin\Service\EntityServiceInterface;
 use Interop\Container\ContainerInterface;
@@ -29,7 +28,7 @@ class AdminControllerFactory
     {
         /** @var EntityServiceInterface $service */
         $service = $container->get('dot-ems.service.admin');
-        $userForm = $container->get(AdminForm::class);
+        $userForm = $container->get('dot-form.admin');
 
         $confirmDeleteForm = new ConfirmDeleteForm();
         $confirmDeleteForm->init();

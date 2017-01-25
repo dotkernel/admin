@@ -36,7 +36,7 @@ class AdminInputFilterFactory
                 'key' => 'username'
             ])
         );
-        $filter->init();
+
         return $filter;
     }
 }

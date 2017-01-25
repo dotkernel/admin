@@ -59,7 +59,7 @@ class AdminInputFilter extends InputFilter
             'required' => false,
         ]);
 
-        $username = [
+        $this->add([
             'name' => 'username',
             'filters' => [
                 ['name' => 'StringTrim'],
@@ -88,16 +88,14 @@ class AdminInputFilter extends InputFilter
                     ]
                 ]
             ],
-        ];
+        ]);
 
         if ($this->usernameValidator) {
             $this->usernameValidator->setMessage(static::USERNAME_TAKEN);
-            $username['validators'][] = $this->usernameValidator;
+            $this->get('username')->getValidatorChain()->attach($this->usernameValidator);
         }
 
-        $this->add($username);
-
-        $email = [
+        $this->add([
             'name' => 'email',
             'filters' => [
                 ['name' => 'StringTrim'],
@@ -117,14 +115,12 @@ class AdminInputFilter extends InputFilter
                     ]
                 ],
             ],
-        ];
+        ]);
 
         if ($this->emailValidator) {
             $this->emailValidator->setMessage(static::EMAIL_TAKEN);
-            $email['validators'][] = $this->emailValidator;
+            $this->get('email')->getValidatorChain()->attach($this->emailValidator);
         }
-
-        $this->add($email);
 
         $this->add([
             'name' => 'firstName',

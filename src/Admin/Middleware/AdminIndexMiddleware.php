@@ -9,6 +9,8 @@
 
 namespace Dot\Admin\Middleware;
 
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Authentication\AuthenticationInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,6 +20,8 @@ use Zend\Expressive\Helper\UrlHelper;
 /**
  * Class AdminIndexMiddleware
  * @package Dot\Authentication\Middleware
+ *
+ * @Service
  */
 class AdminIndexMiddleware
 {
@@ -31,6 +35,8 @@ class AdminIndexMiddleware
      * AdminIndexMiddleware constructor.
      * @param AuthenticationInterface $authentication
      * @param UrlHelper $urlHelper
+     *
+     * @Inject({AuthenticationInterface::class, UrlHelper::class})
      */
     public function __construct(AuthenticationInterface $authentication, UrlHelper $urlHelper)
     {

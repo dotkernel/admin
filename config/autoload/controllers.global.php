@@ -5,7 +5,7 @@ return [
     'dependencies' => [
         'factories' => [
             \Dot\Admin\Controller\DashboardController::class =>
-                \Dot\Admin\Factory\DashboardControllerFactory::class,
+                \Zend\ServiceManager\Factory\InvokableFactory::class,
 
             \Dot\Admin\Controller\UserController::class =>
                 \Dot\Admin\Factory\User\UserControllerFactory::class,

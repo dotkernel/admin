@@ -11,7 +11,6 @@ namespace Dot\Admin\Form\Admin;
 
 use Zend\Form\Element\Csrf;
 use Zend\Form\ElementInterface;
-use Zend\Form\Fieldset;
 use Zend\Form\FieldsetInterface;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
@@ -22,9 +21,6 @@ use Zend\Form\FormInterface;
  */
 class AdminForm extends Form
 {
-    /** @var  Fieldset */
-    protected $adminFieldset;
-
     protected $currentValidationGroup = [
         'id' => true,
         'username' => true,
@@ -39,22 +35,16 @@ class AdminForm extends Form
 
     /**
      * AdminForm constructor.
-     * @param Fieldset $adminFieldset
      * @param string $name
      * @param array $options
      */
-    public function __construct(Fieldset $adminFieldset, $name = 'admin_form', array $options = [])
+    public function __construct($name = 'admin_form', array $options = [])
     {
-        $this->adminFieldset = $adminFieldset;
         parent::__construct($name, $options);
     }
 
     public function init()
     {
-        $this->adminFieldset->setName('admin');
-        $this->adminFieldset->setUseAsBaseFieldset(true);
-        $this->add($this->adminFieldset);
-
         $csrf = new Csrf('admin_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,

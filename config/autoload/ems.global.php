@@ -2,13 +2,13 @@
 
 return [
     'dot_ems' => [
-        'service' => [
+        'services' => [
             'user' => [
                 'atomic_operations' => true,
                 'type' => \Dot\Admin\Service\UserService::class,
 
                 'mapper' => [
-                    \Dot\Ems\Mapper\RelationalDbMapper::class => [
+                    'RelationalDbMapper' => [
                         'adapter' => 'database',
                         'table' => 'user',
 
@@ -16,7 +16,7 @@ return [
                         'entity_hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
 
                         'relations' => [
-                            \Dot\Ems\Mapper\Relation\OneToOneRelation::class => [
+                            'HasOne' => [
                                 'field_name' => 'details',
                                 'ref_name' => 'userId',
 
@@ -24,7 +24,7 @@ return [
                                 'change_refs' => true,
 
                                 'mapper' => [
-                                    \Dot\Ems\Mapper\DbMapper::class => [
+                                    'DbMapper' => [
                                         'adapter' => 'database',
                                         'table' => 'user_details',
 
@@ -47,7 +47,7 @@ return [
                 ],
 
                 'mapper' => [
-                    \Dot\Ems\Mapper\DbMapper::class => [
+                    'DbMapper' => [
                         'adapter' => 'database',
                         'table' => 'admin',
 
