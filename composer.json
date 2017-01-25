@@ -46,6 +46,7 @@
     "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
     "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
     "dotkernel/dot-controller-plugin-mail": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-forms": "0.6.x-dev",
     "dotkernel/dot-authentication": "0.6.x-dev",
     "dotkernel/dot-authentication-service": "0.6.x-dev",
     "dotkernel/dot-authentication-web": "0.6.x-dev",
@@ -100,6 +101,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/dotkernel/dot-annotated-services"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dotkernel/dot-controller-plugin-forms"
     }
   ],
   "autoload": {

@@ -11,11 +11,15 @@ namespace Dot\Admin\Controller;
 
 use Dot\Admin\Entity\AdminEntity;
 use Dot\Admin\Form\Admin\AdminForm;
-
+use Dot\Admin\Service\EntityServiceInterface;
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 
 /**
  * Class AdminController
  * @package Dot\Authentication\Controller
+ *
+ * @Service
  */
 class AdminController extends EntityManageBaseController
 {
@@ -23,6 +27,20 @@ class AdminController extends EntityManageBaseController
     const ENTITY_NAME_PLURAL = 'admins';
     const ENTITY_ROUTE_NAME = 'user';
     const ENTITY_TEMPLATE_NAME = 'entity-manage::admin-table';
+
+    const ENTITY_FORM_NAME = 'admin';
+    const ENTITY_DELETE_FORM_NAME = 'admin_delete';
+
+    /**
+     * AdminController constructor.
+     * @param EntityServiceInterface $service
+     *
+     * @Inject({"dot-ems.service.admin"})
+     */
+    public function __construct(EntityServiceInterface $service)
+    {
+        parent::__construct($service);
+    }
 
     /**
      * @param AdminForm $form
@@ -47,5 +65,16 @@ class AdminController extends EntityManageBaseController
         }
 
         $form->applyValidationGroup();
+    }
+
+    /**
+     * @param bool $debug
+     * @return EntityManageBaseController
+     *
+     * @Inject({"config.debug"})
+     */
+    public function setDebug($debug)
+    {
+        return parent::setDebug($debug);
     }
 }

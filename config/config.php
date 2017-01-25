@@ -57,6 +57,7 @@ $aggregator = new ConfigAggregator([
     \Dot\Controller\Plugin\Authorization\ConfigProvider::class,
     \Dot\Controller\Plugin\FlashMessenger\ConfigProvider::class,
     \Dot\Controller\Plugin\Mail\ConfigProvider::class,
+    \Dot\Controller\Plugin\Forms\ConfigProvider::class,
 
     // authorization modules
     \Dot\Rbac\ConfigProvider::class,

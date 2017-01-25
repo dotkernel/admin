@@ -34,6 +34,7 @@ return [
             'factories' => [
                 \Dot\Admin\Form\Admin\AdminForm::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
                 \Dot\Admin\Form\Admin\AdminFieldset::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+                \Dot\Admin\Form\ConfirmDeleteForm::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
             ],
         ],
 
@@ -46,8 +47,10 @@ return [
                         'spec' => [
                             'name' => 'admin',
                             'type' => \Dot\Admin\Form\Admin\AdminFieldset::class,
-                            'hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
+
                             'object' => \Dot\Admin\Entity\AdminEntity::class,
+                            'hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
+
                             'options' => [
                                 'use_as_base_fieldset' => true,
                             ],
@@ -59,6 +62,10 @@ return [
                         'type' => \Dot\Admin\Form\Admin\AdminInputFilter::class,
                     ]
                 ]
+            ],
+
+            'admin_delete' => [
+                'type' => \Dot\Admin\Form\ConfirmDeleteForm::class,
             ],
 
         ],

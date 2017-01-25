@@ -10,6 +10,7 @@
 namespace Dot\Admin\Controller;
 
 use Dot\Admin\Service\EntityServiceInterface;
+use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -29,14 +30,11 @@ abstract class EntityManageBaseController extends AbstractActionController
     const ENTITY_ROUTE_NAME = '';
     const ENTITY_TEMPLATE_NAME = '';
 
+    const ENTITY_FORM_NAME = '';
+    const ENTITY_DELETE_FORM_NAME = '';
+
     /** @var  EntityServiceInterface */
     protected $service;
-
-    /** @var  Form */
-    protected $entityForm;
-
-    /** @var  Form */
-    protected $deleteForm;
 
     /** @var  bool */
     protected $debug;
@@ -44,17 +42,10 @@ abstract class EntityManageBaseController extends AbstractActionController
     /**
      * UserController constructor.
      * @param EntityServiceInterface $service
-     * @param Form $entityForm
-     * @param Form $deleteForm
      */
-    public function __construct(
-        EntityServiceInterface $service,
-        Form $entityForm,
-        Form $deleteForm
-    ) {
+    public function __construct(EntityServiceInterface $service)
+    {
         $this->service = $service;
-        $this->entityForm = $entityForm;
-        $this->deleteForm = $deleteForm;
     }
 
     /**
@@ -117,13 +108,14 @@ abstract class EntityManageBaseController extends AbstractActionController
     public function addAction()
     {
         $request = $this->request;
-        $form = $this->entityForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_FORM_NAME);
         $form->getBaseFieldset()->remove('id');
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
 
-            $form->bind($this->service->getMapper()->getPrototype());
+            //$form->bind($this->service->getMapper()->getPrototype());
             $form->setData($data);
 
             if ($form->isValid()) {
@@ -291,7 +283,8 @@ abstract class EntityManageBaseController extends AbstractActionController
             return $this->generateJsonOutput($this->getEntityIdInvalidErrorMessage(), 'error');
         }
 
-        $form = $this->entityForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_FORM_NAME);
         $form->bind($entity);
 
         if ($request->getMethod() === 'POST') {
@@ -364,7 +357,8 @@ abstract class EntityManageBaseController extends AbstractActionController
     public function deleteAction()
     {
         $request = $this->getRequest();
-        $form = $this->deleteForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_DELETE_FORM_NAME);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
