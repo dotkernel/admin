@@ -68,11 +68,11 @@ class UserController extends EntityManageBaseController
 
         //remove username and email checks if the value has not changed relative to the original
         if ($entity->getUsername() === $data['user']['username']) {
-            $form->removeUsernameValidation();
+            $form->setValidationForInput('user.username', false);
         }
 
         if ($entity->getEmail() === $data['user']['email']) {
-            $form->removeEmailValidation();
+            $form->setValidationForInput('user.email', false);
         }
 
         $form->applyValidationGroup();

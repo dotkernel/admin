@@ -57,11 +57,11 @@ class AdminController extends EntityManageBaseController
 
         //remove username and email checks if the value has not changed relative to the original
         if ($entity->getUsername() === $data['admin']['username']) {
-            $form->removeUsernameValidation();
+            $form->setValidationForInput('admin.username', false);
         }
 
         if ($entity->getEmail() === $data['admin']['email']) {
-            $form->removeEmailValidation();
+            $form->setValidationForInput('admin.email', false);
         }
 
         $form->applyValidationGroup();

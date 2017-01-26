@@ -231,12 +231,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-annotated-services.git",
-                "reference": "2a7634219c46bd0782feb04fc5a06dea7b4282e3"
+                "reference": "c817c625c8707e216aebc750783960a3cbac5cd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-annotated-services/zipball/2a7634219c46bd0782feb04fc5a06dea7b4282e3",
-                "reference": "2a7634219c46bd0782feb04fc5a06dea7b4282e3",
+                "url": "https://api.github.com/repos/dotkernel/dot-annotated-services/zipball/c817c625c8707e216aebc750783960a3cbac5cd0",
+                "reference": "c817c625c8707e216aebc750783960a3cbac5cd0",
                 "shasum": ""
             },
             "require": {
@@ -291,7 +291,7 @@
                 "source": "https://github.com/dotkernel/dot-annotated-services/tree/master",
                 "issues": "https://github.com/dotkernel/dot-annotated-services/issues"
             },
-            "time": "2017-01-26 01:24:57"
+            "time": "2017-01-26 12:46:36"
         },
         {
             "name": "dotkernel/dot-authentication",
@@ -1095,12 +1095,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-form.git",
-                "reference": "2c7992f491908042c627dfb899e58610f20e2639"
+                "reference": "bb5b83a2d3ab2678da5b448ba63c120b4686497d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-form/zipball/2c7992f491908042c627dfb899e58610f20e2639",
-                "reference": "2c7992f491908042c627dfb899e58610f20e2639",
+                "url": "https://api.github.com/repos/dotkernel/dot-form/zipball/bb5b83a2d3ab2678da5b448ba63c120b4686497d",
+                "reference": "bb5b83a2d3ab2678da5b448ba63c120b4686497d",
                 "shasum": ""
             },
             "require": {
@@ -1152,7 +1152,7 @@
                 "source": "https://github.com/dotkernel/dot-form/tree/master",
                 "issues": "https://github.com/dotkernel/dot-form/issues"
             },
-            "time": "2017-01-25 01:43:10"
+            "time": "2017-01-26 17:13:59"
         },
         {
             "name": "dotkernel/dot-helpers",
@@ -5462,16 +5462,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.33",
+            "version": "4.8.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6381a99bd2a398d2994b454ad6d57c73f5a7de3d"
+                "reference": "7eb45205d27edd94bd2b3614085ea158bd1e2bca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6381a99bd2a398d2994b454ad6d57c73f5a7de3d",
-                "reference": "6381a99bd2a398d2994b454ad6d57c73f5a7de3d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7eb45205d27edd94bd2b3614085ea158bd1e2bca",
+                "reference": "7eb45205d27edd94bd2b3614085ea158bd1e2bca",
                 "shasum": ""
             },
             "require": {
@@ -5530,7 +5530,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-25T19:17:47+00:00"
+            "time": "2017-01-26T16:15:36+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
