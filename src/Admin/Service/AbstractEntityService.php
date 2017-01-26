@@ -9,7 +9,7 @@
 
 namespace Dot\Admin\Service;
 
-use Dot\Admin\Mapper\EntityOperationsMapperInterface;
+use Dot\Admin\Mapper\EntityMapperInterface;
 use Dot\Ems\Service\EntityService;
 
 /**
@@ -18,26 +18,8 @@ use Dot\Ems\Service\EntityService;
  */
 abstract class AbstractEntityService extends EntityService implements EntityServiceInterface
 {
-    /** @var  EntityOperationsMapperInterface */
-    protected $entityOperationsMapper;
-
-    /**
-     * @return EntityOperationsMapperInterface
-     */
-    public function getEntityOperationsMapper()
-    {
-        return $this->entityOperationsMapper;
-    }
-
-    /**
-     * @param EntityOperationsMapperInterface $entityOperationsMapper
-     * @return AbstractEntityService
-     */
-    public function setEntityOperationsMapper(EntityOperationsMapperInterface $entityOperationsMapper)
-    {
-        $this->entityOperationsMapper = $entityOperationsMapper;
-        return $this;
-    }
+    /** @var  EntityMapperInterface */
+    protected $mapper;
 
     /**
      * @param $ids
@@ -45,7 +27,7 @@ abstract class AbstractEntityService extends EntityService implements EntityServ
      */
     public function markAsDeleted($ids)
     {
-        return $this->entityOperationsMapper->markAsDeleted($ids, 'status', 'deleted');
+        return $this->mapper->markAsDeleted($ids, 'status', 'deleted');
     }
 
     /**
@@ -54,6 +36,6 @@ abstract class AbstractEntityService extends EntityService implements EntityServ
      */
     public function bulkDelete($ids)
     {
-        return $this->entityOperationsMapper->bulkDelete($ids);
+        return $this->mapper->bulkDelete($ids);
     }
 }

@@ -17,7 +17,7 @@ return [
         ],
 
         //user entity and its hydrator to use for user transactions
-        'user_entity' => \Dot\Admin\Entity\AdminEntity::class,
+        'user_entity' => \Dot\Admin\Entity\Admin\AdminEntity::class,
 
         'enable_user_status' => true,
 

@@ -9,6 +9,8 @@
 
 namespace Dot\Admin\Service\Listener;
 
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Authentication\AuthenticationInterface;
 use Dot\Ems\Event\AbstractEntityServiceListener;
 use Dot\Ems\Event\EntityServiceEvent;
@@ -17,10 +19,11 @@ use Zend\Log\Logger;
 
 /**
  * Class AdminServiceListener
- *
  * @package Dot\Admin\Service\Listener
+ *
+ * @Service
  */
-class AdminServiceListener extends AbstractEntityServiceListener
+class EntityServiceListener extends AbstractEntityServiceListener
 {
     /** @var  Logger */
     protected $actionLogger;
@@ -32,6 +35,8 @@ class AdminServiceListener extends AbstractEntityServiceListener
      * AdminServiceListener constructor.
      * @param Logger $actionLogger
      * @param AuthenticationInterface $authenticationService
+     *
+     * @Inject({"dot-log.action_logger", AuthenticationInterface::class})
      */
     public function __construct(Logger $actionLogger, AuthenticationInterface $authenticationService)
     {

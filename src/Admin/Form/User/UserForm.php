@@ -21,12 +21,6 @@ use Zend\Form\FormInterface;
  */
 class UserForm extends Form
 {
-    /** @var  Fieldset */
-    protected $userFieldset;
-
-    /** @var  Fieldset */
-    protected $userDetailsFieldset;
-
     protected $currentValidationGroup = [
         'id' => true,
         'username' => true,
@@ -38,23 +32,14 @@ class UserForm extends Form
         'status' => true
     ];
 
-    public function __construct(Fieldset $userFieldset, Fieldset $userDetailsFieldset, $options = [])
+    public function __construct($name = 'user_form', $options = [])
     {
-        $this->userFieldset = $userFieldset;
-        $this->userDetailsFieldset = $userDetailsFieldset;
-        parent::__construct('user_form', $options);
+        parent::__construct($name, $options);
     }
 
     public function init()
     {
-        $this->userFieldset->setName('user');
-        $this->userFieldset->setUseAsBaseFieldset(true);
-
-        $this->userDetailsFieldset->setName('details');
-        $this->userFieldset->add($this->userDetailsFieldset);
-        $this->userFieldset->setPriority('details', -5);
-
-        $this->add($this->userFieldset);
+        //$this->userFieldset->setPriority('details', -5);
 
         $csrf = new Csrf('user_csrf', [
             'csrf_options' => [

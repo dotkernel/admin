@@ -29,14 +29,11 @@ abstract class EntityManageBaseController extends AbstractActionController
     const ENTITY_ROUTE_NAME = '';
     const ENTITY_TEMPLATE_NAME = '';
 
+    const ENTITY_FORM_NAME = '';
+    const ENTITY_DELETE_FORM_NAME = '';
+
     /** @var  EntityServiceInterface */
     protected $service;
-
-    /** @var  Form */
-    protected $entityForm;
-
-    /** @var  Form */
-    protected $deleteForm;
 
     /** @var  bool */
     protected $debug;
@@ -44,17 +41,10 @@ abstract class EntityManageBaseController extends AbstractActionController
     /**
      * UserController constructor.
      * @param EntityServiceInterface $service
-     * @param Form $entityForm
-     * @param Form $deleteForm
      */
-    public function __construct(
-        EntityServiceInterface $service,
-        Form $entityForm,
-        Form $deleteForm
-    ) {
+    public function __construct(EntityServiceInterface $service)
+    {
         $this->service = $service;
-        $this->entityForm = $entityForm;
-        $this->deleteForm = $deleteForm;
     }
 
     /**
@@ -97,18 +87,24 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         //get query params as sent by bootstrap-table
         $params = $this->request->getQueryParams();
-        $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
-        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
+        if (! isset($params['limit']) && ! isset($params['offset'])) {
+            //send data without pagination
+            return new JsonResponse($this->service->findAll([], $params, false));
 
-        /** @var Paginator $paginator */
-        $paginator = $this->service->findAll([], $params, true);
-        $paginator->setItemCountPerPage($limit);
-        $paginator->setCurrentPageNumber(intval($offset / $limit));
+        } else {
+            $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
+            $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
 
-        return new JsonResponse([
-            'total' => $paginator->getTotalItemCount(),
-            'rows' => (array)$paginator->getCurrentItems()
-        ]);
+            /** @var Paginator $paginator */
+            $paginator = $this->service->findAll([], $params, true);
+            $paginator->setItemCountPerPage($limit);
+            $paginator->setCurrentPageNumber(intval($offset / $limit) + 1);
+
+            return new JsonResponse([
+                'total' => $paginator->getTotalItemCount(),
+                'rows' => (array)$paginator->getCurrentItems()
+            ]);
+        }
     }
 
     /**
@@ -117,13 +113,14 @@ abstract class EntityManageBaseController extends AbstractActionController
     public function addAction()
     {
         $request = $this->request;
-        $form = $this->entityForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_FORM_NAME);
         $form->getBaseFieldset()->remove('id');
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
 
-            $form->bind($this->service->getMapper()->getPrototype());
+            //$form->bind($this->service->getMapper()->getPrototype());
             $form->setData($data);
 
             if ($form->isValid()) {
@@ -291,7 +288,8 @@ abstract class EntityManageBaseController extends AbstractActionController
             return $this->generateJsonOutput($this->getEntityIdInvalidErrorMessage(), 'error');
         }
 
-        $form = $this->entityForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_FORM_NAME);
         $form->bind($entity);
 
         if ($request->getMethod() === 'POST') {
@@ -364,7 +362,8 @@ abstract class EntityManageBaseController extends AbstractActionController
     public function deleteAction()
     {
         $request = $this->getRequest();
-        $form = $this->deleteForm;
+        /** @var Form $form */
+        $form = $this->forms(static::ENTITY_DELETE_FORM_NAME);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();

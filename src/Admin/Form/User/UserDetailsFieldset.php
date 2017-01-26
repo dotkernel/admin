@@ -22,7 +22,7 @@ class UserDetailsFieldset extends Fieldset
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = 'user_details_fieldset', array $options = [])
+    public function __construct($name = 'details', array $options = [])
     {
         parent::__construct($name, $options);
     }

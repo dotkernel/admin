@@ -19,45 +19,6 @@ return [
         'factories' => [
             Application::class => ApplicationFactory::class,
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
-
-            /** Admin entity related dependencies */
-            \Dot\Admin\Form\Admin\AdminForm::class =>
-                \Dot\Admin\Factory\Admin\AdminFormFactory::class,
-
-            \Dot\Admin\Form\Admin\AdminFieldset::class =>
-                \Dot\Admin\Factory\Admin\AdminFieldsetFactory::class,
-
-            \Dot\Admin\Form\Admin\AdminInputFilter::class =>
-                \Dot\Admin\Factory\Admin\AdminInputFilterFactory::class,
-
-            /** User entity related dependencies */
-            \Dot\Admin\Form\User\UserDetailsInputFilter::class =>
-                \Dot\Admin\Factory\User\UserDetailsInputFilterFactory::class,
-
-            \Dot\Admin\Form\User\UserInputFilter::class =>
-                \Dot\Admin\Factory\User\UserInputFilterFactory::class,
-
-            \Dot\Admin\Form\User\UserDetailsFieldset::class =>
-                \Dot\Admin\Factory\User\UserDetailsFieldsetFactory::class,
-
-            \Dot\Admin\Form\User\UserFieldset::class =>
-                \Dot\Admin\Factory\User\UserFieldsetFactory::class,
-
-            \Dot\Admin\Form\User\UserForm::class =>
-                \Dot\Admin\Factory\User\UserFormFactory::class,
-
-            \Dot\Admin\Service\Listener\AdminServiceListener::class =>
-                \Dot\Admin\Factory\AdminServiceListenerFactory::class,
-
-        ],
-
-        'delegators' => [
-            'dot-ems.service.user' => [
-                \Dot\Admin\Factory\User\UserServiceDelegator::class,
-            ],
-            'dot-ems.service.admin' => [
-                \Dot\Admin\Factory\Admin\AdminServiceDelegator::class,
-            ]
         ],
     ],
 ];
