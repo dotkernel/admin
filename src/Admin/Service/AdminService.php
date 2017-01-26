@@ -9,12 +9,16 @@
 
 namespace Dot\Admin\Service;
 
-use Dot\Admin\Entity\AdminEntity;
+use Dot\Admin\Entity\Admin\AdminEntity;
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService
  * @package Dot\Authentication\Service
+ *
+ * @Service
  */
 class AdminService extends AbstractEntityService
 {
@@ -45,6 +49,8 @@ class AdminService extends AbstractEntityService
     /**
      * @param PasswordInterface $passwordService
      * @return $this
+     *
+     * @Inject({PasswordInterface::class})
      */
     public function setPasswordService(PasswordInterface $passwordService)
     {
