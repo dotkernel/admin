@@ -39,8 +39,6 @@ class UserForm extends Form
 
     public function init()
     {
-        //$this->userFieldset->setPriority('details', -5);
-
         $csrf = new Csrf('user_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,

@@ -105,6 +105,9 @@ return [
 
                                         'object' => \Dot\Admin\Entity\User\UserDetailsEntity::class,
                                         'hydrator' => \Dot\Hydrator\ClassMethodsCamelCase::class,
+                                    ],
+                                    'flags' => [
+                                        'priority' => -5,
                                     ]
                                 ]
                             ]
