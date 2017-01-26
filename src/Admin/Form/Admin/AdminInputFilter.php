@@ -10,7 +10,6 @@
 namespace Dot\Admin\Form\Admin;
 
 use Zend\InputFilter\InputFilter;
-use Zend\Validator\AbstractValidator;
 
 /**
  * Class AdminInputFilter
@@ -34,23 +33,6 @@ class AdminInputFilter extends InputFilter
     const PASSWORD_LENGTH_LIMIT = 'Password must have at least 4 and up to 150 characters';
     const PASSWORD_VERIFY_REQUIRED = 'Password confirmation is required and cannot be empty';
     const PASSWORD_VERIFY_MISMATCH = 'Password confirmation does not match';
-
-    /** @var  AbstractValidator */
-    protected $emailValidator;
-
-    /** @var  AbstractValidator */
-    protected $usernameValidator;
-
-    /**
-     * AdminInputFilter constructor.
-     * @param AbstractValidator|null $emailValidator
-     * @param AbstractValidator|null $usernameValidator
-     */
-    public function __construct($emailValidator = null, $usernameValidator = null)
-    {
-        $this->usernameValidator = $usernameValidator;
-        $this->emailValidator = $emailValidator;
-    }
 
     public function init()
     {
@@ -86,14 +68,17 @@ class AdminInputFilter extends InputFilter
                         'pattern' => '/^[a-zA-Z0-9-_]+$/',
                         'message' => static::USERNAME_INVALID,
                     ]
-                ]
+                ],
+                [
+                    'name' => 'EmsNoRecordExists',
+                    'options' => [
+                        'key' => 'username',
+                        'service' => 'dot-ems.service.admin',
+                        'message' => static::USERNAME_TAKEN
+                    ],
+                ],
             ],
         ]);
-
-        if ($this->usernameValidator) {
-            $this->usernameValidator->setMessage(static::USERNAME_TAKEN);
-            $this->get('username')->getValidatorChain()->attach($this->usernameValidator);
-        }
 
         $this->add([
             'name' => 'email',
@@ -114,13 +99,16 @@ class AdminInputFilter extends InputFilter
                         'message' => static::EMAIL_INVALID,
                     ]
                 ],
+                [
+                    'name' => 'EmsNoRecordExists',
+                    'options' => [
+                        'key' => 'email',
+                        'service' => 'dot-ems.service.admin',
+                        'message' => static::EMAIL_TAKEN,
+                    ],
+                ],
             ],
         ]);
-
-        if ($this->emailValidator) {
-            $this->emailValidator->setMessage(static::EMAIL_TAKEN);
-            $this->get('email')->getValidatorChain()->attach($this->emailValidator);
-        }
 
         $this->add([
             'name' => 'firstName',

@@ -231,12 +231,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-annotated-services.git",
-                "reference": "1a0f99916534ccdc91dba1695c81323a09383b1c"
+                "reference": "2a7634219c46bd0782feb04fc5a06dea7b4282e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-annotated-services/zipball/1a0f99916534ccdc91dba1695c81323a09383b1c",
-                "reference": "1a0f99916534ccdc91dba1695c81323a09383b1c",
+                "url": "https://api.github.com/repos/dotkernel/dot-annotated-services/zipball/2a7634219c46bd0782feb04fc5a06dea7b4282e3",
+                "reference": "2a7634219c46bd0782feb04fc5a06dea7b4282e3",
                 "shasum": ""
             },
             "require": {
@@ -291,7 +291,7 @@
                 "source": "https://github.com/dotkernel/dot-annotated-services/tree/master",
                 "issues": "https://github.com/dotkernel/dot-annotated-services/issues"
             },
-            "time": "2017-01-21 15:34:17"
+            "time": "2017-01-26 01:24:57"
         },
         {
             "name": "dotkernel/dot-authentication",
@@ -868,12 +868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "1cdad31accc30f1d5c30c2d81b3fc8c60ece30ae"
+                "reference": "189ca5369087e45de7a2cf86aa475e83d629073c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/1cdad31accc30f1d5c30c2d81b3fc8c60ece30ae",
-                "reference": "1cdad31accc30f1d5c30c2d81b3fc8c60ece30ae",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/189ca5369087e45de7a2cf86aa475e83d629073c",
+                "reference": "189ca5369087e45de7a2cf86aa475e83d629073c",
                 "shasum": ""
             },
             "require": {
@@ -925,7 +925,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/develop",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-01-24 17:19:38"
+            "time": "2017-01-26 01:00:17"
         },
         {
             "name": "dotkernel/dot-event",
@@ -1788,12 +1788,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-validator.git",
-                "reference": "d622db6c243f62e9f8b0a8acf3e5b4737df8c7b2"
+                "reference": "469dfee03ddae3e311a4e9ddd05faa232388de62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-validator/zipball/d622db6c243f62e9f8b0a8acf3e5b4737df8c7b2",
-                "reference": "d622db6c243f62e9f8b0a8acf3e5b4737df8c7b2",
+                "url": "https://api.github.com/repos/dotkernel/dot-validator/zipball/469dfee03ddae3e311a4e9ddd05faa232388de62",
+                "reference": "469dfee03ddae3e311a4e9ddd05faa232388de62",
                 "shasum": ""
             },
             "require": {
@@ -1802,6 +1802,9 @@
                 "zendframework/zend-validator": "^2.8"
             },
             "require-dev": {
+                "dotkernel/dot-ems": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-event": "0.6.x-dev",
+                "dotkernel/dot-helpers": "0.6.x-dev",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.5"
             },
@@ -1844,7 +1847,7 @@
                 "source": "https://github.com/dotkernel/dot-validator/tree/master",
                 "issues": "https://github.com/dotkernel/dot-validator/issues"
             },
-            "time": "2017-01-24 21:38:30"
+            "time": "2017-01-25 16:26:11"
         },
         {
             "name": "fig/http-message-util",
@@ -2041,28 +2044,29 @@
         },
         {
             "name": "ocramius/proxy-manager",
-            "version": "2.0.1",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/ProxyManager.git",
-                "reference": "6c89b7bd6039d8047b1473e2074cb56baa4bc15d"
+                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/6c89b7bd6039d8047b1473e2074cb56baa4bc15d",
-                "reference": "6c89b7bd6039d8047b1473e2074cb56baa4bc15d",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/a55d08229f4f614bf335759ed0cf63378feeb2e6",
+                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6",
                 "shasum": ""
             },
             "require": {
                 "ocramius/package-versions": "^1.0",
-                "php": "~7.0",
-                "zendframework/zend-code": "~3.0"
+                "php": "7.0.0 - 7.0.5 || ^7.0.7",
+                "zendframework/zend-code": "3.0.0 - 3.0.2 || ^3.0.4"
             },
             "require-dev": {
                 "couscous/couscous": "^1.4.0",
                 "ext-phar": "*",
-                "phpunit/phpunit": "^5.1.3",
-                "squizlabs/php_codesniffer": "^2.5.1"
+                "phpbench/phpbench": "^0.11.2",
+                "phpunit/phpunit": "^5.4.6",
+                "squizlabs/php_codesniffer": "^2.6.0"
             },
             "suggest": {
                 "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects",
@@ -2101,7 +2105,7 @@
                 "proxy pattern",
                 "service proxies"
             ],
-            "time": "2016-02-08T13:50:05+00:00"
+            "time": "2016-11-04T15:53:15+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -5458,16 +5462,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.32",
+            "version": "4.8.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1"
+                "reference": "6381a99bd2a398d2994b454ad6d57c73f5a7de3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
-                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6381a99bd2a398d2994b454ad6d57c73f5a7de3d",
+                "reference": "6381a99bd2a398d2994b454ad6d57c73f5a7de3d",
                 "shasum": ""
             },
             "require": {
@@ -5526,7 +5530,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-22T08:37:05+00:00"
+            "time": "2017-01-25T19:17:47+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5870,16 +5874,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
+                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/938df7a6478e72795e5f8266cff24d06e3136f2e",
+                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e",
                 "shasum": ""
             },
             "require": {
@@ -5919,7 +5923,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11T19:50:13+00:00"
+            "time": "2016-11-15T06:55:36+00:00"
         },
         {
             "name": "sebastian/version",

@@ -7,7 +7,7 @@
  * Time: 7:38 PM
  */
 
-namespace Dot\Admin\Entity;
+namespace Dot\Admin\Entity\Admin;
 
 use Dot\Ems\Entity\SearchableColumnsProvider;
 use Dot\Ems\Entity\SortableColumnsProvider;

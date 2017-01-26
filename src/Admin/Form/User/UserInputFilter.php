@@ -32,23 +32,6 @@ class UserInputFilter extends InputFilter
     const PASSWORD_VERIFY_REQUIRED = 'Password confirmation is required and cannot be empty';
     const PASSWORD_VERIFY_MISMATCH = 'Password confirmation does not match';
 
-    /** @var  AbstractValidator */
-    protected $emailValidator;
-
-    /** @var  AbstractValidator */
-    protected $usernameValidator;
-
-    /**
-     * AdminInputFilter constructor.
-     * @param AbstractValidator|null $emailValidator
-     * @param AbstractValidator|null $usernameValidator
-     */
-    public function __construct($emailValidator = null, $usernameValidator = null)
-    {
-        $this->usernameValidator = $usernameValidator;
-        $this->emailValidator = $emailValidator;
-    }
-
     public function init()
     {
         $this->add([
@@ -56,7 +39,7 @@ class UserInputFilter extends InputFilter
             'required' => false,
         ]);
 
-        $username = [
+         $this->add([
             'name' => 'username',
             'filters' => [
                 ['name' => 'StringTrim'],
@@ -83,18 +66,19 @@ class UserInputFilter extends InputFilter
                         'pattern' => '/^[a-zA-Z0-9-_]+$/',
                         'message' => static::USERNAME_INVALID,
                     ]
+                ],
+                [
+                    'name' => 'EmsNoRecordExists',
+                    'options' => [
+                        'key' => 'username',
+                        'service' => 'dot-ems.service.user',
+                        'message' => static::USERNAME_TAKEN,
+                    ]
                 ]
             ],
-        ];
+         ]);
 
-        if ($this->usernameValidator) {
-            $this->usernameValidator->setMessage(static::USERNAME_TAKEN);
-            $username['validators'][] = $this->usernameValidator;
-        }
-
-        $this->add($username);
-
-        $email = [
+         $this->add([
             'name' => 'email',
             'filters' => [
                 ['name' => 'StringTrim'],
@@ -113,15 +97,16 @@ class UserInputFilter extends InputFilter
                         'message' => static::EMAIL_INVALID,
                     ]
                 ],
+                [
+                    'name' => 'EmsNoRecordExists',
+                    'options' => [
+                        'key' => 'email',
+                        'service' => 'dot-ems.service.user',
+                        'message' => static::EMAIL_TAKEN,
+                    ]
+                ]
             ],
-        ];
-
-        if ($this->emailValidator) {
-            $this->emailValidator->setMessage(static::EMAIL_TAKEN);
-            $email['validators'][] = $this->emailValidator;
-        }
-
-        $this->add($email);
+         ]);
 
         $this->add([
             'name' => 'password',

@@ -2,17 +2,31 @@
 
 return [
     'dot_ems' => [
+
+        'mapper_manager' => [
+            'factories' => [
+                \Dot\Admin\Mapper\EntityDbMapper::class => \Dot\Ems\Factory\RelationalDbMapperFactory::class,
+            ],
+            'aliases' => [
+                'EntityDbMapper' => \Dot\Admin\Mapper\EntityDbMapper::class,
+            ]
+        ],
+
         'services' => [
             'user' => [
                 'atomic_operations' => true,
                 'type' => \Dot\Admin\Service\UserService::class,
 
+                'service_listeners' => [
+                    \Dot\Admin\Service\Listener\EntityServiceListener::class,
+                ],
+
                 'mapper' => [
-                    'RelationalDbMapper' => [
+                    'EntityDbMapper' => [
                         'adapter' => 'database',
                         'table' => 'user',
 
-                        'entity_prototype' => \Dot\Admin\Entity\UserEntity::class,
+                        'entity_prototype' => \Dot\Admin\Entity\User\UserEntity::class,
                         'entity_hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
 
                         'relations' => [
@@ -29,7 +43,7 @@ return [
                                         'table' => 'user_details',
 
                                         'identifier_name' => 'userId',
-                                        'entity_prototype' => \Dot\Admin\Entity\UserDetailsEntity::class,
+                                        'entity_prototype' => \Dot\Admin\Entity\User\UserDetailsEntity::class,
                                     ],
                                 ],
                             ],
@@ -43,15 +57,15 @@ return [
                 'type' => \Dot\Admin\Service\AdminService::class,
 
                 'service_listeners' => [
-                    \Dot\Admin\Service\Listener\AdminServiceListener::class,
+                    \Dot\Admin\Service\Listener\EntityServiceListener::class,
                 ],
 
                 'mapper' => [
-                    'DbMapper' => [
+                    'EntityDbMapper' => [
                         'adapter' => 'database',
                         'table' => 'admin',
 
-                        'entity_prototype' => \Dot\Admin\Entity\AdminEntity::class,
+                        'entity_prototype' => \Dot\Admin\Entity\Admin\AdminEntity::class,
                         'entity_hydrator' => \Dot\User\Entity\UserEntityHydrator::class,
                     ]
                 ],

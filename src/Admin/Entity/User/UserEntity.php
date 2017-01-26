@@ -7,7 +7,7 @@
  * Time: 9:27 PM
  */
 
-namespace Dot\Admin\Entity;
+namespace Dot\Admin\Entity\User;
 
 use Dot\Ems\Entity\IgnorePropertyProvider;
 use Dot\Ems\Entity\SearchableColumnsProvider;

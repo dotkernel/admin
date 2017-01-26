@@ -10,7 +10,6 @@
 namespace Dot\Admin\Controller;
 
 use Dot\Admin\Service\EntityServiceInterface;
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -88,18 +87,24 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         //get query params as sent by bootstrap-table
         $params = $this->request->getQueryParams();
-        $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
-        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
+        if (! isset($params['limit']) && ! isset($params['offset'])) {
+            //send data without pagination
+            return new JsonResponse($this->service->findAll([], $params, false));
 
-        /** @var Paginator $paginator */
-        $paginator = $this->service->findAll([], $params, true);
-        $paginator->setItemCountPerPage($limit);
-        $paginator->setCurrentPageNumber(intval($offset / $limit));
+        } else {
+            $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
+            $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
 
-        return new JsonResponse([
-            'total' => $paginator->getTotalItemCount(),
-            'rows' => (array)$paginator->getCurrentItems()
-        ]);
+            /** @var Paginator $paginator */
+            $paginator = $this->service->findAll([], $params, true);
+            $paginator->setItemCountPerPage($limit);
+            $paginator->setCurrentPageNumber(intval($offset / $limit) + 1);
+
+            return new JsonResponse([
+                'total' => $paginator->getTotalItemCount(),
+                'rows' => (array)$paginator->getCurrentItems()
+            ]);
+        }
     }
 
     /**

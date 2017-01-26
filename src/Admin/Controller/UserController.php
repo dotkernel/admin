@@ -9,12 +9,17 @@
 
 namespace Dot\Admin\Controller;
 
-use Dot\Admin\Entity\UserEntity;
+use Dot\Admin\Entity\User\UserEntity;
 use Dot\Admin\Form\User\UserForm;
+use Dot\Admin\Service\EntityServiceInterface;
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 
 /**
  * Class UserController
  * @package Dot\Authentication\User\Controller
+ *
+ * @Service
  */
 class UserController extends EntityManageBaseController
 {
@@ -22,6 +27,31 @@ class UserController extends EntityManageBaseController
     const ENTITY_NAME_PLURAL = 'users';
     const ENTITY_ROUTE_NAME = 'f_user';
     const ENTITY_TEMPLATE_NAME = 'entity-manage::user-table';
+
+    const ENTITY_FORM_NAME = 'user';
+    const ENTITY_DELETE_FORM_NAME = 'confirm_delete';
+
+    /**
+     * UserController constructor.
+     * @param EntityServiceInterface $service
+     *
+     * @Inject({"dot-ems.service.user"})
+     */
+    public function __construct(EntityServiceInterface $service)
+    {
+        parent::__construct($service);
+    }
+
+    /**
+     * @param bool $debug
+     * @return EntityManageBaseController
+     *
+     * @Inject({"config.debug"})
+     */
+    public function setDebug($debug)
+    {
+        return parent::setDebug($debug);
+    }
 
     /**
      * @param UserForm $form

@@ -18,11 +18,11 @@ use Zend\Form\Fieldset;
 class UserFieldset extends Fieldset
 {
     /**
-     * AdminFieldset constructor.
+     * UserFieldset constructor.
      * @param string $name
      * @param array $options
      */
-    public function __construct($name = 'user_fieldset', array $options = [])
+    public function __construct($name = 'user', array $options = [])
     {
         parent::__construct($name, $options);
     }

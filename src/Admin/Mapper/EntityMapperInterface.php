@@ -1,19 +1,21 @@
 <?php
 /**
  * @copyright: DotKernel
- * @library: dotkernel/dot-admin
+ * @library: dot-admin
  * @author: n3vrax
- * Date: 11/21/2016
- * Time: 9:28 PM
+ * Date: 1/26/2017
+ * Time: 3:07 AM
  */
 
 namespace Dot\Admin\Mapper;
 
+use Dot\Ems\Mapper\MapperInterface;
+
 /**
- * Interface EntityMapperExtensionInterface
- * @package Dot\Authentication\Mapper
+ * Interface EntityMapperInterface
+ * @package Dot\Admin\Mapper
  */
-interface EntityOperationsMapperInterface
+interface EntityMapperInterface extends MapperInterface
 {
     /**
      * @param $fieldName

@@ -9,7 +9,7 @@
 
 namespace Dot\Admin\Controller;
 
-use Dot\Admin\Entity\AdminEntity;
+use Dot\Admin\Entity\Admin\AdminEntity;
 use Dot\Admin\Form\Admin\AdminForm;
 use Dot\Admin\Service\EntityServiceInterface;
 use Dot\AnnotatedServices\Annotation\Inject;
@@ -29,7 +29,7 @@ class AdminController extends EntityManageBaseController
     const ENTITY_TEMPLATE_NAME = 'entity-manage::admin-table';
 
     const ENTITY_FORM_NAME = 'admin';
-    const ENTITY_DELETE_FORM_NAME = 'admin_delete';
+    const ENTITY_DELETE_FORM_NAME = 'confirm_delete';
 
     /**
      * AdminController constructor.

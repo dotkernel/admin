@@ -23,7 +23,7 @@ use Zend\Log\Logger;
  *
  * @Service
  */
-class AdminServiceListener extends AbstractEntityServiceListener
+class EntityServiceListener extends AbstractEntityServiceListener
 {
     /** @var  Logger */
     protected $actionLogger;
