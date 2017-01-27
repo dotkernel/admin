@@ -7,7 +7,7 @@
  * Time: 9:09 PM
  */
 
-namespace Dot\Admin\Service\Listener;
+namespace Dot\Admin\Listener;
 
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
@@ -42,15 +42,6 @@ class EntityServiceListener extends AbstractEntityServiceListener
     {
         $this->actionLogger = $actionLogger;
         $this->authenticationService = $authenticationService;
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
-    public function onPreCreate(EntityServiceEvent $e)
-    {
-        // TODO: Implement onPreCreate() method.
     }
 
     /**
@@ -120,20 +111,6 @@ class EntityServiceListener extends AbstractEntityServiceListener
      * @param EntityServiceEvent $e
      * @return void
      */
-    public function onCreateError(EntityServiceEvent $e)
-    {
-        // TODO: Implement onCreateError() method.
-    }
-
-    public function onPreUpdate(EntityServiceEvent $e)
-    {
-        // TODO: Implement onPreUpdate() method.
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
     public function onPostUpdate(EntityServiceEvent $e)
     {
         /** @var EntityService $service */
@@ -153,41 +130,5 @@ class EntityServiceListener extends AbstractEntityServiceListener
                 $this->getTargetExtra($service, $target)
             )
         );
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
-    public function onUpdateError(EntityServiceEvent $e)
-    {
-        // TODO: Implement onUpdateError() method.
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
-    public function onPreDelete(EntityServiceEvent $e)
-    {
-        // TODO: Implement onPreDelete() method.
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
-    public function onPostDelete(EntityServiceEvent $e)
-    {
-        // TODO: Implement onPostDelete() method.
-    }
-
-    /**
-     * @param EntityServiceEvent $e
-     * @return void
-     */
-    public function onDeleteError(EntityServiceEvent $e)
-    {
-        // TODO: Implement onDeleteError() method.
     }
 }

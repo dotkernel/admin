@@ -13,13 +13,13 @@ $eventManager = $container->get(\Zend\EventManager\EventManagerInterface::class)
  * This authentication listener prepares the request for authentication adapter
  */
 /** @var  $authenticationListeners */
-$authenticationListeners = $container->get(\Dot\Admin\Authentication\Listener\AuthenticationListener::class);
+$authenticationListeners = $container->get(\Dot\Admin\Listener\AuthenticationListener::class);
 $authenticationListeners->attach($eventManager);
 
 $sharedEventManager = $eventManager->getSharedManager();
 $sharedEventManager->attach(
     \Dot\Authentication\Web\ErrorHandler\UnauthorizedHandler::class,
     \Dot\Authentication\Web\Event\AuthenticationEvent::EVENT_AUTHENTICATION_UNAUTHORIZED,
-    new \Dot\Admin\Authentication\Listener\UnauthorizedListener(),
+    new \Dot\Admin\Listener\UnauthorizedListener(),
     10
 );

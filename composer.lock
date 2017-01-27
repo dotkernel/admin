@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a46455a5dc86c0b47a463a1709c907a",
+    "content-hash": "8130b5b7f8d11db6efffa1e5a38c22d8",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -560,20 +560,21 @@
         },
         {
             "name": "dotkernel/dot-controller",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller.git",
-                "reference": "bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d"
+                "reference": "93aea9dd6e5da62b00d98a397e5ab9bc564fa52e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d",
-                "reference": "bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/93aea9dd6e5da62b00d98a397e5ab9bc564fa52e",
+                "reference": "93aea9dd6e5da62b00d98a397e5ab9bc564fa52e",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
+                "dotkernel/dot-event": "0.6.x-dev",
                 "php": "^5.6 || ^7.0",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-servicemanager": "^3.0"
@@ -606,7 +607,7 @@
                 }
             ],
             "description": "Controller like middleware with plugin support",
-            "time": "2017-01-19 19:19:14"
+            "time": "2017-01-27 17:41:39"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authentication",
@@ -706,16 +707,16 @@
         },
         {
             "name": "dotkernel/dot-controller-plugin-flashmessenger",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-flashmessenger.git",
-                "reference": "49338082748c5eb02e85630fd04e13ad43a7210a"
+                "reference": "41479e1a5234c78ef583d774240d6b9a03804def"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-flashmessenger/zipball/49338082748c5eb02e85630fd04e13ad43a7210a",
-                "reference": "49338082748c5eb02e85630fd04e13ad43a7210a",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-flashmessenger/zipball/41479e1a5234c78ef583d774240d6b9a03804def",
+                "reference": "41479e1a5234c78ef583d774240d6b9a03804def",
                 "shasum": ""
             },
             "require": {
@@ -750,7 +751,7 @@
                 }
             ],
             "description": "Flashmessenger DK controller plugin",
-            "time": "2017-01-19 19:29:11"
+            "time": "2017-01-27 17:43:46"
         },
         {
             "name": "dotkernel/dot-controller-plugin-forms",
@@ -868,12 +869,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "189ca5369087e45de7a2cf86aa475e83d629073c"
+                "reference": "f6116b4029326d33d50fc92a886c9c478f02b4bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/189ca5369087e45de7a2cf86aa475e83d629073c",
-                "reference": "189ca5369087e45de7a2cf86aa475e83d629073c",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/f6116b4029326d33d50fc92a886c9c478f02b4bf",
+                "reference": "f6116b4029326d33d50fc92a886c9c478f02b4bf",
                 "shasum": ""
             },
             "require": {
@@ -925,7 +926,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/develop",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-01-26 01:00:17"
+            "time": "2017-01-27 17:58:28"
         },
         {
             "name": "dotkernel/dot-event",
@@ -933,19 +934,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-event.git",
-                "reference": "77828a61d71341f442256d7d6985543fac02ccac"
+                "reference": "f50e15524d5bf6bf9b5f2aa7b3c23f794fbeb874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/77828a61d71341f442256d7d6985543fac02ccac",
-                "reference": "77828a61d71341f442256d7d6985543fac02ccac",
+                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/f50e15524d5bf6bf9b5f2aa7b3c23f794fbeb874",
+                "reference": "f50e15524d5bf6bf9b5f2aa7b3c23f794fbeb874",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
                 "php": "^5.6 || ^7.0",
                 "psr/http-message": "^1.0",
-                "zendframework/zend-eventmanager": "^3.0"
+                "zendframework/zend-eventmanager": "^3.0",
+                "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
@@ -973,7 +975,7 @@
                 }
             ],
             "description": "Common base event objects based on Zend Event Manager",
-            "time": "2017-01-19 20:34:03"
+            "time": "2017-01-27 14:11:39"
         },
         {
             "name": "dotkernel/dot-filter",
@@ -1716,16 +1718,16 @@
         },
         {
             "name": "dotkernel/dot-user",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "1b013d9db0d8c2564942d266c52be84085a325f2"
+                "reference": "ed76d41eb7c6f5b251f4b945469b1e4a099b2f73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/1b013d9db0d8c2564942d266c52be84085a325f2",
-                "reference": "1b013d9db0d8c2564942d266c52be84085a325f2",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/ed76d41eb7c6f5b251f4b945469b1e4a099b2f73",
+                "reference": "ed76d41eb7c6f5b251f4b945469b1e4a099b2f73",
                 "shasum": ""
             },
             "require": {
@@ -1736,21 +1738,23 @@
                 "dotkernel/dot-controller": "0.6.x-dev",
                 "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
                 "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
-                "dotkernel/dot-controller-plugin-flashmessenger": "0.6.x-dev",
-                "dotkernel/dot-ems": "0.6.x-dev",
+                "dotkernel/dot-controller-plugin-flashmessenger": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-controller-plugin-forms": "0.6.x-dev",
+                "dotkernel/dot-ems": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-event": "0.6.x-dev",
+                "dotkernel/dot-filter": "0.6.x-dev",
                 "dotkernel/dot-flashmessenger": "0.6.x-dev",
+                "dotkernel/dot-form": "0.6.x-dev",
                 "dotkernel/dot-helpers": "0.6.x-dev",
+                "dotkernel/dot-hydrator": "0.6.x-dev",
+                "dotkernel/dot-inputfilter": "0.6.x-dev",
+                "dotkernel/dot-validator": "0.6.x-dev",
                 "php": "^5.6 || ^7.0",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-crypt": "^3.1",
                 "zendframework/zend-db": "^2.8",
                 "zendframework/zend-diactoros": "^1.3",
                 "zendframework/zend-expressive-template": "^1.0",
-                "zendframework/zend-filter": "^2.6",
-                "zendframework/zend-form": "^2.9",
-                "zendframework/zend-hydrator": "^2.2",
-                "zendframework/zend-inputfilter": "^2.7",
                 "zendframework/zend-math": "^3.0",
                 "zendframework/zend-servicemanager": "^3.0"
             },
@@ -1780,7 +1784,7 @@
                 }
             ],
             "description": "Complete configurable user module for DK built around dot-authentication-web",
-            "time": "2017-01-19 21:21:39"
+            "time": "2017-01-27 17:49:08"
         },
         {
             "name": "dotkernel/dot-validator",
@@ -6205,6 +6209,24 @@
             "alias_normalized": "0.6.9999999.9999999-dev",
             "version": "dev-develop",
             "package": "dotkernel/dot-log"
+        },
+        {
+            "alias": "0.6.x-dev",
+            "alias_normalized": "0.6.9999999.9999999-dev",
+            "version": "dev-develop",
+            "package": "dotkernel/dot-controller"
+        },
+        {
+            "alias": "0.6.x-dev",
+            "alias_normalized": "0.6.9999999.9999999-dev",
+            "version": "dev-develop",
+            "package": "dotkernel/dot-controller-plugin-flashmessenger"
+        },
+        {
+            "alias": "0.6.x-dev",
+            "alias_normalized": "0.6.9999999.9999999-dev",
+            "version": "dev-develop",
+            "package": "dotkernel/dot-user"
         }
     ],
     "minimum-stability": "stable",

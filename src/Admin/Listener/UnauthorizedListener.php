@@ -7,7 +7,7 @@
  * Time: 3:23 PM
  */
 
-namespace Dot\Admin\Authentication\Listener;
+namespace Dot\Admin\Listener;
 
 use Dot\Authentication\Web\Event\AuthenticationEvent;
 use Zend\Diactoros\Response;

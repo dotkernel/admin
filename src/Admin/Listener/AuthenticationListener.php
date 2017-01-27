@@ -7,7 +7,7 @@
  * Time: 9:55 PM
  */
 
-namespace Dot\Admin\Authentication\Listener;
+namespace Dot\Admin\Listener;
 
 use Dot\Authentication\Adapter\DbTable\DbCredentials;
 use Dot\Authentication\Web\Action\LoginAction;

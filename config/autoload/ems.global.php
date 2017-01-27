@@ -17,8 +17,8 @@ return [
                 'atomic_operations' => true,
                 'type' => \Dot\Admin\Service\UserService::class,
 
-                'service_listeners' => [
-                    \Dot\Admin\Service\Listener\EntityServiceListener::class,
+                'event_listeners' => [
+                    \Dot\Admin\Listener\EntityServiceListener::class,
                 ],
 
                 'mapper' => [
@@ -56,8 +56,8 @@ return [
                 'atomic_operations' => true,
                 'type' => \Dot\Admin\Service\AdminService::class,
 
-                'service_listeners' => [
-                    \Dot\Admin\Service\Listener\EntityServiceListener::class,
+                'event_listeners' => [
+                    \Dot\Admin\Listener\EntityServiceListener::class,
                 ],
 
                 'mapper' => [

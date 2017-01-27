@@ -5,7 +5,7 @@ return [
     'dependencies' => [
         //whatever dependencies you need additionally
         'factories' => [
-            \Dot\Admin\Authentication\Listener\AuthenticationListener::class =>
+            \Dot\Admin\Listener\AuthenticationListener::class =>
                 \Zend\ServiceManager\Factory\InvokableFactory::class,
         ],
     ],
