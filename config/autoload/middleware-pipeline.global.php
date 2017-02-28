@@ -41,7 +41,6 @@ return [
                 // - modifications to outgoing responses
                 Helper\ServerUrlMiddleware::class,
                 \Dot\Session\SessionMiddleware::class,
-                \Dot\FlashMessenger\FlashMessengerMiddleware::class,
             ],
             'priority' => 10000,
         ],

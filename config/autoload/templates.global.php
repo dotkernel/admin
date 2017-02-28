@@ -17,16 +17,16 @@ return [
     'templates' => [
         'extension' => 'html.twig',
         'paths' => [
-            'app' => ['templates/app'],
-            'layout' => ['templates/layout'],
-            'error' => ['templates/error'],
-            'partial' => ['templates/partial'],
-            'entity-manage' => ['templates/entity-manage'],
+            'app' => [__DIR__ . '/../../templates/app'],
+            'layout' => [__DIR__ . '/../../templates/layout'],
+            'error' => [__DIR__ . '/../../templates/error'],
+            'partial' => [__DIR__ . '/../../templates/partial'],
+            'entity-manage' => [__DIR__ . '/../../templates/entity-manage'],
         ],
     ],
 
     'twig' => [
-        'cache_dir' => 'data/cache/twig',
+        'cache_dir' => __DIR__ . '/../../data/cache/twig',
         'assets_url' => '/',
         'assets_version' => null,
         'extensions' => [

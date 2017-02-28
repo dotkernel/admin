@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^5.5 || ^7.0",
+    "php": "^7.1",
     "roave/security-advisories": "dev-master",
     "zendframework/zend-expressive": "^1.0",
     "zendframework/zend-expressive-fastroute": "^1.0",
@@ -20,43 +20,44 @@
     "zendframework/zend-i18n": "^2.7",
     "zendframework/zend-i18n-resources": "^2.5",
     "zendframework/zend-captcha": "^2.6",
-    "zendframework/zendservice-recaptcha": "^2.0",
+    "zendframework/zendservice-recaptcha": "^3.0",
     "zendframework/zend-text": "^2.6",
     "zendframework/zend-stdlib": "^3.0",
     "zendframework/zend-psr7bridge": "^0.2.2",
-    "zendframework/zend-config": "^2.6",
+    "zendframework/zend-config": "^3.1",
     "zendframework/zend-config-aggregator": "^0.2.0",
     "zendframework/zend-component-installer": "^0.6.0 || ~1.0",
 
-    "dotkernel/dot-helpers": "0.6.x-dev",
-    "dotkernel/dot-ems": "dev-develop as 0.6.x-dev",
-    "dotkernel/dot-log": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-annotated-services": "0.6.x-dev",
+    "dotkernel/dot-authentication": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-authentication-service": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-authentication-web": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-authorization": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-cache": "0.6.x-dev",
-    "dotkernel/dot-filter": "0.6.x-dev",
-    "dotkernel/dot-validator": "0.6.x-dev",
-    "dotkernel/dot-inputfilter": "0.6.x-dev",
-    "dotkernel/dot-hydrator": "0.6.x-dev",
-    "dotkernel/dot-form": "0.6.x-dev",
-    "dotkernel/dot-event": "0.6.x-dev",
-    "dotkernel/dot-session": "0.6.x-dev",
-    "dotkernel/dot-flashmessenger": "0.6.x-dev",
     "dotkernel/dot-controller": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-controller-plugin-flashmessenger": "dev-develop as 0.6.x-dev",
-    "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-mail": "0.6.x-dev",
+    "dotkernel/dot-controller-plugin-authentication": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-controller-plugin-authorization": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-controller-plugin-forms": "0.6.x-dev",
-    "dotkernel/dot-authentication": "0.6.x-dev",
-    "dotkernel/dot-authentication-service": "0.6.x-dev",
-    "dotkernel/dot-authentication-web": "0.6.x-dev",
-    "dotkernel/dot-authorization": "0.6.x-dev",
-    "dotkernel/dot-rbac": "0.6.x-dev",
-    "dotkernel/dot-rbac-guard": "0.6.x-dev",
-    "dotkernel/dot-user": "dev-develop as 0.6.x-dev",
-    "dotkernel/dot-mail": "0.6.x-dev",
-    "dotkernel/dot-navigation": "0.6.x-dev",
-    "dotkernel/dot-twigrenderer": "0.6.x-dev"
+    "dotkernel/dot-controller-plugin-mail": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-controller-plugin-session": "0.6.x-dev",
+    "dotkernel/dot-ems": "dev-reworked as 0.6.x-dev",
+    "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-filter": "0.6.x-dev",
+    "dotkernel/dot-flashmessenger": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-form": "0.6.x-dev",
+    "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-hydrator": "0.6.x-dev",
+    "dotkernel/dot-inputfilter": "0.6.x-dev",
+    "dotkernel/dot-log": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-mail": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-navigation": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-rbac": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-rbac-guard": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-session": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-twigrenderer": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-user": "dev-reworked as 0.6.x-dev",
+    "dotkernel/dot-validator": "0.6.x-dev"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8",
@@ -105,16 +106,21 @@
     {
       "type": "vcs",
       "url": "https://github.com/dotkernel/dot-controller-plugin-forms"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dotkernel/dot-controller-plugin-session"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Dot\\Admin\\": "src/Admin/"
+      "Admin\\App\\": "src/App/",
+      "Admin\\User\\": "src/User/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Dot\\AdminTest\\": "test/AdminTest/"
+      "AppTest\\Admin\\": "test/AdminTest/"
     }
   },
   "scripts": {

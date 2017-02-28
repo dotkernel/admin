@@ -23,17 +23,5 @@ return [
             'path' => '/user[/{action}[/{id:\d+}]]',
             'middleware' => \Dot\Admin\Controller\UserController::class,
         ],
-        //change default route paths for user related stuff into admin
-        //we will use 'user' for frontend users
-        'login_route' => [
-            'path' => '/admin/login',
-        ],
-        'logout_route' => [
-            'path' => '/admin/logout',
-        ],
-        'user_route' => [
-            'path' => '/admin[/{action}[/{id:\d+}]]',
-            'middleware' => [\Dot\Admin\Controller\AdminController::class],
-        ]
     ],
 ];

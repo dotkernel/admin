@@ -20,4 +20,10 @@ use Zend\ConfigAggregator\ConfigAggregator;
 return [
     'debug' => true,
     ConfigAggregator::ENABLE_CACHE => false,
+
+    'dependencies' => [
+        'lazy_services' => [
+            'write_proxy_files' => false,
+        ]
+    ]
 ];
