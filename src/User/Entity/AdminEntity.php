@@ -15,8 +15,12 @@ namespace Admin\User\Entity;
  * Class UserEntity
  * @package Admin\User\Entity
  */
-class UserEntity
+class AdminEntity
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_DELETED = 'deleted';
+
     /** @var  string */
     protected $firstName;
 

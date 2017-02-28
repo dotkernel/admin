@@ -11,8 +11,15 @@ declare(strict_types = 1);
 
 namespace Admin\User;
 
+use Admin\User\Authentication\AuthenticationListener;
+use Admin\User\Entity\AdminEntity;
+use Admin\User\Form\AdminFieldset;
+use Admin\User\Mapper\AdminDbMapper;
 use Dot\Admin\Controller\AdminController;
 use Dot\User\Controller\UserController;
+use Dot\User\Entity\RoleEntity;
+use Dot\User\Factory\UserDbMapperFactory;
+use Dot\User\Factory\UserFieldsetFactory;
 
 /**
  * Class ConfigProvider
@@ -27,12 +34,37 @@ class ConfigProvider
 
             'dot_ems' => $this->getMapperConfig(),
 
+            'dot_authentication' => $this->getAuthenticationConfig(),
+
             'dot_form' => $this->getFormsConfig(),
 
             'routes' => $this->getRoutesConfig(),
 
             'dot_user' => [
+                'user_entity' => AdminEntity::class,
+                'default_roles' => ['admin'],
+                'route_default' => ['route_name' => 'dashboard'],
 
+                'enable_account_confirmation' => false,
+
+                'login_options' => [
+                    'enable_remember' => false,
+                    'allowed_status' => [AdminEntity::STATUS_ACTIVE]
+                ],
+                'register_options' => [
+                    'enable_registration' => false,
+                ],
+                'password_recovery_options' => [
+                    'enable_recovery' => false,
+                ],
+                'template_options' => [
+                    'login_template' => 'user::login'
+                ],
+                'messages_options' => [
+                    'messages' => [
+
+                    ]
+                ]
             ]
         ];
     }
@@ -65,14 +97,52 @@ class ConfigProvider
     public function getMapperConfig(): array
     {
         return [
-
+            'mapper_manager' => [
+                'factories' => [
+                    AdminDbMapper::class => UserDbMapperFactory::class,
+                ],
+                'aliases' => [
+                    AdminEntity::class => AdminDbMapper::class,
+                ]
+            ],
+            'options' => [
+                RoleEntity::class => [
+                    'mapper' => [
+                        'table' => 'admin_role',
+                    ]
+                ],
+            ]
         ];
     }
 
     public function getFormsConfig(): array
     {
         return [
+            'form_manager' => [
+                'factories' => [
+                    AdminFieldset::class => UserFieldsetFactory::class,
+                ],
+                'aliases' => [
+                    'UserFieldset' => AdminFieldset::class,
+                    'AdminFieldset' => AdminFieldset::class,
+                ]
+            ]
+        ];
+    }
 
+    public function getAuthenticationConfig(): array
+    {
+        return [
+            'web' => [
+                'after_login_route' => ['route_name' => 'dashboard'],
+
+                'event_listeners' => [
+                    [
+                        'type' => AuthenticationListener::class,
+                        'priority' => 100,
+                    ]
+                ]
+            ]
         ];
     }
 }
