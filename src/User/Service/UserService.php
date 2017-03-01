@@ -4,40 +4,40 @@
  * @library: dotkernel/dot-admin
  * @author: n3vrax
  * Date: 11/21/2016
- * Time: 9:56 PM
+ * Time: 9:55 PM
  */
 
 namespace Admin\User\Service;
 
-use Admin\Admin\Entity\AdminEntity;
 use Admin\App\Exception\InvalidArgumentException;
+use Admin\User\Entity\UserEntity;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Zend\Crypt\Password\PasswordInterface;
 
 /**
- * Class AdminService
+ * Class UserService
  * @package Dot\Authentication\Service
  *
  * @Service
  */
-class AdminService extends AbstractEntityService
+class UserService extends AbstractEntityService
 {
     /** @var  PasswordInterface */
     protected $passwordService;
 
     /**
-     * @param AdminEntity $entity
+     * @param UserEntity $entity
      * @param array $options
-     * @return AdminEntity
+     * @return UserEntity
      */
     public function save($entity, array $options = [])
     {
-        if (!$entity instanceof AdminEntity) {
-            throw new InvalidArgumentException('AdminService can save only instances of AdminEntity');
+        if (!$entity instanceof UserEntity) {
+            throw new InvalidArgumentException('UserService can save only instances of UserEntity');
         }
 
-        /** @var AdminEntity $entity */
+        /** @var UserEntity $entity */
         if (!empty($entity->getPassword())) {
             $entity->setPassword($this->passwordService->create($entity->getPassword()));
         }

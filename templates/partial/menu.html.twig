@@ -18,7 +18,7 @@
                 <li role="presentation" class="divider"></li>
             {% else %}
                 <li class="{{ liClass }}">
-                    <a href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ navigationPageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
+                    <a href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
                         {% if page.hasChildren() and depth == 0 %}
                             <div data-toggle="collapse" href="#sub-item-{{ loop.index }}">
                                 <i class="{{ page.getOption('icon') }}"></i>&nbsp;

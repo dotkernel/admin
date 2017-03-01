@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "824d15d10813acb7cf97a835c8c3c47c",
+    "content-hash": "86570340fa5fdf5f2a57b1832e3817ff",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -934,12 +934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "8c6c77b6b38af40eee5d3d32828b0e5f4db6c0d9"
+                "reference": "cd22ec4dc004ecfba55a6233f7689e3d491bba98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/8c6c77b6b38af40eee5d3d32828b0e5f4db6c0d9",
-                "reference": "8c6c77b6b38af40eee5d3d32828b0e5f4db6c0d9",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/cd22ec4dc004ecfba55a6233f7689e3d491bba98",
+                "reference": "cd22ec4dc004ecfba55a6233f7689e3d491bba98",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/reworked",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-02-27 00:49:28"
+            "time": "2017-02-28 22:58:26"
         },
         {
             "name": "dotkernel/dot-event",
@@ -1564,6 +1564,66 @@
             ],
             "description": "Navigation library for easy menu parsing",
             "time": "2017-02-27 21:10:52"
+        },
+        {
+            "name": "dotkernel/dot-paginator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-paginator.git",
+                "reference": "3310554f9a43df3aff798aaa841b6dca53bf352e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/3310554f9a43df3aff798aaa841b6dca53bf352e",
+                "reference": "3310554f9a43df3aff798aaa841b6dca53bf352e",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "php": "^7.1",
+                "zendframework/zend-paginator": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "dotkernel/dot-ems": "dev-reworked as 0.6.x-dev",
+                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-hydrator": "0.6.x-dev",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Paginator\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DotTest\\Paginator\\": "test/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "Paginator component for dotkernel based on zend-paginator",
+            "support": {
+                "source": "https://github.com/dotkernel/dot-paginator/tree/master",
+                "issues": "https://github.com/dotkernel/dot-paginator/issues"
+            },
+            "time": "2017-02-28 22:56:37"
         },
         {
             "name": "dotkernel/dot-rbac",
@@ -5964,16 +6024,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
+                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/938df7a6478e72795e5f8266cff24d06e3136f2e",
+                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e",
                 "shasum": ""
             },
             "require": {
@@ -6013,7 +6073,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11T19:50:13+00:00"
+            "time": "2016-11-15T06:55:36+00:00"
         },
         {
             "name": "sebastian/version",
@@ -6438,6 +6498,7 @@
         "dotkernel/dot-log": 20,
         "dotkernel/dot-mail": 20,
         "dotkernel/dot-navigation": 20,
+        "dotkernel/dot-paginator": 20,
         "dotkernel/dot-rbac": 20,
         "dotkernel/dot-rbac-guard": 20,
         "dotkernel/dot-session": 20,

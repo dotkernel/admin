@@ -1,0 +1,71 @@
+<?php
+/**
+ * @copyright: DotKernel
+ * @library: dot-admin
+ * @author: n3vrax
+ * Date: 2/28/2017
+ * Time: 4:27 AM
+ */
+
+declare(strict_types = 1);
+
+namespace Admin\Admin\Entity;
+
+use Dot\User\Entity\UserEntity;
+
+/**
+ * Class UserEntity
+ * @package App\Admin\Entity
+ */
+class AdminEntity extends UserEntity implements \JsonSerializable
+{
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_DELETED = 'deleted';
+
+    /** @var  string */
+    protected $firstName;
+
+    /** @var  string */
+    protected $lastName;
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+}

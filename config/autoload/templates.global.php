@@ -21,7 +21,8 @@ return [
             'layout' => [__DIR__ . '/../../templates/layout'],
             'error' => [__DIR__ . '/../../templates/error'],
             'partial' => [__DIR__ . '/../../templates/partial'],
-            'entity-manage' => [__DIR__ . '/../../templates/entity-manage'],
+            'admin' => [__DIR__ . '/../../templates/app/admin'],
+            'user' => [__DIR__ . '/../../templates/app/user'],
         ],
     ],
 

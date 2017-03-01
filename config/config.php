@@ -15,7 +15,6 @@ $aggregator = new ConfigAggregator([
     //zend framework
     \Zend\Db\ConfigProvider::class,
     \Zend\Mail\ConfigProvider::class,
-    \Zend\Paginator\ConfigProvider::class,
 
     // dotkernel
     \Dot\AnnotatedServices\ConfigProvider::class,
@@ -40,6 +39,7 @@ $aggregator = new ConfigAggregator([
     \Dot\Log\ConfigProvider::class,
     \Dot\Mail\ConfigProvider::class,
     \Dot\Navigation\ConfigProvider::class,
+    \Dot\Paginator\ConfigProvider::class,
     \Dot\Rbac\ConfigProvider::class,
     \Dot\Rbac\Guard\ConfigProvider::class,
     \Dot\Session\ConfigProvider::class,
@@ -48,6 +48,7 @@ $aggregator = new ConfigAggregator([
     \Dot\Validator\ConfigProvider::class,
 
     //application
+    \Admin\Admin\ConfigProvider::class,
     \Admin\User\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings

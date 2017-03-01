@@ -8,7 +8,7 @@ return [
             // used by dot-annotated-services to cache annotations
             // needs to return a cache instance from Doctrine\Common\Cache
             \Dot\AnnotatedServices\Factory\AbstractAnnotatedFactory::CACHE_SERVICE =>
-                \Dot\Admin\Factory\AnnotationsCacheFactory::class,
+                \Admin\App\Factory\AnnotationsCacheFactory::class,
         ]
     ],
 ];

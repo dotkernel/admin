@@ -52,6 +52,7 @@
     "dotkernel/dot-log": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-mail": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-navigation": "dev-develop as 0.6.x-dev",
+    "dotkernel/dot-paginator": "0.6.x-dev",
     "dotkernel/dot-rbac": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-rbac-guard": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-session": "dev-develop as 0.6.x-dev",
@@ -101,6 +102,10 @@
     },
     {
       "type": "vcs",
+      "url": "https://github.com/dotkernel/dot-paginator"
+    },
+    {
+      "type": "vcs",
       "url": "https://github.com/dotkernel/dot-annotated-services"
     },
     {
@@ -115,12 +120,13 @@
   "autoload": {
     "psr-4": {
       "Admin\\App\\": "src/App/",
+      "Admin\\Admin\\": "src/Admin/",
       "Admin\\User\\": "src/User/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "AppTest\\Admin\\": "test/AdminTest/"
+      "AdminTest\\App\\": "test/AppTest/"
     }
   },
   "scripts": {
