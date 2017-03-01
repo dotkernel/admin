@@ -24,9 +24,14 @@ use Zend\InputFilter\InputFilter;
  */
 class AdminForm extends Form
 {
-    public function __construct($name = null, array $options = [])
+    /**
+     * AdminForm constructor.
+     * @param string $name
+     * @param array $options
+     */
+    public function __construct($name = 'adminForm', array $options = [])
     {
-        parent::__construct('adminForm', $options);
+        parent::__construct($name, $options);
 
         $this->setAttribute('method', 'post');
         $this->setInputFilter(new InputFilter());

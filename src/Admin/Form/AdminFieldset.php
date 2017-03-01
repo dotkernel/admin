@@ -25,6 +25,9 @@ class AdminFieldset extends UserFieldset
     const MESSAGE_LAST_NAME_EMPTY = '<b>Last name</b> is required and cannot be empty';
     const MESSAGE_LAST_NAME_LIMIT = '<b>Last name</b> character limit of 150 exceeded';
 
+    /**
+     * AdminFieldset constructor.
+     */
     public function __construct()
     {
         parent::__construct('admin');

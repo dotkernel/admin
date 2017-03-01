@@ -14,12 +14,15 @@ namespace Admin\Admin;
 use Admin\Admin\Authentication\AuthenticationListener;
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Form\AdminFieldset;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Listener\UnauthorizedListener;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Dot\Admin\Controller\AdminController;
 use Dot\User\Controller\UserController;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
+use Zend\Form\ElementFactory;
 
 /**
  * Class ConfigProvider
@@ -121,10 +124,12 @@ class ConfigProvider
             'form_manager' => [
                 'factories' => [
                     AdminFieldset::class => UserFieldsetFactory::class,
+                    AdminForm::class => ElementFactory::class,
                 ],
                 'aliases' => [
                     'UserFieldset' => AdminFieldset::class,
                     'AdminFieldset' => AdminFieldset::class,
+                    'Admin' => AdminForm::class,
                 ]
             ]
         ];
@@ -140,6 +145,10 @@ class ConfigProvider
                     [
                         'type' => AuthenticationListener::class,
                         'priority' => 100,
+                    ],
+                    [
+                        'type' => UnauthorizedListener::class,
+                        'priority' => 1000,
                     ]
                 ]
             ]

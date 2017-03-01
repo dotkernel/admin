@@ -24,9 +24,14 @@ use Zend\InputFilter\InputFilter;
  */
 class UserForm extends Form
 {
-    public function __construct($name = null, array $options = [])
+    /**
+     * UserForm constructor.
+     * @param string $name
+     * @param array $options
+     */
+    public function __construct($name = 'userForm', array $options = [])
     {
-        parent::__construct('userForm', $options);
+        parent::__construct($name, $options);
 
         $this->setAttribute('method', 'post');
         $this->setInputFilter(new InputFilter());
@@ -35,7 +40,7 @@ class UserForm extends Form
     public function init()
     {
         $this->add([
-            'type' => 'UserFieldset',
+            'type' => 'F_UserFieldset',
             'options' => [
                 'use_as_base_fieldset' => true,
             ]

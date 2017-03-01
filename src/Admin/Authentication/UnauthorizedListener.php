@@ -7,9 +7,11 @@
  * Time: 3:23 PM
  */
 
-namespace Dot\Admin\Listener;
+namespace Admin\Admin\Listener;
 
+use Dot\Authentication\Web\Event\AbstractAuthenticationEventListener;
 use Dot\Authentication\Web\Event\AuthenticationEvent;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Expressive\Router\RouteResult;
 
@@ -20,22 +22,29 @@ use Zend\Expressive\Router\RouteResult;
  *
  * @package Dot\App\Authentication\Listener
  */
-class UnauthorizedListener
+class UnauthorizedListener extends AbstractAuthenticationEventListener
 {
+    /** @var array  */
     protected $routes = ['user', 'f_user'];
 
+    /** @var array  */
     protected $actions = ['list', 'add', 'edit', 'delete'];
 
-    public function __invoke(AuthenticationEvent $e)
+    /**
+     * @param AuthenticationEvent $e
+     * @return bool|Response\EmptyResponse
+     */
+    public function onUnauthorized(AuthenticationEvent $e)
     {
-        $request = $e->getRequest();
+        /** @var ServerRequestInterface $request */
+        $request = $e->getParam('request');
         /** @var RouteResult $routeMatch */
-        $routeMatch = $request->getAttribute(RouteResult::class, null);
+        $routeMatch = $request->getAttribute(RouteResult::class);
 
         if ($routeMatch) {
             $routeName = $routeMatch->getMatchedRouteName();
             $params = $routeMatch->getMatchedParams();
-            $action = isset($params['action']) ? $params['action'] : '';
+            $action = $params['action'] ?? '';
 
             if (in_array($routeName, $this->routes) && in_array($action, $this->actions)) {
                 return new Response\EmptyResponse(401);

@@ -25,7 +25,7 @@ class UserFieldset extends \Dot\User\Form\UserFieldset
 
         $this->add([
             'name' => 'details',
-            'type' => 'UserDetailsFieldset',
+            'type' => 'F_UserDetailsFieldset',
         ], ['priority' => -10]);
 
         $this->add([
