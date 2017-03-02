@@ -24,6 +24,38 @@ use Zend\InputFilter\InputFilter;
  */
 class UserForm extends Form
 {
+    protected $validationGroup = [
+        'user_csrf',
+        'user' => [
+            'username',
+            'email',
+            'password',
+            'passwordConfirm',
+            'status',
+            'details' => [
+                'firstName',
+                'lastName',
+                'phone',
+                'address'
+            ]
+        ]
+    ];
+
+    protected $noPasswordValidationGroup = [
+        'user_csrf',
+        'user' => [
+            'username',
+            'email',
+            'status',
+            'details' => [
+                'firstName',
+                'lastName',
+                'phone',
+                'address'
+            ]
+        ]
+    ];
+
     /**
      * UserForm constructor.
      */
@@ -52,6 +84,18 @@ class UserForm extends Form
                 'message' => Messages::CSRF_EXPIRED
             ]
         ]);
+
+        $this->setValidationGroup($this->validationGroup);
+    }
+
+    public function disablePasswordValidation()
+    {
+        $this->setValidationGroup($this->noPasswordValidationGroup);
+    }
+
+    public function resetValidation()
+    {
+        $this->setValidationGroup($this->validationGroup);
     }
 
     /**

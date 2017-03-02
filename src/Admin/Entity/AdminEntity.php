@@ -23,6 +23,9 @@ class AdminEntity extends UserEntity
     const STATUS_INACTIVE = 'inactive';
     const STATUS_DELETED = 'deleted';
 
+    /** @var bool  */
+    protected $needsPasswordRehash = true;
+
     /** @var  string */
     protected $firstName;
 
@@ -71,5 +74,19 @@ class AdminEntity extends UserEntity
             'firstName' => $this->getFirstName(),
             'lastName' => $this->getLastName(),
         ]);
+    }
+
+    /**
+     * @param bool|null $value
+     * @return mixed
+     */
+    public function needsPasswordRehash(bool $value = null)
+    {
+        if ($value !== null) {
+            $this->needsPasswordRehash = $value;
+            return $this;
+        } else {
+            return $this->needsPasswordRehash;
+        }
     }
 }

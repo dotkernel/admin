@@ -51,8 +51,8 @@ class UserController extends EntityManageBaseController
     {
         //make password field optional for updates if both are empty in the POST data
         if (empty($data['user']['password']) && empty($data['user']['passwordConfirm'])) {
-            $form->getInputFilter()->get('user')->get('password')->setRequired(false);
-            $form->getInputFilter()->get('user')->get('passwordConfirm')->setRequired(false);
+            $form->disablePasswordValidation();
+            $entity->needsPasswordRehash(false);
         }
     }
 }

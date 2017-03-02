@@ -42,9 +42,11 @@ class AdminService extends AbstractEntityService
         }
 
         /** @var AdminEntity $entity */
-        if (!empty($entity->getPassword())) {
+        if ($entity->needsPasswordRehash()) {
             $entity->setPassword($this->passwordService->create($entity->getPassword()));
         }
+
+        $entity->needsPasswordRehash(true);
 
         return parent::save($entity);
     }

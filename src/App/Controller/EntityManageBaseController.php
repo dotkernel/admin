@@ -137,6 +137,7 @@ abstract class EntityManageBaseController extends AbstractActionController
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
+
             $form->setData($data);
             if ($form->isValid()) {
                 $entity = $form->getData();

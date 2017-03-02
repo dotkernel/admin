@@ -51,8 +51,8 @@ class AdminController extends EntityManageBaseController
     {
         //make password field optional for updates if both are empty in the POST data
         if (empty($data['admin']['password']) && empty($data['admin']['passwordConfirm'])) {
-            $form->getInputFilter()->get('admin')->get('password')->setRequired(false);
-            $form->getInputFilter()->get('admin')->get('passwordConfirm')->setRequired(false);
+            $form->disablePasswordValidation();
+            $entity->needsPasswordRehash(false);
         }
     }
 }

@@ -15,6 +15,9 @@ namespace Admin\User\Entity;
  */
 class UserEntity extends \Dot\User\Entity\UserEntity
 {
+    /** @var bool  */
+    protected $needsPasswordRehash = true;
+
     /** @var  UserDetailsEntity */
     protected $details;
 
@@ -48,5 +51,19 @@ class UserEntity extends \Dot\User\Entity\UserEntity
                 'details' => $this->getDetails(),
             ]
         );
+    }
+
+    /**
+     * @param bool|null $value
+     * @return mixed
+     */
+    public function needsPasswordRehash(bool $value = null)
+    {
+        if ($value !== null) {
+            $this->needsPasswordRehash = $value;
+            return $this;
+        } else {
+            return $this->needsPasswordRehash;
+        }
     }
 }

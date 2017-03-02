@@ -24,6 +24,30 @@ use Zend\InputFilter\InputFilter;
  */
 class AdminForm extends Form
 {
+    protected $validationGroup = [
+        'admin_csrf',
+        'admin' => [
+            'username',
+            'email',
+            'password',
+            'passwordConfirm',
+            'firstName',
+            'lastName',
+            'status',
+        ]
+    ];
+
+    protected $noPasswordValidationGroup = [
+        'admin_csrf',
+        'admin' => [
+            'username',
+            'email',
+            'firstName',
+            'lastName',
+            'status',
+        ]
+    ];
+
     /**
      * AdminForm constructor.
      */
@@ -52,6 +76,18 @@ class AdminForm extends Form
                 'message' => Messages::CSRF_EXPIRED
             ]
         ]);
+
+        $this->setValidationGroup($this->validationGroup);
+    }
+
+    public function disablePasswordValidation()
+    {
+        $this->setValidationGroup($this->noPasswordValidationGroup);
+    }
+
+    public function resetValidation()
+    {
+        $this->setValidationGroup($this->validationGroup);
     }
 
     /**
