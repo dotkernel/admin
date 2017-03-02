@@ -7,7 +7,7 @@
  * Time: 7:23 PM
  */
 
-namespace Dot\Admin\Middleware;
+namespace Admin\App\Middleware;
 
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;

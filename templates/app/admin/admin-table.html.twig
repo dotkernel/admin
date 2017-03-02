@@ -24,8 +24,26 @@
         <th data-field="email" data-sortable="true">E-mail</th>
         <th data-field="firstName" data-sortable="true">First Name</th>
         <th data-field="lastName" data-sortable="true">Last Name</th>
-        <th data-field="role" data-sortable="true">Role</th>
+        <th data-field="roles" data-formatter="rolesFormatter" data-sortable="true">Roles</th>
         <th data-field="status" data-sortable="true">Status</th>
         <th data-field="dateCreated" data-sortable="true">Created</th>
     </tr>
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+        var rolesFormatter = function (value, row) {
+            if (row.roles != null) {
+                var roles = [];
+                row.roles.forEach(function(role) {
+                    roles.push(role.name);
+                });
+
+                return roles.join('<br>');
+            }
+        }
+    </script>
 {% endblock %}

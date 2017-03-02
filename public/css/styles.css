@@ -46,6 +46,11 @@ h3, h4 {
     margin-top: 15px;
 }
 
+.alert > ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
 .modal {
     -webkit-overflow-scrolling: auto !important;
     overflow-y: auto !important;

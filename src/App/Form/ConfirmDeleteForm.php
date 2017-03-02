@@ -19,15 +19,15 @@ use Zend\Form\Form;
  */
 class ConfirmDeleteForm extends Form
 {
-    public function __construct($name = 'deleteConfirmForm', array $options = [])
+    public function __construct()
     {
-        parent::__construct($name, $options);
+        parent::__construct('confirmDeleteForm');
         $this->setAttribute('method', 'post');
     }
 
     public function init()
     {
-        $csrf = new Csrf('delete_confirm_csrf', [
+        $csrf = new Csrf('confirm_delete_csrf', [
             'csrf_options' => [
                 'timeout' => 3600,
                 'message' => Messages::CSRF_EXPIRED

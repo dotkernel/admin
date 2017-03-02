@@ -7,9 +7,9 @@
  * Time: 8:49 PM
  */
 
-namespace Dot\Admin\Controller;
+namespace Admin\App\Controller;
 
-use Admin\User\Service\EntityServiceInterface;
+use Admin\App\Service\EntityServiceInterface;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -251,7 +251,7 @@ abstract class EntityManageBaseController extends AbstractActionController
             if (isset($data[static::ENTITY_NAME_PLURAL]) && is_array($data[static::ENTITY_NAME_PLURAL])) {
                 return new HtmlResponse(
                     $this->template()->render(
-                        'partial::delete-form',
+                        'partial::confirm-delete',
                         [
                             'form' => $form,
                             'deleteUri' => $this->url(static::ENTITY_ROUTE_NAME, ['action' => 'delete']),
@@ -330,7 +330,7 @@ abstract class EntityManageBaseController extends AbstractActionController
         $output = [$type => $messages];
         //render the alerts partial to send it through ajax to be inserted into the DOM
         $output['alerts'] = $this->template(
-            'dot-partial::alerts',
+            'partial::alerts',
             ['dismissible' => $dismissible, 'messages' => [$typeToNamespace[$type] => $alerts]]
         );
 

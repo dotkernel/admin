@@ -26,12 +26,10 @@ class UserForm extends Form
 {
     /**
      * UserForm constructor.
-     * @param string $name
-     * @param array $options
      */
-    public function __construct($name = 'userForm', array $options = [])
+    public function __construct()
     {
-        parent::__construct($name, $options);
+        parent::__construct('userForm');
 
         $this->setAttribute('method', 'post');
         $this->setInputFilter(new InputFilter());
@@ -52,14 +50,6 @@ class UserForm extends Form
             'options' => [
                 'timeout' => 3600,
                 'message' => Messages::CSRF_EXPIRED
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'submit',
-            'attributes' => [
-                'type' => 'submit',
-                'value' => 'Save'
             ]
         ]);
     }

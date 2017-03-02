@@ -4,5 +4,5 @@
 {% set dummy = form.prepare() %}
 
 {{ form().openTag(form) | raw }}
-{% include '@dot-form/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
+{% include '@partial/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
 {{ form().closeTag() | raw }}

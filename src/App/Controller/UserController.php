@@ -7,7 +7,7 @@
  * Time: 7:58 PM
  */
 
-namespace Dot\Admin\Controller;
+namespace Admin\App\Controller;
 
 use Admin\User\Entity\UserEntity;
 use Admin\User\Form\UserForm;
@@ -26,7 +26,7 @@ class UserController extends EntityManageBaseController
     const ENTITY_NAME_SINGULAR = 'user';
     const ENTITY_NAME_PLURAL = 'users';
     const ENTITY_ROUTE_NAME = 'f_user';
-    const ENTITY_TEMPLATE_NAME = 'entity-manage::user-table';
+    const ENTITY_TEMPLATE_NAME = 'user::user-table';
 
     const ENTITY_FORM_NAME = 'User';
     const ENTITY_DELETE_FORM_NAME = 'ConfirmDelete';
@@ -50,9 +50,9 @@ class UserController extends EntityManageBaseController
     public function customizeEditValidation(UserForm $form, UserEntity $entity, array $data)
     {
         //make password field optional for updates if both are empty in the POST data
-        if (empty($data['user']['password']) && empty($data['user']['passwordVerify'])) {
+        if (empty($data['user']['password']) && empty($data['user']['passwordConfirm'])) {
             $form->getInputFilter()->get('user')->get('password')->setRequired(false);
-            $form->getInputFilter()->get('user')->get('passwordVerify')->setRequired(false);
+            $form->getInputFilter()->get('user')->get('passwordConfirm')->setRequired(false);
         }
     }
 }

@@ -10,7 +10,7 @@ return [
                 'identity_prototype' => \Admin\Admin\Entity\AdminEntity::class,
                 'identity_hydrator' => \Dot\Hydrator\ClassMethodsCamelCase::class,
 
-                'table' => 'user',
+                'table' => 'admin',
 
                 'identity_columns' => ['username', 'email'],
                 'credential_column' => 'password',

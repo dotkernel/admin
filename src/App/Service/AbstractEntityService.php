@@ -7,7 +7,7 @@
  * Time: 10:09 PM
  */
 
-namespace Admin\User\Service;
+namespace Admin\App\Service;
 
 use Admin\App\Exception\RuntimeException;
 use Dot\Ems\Mapper\MapperInterface;

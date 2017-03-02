@@ -13,16 +13,16 @@ namespace Admin\Admin;
 
 use Admin\Admin\Authentication\AuthenticationListener;
 use Admin\Admin\Entity\AdminEntity;
+use Admin\Admin\Entity\RoleEntity;
 use Admin\Admin\Form\AdminFieldset;
 use Admin\Admin\Form\AdminForm;
-use Admin\Admin\Listener\UnauthorizedListener;
+use Admin\Admin\Authentication\UnauthorizedListener;
 use Admin\Admin\Mapper\AdminDbMapper;
-use Dot\Admin\Controller\AdminController;
-use Dot\User\Controller\UserController;
-use Dot\User\Entity\RoleEntity;
+use Admin\Admin\Mapper\RoleDbMapper;
+use Dot\Ems\Factory\DbMapperFactory;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
-use Zend\Form\ElementFactory;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider
@@ -41,12 +41,12 @@ class ConfigProvider
 
             'dot_form' => $this->getFormsConfig(),
 
-            'routes' => $this->getRoutesConfig(),
-
             'dot_user' => [
                 'user_entity' => AdminEntity::class,
+                'role_entity' => RoleEntity::class,
+
                 'default_roles' => ['admin'],
-                'route_default' => ['route_name' => 'dashboard'],
+                'route_default' => ['route_name' => 'dashboard', 'route_params' => ['action' => '']],
 
                 'enable_account_confirmation' => false,
 
@@ -72,24 +72,6 @@ class ConfigProvider
         ];
     }
 
-    public function getRoutesConfig(): array
-    {
-        return [
-            //change default route paths for user related stuff into admin
-            //we will use 'user' for frontend users
-            'login_route' => [
-                'path' => '/admin/login',
-            ],
-            'logout_route' => [
-                'path' => '/admin/logout',
-            ],
-            'user_route' => [
-                'path' => '/admin[/{action}[/{id:\d+}]]',
-                'middleware' => [AdminController::class, UserController::class],
-            ]
-        ];
-    }
-
     public function getDependenciesConfig(): array
     {
         return [
@@ -103,18 +85,13 @@ class ConfigProvider
             'mapper_manager' => [
                 'factories' => [
                     AdminDbMapper::class => UserDbMapperFactory::class,
+                    RoleDbMapper::class => DbMapperFactory::class,
                 ],
                 'aliases' => [
                     AdminEntity::class => AdminDbMapper::class,
+                    RoleEntity::class => RoleDbMapper::class,
                 ]
             ],
-            'options' => [
-                RoleEntity::class => [
-                    'mapper' => [
-                        'table' => 'admin_role',
-                    ]
-                ],
-            ]
         ];
     }
 
@@ -124,7 +101,7 @@ class ConfigProvider
             'form_manager' => [
                 'factories' => [
                     AdminFieldset::class => UserFieldsetFactory::class,
-                    AdminForm::class => ElementFactory::class,
+                    AdminForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
                     'UserFieldset' => AdminFieldset::class,
@@ -139,7 +116,7 @@ class ConfigProvider
     {
         return [
             'web' => [
-                'after_login_route' => ['route_name' => 'dashboard'],
+                'after_login_route' => ['route_name' => 'dashboard', 'route_params' => ['action' => '']],
 
                 'event_listeners' => [
                     [

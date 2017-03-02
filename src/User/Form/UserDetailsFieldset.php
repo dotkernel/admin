@@ -32,12 +32,10 @@ class UserDetailsFieldset extends Fieldset implements InputFilterProviderInterfa
 
     /**
      * UserDetailsFieldset constructor.
-     * @param string $name
-     * @param array $options
      */
-    public function __construct($name = 'details', array $options = [])
+    public function __construct()
     {
-        parent::__construct($name, $options);
+        parent::__construct('details');
         $this->setObject(new UserDetailsEntity());
         $this->setHydrator(new ClassMethodsCamelCase());
     }

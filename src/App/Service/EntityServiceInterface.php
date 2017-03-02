@@ -7,7 +7,7 @@
  * Time: 9:16 PM
  */
 
-namespace Admin\User\Service;
+namespace Admin\App\Service;
 
 use Zend\Paginator\Paginator;
 

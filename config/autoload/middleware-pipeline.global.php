@@ -50,7 +50,7 @@ return [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
                 Helper\UrlHelperMiddleware::class,
 
-                \Dot\Admin\Middleware\AdminIndexMiddleware::class,
+                \Admin\App\Middleware\AdminIndexMiddleware::class,
 
                 //DK after-routing middleware
                 \Dot\Navigation\NavigationMiddleware::class,

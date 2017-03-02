@@ -13,7 +13,7 @@ namespace Admin\User\Entity;
  * Class UserEntity
  * @package Dot\Authentication\Admin\Entity
  */
-class UserEntity extends \Dot\User\Entity\UserEntity implements \JsonSerializable
+class UserEntity extends \Dot\User\Entity\UserEntity
 {
     /** @var  UserDetailsEntity */
     protected $details;
@@ -40,8 +40,13 @@ class UserEntity extends \Dot\User\Entity\UserEntity implements \JsonSerializabl
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        return get_object_vars($this);
+        return array_merge(
+            parent::jsonSerialize(),
+            [
+                'details' => $this->getDetails(),
+            ]
+        );
     }
 }

@@ -14,6 +14,15 @@ return [
             'options' => [
                 'guards' => [
                     [
+                        'type' => 'Route',
+                        'options' => [
+                            'rules' => [
+                                'login' => ['*'],
+                                'logout' => ['*']
+                            ]
+                        ]
+                    ],
+                    [
                         'type' => 'ControllerPermission',
                         'options' => [
                             'rules' => [

@@ -7,8 +7,9 @@
  * Time: 7:37 PM
  */
 
-namespace Dot\Admin\Controller;
+namespace Admin\App\Controller;
 
+use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Controller\AbstractActionController;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -33,6 +34,8 @@ use Zend\Form\Form;
  * @method AuthenticationPlugin authentication()
  * @method AuthorizationPlugin isGranted(string $permission, array $roles = [], mixed $context = null)
  * @method Container session(string $namespace)
+ *
+ * @Service
  */
 class DashboardController extends AbstractActionController
 {

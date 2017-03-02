@@ -10,6 +10,7 @@
 namespace Admin\User\Service;
 
 use Admin\App\Exception\InvalidArgumentException;
+use Admin\App\Service\AbstractEntityService;
 use Admin\User\Entity\UserEntity;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
@@ -23,6 +24,9 @@ use Zend\Crypt\Password\PasswordInterface;
  */
 class UserService extends AbstractEntityService
 {
+    /** @var  string */
+    protected $entityClass = UserEntity::class;
+
     /** @var  PasswordInterface */
     protected $passwordService;
 

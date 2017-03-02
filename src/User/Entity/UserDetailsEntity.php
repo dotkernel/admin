@@ -125,6 +125,12 @@ class UserDetailsEntity implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'userId' => $this->getUserId(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'phone' => $this->getPhone(),
+            'address' => $this->getAddress()
+        ];
     }
 }

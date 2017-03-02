@@ -7,10 +7,11 @@
  * Time: 9:56 PM
  */
 
-namespace Admin\User\Service;
+namespace Admin\Admin\Service;
 
 use Admin\Admin\Entity\AdminEntity;
 use Admin\App\Exception\InvalidArgumentException;
+use Admin\App\Service\AbstractEntityService;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Zend\Crypt\Password\PasswordInterface;
@@ -23,6 +24,9 @@ use Zend\Crypt\Password\PasswordInterface;
  */
 class AdminService extends AbstractEntityService
 {
+    /** @var  string */
+    protected $entityClass = AdminEntity::class;
+
     /** @var  PasswordInterface */
     protected $passwordService;
 

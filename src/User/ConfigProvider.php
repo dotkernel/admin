@@ -18,7 +18,7 @@ use Admin\User\Form\UserForm;
 use Admin\User\Mapper\UserDbMapper;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
-use Zend\Form\ElementFactory;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider
@@ -50,8 +50,8 @@ class ConfigProvider
             'form_manager' => [
                 'factories' => [
                     UserFieldset::class => UserFieldsetFactory::class,
-                    UserDetailsFieldset::class => ElementFactory::class,
-                    UserForm::class => ElementFactory::class,
+                    UserDetailsFieldset::class => InvokableFactory::class,
+                    UserForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
                     'F_UserFieldset' => UserFieldset::class,

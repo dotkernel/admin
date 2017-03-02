@@ -7,7 +7,7 @@
  * Time: 3:23 PM
  */
 
-namespace Admin\Admin\Listener;
+namespace Admin\Admin\Authentication;
 
 use Dot\Authentication\Web\Event\AbstractAuthenticationEventListener;
 use Dot\Authentication\Web\Event\AuthenticationEvent;

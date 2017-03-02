@@ -17,7 +17,7 @@ use Dot\User\Entity\UserEntity;
  * Class UserEntity
  * @package App\Admin\Entity
  */
-class AdminEntity extends UserEntity implements \JsonSerializable
+class AdminEntity extends UserEntity
 {
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
@@ -64,8 +64,12 @@ class AdminEntity extends UserEntity implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        return get_object_vars($this);
+        $fields = parent::jsonSerialize();
+        return array_merge($fields, [
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+        ]);
     }
 }
