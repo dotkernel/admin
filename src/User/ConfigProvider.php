@@ -12,12 +12,12 @@ declare(strict_types = 1);
 namespace Admin\User;
 
 use Admin\User\Entity\UserEntity;
+use Admin\User\Factory\UserDbMapperFactory;
+use Admin\User\Factory\UserFieldsetFactory;
 use Admin\User\Form\UserDetailsFieldset;
 use Admin\User\Form\UserFieldset;
 use Admin\User\Form\UserForm;
 use Admin\User\Mapper\UserDbMapper;
-use Dot\User\Factory\UserDbMapperFactory;
-use Dot\User\Factory\UserFieldsetFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**

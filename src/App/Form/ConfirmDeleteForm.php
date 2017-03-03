@@ -7,7 +7,7 @@
  * Time: 4:22 PM
  */
 
-namespace Dot\Admin\Form;
+namespace Admin\App\Form;
 
 use Admin\App\Messages;
 use Zend\Form\Element\Csrf;

@@ -132,7 +132,8 @@ class UserDetailsFieldset extends Fieldset implements InputFilterProviderInterfa
             'phone' => [
                 'required' => false,
                 'filters' => [
-                    ['name' => 'StringTrim']
+                    ['name' => 'StringTrim'],
+                    ['name' => 'ToNull']
                 ],
                 'validators' => [
                     [
@@ -154,7 +155,8 @@ class UserDetailsFieldset extends Fieldset implements InputFilterProviderInterfa
             'address' => [
                 'required' => false,
                 'filters' => [
-                    ['name' => 'StringTrim']
+                    ['name' => 'StringTrim'],
+                    ['name' => 'ToNull']
                 ],
                 'validators' => [
 

@@ -16,8 +16,6 @@ use Admin\User\Entity\UserEntity;
 use Dot\Ems\Event\MapperEvent;
 use Dot\Ems\Mapper\MapperManager;
 use Dot\Hydrator\ClassMethodsCamelCase;
-use Dot\User\Entity\RoleEntity;
-use Dot\User\Options\UserOptions;
 use Zend\Db\Metadata\Object\ColumnObject;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
@@ -47,13 +45,6 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
      */
     public function __construct(MapperManager $mapperManager, array $options = [])
     {
-        /** Force this mapper to use the old role mapper, which uses user_role table */
-        if (isset($options['user_options']) && $options['user_options'] instanceof UserOptions) {
-            /** @var UserOptions $userOptions */
-            $userOptions = $options['user_options'];
-            $userOptions->setRoleEntity(RoleEntity::class);
-        }
-
         parent::__construct($mapperManager, $options);
 
         $this->userDetailsPrototype = new UserDetailsEntity();

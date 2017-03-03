@@ -106,24 +106,28 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         //get query params as sent by bootstrap-table
         $params = $this->request->getQueryParams();
-        if (!isset($params['limit']) && !isset($params['offset'])) {
-            //send data without pagination
-            return new JsonResponse($this->service->findAll());
-        } else {
-            $limit = isset($params['limit']) ? (int)$params['limit'] : 30;
-            $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
 
-            /** @var Paginator $paginator */
-            $paginator = $this->service->findAll([], true);
-            $paginator->setItemCountPerPage($limit);
-            $paginator->setCurrentPageNumber(intval($offset / $limit) + 1);
+        $options = [];
+        $sort = $params['sort'] ?? '';
+        $order = $params['order'] ?? 'asc';
 
-
-            return new JsonResponse([
-                'total' => $paginator->getTotalItemCount(),
-                'rows' => (array)$paginator->getCurrentItems()
-            ]);
+        if (!empty($sort) && !empty($order)) {
+            $options['order'] = [$sort => $order];
         }
+
+        $limit = (int) $params['limit'] ?? 30;
+        $offset = (int) $params['offset'] ?? 0;
+
+        /** @var Paginator $paginator */
+        $paginator = $this->service->findAll($options, true);
+        $paginator->setItemCountPerPage($limit);
+        $paginator->setCurrentPageNumber(intval($offset / $limit) + 1);
+
+
+        return new JsonResponse([
+            'total' => $paginator->getTotalItemCount(),
+            'rows' => (array)$paginator->getCurrentItems()
+        ]);
     }
 
     /**
@@ -405,7 +409,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityDeleteNoChangesMessage()
     {
-        return ['Delete operation was canceled. No changes were made'];
+        return ['Deletion not confirmed or no changes were made'];
     }
 
     /**

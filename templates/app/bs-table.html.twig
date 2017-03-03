@@ -121,7 +121,7 @@
                         $("#formPlaceholder").html(data);
 
                         $("#loading").on('hidden.bs.modal', function () {
-                            $("#loading").off('hidden')
+                            $("#loading").off('hidden');
                             $("#formModal").modal('show');
                         });
 
@@ -129,7 +129,7 @@
                     })
                     .fail(function (data) {
                         $("#loading").on('hidden.bs.modal', function () {
-                            $("#loading").off('hidden')
+                            $("#loading").off('hidden');
                             showFailDialog(data);
                         });
                         hideLoading();
@@ -152,14 +152,14 @@
                             $("#formPlaceholder").html(data);
 
                             $("#loading").on('hidden.bs.modal', function () {
-                                $("#loading").off('hidden')
+                                $("#loading").off('hidden');
                                 $("#formModal").modal('show');
                             });
                             hideLoading();
                         })
                         .fail(function (data) {
                             $("#loading").on('hidden.bs.modal', function () {
-                                $("#loading").off('hidden')
+                                $("#loading").off('hidden');
                                 showFailDialog(data);
                             });
                             hideLoading();
@@ -181,14 +181,14 @@
                         $("#formPlaceholder").html(data);
 
                         $("#loading").on('hidden.bs.modal', function () {
-                            $("#loading").off('hidden')
+                            $("#loading").off('hidden');
                             $("#formModal").modal('show');
                         });
                         hideLoading();
                     })
                     .fail(function (data) {
                         $("#loading").on('hidden.bs.modal', function () {
-                            $("#loading").off('hidden')
+                            $("#loading").off('hidden');
                             showFailDialog(data);
                         });
                         hideLoading();

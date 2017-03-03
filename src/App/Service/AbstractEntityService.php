@@ -74,6 +74,7 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
         if (!$paginated) {
             return $this->getEntityMapper()->find('all', $options);
         }
+        //var_dump($options);exit;
 
         //returns paginated results
         return $this->getPaginator($this->getEntityMapper(), $options);

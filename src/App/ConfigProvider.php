@@ -14,7 +14,7 @@ namespace Admin\App;
 use Admin\App\Controller\AdminController;
 use Admin\App\Controller\DashboardController;
 use Admin\App\Controller\UserController;
-use Dot\Admin\Form\ConfirmDeleteForm;
+use Admin\App\Form\ConfirmDeleteForm;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
