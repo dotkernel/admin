@@ -33,6 +33,7 @@ class AdminForm extends Form
             'passwordConfirm',
             'firstName',
             'lastName',
+            'roles',
             'status',
         ]
     ];
@@ -44,6 +45,7 @@ class AdminForm extends Form
             'email',
             'firstName',
             'lastName',
+            'roles',
             'status',
         ]
     ];
@@ -119,4 +121,5 @@ class AdminForm extends Form
         }
         return parent::bind($object, $flags);
     }
+
 }

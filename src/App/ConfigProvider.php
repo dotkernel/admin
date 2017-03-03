@@ -15,6 +15,8 @@ use Admin\App\Controller\AdminController;
 use Admin\App\Controller\DashboardController;
 use Admin\App\Controller\UserController;
 use Admin\App\Form\ConfirmDeleteForm;
+use Admin\App\Form\Element\EntitySelect;
+use Admin\App\Form\Element\EntitySelectFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
@@ -46,9 +48,14 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories' => [
+                    EntitySelect::class => EntitySelectFactory::class,
                     ConfirmDeleteForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
+                    'EntitySelect' => EntitySelect::class,
+                    'entityselect' => EntitySelect::class,
+                    'entitySelect' => EntitySelect::class,
+
                     'ConfirmDelete' => ConfirmDeleteForm::class,
                 ]
             ]

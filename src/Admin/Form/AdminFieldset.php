@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace Admin\Admin\Form;
 
 use Admin\Admin\Entity\AdminEntity;
+use Admin\Admin\Entity\RoleEntity;
 use Dot\User\Form\UserFieldset;
 
 /**
@@ -59,6 +60,20 @@ class AdminFieldset extends UserFieldset
                 'placeholder' => 'Last name...'
             ]
         ], ['priority' => -11]);
+
+        $this->add([
+            'name' => 'roles',
+            'type' => 'EntitySelect',
+            'options' => [
+                'label' => 'Roles',
+                'target_entity' => RoleEntity::class,
+                'entity_identifier' => 'id',
+                'property' => 'name',
+            ],
+            'attributes' => [
+                'multiple' => true,
+            ]
+        ], ['priority' => -25]);
 
         $this->add([
             'name' => 'status',

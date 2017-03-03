@@ -16,6 +16,7 @@ use Dot\Ems\Entity\EntityInterface;
 use Dot\Ems\Mapper\MapperInterface;
 use Dot\Ems\Mapper\MapperManager;
 use Zend\Form\Element\Select;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class EntitySelect
@@ -51,7 +52,13 @@ class EntitySelect extends Select
     protected $optgroupIdentifier;
 
     /** @var  string|null */
+    protected $optgroupDefault;
+
+    /** @var  string|null */
     protected $entityIdentifier;
+
+    /** @var  array */
+    protected $optionAttributes = [];
 
     /**
      * @param array|\Traversable $options
@@ -93,6 +100,14 @@ class EntitySelect extends Select
             $this->setLabelGenerator($options['label_generator']);
         }
 
+        if (isset($options['option_attributes'])) {
+            $this->setOptionAttributes($options['option_attributes']);
+        }
+
+        if (isset($options['optgroup_default'])) {
+            $this->setOptgroupDefault($options['optgroup_default']);
+        }
+
         return $this;
     }
 
@@ -107,6 +122,35 @@ class EntitySelect extends Select
         $this->setOptions([$key => $value]);
 
         return $this;
+    }
+
+    public function setValue($value)
+    {
+        if ($this->isMultiple()) {
+            if ($value instanceof \Traversable) {
+                $value = ArrayUtils::iteratorToArray($value);
+            } elseif ($value == null) {
+                return parent::setValue([]);
+            } elseif (!is_array($value)) {
+                $value = (array) $value;
+            }
+
+            return parent::setValue(array_map([$this, 'getEntityValue'], $value));
+        }
+
+        return parent::setValue($this->getEntityValue($value));
+    }
+
+    public function getEntityValue($value)
+    {
+        if ($value instanceof EntityInterface) {
+            $identifier = $this->getEntityIdentifier();
+            if ($identifier) {
+                $value = $value->extractProperties([$identifier])[$identifier];
+            }
+        }
+
+        return $value;
     }
 
     /**
@@ -195,10 +239,68 @@ class EntitySelect extends Select
             if (!$identifier) {
                 $value = $key;
             } else {
-                $value = $identifier;
+                if (!$entity->hasProperties([$identifier])) {
+                    throw new RuntimeException(sprintf(
+                        'Entity does not have identifier property `%s`',
+                        $identifier
+                    ));
+                }
+                $value = $entity->extractProperties([$identifier])[$identifier];
             }
+
+            foreach ($this->getOptionAttributes() as $optionKey => $optionValue) {
+                if (is_string($optionValue)) {
+                    $optionsAttributes[$optionKey] = $optionValue;
+                    continue;
+                }
+
+                if (is_callable($optionValue)) {
+                    $callableValue = call_user_func($optionValue, $entity);
+                    $optionsAttributes[$optionKey] = (string) $callableValue;
+                    continue;
+                }
+            }
+
+            if (is_null($this->getOptgroupIdentifier())) {
+                $options[] = ['label' => $label, 'value' => $value, 'attributes' => $optionsAttributes];
+                continue;
+            }
+
+            if (!$entity->hasProperties([$this->getOptgroupIdentifier()])) {
+                throw new RuntimeException(sprintf(
+                    'Entity object does not have a property `%s` defined',
+                    $this->getOptgroupIdentifier()
+                ));
+            }
+
+            $optGroup = $entity->extractProperties([$this->getOptgroupIdentifier()])[$this->getOptgroupIdentifier()];
+
+            if (false === is_null($optGroup) && trim($optGroup) !== '') {
+                $options[$optGroup]['label'] = $optGroup;
+                $options[$optGroup]['options'][] = [
+                    'label' => $label,
+                    'value' => $value,
+                    'attributes' => $optionsAttributes,
+                ];
+
+                continue;
+            }
+
+            $optGroupDefault = $this->getOptgroupDefault();
+            if (is_null($optGroupDefault)) {
+                $options[] = ['label' => $label, 'value' => $value, 'attributes' => $optionsAttributes];
+                continue;
+            }
+
+            $options[$optGroupDefault]['label'] = $optGroupDefault;
+            $options[$optGroupDefault]['options'][] = [
+                'label' => $label,
+                'value' => $value,
+                'attributes' => $optionsAttributes,
+            ];
         }
 
+        $this->valueOptions = $options;
     }
 
     /**
@@ -345,5 +447,37 @@ class EntitySelect extends Select
     public function setEntityIdentifier($entityIdentifier)
     {
         $this->entityIdentifier = $entityIdentifier;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptionAttributes(): array
+    {
+        return $this->optionAttributes;
+    }
+
+    /**
+     * @param array $optionAttributes
+     */
+    public function setOptionAttributes(array $optionAttributes)
+    {
+        $this->optionAttributes = $optionAttributes;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getOptgroupDefault()
+    {
+        return $this->optgroupDefault;
+    }
+
+    /**
+     * @param null|string $optgroupDefault
+     */
+    public function setOptgroupDefault($optgroupDefault)
+    {
+        $this->optgroupDefault = $optgroupDefault;
     }
 }
