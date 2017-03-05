@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace Admin\User\Form;
 
 use Admin\User\Entity\UserEntity;
+use Dot\User\Entity\RoleEntity;
 
 /**
  * Class UserFieldset
@@ -19,6 +20,8 @@ use Admin\User\Entity\UserEntity;
  */
 class UserFieldset extends \Dot\User\Form\UserFieldset
 {
+    const MESSAGE_ROLES_EMPTY = '<b>Roles</b> should have at least one role selected';
+
     public function init()
     {
         parent::init();
@@ -27,6 +30,21 @@ class UserFieldset extends \Dot\User\Form\UserFieldset
             'name' => 'details',
             'type' => 'F_UserDetailsFieldset',
         ], ['priority' => -10]);
+
+        $this->add([
+            'name' => 'roles',
+            'type' => 'EntitySelect',
+            'options' => [
+                'label' => 'Roles',
+                'use_hidden_element' => true,
+                'target' => RoleEntity::class,
+                'property' => 'name',
+            ],
+            'attributes' => [
+                'multiple' => true,
+                'id' => 'rolesSelect'
+            ]
+        ], ['priority' => -25]);
 
         $this->add([
             'name' => 'status',
@@ -40,6 +58,24 @@ class UserFieldset extends \Dot\User\Form\UserFieldset
                     ['value' => UserEntity::STATUS_DELETED, 'label' => UserEntity::STATUS_DELETED],
                 ]
             ],
-        ], ['priority' => -21]);
+        ], ['priority' => -30]);
+    }
+
+    public function getInputFilterSpecification()
+    {
+        $specs = parent::getInputFilterSpecification();
+        $specs['roles'] = [
+            'validators' => [
+                [
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => static::MESSAGE_ROLES_EMPTY,
+                    ]
+                ]
+            ]
+        ];
+
+        return $specs;
     }
 }

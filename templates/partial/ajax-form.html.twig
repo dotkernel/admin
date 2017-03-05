@@ -6,3 +6,15 @@
 {{ form().openTag(form) | raw }}
 {% include '@partial/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
 {{ form().closeTag() | raw }}
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('#rolesSelect').multiselect({
+            buttonContainer: '<div class="input-group"></div>',
+            nonSelectedText: 'Select at least one user role...',
+            allSelectedText: false,
+            numberDisplayed: 4,
+            maxHeight: 200
+        });
+    });
+</script>

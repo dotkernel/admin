@@ -16,6 +16,7 @@ use Dot\Hydrator\ClassMethodsCamelCase;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Form\UserFieldset;
 use Interop\Container\ContainerInterface;
+use Zend\Hydrator\HydratorPluginManager;
 
 /**
  * Class UserFieldsetFactory
@@ -38,9 +39,13 @@ class UserFieldsetFactory extends \Dot\User\Factory\UserFieldsetFactory
         $userOptions->setRoleEntity(RoleEntity::class);
         $userOptions->setDefaultRoles(['user']);
 
+        /** @var HydratorPluginManager $hydratorManager */
+        $hydratorManager = $container->get('HydratorManager');
+        $entity = new UserEntity();
+
         $fieldset->setUserOptions($userOptions);
-        $fieldset->setObject(new UserEntity());
-        $fieldset->setHydrator(new ClassMethodsCamelCase());
+        $fieldset->setObject($entity);
+        $fieldset->setHydrator($hydratorManager->get($entity->hydrator()));
 
         return $fieldset;
     }

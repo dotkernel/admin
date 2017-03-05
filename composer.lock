@@ -934,12 +934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "53fab82603af869b5e15203457c8171fe803f2d3"
+                "reference": "2bed226dfe652590be8605e4218231aab59d2b7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/53fab82603af869b5e15203457c8171fe803f2d3",
-                "reference": "53fab82603af869b5e15203457c8171fe803f2d3",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/2bed226dfe652590be8605e4218231aab59d2b7e",
+                "reference": "2bed226dfe652590be8605e4218231aab59d2b7e",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/reworked",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-03-03 18:54:59"
+            "time": "2017-03-03 21:17:18"
         },
         {
             "name": "dotkernel/dot-event",
@@ -2242,16 +2242,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.8",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "eeb4c23c7b84c1dc87db3c92856bd57ff1844ca4"
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/eeb4c23c7b84c1dc87db3c92856bd57ff1844ca4",
-                "reference": "eeb4c23c7b84c1dc87db3c92856bd57ff1844ca4",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/6968531206671f94377b01dc7888d5d1b858a01b",
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b",
                 "shasum": ""
             },
             "require": {
@@ -2286,7 +2286,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-03T14:11:40+00:00"
+            "time": "2017-03-03T20:43:42+00:00"
         },
         {
             "name": "psr/container",
@@ -6088,16 +6088,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.4",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e"
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/938df7a6478e72795e5f8266cff24d06e3136f2e",
-                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
                 "shasum": ""
             },
             "require": {
@@ -6137,7 +6137,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-15T06:55:36+00:00"
+            "time": "2015-11-11T19:50:13+00:00"
         },
         {
             "name": "sebastian/version",

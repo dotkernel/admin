@@ -34,13 +34,13 @@ class EntitySelect extends Select
     protected $entities;
 
     /** @var  string */
-    protected $targetEntity;
+    protected $target;
 
     /** @var  string */
     protected $property;
 
     /** @var string  */
-    protected $findMethod = 'all';
+    protected $finder = 'all';
 
     /** @var array  */
     protected $findOptions = [];
@@ -53,9 +53,6 @@ class EntitySelect extends Select
 
     /** @var  string|null */
     protected $optgroupDefault;
-
-    /** @var  string|null */
-    protected $entityIdentifier;
 
     /** @var  array */
     protected $optionAttributes = [];
@@ -72,12 +69,12 @@ class EntitySelect extends Select
             $this->setMapperManager($options['mapper_manager']);
         }
 
-        if (isset($options['target_entity'])) {
-            $this->setTargetEntity($options['target_entity']);
+        if (isset($options['target'])) {
+            $this->setTarget($options['target']);
         }
 
-        if (isset($options['find_method'])) {
-            $this->setFindMethod($options['find_method']);
+        if (isset($options['finder'])) {
+            $this->setFinder($options['finder']);
         }
 
         if (isset($options['find_options'])) {
@@ -86,10 +83,6 @@ class EntitySelect extends Select
 
         if (isset($options['property'])) {
             $this->setProperty($options['property']);
-        }
-
-        if (isset($options['entity_identifier'])) {
-            $this->setEntityIdentifier($options['entity_identifier']);
         }
 
         if (isset($options['optgroup_identifier'])) {
@@ -144,9 +137,13 @@ class EntitySelect extends Select
     public function getEntityValue($value)
     {
         if ($value instanceof EntityInterface) {
-            $identifier = $this->getEntityIdentifier();
-            if ($identifier) {
-                $value = $value->extractProperties([$identifier])[$identifier];
+            $identifier = $this->getMapper()->getPrimaryKey();
+
+            if (count($identifier) !== 1) {
+                //$value = $key;
+            } else {
+                $identifier = current($identifier);
+                $value = $value->extractProperty($identifier);
             }
         }
 
@@ -186,13 +183,10 @@ class EntitySelect extends Select
             return;
         }
 
-        $finder = $this->getFindMethod();
+        $finder = $this->getFinder();
         $findOptions = $this->getFindOptions();
 
-        /** @var MapperInterface $mapper */
-        $mapper = $this->mapperManager->get($this->getTargetEntity());
-        $entities = $mapper->find($finder, $findOptions);
-
+        $entities = $this->getMapper()->find($finder, $findOptions);
         $this->entities = $entities;
     }
 
@@ -202,11 +196,11 @@ class EntitySelect extends Select
             throw new RuntimeException('No mapper manager was set');
         }
 
-        if (!$this->targetEntity) {
+        if (!$this->target) {
             throw new RuntimeException('No target entity was set');
         }
 
-        $identifier = $this->getEntityIdentifier();
+        $identifier = $this->getMapper()->getPrimaryKey();
         $entities = $this->getEntities();
         $options = [];
         $optionsAttributes = [];
@@ -223,29 +217,29 @@ class EntitySelect extends Select
             if (null !== ($generatedLabel = $this->generateLabel($entity))) {
                 $label = $generatedLabel;
             } elseif ($property = $this->getProperty()) {
-                if (!$entity->hasProperties([$property])) {
+                if (!$entity->hasProperty($property)) {
                     throw new RuntimeException(sprintf(
                         'Property `%s` could not be found in object `%s`',
                         $property,
-                        $this->getTargetEntity()
+                        $this->getTarget()
                     ));
                 }
 
-                $label = $entity->extractProperties([$property])[$property];
+                $label = $entity->extractProperty($property);
             } else {
                 $label = (string) $entity;
             }
 
-            if (!$identifier) {
+            if (count($identifier) !== 1) {
                 $value = $key;
             } else {
-                if (!$entity->hasProperties([$identifier])) {
+                if (!$entity->hasProperty(current($identifier))) {
                     throw new RuntimeException(sprintf(
                         'Entity does not have identifier property `%s`',
-                        $identifier
+                        current($identifier)
                     ));
                 }
-                $value = $entity->extractProperties([$identifier])[$identifier];
+                $value = $entity->extractProperty(current($identifier));
             }
 
             foreach ($this->getOptionAttributes() as $optionKey => $optionValue) {
@@ -266,14 +260,14 @@ class EntitySelect extends Select
                 continue;
             }
 
-            if (!$entity->hasProperties([$this->getOptgroupIdentifier()])) {
+            if (!$entity->hasProperty($this->getOptgroupIdentifier())) {
                 throw new RuntimeException(sprintf(
                     'Entity object does not have a property `%s` defined',
                     $this->getOptgroupIdentifier()
                 ));
             }
 
-            $optGroup = $entity->extractProperties([$this->getOptgroupIdentifier()])[$this->getOptgroupIdentifier()];
+            $optGroup = $entity->extractProperty($this->getOptgroupIdentifier());
 
             if (false === is_null($optGroup) && trim($optGroup) !== '') {
                 $options[$optGroup]['label'] = $optGroup;
@@ -338,19 +332,31 @@ class EntitySelect extends Select
     }
 
     /**
-     * @return string
+     * @return MapperInterface
      */
-    public function getTargetEntity(): string
+    public function getMapper(): MapperInterface
     {
-        return $this->targetEntity;
+        if (!$this->mapper) {
+            $this->mapper = $this->mapperManager->get($this->getTarget());
+        }
+
+        return $this->mapper;
     }
 
     /**
-     * @param string $targetEntity
+     * @return string
      */
-    public function setTargetEntity(string $targetEntity)
+    public function getTarget(): string
     {
-        $this->targetEntity = $targetEntity;
+        return $this->target;
+    }
+
+    /**
+     * @param string $target
+     */
+    public function setTarget(string $target)
+    {
+        $this->target = $target;
     }
 
     /**
@@ -372,17 +378,17 @@ class EntitySelect extends Select
     /**
      * @return string
      */
-    public function getFindMethod(): string
+    public function getFinder(): string
     {
-        return $this->findMethod;
+        return $this->finder;
     }
 
     /**
-     * @param string $findMethod
+     * @param string $finder
      */
-    public function setFindMethod(string $findMethod)
+    public function setFinder(string $finder)
     {
-        $this->findMethod = $findMethod;
+        $this->finder = $finder;
     }
 
     /**
@@ -431,22 +437,6 @@ class EntitySelect extends Select
     public function setOptgroupIdentifier($optgroupIdentifier)
     {
         $this->optgroupIdentifier = $optgroupIdentifier;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getEntityIdentifier()
-    {
-        return $this->entityIdentifier;
-    }
-
-    /**
-     * @param null|string $entityIdentifier
-     */
-    public function setEntityIdentifier($entityIdentifier)
-    {
-        $this->entityIdentifier = $entityIdentifier;
     }
 
     /**

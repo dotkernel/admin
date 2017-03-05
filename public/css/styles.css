@@ -56,6 +56,14 @@ h3, h4 {
     overflow-y: auto !important;
 }
 
+.has-error .multiselect {
+    border-color: #a94442;
+}
+
+.has-error .checkbox {
+    color: black;
+}
+
 #modalAlertIcon {
     padding-right: 10px;
 }
@@ -179,7 +187,6 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-    background-color: #e9ecf2;
     border-color: #e9ecf2;
     color: #1b3548;
 }

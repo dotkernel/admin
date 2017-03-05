@@ -11,9 +11,11 @@ declare(strict_types = 1);
 
 namespace Admin\User;
 
+use Admin\User\Hydrator\UserHydrator;
 use Admin\User\Entity\UserEntity;
 use Admin\User\Factory\UserDbMapperFactory;
 use Admin\User\Factory\UserFieldsetFactory;
+use Admin\User\Factory\UserHydratorFactory;
 use Admin\User\Form\UserDetailsFieldset;
 use Admin\User\Form\UserFieldset;
 use Admin\User\Form\UserForm;
@@ -32,6 +34,8 @@ class ConfigProvider
             'dependencies' => $this->getDependenciesConfig(),
 
             'dot_form' => $this->getFormsConfig(),
+
+            'dot_hydrator' => $this->getHydratorsConfig(),
 
             'dot_ems' => $this->getMappersConfig(),
         ];
@@ -57,6 +61,20 @@ class ConfigProvider
                     'F_UserFieldset' => UserFieldset::class,
                     'F_UserDetailsFieldset' => UserDetailsFieldset::class,
                     'User' => UserForm::class,
+                ]
+            ]
+        ];
+    }
+
+    public function getHydratorsConfig(): array
+    {
+        return [
+            'hydrator_manager' => [
+                'factories' => [
+                    UserHydrator::class => UserHydratorFactory::class,
+                ],
+                'aliases' => [
+                    'UserHydrator' => UserHydrator::class,
                 ]
             ]
         ];

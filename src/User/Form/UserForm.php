@@ -31,6 +31,7 @@ class UserForm extends Form
             'email',
             'password',
             'passwordConfirm',
+            'roles',
             'status',
             'details' => [
                 'firstName',
@@ -46,6 +47,7 @@ class UserForm extends Form
         'user' => [
             'username',
             'email',
+            'roles',
             'status',
             'details' => [
                 'firstName',

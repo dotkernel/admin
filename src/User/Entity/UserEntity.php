@@ -9,6 +9,8 @@
 
 namespace Admin\User\Entity;
 
+use Admin\User\Hydrator\UserHydrator;
+
 /**
  * Class UserEntity
  * @package Dot\Authentication\Admin\Entity
@@ -17,6 +19,9 @@ class UserEntity extends \Dot\User\Entity\UserEntity
 {
     /** @var bool  */
     protected $needsPasswordRehash = true;
+
+    /** @var  string */
+    protected $hydrator = UserHydrator::class;
 
     /** @var  UserDetailsEntity */
     protected $details;

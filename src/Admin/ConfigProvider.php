@@ -14,9 +14,11 @@ namespace Admin\Admin;
 use Admin\Admin\Authentication\AuthenticationListener;
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Entity\RoleEntity;
+use Admin\Admin\Factory\AdminHydratorFactory;
 use Admin\Admin\Form\AdminFieldset;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Authentication\UnauthorizedListener;
+use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
 use Dot\Ems\Factory\DbMapperFactory;
@@ -40,6 +42,8 @@ class ConfigProvider
             'dot_authentication' => $this->getAuthenticationConfig(),
 
             'dot_form' => $this->getFormsConfig(),
+
+            'dot_hydrator' => $this->getHydratorsConfig(),
 
             'dot_user' => [
                 'user_entity' => AdminEntity::class,
@@ -92,6 +96,20 @@ class ConfigProvider
                     RoleEntity::class => RoleDbMapper::class,
                 ]
             ],
+        ];
+    }
+
+    public function getHydratorsConfig(): array
+    {
+        return [
+            'hydrator_manager' => [
+                'factories' => [
+                    AdminHydrator::class => AdminHydratorFactory::class,
+                ],
+                'aliases' => [
+                    'AdminHydrator' => AdminHydrator::class,
+                ]
+            ]
         ];
     }
 

@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Hydrator\AdminHydrator;
 use Dot\User\Entity\UserEntity;
 
 /**
@@ -22,6 +23,9 @@ class AdminEntity extends UserEntity
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
     const STATUS_DELETED = 'deleted';
+
+    /** @var  string */
+    protected $hydrator = AdminHydrator::class;
 
     /** @var bool  */
     protected $needsPasswordRehash = true;

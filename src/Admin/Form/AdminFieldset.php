@@ -26,6 +26,8 @@ class AdminFieldset extends UserFieldset
     const MESSAGE_LAST_NAME_EMPTY = '<b>Last name</b> is required and cannot be empty';
     const MESSAGE_LAST_NAME_LIMIT = '<b>Last name</b> character limit of 150 exceeded';
 
+    const MESSAGE_ROLES_EMPTY = '<b>Roles</b> should have at least one role selected';
+
     /**
      * AdminFieldset constructor.
      */
@@ -66,12 +68,13 @@ class AdminFieldset extends UserFieldset
             'type' => 'EntitySelect',
             'options' => [
                 'label' => 'Roles',
-                'target_entity' => RoleEntity::class,
-                'entity_identifier' => 'id',
+                'use_hidden_element' => true,
+                'target' => RoleEntity::class,
                 'property' => 'name',
             ],
             'attributes' => [
                 'multiple' => true,
+                'id' => 'rolesSelect'
             ]
         ], ['priority' => -25]);
 
@@ -133,6 +136,17 @@ class AdminFieldset extends UserFieldset
                     ],
                 ]
             ],
+        ];
+        $specs['roles'] = [
+            'validators' => [
+                [
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => static::MESSAGE_ROLES_EMPTY,
+                    ]
+                ]
+            ]
         ];
 
         return $specs;
