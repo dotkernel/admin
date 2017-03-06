@@ -30,6 +30,11 @@ class AdminService extends AbstractEntityService
     /** @var  PasswordInterface */
     protected $passwordService;
 
+    /** @var array  */
+    protected $searchableColumns = ['id', 'username', 'email',
+        'firstName', 'lastName', 'status'
+    ];
+
     /**
      * @param AdminEntity $entity
      * @param array $options

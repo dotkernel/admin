@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace Admin\User\Mapper;
 
+use Admin\App\Mapper\SearchFinderMapperTrait;
 use Admin\User\Entity\UserDetailsEntity;
 use Admin\User\Entity\UserEntity;
 use Dot\Ems\Event\MapperEvent;
@@ -26,6 +27,8 @@ use Zend\Hydrator\HydratorInterface;
  */
 class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
 {
+    use SearchFinderMapperTrait;
+
     /** @var string  */
     protected $userDetailsTable = 'user_details';
 
@@ -64,6 +67,7 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
         $options['joins'] += [
             'UserDetails' => [
                 'on' => 'UserDetails.userId = User.id',
+                'table' => $this->userDetailsTable,
                 'type' => Select::JOIN_LEFT
             ]
         ];

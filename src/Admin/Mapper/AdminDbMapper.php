@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 namespace Admin\Admin\Mapper;
 
+use Admin\App\Mapper\SearchFinderMapperTrait;
 use Dot\User\Mapper\UserDbMapper;
 
 /**
@@ -19,6 +20,8 @@ use Dot\User\Mapper\UserDbMapper;
  */
 class AdminDbMapper extends UserDbMapper
 {
+    use SearchFinderMapperTrait;
+
     /** @var string  */
     protected $table = 'admin';
 

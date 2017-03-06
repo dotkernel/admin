@@ -30,6 +30,7 @@ class AdminController extends EntityManageBaseController
 
     const ENTITY_FORM_NAME = 'Admin';
     const ENTITY_DELETE_FORM_NAME = 'ConfirmDelete';
+    const DEFAULT_SORTED_COLUMN = 'dateCreated';
 
     /**
      * AdminController constructor.

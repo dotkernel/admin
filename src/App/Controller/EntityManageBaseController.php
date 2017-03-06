@@ -51,6 +51,8 @@ abstract class EntityManageBaseController extends AbstractActionController
     const ENTITY_FORM_NAME = '';
     const ENTITY_DELETE_FORM_NAME = '';
 
+    const DEFAULT_SORTED_COLUMN = '';
+
     /** @var  EntityServiceInterface */
     protected $service;
 
@@ -88,6 +90,7 @@ abstract class EntityManageBaseController extends AbstractActionController
             $this->template(
                 static::ENTITY_TEMPLATE_NAME,
                 [
+                    'defaultSortedColumn' => static::DEFAULT_SORTED_COLUMN,
                     'listUri' => $listUri,
                     'editUri' => $editUri,
                     'addUri' => $addUri,
@@ -111,8 +114,15 @@ abstract class EntityManageBaseController extends AbstractActionController
         $sort = $params['sort'] ?? '';
         $order = $params['order'] ?? 'asc';
 
+        $search = $params['search'] ?? '';
+        $search = trim($search);
+
         if (!empty($sort) && !empty($order)) {
             $options['order'] = [$sort => $order];
+        }
+
+        if (!empty($search)) {
+            $options['search'] = $search;
         }
 
         $limit = (int) $params['limit'] ?? 30;

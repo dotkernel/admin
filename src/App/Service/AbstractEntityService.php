@@ -10,10 +10,11 @@
 namespace Admin\App\Service;
 
 use Admin\App\Exception\RuntimeException;
+use Dot\Ems\Mapper\AbstractDbMapper;
 use Dot\Ems\Mapper\MapperInterface;
 use Dot\Ems\Mapper\MapperManagerAwareInterface;
 use Dot\Ems\Mapper\MapperManagerAwareTrait;
-use Dot\Paginator\Adapter\MapperAdapter;
+use Dot\Paginator\Adapter\DbMapperAdapter;
 use Zend\Paginator\Paginator;
 
 /**
@@ -35,6 +36,9 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
 
     /** @var  MapperInterface */
     protected $entityMapper;
+
+    /** @var array  */
+    protected $searchableColumns = [];
 
     /**
      * @param $ids
@@ -71,12 +75,23 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
      */
     public function findAll(array $options = [], bool $paginated = false)
     {
-        if (!$paginated) {
-            return $this->getEntityMapper()->find('all', $options);
+        $finder = 'all';
+        if (isset($options['search']) && is_string($options['search']) && !empty($this->searchableColumns)) {
+            $finder = 'search';
+            $search = [];
+            foreach ($this->searchableColumns as $column) {
+                $search[$column] = $options['search'];
+            }
+
+            $options['search'] = $search;
         }
-        //var_dump($options);exit;
+
+        if (!$paginated) {
+            return $this->getEntityMapper()->find($finder, $options);
+        }
 
         //returns paginated results
+        $options['finder'] = $finder;
         return $this->getPaginator($this->getEntityMapper(), $options);
     }
 
@@ -124,6 +139,7 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
         }
 
         $class = $this->paginatorClass;
-        return new $class(new MapperAdapter($mapper, $options));
+        /** @var AbstractDbMapper $mapper */
+        return new $class(new DbMapperAdapter($mapper, $options));
     }
 }

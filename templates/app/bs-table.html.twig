@@ -24,8 +24,9 @@
                            data-mobile-responsive="true" data-check-on-init="true" data-min-width="800"
                            data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
+                           data-silent-sort="false" data-search-on-enter-key="true" data-pagination-loop="false"
                            data-side-pagination="server" data-page-list="[10, 30, 50, 100, 200]" data-page-size="30"
-                           data-sort-name="dateCreated" data-sort-order="desc" id="bsTable">
+                           data-sort-name="{{ defaultSortedColumn }}" data-sort-order="desc" id="bsTable">
                         <thead>
 
                         {% block tableFields %}{% endblock %}

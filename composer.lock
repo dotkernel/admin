@@ -934,12 +934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "2bed226dfe652590be8605e4218231aab59d2b7e"
+                "reference": "3b2a400df45603fb4096365abc52dc1c6499df92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/2bed226dfe652590be8605e4218231aab59d2b7e",
-                "reference": "2bed226dfe652590be8605e4218231aab59d2b7e",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/3b2a400df45603fb4096365abc52dc1c6499df92",
+                "reference": "3b2a400df45603fb4096365abc52dc1c6499df92",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/reworked",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-03-03 21:17:18"
+            "time": "2017-03-06 12:38:34"
         },
         {
             "name": "dotkernel/dot-event",
@@ -1571,12 +1571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-paginator.git",
-                "reference": "890f1088e1866b60f994a02bf3cf589956e5569d"
+                "reference": "b555057ee51626f1ff1fe54931fed8b16d505efe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/890f1088e1866b60f994a02bf3cf589956e5569d",
-                "reference": "890f1088e1866b60f994a02bf3cf589956e5569d",
+                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/b555057ee51626f1ff1fe54931fed8b16d505efe",
+                "reference": "b555057ee51626f1ff1fe54931fed8b16d505efe",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,8 @@
                 "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-hydrator": "0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3"
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-db": "^2.8"
             },
             "type": "library",
             "extra": {
@@ -1623,7 +1624,7 @@
                 "source": "https://github.com/dotkernel/dot-paginator/tree/master",
                 "issues": "https://github.com/dotkernel/dot-paginator/issues"
             },
-            "time": "2017-03-02 01:40:18"
+            "time": "2017-03-06 15:22:01"
         },
         {
             "name": "dotkernel/dot-rbac",

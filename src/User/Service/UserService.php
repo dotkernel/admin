@@ -30,6 +30,12 @@ class UserService extends AbstractEntityService
     /** @var  PasswordInterface */
     protected $passwordService;
 
+    /** @var array  */
+    protected $searchableColumns = ['id', 'username', 'email',
+        'UserDetails.firstName', 'UserDetails.lastName',
+        'status'
+    ];
+
     /**
      * @param UserEntity $entity
      * @param array $options
