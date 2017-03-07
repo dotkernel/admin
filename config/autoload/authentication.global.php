@@ -21,7 +21,7 @@ return [
         'storage' => [
             'type' => 'Session',
             'options' => [
-                'namespace' => 'frontend_authentication',
+                'namespace' => 'admin_authentication',
                 'member' => 'storage',
             ]
         ],
