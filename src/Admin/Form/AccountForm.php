@@ -3,68 +3,33 @@
  * @copyright: DotKernel
  * @library: dot-admin
  * @author: n3vrax
- * Date: 2/28/2017
- * Time: 7:59 PM
+ * Date: 3/6/2017
+ * Time: 11:58 PM
  */
 
 declare(strict_types = 1);
 
-namespace Admin\User\Form;
+namespace Admin\Admin\Form;
 
+use Admin\Admin\Entity\AdminEntity;
 use Admin\App\Messages;
-use Admin\User\Entity\UserEntity;
 use Dot\Validator\Ems\NoRecordExists;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
 use Zend\InputFilter\InputFilter;
 
 /**
- * Class UserForm
- * @package Admin\User\Form
+ * Class AccountForm
+ * @package Admin\Admin\Form
  */
-class UserForm extends Form
+class AccountForm extends Form
 {
-    protected $validationGroup = [
-        'user_csrf',
-        'f_user' => [
-            'username',
-            'email',
-            'password',
-            'passwordConfirm',
-            'roles',
-            'status',
-            'details' => [
-                'firstName',
-                'lastName',
-                'phone',
-                'address'
-            ]
-        ]
-    ];
-
-    protected $noPasswordValidationGroup = [
-        'user_csrf',
-        'f_user' => [
-            'username',
-            'email',
-            'roles',
-            'status',
-            'details' => [
-                'firstName',
-                'lastName',
-                'phone',
-                'address'
-            ]
-        ]
-    ];
-
     /**
-     * UserForm constructor.
+     * AccountForm constructor.
      */
     public function __construct()
     {
-        parent::__construct('userForm');
-
+        parent::__construct('accountForm');
         $this->setAttribute('method', 'post');
         $this->setInputFilter(new InputFilter());
     }
@@ -72,14 +37,14 @@ class UserForm extends Form
     public function init()
     {
         $this->add([
-            'type' => 'F_UserFieldset',
+            'type' => 'AdminFieldset',
             'options' => [
                 'use_as_base_fieldset' => true,
             ]
         ]);
 
         $this->add([
-            'name' => 'user_csrf',
+            'name' => 'account_csrf',
             'type' => 'csrf',
             'options' => [
                 'timeout' => 3600,
@@ -87,17 +52,23 @@ class UserForm extends Form
             ]
         ]);
 
-        $this->setValidationGroup($this->validationGroup);
-    }
+        $this->add([
+            'name' => 'submit',
+            'attributes' => [
+                'type' => 'submit',
+                'value' => 'Update account'
+            ]
+        ], ['priority' => -100]);
 
-    public function disablePasswordValidation()
-    {
-        $this->setValidationGroup($this->noPasswordValidationGroup);
-    }
-
-    public function resetValidation()
-    {
-        $this->setValidationGroup($this->validationGroup);
+        $this->setValidationGroup([
+            'account_csrf',
+            'user' => [
+                'username',
+                'email',
+                'firstName',
+                'lastName',
+            ]
+        ]);
     }
 
     /**
@@ -107,8 +78,8 @@ class UserForm extends Form
      */
     public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
     {
-        if ($object instanceof UserEntity) {
-            $usernameValidators = $this->getInputFilter()->get('f_user')->get('username')
+        if ($object instanceof AdminEntity) {
+            $usernameValidators = $this->getInputFilter()->get('user')->get('username')
                 ->getValidatorChain()->getValidators();
             foreach ($usernameValidators as $validator) {
                 $validator = $validator['instance'];
@@ -117,7 +88,7 @@ class UserForm extends Form
                     break;
                 }
             }
-            $emailValidators = $this->getInputFilter()->get('f_user')->get('email')
+            $emailValidators = $this->getInputFilter()->get('user')->get('email')
                 ->getValidatorChain()->getValidators();
             foreach ($emailValidators as $validator) {
                 $validator = $validator['instance'];

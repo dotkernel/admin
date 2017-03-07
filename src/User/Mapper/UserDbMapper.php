@@ -55,11 +55,35 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
     }
 
     /**
+     * The user details join is dependent, and we add it on every user find
+     *
      * @param string $type
      * @param array $options
      * @return array
      */
     public function find(string $type = 'all', array $options = []): array
+    {
+        $this->insertUserDetailsJoin($options);
+        return parent::find($type, $options);
+    }
+
+    /**
+     * We override the count select too, in order to add the join
+     *
+     * @param string $type
+     * @param array $options
+     * @return int
+     */
+    public function count(string $type = 'all', array $options = []): int
+    {
+        $this->insertUserDetailsJoin($options);
+        return parent::count($type, $options);
+    }
+
+    /**
+     * @param array $options
+     */
+    protected function insertUserDetailsJoin(array &$options)
     {
         $options['joins'] = $options['joins'] ?? [];
         // append a join condition to the options
@@ -71,8 +95,6 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
                 'type' => Select::JOIN_LEFT
             ]
         ];
-
-        return parent::find($type, $options);
     }
 
     /**

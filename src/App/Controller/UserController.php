@@ -51,7 +51,7 @@ class UserController extends EntityManageBaseController
     public function customizeEditValidation(UserForm $form, UserEntity $entity, array $data)
     {
         //make password field optional for updates if both are empty in the POST data
-        if (empty($data['user']['password']) && empty($data['user']['passwordConfirm'])) {
+        if (empty($data['f_user']['password']) && empty($data['f_user']['passwordConfirm'])) {
             $form->disablePasswordValidation();
             $entity->needsPasswordRehash(false);
         }

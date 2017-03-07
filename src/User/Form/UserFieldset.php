@@ -22,6 +22,12 @@ class UserFieldset extends \Dot\User\Form\UserFieldset
 {
     const MESSAGE_ROLES_EMPTY = '<b>Roles</b> should have at least one role selected';
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setName('f_user');
+    }
+
     public function init()
     {
         parent::init();

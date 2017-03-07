@@ -26,7 +26,7 @@ class AdminForm extends Form
 {
     protected $validationGroup = [
         'admin_csrf',
-        'admin' => [
+        'user' => [
             'username',
             'email',
             'password',
@@ -40,7 +40,7 @@ class AdminForm extends Form
 
     protected $noPasswordValidationGroup = [
         'admin_csrf',
-        'admin' => [
+        'user' => [
             'username',
             'email',
             'firstName',
@@ -100,7 +100,7 @@ class AdminForm extends Form
     public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
     {
         if ($object instanceof AdminEntity) {
-            $usernameValidators = $this->getInputFilter()->get('admin')->get('username')
+            $usernameValidators = $this->getInputFilter()->get('user')->get('username')
                 ->getValidatorChain()->getValidators();
             foreach ($usernameValidators as $validator) {
                 $validator = $validator['instance'];
@@ -109,7 +109,7 @@ class AdminForm extends Form
                     break;
                 }
             }
-            $emailValidators = $this->getInputFilter()->get('admin')->get('email')
+            $emailValidators = $this->getInputFilter()->get('user')->get('email')
                 ->getValidatorChain()->getValidators();
             foreach ($emailValidators as $validator) {
                 $validator = $validator['instance'];

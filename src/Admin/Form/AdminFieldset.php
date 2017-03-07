@@ -34,7 +34,6 @@ class AdminFieldset extends UserFieldset
     public function __construct()
     {
         parent::__construct();
-        $this->setName('admin');
     }
 
     public function init()

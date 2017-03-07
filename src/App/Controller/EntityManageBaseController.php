@@ -356,7 +356,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityCreateSuccessMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully created'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' entity was successfully created'];
     }
 
     /**
@@ -366,7 +366,7 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         return [
             ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be created due to a server error. Please try again'
+            ' entity could not be created due to a server error. Please try again'
         ];
     }
 
@@ -375,7 +375,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityEditNoIdErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' id parameter is missing'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' entity id parameter is missing'];
     }
 
     /**
@@ -383,7 +383,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityIdInvalidErrorMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' id is invalid.'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' entity id is invalid.'];
     }
 
     /**
@@ -391,7 +391,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityUpdateSuccessMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully updated'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' entity was successfully updated'];
     }
 
     /**
@@ -401,7 +401,7 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         return [
             ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be updated due to a server error. Please try again'
+            ' entity could not be updated due to a server error. Please try again'
         ];
     }
 
@@ -410,7 +410,7 @@ abstract class EntityManageBaseController extends AbstractActionController
      */
     protected function getEntityDeleteSuccessMessage()
     {
-        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' was successfully removed'];
+        return [ucfirst(static::ENTITY_NAME_SINGULAR) . ' entity was successfully removed'];
     }
 
     /**
@@ -428,7 +428,7 @@ abstract class EntityManageBaseController extends AbstractActionController
     {
         return [
             ucfirst(static::ENTITY_NAME_SINGULAR) .
-            ' could not be removed due to a server error. Please try again'
+            ' entity could not be removed due to a server error. Please try again'
         ];
     }
 }

@@ -14,6 +14,12 @@ use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Service\AdminService;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
+use Dot\User\Event\UserControllerEvent;
+use Dot\User\Event\UserControllerEventListenerInterface;
+use Dot\User\Event\UserControllerEventListenerTrait;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Diactoros\Uri;
 
 /**
  * Class AdminController
@@ -21,8 +27,10 @@ use Dot\AnnotatedServices\Annotation\Service;
  *
  * @Service
  */
-class AdminController extends EntityManageBaseController
+class AdminController extends EntityManageBaseController implements UserControllerEventListenerInterface
 {
+    use UserControllerEventListenerTrait;
+
     const ENTITY_NAME_SINGULAR = 'admin';
     const ENTITY_NAME_PLURAL = 'admins';
     const ENTITY_ROUTE_NAME = 'user';
@@ -51,9 +59,40 @@ class AdminController extends EntityManageBaseController
     public function customizeEditValidation(AdminForm $form, AdminEntity $entity, array $data)
     {
         //make password field optional for updates if both are empty in the POST data
-        if (empty($data['admin']['password']) && empty($data['admin']['passwordConfirm'])) {
+        if (empty($data['user']['password']) && empty($data['user']['passwordConfirm'])) {
             $form->disablePasswordValidation();
             $entity->needsPasswordRehash(false);
         }
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function changePasswordAction(): ResponseInterface
+    {
+        // change uri to account uri, as there is the form, so PRG will go there
+        $this->request = $this->request->withUri(new Uri($this->url('user', ['action' => 'account'])));
+
+        // this overwrites the original action, in order to redirect to /admin/account, where change password is moved
+        // this happens only on GET, POST will go through the original action in order to process the request
+        // as the original action does a PRG(post-redirect-get) it will go to the account action after processing update
+        // this is what we actually want
+        if ($this->getRequest()->getMethod() === 'GET') {
+            return new RedirectResponse($this->url('user', ['action' => 'account']));
+        }
+
+        $next = $this->getNext();
+        return $next($this->getRequest(), $this->getResponse());
+    }
+
+    /**
+     * @param UserControllerEvent $e
+     */
+    public function onBeforeAccountRender(UserControllerEvent $e)
+    {
+        //$this->messenger()->addSuccess('test test');
+        // inject the ChangePassword form
+        $e->setParam('changePasswordForm', $this->forms('ChangePassword'));
+        $e->setParam('changePasswordAction', $this->url('user', ['action' => 'change-password']));
     }
 }

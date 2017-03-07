@@ -15,12 +15,15 @@ use Admin\Admin\Authentication\AuthenticationListener;
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Entity\RoleEntity;
 use Admin\Admin\Factory\AdminHydratorFactory;
+use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminFieldset;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Authentication\UnauthorizedListener;
+use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
+use Admin\App\Controller\AdminController;
 use Dot\Ems\Factory\DbMapperFactory;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
@@ -65,11 +68,18 @@ class ConfigProvider
                     'enable_recovery' => false,
                 ],
                 'template_options' => [
-                    'login_template' => 'admin::login'
+                    'login_template' => 'admin::login',
+                    'account_template' => 'admin::account',
                 ],
                 'messages_options' => [
                     'messages' => [
 
+                    ]
+                ],
+
+                'event_listeners' => [
+                    'controller' => [
+                        AdminController::class,
                     ]
                 ]
             ]
@@ -120,11 +130,15 @@ class ConfigProvider
                 'factories' => [
                     AdminFieldset::class => UserFieldsetFactory::class,
                     AdminForm::class => InvokableFactory::class,
+                    AccountForm::class => InvokableFactory::class,
+                    //ChangePasswordForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
                     'UserFieldset' => AdminFieldset::class,
                     'AdminFieldset' => AdminFieldset::class,
                     'Admin' => AdminForm::class,
+                    'Account' => AccountForm::class,
+                    //'ChangePassword' => ChangePasswordForm::class,
                 ]
             ]
         ];

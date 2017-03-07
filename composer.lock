@@ -409,12 +409,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authentication-web.git",
-                "reference": "6aa3c552d80234b925e37a3b261056b4901abf39"
+                "reference": "72cd373b47ee8826dede6b06593d311695eda2d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authentication-web/zipball/6aa3c552d80234b925e37a3b261056b4901abf39",
-                "reference": "6aa3c552d80234b925e37a3b261056b4901abf39",
+                "url": "https://api.github.com/repos/dotkernel/dot-authentication-web/zipball/72cd373b47ee8826dede6b06593d311695eda2d6",
+                "reference": "72cd373b47ee8826dede6b06593d311695eda2d6",
                 "shasum": ""
             },
             "require": {
@@ -455,7 +455,7 @@
                 }
             ],
             "description": "Login/logout authentication flow for web based applications",
-            "time": "2017-02-23 18:40:55"
+            "time": "2017-03-07 00:04:27"
         },
         {
             "name": "dotkernel/dot-authorization",
@@ -567,12 +567,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller.git",
-                "reference": "6f91e1284d0666f04cab9446fc2468d35881c067"
+                "reference": "0422e8c5e9b52d2eb2b990366db9464829328f9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/6f91e1284d0666f04cab9446fc2468d35881c067",
-                "reference": "6f91e1284d0666f04cab9446fc2468d35881c067",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/0422e8c5e9b52d2eb2b990366db9464829328f9c",
+                "reference": "0422e8c5e9b52d2eb2b990366db9464829328f9c",
                 "shasum": ""
             },
             "require": {
@@ -610,7 +610,7 @@
                 }
             ],
             "description": "Controller like middleware with plugin support",
-            "time": "2017-02-24 20:09:32"
+            "time": "2017-03-07 00:01:02"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authentication",
@@ -934,12 +934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "3b2a400df45603fb4096365abc52dc1c6499df92"
+                "reference": "0f53355378ba1bcc9a30021b972dfc0f79a526f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/3b2a400df45603fb4096365abc52dc1c6499df92",
-                "reference": "3b2a400df45603fb4096365abc52dc1c6499df92",
+                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/0f53355378ba1bcc9a30021b972dfc0f79a526f5",
+                "reference": "0f53355378ba1bcc9a30021b972dfc0f79a526f5",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +991,7 @@
                 "source": "https://github.com/dotkernel/dot-ems/tree/reworked",
                 "issues": "https://github.com/dotkernel/dot-ems/issues"
             },
-            "time": "2017-03-06 12:38:34"
+            "time": "2017-03-07 00:06:57"
         },
         {
             "name": "dotkernel/dot-event",
@@ -999,12 +999,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-event.git",
-                "reference": "6a9f283a0f84324338f24e5d2909b7643c5bce48"
+                "reference": "bfb58acb9a79aaa6878140ca7445e6c79ecc03fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/6a9f283a0f84324338f24e5d2909b7643c5bce48",
-                "reference": "6a9f283a0f84324338f24e5d2909b7643c5bce48",
+                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/bfb58acb9a79aaa6878140ca7445e6c79ecc03fe",
+                "reference": "bfb58acb9a79aaa6878140ca7445e6c79ecc03fe",
                 "shasum": ""
             },
             "require": {
@@ -1040,7 +1040,7 @@
                 }
             ],
             "description": "Common base event objects based on Zend Event Manager",
-            "time": "2017-02-23 22:12:56"
+            "time": "2017-03-06 23:41:52"
         },
         {
             "name": "dotkernel/dot-filter",
@@ -1162,12 +1162,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-form.git",
-                "reference": "07af644576f42aa521f1fcf46d83e842a21f5564"
+                "reference": "2ab70fc46d37cc9940c56736e6509049877c0ff9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-form/zipball/07af644576f42aa521f1fcf46d83e842a21f5564",
-                "reference": "07af644576f42aa521f1fcf46d83e842a21f5564",
+                "url": "https://api.github.com/repos/dotkernel/dot-form/zipball/2ab70fc46d37cc9940c56736e6509049877c0ff9",
+                "reference": "2ab70fc46d37cc9940c56736e6509049877c0ff9",
                 "shasum": ""
             },
             "require": {
@@ -1181,6 +1181,9 @@
             },
             "require-dev": {
                 "doctrine/annotations": "^1.3",
+                "dotkernel/dot-ems": "dev-reworked as 0.6.x-dev",
+                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.5"
             },
@@ -1219,7 +1222,7 @@
                 "source": "https://github.com/dotkernel/dot-form/tree/master",
                 "issues": "https://github.com/dotkernel/dot-form/issues"
             },
-            "time": "2017-02-04 15:01:16"
+            "time": "2017-03-06 17:46:37"
         },
         {
             "name": "dotkernel/dot-helpers",
@@ -1467,12 +1470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-mail.git",
-                "reference": "49f632fe1bbcc6baece6051942bcf02d4ae15d9d"
+                "reference": "ed44e7f8d348b8ebb0a0b57451f120de05fd2c13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-mail/zipball/49f632fe1bbcc6baece6051942bcf02d4ae15d9d",
-                "reference": "49f632fe1bbcc6baece6051942bcf02d4ae15d9d",
+                "url": "https://api.github.com/repos/dotkernel/dot-mail/zipball/ed44e7f8d348b8ebb0a0b57451f120de05fd2c13",
+                "reference": "ed44e7f8d348b8ebb0a0b57451f120de05fd2c13",
                 "shasum": ""
             },
             "require": {
@@ -1510,7 +1513,7 @@
                 }
             ],
             "description": "Mail module for DotKernel based on Zend Mail",
-            "time": "2017-02-25 16:54:16"
+            "time": "2017-03-07 00:09:27"
         },
         {
             "name": "dotkernel/dot-navigation",
@@ -1571,12 +1574,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-paginator.git",
-                "reference": "b555057ee51626f1ff1fe54931fed8b16d505efe"
+                "reference": "2422c8546d050eec1f2b19dc78f90f3749f81765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/b555057ee51626f1ff1fe54931fed8b16d505efe",
-                "reference": "b555057ee51626f1ff1fe54931fed8b16d505efe",
+                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/2422c8546d050eec1f2b19dc78f90f3749f81765",
+                "reference": "2422c8546d050eec1f2b19dc78f90f3749f81765",
                 "shasum": ""
             },
             "require": {
@@ -1624,7 +1627,7 @@
                 "source": "https://github.com/dotkernel/dot-paginator/tree/master",
                 "issues": "https://github.com/dotkernel/dot-paginator/issues"
             },
-            "time": "2017-03-06 15:22:01"
+            "time": "2017-03-06 17:23:24"
         },
         {
             "name": "dotkernel/dot-rbac",
@@ -1685,12 +1688,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-rbac-guard.git",
-                "reference": "f0f2f5d409c8ca80927e01f2f3fa0c5f766b1e72"
+                "reference": "24c95d2e58c5dab13e7607dcfd83909e9575e980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-rbac-guard/zipball/f0f2f5d409c8ca80927e01f2f3fa0c5f766b1e72",
-                "reference": "f0f2f5d409c8ca80927e01f2f3fa0c5f766b1e72",
+                "url": "https://api.github.com/repos/dotkernel/dot-rbac-guard/zipball/24c95d2e58c5dab13e7607dcfd83909e9575e980",
+                "reference": "24c95d2e58c5dab13e7607dcfd83909e9575e980",
                 "shasum": ""
             },
             "require": {
@@ -1735,7 +1738,7 @@
                 }
             ],
             "description": "Various authorization guards for route/controller authorization",
-            "time": "2017-02-24 20:55:42"
+            "time": "2017-03-07 00:12:05"
         },
         {
             "name": "dotkernel/dot-session",
@@ -1848,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "80fe58ea7f3a5ed131ee13e79cf534bd8048f5b7"
+                "reference": "185f04bc05389d0434392e30d63c3a724066ea97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/80fe58ea7f3a5ed131ee13e79cf534bd8048f5b7",
-                "reference": "80fe58ea7f3a5ed131ee13e79cf534bd8048f5b7",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/185f04bc05389d0434392e30d63c3a724066ea97",
+                "reference": "185f04bc05389d0434392e30d63c3a724066ea97",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1914,7 @@
                 }
             ],
             "description": "Complete configurable user module for DK built around dot-authentication-web",
-            "time": "2017-03-02 14:24:51"
+            "time": "2017-03-07 01:08:13"
         },
         {
             "name": "dotkernel/dot-validator",
@@ -6089,16 +6092,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/b19cc3298482a335a95f3016d2f8a6950f0fbcd7",
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7",
                 "shasum": ""
             },
             "require": {
@@ -6138,7 +6141,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11T19:50:13+00:00"
+            "time": "2016-10-03T07:41:43+00:00"
         },
         {
             "name": "sebastian/version",

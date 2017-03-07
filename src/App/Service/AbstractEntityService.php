@@ -10,11 +10,10 @@
 namespace Admin\App\Service;
 
 use Admin\App\Exception\RuntimeException;
-use Dot\Ems\Mapper\AbstractDbMapper;
 use Dot\Ems\Mapper\MapperInterface;
 use Dot\Ems\Mapper\MapperManagerAwareInterface;
 use Dot\Ems\Mapper\MapperManagerAwareTrait;
-use Dot\Paginator\Adapter\DbMapperAdapter;
+use Dot\Paginator\Adapter\MapperAdapter;
 use Zend\Paginator\Paginator;
 
 /**
@@ -139,7 +138,6 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
         }
 
         $class = $this->paginatorClass;
-        /** @var AbstractDbMapper $mapper */
-        return new $class(new DbMapperAdapter($mapper, $options));
+        return new $class(new MapperAdapter($mapper, $options));
     }
 }

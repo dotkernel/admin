@@ -13,10 +13,9 @@ namespace Admin\App;
 
 use Admin\App\Controller\AdminController;
 use Admin\App\Controller\DashboardController;
-use Admin\App\Controller\UserController;
+use Admin\App\Controller\UserController as UserManageController;
+use Dot\User\Controller\UserController;
 use Admin\App\Form\ConfirmDeleteForm;
-use Admin\App\Form\Element\EntitySelect;
-use Admin\App\Form\Element\EntitySelectFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
@@ -48,14 +47,9 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories' => [
-                    EntitySelect::class => EntitySelectFactory::class,
                     ConfirmDeleteForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
-                    'EntitySelect' => EntitySelect::class,
-                    'entityselect' => EntitySelect::class,
-                    'entitySelect' => EntitySelect::class,
-
                     'ConfirmDelete' => ConfirmDeleteForm::class,
                 ]
             ]
@@ -75,7 +69,7 @@ class ConfigProvider
                 // so we use a diff one for the frontend user management
                 'name' => 'f_user',
                 'path' => '/user[/{action}[/{id:\d+}]]',
-                'middleware' => UserController::class,
+                'middleware' => UserManageController::class,
             ],
 
             //change default route paths for user related stuff into admin

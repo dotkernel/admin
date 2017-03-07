@@ -23,6 +23,24 @@ return [
                         ]
                     ],
                     [
+                        'type' => 'Controller',
+                        'options' => [
+                            'rules' => [
+                                [
+                                    'route' => 'user',
+                                    'actions' => [
+                                        'register',
+                                        'reset-password',
+                                        'forgot-password',
+                                        'confirm-account',
+                                        'opt-out'
+                                    ],
+                                    'roles' => ['guest'],
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
                         'type' => 'ControllerPermission',
                         'options' => [
                             'rules' => [
