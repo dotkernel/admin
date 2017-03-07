@@ -1851,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "185f04bc05389d0434392e30d63c3a724066ea97"
+                "reference": "2def943b97d3d6bc4549e3841940e11b37d07968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/185f04bc05389d0434392e30d63c3a724066ea97",
-                "reference": "185f04bc05389d0434392e30d63c3a724066ea97",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/2def943b97d3d6bc4549e3841940e11b37d07968",
+                "reference": "2def943b97d3d6bc4549e3841940e11b37d07968",
                 "shasum": ""
             },
             "require": {
@@ -1914,7 +1914,7 @@
                 }
             ],
             "description": "Complete configurable user module for DK built around dot-authentication-web",
-            "time": "2017-03-07 01:08:13"
+            "time": "2017-03-07 17:56:15"
         },
         {
             "name": "dotkernel/dot-validator",
@@ -5116,16 +5116,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "1a8192deae1f35aabc3a73aad19cd07c68091dd1"
+                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/1a8192deae1f35aabc3a73aad19cd07c68091dd1",
-                "reference": "1a8192deae1f35aabc3a73aad19cd07c68091dd1",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
+                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
                 "shasum": ""
             },
             "require": {
@@ -5173,7 +5173,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2017-03-02T16:54:56+00:00"
+            "time": "2017-03-07T09:04:45+00:00"
         },
         {
             "name": "mikey179/vfsStream",

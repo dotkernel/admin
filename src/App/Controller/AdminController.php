@@ -90,7 +90,6 @@ class AdminController extends EntityManageBaseController implements UserControll
      */
     public function onBeforeAccountRender(UserControllerEvent $e)
     {
-        //$this->messenger()->addSuccess('test test');
         // inject the ChangePassword form
         $e->setParam('changePasswordForm', $this->forms('ChangePassword'));
         $e->setParam('changePasswordAction', $this->url('user', ['action' => 'change-password']));

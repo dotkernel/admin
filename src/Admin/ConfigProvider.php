@@ -19,12 +19,15 @@ use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminFieldset;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Authentication\UnauthorizedListener;
-use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
+use Admin\Admin\Mapper\TokenDbMapper;
 use Admin\App\Controller\AdminController;
 use Dot\Ems\Factory\DbMapperFactory;
+use Dot\User\Entity\ConfirmTokenEntity;
+use Dot\User\Entity\RememberTokenEntity;
+use Dot\User\Entity\ResetTokenEntity;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -100,10 +103,15 @@ class ConfigProvider
                 'factories' => [
                     AdminDbMapper::class => UserDbMapperFactory::class,
                     RoleDbMapper::class => DbMapperFactory::class,
+                    TokenDbMapper::class => DbMapperFactory::class,
                 ],
                 'aliases' => [
                     AdminEntity::class => AdminDbMapper::class,
                     RoleEntity::class => RoleDbMapper::class,
+
+                    ConfirmTokenEntity::class => TokenDbMapper::class,
+                    RememberTokenEntity::class => TokenDbMapper::class,
+                    ResetTokenEntity::class => TokenDbMapper::class,
                 ]
             ],
         ];
