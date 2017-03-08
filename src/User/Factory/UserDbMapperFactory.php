@@ -12,7 +12,7 @@ declare(strict_types = 1);
 namespace Admin\User\Factory;
 
 use Admin\User\Entity\UserEntity;
-use Dot\Ems\Factory\DbMapperFactory;
+use Dot\Mapper\Factory\DbMapperFactory;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Options\UserOptions;
 use Interop\Container\ContainerInterface;

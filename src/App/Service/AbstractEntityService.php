@@ -10,9 +10,9 @@
 namespace Admin\App\Service;
 
 use Admin\App\Exception\RuntimeException;
-use Dot\Ems\Mapper\MapperInterface;
-use Dot\Ems\Mapper\MapperManagerAwareInterface;
-use Dot\Ems\Mapper\MapperManagerAwareTrait;
+use Dot\Mapper\Mapper\MapperInterface;
+use Dot\Mapper\Mapper\MapperManagerAwareInterface;
+use Dot\Mapper\Mapper\MapperManagerAwareTrait;
 use Dot\Paginator\Adapter\MapperAdapter;
 use Zend\Paginator\Paginator;
 

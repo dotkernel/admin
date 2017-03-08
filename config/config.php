@@ -28,7 +28,7 @@ $aggregator = new ConfigAggregator([
     \Dot\Controller\Plugin\Mail\ConfigProvider::class,
     \Dot\Controller\Plugin\Forms\ConfigProvider::class,
     \Dot\Controller\Plugin\Session\ConfigProvider::class,
-    \Dot\Ems\ConfigProvider::class,
+    \Dot\Mapper\ConfigProvider::class,
     \Dot\Event\ConfigProvider::class,
     \Dot\Filter\ConfigProvider::class,
     \Dot\FlashMessenger\ConfigProvider::class,

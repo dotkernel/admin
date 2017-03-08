@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "86570340fa5fdf5f2a57b1832e3817ff",
+    "content-hash": "d2d943d8528519bef2802f6ec5c84dd9",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authentication.git",
-                "reference": "5332478e9c0b0ce4d1b707ed1ea2a35ff9af08a4"
+                "reference": "f513aeedf5b9f97a9dcdd9ef3bf04b79d75207f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authentication/zipball/5332478e9c0b0ce4d1b707ed1ea2a35ff9af08a4",
-                "reference": "5332478e9c0b0ce4d1b707ed1ea2a35ff9af08a4",
+                "url": "https://api.github.com/repos/dotkernel/dot-authentication/zipball/f513aeedf5b9f97a9dcdd9ef3bf04b79d75207f4",
+                "reference": "f513aeedf5b9f97a9dcdd9ef3bf04b79d75207f4",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +322,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -341,7 +341,7 @@
                 }
             ],
             "description": "Core interfaces for authentication implementations",
-            "time": "2017-02-24 23:07:42"
+            "time": "2017-03-07 20:52:20"
         },
         {
             "name": "dotkernel/dot-authentication-service",
@@ -463,12 +463,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authorization.git",
-                "reference": "adea1b7a70d9caeb93f29eb9f3cefdf5a6dec4e2"
+                "reference": "1ff1053b32f066d7997e4240298ed015031fa410"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authorization/zipball/adea1b7a70d9caeb93f29eb9f3cefdf5a6dec4e2",
-                "reference": "adea1b7a70d9caeb93f29eb9f3cefdf5a6dec4e2",
+                "url": "https://api.github.com/repos/dotkernel/dot-authorization/zipball/1ff1053b32f066d7997e4240298ed015031fa410",
+                "reference": "1ff1053b32f066d7997e4240298ed015031fa410",
                 "shasum": ""
             },
             "require": {
@@ -481,7 +481,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -500,7 +500,7 @@
                 }
             ],
             "description": "Authorization service abstractions",
-            "time": "2017-02-23 21:58:21"
+            "time": "2017-03-07 21:01:17"
         },
         {
             "name": "dotkernel/dot-cache",
@@ -567,17 +567,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller.git",
-                "reference": "0422e8c5e9b52d2eb2b990366db9464829328f9c"
+                "reference": "d7bd04a816f410ced3378ee13611fa95a7422ec8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/0422e8c5e9b52d2eb2b990366db9464829328f9c",
-                "reference": "0422e8c5e9b52d2eb2b990366db9464829328f9c",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/d7bd04a816f410ced3378ee13611fa95a7422ec8",
+                "reference": "d7bd04a816f410ced3378ee13611fa95a7422ec8",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-event": "~0.1",
                 "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-servicemanager": "^3.0"
@@ -591,7 +591,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -610,7 +610,7 @@
                 }
             ],
             "description": "Controller like middleware with plugin support",
-            "time": "2017-03-07 00:01:02"
+            "time": "2017-03-08 01:57:02"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authentication",
@@ -618,29 +618,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-authentication.git",
-                "reference": "896d0e49b69a196043525d5be14dd962fbaa3740"
+                "reference": "4149cfcecaf39219872bd0f7b6bc9f33f70aef77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authentication/zipball/896d0e49b69a196043525d5be14dd962fbaa3740",
-                "reference": "896d0e49b69a196043525d5be14dd962fbaa3740",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authentication/zipball/4149cfcecaf39219872bd0f7b6bc9f33f70aef77",
+                "reference": "4149cfcecaf39219872bd0f7b6bc9f33f70aef77",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "dev-develop as 0.6.x-dev",
-                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-authentication": "~0.1",
+                "dotkernel/dot-controller": "~0.1",
                 "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-authentication": "dev-develop as 0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -658,8 +657,8 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Authentication DK3 controller plugin",
-            "time": "2017-02-22 20:21:28"
+            "description": "DotKernel authentication controller plugin",
+            "time": "2017-03-08 02:05:46"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authorization",
@@ -667,29 +666,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-authorization.git",
-                "reference": "25814199424373373e9be2602e63ea142717286e"
+                "reference": "603cc22666e64fada1ba93ffd0bb691f96e699ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authorization/zipball/25814199424373373e9be2602e63ea142717286e",
-                "reference": "25814199424373373e9be2602e63ea142717286e",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authorization/zipball/603cc22666e64fada1ba93ffd0bb691f96e699ae",
+                "reference": "603cc22666e64fada1ba93ffd0bb691f96e699ae",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "dev-develop as 0.6.x-dev",
-                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-authorization": "~0.1",
+                "dotkernel/dot-controller": "~0.1",
                 "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-authorization": "dev-develop as 0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -707,8 +705,8 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Authorization controller plugin for easy access to authorization service inside DK controllers",
-            "time": "2017-02-24 18:27:45"
+            "description": "Authorization controller plugin for easy access to authorization service inside dotkernel controllers",
+            "time": "2017-03-08 02:12:47"
         },
         {
             "name": "dotkernel/dot-controller-plugin-flashmessenger",
@@ -929,82 +927,17 @@
             "time": "2017-02-02 22:47:01"
         },
         {
-            "name": "dotkernel/dot-ems",
-            "version": "dev-reworked",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "0f53355378ba1bcc9a30021b972dfc0f79a526f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/0f53355378ba1bcc9a30021b972dfc0f79a526f5",
-                "reference": "0f53355378ba1bcc9a30021b972dfc0f79a526f5",
-                "shasum": ""
-            },
-            "require": {
-                "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
-                "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
-                "dotkernel/dot-hydrator": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
-                "zendframework/zend-paginator": "^2.7",
-                "zendframework/zend-servicemanager": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3",
-                "zendframework/zend-db": "^2.8",
-                "zendframework/zend-validator": "^2.8"
-            },
-            "suggest": {
-                "zendframework/zend-db": "Needed if you use the db mappers",
-                "zendframework/zend-validator": "Needed if you use the provided custom validators"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Dot\\Ems\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DotTest\\Ems\\": "test/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "n3vrax",
-                    "email": "tibi@apidemia.com"
-                }
-            ],
-            "description": "Entity-mapper-service abstraction layer",
-            "support": {
-                "source": "https://github.com/dotkernel/dot-ems/tree/reworked",
-                "issues": "https://github.com/dotkernel/dot-ems/issues"
-            },
-            "time": "2017-03-07 00:06:57"
-        },
-        {
             "name": "dotkernel/dot-event",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-event.git",
-                "reference": "bfb58acb9a79aaa6878140ca7445e6c79ecc03fe"
+                "reference": "2c3b1681917f403be9bbacceae9c39e0c5129088"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/bfb58acb9a79aaa6878140ca7445e6c79ecc03fe",
-                "reference": "bfb58acb9a79aaa6878140ca7445e6c79ecc03fe",
+                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/2c3b1681917f403be9bbacceae9c39e0c5129088",
+                "reference": "2c3b1681917f403be9bbacceae9c39e0c5129088",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +954,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -1040,7 +973,7 @@
                 }
             ],
             "description": "Common base event objects based on Zend Event Manager",
-            "time": "2017-03-06 23:41:52"
+            "time": "2017-03-07 21:10:40"
         },
         {
             "name": "dotkernel/dot-filter",
@@ -1230,12 +1163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-helpers.git",
-                "reference": "1a455b3791c9b9c4d2b5fe756425f94a294ddf56"
+                "reference": "4a9d76b167c8ef62078d4f0f13556992929c1cec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-helpers/zipball/1a455b3791c9b9c4d2b5fe756425f94a294ddf56",
-                "reference": "1a455b3791c9b9c4d2b5fe756425f94a294ddf56",
+                "url": "https://api.github.com/repos/dotkernel/dot-helpers/zipball/4a9d76b167c8ef62078d4f0f13556992929c1cec",
+                "reference": "4a9d76b167c8ef62078d4f0f13556992929c1cec",
                 "shasum": ""
             },
             "require": {
@@ -1253,7 +1186,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -1272,7 +1205,7 @@
                 }
             ],
             "description": "Various helper structures and classes",
-            "time": "2017-02-23 19:42:07"
+            "time": "2017-03-07 21:21:06"
         },
         {
             "name": "dotkernel/dot-hydrator",
@@ -1514,6 +1447,71 @@
             ],
             "description": "Mail module for DotKernel based on Zend Mail",
             "time": "2017-03-07 00:09:27"
+        },
+        {
+            "name": "dotkernel/dot-mapper",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-mapper.git",
+                "reference": "cda82ed1c8c10184db9ee28abf0a1d64327229a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-mapper/zipball/cda82ed1c8c10184db9ee28abf0a1d64327229a8",
+                "reference": "cda82ed1c8c10184db9ee28abf0a1d64327229a8",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
+                "dotkernel/dot-hydrator": "0.6.x-dev",
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-paginator": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-db": "^2.8",
+                "zendframework/zend-validator": "^2.8"
+            },
+            "suggest": {
+                "zendframework/zend-db": "Needed if you use the db mappers",
+                "zendframework/zend-validator": "Needed if you use the provided custom validators"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Mapper\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DotTest\\Mapper\\": "test/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "Mapper pattern implementation",
+            "support": {
+                "source": "https://github.com/dotkernel/dot-mapper/tree/develop",
+                "issues": "https://github.com/dotkernel/dot-mapper/issues"
+            },
+            "time": "2017-03-08 17:04:14"
         },
         {
             "name": "dotkernel/dot-navigation",
@@ -1851,12 +1849,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "2def943b97d3d6bc4549e3841940e11b37d07968"
+                "reference": "b51e56775a943c9ef7eca694f269b810b169a419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/2def943b97d3d6bc4549e3841940e11b37d07968",
-                "reference": "2def943b97d3d6bc4549e3841940e11b37d07968",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/b51e56775a943c9ef7eca694f269b810b169a419",
+                "reference": "b51e56775a943c9ef7eca694f269b810b169a419",
                 "shasum": ""
             },
             "require": {
@@ -1869,7 +1867,6 @@
                 "dotkernel/dot-controller-plugin-authorization": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-controller-plugin-flashmessenger": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-controller-plugin-forms": "0.6.x-dev",
-                "dotkernel/dot-ems": "dev-reworked as 0.6.x-dev",
                 "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-filter": "0.6.x-dev",
                 "dotkernel/dot-flashmessenger": "dev-develop as 0.6.x-dev",
@@ -1877,6 +1874,7 @@
                 "dotkernel/dot-helpers": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-hydrator": "0.6.x-dev",
                 "dotkernel/dot-inputfilter": "0.6.x-dev",
+                "dotkernel/dot-mapper": "dev-develop as 0.6.x-dev",
                 "dotkernel/dot-validator": "0.6.x-dev",
                 "php": "^7.1",
                 "psr/http-message": "^1.0",
@@ -1914,7 +1912,7 @@
                 }
             ],
             "description": "Complete configurable user module for DK built around dot-authentication-web",
-            "time": "2017-03-07 17:56:15"
+            "time": "2017-03-08 17:01:15"
         },
         {
             "name": "dotkernel/dot-validator",
@@ -6469,8 +6467,8 @@
         {
             "alias": "0.6.x-dev",
             "alias_normalized": "0.6.9999999.9999999-dev",
-            "version": "dev-reworked",
-            "package": "dotkernel/dot-ems"
+            "version": "dev-develop",
+            "package": "dotkernel/dot-mapper"
         },
         {
             "alias": "0.6.x-dev",
@@ -6555,7 +6553,7 @@
         "dotkernel/dot-controller-plugin-forms": 20,
         "dotkernel/dot-controller-plugin-mail": 20,
         "dotkernel/dot-controller-plugin-session": 20,
-        "dotkernel/dot-ems": 20,
+        "dotkernel/dot-mapper": 20,
         "dotkernel/dot-event": 20,
         "dotkernel/dot-filter": 20,
         "dotkernel/dot-flashmessenger": 20,

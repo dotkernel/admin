@@ -24,7 +24,7 @@ use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
 use Admin\Admin\Mapper\TokenDbMapper;
 use Admin\App\Controller\AdminController;
-use Dot\Ems\Factory\DbMapperFactory;
+use Dot\Mapper\Factory\DbMapperFactory;
 use Dot\User\Entity\ConfirmTokenEntity;
 use Dot\User\Entity\RememberTokenEntity;
 use Dot\User\Entity\ResetTokenEntity;

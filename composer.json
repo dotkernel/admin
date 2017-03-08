@@ -41,7 +41,7 @@
     "dotkernel/dot-controller-plugin-forms": "0.6.x-dev",
     "dotkernel/dot-controller-plugin-mail": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-controller-plugin-session": "0.6.x-dev",
-    "dotkernel/dot-ems": "dev-reworked as 0.6.x-dev",
+    "dotkernel/dot-mapper": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-event": "dev-develop as 0.6.x-dev",
     "dotkernel/dot-filter": "0.6.x-dev",
     "dotkernel/dot-flashmessenger": "dev-develop as 0.6.x-dev",
@@ -70,7 +70,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/dotkernel/dot-ems"
+      "url": "https://github.com/dotkernel/dot-mapper"
     },
     {
       "type": "vcs",

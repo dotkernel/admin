@@ -121,5 +121,4 @@ class AdminForm extends Form
         }
         return parent::bind($object, $flags);
     }
-
 }

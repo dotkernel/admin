@@ -12,7 +12,6 @@ declare(strict_types = 1);
 namespace Admin\User\Factory;
 
 use Admin\User\Entity\UserEntity;
-use Dot\Hydrator\ClassMethodsCamelCase;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Form\UserFieldset;
 use Interop\Container\ContainerInterface;

@@ -13,9 +13,9 @@ namespace Admin\User\Hydrator;
 
 use Admin\App\Exception\RuntimeException;
 use Dot\AnnotatedServices\Annotation\Service;
-use Dot\Ems\Mapper\MapperInterface;
-use Dot\Ems\Mapper\MapperManagerAwareInterface;
-use Dot\Ems\Mapper\MapperManagerAwareTrait;
+use Dot\Mapper\Mapper\MapperInterface;
+use Dot\Mapper\Mapper\MapperManagerAwareInterface;
+use Dot\Mapper\Mapper\MapperManagerAwareTrait;
 use Dot\User\Entity\RoleEntity;
 use Zend\Hydrator\Strategy\StrategyInterface;
 
