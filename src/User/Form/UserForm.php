@@ -13,7 +13,7 @@ namespace Admin\User\Form;
 
 use Admin\App\Messages;
 use Admin\User\Entity\UserEntity;
-use Dot\Validator\Ems\NoRecordExists;
+use Dot\Validator\Mapper\NoRecordExists;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
 use Zend\InputFilter\InputFilter;
