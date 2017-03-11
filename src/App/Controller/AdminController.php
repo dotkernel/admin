@@ -1,10 +1,8 @@
 <?php
 /**
- * @copyright: DotKernel
- * @package: dotkernel/dot-admin
- * @author: n3vrax
- * Date: 11/21/2016
- * Time: 2:28 PM
+ * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
+ * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\App\Controller;

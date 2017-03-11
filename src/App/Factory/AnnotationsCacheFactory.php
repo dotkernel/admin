@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * Admin: n3vra
- * Date: 1/21/2017
- * Time: 5:36 PM
+ * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
+ * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\App\Factory;
