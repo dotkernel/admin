@@ -1735,16 +1735,16 @@
         },
         {
             "name": "dotkernel/dot-user",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "90f29b056d9dc90f22bb9ea03b45462819aa3565"
+                "reference": "afacdf895b56c454db0c3f8353b106912e9e26e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/90f29b056d9dc90f22bb9ea03b45462819aa3565",
-                "reference": "90f29b056d9dc90f22bb9ea03b45462819aa3565",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/afacdf895b56c454db0c3f8353b106912e9e26e9",
+                "reference": "afacdf895b56c454db0c3f8353b106912e9e26e9",
                 "shasum": ""
             },
             "require": {
@@ -1802,7 +1802,7 @@
                 }
             ],
             "description": "DotKernel configurable user component providing common user functions and extending the authentication flow",
-            "time": "2017-03-11T13:58:33+00:00"
+            "time": "2017-03-12T11:34:33+00:00"
         },
         {
             "name": "dotkernel/dot-validator",
