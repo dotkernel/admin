@@ -1,26 +1,33 @@
 <?php
 /**
- * @copyright: DotKernel
- * @library: dotkernel/dot-admin
- * @author: n3vrax
- * Date: 10/26/2016
- * Time: 7:38 PM
+ * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
+ * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
-namespace Dot\Admin\Entity;
+declare(strict_types = 1);
 
-use Dot\Ems\Entity\SearchableColumnsProvider;
-use Dot\Ems\Entity\SortableColumnsProvider;
+namespace Admin\Admin\Entity;
+
+use Admin\Admin\Hydrator\AdminHydrator;
 use Dot\User\Entity\UserEntity;
 
 /**
- * Class AdminEntity
- * @package Dot\Authentication\Authentication\Entity
+ * Class UserEntity
+ * @package App\Admin\Entity
  */
-class AdminEntity extends UserEntity implements
-    SortableColumnsProvider,
-    SearchableColumnsProvider
+class AdminEntity extends UserEntity
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_DELETED = 'deleted';
+
+    /** @var  string */
+    protected $hydrator = AdminHydrator::class;
+
+    /** @var bool  */
+    protected $needsPasswordRehash = true;
+
     /** @var  string */
     protected $firstName;
 
@@ -37,12 +44,10 @@ class AdminEntity extends UserEntity implements
 
     /**
      * @param string $firstName
-     * @return AdminEntity
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-        return $this;
     }
 
     /**
@@ -55,37 +60,35 @@ class AdminEntity extends UserEntity implements
 
     /**
      * @param string $lastName
-     * @return AdminEntity
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-        return $this;
     }
 
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        return get_object_vars($this);
+        $fields = parent::jsonSerialize();
+        return array_merge($fields, [
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+        ]);
     }
 
     /**
-     * @return array
+     * @param bool|null $value
+     * @return mixed
      */
-    public function ignoredProperties()
+    public function needsPasswordRehash(bool $value = null)
     {
-        return ['roles', 'name', 'dateCreated'];
-    }
-
-    public function sortableColumns()
-    {
-        return ['id', 'username', 'email', 'dateCreated', 'role', 'status', 'firstName', 'lastName'];
-    }
-
-    public function searchableColumns()
-    {
-        return ['id', 'username', 'email', 'firstName', 'lastName', 'role', 'status'];
+        if ($value !== null) {
+            $this->needsPasswordRehash = $value;
+            return $this;
+        } else {
+            return $this->needsPasswordRehash;
+        }
     }
 }

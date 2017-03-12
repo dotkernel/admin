@@ -46,9 +46,22 @@ h3, h4 {
     margin-top: 15px;
 }
 
+.alert > ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
 .modal {
     -webkit-overflow-scrolling: auto !important;
     overflow-y: auto !important;
+}
+
+.has-error .multiselect {
+    border-color: #a94442;
+}
+
+.has-error .checkbox {
+    color: black;
 }
 
 #modalAlertIcon {
@@ -174,7 +187,6 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-    background-color: #e9ecf2;
     border-color: #e9ecf2;
     color: #1b3548;
 }
@@ -715,11 +727,11 @@ a.bg-danger:hover {
     padding: 10px 15px;
     background: #e9ecf2;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    margin: 0;
+    margin: 0 0 10px;
 }
 
 h1.page-header {
-    margin-top: 30px;
+    margin-top: 15px;
     border-bottom: 0;
 }
 

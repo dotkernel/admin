@@ -2,8 +2,7 @@
 
 return [
     'dot_log' => [
-        'service' => [
-
+        'loggers' => [
             'action_logger' => [
                 'writers' => [
                     [

@@ -2,41 +2,28 @@
 
 return [
     'dot_authentication' => [
-        //required by the auth adapters, it may be optional for your custom adapters
-        //specify the identity entity to use and its hydrator
-        'identity_class' => \Dot\Admin\Entity\AdminEntity::class,
-        'identity_hydrator_class' => \Dot\User\Entity\UserEntityHydrator::class,
-
-        //this is adapter specific
-        //currently we support HTTP basic and digest
-        //below is config template for callbackcheck adapter which is for mysql
         'adapter' => [
-            \Dot\Authentication\Adapter\DbTable\CallbackCheckAdapter::class => [
-                //zend db adapter service name
-                'db_adapter' => 'database',
+            'type' => 'CallbackCheck',
+            'options' => [
+                'adapter' => 'database',
 
-                //your user table name
-                'table_name' => 'admin',
+                'identity_prototype' => \Admin\Admin\Entity\AdminEntity::class,
+                'identity_hydrator' => \Dot\Hydrator\ClassMethodsCamelCase::class,
 
-                //what user fields should use for authentication(db fields)
+                'table' => 'admin',
+
                 'identity_columns' => ['username', 'email'],
-
-                //name of the password db field
                 'credential_column' => 'password',
 
-                'callback_check' => \Dot\User\Service\PasswordCheck::class,
-            ],
+                'callback_check' => \Dot\User\Service\PasswordCheck::class
+            ]
         ],
-
-        //storage specific options, example below, for session storage
         'storage' => [
-            \Dot\Authentication\Storage\SessionStorage::class => [
-                //session namespace
+            'type' => 'Session',
+            'options' => [
                 'namespace' => 'admin_authentication',
-
-                //what session member to use
-                'member' => 'storage'
-            ],
+                'member' => 'storage',
+            ]
         ],
 
         'adapter_manager' => [

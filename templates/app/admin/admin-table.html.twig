@@ -1,0 +1,49 @@
+{% extends '@app/bs-table.html.twig' %}
+
+{% block title %}Manage admins{% endblock %}
+
+{% block pageHeader %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Manage admins</h1>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="messages"></div>
+        </div>
+    </div><!--/.row-->
+{% endblock %}
+
+{% block tableFields %}
+    <tr>
+        <th data-field="checked" data-checkbox="true">Id</th>
+        <th data-field="id" data-sortable="true">#ID</th>
+        <th data-field="username" data-sortable="true">Username</th>
+        <th data-field="email" data-sortable="true">E-mail</th>
+        <th data-field="firstName" data-sortable="true">First Name</th>
+        <th data-field="lastName" data-sortable="true">Last Name</th>
+        <th data-field="roles" data-formatter="rolesFormatter" data-sortable="false">Roles</th>
+        <th data-field="status" data-sortable="true">Status</th>
+        <th data-field="dateCreated" data-sortable="true">Created</th>
+    </tr>
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+        var rolesFormatter = function (value, row) {
+            if (row.roles != null) {
+                var roles = [];
+                row.roles.forEach(function(role) {
+                    roles.push(role.name);
+                });
+
+                return roles.join(', ');
+            }
+        }
+    </script>
+{% endblock %}

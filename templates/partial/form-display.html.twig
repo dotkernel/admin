@@ -1,0 +1,62 @@
+{% if showLabels is not defined %}
+    {% set showLabels = false %}
+{% endif %}
+
+{% for element in form %}
+
+    {% if element is Captcha %}
+
+        <div class="form-group">
+
+            {% set dummy = element.setAttribute('class', 'form-control') %}
+
+            {{ formLabel(element) }}
+            {{ formCaptcha(element) }}
+
+        </div>
+
+    {% elseif element is Checkbox %}
+
+        <div class="checkbox">
+            <label>
+                {{ formCheckbox(element) }} {{ element.getLabel() }}
+            </label>
+        </div>
+
+    {% elseif element is Hidden %}
+
+        {{ formElement(element) }}
+
+    {% elseif element is Button and element.getName() != 'submit' %}
+
+        {% set dummy = element.setAttribute('class', 'btn btn-block') %}
+        {{ formButton(element) }}
+
+    {% elseif element is Submit or element is Button and element.getName() == 'submit' %}
+
+        {% set dummy = element.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+        {{ formSubmit(element) }}
+
+    {% elseif element is Fieldset %}
+
+        {% include '@partial/form-display.html.twig' with {'form' : element, 'showLabels' : showLabels} only %}
+
+    {% else %}
+
+        <div class="form-group {% if element.getMessages() %}has-error{% endif %}">
+
+            {% set dummy = element.setAttribute('class', 'form-control') %}
+
+            {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+
+                {{ formLabel(element) }}
+
+            {% endif %}
+
+            {{ formElement(element) }}
+
+        </div>
+
+    {% endif %}
+
+{% endfor %}

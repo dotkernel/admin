@@ -34,7 +34,7 @@ return [
             'message_options' => [
 
                 //from email address of the email
-                'from' => 'pgt.dot.work@gmail.com',
+                'from' => 'support@dotkernel.com',
 
                 //from name to be displayed instead of from address
                 'from_name' => 'DotKernel Team',
@@ -89,7 +89,7 @@ return [
             'smtp_options' => [
 
                 //hostname or IP address of the mail server
-                'host' => 'smtp.gmail.com',
+                'host' => '',
 
                 //port of the mail server - default 25
                 'port' => 587,
@@ -115,18 +115,18 @@ return [
             //file options that will be used only if the adapter is Zend\Mail\Transport\File
             /*'file_options' => [
 
-                //this is the folder where the file is going to be saved
-                //default value is 'data/mail/output'
+                // this is the folder where the file is going to be saved
+                // default value is 'data/mail/output'
                 'path' => 'data/mail/output',
 
-                // a callable that will get the Zend\Mail\Transport\File object
-                // as an argument and should return the filename
+                // a callable that will get the Zend\Mail\Transport\File object as an argument
+                // and should return the filename
                 // if null is used, and empty callable will be used
-                //'callback' => null,
+                // 'callback' => null,
             ],*/
 
             //listeners to register with the mail service, for mail events
-            'mail_listeners' => [
+            'event_listeners' => [
 
             ],
         ],

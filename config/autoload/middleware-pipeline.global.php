@@ -1,4 +1,5 @@
 <?php
+
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
 
@@ -7,8 +8,6 @@ return [
         'factories' => [
             Helper\ServerUrlMiddleware::class => Helper\ServerUrlMiddlewareFactory::class,
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
-
-            \Dot\Admin\Middleware\AdminIndexMiddleware::class => \Dot\Admin\Factory\AdminIndexMiddlewareFactory::class,
         ],
     ],
     // This can be used to seed pre- and/or post-routing middleware
@@ -43,7 +42,6 @@ return [
                 // - modifications to outgoing responses
                 Helper\ServerUrlMiddleware::class,
                 \Dot\Session\SessionMiddleware::class,
-                \Dot\FlashMessenger\FlashMessengerMiddleware::class,
             ],
             'priority' => 10000,
         ],
@@ -53,7 +51,7 @@ return [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
                 Helper\UrlHelperMiddleware::class,
 
-                \Dot\Admin\Middleware\AdminIndexMiddleware::class,
+                \Admin\App\Middleware\AdminIndexMiddleware::class,
 
                 //DK after-routing middleware
                 \Dot\Navigation\NavigationMiddleware::class,

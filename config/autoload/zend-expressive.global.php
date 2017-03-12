@@ -20,4 +20,10 @@ return [
             'template_error' => 'error::error',
         ],
     ],
+
+    'dependencies' => [
+        'lazy_services' => [
+            'write_proxy_files' => true,
+        ]
+    ]
 ];

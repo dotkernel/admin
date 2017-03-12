@@ -4,21 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e713294c87ac9d49e60b5b04844aa867",
+    "content-hash": "fe3c6792853effcc704247a20b087f95",
     "packages": [
         {
             "name": "container-interop/container-interop",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/container-interop/container-interop.git",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e"
+                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/container-interop/container-interop/zipball/fc08354828f8fd3245f77a66b9e23a6bca48297e",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e",
+                "url": "https://api.github.com/repos/container-interop/container-interop/zipball/79cbf1341c22ec75643d841642dd5d6acd83bdb8",
+                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8",
                 "shasum": ""
+            },
+            "require": {
+                "psr/container": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -31,24 +34,277 @@
                 "MIT"
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "time": "2014-12-30T15:22:37+00:00"
+            "homepage": "https://github.com/container-interop/container-interop",
+            "time": "2017-02-14T19:40:03+00:00"
         },
         {
-            "name": "dotkernel/dot-authentication",
-            "version": "dev-master",
+            "name": "doctrine/annotations",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-authentication.git",
-                "reference": "ea271a2c71c8dcdb0e415b6c7d4a221012a3ef3f"
+                "url": "https://github.com/doctrine/annotations.git",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authentication/zipball/ea271a2c71c8dcdb0e415b6c7d4a221012a3ef3f",
-                "reference": "ea271a2c71c8dcdb0e415b6c7d4a221012a3ef3f",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0",
+                "doctrine/lexer": "1.*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "doctrine/cache": "1.*",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Docblock Annotations Parser",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "parser"
+            ],
+            "time": "2017-02-24T16:22:25+00:00"
+        },
+        {
+            "name": "doctrine/cache",
+            "version": "v1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "b6f544a20f4807e81f7044d31e679ccbb1866dc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/b6f544a20f4807e81f7044d31e679ccbb1866dc3",
+                "reference": "b6f544a20f4807e81f7044d31e679ccbb1866dc3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.5|~7.0"
+            },
+            "conflict": {
+                "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|~5.0",
+                "predis/predis": "~1.0",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Caching library offering an object-oriented API for many cache backends",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "cache",
+                "caching"
+            ],
+            "time": "2016-10-29T11:16:17+00:00"
+        },
+        {
+            "name": "doctrine/lexer",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/lexer.git",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Lexer\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "lexer",
+                "parser"
+            ],
+            "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "dotkernel/dot-annotated-services",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-annotated-services.git",
+                "reference": "ef50f79d5cff31265b1b500d331d826e50ccbe92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-annotated-services/zipball/ef50f79d5cff31265b1b500d331d826e50ccbe92",
+                "reference": "ef50f79d5cff31265b1b500d331d826e50ccbe92",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.3",
+                "doctrine/cache": "^1.6",
+                "php": "^7.1",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "suggest": {
+                "doctrine/cache": "To cache the result of processing the annotations and speed-up your application"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\AnnotatedServices\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Popa Tiberiu",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel service creation component through zend-servicemanager and annotations",
+            "keywords": [
+                "annotations",
+                "container",
+                "factories",
+                "service-manager",
+                "services",
+                "zf2",
+                "zf3"
+            ],
+            "time": "2017-03-10T20:58:45+00:00"
+        },
+        {
+            "name": "dotkernel/dot-authentication",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-authentication.git",
+                "reference": "f151ed11d6173b08cf66101f8e50d27ec914f52b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-authentication/zipball/f151ed11d6173b08cf66101f8e50d27ec914f52b",
+                "reference": "f151ed11d6173b08cf66101f8e50d27ec914f52b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
                 "psr/http-message": "^1.0"
             },
             "require-dev": {
@@ -58,7 +314,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -77,27 +333,27 @@
                 }
             ],
             "description": "Core interfaces for authentication implementations",
-            "time": "2017-01-17 16:47:31"
+            "time": "2017-03-10T21:06:47+00:00"
         },
         {
             "name": "dotkernel/dot-authentication-service",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authentication-service.git",
-                "reference": "6222de2ab27e3f2104a04493be8abc08eafe9431"
+                "reference": "4a780b87deef94ccd67a6a256f38984d7522e29e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authentication-service/zipball/6222de2ab27e3f2104a04493be8abc08eafe9431",
-                "reference": "6222de2ab27e3f2104a04493be8abc08eafe9431",
+                "url": "https://api.github.com/repos/dotkernel/dot-authentication-service/zipball/4a780b87deef94ccd67a6a256f38984d7522e29e",
+                "reference": "4a780b87deef94ccd67a6a256f38984d7522e29e",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-authentication": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-hydrator": "^1.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-authentication": "^2.5",
                 "zendframework/zend-servicemanager": "^3.1"
@@ -106,20 +362,18 @@
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3",
                 "zendframework/zend-db": "^2.8",
-                "zendframework/zend-hydrator": "^2.2",
                 "zendframework/zend-psr7bridge": "^0.2",
                 "zendframework/zend-session": "^2.7"
             },
             "suggest": {
                 "zendframework/zend-db": "Needed if you are using the CallbackCheckAdapter",
-                "zendframework/zend-hydrator": "Used by the authentication adapters to hydrate identity objects",
                 "zendframework/zend-psr7bridge": "Util lib for converting ZF3 HTTP messages to PSR7 and vice-versa",
                 "zendframework/zend-session": "Used by the SessionStorage to store authentication identity"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -137,30 +391,30 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Concrete implementation of an AuthenticationInterface based on Zend Authentication",
-            "time": "2017-01-19 18:46:59"
+            "description": "DotKernel authentication service component based on zend-authentication",
+            "time": "2017-03-10T21:25:17+00:00"
         },
         {
             "name": "dotkernel/dot-authentication-web",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authentication-web.git",
-                "reference": "4eb770e6dd901d27f8e9a050b3583b22936cd4e5"
+                "reference": "c1420b0e79c9d57981a2cbde25936fbfe1038563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authentication-web/zipball/4eb770e6dd901d27f8e9a050b3583b22936cd4e5",
-                "reference": "4eb770e6dd901d27f8e9a050b3583b22936cd4e5",
+                "url": "https://api.github.com/repos/dotkernel/dot-authentication-web/zipball/c1420b0e79c9d57981a2cbde25936fbfe1038563",
+                "reference": "c1420b0e79c9d57981a2cbde25936fbfe1038563",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-authentication": "0.6.x-dev",
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-flashmessenger": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-event": "^0.1",
+                "dotkernel/dot-flashmessenger": "^0.1",
+                "dotkernel/dot-helpers": "^0.1",
+                "php": "^7.1",
                 "psr/http-message": "^1.0"
             },
             "require-dev": {
@@ -173,7 +427,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -191,25 +445,25 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Login/logout authentication flow for web based applications",
-            "time": "2017-01-19 19:10:51"
+            "description": "DotKernel login/logout authentication flow for web based applications",
+            "time": "2017-03-10T21:40:04+00:00"
         },
         {
             "name": "dotkernel/dot-authorization",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-authorization.git",
-                "reference": "4f734502001439d95239ec67179ef8b8b44185a9"
+                "reference": "382b9e6199bab9695199d6900c6852e62ad37507"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-authorization/zipball/4f734502001439d95239ec67179ef8b8b44185a9",
-                "reference": "4f734502001439d95239ec67179ef8b8b44185a9",
+                "url": "https://api.github.com/repos/dotkernel/dot-authorization/zipball/382b9e6199bab9695199d6900c6852e62ad37507",
+                "reference": "382b9e6199bab9695199d6900c6852e62ad37507",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
@@ -218,7 +472,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -236,26 +490,78 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Authorization service abstractions",
-            "time": "2017-01-19 19:13:31"
+            "description": "DotKernel authorization service abstractions",
+            "time": "2017-03-10T21:45:36+00:00"
         },
         {
-            "name": "dotkernel/dot-controller",
-            "version": "dev-master",
+            "name": "dotkernel/dot-cache",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-controller.git",
-                "reference": "bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d"
+                "url": "https://github.com/dotkernel/dot-cache.git",
+                "reference": "e142c594973d2cccfa0cc1947d5e8f92027e5297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d",
-                "reference": "bfe7326d2cccdc9a78efe1e58c4ca25d402d1b8d",
+                "url": "https://api.github.com/repos/dotkernel/dot-cache/zipball/e142c594973d2cccfa0cc1947d5e8f92027e5297",
+                "reference": "e142c594973d2cccfa0cc1947d5e8f92027e5297",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "zendframework/zend-cache": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Cache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel cache component extending zend-cache",
+            "keywords": [
+                "cache",
+                "services"
+            ],
+            "time": "2017-03-10T21:58:23+00:00"
+        },
+        {
+            "name": "dotkernel/dot-controller",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-controller.git",
+                "reference": "8de640e969070b292d3b07971bcf1aaeea2212c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller/zipball/8de640e969070b292d3b07971bcf1aaeea2212c0",
+                "reference": "8de640e969070b292d3b07971bcf1aaeea2212c0",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-event": "^0.1",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-servicemanager": "^3.0"
             },
@@ -268,7 +574,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -286,37 +592,37 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Controller like middleware with plugin support",
-            "time": "2017-01-19 19:19:14"
+            "description": "DotKernel controller like middleware component with plugin support",
+            "time": "2017-03-10T22:05:02+00:00"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authentication",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-authentication.git",
-                "reference": "a34a8abed145ca3892321dc926ac8ade7c1c0ec1"
+                "reference": "4b637c3e9c6067d40f51a16e2d91cc549fcc64e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authentication/zipball/a34a8abed145ca3892321dc926ac8ade7c1c0ec1",
-                "reference": "a34a8abed145ca3892321dc926ac8ade7c1c0ec1",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authentication/zipball/4b637c3e9c6067d40f51a16e2d91cc549fcc64e9",
+                "reference": "4b637c3e9c6067d40f51a16e2d91cc549fcc64e9",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "php": "^5.6 || ^7.0"
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-controller": "^0.1",
+                "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-authentication": "0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -334,37 +640,37 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Authentication DK3 controller plugin",
-            "time": "2017-01-19 19:22:54"
+            "description": "DotKernel authentication controller plugin",
+            "time": "2017-03-10T22:13:15+00:00"
         },
         {
             "name": "dotkernel/dot-controller-plugin-authorization",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-authorization.git",
-                "reference": "bf312185c3944e7e60d44b568a9bf764ff574178"
+                "reference": "3c5e054608d3a6a6347723f046c0b4fcc60ef23f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authorization/zipball/bf312185c3944e7e60d44b568a9bf764ff574178",
-                "reference": "bf312185c3944e7e60d44b568a9bf764ff574178",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-authorization/zipball/3c5e054608d3a6a6347723f046c0b4fcc60ef23f",
+                "reference": "3c5e054608d3a6a6347723f046c0b4fcc60ef23f",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "php": "^5.6 || ^7.0"
+                "dotkernel/dot-authorization": "^0.1",
+                "dotkernel/dot-controller": "^0.1",
+                "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-authorization": "0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -382,37 +688,37 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Authorization controller plugin for easy access to authorization service inside DK controllers",
-            "time": "2017-01-19 19:25:12"
+            "description": "DotKernel authorization controller plugin",
+            "time": "2017-03-10T22:20:42+00:00"
         },
         {
             "name": "dotkernel/dot-controller-plugin-flashmessenger",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-controller-plugin-flashmessenger.git",
-                "reference": "49338082748c5eb02e85630fd04e13ad43a7210a"
+                "reference": "13c6b40263b726a0a9b1e6770cf5aad51f14976f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-flashmessenger/zipball/49338082748c5eb02e85630fd04e13ad43a7210a",
-                "reference": "49338082748c5eb02e85630fd04e13ad43a7210a",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-flashmessenger/zipball/13c6b40263b726a0a9b1e6770cf5aad51f14976f",
+                "reference": "13c6b40263b726a0a9b1e6770cf5aad51f14976f",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "php": "^5.6 || ^7.0"
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-flashmessenger": "^0.1",
+                "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-flashmessenger": "0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -430,39 +736,86 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Flashmessenger DK controller plugin",
-            "time": "2017-01-19 19:29:11"
+            "description": "DotKernel flash messenger controller plugin",
+            "time": "2017-03-10T22:31:23+00:00"
         },
         {
-            "name": "dotkernel/dot-controller-plugin-mail",
-            "version": "dev-master",
+            "name": "dotkernel/dot-controller-plugin-forms",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-controller-plugin-mail.git",
-                "reference": "c1b98ea6f21673010387ea20fb0bd6fc064e965e"
+                "url": "https://github.com/dotkernel/dot-controller-plugin-forms.git",
+                "reference": "6865153f196e7788419219eb014a789f30779b6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-mail/zipball/c1b98ea6f21673010387ea20fb0bd6fc064e965e",
-                "reference": "c1b98ea6f21673010387ea20fb0bd6fc064e965e",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-forms/zipball/6865153f196e7788419219eb014a789f30779b6f",
+                "reference": "6865153f196e7788419219eb014a789f30779b6f",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "php": "^5.6 || ^7.0"
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-flashmessenger": "^0.1",
+                "dotkernel/dot-form": "^1.0",
+                "php": "^7.1"
             },
             "require-dev": {
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "dotkernel/dot-mail": "0.6.x-dev",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Controller\\Plugin\\Forms\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel controller forms plugin for easy access to forms inside controllers",
+            "time": "2017-03-10T22:37:15+00:00"
+        },
+        {
+            "name": "dotkernel/dot-controller-plugin-mail",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-controller-plugin-mail.git",
+                "reference": "398a6f6b095bf3d94b056ef2dc349f3983f0e38d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-mail/zipball/398a6f6b095bf3d94b056ef2dc349f3983f0e38d",
+                "reference": "398a6f6b095bf3d94b056ef2dc349f3983f0e38d",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-mail": "^0.1",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -480,58 +833,45 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Mail controller plugin for easy access of mail services inside DK controllers",
-            "time": "2017-01-19 19:33:27"
+            "description": "DotKernel mail controller plugin component",
+            "time": "2017-03-10T22:51:48+00:00"
         },
         {
-            "name": "dotkernel/dot-ems",
-            "version": "dev-master",
+            "name": "dotkernel/dot-controller-plugin-session",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-ems.git",
-                "reference": "db2f576999ce703322618246cf1ce8f6660b94ee"
+                "url": "https://github.com/dotkernel/dot-controller-plugin-session.git",
+                "reference": "e90b34afe60c1ed4e279627e60993146ab086810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-ems/zipball/db2f576999ce703322618246cf1ce8f6660b94ee",
-                "reference": "db2f576999ce703322618246cf1ce8f6660b94ee",
+                "url": "https://api.github.com/repos/dotkernel/dot-controller-plugin-session/zipball/e90b34afe60c1ed4e279627e60993146ab086810",
+                "reference": "e90b34afe60c1ed4e279627e60993146ab086810",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
-                "zendframework/zend-hydrator": "^2.2",
-                "zendframework/zend-paginator": "^2.7",
-                "zendframework/zend-servicemanager": "^3.0"
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-session": "^1.0",
+                "php": "^7.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3",
-                "zendframework/zend-db": "^2.8",
-                "zendframework/zend-validator": "^2.8"
-            },
-            "suggest": {
-                "zendframework/zend-db": "Needed if you use the db mappers",
-                "zendframework/zend-validator": "Needed if you use the provided custom validators"
+                "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Dot\\Ems\\": "src/"
+                    "Dot\\Controller\\Plugin\\Session\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "DotTest\\Ems\\": "test/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -541,32 +881,29 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Entity-mapper-service abstraction layer",
-            "support": {
-                "source": "https://github.com/dotkernel/dot-ems/tree/master",
-                "issues": "https://github.com/dotkernel/dot-ems/issues"
-            },
-            "time": "2017-01-19 19:40:34"
+            "description": "DotKernel session controller plugin",
+            "time": "2017-03-10T22:55:53+00:00"
         },
         {
             "name": "dotkernel/dot-event",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-event.git",
-                "reference": "77828a61d71341f442256d7d6985543fac02ccac"
+                "reference": "1f2822d5de1ad9a620b4498546b3f0d8d0cc64e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/77828a61d71341f442256d7d6985543fac02ccac",
-                "reference": "77828a61d71341f442256d7d6985543fac02ccac",
+                "url": "https://api.github.com/repos/dotkernel/dot-event/zipball/1f2822d5de1ad9a620b4498546b3f0d8d0cc64e5",
+                "reference": "1f2822d5de1ad9a620b4498546b3f0d8d0cc64e5",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
-                "zendframework/zend-eventmanager": "^3.0"
+                "zendframework/zend-eventmanager": "^3.0",
+                "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
@@ -575,7 +912,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -593,29 +930,85 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Common base event objects based on Zend Event Manager",
-            "time": "2017-01-19 20:34:03"
+            "description": "DotKernel event component extending and customizing zend-eventmanager",
+            "time": "2017-03-11T02:04:37+00:00"
         },
         {
-            "name": "dotkernel/dot-flashmessenger",
-            "version": "dev-master",
+            "name": "dotkernel/dot-filter",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-flashmessenger.git",
-                "reference": "99b97c23c8d49c7ad5b1c697b700ce6d391b7527"
+                "url": "https://github.com/dotkernel/dot-filter.git",
+                "reference": "297b62f39481cf1cb48639c9135d1d004b7c3571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-flashmessenger/zipball/99b97c23c8d49c7ad5b1c697b700ce6d391b7527",
-                "reference": "99b97c23c8d49c7ad5b1c697b700ce6d391b7527",
+                "url": "https://api.github.com/repos/dotkernel/dot-filter/zipball/297b62f39481cf1cb48639c9135d1d004b7c3571",
+                "reference": "297b62f39481cf1cb48639c9135d1d004b7c3571",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "zendframework/zend-filter": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Filter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel filter component customizing and extending zend-filter",
+            "keywords": [
+                "container",
+                "dotkernel",
+                "factories",
+                "filter",
+                "service-manager",
+                "zf2",
+                "zf3"
+            ],
+            "time": "2017-03-11T02:09:29+00:00"
+        },
+        {
+            "name": "dotkernel/dot-flashmessenger",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-flashmessenger.git",
+                "reference": "c803b00487c1526911204140172f1f39ffd7c141"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-flashmessenger/zipball/c803b00487c1526911204140172f1f39ffd7c141",
+                "reference": "c803b00487c1526911204140172f1f39ffd7c141",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-session": "^1.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
-                "zendframework/zend-servicemanager": "^3.0",
-                "zendframework/zend-session": "^2.7"
+                "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
@@ -625,7 +1018,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -643,26 +1036,84 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Flash messenger library for session messages between redirects",
-            "time": "2017-01-19 20:35:28"
+            "description": "DotKernel flash messenger component for session messages between redirects",
+            "time": "2017-03-11T02:13:58+00:00"
         },
         {
-            "name": "dotkernel/dot-helpers",
-            "version": "dev-master",
+            "name": "dotkernel/dot-form",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-helpers.git",
-                "reference": "3aa60b7513658953f459bcbf421ecdf3d32ab2b9"
+                "url": "https://github.com/dotkernel/dot-form.git",
+                "reference": "9862d67a15f2ff236eb13516d617e22acc409f37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-helpers/zipball/3aa60b7513658953f459bcbf421ecdf3d32ab2b9",
-                "reference": "3aa60b7513658953f459bcbf421ecdf3d32ab2b9",
+                "url": "https://api.github.com/repos/dotkernel/dot-form/zipball/9862d67a15f2ff236eb13516d617e22acc409f37",
+                "reference": "9862d67a15f2ff236eb13516d617e22acc409f37",
+                "shasum": ""
+            },
+            "require": {
+                "dotkernel/dot-filter": "^1.0",
+                "dotkernel/dot-hydrator": "^1.0",
+                "dotkernel/dot-inputfilter": "^1.0",
+                "dotkernel/dot-validator": "^1.0",
+                "php": "^7.1",
+                "zendframework/zend-form": "^2.9",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.3",
+                "dotkernel/dot-mapper": "^0.1",
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Form\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel form component extending and customizing zend-form",
+            "keywords": [
+                "form",
+                "input filter",
+                "services"
+            ],
+            "time": "2017-03-11T02:17:20+00:00"
+        },
+        {
+            "name": "dotkernel/dot-helpers",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-helpers.git",
+                "reference": "de0700f0e0c5ea90702897edccb6a20728a071a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-helpers/zipball/de0700f0e0c5ea90702897edccb6a20728a071a3",
+                "reference": "de0700f0e0c5ea90702897edccb6a20728a071a3",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-expressive-helpers": "^2.0",
                 "zendframework/zend-servicemanager": "^3.1"
@@ -675,7 +1126,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -694,52 +1145,43 @@
                 }
             ],
             "description": "Various helper structures and classes",
-            "time": "2017-01-19 20:42:47"
+            "time": "2017-03-11T02:20:17+00:00"
         },
         {
-            "name": "dotkernel/dot-log",
-            "version": "dev-master",
+            "name": "dotkernel/dot-hydrator",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-log.git",
-                "reference": "4f6a917c3702e8fb7d2fa80e384e0231b0de7145"
+                "url": "https://github.com/dotkernel/dot-hydrator.git",
+                "reference": "ce1ff7ebd112e078d0b19abec5d356cdc94890c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-log/zipball/4f6a917c3702e8fb7d2fa80e384e0231b0de7145",
-                "reference": "4f6a917c3702e8fb7d2fa80e384e0231b0de7145",
+                "url": "https://api.github.com/repos/dotkernel/dot-hydrator/zipball/ce1ff7ebd112e078d0b19abec5d356cdc94890c3",
+                "reference": "ce1ff7ebd112e078d0b19abec5d356cdc94890c3",
                 "shasum": ""
             },
             "require": {
-                "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
-                "psr/http-message": "^1.0",
-                "zendframework/zend-log": "^2.9.0",
+                "php": "^7.1",
+                "zendframework/zend-hydrator": "^2.2",
                 "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "dotkernel/dot-mail": "0.6.x-dev",
-                "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3"
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Dot\\Log\\": "src/"
+                    "Dot\\Hydrator\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "DotTest\\Log\\": "test/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -749,32 +1191,145 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Log component for DotKernel",
-            "support": {
-                "source": "https://github.com/dotkernel/dot-log/tree/master",
-                "issues": "https://github.com/dotkernel/dot-log/issues"
-            },
-            "time": "2017-01-19 20:44:25"
+            "description": "DotKernel hydrator component extending and customizing zend-hydrator",
+            "keywords": [
+                "container",
+                "factories",
+                "hydrator",
+                "service-manager",
+                "services",
+                "zf2",
+                "zf3"
+            ],
+            "time": "2017-03-11T02:23:42+00:00"
         },
         {
-            "name": "dotkernel/dot-mail",
-            "version": "dev-master",
+            "name": "dotkernel/dot-inputfilter",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-mail.git",
-                "reference": "85d2c0fc155b58dac0c02029895d4dca1a678efe"
+                "url": "https://github.com/dotkernel/dot-inputfilter.git",
+                "reference": "0223cc8d821f4eef716729f0e2892279c1d75521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-mail/zipball/85d2c0fc155b58dac0c02029895d4dca1a678efe",
-                "reference": "85d2c0fc155b58dac0c02029895d4dca1a678efe",
+                "url": "https://api.github.com/repos/dotkernel/dot-inputfilter/zipball/0223cc8d821f4eef716729f0e2892279c1d75521",
+                "reference": "0223cc8d821f4eef716729f0e2892279c1d75521",
+                "shasum": ""
+            },
+            "require": {
+                "dotkernel/dot-filter": "^1.0",
+                "dotkernel/dot-validator": "^1.0",
+                "php": "^7.1",
+                "zendframework/zend-inputfilter": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\InputFilter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel input filter component extending and customizing zend-inputfilter",
+            "keywords": [
+                "container",
+                "dotkernel",
+                "factories",
+                "input filter",
+                "service-manager",
+                "zf2",
+                "zf3"
+            ],
+            "time": "2017-03-11T02:26:01+00:00"
+        },
+        {
+            "name": "dotkernel/dot-log",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-log.git",
+                "reference": "bcd1d2838d9bf61874e60be8c150e50ccab321a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-log/zipball/bcd1d2838d9bf61874e60be8c150e50ccab321a9",
+                "reference": "bcd1d2838d9bf61874e60be8c150e50ccab321a9",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-log": "^2.9.0",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "dotkernel/dot-mail": "^0.1",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Log\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel log component extending and customizing zend-log",
+            "time": "2017-03-11T02:29:00+00:00"
+        },
+        {
+            "name": "dotkernel/dot-mail",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-mail.git",
+                "reference": "d6e66cadf3f691d318112131e615b228c7dea529"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-mail/zipball/d6e66cadf3f691d318112131e615b228c7dea529",
+                "reference": "d6e66cadf3f691d318112131e615b228c7dea529",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "dotkernel/dot-event": "^0.1",
+                "dotkernel/dot-helpers": "^0.1",
+                "php": "^7.1",
                 "zendframework/zend-expressive-template": "^1.0",
                 "zendframework/zend-mail": "^2.7",
                 "zendframework/zend-servicemanager": "^3.0"
@@ -786,7 +1341,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -804,26 +1359,81 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Mail module for DotKernel based on Zend Mail",
-            "time": "2017-01-19 20:55:28"
+            "description": "DotKernel mail component based on zend-mail",
+            "time": "2017-03-11T02:35:09+00:00"
         },
         {
-            "name": "dotkernel/dot-navigation",
-            "version": "dev-master",
+            "name": "dotkernel/dot-mapper",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-navigation.git",
-                "reference": "eb164c14c5b0d4406ea8547c2c3263d2b724bf6d"
+                "url": "https://github.com/dotkernel/dot-mapper.git",
+                "reference": "8401b0ab623dec41b1624b268c5c88a78ee9718f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-navigation/zipball/eb164c14c5b0d4406ea8547c2c3263d2b724bf6d",
-                "reference": "eb164c14c5b0d4406ea8547c2c3263d2b724bf6d",
+                "url": "https://api.github.com/repos/dotkernel/dot-mapper/zipball/8401b0ab623dec41b1624b268c5c88a78ee9718f",
+                "reference": "8401b0ab623dec41b1624b268c5c88a78ee9718f",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-event": "^0.1",
+                "dotkernel/dot-helpers": "^0.1",
+                "dotkernel/dot-hydrator": "^1.0",
+                "php": "^7.1",
+                "zendframework/zend-paginator": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-db": "^2.8"
+            },
+            "suggest": {
+                "zendframework/zend-db": "Needed if you use the db mappers"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Mapper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel mapper pattern implementation",
+            "time": "2017-03-11T02:42:36+00:00"
+        },
+        {
+            "name": "dotkernel/dot-navigation",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-navigation.git",
+                "reference": "8d1ec2d3ccf32c5a3072143bfad4c6af42114393"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-navigation/zipball/8d1ec2d3ccf32c5a3072143bfad4c6af42114393",
+                "reference": "8d1ec2d3ccf32c5a3072143bfad4c6af42114393",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-escaper": "^2.5",
                 "zendframework/zend-expressive-helpers": "^2.0",
@@ -831,7 +1441,7 @@
                 "zendframework/zend-servicemanager": "^3.1"
             },
             "require-dev": {
-                "dotkernel/dot-authorization": "0.6.x-dev",
+                "dotkernel/dot-authorization": "^0.1",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3",
                 "zendframework/zend-stdlib": "^3.1"
@@ -839,7 +1449,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -857,31 +1467,81 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Navigation library for easy menu parsing",
-            "time": "2017-01-19 21:01:37"
+            "description": "DotKernel navigation component",
+            "time": "2017-03-11T12:30:28+00:00"
         },
         {
-            "name": "dotkernel/dot-rbac",
-            "version": "dev-master",
+            "name": "dotkernel/dot-paginator",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotkernel/dot-rbac.git",
-                "reference": "8f31ddca002170cf2b02c6bb93f9d58712991c19"
+                "url": "https://github.com/dotkernel/dot-paginator.git",
+                "reference": "4e9ff3a5751d8dbc7e8b313dcf93d36478247905"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-rbac/zipball/8f31ddca002170cf2b02c6bb93f9d58712991c19",
-                "reference": "8f31ddca002170cf2b02c6bb93f9d58712991c19",
+                "url": "https://api.github.com/repos/dotkernel/dot-paginator/zipball/4e9ff3a5751d8dbc7e8b313dcf93d36478247905",
+                "reference": "4e9ff3a5751d8dbc7e8b313dcf93d36478247905",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-authorization": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
+                "zendframework/zend-paginator": "^2.7",
+                "zendframework/zend-servicemanager": "^3.0"
+            },
+            "require-dev": {
+                "dotkernel/dot-mapper": "^0.1",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-db": "^2.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Paginator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel paginator component extending and customizing zend-paginator",
+            "time": "2017-03-11T12:40:19+00:00"
+        },
+        {
+            "name": "dotkernel/dot-rbac",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotkernel/dot-rbac.git",
+                "reference": "476b42d98db7510b741362720296409ca061fc0f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotkernel/dot-rbac/zipball/476b42d98db7510b741362720296409ca061fc0f",
+                "reference": "476b42d98db7510b741362720296409ca061fc0f",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "dotkernel/dot-authorization": "^0.1",
+                "php": "^7.1",
                 "zendframework/zend-servicemanager": "^3.1"
             },
             "require-dev": {
-                "dotkernel/dot-authentication": "0.6.x-dev",
+                "dotkernel/dot-authentication": "^0.1",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3",
                 "zendframework/zend-stdlib": "^3.1"
@@ -892,7 +1552,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -910,38 +1570,35 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Rbac authorization library for DK",
-            "time": "2017-01-19 21:04:42"
+            "description": "DotKernel RBAC authorization component",
+            "time": "2017-03-11T12:47:53+00:00"
         },
         {
             "name": "dotkernel/dot-rbac-guard",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-rbac-guard.git",
-                "reference": "d111f4513858f7715a6455f4a3efbe5e9cbef821"
+                "reference": "d179d6250d9cfc63e406b253652e11cc15879bb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-rbac-guard/zipball/d111f4513858f7715a6455f4a3efbe5e9cbef821",
-                "reference": "d111f4513858f7715a6455f4a3efbe5e9cbef821",
+                "url": "https://api.github.com/repos/dotkernel/dot-rbac-guard/zipball/d179d6250d9cfc63e406b253652e11cc15879bb9",
+                "reference": "d179d6250d9cfc63e406b253652e11cc15879bb9",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-authorization": "0.6.x-dev",
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "dotkernel/dot-rbac": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-rbac": "^0.1",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-expressive-router": "^1.0",
                 "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
-                "dotkernel/dot-authentication": "0.6.x-dev",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "dotkernel/dot-flashmessenger": "0.6.x-dev",
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-flashmessenger": "^0.1",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3",
                 "zendframework/zend-diactoros": "^1.3",
@@ -950,7 +1607,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -968,26 +1625,26 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Various authorization guards for route/controller authorization",
-            "time": "2017-01-19 21:09:56"
+            "description": "DotKernel RBAC guards component",
+            "time": "2017-03-11T13:10:10+00:00"
         },
         {
             "name": "dotkernel/dot-session",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-session.git",
-                "reference": "1b3dd3a8daf16e387d8b79fe66ef163cfbd88484"
+                "reference": "da09162e9b04dca29ffea019a3d3dcf278b4c235"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-session/zipball/1b3dd3a8daf16e387d8b79fe66ef163cfbd88484",
-                "reference": "1b3dd3a8daf16e387d8b79fe66ef163cfbd88484",
+                "url": "https://api.github.com/repos/dotkernel/dot-session/zipball/da09162e9b04dca29ffea019a3d3dcf278b4c235",
+                "reference": "da09162e9b04dca29ffea019a3d3dcf278b4c235",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-servicemanager": "^3.0",
                 "zendframework/zend-session": "^2.7"
@@ -1000,7 +1657,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -1018,36 +1675,36 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Session library for DotKernel based on ZF3 session library",
-            "time": "2017-01-19 21:12:24"
+            "description": "DotKernel session component extending and customizing zend-session",
+            "time": "2017-03-11T13:17:16+00:00"
         },
         {
             "name": "dotkernel/dot-twigrenderer",
-            "version": "dev-master",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-twigrenderer.git",
-                "reference": "1cec6c7b70bfcf80f082bde44f07fc2c4ec42b70"
+                "reference": "f3ac7b8f08d16043dff8561b3f3ea3e571ff2623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-twigrenderer/zipball/1cec6c7b70bfcf80f082bde44f07fc2c4ec42b70",
-                "reference": "1cec6c7b70bfcf80f082bde44f07fc2c4ec42b70",
+                "url": "https://api.github.com/repos/dotkernel/dot-twigrenderer/zipball/f3ac7b8f08d16043dff8561b3f3ea3e571ff2623",
+                "reference": "f3ac7b8f08d16043dff8561b3f3ea3e571ff2623",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
                 "ocramius/proxy-manager": "^2.0",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "zendframework/zend-expressive-twigrenderer": "^1.1",
                 "zendframework/zend-servicemanager": "^3.1",
                 "zendframework/zend-view": "^2.8"
             },
             "require-dev": {
-                "dotkernel/dot-authentication": "0.6.x-dev",
-                "dotkernel/dot-authorization": "0.6.x-dev",
-                "dotkernel/dot-flashmessenger": "0.6.x-dev",
-                "dotkernel/dot-navigation": "0.6.x-dev",
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-authorization": "^0.1",
+                "dotkernel/dot-flashmessenger": "^0.1",
+                "dotkernel/dot-navigation": "^0.1",
                 "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.3",
                 "zendframework/zend-form": "^2.9"
@@ -1055,7 +1712,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -1073,57 +1730,60 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "DK useful twig extensions and ZF3 view helpers made available for twig",
-            "time": "2017-01-19 21:15:34"
+            "description": "DotKernel component providing twig extensions and customization",
+            "time": "2017-03-11T13:23:04+00:00"
         },
         {
             "name": "dotkernel/dot-user",
-            "version": "dev-master",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotkernel/dot-user.git",
-                "reference": "1b013d9db0d8c2564942d266c52be84085a325f2"
+                "reference": "90f29b056d9dc90f22bb9ea03b45462819aa3565"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/1b013d9db0d8c2564942d266c52be84085a325f2",
-                "reference": "1b013d9db0d8c2564942d266c52be84085a325f2",
+                "url": "https://api.github.com/repos/dotkernel/dot-user/zipball/90f29b056d9dc90f22bb9ea03b45462819aa3565",
+                "reference": "90f29b056d9dc90f22bb9ea03b45462819aa3565",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "dotkernel/dot-authentication": "0.6.x-dev",
-                "dotkernel/dot-authentication-web": "0.6.x-dev",
-                "dotkernel/dot-authorization": "0.6.x-dev",
-                "dotkernel/dot-controller": "0.6.x-dev",
-                "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
-                "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
-                "dotkernel/dot-controller-plugin-flashmessenger": "0.6.x-dev",
-                "dotkernel/dot-ems": "0.6.x-dev",
-                "dotkernel/dot-event": "0.6.x-dev",
-                "dotkernel/dot-flashmessenger": "0.6.x-dev",
-                "dotkernel/dot-helpers": "0.6.x-dev",
-                "php": "^5.6 || ^7.0",
+                "dotkernel/dot-authentication": "^0.1",
+                "dotkernel/dot-authentication-web": "^0.1",
+                "dotkernel/dot-authorization": "^0.1",
+                "dotkernel/dot-controller": "^0.1",
+                "dotkernel/dot-controller-plugin-authentication": "^0.1",
+                "dotkernel/dot-controller-plugin-authorization": "^0.1",
+                "dotkernel/dot-controller-plugin-flashmessenger": "^0.1",
+                "dotkernel/dot-controller-plugin-forms": "^0.1",
+                "dotkernel/dot-event": "^0.1",
+                "dotkernel/dot-filter": "^1.0",
+                "dotkernel/dot-flashmessenger": "^0.1",
+                "dotkernel/dot-form": "^1.0",
+                "dotkernel/dot-helpers": "^0.1",
+                "dotkernel/dot-hydrator": "^1.0",
+                "dotkernel/dot-inputfilter": "^1.0",
+                "dotkernel/dot-mapper": "^0.1",
+                "dotkernel/dot-validator": "^1.0",
+                "php": "^7.1",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-crypt": "^3.1",
                 "zendframework/zend-db": "^2.8",
                 "zendframework/zend-diactoros": "^1.3",
                 "zendframework/zend-expressive-template": "^1.0",
-                "zendframework/zend-filter": "^2.6",
-                "zendframework/zend-form": "^2.9",
-                "zendframework/zend-hydrator": "^2.2",
-                "zendframework/zend-inputfilter": "^2.7",
                 "zendframework/zend-math": "^3.0",
                 "zendframework/zend-servicemanager": "^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3"
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-captcha": "^2.7"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "0.2-dev"
                 }
             },
             "autoload": {
@@ -1141,21 +1801,79 @@
                     "email": "tibi@apidemia.com"
                 }
             ],
-            "description": "Complete configurable user module for DK built around dot-authentication-web",
-            "time": "2017-01-19 21:21:39"
+            "description": "DotKernel configurable user component providing common user functions and extending the authentication flow",
+            "time": "2017-03-11T13:58:33+00:00"
         },
         {
-            "name": "fig/http-message-util",
-            "version": "1.1.0",
+            "name": "dotkernel/dot-validator",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/http-message-util.git",
-                "reference": "70899e53776d4d65fec9f90f0f88ba6c4d0f7b88"
+                "url": "https://github.com/dotkernel/dot-validator.git",
+                "reference": "2e69abe0cf92269e50bc93316a680026983077f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/70899e53776d4d65fec9f90f0f88ba6c4d0f7b88",
-                "reference": "70899e53776d4d65fec9f90f0f88ba6c4d0f7b88",
+                "url": "https://api.github.com/repos/dotkernel/dot-validator/zipball/2e69abe0cf92269e50bc93316a680026983077f1",
+                "reference": "2e69abe0cf92269e50bc93316a680026983077f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "zendframework/zend-servicemanager": "^3.0",
+                "zendframework/zend-validator": "^2.8"
+            },
+            "require-dev": {
+                "dotkernel/dot-hydrator": "^1.0",
+                "dotkernel/dot-mapper": "^0.1",
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dot\\Validator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n3vrax",
+                    "email": "tibi@apidemia.com"
+                }
+            ],
+            "description": "DotKernel validator component extending and customizing zend-validator",
+            "keywords": [
+                "container",
+                "factories",
+                "service-manager",
+                "services",
+                "validator",
+                "zf2",
+                "zf3"
+            ],
+            "time": "2017-03-11T13:41:07+00:00"
+        },
+        {
+            "name": "fig/http-message-util",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "20b2c280cb6914b7b83089720df44e490f4b42f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/20b2c280cb6914b7b83089720df44e490f4b42f0",
+                "reference": "20b2c280cb6914b7b83089720df44e490f4b42f0",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1910,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-09-19T14:52:54+00:00"
+            "time": "2017-02-09T16:10:21+00:00"
         },
         {
             "name": "http-interop/http-middleware",
@@ -1248,16 +1966,16 @@
         },
         {
             "name": "nikic/fast-route",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/FastRoute.git",
-                "reference": "f3dcf5130e634b6123d40727d612ec6aa4f61fb3"
+                "reference": "b5f95749071c82a8e0f58586987627054400cdf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/f3dcf5130e634b6123d40727d612ec6aa4f61fb3",
-                "reference": "f3dcf5130e634b6123d40727d612ec6aa4f61fb3",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/b5f95749071c82a8e0f58586987627054400cdf6",
+                "reference": "b5f95749071c82a8e0f58586987627054400cdf6",
                 "shasum": ""
             },
             "require": {
@@ -1287,7 +2005,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2016-10-20T17:36:47+00:00"
+            "time": "2017-01-19T11:35:12+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -1339,29 +2057,31 @@
         },
         {
             "name": "ocramius/proxy-manager",
-            "version": "2.0.4",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/ProxyManager.git",
-                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6"
+                "reference": "d9e5a00ca2d87b7e0f1bff36b897e02afd7d5435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/a55d08229f4f614bf335759ed0cf63378feeb2e6",
-                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/d9e5a00ca2d87b7e0f1bff36b897e02afd7d5435",
+                "reference": "d9e5a00ca2d87b7e0f1bff36b897e02afd7d5435",
                 "shasum": ""
             },
             "require": {
-                "ocramius/package-versions": "^1.0",
-                "php": "7.0.0 - 7.0.5 || ^7.0.7",
-                "zendframework/zend-code": "3.0.0 - 3.0.2 || ^3.0.4"
+                "ocramius/package-versions": "^1.1.1",
+                "php": "^7.1.0",
+                "zendframework/zend-code": "^3.1.0"
             },
             "require-dev": {
-                "couscous/couscous": "^1.4.0",
+                "couscous/couscous": "^1.5.2",
                 "ext-phar": "*",
-                "phpbench/phpbench": "^0.11.2",
-                "phpunit/phpunit": "^5.4.6",
-                "squizlabs/php_codesniffer": "^2.6.0"
+                "humbug/humbug": "dev-master@DEV",
+                "phpbench/phpbench": "^0.12.2",
+                "phpunit/phpunit": "^5.6.4",
+                "phpunit/phpunit-mock-objects": "^3.4.1",
+                "squizlabs/php_codesniffer": "^2.7.0"
             },
             "suggest": {
                 "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects",
@@ -1400,20 +2120,20 @@
                 "proxy pattern",
                 "service proxies"
             ],
-            "time": "2016-11-04T15:53:15+00:00"
+            "time": "2016-11-30T15:45:00+00:00"
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.4",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/6968531206671f94377b01dc7888d5d1b858a01b",
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b",
                 "shasum": ""
             },
             "require": {
@@ -1448,7 +2168,56 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07T23:38:38+00:00"
+            "time": "2017-03-03T20:43:42+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1553,12 +2322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "1991086b35313dd4e3c5b351f4b22760deea0910"
+                "reference": "73603e2e613ddc14e2e11ec6da4e837bf0a2149a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/1991086b35313dd4e3c5b351f4b22760deea0910",
-                "reference": "1991086b35313dd4e3c5b351f4b22760deea0910",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/73603e2e613ddc14e2e11ec6da4e837bf0a2149a",
+                "reference": "73603e2e613ddc14e2e11ec6da4e837bf0a2149a",
                 "shasum": ""
             },
             "conflict": {
@@ -1567,6 +2336,7 @@
                 "aws/aws-sdk-php": ">=3,<3.2.1",
                 "bugsnag/bugsnag-laravel": ">=2,<2.0.2",
                 "cakephp/cakephp": ">=3,<3.0.15|>=2,<2.4.99|>=2.5,<2.5.99|>=2.6,<2.6.12|>=1.3,<1.3.18|>=2.7,<2.7.6|>=3.1,<3.1.4",
+                "cart2quote/module-quotation": ">=4.1.6,<=4.4.5|>=5,<5.4.4",
                 "cartalyst/sentry": "<2.1",
                 "codeigniter/framework": "<=3.0.6",
                 "composer/composer": "<=1.0.0-alpha11",
@@ -1594,6 +2364,8 @@
                 "joomla/session": "<1.3.1",
                 "laravel/framework": ">=4,<4.0.99|>=4.1,<4.1.29",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
+                "magento/magento1ce": ">=1.5.0.1,<1.9.3.2",
+                "magento/magento1ee": ">=1.9,<1.14.3.2",
                 "magento/magento2ce": ">=2,<2.2",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
@@ -1602,7 +2374,7 @@
                 "phpmailer/phpmailer": ">=5,<5.2.22",
                 "pusher/pusher-php-server": "<2.2.1",
                 "sabre/dav": ">=1.6,<1.6.99|>=1.7,<1.7.11|>=1.8,<1.8.9",
-                "shopware/shopware": "<4.3.7|>=5,<5.1.5",
+                "shopware/shopware": "<4.4|>=5,<5.2.16",
                 "silverstripe/cms": ">=3.1,<3.1.11|>=3,<=3.0.11",
                 "silverstripe/forum": "<=0.6.1|>=0.7,<=0.7.3",
                 "silverstripe/framework": ">=3,<3.3",
@@ -1611,6 +2383,7 @@
                 "simplesamlphp/simplesamlphp": "<1.14.11",
                 "simplesamlphp/simplesamlphp-module-infocard": "<1.0.1",
                 "socalnick/scn-social-auth": "<1.15.2",
+                "squizlabs/php_codesniffer": ">=1,<2.8.1",
                 "swiftmailer/swiftmailer": ">=4,<5.4.5",
                 "symfony/dependency-injection": ">=2,<2.0.17",
                 "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.7",
@@ -1630,7 +2403,7 @@
                 "thelia/backoffice-default-template": ">=2.1,<2.1.2",
                 "thelia/thelia": ">=2.1.0-beta1,<2.1.3|>=2.1,<2.1.2",
                 "twig/twig": "<1.20",
-                "typo3/cms": ">=6.2,<6.2.30|>=8,<8.4.1|>=7,<7.6.13",
+                "typo3/cms": ">=6.2,<6.2.30|>=8,<8.6.1|>=7,<7.6.16",
                 "typo3/flow": ">=2.3,<2.3.16|>=3,<3.0.10|>=3.1,<3.1.7|>=3.2,<3.2.7|>=3.3,<3.3.5|>=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4",
                 "willdurand/js-translation-bundle": "<2.1.1",
@@ -1676,33 +2449,94 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2017-01-19T15:04:18+00:00"
+            "time": "2017-03-02T15:23:30+00:00"
         },
         {
-            "name": "twig/twig",
-            "version": "v1.31.0",
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ddc9e3e20ee9c0b6908f401ac8353635b750eca7"
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddc9e3e20ee9c0b6908f401ac8353635b750eca7",
-                "reference": "ddc9e3e20ee9c0b6908f401ac8353635b750eca7",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.7"
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-11-14T01:06:16+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "29bb02dde09ff56291d30f7687eb8696918023af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/29bb02dde09ff56291d30f7687eb8696918023af",
+                "reference": "29bb02dde09ff56291d30f7687eb8696918023af",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-mbstring": "~1.0"
             },
             "require-dev": {
+                "psr/container": "^1.0",
                 "symfony/debug": "~2.7",
                 "symfony/phpunit-bridge": "~3.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.31-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -1737,7 +2571,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-01-11T19:36:15+00:00"
+            "time": "2017-02-27T00:16:20+00:00"
         },
         {
             "name": "zendframework/zend-authentication",
@@ -1802,17 +2636,86 @@
             "time": "2016-02-28T15:02:34+00:00"
         },
         {
-            "name": "zendframework/zend-captcha",
-            "version": "2.6.0",
+            "name": "zendframework/zend-cache",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zend-captcha.git",
-                "reference": "9a1197bc5b8aa4fad104c22f6d9b2a3d4bdda0c6"
+                "url": "https://github.com/zendframework/zend-cache.git",
+                "reference": "c98331b96d3b9d9b24cf32d02660602edb34d039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-captcha/zipball/9a1197bc5b8aa4fad104c22f6d9b2a3d4bdda0c6",
-                "reference": "9a1197bc5b8aa4fad104c22f6d9b2a3d4bdda0c6",
+                "url": "https://api.github.com/repos/zendframework/zend-cache/zipball/c98331b96d3b9d9b24cf32d02660602edb34d039",
+                "reference": "c98331b96d3b9d9b24cf32d02660602edb34d039",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
+                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "require-dev": {
+                "phpbench/phpbench": "^0.10.0",
+                "phpunit/phpunit": "^4.8",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-serializer": "^2.6",
+                "zendframework/zend-session": "^2.6.2"
+            },
+            "suggest": {
+                "ext-apc": "APC or compatible extension, to use the APC storage adapter",
+                "ext-apcu": "APCU >= 5.1.0, to use the APCu storage adapter",
+                "ext-dba": "DBA, to use the DBA storage adapter",
+                "ext-memcache": "Memcache >= 2.0.0 to use the Memcache storage adapter",
+                "ext-memcached": "Memcached >= 1.0.0 to use the Memcached storage adapter",
+                "ext-mongo": "Mongo, to use MongoDb storage adapter",
+                "ext-redis": "Redis, to use Redis storage adapter",
+                "ext-wincache": "WinCache, to use the WinCache storage adapter",
+                "ext-xcache": "XCache, to use the XCache storage adapter",
+                "mongofill/mongofill": "Alternative to ext-mongo - a pure PHP implementation designed as a drop in replacement",
+                "zendframework/zend-serializer": "Zend\\Serializer component",
+                "zendframework/zend-session": "Zend\\Session component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
+                },
+                "zf": {
+                    "component": "Zend\\Cache",
+                    "config-provider": "Zend\\Cache\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides a generic way to cache any data",
+            "homepage": "https://github.com/zendframework/zend-cache",
+            "keywords": [
+                "cache",
+                "zf2"
+            ],
+            "time": "2016-12-16T11:35:47+00:00"
+        },
+        {
+            "name": "zendframework/zend-captcha",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-captcha.git",
+                "reference": "2d56293a5ae3e45e7c8ee7030aa8b305768d8014"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-captcha/zipball/2d56293a5ae3e45e7c8ee7030aa8b305768d8014",
+                "reference": "2d56293a5ae3e45e7c8ee7030aa8b305768d8014",
                 "shasum": ""
             },
             "require": {
@@ -1822,11 +2725,11 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.8",
-                "squizlabs/php_codesniffer": "^2.3.1",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-session": "^2.6",
                 "zendframework/zend-text": "^2.6",
                 "zendframework/zend-validator": "^2.6",
-                "zendframework/zendservice-recaptcha": "*"
+                "zendframework/zendservice-recaptcha": "^3.0"
             },
             "suggest": {
                 "zendframework/zend-i18n-resources": "Translations of captcha messages",
@@ -1838,8 +2741,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
                 }
             },
             "autoload": {
@@ -1856,7 +2759,7 @@
                 "captcha",
                 "zf2"
             ],
-            "time": "2016-06-21T17:32:09+00:00"
+            "time": "2017-02-23T08:09:44+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -1957,41 +2860,45 @@
         },
         {
             "name": "zendframework/zend-config",
-            "version": "2.6.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-config.git",
-                "reference": "2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d"
+                "reference": "a12e4a592bf66d9629b84960e268f3752e53abe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d",
-                "reference": "2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d",
+                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/a12e4a592bf66d9629b84960e268f3752e53abe4",
+                "reference": "a12e4a592bf66d9629b84960e268f3752e53abe4",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+                "ext-json": "*",
+                "php": "^5.6 || ^7.0",
+                "psr/container": "^1.0",
+                "zendframework/zend-stdlib": "^2.7.7 || ^3.1"
+            },
+            "conflict": {
+                "container-interop/container-interop": "<1.2.0"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0",
-                "zendframework/zend-filter": "^2.6",
-                "zendframework/zend-i18n": "^2.5",
-                "zendframework/zend-json": "^2.6.1",
-                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
+                "malukenho/docheader": "^0.1.5",
+                "phpunit/phpunit": "^5.7 || ^6.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-filter": "^2.7.1",
+                "zendframework/zend-i18n": "^2.7.3",
+                "zendframework/zend-servicemanager": "^2.7.8 || ^3.2.1"
             },
             "suggest": {
-                "zendframework/zend-filter": "Zend\\Filter component",
-                "zendframework/zend-i18n": "Zend\\I18n component",
-                "zendframework/zend-json": "Zend\\Json to use the Json reader or writer classes",
-                "zendframework/zend-servicemanager": "Zend\\ServiceManager for use with the Config Factory to retrieve reader and writer instances"
+                "zendframework/zend-filter": "^2.7.1; install if you want to use the Filter processor",
+                "zendframework/zend-i18n": "^2.7.3; install if you want to use the Translator processor",
+                "zendframework/zend-servicemanager": "^2.7.8 || ^3.2.1; if you need an extensible plugin manager for use with the Config Factory"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
                 }
             },
             "autoload": {
@@ -2009,7 +2916,7 @@
                 "config",
                 "zf2"
             ],
-            "time": "2016-02-04T23:01:10+00:00"
+            "time": "2017-02-22T14:31:10+00:00"
         },
         {
             "name": "zendframework/zend-config-aggregator",
@@ -2317,16 +3224,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "1.0.6",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "b315ea9269ea3ee2e5fd3adb712fc278a2904eb1"
+                "reference": "891507003240cec0404ca3b157a88a311c1f9c26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/b315ea9269ea3ee2e5fd3adb712fc278a2904eb1",
-                "reference": "b315ea9269ea3ee2e5fd3adb712fc278a2904eb1",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/891507003240cec0404ca3b157a88a311c1f9c26",
+                "reference": "891507003240cec0404ca3b157a88a311c1f9c26",
                 "shasum": ""
             },
             "require": {
@@ -2334,18 +3241,19 @@
                 "php": "^5.6 || ^7.0",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.1",
-                "zendframework/zend-expressive-router": "^1.1",
+                "zendframework/zend-expressive-router": "^1.1 || ^2.0",
                 "zendframework/zend-expressive-template": "^1.0.1",
-                "zendframework/zend-stratigility": ">=1.1.0 < 1.3.0 || >=1.3.1 <2.0.0"
+                "zendframework/zend-stratigility": "^1.3.3"
             },
             "require-dev": {
                 "filp/whoops": "^1.1 || ^2.0",
                 "malukenho/docheader": "^0.1.5",
+                "mockery/mockery": "^0.9.5",
                 "phpunit/phpunit": "^4.7",
                 "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-expressive-aurarouter": "^1.0",
-                "zendframework/zend-expressive-fastroute": "^1.0",
-                "zendframework/zend-expressive-zendrouter": "^1.0",
+                "zendframework/zend-expressive-aurarouter": "^1.0 || ^2.0",
+                "zendframework/zend-expressive-fastroute": "^1.0 || ^2.0",
+                "zendframework/zend-expressive-zendrouter": "^1.0 || ^2.0",
                 "zendframework/zend-servicemanager": "^2.6"
             },
             "suggest": {
@@ -2358,8 +3266,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev",
-                    "dev-develop": "1.1-dev"
+                    "dev-master": "1.1-dev",
+                    "dev-develop": "2.0-dev"
                 }
             },
             "autoload": {
@@ -2378,7 +3286,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-01-09T16:08:29+00:00"
+            "time": "2017-02-14T14:11:19+00:00"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
@@ -2597,41 +3505,41 @@
         },
         {
             "name": "zendframework/zend-expressive-twigrenderer",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-twigrenderer.git",
-                "reference": "786c2b971856c810106b37e9e9b8a90cc28ae454"
+                "reference": "a1583749cc55b79b81939175281e56a5c9449213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-twigrenderer/zipball/786c2b971856c810106b37e9e9b8a90cc28ae454",
-                "reference": "786c2b971856c810106b37e9e9b8a90cc28ae454",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-twigrenderer/zipball/a1583749cc55b79b81939175281e56a5c9449213",
+                "reference": "a1583749cc55b79b81939175281e56a5c9449213",
                 "shasum": ""
             },
             "require": {
-                "container-interop/container-interop": "^1.1",
+                "container-interop/container-interop": "^1.2",
                 "php": "^5.6 || ^7.0",
-                "twig/twig": "^1.26",
-                "zendframework/zend-expressive-helpers": "^1.1 || ^2.0 || ^3.0",
-                "zendframework/zend-expressive-router": "^1.3.2 || ^2.0",
+                "twig/twig": "^1.32 || ^2.1",
+                "zendframework/zend-expressive-helpers": "^1.4 || ^2.2 || ^3.0.1",
+                "zendframework/zend-expressive-router": "^1.3.2 || ^2.1",
                 "zendframework/zend-expressive-template": "^1.0.4"
             },
             "require-dev": {
                 "malukenho/docheader": "^0.1.5",
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^6.0.7 || ^5.7.14",
                 "zendframework/zend-coding-standard": "~1.0.0"
             },
             "suggest": {
-                "aura/di": "3.0.*@beta to make use of Aura.Di dependency injection container",
+                "aura/di": "^3.2 to make use of Aura.Di dependency injection container",
                 "mouf/pimple-interop": "^1.0 to use Pimple for dependency injection",
-                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection"
+                "zendframework/zend-servicemanager": "^3.3 to use zend-servicemanager for dependency injection"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev",
-                    "dev-develop": "1.3-dev"
+                    "dev-master": "1.3-dev",
+                    "dev-develop": "1.4-dev"
                 }
             },
             "autoload": {
@@ -2652,7 +3560,7 @@
                 "psr-7",
                 "twig"
             ],
-            "time": "2017-01-12T10:57:50+00:00"
+            "time": "2017-03-02T17:50:19+00:00"
         },
         {
             "name": "zendframework/zend-filter",
@@ -2716,16 +3624,16 @@
         },
         {
             "name": "zendframework/zend-form",
-            "version": "2.9.2",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-form.git",
-                "reference": "2d076100e4c6a779b7676d098192e3d1cf74f34e"
+                "reference": "ca2b2f9e1bdc5511d06967d755cbb793708a2d7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-form/zipball/2d076100e4c6a779b7676d098192e3d1cf74f34e",
-                "reference": "2d076100e4c6a779b7676d098192e3d1cf74f34e",
+                "url": "https://api.github.com/repos/zendframework/zend-form/zipball/ca2b2f9e1bdc5511d06967d755cbb793708a2d7b",
+                "reference": "ca2b2f9e1bdc5511d06967d755cbb793708a2d7b",
                 "shasum": ""
             },
             "require": {
@@ -2736,11 +3644,11 @@
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
-                "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "^4.8",
                 "zendframework/zend-cache": "^2.6.1",
-                "zendframework/zend-captcha": "^2.5.4",
+                "zendframework/zend-captcha": "^2.7.1",
                 "zendframework/zend-code": "^2.6 || ^3.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-escaper": "^2.5",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
                 "zendframework/zend-filter": "^2.6",
@@ -2750,10 +3658,10 @@
                 "zendframework/zend-text": "^2.6",
                 "zendframework/zend-validator": "^2.6",
                 "zendframework/zend-view": "^2.6.2",
-                "zendframework/zendservice-recaptcha": "*"
+                "zendframework/zendservice-recaptcha": "^3.0.0"
             },
             "suggest": {
-                "zendframework/zend-captcha": "^2.5.4, required for using CAPTCHA form elements",
+                "zendframework/zend-captcha": "^2.7.1, required for using CAPTCHA form elements",
                 "zendframework/zend-code": "^2.6 || ^3.0, required to use zend-form annotations support",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0, reuired for zend-form annotations support",
                 "zendframework/zend-i18n": "^2.6, required when using zend-form view helpers",
@@ -2764,8 +3672,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9-dev",
-                    "dev-develop": "2.10-dev"
+                    "dev-master": "2.10-dev",
+                    "dev-develop": "2.11-dev"
                 },
                 "zf": {
                     "component": "Zend\\Form",
@@ -2789,20 +3697,20 @@
                 "form",
                 "zf2"
             ],
-            "time": "2016-09-22T15:56:15+00:00"
+            "time": "2017-02-23T16:03:25+00:00"
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.5.5",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "98b1cac0bc7a91497c5898184281abcd0e24c8d6"
+                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/98b1cac0bc7a91497c5898184281abcd0e24c8d6",
-                "reference": "98b1cac0bc7a91497c5898184281abcd0e24c8d6",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/09f4d279f46d86be63171ff62ee0f79eca878678",
+                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678",
                 "shasum": ""
             },
             "require": {
@@ -2813,15 +3721,15 @@
                 "zendframework/zend-validator": "^2.5"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "^4.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-config": "^2.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
+                    "dev-master": "2.6-dev",
+                    "dev-develop": "2.7-dev"
                 }
             },
             "autoload": {
@@ -2839,7 +3747,7 @@
                 "http",
                 "zf2"
             ],
-            "time": "2016-08-08T15:01:54+00:00"
+            "time": "2017-01-31T14:41:02+00:00"
         },
         {
             "name": "zendframework/zend-hydrator",
@@ -3062,40 +3970,35 @@
         },
         {
             "name": "zendframework/zend-json",
-            "version": "2.6.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-json.git",
-                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28"
+                "reference": "f42a1588e75c2a3e338cd94c37906231e616daab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
-                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
+                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/f42a1588e75c2a3e338cd94c37906231e616daab",
+                "reference": "f42a1588e75c2a3e338cd94c37906231e616daab",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.5 || ^7.0"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
-                "zendframework/zend-http": "^2.5.4",
-                "zendframework/zend-server": "^2.6.1",
-                "zendframework/zend-stdlib": "^2.5 || ^3.0",
-                "zendframework/zendxml": "^1.0.2"
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
             "suggest": {
-                "zendframework/zend-http": "Zend\\Http component, required to use Zend\\Json\\Server",
-                "zendframework/zend-server": "Zend\\Server component, required to use Zend\\Json\\Server",
-                "zendframework/zend-stdlib": "Zend\\Stdlib component, for use with caching Zend\\Json\\Server responses",
-                "zendframework/zendxml": "To support Zend\\Json\\Json::fromXml() usage"
+                "zendframework/zend-json-server": "For implementing JSON-RPC servers",
+                "zendframework/zend-xml2json": "For converting XML documents to JSON"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "3.0-dev",
+                    "dev-develop": "3.1-dev"
                 }
             },
             "autoload": {
@@ -3113,7 +4016,7 @@
                 "json",
                 "zf2"
             ],
-            "time": "2016-02-04T21:20:26+00:00"
+            "time": "2016-04-01T02:34:00+00:00"
         },
         {
             "name": "zendframework/zend-loader",
@@ -3232,16 +4135,16 @@
         },
         {
             "name": "zendframework/zend-mail",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mail.git",
-                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c"
+                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/8210faa6865f94962f9a5c76269703bfdcf2fa4c",
-                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c",
+                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff",
+                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff",
                 "shasum": ""
             },
             "require": {
@@ -3253,7 +4156,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3.1",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-config": "^2.6",
                 "zendframework/zend-crypt": "^2.6",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
@@ -3288,7 +4191,7 @@
                 "mail",
                 "zf2"
             ],
-            "time": "2016-12-19T22:46:35+00:00"
+            "time": "2017-02-14T18:03:34+00:00"
         },
         {
             "name": "zendframework/zend-math",
@@ -3504,31 +4407,33 @@
         },
         {
             "name": "zendframework/zend-servicemanager",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-servicemanager.git",
-                "reference": "596a2cde85a92c3366514ae0f55ea32ef59536ac"
+                "reference": "c3036efb81f71bfa36cc9962ee5d4474f36581d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/596a2cde85a92c3366514ae0f55ea32ef59536ac",
-                "reference": "596a2cde85a92c3366514ae0f55ea32ef59536ac",
+                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/c3036efb81f71bfa36cc9962ee5d4474f36581d0",
+                "reference": "c3036efb81f71bfa36cc9962ee5d4474f36581d0",
                 "shasum": ""
             },
             "require": {
-                "container-interop/container-interop": "~1.0",
+                "container-interop/container-interop": "^1.2",
                 "php": "^5.6 || ^7.0",
+                "psr/container": "^1.0",
                 "zendframework/zend-stdlib": "^3.1"
             },
             "provide": {
-                "container-interop/container-interop-implementation": "^1.1"
+                "container-interop/container-interop-implementation": "^1.2",
+                "psr/container-implementation": "^1.0"
             },
             "require-dev": {
                 "mikey179/vfsstream": "^1.6",
                 "ocramius/proxy-manager": "^1.0 || ^2.0",
                 "phpbench/phpbench": "^0.10.0",
-                "phpunit/phpunit": "^4.6 || ^5.2.10",
+                "phpunit/phpunit": "^5.7 || ^6.0.6",
                 "zendframework/zend-coding-standard": "~1.0.0"
             },
             "suggest": {
@@ -3542,8 +4447,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev",
-                    "dev-develop": "3.3-dev"
+                    "dev-master": "3.3-dev",
+                    "dev-develop": "3.4-dev"
                 }
             },
             "autoload": {
@@ -3561,7 +4466,7 @@
                 "servicemanager",
                 "zf"
             ],
-            "time": "2016-12-19T20:04:51+00:00"
+            "time": "2017-03-01T22:08:02+00:00"
         },
         {
             "name": "zendframework/zend-session",
@@ -3676,16 +4581,16 @@
         },
         {
             "name": "zendframework/zend-stratigility",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stratigility.git",
-                "reference": "ffbf29ceb92a9223b8383ea2b021b242591141d2"
+                "reference": "2c4120d2af215c8261a36e0bc3aa8e179e05e148"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/ffbf29ceb92a9223b8383ea2b021b242591141d2",
-                "reference": "ffbf29ceb92a9223b8383ea2b021b242591141d2",
+                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/2c4120d2af215c8261a36e0bc3aa8e179e05e148",
+                "reference": "2c4120d2af215c8261a36e0bc3aa8e179e05e148",
                 "shasum": ""
             },
             "require": {
@@ -3725,7 +4630,7 @@
                 "middleware",
                 "psr-7"
             ],
-            "time": "2017-01-05T22:22:10+00:00"
+            "time": "2017-01-23T22:59:03+00:00"
         },
         {
             "name": "zendframework/zend-text",
@@ -3823,16 +4728,16 @@
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.8.1",
+            "version": "2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "8ec9f57a717dd37340308aa632f148a2c2be1cfc"
+                "reference": "99b528e01276054458da9553b587cfb959dfa436"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/8ec9f57a717dd37340308aa632f148a2c2be1cfc",
-                "reference": "8ec9f57a717dd37340308aa632f148a2c2be1cfc",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/99b528e01276054458da9553b587cfb959dfa436",
+                "reference": "99b528e01276054458da9553b587cfb959dfa436",
                 "shasum": ""
             },
             "require": {
@@ -3890,57 +4795,7 @@
                 "validator",
                 "zf2"
             ],
-            "time": "2016-06-23T13:44:31+00:00"
-        },
-        {
-            "name": "zendframework/zend-version",
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-version.git",
-                "reference": "e30c55dc394eaf396f0347887af0a7bef471fe08"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-version/zipball/e30c55dc394eaf396f0347887af0a7bef471fe08",
-                "reference": "e30c55dc394eaf396f0347887af0a7bef471fe08",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.23",
-                "zendframework/zend-json": "~2.5"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0",
-                "zendframework/zend-http": "~2.5"
-            },
-            "suggest": {
-                "zendframework/zend-http": "Allows use of Zend\\Http\\Client to check version information",
-                "zendframework/zend-json": "To check latest version hosted in GitHub"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Version\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "homepage": "https://github.com/zendframework/zend-version",
-            "keywords": [
-                "version",
-                "zf2"
-            ],
-            "time": "2015-06-04T15:41:05+00:00"
+            "time": "2017-01-29T17:24:24+00:00"
         },
         {
             "name": "zendframework/zend-view",
@@ -4031,33 +4886,42 @@
         },
         {
             "name": "zendframework/zendservice-recaptcha",
-            "version": "2.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendService_ReCaptcha.git",
-                "reference": "4324cca8502d9f47b3b43a18acdd3fdbeb965536"
+                "reference": "6c6877c07c8ac73b187911ea5d264a640b234361"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendService_ReCaptcha/zipball/4324cca8502d9f47b3b43a18acdd3fdbeb965536",
-                "reference": "4324cca8502d9f47b3b43a18acdd3fdbeb965536",
+                "url": "https://api.github.com/repos/zendframework/ZendService_ReCaptcha/zipball/6c6877c07c8ac73b187911ea5d264a640b234361",
+                "reference": "6c6877c07c8ac73b187911ea5d264a640b234361",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-http": ">=2.0.0",
-                "zendframework/zend-uri": ">=2.0.0",
-                "zendframework/zend-version": ">=2.0.0"
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-http": "^2.5.4",
+                "zendframework/zend-json": "^2.6.1 || ^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^6.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-config": "^2.0",
+                "zendframework/zend-validator": "^2.8.2"
+            },
+            "suggest": {
+                "zendframework/zend-validator": "~2.0, if using ReCaptcha's Mailhide API"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0-dev",
+                    "dev-develop": "3.1-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "ZendService": "library/"
+                "psr-4": {
+                    "ZendService\\ReCaptcha\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4070,7 +4934,7 @@
                 "recaptcha",
                 "zf2"
             ],
-            "time": "2012-09-24T15:18:29+00:00"
+            "time": "2017-02-09T21:38:25+00:00"
         }
     ],
     "packages-dev": [
@@ -4130,20 +4994,21 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.5",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c"
+                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/2abce9d956589122c6443d6265f01cf7e9388e3c",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
+                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0"
+                "php": "^5.5.9 || ^7.0",
+                "psr/log": "^1.0.1"
             },
             "require-dev": {
                 "mockery/mockery": "0.9.*",
@@ -4186,7 +5051,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-12-26T16:13:31+00:00"
+            "time": "2017-03-07T09:04:45+00:00"
         },
         {
             "name": "mikey179/vfsStream",
@@ -4382,27 +5247,27 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.6.2",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb"
+                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/6c52c2722f8460122f96f86346600e1077ce22cb",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/93d39f1f7f9326d746203c7c056f300f7f126073",
+                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
-                "sebastian/comparator": "^1.1",
-                "sebastian/recursion-context": "^1.0|^2.0"
+                "sebastian/comparator": "^1.1|^2.0",
+                "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.0",
+                "phpspec/phpspec": "^2.5|^3.2",
                 "phpunit/phpunit": "^4.8 || ^5.6.5"
             },
             "type": "library",
@@ -4441,7 +5306,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21T14:58:47+00:00"
+            "time": "2017-03-02T20:05:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4595,25 +5460,30 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260"
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4|~5"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -4635,20 +5505,20 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12T18:03:57+00:00"
+            "time": "2017-02-26T11:10:40+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.9",
+            "version": "1.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b"
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3b402f65a4cc90abf6e1104e388b896ce209631b",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e03f8f67534427a787e21a385a67ec3ca6978ea7",
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7",
                 "shasum": ""
             },
             "require": {
@@ -4684,20 +5554,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15T14:06:22+00:00"
+            "time": "2017-02-27T10:12:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.32",
+            "version": "4.8.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1"
+                "reference": "791b1a67c25af50e230f841ee7a9c6eba507dc87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
-                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/791b1a67c25af50e230f841ee7a9c6eba507dc87",
+                "reference": "791b1a67c25af50e230f841ee7a9c6eba507dc87",
                 "shasum": ""
             },
             "require": {
@@ -4756,7 +5626,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-22T08:37:05+00:00"
+            "time": "2017-02-06T05:18:07+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4816,16 +5686,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.2",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f"
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
                 "shasum": ""
             },
             "require": {
@@ -4876,7 +5746,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19T09:18:40+00:00"
+            "time": "2017-01-29T09:50:25+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -5100,16 +5970,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e"
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/938df7a6478e72795e5f8266cff24d06e3136f2e",
-                "reference": "938df7a6478e72795e5f8266cff24d06e3136f2e",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/b19cc3298482a335a95f3016d2f8a6950f0fbcd7",
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7",
                 "shasum": ""
             },
             "require": {
@@ -5149,7 +6019,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-15T06:55:36+00:00"
+            "time": "2016-10-03T07:41:43+00:00"
         },
         {
             "name": "sebastian/version",
@@ -5188,16 +6058,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "2.7.1",
+            "version": "2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "9b324f3a1132459a7274a0ace2e1b766ba80930f"
+                "reference": "d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9b324f3a1132459a7274a0ace2e1b766ba80930f",
-                "reference": "9b324f3a1132459a7274a0ace2e1b766ba80930f",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d",
+                "reference": "d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d",
                 "shasum": ""
             },
             "require": {
@@ -5262,20 +6132,20 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-11-30T04:02:31+00:00"
+            "time": "2017-03-01T22:17:45+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.2",
+            "version": "v3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d"
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/50eadbd7926e31842893c957eca362b21592a97d",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/093e416ad096355149e265ea2e4cc1f9ee40ab1a",
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a",
                 "shasum": ""
             },
             "require": {
@@ -5317,7 +6187,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-03T13:51:32+00:00"
+            "time": "2017-03-07T16:47:02+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5422,33 +6292,12 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "roave/security-advisories": 20,
-        "dotkernel/dot-helpers": 20,
-        "dotkernel/dot-ems": 20,
-        "dotkernel/dot-event": 20,
-        "dotkernel/dot-session": 20,
-        "dotkernel/dot-flashmessenger": 20,
-        "dotkernel/dot-controller": 20,
-        "dotkernel/dot-controller-plugin-flashmessenger": 20,
-        "dotkernel/dot-controller-plugin-authentication": 20,
-        "dotkernel/dot-controller-plugin-authorization": 20,
-        "dotkernel/dot-controller-plugin-mail": 20,
-        "dotkernel/dot-authentication": 20,
-        "dotkernel/dot-authentication-service": 20,
-        "dotkernel/dot-authentication-web": 20,
-        "dotkernel/dot-authorization": 20,
-        "dotkernel/dot-rbac": 20,
-        "dotkernel/dot-rbac-guard": 20,
-        "dotkernel/dot-user": 20,
-        "dotkernel/dot-mail": 20,
-        "dotkernel/dot-navigation": 20,
-        "dotkernel/dot-twigrenderer": 20,
-        "dotkernel/dot-log": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.5 || ^7.0"
+        "php": "^7.1"
     },
     "platform-dev": []
 }

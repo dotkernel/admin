@@ -1,36 +1,56 @@
 <?php
 /**
- * @copyright: DotKernel
- * @library: dotkernel/dot-admin
- * @author: n3vrax
- * Date: 11/21/2016
- * Time: 9:56 PM
+ * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
+ * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
-namespace Dot\Admin\Service;
+namespace Admin\Admin\Service;
 
-use Dot\Admin\Entity\AdminEntity;
+use Admin\Admin\Entity\AdminEntity;
+use Admin\App\Exception\InvalidArgumentException;
+use Admin\App\Service\AbstractEntityService;
+use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\AnnotatedServices\Annotation\Service;
 use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService
  * @package Dot\Authentication\Service
+ *
+ * @Service
  */
 class AdminService extends AbstractEntityService
 {
+    /** @var  string */
+    protected $entityClass = AdminEntity::class;
+
     /** @var  PasswordInterface */
     protected $passwordService;
 
+    /** @var array  */
+    protected $searchableColumns = ['id', 'username', 'email',
+        'firstName', 'lastName', 'status'
+    ];
+
     /**
-     * @param $entity
-     * @return int
+     * @param AdminEntity $entity
+     * @param array $options
+     * @return AdminEntity
      */
-    public function save($entity)
+    public function save($entity, array $options = [])
     {
+        if (!$entity instanceof AdminEntity) {
+            throw new InvalidArgumentException('AdminService can save only instances of AdminEntity');
+        }
+
         /** @var AdminEntity $entity */
-        if (!empty($entity->getPassword())) {
+        if ($entity->needsPasswordRehash()) {
             $entity->setPassword($this->passwordService->create($entity->getPassword()));
         }
+
+        $entity->needsPasswordRehash(true);
+
         return parent::save($entity);
     }
 
@@ -45,6 +65,8 @@ class AdminService extends AbstractEntityService
     /**
      * @param PasswordInterface $passwordService
      * @return $this
+     *
+     * @Inject({PasswordInterface::class})
      */
     public function setPasswordService(PasswordInterface $passwordService)
     {

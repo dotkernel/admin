@@ -1,12 +1,13 @@
 <?php
 
 return [
-
-    'dot_session' => [
-        'session_namespace' => 'admin_session',
-    ],
-
     'dot_flashmessenger' => [
-        'namespace' => 'admin_flashmessenger'
+        'options' => [
+            'namespace' => 'admin_messenger'
+        ]
     ],
+
+    'session_config' => [
+        'name' => 'ADMIN_SESSID',
+    ]
 ];

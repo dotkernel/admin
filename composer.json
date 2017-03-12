@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^5.5 || ^7.0",
+    "php": "^7.1",
     "roave/security-advisories": "dev-master",
     "zendframework/zend-expressive": "^1.0",
     "zendframework/zend-expressive-fastroute": "^1.0",
@@ -20,35 +20,43 @@
     "zendframework/zend-i18n": "^2.7",
     "zendframework/zend-i18n-resources": "^2.5",
     "zendframework/zend-captcha": "^2.6",
-    "zendframework/zendservice-recaptcha": "^2.0",
+    "zendframework/zendservice-recaptcha": "^3.0",
     "zendframework/zend-text": "^2.6",
     "zendframework/zend-stdlib": "^3.0",
     "zendframework/zend-psr7bridge": "^0.2.2",
-    "zendframework/zend-config": "^2.6",
+    "zendframework/zend-config": "^3.1",
     "zendframework/zend-config-aggregator": "^0.2.0",
     "zendframework/zend-component-installer": "^0.6.0 || ~1.0",
 
-    "dotkernel/dot-helpers": "0.6.x-dev",
-    "dotkernel/dot-ems": "0.6.x-dev",
-    "dotkernel/dot-event": "0.6.x-dev",
-    "dotkernel/dot-session": "0.6.x-dev",
-    "dotkernel/dot-flashmessenger": "0.6.x-dev",
-    "dotkernel/dot-controller": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-flashmessenger": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-authentication": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-authorization": "0.6.x-dev",
-    "dotkernel/dot-controller-plugin-mail": "0.6.x-dev",
-    "dotkernel/dot-authentication": "0.6.x-dev",
-    "dotkernel/dot-authentication-service": "0.6.x-dev",
-    "dotkernel/dot-authentication-web": "0.6.x-dev",
-    "dotkernel/dot-authorization": "0.6.x-dev",
-    "dotkernel/dot-rbac": "0.6.x-dev",
-    "dotkernel/dot-rbac-guard": "0.6.x-dev",
-    "dotkernel/dot-user": "0.6.x-dev",
-    "dotkernel/dot-mail": "0.6.x-dev",
-    "dotkernel/dot-navigation": "0.6.x-dev",
-    "dotkernel/dot-twigrenderer": "0.6.x-dev",
-    "dotkernel/dot-log": "0.6.x-dev"
+    "dotkernel/dot-annotated-services": "^1.0",
+    "dotkernel/dot-authentication-service": "^0.1",
+    "dotkernel/dot-authentication-web": "^0.1",
+    "dotkernel/dot-cache": "^1.0",
+    "dotkernel/dot-controller": "^0.1",
+    "dotkernel/dot-controller-plugin-flashmessenger": "^0.1",
+    "dotkernel/dot-controller-plugin-authentication": "^0.1",
+    "dotkernel/dot-controller-plugin-authorization": "^0.1",
+    "dotkernel/dot-controller-plugin-forms": "^0.1",
+    "dotkernel/dot-controller-plugin-mail": "^0.1",
+    "dotkernel/dot-controller-plugin-session": "^0.1",
+    "dotkernel/dot-mapper": "^0.1",
+    "dotkernel/dot-event": "^0.1",
+    "dotkernel/dot-filter": "^1.0",
+    "dotkernel/dot-flashmessenger": "^0.1",
+    "dotkernel/dot-form": "^1.0",
+    "dotkernel/dot-helpers": "^0.1",
+    "dotkernel/dot-hydrator": "^1.0",
+    "dotkernel/dot-inputfilter": "^1.0",
+    "dotkernel/dot-log": "^1.0",
+    "dotkernel/dot-mail": "^0.1",
+    "dotkernel/dot-navigation": "^0.1",
+    "dotkernel/dot-paginator": "^1.0",
+    "dotkernel/dot-rbac": "^0.1",
+    "dotkernel/dot-rbac-guard": "^0.1",
+    "dotkernel/dot-session": "^1.0",
+    "dotkernel/dot-twigrenderer": "^0.1",
+    "dotkernel/dot-user": "^0.1",
+    "dotkernel/dot-validator": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8",
@@ -57,24 +65,16 @@
     "mikey179/vfsstream": "^1.6",
     "zfcampus/zf-development-mode": "^3.1"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/dotkernel/dot-ems"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/dotkernel/dot-log"
-    }
-  ],
   "autoload": {
     "psr-4": {
-      "Dot\\Admin\\": "src/Admin/"
+      "Admin\\App\\": "src/App/",
+      "Admin\\Admin\\": "src/Admin/",
+      "Admin\\User\\": "src/User/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Dot\\AdminTest\\": "test/AdminTest/"
+      "AdminTest\\App\\": "test/AppTest/"
     }
   },
   "scripts": {
@@ -92,5 +92,10 @@
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
     "upload-coverage": "coveralls -v"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.2-dev"
+    }
   }
 }
