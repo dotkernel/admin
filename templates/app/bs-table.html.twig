@@ -205,7 +205,12 @@
                             .closest('.form-group').addClass('has-error');
                     }
                     else if ($.isPlainObject(value)) {
-                        formInputErrors(value, prevName + "[" + name + "]");
+                        if (prevName == '') {
+                            formInputErrors(value, name);
+                        } else {
+                            formInputErrors(value, prevName + "[" + name + "]");
+                        }
+
                     }
                 });
             };
@@ -231,7 +236,7 @@
                         else if (typeof data.validation !== 'undefined') {
                             hideLoading();
                             $("#formMessages").html(data.alerts);
-                            formInputErrors(data.validation.{{ entityNameSingular }}, "{{ entityNameSingular }}");
+                            formInputErrors(data.validation, "");
                             $('#formModal').modal('handleUpdate');
                         }
                         else {

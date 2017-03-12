@@ -39,7 +39,7 @@
 
     {% elseif element is Fieldset %}
 
-        {% include '@partial/form.html.twig' with {'form' : element, 'showLabels' : showLabels} only %}
+        {% include '@partial/form-display.html.twig' with {'form' : element, 'showLabels' : showLabels} only %}
 
     {% else %}
 

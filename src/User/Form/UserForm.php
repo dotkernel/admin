@@ -27,16 +27,16 @@ class UserForm extends Form
         'f_user' => [
             'username',
             'email',
-            'password',
-            'passwordConfirm',
-            'roles',
-            'status',
             'details' => [
                 'firstName',
                 'lastName',
                 'phone',
                 'address'
-            ]
+            ],
+            'password',
+            'passwordConfirm',
+            'roles',
+            'status',
         ]
     ];
 
@@ -45,14 +45,14 @@ class UserForm extends Form
         'f_user' => [
             'username',
             'email',
-            'roles',
-            'status',
             'details' => [
                 'firstName',
                 'lastName',
                 'phone',
                 'address'
-            ]
+            ],
+            'roles',
+            'status',
         ]
     ];
 

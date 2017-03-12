@@ -4,7 +4,7 @@
 {% set dummy = form.prepare() %}
 
 {{ form().openTag(form) | raw }}
-{% include '@partial/form.html.twig' with {'form' : form, 'showLabels' : true} only %}
+{% include '@partial/form-display-validationgroup.html.twig' with {'form' : form, 'showLabels' : true} only %}
 {{ form().closeTag() | raw }}
 
 <script type="application/javascript">

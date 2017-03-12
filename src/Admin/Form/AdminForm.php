@@ -27,10 +27,10 @@ class AdminForm extends Form
         'user' => [
             'username',
             'email',
-            'password',
-            'passwordConfirm',
             'firstName',
             'lastName',
+            'password',
+            'passwordConfirm',
             'roles',
             'status',
         ]
