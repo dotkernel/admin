@@ -5,4 +5,5 @@
 !proxies
 !proxies/README.md
 !dot-admin.sql
+!dot-admin+frontend.sql
 
