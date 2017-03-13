@@ -10,7 +10,10 @@
 
             {% set dummy = element.setAttribute('class', 'form-control') %}
 
-            {{ formLabel(element) }}
+            {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+                {{ formLabel(element) }}
+            {% endif %}
+
             {{ formCaptcha(element) }}
 
         </div>
@@ -48,9 +51,7 @@
             {% set dummy = element.setAttribute('class', 'form-control') %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
-
                 {{ formLabel(element) }}
-
             {% endif %}
 
             {{ formElement(element) }}

@@ -55,7 +55,7 @@
     "dotkernel/dot-rbac-guard": "^0.1",
     "dotkernel/dot-session": "^1.0",
     "dotkernel/dot-twigrenderer": "^0.1",
-    "dotkernel/dot-user": "^0.1",
+    "dotkernel/dot-user": "dev-develop as 0.2.x-dev",
     "dotkernel/dot-validator": "^1.0"
   },
   "require-dev": {
