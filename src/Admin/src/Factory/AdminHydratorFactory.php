@@ -11,7 +11,7 @@ namespace Admin\Admin\Factory;
 
 use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Hydrator\RolesHydratingStrategy;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class AdminHydratorFactory

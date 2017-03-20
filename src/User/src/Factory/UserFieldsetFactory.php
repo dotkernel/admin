@@ -12,7 +12,7 @@ namespace Admin\User\Factory;
 use Admin\User\Entity\UserEntity;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Form\UserFieldset;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Hydrator\HydratorPluginManager;
 
 /**

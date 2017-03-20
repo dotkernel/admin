@@ -29,24 +29,35 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies' => $this->getDependenciesConfig(),
+            'dependencies' => $this->getDependencies(),
 
-            'dot_form' => $this->getFormsConfig(),
+            'dot_form' => $this->getForms(),
 
-            'dot_hydrator' => $this->getHydratorsConfig(),
+            'dot_hydrator' => $this->getHydrators(),
 
-            'dot_ems' => $this->getMappersConfig(),
+            'templates' => $this->getTemplates(),
+
+            'dot_mapper' => $this->getMappers(),
         ];
     }
 
-    public function getDependenciesConfig(): array
+    public function getDependencies(): array
     {
         return [
 
         ];
     }
 
-    public function getFormsConfig(): array
+    public function getTemplates(): array
+    {
+        return [
+            'paths' => [
+                'app' => [__DIR__ . '/../templates/app']
+            ]
+        ];
+    }
+
+    public function getForms(): array
     {
         return [
             'form_manager' => [
@@ -64,7 +75,7 @@ class ConfigProvider
         ];
     }
 
-    public function getHydratorsConfig(): array
+    public function getHydrators(): array
     {
         return [
             'hydrator_manager' => [
@@ -78,7 +89,7 @@ class ConfigProvider
         ];
     }
 
-    public function getMappersConfig(): array
+    public function getMappers(): array
     {
         return [
             'mapper_manager' => [

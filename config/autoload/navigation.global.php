@@ -14,24 +14,30 @@ return [
                         [
                             'options' => [
                                 'label' => 'Dashboard',
-                                'route' => 'dashboard',
-                                'params' => ['action' => ''],
+                                'route' => [
+                                    'route_name' => 'dashboard',
+                                    'route_params' => ['action' => '']
+                                ],
                                 'icon' => 'fa fa-tachometer',
                             ]
                         ],
                         [
                             'options' => [
                                 'label' => 'Manage admins',
-                                'route' => 'user',
-                                'params' => ['action' => 'manage'],
+                                'route' => [
+                                    'route_name' => 'user',
+                                    'route_params' => ['action' => 'manage']
+                                ],
                                 'icon' => 'fa fa-user-circle-o',
                             ],
                         ],
                         [
                             'options' => [
                                 'label' => 'Manage users',
-                                'route' => 'f_user',
-                                'params' => ['action' => 'manage'],
+                                'route' => [
+                                    'route_name' => 'f_user',
+                                    'route_params' => ['action' => 'manage']
+                                ],
                                 'icon' => 'fa fa-user-o',
                             ],
                         ],
@@ -46,22 +52,28 @@ return [
                         [
                             'options' => [
                                 'label' => 'Profile',
-                                'route' => 'user',
-                                'params' => ['action' => 'account'],
+                                'route' => [
+                                    'route_name' => 'user',
+                                    'route_params' => ['action' => 'account']
+                                ],
                                 'icon' => 'fa fa-user',
                             ]
                         ],
                         [
                             'options' => [
                                 'label' => 'Settings',
-                                'route' => 'dashboard',
+                                'route' => [
+                                    'route_name' => 'dashboard',
+                                ],
                                 'icon' => 'fa fa-cog',
                             ]
                         ],
                         [
                             'options' => [
                                 'label' => 'Sign Out',
-                                'route' => 'logout',
+                                'route' => [
+                                    'route_name' => 'logout',
+                                ],
                                 'icon' => 'fa fa-sign-out',
                             ]
                         ]

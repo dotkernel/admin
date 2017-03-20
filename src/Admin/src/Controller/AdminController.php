@@ -5,11 +5,12 @@
  * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
-namespace Admin\App\Controller;
+namespace Admin\Admin\Controller;
 
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Service\AdminService;
+use Admin\App\Controller\EntityManageBaseController;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Dot\User\Event\UserControllerEvent;
@@ -32,7 +33,7 @@ class AdminController extends EntityManageBaseController implements UserControll
     const ENTITY_NAME_SINGULAR = 'admin';
     const ENTITY_NAME_PLURAL = 'admins';
     const ENTITY_ROUTE_NAME = 'user';
-    const ENTITY_TEMPLATE_NAME = 'admin::admin-table';
+    const ENTITY_TEMPLATE_NAME = 'app::admin-table';
 
     const ENTITY_FORM_NAME = 'Admin';
     const ENTITY_DELETE_FORM_NAME = 'ConfirmDelete';
@@ -79,8 +80,8 @@ class AdminController extends EntityManageBaseController implements UserControll
             return new RedirectResponse($this->url('user', ['action' => 'account']));
         }
 
-        $next = $this->getNext();
-        return $next($this->getRequest(), $this->getResponse());
+        $delegate = $this->getDelegate();
+        return $delegate->process($this->getRequest());
     }
 
     /**

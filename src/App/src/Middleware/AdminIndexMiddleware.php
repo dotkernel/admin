@@ -10,6 +10,8 @@ namespace Admin\App\Middleware;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Authentication\AuthenticationInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -21,7 +23,7 @@ use Zend\Expressive\Helper\UrlHelper;
  *
  * @Service
  */
-class AdminIndexMiddleware
+class AdminIndexMiddleware implements MiddlewareInterface
 {
     /** @var  AuthenticationInterface */
     protected $authentication;
@@ -44,11 +46,10 @@ class AdminIndexMiddleware
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable|null $next
-     * @return RedirectResponse
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
     {
         //if root path is accessed and not authenticated send to login page
         //we do this to make interface more user-friendly, by bypassing the authorization guards
@@ -60,6 +61,6 @@ class AdminIndexMiddleware
             }
         }
 
-        return $next($request, $response);
+        return $delegate->process($request);
     }
 }

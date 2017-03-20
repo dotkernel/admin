@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Admin\Admin;
 
 use Admin\Admin\Authentication\AuthenticationListener;
+use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Entity\RoleEntity;
 use Admin\Admin\Factory\AdminHydratorFactory;
@@ -21,7 +22,6 @@ use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
 use Admin\Admin\Mapper\TokenDbMapper;
-use Admin\App\Controller\AdminController;
 use Dot\Mapper\Factory\DbMapperFactory;
 use Dot\User\Entity\ConfirmTokenEntity;
 use Dot\User\Entity\RememberTokenEntity;
@@ -39,22 +39,28 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies' => $this->getDependenciesConfig(),
+            'dependencies' => $this->getDependencies(),
 
-            'dot_ems' => $this->getMapperConfig(),
+            'templates' => $this->getTemplates(),
 
-            'dot_authentication' => $this->getAuthenticationConfig(),
+            'dot_mapper' => $this->getMappers(),
 
-            'dot_form' => $this->getFormsConfig(),
+            'dot_authentication' => $this->getAuthentication(),
 
-            'dot_hydrator' => $this->getHydratorsConfig(),
+            'dot_form' => $this->getForms(),
+
+            'dot_hydrator' => $this->getHydrators(),
 
             'dot_user' => [
                 'user_entity' => AdminEntity::class,
                 'role_entity' => RoleEntity::class,
 
                 'default_roles' => ['admin'],
-                'route_default' => ['route_name' => 'dashboard', 'route_params' => ['action' => '']],
+
+                'route_default' => [
+                    'route_name' => 'dashboard',
+                    'route_params' => ['action' => '']
+                ],
 
                 'enable_account_confirmation' => false,
 
@@ -69,8 +75,8 @@ class ConfigProvider
                     'enable_recovery' => false,
                 ],
                 'template_options' => [
-                    'login_template' => 'admin::login',
-                    'account_template' => 'admin::account',
+                    'login_template' => 'app::login',
+                    'account_template' => 'app::account',
                 ],
                 'messages_options' => [
                     'messages' => [
@@ -87,14 +93,23 @@ class ConfigProvider
         ];
     }
 
-    public function getDependenciesConfig(): array
+    public function getDependencies(): array
     {
         return [
 
         ];
     }
 
-    public function getMapperConfig(): array
+    public function getTemplates(): array
+    {
+        return [
+            'paths' => [
+                'app' => [__DIR__ . '/../templates/app']
+            ]
+        ];
+    }
+
+    public function getMappers(): array
     {
         return [
             'mapper_manager' => [
@@ -115,7 +130,7 @@ class ConfigProvider
         ];
     }
 
-    public function getHydratorsConfig(): array
+    public function getHydrators(): array
     {
         return [
             'hydrator_manager' => [
@@ -129,7 +144,7 @@ class ConfigProvider
         ];
     }
 
-    public function getFormsConfig(): array
+    public function getForms(): array
     {
         return [
             'form_manager' => [
@@ -137,24 +152,36 @@ class ConfigProvider
                     AdminFieldset::class => UserFieldsetFactory::class,
                     AdminForm::class => InvokableFactory::class,
                     AccountForm::class => InvokableFactory::class,
-                    //ChangePasswordForm::class => InvokableFactory::class,
                 ],
                 'aliases' => [
                     'UserFieldset' => AdminFieldset::class,
                     'AdminFieldset' => AdminFieldset::class,
                     'Admin' => AdminForm::class,
                     'Account' => AccountForm::class,
-                    //'ChangePassword' => ChangePasswordForm::class,
                 ]
             ]
         ];
     }
 
-    public function getAuthenticationConfig(): array
+    public function getAuthentication(): array
     {
         return [
             'web' => [
-                'after_login_route' => ['route_name' => 'dashboard', 'route_params' => ['action' => '']],
+                'login_route' => [
+                    'route_name' => 'login',
+                ],
+
+                'logout_route' => [
+                    'route_name' => 'logout',
+                ],
+
+                'after_logout_route' => [
+                    'route_name' => 'login',
+                ],
+                'after_login_route' => [
+                    'route_name' => 'dashboard',
+                    'route_params' => ['action' => '']
+                ],
 
                 'event_listeners' => [
                     [

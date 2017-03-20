@@ -9,67 +9,70 @@
       "email": "tibi@apidemia.com"
     }
   ],
+  "config": {
+    "sort-packages": true
+  },
   "require": {
     "php": "^7.1",
     "roave/security-advisories": "dev-master",
-    "zendframework/zend-expressive": "^1.0",
-    "zendframework/zend-expressive-fastroute": "^1.0",
-    "zendframework/zend-servicemanager": "^3.0",
-    "zendframework/zend-expressive-twigrenderer": "^1.0",
+    "zendframework/zend-expressive": "^2.0.2",
+    "zendframework/zend-expressive-fastroute": "^2.0",
+    "zendframework/zend-expressive-twigrenderer": "^1.4",
+    "zendframework/zend-servicemanager": "^3.3.0",
     "zendframework/zend-db": "^2.8",
     "zendframework/zend-i18n": "^2.7",
     "zendframework/zend-i18n-resources": "^2.5",
     "zendframework/zend-captcha": "^2.6",
     "zendframework/zendservice-recaptcha": "^3.0",
     "zendframework/zend-text": "^2.6",
-    "zendframework/zend-stdlib": "^3.0",
+    "zendframework/zend-stdlib": "^3.1",
     "zendframework/zend-psr7bridge": "^0.2.2",
     "zendframework/zend-config": "^3.1",
     "zendframework/zend-config-aggregator": "^0.2.0",
-    "zendframework/zend-component-installer": "^0.6.0 || ~1.0",
+    "zendframework/zend-component-installer": "^1.0 || ^0.7.0",
 
-    "dotkernel/dot-annotated-services": "^1.0",
-    "dotkernel/dot-authentication-service": "^0.1",
-    "dotkernel/dot-authentication-web": "^0.1",
-    "dotkernel/dot-cache": "^1.0",
-    "dotkernel/dot-controller": "^0.1",
-    "dotkernel/dot-controller-plugin-flashmessenger": "^0.1",
-    "dotkernel/dot-controller-plugin-authentication": "^0.1",
-    "dotkernel/dot-controller-plugin-authorization": "^0.1",
-    "dotkernel/dot-controller-plugin-forms": "^0.1",
+    "dotkernel/dot-annotated-services": "^1.1",
+    "dotkernel/dot-authentication-service": "^0.2",
+    "dotkernel/dot-authentication-web": "^0.2",
+    "dotkernel/dot-cache": "^1.1",
+    "dotkernel/dot-controller": "^0.2",
+    "dotkernel/dot-controller-plugin-flashmessenger": "^0.2",
+    "dotkernel/dot-controller-plugin-authentication": "^0.2",
+    "dotkernel/dot-controller-plugin-authorization": "^0.2",
+    "dotkernel/dot-controller-plugin-forms": "^0.2",
     "dotkernel/dot-controller-plugin-mail": "^0.1",
-    "dotkernel/dot-controller-plugin-session": "^0.1",
-    "dotkernel/dot-mapper": "^0.1",
-    "dotkernel/dot-event": "^0.1",
-    "dotkernel/dot-filter": "^1.0",
-    "dotkernel/dot-flashmessenger": "^0.1",
-    "dotkernel/dot-form": "^1.0",
-    "dotkernel/dot-helpers": "^0.1",
-    "dotkernel/dot-hydrator": "^1.0",
-    "dotkernel/dot-inputfilter": "^1.0",
-    "dotkernel/dot-log": "^1.0",
+    "dotkernel/dot-controller-plugin-session": "^0.2",
+    "dotkernel/dot-mapper": "^0.3",
+    "dotkernel/dot-event": "^0.2",
+    "dotkernel/dot-filter": "^1.1",
+    "dotkernel/dot-flashmessenger": "^0.2",
+    "dotkernel/dot-form": "^1.1",
+    "dotkernel/dot-helpers": "^0.2",
+    "dotkernel/dot-hydrator": "^1.1",
+    "dotkernel/dot-inputfilter": "^1.1",
+    "dotkernel/dot-log": "^1.1",
     "dotkernel/dot-mail": "^0.1",
-    "dotkernel/dot-navigation": "^0.1",
-    "dotkernel/dot-paginator": "^1.0",
-    "dotkernel/dot-rbac": "^0.1",
-    "dotkernel/dot-rbac-guard": "^0.1",
-    "dotkernel/dot-session": "^1.0",
-    "dotkernel/dot-twigrenderer": "^0.1",
-    "dotkernel/dot-user": "dev-develop as 0.2.x-dev",
-    "dotkernel/dot-validator": "^1.0"
+    "dotkernel/dot-navigation": "^0.2",
+    "dotkernel/dot-paginator": "^1.1",
+    "dotkernel/dot-rbac": "^0.2",
+    "dotkernel/dot-rbac-guard": "0.2.x-dev",
+    "dotkernel/dot-session": "^2.0",
+    "dotkernel/dot-twigrenderer": "^0.2",
+    "dotkernel/dot-user": "0.2.x-dev",
+    "dotkernel/dot-validator": "^1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8",
-    "squizlabs/php_codesniffer": "^2.3",
-    "filp/whoops": "^1.1 || ^2.0",
-    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "^6.0.8 || ^5.7.15",
+    "squizlabs/php_codesniffer": "^2.8.1",
+    "zendframework/zend-expressive-tooling": "^0.3.2",
+    "filp/whoops": "^2.1.7",
     "zfcampus/zf-development-mode": "^3.1"
   },
   "autoload": {
     "psr-4": {
-      "Admin\\App\\": "src/App/",
-      "Admin\\Admin\\": "src/Admin/",
-      "Admin\\User\\": "src/User/"
+      "Admin\\App\\": "src/App/src",
+      "Admin\\Admin\\": "src/Admin/src",
+      "Admin\\User\\": "src/User/src"
     }
   },
   "autoload-dev": {
@@ -78,24 +81,28 @@
     }
   },
   "scripts": {
+    "post-create-project-cmd": [
+      "@development-enable"
+    ],
     "development-disable": "zf-development-mode disable",
     "development-enable": "zf-development-mode enable",
     "development-status": "zf-development-mode status",
     "check": [
-      "@cs",
+      "@cs-check",
       "@test"
     ],
     "clear-config-cache": "php bin/clear-config-cache.php",
     "cs-check": "phpcs",
     "cs-fix": "phpcbf",
-    "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
+    "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
     "upload-coverage": "coveralls -v"
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.2-dev"
+      "dev-master": "0.2-dev",
+      "dev-develop": "0.3-dev"
     }
   }
 }

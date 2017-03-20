@@ -5,8 +5,9 @@
  * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
  */
 
-namespace Admin\App\Controller;
+namespace Admin\User\Controller;
 
+use Admin\App\Controller\EntityManageBaseController;
 use Admin\User\Entity\UserEntity;
 use Admin\User\Form\UserForm;
 use Admin\User\Service\UserService;
@@ -24,7 +25,7 @@ class UserController extends EntityManageBaseController
     const ENTITY_NAME_SINGULAR = 'user';
     const ENTITY_NAME_PLURAL = 'users';
     const ENTITY_ROUTE_NAME = 'f_user';
-    const ENTITY_TEMPLATE_NAME = 'user::user-table';
+    const ENTITY_TEMPLATE_NAME = 'app::user-table';
 
     const ENTITY_FORM_NAME = 'User';
     const ENTITY_DELETE_FORM_NAME = 'ConfirmDelete';
