@@ -16,7 +16,6 @@ return [
                                 'label' => 'Dashboard',
                                 'route' => [
                                     'route_name' => 'dashboard',
-                                    'route_params' => ['action' => '']
                                 ],
                                 'icon' => 'fa fa-tachometer',
                             ]

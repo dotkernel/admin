@@ -58,8 +58,7 @@ class ConfigProvider
                 'default_roles' => ['admin'],
 
                 'route_default' => [
-                    'route_name' => 'dashboard',
-                    'route_params' => ['action' => '']
+                    'route_name' => 'dashboard'
                 ],
 
                 'enable_account_confirmation' => false,
@@ -180,7 +179,6 @@ class ConfigProvider
                 ],
                 'after_login_route' => [
                     'route_name' => 'dashboard',
-                    'route_params' => ['action' => '']
                 ],
 
                 'event_listeners' => [
