@@ -55,10 +55,10 @@
     "dotkernel/dot-navigation": "^0.2",
     "dotkernel/dot-paginator": "^1.1",
     "dotkernel/dot-rbac": "^0.2",
-    "dotkernel/dot-rbac-guard": "0.2.x-dev",
+    "dotkernel/dot-rbac-guard": "^0.2",
     "dotkernel/dot-session": "^2.0",
     "dotkernel/dot-twigrenderer": "^0.2",
-    "dotkernel/dot-user": "0.2.x-dev",
+    "dotkernel/dot-user": "^0.2",
     "dotkernel/dot-validator": "^1.1"
   },
   "require-dev": {
