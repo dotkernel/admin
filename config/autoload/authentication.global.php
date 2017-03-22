@@ -1,5 +1,9 @@
 <?php
 
+use Admin\Admin\Entity\AdminEntity;
+use Admin\Admin\Hydrator\AdminHydrator;
+use Dot\User\Service\PasswordCheck;
+
 return [
     'dot_authentication' => [
         'adapter' => [
@@ -7,15 +11,15 @@ return [
             'options' => [
                 'adapter' => 'database',
 
-                'identity_prototype' => \Admin\Admin\Entity\AdminEntity::class,
-                'identity_hydrator' => \Dot\Hydrator\ClassMethodsCamelCase::class,
+                'identity_prototype' => AdminEntity::class,
+                'identity_hydrator' => AdminHydrator::class,
 
                 'table' => 'admin',
 
                 'identity_columns' => ['username', 'email'],
                 'credential_column' => 'password',
 
-                'callback_check' => \Dot\User\Service\PasswordCheck::class
+                'callback_check' => PasswordCheck::class
             ]
         ],
         'storage' => [

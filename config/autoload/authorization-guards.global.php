@@ -1,8 +1,10 @@
 <?php
 
+use Dot\Rbac\Guard\Guard\GuardInterface;
+
 return [
     'dot_authorization' => [
-        'protection_policy' => \Dot\Rbac\Guard\Guard\GuardInterface::POLICY_DENY,
+        'protection_policy' => GuardInterface::POLICY_DENY,
 
         'event_listeners' => [],
 
@@ -35,7 +37,8 @@ return [
                                         'confirm-account',
                                         'opt-out'
                                     ],
-                                    'roles' => ['guest'],
+                                    // no restriction on these actions because they handle the authentication check
+                                    'roles' => ['*'],
                                 ]
                             ]
                         ]
@@ -54,7 +57,7 @@ return [
                                     'actions' => ['add', 'edit', 'delete'],
                                     'permissions' => [
                                         'permissions' => ['superuser', 'admin-manager'],
-                                        'condition' => \Dot\Rbac\Guard\Guard\GuardInterface::CONDITION_OR,
+                                        'condition' => GuardInterface::CONDITION_OR,
                                     ],
                                 ],
                                 [
@@ -67,7 +70,7 @@ return [
                                     'actions' => [],
                                     'permissions' => [
                                         'permissions' => ['superuser', 'admin'],
-                                        'condition' => \Dot\Rbac\Guard\Guard\GuardInterface::CONDITION_OR
+                                        'condition' => GuardInterface::CONDITION_OR
                                     ]
                                 ],
                             ]
