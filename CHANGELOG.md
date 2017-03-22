@@ -1,3 +1,21 @@
+## 0.2.1 - 2017-03-22
+
+### Changed
+* updated controller doc blocks
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Nothing
+
+
 ## 0.2.0 - 2017-03-22
 
 ZE2 migration

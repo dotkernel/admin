@@ -25,12 +25,12 @@ use Zend\Form\Form;
  * Class DashboardController
  * @package Dot\Authentication\Controller
  *
- * @method UrlHelperPlugin|UriInterface url(string $route = null, array $params = [])
+ * @method UrlHelperPlugin|UriInterface url($r = null, $p = [], $q = [], $f = null, $o = [])
  * @method FlashMessengerPlugin messenger()
  * @method FormsPlugin|Form forms(string $name = null)
  * @method TemplatePlugin|string template(string $template = null, array $params = [])
  * @method AuthenticationPlugin authentication()
- * @method AuthorizationPlugin isGranted(string $permission, array $roles = [], mixed $context = null)
+ * @method AuthorizationPlugin isGranted(string $permission, array $roles = [], $context = null)
  * @method Container session(string $namespace)
  *
  * @Service
