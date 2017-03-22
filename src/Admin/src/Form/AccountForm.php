@@ -52,6 +52,7 @@ class AccountForm extends Form
 
         $this->add([
             'name' => 'submit',
+            'type' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => 'Update account'

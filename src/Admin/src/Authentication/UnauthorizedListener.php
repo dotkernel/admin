@@ -9,6 +9,7 @@ namespace Admin\Admin\Authentication;
 
 use Dot\Authentication\Web\Event\AbstractAuthenticationEventListener;
 use Dot\Authentication\Web\Event\AuthenticationEvent;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Expressive\Router\RouteResult;
@@ -30,7 +31,7 @@ class UnauthorizedListener extends AbstractAuthenticationEventListener
 
     /**
      * @param AuthenticationEvent $e
-     * @return bool|Response\EmptyResponse
+     * @return ResponseInterface|null
      */
     public function onUnauthorized(AuthenticationEvent $e)
     {
@@ -38,17 +39,17 @@ class UnauthorizedListener extends AbstractAuthenticationEventListener
         $request = $e->getParam('request');
         /** @var RouteResult $routeMatch */
         $routeMatch = $request->getAttribute(RouteResult::class);
-
         if ($routeMatch) {
             $routeName = $routeMatch->getMatchedRouteName();
             $params = $routeMatch->getMatchedParams();
-            $action = $params['action'] ?? '';
+            $action = $params['action'] ?? 'index';
 
             if (in_array($routeName, $this->routes) && in_array($action, $this->actions)) {
                 return new Response\EmptyResponse(401);
             }
         }
-
-        return true;
+        // just to make the IDE shut up about returning something
+        // only ResponseInterfaces return types are picked by the event trigger source
+        return null;
     }
 }

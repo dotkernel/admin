@@ -1,4 +1,12 @@
 <?php
+
+use Admin\App\Controller\DashboardController;
+use Admin\Admin\Controller\AdminController;
+use Dot\Authentication\Web\Action\LoginAction;
+use Dot\Authentication\Web\Action\LogoutAction;
+use Dot\User\Controller\UserController as UserController;
+use Admin\User\Controller\UserController as UserManagementController;
+
 /**
  * Setup routes with a single request method:
  *
@@ -27,28 +35,16 @@
  */
 
 /** @var \Zend\Expressive\Application $app */
-$app->route(
-    '/dashboard[/{action}]',
-    \Admin\App\Controller\DashboardController::class,
-    ['GET', 'POST'],
-    'dashboard'
-);
+// Dashboard controller route
+$app->route('/dashboard[/{action}]', DashboardController::class, ['GET', 'POST'], 'dashboard');
 
-$app->route('/admin/login', \Dot\Authentication\Web\Action\LoginAction::class, ['GET', 'POST'], 'login');
-$app->route('/admin/logout', \Dot\Authentication\Web\Action\LogoutAction::class, ['GET'], 'logout');
-$app->route(
-    '/admin[/{action}]',
-    [
-        \Admin\Admin\Controller\AdminController::class,
-        \Dot\User\Controller\UserController::class
-    ],
-    ['GET', 'POST'],
-    'user'
-);
+// following three routes are for user(in this case user refers to the admin user) authentication and management
+$app->route('/admin/login', LoginAction::class, ['GET', 'POST'], 'login');
+$app->route('/admin/logout', LogoutAction::class, ['GET'], 'logout');
+$app->route('/admin[/{action}[/{id}]]', [AdminController::class, UserController::class], ['GET', 'POST'], 'user');
 
-$app->route(
-    '/user[/{action}]',
-    \Admin\User\Controller\UserController::class,
-    ['GET', 'POST'],
-    'f_user'
-);
+// this route is for the frontend user management(hence the f_ prefix)
+// if this admin application is used without the frontend application(no frontend user management required)
+// you can remove the Admin\User module together with any configuration related to it
+// TODO: we'll offer the option to use admin package without frontend in future releases, as installation scripts
+$app->route('/user[/{action}[/{id}]]', UserManagementController::class, ['GET', 'POST'], 'f_user');

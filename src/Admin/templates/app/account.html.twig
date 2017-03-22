@@ -3,7 +3,7 @@
 {% block title %}Account{% endblock %}
 
 {% block content %}
-    {{ messagesPartial('partial::alerts') }}
+    {{ messagesPartial('partial::alerts', {dismissible: true}) }}
     <div class="row">
         <div class="col-md-6 col-sm-10 col-lg-5">
             <div class="panel panel-default">

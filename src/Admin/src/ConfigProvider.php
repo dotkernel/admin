@@ -28,6 +28,7 @@ use Dot\User\Entity\RememberTokenEntity;
 use Dot\User\Entity\ResetTokenEntity;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
+use Dot\User\Options\MessagesOptions;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
@@ -58,7 +59,8 @@ class ConfigProvider
                 'default_roles' => ['admin'],
 
                 'route_default' => [
-                    'route_name' => 'dashboard'
+                    'route_name' => 'user',
+                    'route_params' => ['action' => 'account']
                 ],
 
                 'enable_account_confirmation' => false,
@@ -79,7 +81,8 @@ class ConfigProvider
                 ],
                 'messages_options' => [
                     'messages' => [
-
+                        MessagesOptions::SIGN_OUT_FIRST =>
+                            '<a href="/admin/logout">Sign out</a> first in order to access the requested content'
                     ]
                 ],
 

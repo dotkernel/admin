@@ -9,12 +9,15 @@
 
 <script type="application/javascript">
     $(document).ready(function() {
-        $('#rolesSelect').multiselect({
-            buttonContainer: '<div class="input-group"></div>',
-            nonSelectedText: 'Select at least one user role...',
-            allSelectedText: false,
-            numberDisplayed: 4,
-            maxHeight: 200
-        });
+        var roleSelect = $('#rolesSelect');
+        if (roleSelect.length) {
+            roleSelect.multiselect({
+                buttonContainer: '<div class="input-group"></div>',
+                nonSelectedText: 'Select at least one user role...',
+                allSelectedText: false,
+                numberDisplayed: 4,
+                maxHeight: 200
+            });
+        }
     });
 </script>

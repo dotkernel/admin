@@ -34,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('dashboard', {'action': ''}) }}"><span>&nbsp;DotKernel</span>Admin</a>
+            <a class="navbar-brand" href="/"><span>&nbsp;DotKernel</span>Admin</a>
             <div class="collapse navbar-collapse">
 
                 {% if hasIdentity() %}
@@ -72,8 +72,7 @@
         {% if hasIdentity() %}
             <div class="row">
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-home"></i></a></li>
-                    <li class="active">Icons</li>
+                    <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
                 </ol>
             </div><!--/.row-->
         {% endif %}
