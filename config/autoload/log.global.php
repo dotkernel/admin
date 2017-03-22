@@ -1,5 +1,7 @@
 <?php
 
+use Zend\Log\Logger;
+
 return [
     'dot_log' => [
         'loggers' => [
@@ -7,7 +9,7 @@ return [
                 'writers' => [
                     [
                         'name' => 'db',
-                        'priority' => \Zend\Log\Logger::INFO,
+                        'priority' => Logger::INFO,
                         'options' => [
 
                             'db' => 'database',

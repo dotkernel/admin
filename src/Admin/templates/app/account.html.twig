@@ -1,0 +1,101 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+    {{ messagesPartial('partial::alerts', {dismissible: true}) }}
+    <div class="row">
+        <div class="col-md-6 col-sm-10 col-lg-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">Update personal data</div>
+                <div class="panel-body">
+                    {{ messagesPartial('partial::alerts', {}, null, 'account') }}
+
+                    {% set dummy = form.prepare() %}
+                    {{ form().openTag(form) | raw }}
+
+                    {% set username = form.getBaseFieldset().get('username') %}
+                    <div class="form-group {% if username.getMessages() %}has-error{% endif %}">
+                        {% set dummy = username.setAttribute('class', 'form-control') %}
+                        {{ formLabel(username) }}
+                        {{ formElement(username) }}
+                    </div>
+
+                    {% set email = form.getBaseFieldset().get('email') %}
+                    <div class="form-group {% if email.getMessages() %}has-error{% endif %}">
+                        {% set dummy = email.setAttribute('class', 'form-control') %}
+                        {{ formLabel(email) }}
+                        {{ formElement(email) }}
+                    </div>
+
+                    {% set firstName = form.getBaseFieldset().get('firstName') %}
+                    <div class="form-group {% if firstName.getMessages() %}has-error{% endif %}">
+                        {% set dummy = firstName.setAttribute('class', 'form-control') %}
+                        {{ formLabel(firstName) }}
+                        {{ formElement(firstName) }}
+                    </div>
+
+                    {% set lastName = form.getBaseFieldset().get('lastName') %}
+                    <div class="form-group {% if lastName.getMessages() %}has-error{% endif %}">
+                        {% set dummy = lastName.setAttribute('class', 'form-control') %}
+                        {{ formLabel(lastName) }}
+                        {{ formElement(lastName) }}
+                    </div>
+
+                    {{ formElement(form.get('account_csrf')) }}
+
+                    {% set submit = form.get('submit') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {{ formSubmit(submit) }}
+
+                    {{ form().closeTag() | raw }}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-10 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Change password</div>
+                <div class="panel-body">
+                    {{ messagesPartial('partial::alerts', {}, null, 'change-password') }}
+
+                    {% set dummy = changePasswordForm.setAttribute('action', changePasswordAction) %}
+                    {% set dummy = changePasswordForm.prepare() %}
+                    {{ form().openTag(changePasswordForm) | raw }}
+
+                    {% set currentPassword = changePasswordForm.get('currentPassword') %}
+                    <div class="form-group {% if currentPassword.getMessages() %}has-error{% endif %}">
+                        {% set dummy = currentPassword.setAttribute('class', 'form-control') %}
+                        {{ formLabel(currentPassword) }}
+                        {{ formElement(currentPassword) }}
+                    </div>
+
+                    {% set password = changePasswordForm.getBaseFieldset().get('password') %}
+                    <div class="form-group {% if password.getMessages() %}has-error{% endif %}">
+                        {% set dummy = password.setAttribute('class', 'form-control') %}
+                        {{ formLabel(password) }}
+                        {{ formElement(password) }}
+                    </div>
+
+                    {% set passwordConfirm = changePasswordForm.getBaseFieldset().get('passwordConfirm') %}
+                    <div class="form-group {% if passwordConfirm.getMessages() %}has-error{% endif %}">
+                        {% set dummy = passwordConfirm.setAttribute('class', 'form-control') %}
+                        {{ formLabel(passwordConfirm) }}
+                        {{ formElement(passwordConfirm) }}
+                    </div>
+
+                    {{ formElement(changePasswordForm.get('change_password_csrf')) }}
+
+                    {% set submit = changePasswordForm.get('submit') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {{ formSubmit(submit) }}
+
+                    {{ form().closeTag() | raw }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

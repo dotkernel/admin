@@ -13,11 +13,15 @@ $aggregator = new ConfigAggregator([
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
-    //zend framework
+    //zend framework configs
     \Zend\Db\ConfigProvider::class,
     \Zend\Mail\ConfigProvider::class,
 
-    // dotkernel
+    // dotkernel components default configs
+    // some of these configs are overwriting and customizing the underlying zendframework configs
+    // in case the dotkernel package is heavily based on a zendframework package
+    // you should not include both zendframework config provider and dotkernel's config provider in this case
+    // e.g: dot-filter, dot-paginator, dot-session etc.
     \Dot\AnnotatedServices\ConfigProvider::class,
     \Dot\Authentication\ConfigProvider::class,
     \Dot\Authentication\Web\ConfigProvider::class,
@@ -64,4 +68,5 @@ $aggregator = new ConfigAggregator([
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
 ], $cacheConfig['config_cache_path']);
+
 return $aggregator->getMergedConfig();

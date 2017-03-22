@@ -1,0 +1,80 @@
+{% if showLabels is not defined %}
+    {% set showLabels = false %}
+{% endif %}
+
+{% if validationGroup is not defined %}
+    {% set validationGroup = form.getValidationGroup() %}
+{% endif %}
+
+{% for k,v in validationGroup %}
+
+    {% if form.has(k) %}
+
+        {% include '@partial/form-display-validationgroup.html.twig' with {
+            'form' : form.get(k),
+            'validationGroup': validationGroup[k],
+            'showLabels' : showLabels} only
+        %}
+
+    {% else %}
+
+        {% if form.has(v) %}
+
+            {% set element = form.get(v) %}
+            {% if element is Captcha %}
+
+                <div class="form-group">
+
+                    {% set dummy = element.setAttribute('class', 'form-control') %}
+
+                    {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+                        {{ formLabel(element) }}
+                    {% endif %}
+
+                    {{ formCaptcha(element) }}
+
+                </div>
+
+            {% elseif element is Checkbox %}
+
+                <div class="checkbox">
+                    <label>
+                        {{ formCheckbox(element) }} {{ element.getLabel() }}
+                    </label>
+                </div>
+
+            {% elseif element is Hidden %}
+
+                {{ formElement(element) }}
+
+            {% elseif element is Button and element.getName() != 'submit' %}
+
+                {% set dummy = element.setAttribute('class', 'btn btn-block') %}
+                {{ formButton(element) }}
+
+            {% elseif element is Submit or element is Button and element.getName() == 'submit' %}
+
+                {% set dummy = element.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                {{ formSubmit(element) }}
+
+            {% else %}
+
+                <div class="form-group {% if element.getMessages() %}has-error{% endif %}">
+
+                    {% set dummy = element.setAttribute('class', 'form-control') %}
+
+                    {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+                        {{ formLabel(element) }}
+                    {% endif %}
+
+                    {{ formElement(element) }}
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+    {% endif %}
+
+{% endfor %}
