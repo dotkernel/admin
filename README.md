@@ -15,7 +15,6 @@ $ composer create-project dotkernel/dot-admin .
 * if using admin and frontend, you can import the `dot-admin+frontend.sql` database
 * remove the `.dist` extension of the files `local.php.dist` located in `config/autoload`
 * edit `local.php` according to your dev machine. Fill in the `database` configuration and mail configuration
-* run the following command in your project root dir
 * if you use the create-project command, after installing, the project will go into development mode automatically
 * you can also toggle development mode by using the composer commands
 ```bash
