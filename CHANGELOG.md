@@ -1,3 +1,21 @@
+## 0.2.2 - 2017-03-22
+
+### Changed
+* Nothing
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* missing lazy services configuration
+
+
 ## 0.2.1 - 2017-03-22
 
 ### Changed

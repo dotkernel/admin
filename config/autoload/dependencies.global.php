@@ -35,5 +35,10 @@ return [
             Middleware\ErrorResponseGenerator::class         => Container\ErrorResponseGeneratorFactory::class,
             Middleware\NotFoundHandler::class                => Container\NotFoundHandlerFactory::class,
         ],
+
+        'lazy_services' => [
+            'proxies_target_dir' => 'data/proxies',
+            'proxies_namespace' => 'DotProxy',
+        ]
     ],
 ];
