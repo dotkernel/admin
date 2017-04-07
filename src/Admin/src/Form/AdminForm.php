@@ -5,7 +5,7 @@
  * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\Admin\Form;
 
@@ -18,7 +18,7 @@ use Zend\InputFilter\InputFilter;
 
 /**
  * Class AdminForm
- * @package App\Admin\Form
+ * @package Admin\Admin\Form
  */
 class AdminForm extends Form
 {

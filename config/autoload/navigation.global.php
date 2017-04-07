@@ -28,7 +28,7 @@ return [
                                     'route_params' => ['action' => 'manage']
                                 ],
                                 'icon' => 'fa fa-user-circle-o',
-                            ],
+                            ]
                         ],
                         [
                             'options' => [
@@ -39,6 +39,52 @@ return [
                                 ],
                                 'icon' => 'fa fa-user-o',
                             ],
+                        ],
+                        [
+                            'options' => [
+                                'label' => 'Submenu 1',
+                                'route' => '',
+                                'icon' => 'fa fa-cog',
+                            ],
+                            'pages' => [
+                                [
+                                    'options' => [
+                                        'label' => 'Submenu link 1',
+                                        'uri' => '#',
+                                        'icon' => 'fa fa-square',
+                                    ],
+                                ],
+                                [
+                                    'options' => [
+                                        'label' => 'Submenu link 2',
+                                        'uri' => '#',
+                                        'icon' => 'fa fa-square',
+                                    ],
+                                ]
+                            ]
+                        ],
+                        [
+                            'options' => [
+                                'label' => 'Submenu 2',
+                                'route' => '',
+                                'icon' => 'fa fa-gear',
+                            ],
+                            'pages' => [
+                                [
+                                    'options' => [
+                                        'label' => 'Submenu link 1',
+                                        'uri' => '#',
+                                        'icon' => 'fa fa-square',
+                                    ],
+                                ],
+                                [
+                                    'options' => [
+                                        'label' => 'Submenu link 2',
+                                        'uri' => '#',
+                                        'icon' => 'fa fa-square',
+                                    ],
+                                ]
+                            ]
                         ],
                     ]
                 ]

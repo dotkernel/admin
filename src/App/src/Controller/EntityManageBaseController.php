@@ -9,21 +9,21 @@ namespace Admin\App\Controller;
 
 use Admin\App\Service\EntityServiceInterface;
 use Dot\Controller\AbstractActionController;
-use Dot\FlashMessenger\FlashMessengerInterface;
-use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Paginator\Paginator;
 use Dot\Controller\Plugin\Authentication\AuthenticationPlugin;
 use Dot\Controller\Plugin\Authorization\AuthorizationPlugin;
 use Dot\Controller\Plugin\FlashMessenger\FlashMessengerPlugin;
 use Dot\Controller\Plugin\Forms\FormsPlugin;
 use Dot\Controller\Plugin\TemplatePlugin;
 use Dot\Controller\Plugin\UrlHelperPlugin;
-use Zend\Session\Container;
+use Dot\FlashMessenger\FlashMessengerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Form\Form;
+use Zend\Paginator\Paginator;
+use Zend\Session\Container;
 
 /**
  * Class EntityManageBaseController
@@ -123,8 +123,8 @@ abstract class EntityManageBaseController extends AbstractActionController
             $options['search'] = $search;
         }
 
-        $limit = (int) $params['limit'] ?? 30;
-        $offset = (int) $params['offset'] ?? 0;
+        $limit = (int)$params['limit'] ?? 30;
+        $offset = (int)$params['offset'] ?? 0;
 
         /** @var Paginator $paginator */
         $paginator = $this->service->findAll($options, true);

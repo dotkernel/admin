@@ -5,7 +5,7 @@
  * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\Admin\Form;
 
@@ -15,7 +15,7 @@ use Dot\User\Form\UserFieldset;
 
 /**
  * Class AdminFieldset
- * @package App\Admin\Form
+ * @package Admin\Admin\Form
  */
 class AdminFieldset extends UserFieldset
 {

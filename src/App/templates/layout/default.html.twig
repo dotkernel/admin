@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <title>{% block title %}{% endblock %} - DotKernel</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -23,19 +25,15 @@
 
 </head>
 
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<body class="side-collapse-container">
+<nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"><span>&nbsp;DotKernel</span>Admin</a>
-            <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="{{ path('dashboard') }}">
+                <img src="{{ asset('img/logo.svg') }}" alt="DotKernel"
+                     onerror="this.onerror=null; this.src={{ asset('img/logo.png') }}" />
+            </a>
+            <div class="collapse navbar-collapse user-menu-collapse">
 
                 {% if hasIdentity() %}
                     <!-- navbar-right with login form or account menu -->
@@ -49,33 +47,53 @@
 </nav>
 
 {% if hasIdentity() %}
-    <div id="sidebar-collapse" class="col-sm-3 col-md-2 col-lg-2 sidebar">
+    <div id="sidebar-collapse" class="sidebar side-collapse sideRightIn in">
+        <div class="nav-placeholder">
+            <a class="logo" href="{{ path('dashboard') }}">
+                <img src="{{ asset('img/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
+            </a>
+        </div>
         <form role="search">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
             </div>
         </form>
+        <div class="toggle">
+            <a id="left-menu-toggle" href="#sidebar-collapse" class="slide-right">&nbsp;</a>
+        </div>
 
-        {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu', 'ulId': '', 'depth': 0}) }}
+        <div class="nano nano-sidebar">
+            {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu nano-content', 'ulId': '', 'depth': 0}) }}
+        </div>
 
     </div><!--/.sidebar-->
 {% endif %}
 
-<main class="container-fluid">
+<main class="container-fluid  main-content">
     {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
     {% if hasIdentity() %}
-        {% set mainClass = 'col-sm-9 col-md-10 col-lg-10 col-sm-offset-3 col-md-offset-2 col-lg-offset-2' %}
+        {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
     {% endif %}
 
-    <div class="main {{ mainClass }}">
-
-        {% if hasIdentity() %}
+    {% if hasIdentity() %}
+        <div class="breadcrumb-section">
             <div class="row">
+                <button data-toggle="collapse-side" data-target=".side-collapse"
+                        data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <ol class="breadcrumb">
                     <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
                 </ol>
             </div><!--/.row-->
-        {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="main {{ mainClass }}">
 
         {% block content %}{% endblock %}
 
@@ -94,6 +112,8 @@
 <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
 <script src="{{ asset('js/bootstrap-table/bootstrap-table.js') }}"></script>
 <script src="{{ asset('js/bootstrap-table/extension/bootstrap-table-mobile.js') }}"></script>
+<script src="{{ asset('js/nanoScroller.js') }}"></script>
+<script src="{{ asset('js/admin.js') }}"></script>
 <script>
     $('#calendar').datepicker({});
 
@@ -106,10 +126,10 @@
 
     $(window).on('resize', function () {
         if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-    })
+    });
     $(window).on('resize', function () {
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-    })
+    });
 
     var showAlertDialog = function (title, message, type) {
         var iconClass = 'fa-info-circle color-blue';
@@ -122,15 +142,15 @@
         modal.find("#modalAlertTitle").text(title);
         modal.find("#modalAlertMessage").text(message);
         modal.modal('show');
-    }
+    };
 
     var showLoading = function () {
         $("#loading").modal({backdrop:false,show:true});
-    }
+    };
 
     var hideLoading = function () {
         $("#loading").modal('hide');
-    }
+    };
 </script>
 
 {% block javascript %}{% endblock %}

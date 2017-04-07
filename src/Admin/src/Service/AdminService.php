@@ -16,7 +16,7 @@ use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService
- * @package Dot\Authentication\Service
+ * @package Admin\Admin\Service
  *
  * @Service
  */
@@ -28,9 +28,14 @@ class AdminService extends AbstractEntityService
     /** @var  PasswordInterface */
     protected $passwordService;
 
-    /** @var array  */
-    protected $searchableColumns = ['id', 'username', 'email',
-        'firstName', 'lastName', 'status'
+    /** @var array */
+    protected $searchableColumns = [
+        'id',
+        'username',
+        'email',
+        'firstName',
+        'lastName',
+        'status'
     ];
 
     /**

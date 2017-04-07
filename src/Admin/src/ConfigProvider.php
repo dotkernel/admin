@@ -5,11 +5,12 @@
  * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\Admin;
 
 use Admin\Admin\Authentication\AuthenticationListener;
+use Admin\Admin\Authentication\UnauthorizedListener;
 use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Entity\AdminEntity;
 use Admin\Admin\Entity\RoleEntity;
@@ -17,7 +18,6 @@ use Admin\Admin\Factory\AdminHydratorFactory;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminFieldset;
 use Admin\Admin\Form\AdminForm;
-use Admin\Admin\Authentication\UnauthorizedListener;
 use Admin\Admin\Hydrator\AdminHydrator;
 use Admin\Admin\Mapper\AdminDbMapper;
 use Admin\Admin\Mapper\RoleDbMapper;
@@ -33,7 +33,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider
- * @package App\Admin
+ * @package Admin\Admin
  */
 class ConfigProvider
 {
