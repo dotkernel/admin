@@ -1,8 +1,8 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\App\Controller;
@@ -27,7 +27,7 @@ use Zend\Form\Form;
 
 /**
  * Class EntityManageBaseController
- * @package Dot\Authentication\Controller
+ * @package Admin\App\Controller
  *
  * @method UrlHelperPlugin|UriInterface url($r = null, $p = [], $q = [], $f = null, $o = [])
  * @method FlashMessengerPlugin messenger()
