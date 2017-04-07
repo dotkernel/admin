@@ -1,8 +1,8 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
 declare(strict_types = 1);
@@ -19,7 +19,7 @@ use Zend\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class RolesHydratingStrategy
- * @package Admin\Admin\Hydrator
+ * @package Admin\User\Hydrator
  *
  * @Service
  */
