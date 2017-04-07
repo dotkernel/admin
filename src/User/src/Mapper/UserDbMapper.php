@@ -5,16 +5,16 @@
  * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\User\Mapper;
 
 use Admin\App\Mapper\SearchFinderMapperTrait;
 use Admin\User\Entity\UserDetailsEntity;
 use Admin\User\Entity\UserEntity;
+use Dot\Hydrator\ClassMethodsCamelCase;
 use Dot\Mapper\Event\MapperEvent;
 use Dot\Mapper\Mapper\MapperManager;
-use Dot\Hydrator\ClassMethodsCamelCase;
 use Zend\Db\Metadata\Object\ColumnObject;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
@@ -27,7 +27,7 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
 {
     use SearchFinderMapperTrait;
 
-    /** @var string  */
+    /** @var string */
     protected $userDetailsTable = 'user_details';
 
     /** @var  UserDetailsEntity */
@@ -143,7 +143,7 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
             // update details
             $query = $this->getSql()->update($this->userDetailsTable)
                 ->set($detailsData)
-                ->where(['userId' => (int) $details->getUserId()]);
+                ->where(['userId' => (int)$details->getUserId()]);
         } else {
             $details->setUserId($entity->getId());
             $detailsData['userId'] = $entity->getId();

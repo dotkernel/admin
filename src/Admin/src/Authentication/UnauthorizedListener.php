@@ -23,10 +23,10 @@ use Zend\Expressive\Router\RouteResult;
  */
 class UnauthorizedListener extends AbstractAuthenticationEventListener
 {
-    /** @var array  */
+    /** @var array */
     protected $routes = ['user', 'f_user'];
 
-    /** @var array  */
+    /** @var array */
     protected $actions = ['list', 'add', 'edit', 'delete'];
 
     /**

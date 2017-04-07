@@ -15,7 +15,7 @@ use Admin\User\Hydrator\UserHydrator;
  */
 class UserEntity extends \Dot\User\Entity\UserEntity
 {
-    /** @var bool  */
+    /** @var bool */
     protected $needsPasswordRehash = true;
 
     /** @var  string */

@@ -5,7 +5,7 @@
  * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
@@ -25,7 +25,7 @@ class AdminEntity extends UserEntity
     /** @var  string */
     protected $hydrator = AdminHydrator::class;
 
-    /** @var bool  */
+    /** @var bool */
     protected $needsPasswordRehash = true;
 
     /** @var  string */

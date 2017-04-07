@@ -15,12 +15,12 @@ require 'vendor/autoload.php';
 
 $config = include 'config/config.php';
 
-if (! isset($config['config_cache_path'])) {
+if (!isset($config['config_cache_path'])) {
     echo "No configuration cache path found" . PHP_EOL;
     exit(0);
 }
 
-if (! file_exists($config['config_cache_path'])) {
+if (!file_exists($config['config_cache_path'])) {
     printf(
         "Configured config cache file '%s' not found%s",
         $config['config_cache_path'],

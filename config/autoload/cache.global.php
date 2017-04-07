@@ -1,7 +1,7 @@
 <?php
 
-use Dot\AnnotatedServices\Factory\AbstractAnnotatedFactory;
 use Admin\App\Factory\AnnotationsCacheFactory;
+use Dot\AnnotatedServices\Factory\AbstractAnnotatedFactory;
 
 return [
     'annotations_cache_dir' => __DIR__ . '/../../data/cache/annotations',

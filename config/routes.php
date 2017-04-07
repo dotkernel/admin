@@ -1,11 +1,11 @@
 <?php
 
-use Admin\App\Controller\DashboardController;
 use Admin\Admin\Controller\AdminController;
+use Admin\App\Controller\DashboardController;
+use Admin\User\Controller\UserController as UserManagementController;
 use Dot\Authentication\Web\Action\LoginAction;
 use Dot\Authentication\Web\Action\LogoutAction;
 use Dot\User\Controller\UserController as UserController;
-use Admin\User\Controller\UserController as UserManagementController;
 
 /**
  * Setup routes with a single request method:

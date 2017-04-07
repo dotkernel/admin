@@ -28,13 +28,13 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
     /** @var  string */
     protected $paginatorClass = Paginator::class;
 
-    /** @var string  */
+    /** @var string */
     protected $entityIdentifier = 'id';
 
     /** @var  MapperInterface */
     protected $entityMapper;
 
-    /** @var array  */
+    /** @var array */
     protected $searchableColumns = [];
 
     /**

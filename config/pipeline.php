@@ -1,18 +1,18 @@
 <?php
 
+use Admin\App\Middleware\AdminIndexMiddleware;
+use Dot\Authentication\Web\ErrorHandler\UnauthorizedHandler;
+use Dot\Navigation\NavigationMiddleware;
+use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
+use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
+use Dot\Session\SessionMiddleware;
+use Dot\User\Middleware\AutoLogin;
 use Zend\Expressive\Helper\ServerUrlMiddleware;
 use Zend\Expressive\Helper\UrlHelperMiddleware;
 use Zend\Expressive\Middleware\ImplicitHeadMiddleware;
 use Zend\Expressive\Middleware\ImplicitOptionsMiddleware;
 use Zend\Expressive\Middleware\NotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
-use Dot\Authentication\Web\ErrorHandler\UnauthorizedHandler;
-use Dot\Session\SessionMiddleware;
-use Dot\Navigation\NavigationMiddleware;
-use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
-use Admin\App\Middleware\AdminIndexMiddleware;
-use Dot\User\Middleware\AutoLogin;
 
 /**
  * Setup middleware pipeline:
