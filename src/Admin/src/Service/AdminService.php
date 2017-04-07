@@ -16,7 +16,7 @@ use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService
- * @package Dot\Authentication\Service
+ * @package Admin\Admin\Service
  *
  * @Service
  */

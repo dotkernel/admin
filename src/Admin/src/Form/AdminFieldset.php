@@ -15,7 +15,7 @@ use Dot\User\Form\UserFieldset;
 
 /**
  * Class AdminFieldset
- * @package App\Admin\Form
+ * @package Admin\Admin\Form
  */
 class AdminFieldset extends UserFieldset
 {

@@ -22,7 +22,7 @@ use Zend\Diactoros\Uri;
 
 /**
  * Class AdminController
- * @package Dot\Authentication\Controller
+ * @package Admin\Admin\Controller
  *
  * @Service
  */

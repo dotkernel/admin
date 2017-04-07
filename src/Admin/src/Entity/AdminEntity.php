@@ -14,7 +14,7 @@ use Dot\User\Entity\UserEntity;
 
 /**
  * Class UserEntity
- * @package App\Admin\Entity
+ * @package Admin\Admin\Entity
  */
 class AdminEntity extends UserEntity
 {

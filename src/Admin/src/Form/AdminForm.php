@@ -18,7 +18,7 @@ use Zend\InputFilter\InputFilter;
 
 /**
  * Class AdminForm
- * @package App\Admin\Form
+ * @package Admin\Admin\Form
  */
 class AdminForm extends Form
 {

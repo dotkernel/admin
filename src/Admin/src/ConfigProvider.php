@@ -33,7 +33,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider
- * @package App\Admin
+ * @package Admin\Admin
  */
 class ConfigProvider
 {

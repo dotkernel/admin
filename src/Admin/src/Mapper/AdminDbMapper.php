@@ -14,7 +14,7 @@ use Dot\User\Mapper\UserDbMapper;
 
 /**
  * Class AdminDbMapper
- * @package App\Admin\Mapper
+ * @package Admin\Admin\Mapper
  */
 class AdminDbMapper extends UserDbMapper
 {
