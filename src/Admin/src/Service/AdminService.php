@@ -1,8 +1,8 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\Admin\Service;
@@ -16,7 +16,7 @@ use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService
- * @package Dot\Authentication\Service
+ * @package Admin\Admin\Service
  *
  * @Service
  */
@@ -28,9 +28,14 @@ class AdminService extends AbstractEntityService
     /** @var  PasswordInterface */
     protected $passwordService;
 
-    /** @var array  */
-    protected $searchableColumns = ['id', 'username', 'email',
-        'firstName', 'lastName', 'status'
+    /** @var array */
+    protected $searchableColumns = [
+        'id',
+        'username',
+        'email',
+        'firstName',
+        'lastName',
+        'status'
     ];
 
     /**

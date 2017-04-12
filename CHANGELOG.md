@@ -1,3 +1,41 @@
+## 0.3.1 - 2017-04-07
+
+### Changed
+* logo paths updated to point to static "/"
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Nothing
+
+
+## 0.3.0 - 2017-04-07
+
+### Changed
+* updated UI design
+* changed repo name from dot-admin to admin
+* renamed references to dot-admin
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Nothing
+
+
 ## 0.2.2 - 2017-03-22
 
 ### Changed

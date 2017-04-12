@@ -1,8 +1,8 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\App\Service;
@@ -16,7 +16,7 @@ use Zend\Paginator\Paginator;
 
 /**
  * Class AbstractEntityService
- * @package Dot\Authentication\Service
+ * @package Admin\App\Service
  */
 abstract class AbstractEntityService implements EntityServiceInterface, MapperManagerAwareInterface
 {
@@ -28,13 +28,13 @@ abstract class AbstractEntityService implements EntityServiceInterface, MapperMa
     /** @var  string */
     protected $paginatorClass = Paginator::class;
 
-    /** @var string  */
+    /** @var string */
     protected $entityIdentifier = 'id';
 
     /** @var  MapperInterface */
     protected $entityMapper;
 
-    /** @var array  */
+    /** @var array */
     protected $searchableColumns = [];
 
     /**

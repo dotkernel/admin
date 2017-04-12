@@ -29,7 +29,7 @@
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ path('dashboard') }}">
+            <a class="navbar-brand" href="/">
                 <img src="{{ asset('img/logo.svg') }}" alt="DotKernel"
                      onerror="this.onerror=null; this.src={{ asset('img/logo.png') }}" />
             </a>
@@ -49,7 +49,7 @@
 {% if hasIdentity() %}
     <div id="sidebar-collapse" class="sidebar side-collapse sideRightIn in">
         <div class="nav-placeholder">
-            <a class="logo" href="{{ path('dashboard') }}">
+            <a class="logo" href="/">
                 <img src="{{ asset('img/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
             </a>
         </div>
@@ -126,10 +126,10 @@
 
     $(window).on('resize', function () {
         if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-    })
+    });
     $(window).on('resize', function () {
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-    })
+    });
 
     var showAlertDialog = function (title, message, type) {
         var iconClass = 'fa-info-circle color-blue';
@@ -142,15 +142,15 @@
         modal.find("#modalAlertTitle").text(title);
         modal.find("#modalAlertMessage").text(message);
         modal.modal('show');
-    }
+    };
 
     var showLoading = function () {
         $("#loading").modal({backdrop:false,show:true});
-    }
+    };
 
     var hideLoading = function () {
         $("#loading").modal('hide');
-    }
+    };
 </script>
 
 {% block javascript %}{% endblock %}

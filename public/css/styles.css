@@ -40,6 +40,10 @@ h3, h4 {
     padding-right: 0px !important;
 }
 
+.account-page {
+    margin-top: 20px;
+}
+
 .login-panel {
     margin-top: 15px;
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
 namespace Admin\Admin\Authentication;
@@ -19,14 +19,14 @@ use Zend\Expressive\Router\RouteResult;
  * Returns a 401 instead of a redirect response, must be registered before the default listener
  * defined in dot-authentication-web. It returns 401 just for a subset of routes, as ajax don't handle redirect well
  *
- * @package Dot\App\Authentication\Listener
+ * @package Admin\Admin\Listener
  */
 class UnauthorizedListener extends AbstractAuthenticationEventListener
 {
-    /** @var array  */
+    /** @var array */
     protected $routes = ['user', 'f_user'];
 
-    /** @var array  */
+    /** @var array */
     protected $actions = ['list', 'add', 'edit', 'delete'];
 
     /**

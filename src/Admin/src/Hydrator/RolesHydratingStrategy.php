@@ -1,11 +1,11 @@
 <?php
 /**
- * @see https://github.com/dotkernel/dot-admin/ for the canonical source repository
+ * @see https://github.com/dotkernel/admin/ for the canonical source repository
  * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-admin/blob/master/LICENSE.md MIT License
+ * @license https://github.com/dotkernel/admin/blob/master/LICENSE.md MIT License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Admin\Admin\Hydrator;
 
@@ -41,7 +41,7 @@ class RolesHydratingStrategy implements StrategyInterface, MapperManagerAwareInt
         $roleIds = [];
 
         // if value is an array of role ids, replace them with RoleEntity instances
-        $value = (array) $value;
+        $value = (array)$value;
         foreach ($value as $role) {
             if ($role instanceof RoleEntity) {
                 $roles[] = $role;
@@ -49,7 +49,7 @@ class RolesHydratingStrategy implements StrategyInterface, MapperManagerAwareInt
             }
 
             if (is_string($role) || is_numeric($role)) {
-                $roleIds[] = (int) $role;
+                $roleIds[] = (int)$role;
             }
         }
 
