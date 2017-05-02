@@ -4,16 +4,13 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+        <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4 forms">
+            <h1>Sign in</h1>
+            <div class="form-content">
 
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">Sign In</div>
-                <div class="panel-body">
+                {{ messagesPartial('partial::alerts') }}
+                {% include '@dot-user-form/login.html.twig' %}
 
-                    {{ messagesPartial('partial::alerts') }}
-                    {% include '@dot-user-form/login.html.twig' %}
-
-                </div>
             </div>
         </div>
     </div>
