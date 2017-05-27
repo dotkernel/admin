@@ -1,3 +1,23 @@
+## 0.4.0 - 2017-05-27
+
+### Changed
+* Nothing
+
+### Added
+* console capabilities added through dot-console based on zf-console
+* bin/console.php bootstrap file(e.g php bin/console.php <command_name>)
+* see [zf-console documentation](https://github.com/zfcampus/zf-console) for details on how to use console
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Nothing
+
+
 ## 0.3.1 - 2017-04-07
 
 ### Changed
