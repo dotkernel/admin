@@ -919,7 +919,6 @@ h1.page-header {
     overflow-x: hidden;
     top: 0;
     right: 0;
-    bottom: 0;
     left: 0;
 }
 
@@ -1011,6 +1010,80 @@ body {
 
 .collapseRightOut {
     display: none;
+}
+
+/** Forms **/
+.forms {
+    padding: 80px 15px;
+}
+
+.forms h1 {
+    margin-bottom: 40px;
+    margin-top: 0px;
+    font-size: 30px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+.forms .no-account {
+    margin-top: 15px;
+    color: #929292;
+}
+
+.form-content {
+    padding: 40px;
+    background: #FFFFFF;
+}
+
+.form-content a {
+    display: block;
+    width: auto;
+    margin-top: 15px;
+    color: #999CA5;
+}
+
+.form-content .btn {
+    margin-top: 15px;
+}
+
+input.form-control {
+    padding: 15px 15px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    border: 1px solid #E7E7E7;
+    font-size: 16px;
+    line-height: 50px;
+    height: 50px;
+}
+
+@media ( max-width: 1199px) {
+    .form-content {
+        padding: 20px;
+    }
+
+    .form-content h1 {
+        margin-bottom: 20px;
+    }
+}
+
+.btn-primary {
+    height: 50px;
+    border-radius: 2px;
+    background: #C60B31;
+    border-color: #C60B31;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background: #333333;
+}
+
+label {
+    color: #B1B1B1;
 }
 
 /*** Header ***/
@@ -1156,7 +1229,15 @@ body {
 .notification .notis-container ul.content li {
     dispaly: block;
     padding: 10px 15px;
-    border-bottom: 1px solid #F1F4F7;
+    border-bottom: 2px solid #F1F4F7;
+}
+
+.notification .notis-container ul.content li.warning {
+    border-left: 4px solid #f78e3a;
+}
+
+.notification .notis-container ul.content li.error {
+    border-left: 4px solid #f70020;
 }
 
 .notification .notis-container ul.content li.unseen {
@@ -1322,9 +1403,6 @@ body {
 
 .sidebar ul.menu {
     display: block;
-    overflow: auto;
-    overflow-x: hidden;
-    height: 100%;
     margin-right: -17px;
 }
 
@@ -1656,4 +1734,17 @@ sideRightIn .sidebar .nano-sidebar {
         padding-left: 15px;
         padding-right: 15px;
     }
+}
+
+
+
+
+p.tooltip-title {
+    display: none;
+    position: absolute;
+    border: 1px solid #333;
+    background-color: #161616;
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
 }
