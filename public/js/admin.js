@@ -26,8 +26,9 @@ $(document).ready(function() {
     });
 
     // on small devices click on menu item will not open the left sidebar
-    $(".sideRightIn i, .sideRightIn .submenu").click(function (e) {
+    $(".sideRightIn .submenu").click(function (e) {
         e.preventDefault();
+
         if ($(window).width() > 767) {
             $(".main-content").addClass("toggled");
             $("#sidebar-collapse").addClass("sideRightOut").removeClass("sideRightIn");

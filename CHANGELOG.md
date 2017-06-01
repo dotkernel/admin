@@ -1,3 +1,21 @@
+## 0.4.1 - 2017-06-01
+
+### Changed
+* Nothing
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* admin side menu glitches described in issue [#24](https://github.com/dotkernel/admin/issues/24)
+
+
 ## 0.4.0 - 2017-05-27
 
 ### Changed
