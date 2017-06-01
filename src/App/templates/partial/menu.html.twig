@@ -31,13 +31,13 @@
                         {% endif %}
                     {% else %}
                         {% if depth == 0 %}
-                            <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
                             <a class="master-tooltip clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} title="{{ page.getOption('label') }}">
+                                <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
                                 <div class="item-label">{{ page.getOption('label') }}</div>
                             </a>
                         {% else %}
-                            <i class="{{ page.getOption('icon') }}"></i>
                             <a class="clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
+                                <i class="{{ page.getOption('icon') }}"></i>
                                 {{ page.getOption('label') }}
                             </a>
                         {% endif %}
