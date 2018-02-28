@@ -93,6 +93,7 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
                 'type' => Select::JOIN_LEFT
             ]
         ];
+        $options['group'] = ['User.id'];
     }
 
     /**
