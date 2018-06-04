@@ -1,18 +1,16 @@
 <?php
 
-use Admin\Admin\Controller\AdminController;
-use Admin\App\Controller\DashboardController;
-use Admin\User\Controller\UserController as UserManagementController;
 use Dot\Authentication\Web\Action\LoginAction;
 use Dot\Authentication\Web\Action\LogoutAction;
 use Dot\User\Controller\UserController as UserController;
+use Frontend\App\Controller\ContactController;
+use Frontend\App\Controller\PageController;
+use Frontend\User\Controller\UserController as FrontendUserController;
 
-// new middleware
+// new - Expressive 3 use statements
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
 use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Router\Middleware\RouteMiddleware;
-use Zend\Expressive\Router\Middleware\DispatchMiddleware;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     /**
@@ -43,17 +41,14 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
      */
 
     /** @var \Zend\Expressive\Application $app */
-    // Dashboard controller route
-    $app->route('/dashboard[/{action}]', DashboardController::class, ['GET', 'POST'], 'dashboard');
 
-    // following three routes are for user(in this case user refers to the admin user) authentication and management
-    $app->route('/admin/login', LoginAction::class, ['GET', 'POST'], 'login');
-    $app->route('/admin/logout', LogoutAction::class, ['GET'], 'logout');
-    $app->route('/admin[/{action}[/{id}]]', [AdminController::class, UserController::class], ['GET', 'POST'], 'user');
+    $app->route('/', [PageController::class], ['GET', 'POST'], 'home');
 
-    // this route is for the frontend user management(hence the f_ prefix)
-    // if this admin application is used without the frontend application(no frontend user management required)
-    // you can remove the Admin\User module together with any configuration related to it
-    // TODO: we'll offer the option to use admin package without frontend in future releases, as installation scripts
-    $app->route('/user[/{action}[/{id}]]', UserManagementController::class, ['GET', 'POST'], 'f_user');
+// following three routes are for user functionality
+    $app->route('/user/login', LoginAction::class, ['GET', 'POST'], 'login');
+    $app->route('/user/logout', LogoutAction::class, ['GET'], 'logout');
+    $app->route('/user[/{action}]', [FrontendUserController::class, UserController::class], ['GET', 'POST'], 'user');
+
+    $app->route('/contact[/{action}]', [ContactController::class], ['GET', 'POST'], 'contact');
+    $app->route('/page[/{action}]', [PageController::class], ['GET', 'POST'], 'page');
 };
