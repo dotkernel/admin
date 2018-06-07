@@ -14,6 +14,13 @@ use Zend\Expressive\Middleware\ImplicitOptionsMiddleware;
 use Zend\Expressive\Middleware\NotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
+// new middleware
+use Psr\Container\ContainerInterface;
+use Zend\Expressive\Application;
+use Zend\Expressive\MiddlewareFactory;
+use Zend\Expressive\Router\Middleware\RouteMiddleware;
+use Zend\Expressive\Router\Middleware\DispatchMiddleware;
+
 /**
  * Setup middleware pipeline:
  */
@@ -21,52 +28,54 @@ use Zend\Stratigility\Middleware\ErrorHandler;
 // The error handler should be the first (most outer) middleware to catch
 // all Exceptions.
 /** @var \Zend\Expressive\Application $app */
-$app->pipe(ErrorHandler::class);
-$app->pipe(ServerUrlMiddleware::class);
+return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
+    $app->pipe(ErrorHandler::class);
+    $app->pipe(ServerUrlMiddleware::class);
 
-// starts the session and tracks session activity
-$app->pipe(SessionMiddleware::class);
+    // starts the session and tracks session activity
+    $app->pipe(SessionMiddleware::class);
 
-// automatically login the user if it has a valid remember token
-$app->pipe(AutoLogin::class);
+    // automatically login the user if it has a valid remember token
+    $app->pipe(AutoLogin::class);
 
-// Pipe more middleware here that you want to execute on every request:
-// - bootstrapping
-// - pre-conditions
-// - modifications to outgoing responses
+    // Pipe more middleware here that you want to execute on every request:
+    // - bootstrapping
+    // - pre-conditions
+    // - modifications to outgoing responses
 
-// Register the routing middleware in the middleware pipeline
-$app->pipeRoutingMiddleware();
+    // Register the routing middleware in the middleware pipeline
+    $app->pipe(RouteMiddleware::class);
 
-// zend expressive middleware
-$app->pipe(ImplicitHeadMiddleware::class);
-$app->pipe(ImplicitOptionsMiddleware::class);
-$app->pipe(UrlHelperMiddleware::class);
+    // zend expressive middleware
+    $app->pipe(ImplicitHeadMiddleware::class);
+    $app->pipe(ImplicitOptionsMiddleware::class);
+    $app->pipe(UrlHelperMiddleware::class);
 
-// authentication and authorization error handlers
-// this is piped here to have access to the route result
-// it should be ok, as these particular errors are generated from below middleware or routed middleware
-$app->pipe(ForbiddenHandler::class);
-$app->pipe(UnauthorizedHandler::class);
+    // authentication and authorization error handlers
+    // this is piped here to have access to the route result
+    // it should be ok, as these particular errors are generated from below middleware or routed middleware
+    $app->pipe(ForbiddenHandler::class);
+    $app->pipe(UnauthorizedHandler::class);
 
-// Add more middleware here that needs to introspect the routing results; this
-// ...
+    // Add more middleware here that needs to introspect the routing results; this
+    // ...
 
-// this middleware redirects to login or dashboard, based on authentication status, if `/` path is accessed
-// this is just to make the UI more friendly, by by-passing the rbac guards in this particular case
-$app->pipe(AdminIndexMiddleware::class);
+    // this middleware redirects to login or dashboard, based on authentication status, if `/` path is accessed
+    // this is just to make the UI more friendly, by by-passing the rbac guards in this particular case
+    $app->pipe(AdminIndexMiddleware::class);
 
-// navigation middleware makes sure the navigation service is injected the RouteResult
-$app->pipe(NavigationMiddleware::class);
+    // navigation middleware makes sure the navigation service is injected the RouteResult
+    $app->pipe(NavigationMiddleware::class);
 
-// the RBAC guards protect chunks of the application(routes or controllers or controller actions)
-// the authorization service can be used together with the guards for maximum security and finer control
-$app->pipe(RbacGuardMiddleware::class);
+    // the RBAC guards protect chunks of the application(routes or controllers or controller actions)
+    // the authorization service can be used together with the guards for maximum security and finer control
+    $app->pipe(RbacGuardMiddleware::class);
 
-// Register the dispatch middleware in the middleware pipeline
-$app->pipeDispatchMiddleware();
+    // Register the dispatch middleware in the middleware pipeline
+    $app->pipe(DispatchMiddleware::class);
 
-// At this point, if no Response is return by any middleware, the
-// NotFoundHandler kicks in; alternately, you can provide other fallback
-// middleware to execute.
-$app->pipe(NotFoundHandler::class);
+    // At this point, if no Response is return by any middleware, the
+    // NotFoundHandler kicks in; alternately, you can provide other fallback
+    // middleware to execute.
+    $app->pipe(NotFoundHandler::class);
+};

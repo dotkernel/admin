@@ -1,3 +1,23 @@
+## 1.0.0 - 2018-06-04
+
+Migration to Zend-Expressive 3
+
+### Changed
+* Migrate middleware to PSR-15
+
+### Added
+* PSR-15 Middleware support
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* Nothing
+
+
 ## 0.4.1 - 2017-06-01
 
 ### Changed
