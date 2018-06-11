@@ -1,3 +1,23 @@
+## 1.0.1 - 2018-06-04
+
+User listing bug fix
+
+### Changed
+* Nothing
+
+### Added
+* Nothing
+
+### Deprecated
+* Nothing
+
+### Removed
+* Nothing
+
+### Fixed
+* User pagination count issue (#32)
+
+
 ## 1.0.0 - 2018-06-04
 
 Migration to Zend-Expressive 3

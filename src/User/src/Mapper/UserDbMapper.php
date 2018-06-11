@@ -74,7 +74,6 @@ class UserDbMapper extends \Dot\User\Mapper\UserDbMapper
      */
     public function count(string $type = 'all', array $options = []): int
     {
-        $this->insertUserDetailsJoin($options);
         return parent::count($type, $options);
     }
 
