@@ -69,3 +69,8 @@ If you cannot use these commands(for example if you cannot upgrade PHP globally)
 * run `bin/clear-config-cache.php` using the proper PHP version if accessible OR
 * manually clear cached data from `data/cache` directory and optionally `data/proxies`
 
+### Default credentials
+
+Login with username `admin` and password `dotadmin`.
+
+These are the default credentials for the admin area.
