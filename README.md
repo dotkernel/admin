@@ -19,10 +19,11 @@ The setup script will prompt for some custom settings. When encountering a quest
 Please select which config file you wish to inject 'Zend\Session\ConfigProvider' into:
   [0] Do not inject
   [1] config/config.php
-  Make your selection (default is 0):
+  Make your selection (default is 1):
 ```
 
 For this option select `[0] Do not inject` because the frontend application  already has an injected config provider which already contains the prompted configurations.
+THE ABOVE EXPLANATION MAKE NO SENSE. WHICH FRONTEND APPLICATION ?
 
 `Remember this option for other packages of the same type? (y/N)`
 `y`
