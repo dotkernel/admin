@@ -18,7 +18,7 @@ use Admin\User\Form\UserFieldset;
 use Admin\User\Form\UserForm;
 use Admin\User\Hydrator\UserHydrator;
 use Admin\User\Mapper\UserDbMapper;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider

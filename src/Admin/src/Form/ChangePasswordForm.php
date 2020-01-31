@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Admin\Admin\Form;
 
 use Admin\App\Messages;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 /**
  * Class ChangePasswordForm

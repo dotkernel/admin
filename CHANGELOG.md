@@ -1,3 +1,21 @@
+## 2.0.0 - 2020-01-31
+
+### Changed
+* Replaced Zend namespace with Laminas and Mezzio namespaces.
+
+### Added
+* Added Laminas dependencies
+
+### Deprecated
+* Nothing
+
+### Removed
+* Removed Zend packages dependencies
+
+### Fixed
+* Nothing
+
+
 ## 1.0.1 - 2018-06-12
 
 User listing bug fix

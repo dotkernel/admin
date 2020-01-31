@@ -12,7 +12,7 @@ use Admin\App\Exception\InvalidArgumentException;
 use Admin\App\Service\AbstractEntityService;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
-use Zend\Crypt\Password\PasswordInterface;
+use Laminas\Crypt\Password\PasswordInterface;
 
 /**
  * Class AdminService

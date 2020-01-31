@@ -13,7 +13,7 @@ use Admin\User\Entity\UserEntity;
 use Dot\User\Entity\RoleEntity;
 use Dot\User\Form\UserFieldset;
 use Psr\Container\ContainerInterface;
-use Zend\Hydrator\HydratorPluginManager;
+use Laminas\Hydrator\HydratorPluginManager;
 
 /**
  * Class UserFieldsetFactory

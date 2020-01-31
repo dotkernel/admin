@@ -9,10 +9,10 @@ use Dot\User\Controller\UserController as UserController;
 
 // new middleware
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Application;
-use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Router\Middleware\RouteMiddleware;
-use Zend\Expressive\Router\Middleware\DispatchMiddleware;
+use Mezzio\Application;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Router\Middleware\RouteMiddleware;
+use Mezzio\Router\Middleware\DispatchMiddleware;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     /**
@@ -37,12 +37,12 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
      * $app->route(
      *     '/contact',
      *     App\Action\ContactAction::class,
-     *     Zend\Expressive\Router\Route::HTTP_METHOD_ANY,
+     *     Mezzio\Router\Route::HTTP_METHOD_ANY,
      *     'contact'
      * );
      */
 
-    /** @var \Zend\Expressive\Application $app */
+    /** @var \Mezzio\Application $app */
     // Dashboard controller route
     $app->route('/dashboard[/{action}]', DashboardController::class, ['GET', 'POST'], 'dashboard');
 

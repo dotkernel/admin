@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Admin\App;
 
 use Admin\App\Form\ConfirmDeleteForm;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider

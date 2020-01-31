@@ -1,6 +1,6 @@
 <?php
 
-use Zend\Log\Logger;
+use Laminas\Log\Logger;
 
 return [
     'dot_log' => [

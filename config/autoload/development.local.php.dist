@@ -10,8 +10,8 @@
  * `composer development-enable`.
  */
 
-use Zend\Expressive\Container;
-use Zend\Expressive\Middleware\ErrorResponseGenerator;
+use Mezzio\Container;
+use Mezzio\Middleware\ErrorResponseGenerator;
 
 return [
     'dependencies' => [
@@ -19,8 +19,8 @@ return [
         ],
         'factories'  => [
             ErrorResponseGenerator::class       => Container\WhoopsErrorResponseGeneratorFactory::class,
-            'Zend\Expressive\Whoops'            => Container\WhoopsFactory::class,
-            'Zend\Expressive\WhoopsPageHandler' => Container\WhoopsPageHandlerFactory::class,
+            'Mezzio\Whoops'            => Container\WhoopsFactory::class,
+            'Mezzio\WhoopsPageHandler' => Container\WhoopsPageHandlerFactory::class,
         ],
         'lazy_services' => [
             'write_proxy_files' => false,

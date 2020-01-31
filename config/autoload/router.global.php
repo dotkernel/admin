@@ -1,7 +1,7 @@
 <?php
 
-use Zend\Expressive\Router\FastRouteRouter;
-use Zend\Expressive\Router\RouterInterface;
+use Mezzio\Router\FastRouteRouter;
+use Mezzio\Router\RouterInterface;
 
 return [
     'dependencies' => [

@@ -12,9 +12,9 @@ namespace Admin\User\Form;
 use Admin\App\Messages;
 use Admin\User\Entity\UserEntity;
 use Dot\Validator\Mapper\NoRecordExists;
-use Zend\Form\Form;
-use Zend\Form\FormInterface;
-use Zend\InputFilter\InputFilter;
+use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
+use Laminas\InputFilter\InputFilter;
 
 /**
  * Class UserForm

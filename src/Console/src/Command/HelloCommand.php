@@ -11,7 +11,7 @@ namespace Admin\Console\Command;
 
 use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Console\Command\AbstractCommand;
-use Zend\Console\Adapter\AdapterInterface;
+use Laminas\Console\Adapter\AdapterInterface;
 use ZF\Console\Route;
 
 /**

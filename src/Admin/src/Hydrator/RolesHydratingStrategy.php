@@ -15,7 +15,7 @@ use Dot\AnnotatedServices\Annotation\Service;
 use Dot\Mapper\Mapper\MapperInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareTrait;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Laminas\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class RolesHydratingStrategy

@@ -1,110 +1,110 @@
 {
-  "name": "dotkernel/admin",
-  "description": "Dotkernel Admin Application",
-  "type": "project",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "DotKernel Team",
-      "email": "team@dotkernel.com"
-    }
-  ],
-  "config": {
-    "sort-packages": true
-  },
-  "require": {
-    "php": "^7.1",
-    "dotkernel/dot-annotated-services": "^1.1.1",
-    "dotkernel/dot-authentication-service": "^1.0",
-    "dotkernel/dot-authentication-web": "^1.0",
-    "dotkernel/dot-cache": "^1.1.1",
-    "dotkernel/dot-console": "^0.1",
-    "dotkernel/dot-controller": "^1.0",
-    "dotkernel/dot-controller-plugin-authentication": "^1.0",
-    "dotkernel/dot-controller-plugin-authorization": "^1.0",
-    "dotkernel/dot-controller-plugin-flashmessenger": "^1.0",
-    "dotkernel/dot-controller-plugin-forms": "^1.0",
-    "dotkernel/dot-controller-plugin-mail": "^1.0",
-    "dotkernel/dot-controller-plugin-session": "^1.0",
-    "dotkernel/dot-event": "^0.2",
-    "dotkernel/dot-filter": "^1.1",
-    "dotkernel/dot-flashmessenger": "^1.0",
-    "dotkernel/dot-form": "^1.1",
-    "dotkernel/dot-helpers": "^1.0",
-    "dotkernel/dot-hydrator": "^1.1",
-    "dotkernel/dot-inputfilter": "^1.1",
-    "dotkernel/dot-log": "^1.1",
-    "dotkernel/dot-mail": "^1.0",
-    "dotkernel/dot-mapper": "^1.0",
-    "dotkernel/dot-navigation": "^1.0",
-    "dotkernel/dot-paginator": "^1.1",
-    "dotkernel/dot-rbac": "^0.2.1",
-    "dotkernel/dot-rbac-guard": "^1.0",
-    "dotkernel/dot-session": "^3.0",
-    "dotkernel/dot-twigrenderer": "^1.0",
-    "dotkernel/dot-user": "^1.0",
-    "dotkernel/dot-validator": "^1.2.1",
-
-    "roave/security-advisories": "dev-master",
-    "zendframework/zend-captcha": "^2.6",
-    "zendframework/zend-component-installer": "^2.0",
-    "zendframework/zend-config": "^3.1",
-    "zendframework/zend-config-aggregator": "^0.2.0",
-    "zendframework/zend-db": "^2.8",
-    "zendframework/zend-expressive": "^3.0",
-    "zendframework/zend-expressive-fastroute": "^3.0",
-    "zendframework/zend-expressive-twigrenderer": "^2.0",
-    "zendframework/zend-i18n": "^2.7",
-    "zendframework/zend-i18n-resources": "^2.5",
-    "zendframework/zend-psr7bridge": "^0.2.2",
-    "zendframework/zend-servicemanager": "^3.3.0",
-    "zendframework/zend-stdlib": "^3.0",
-    "zendframework/zend-text": "^2.6",
-    "zendframework/zendservice-recaptcha": "^3.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^6.0.8 || ^5.7.15",
-    "squizlabs/php_codesniffer": "^2.8.1",
-    "zendframework/zend-expressive-tooling": "^1.0",
-    "filp/whoops": "^2.1.7",
-    "zfcampus/zf-development-mode": "^3.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "Admin\\App\\": "src/App/src",
-      "Admin\\Admin\\": "src/Admin/src",
-      "Admin\\User\\": "src/User/src",
-      "Admin\\Console\\": "src/Console/src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "AdminTest\\App\\": "test/AppTest/"
-    }
-  },
-  "scripts": {
-    "post-create-project-cmd": [
-      "@development-enable"
+    "name": "dotkernel/admin",
+    "description": "Dotkernel Admin Application",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DotKernel Team",
+            "email": "team@dotkernel.com"
+        }
     ],
-    "development-disable": "zf-development-mode disable",
-    "development-enable": "zf-development-mode enable",
-    "development-status": "zf-development-mode status",
-    "check": [
-      "@cs-check",
-      "@test"
-    ],
-    "clear-config-cache": "php bin/clear-config-cache.php",
-    "cs-check": "phpcs",
-    "cs-fix": "phpcbf",
-    "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-    "upload-coverage": "coveralls -v"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "1.1-dev"
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.2",
+        "dotkernel/dot-annotated-services": "^2.0",
+        "dotkernel/dot-authentication-service": "^2.0",
+        "dotkernel/dot-authentication-web": "^2.0",
+        "dotkernel/dot-cache": "^2.0",
+        "dotkernel/dot-console": "^2.0",
+        "dotkernel/dot-controller": "^2.0",
+        "dotkernel/dot-controller-plugin-authentication": "^2.0",
+        "dotkernel/dot-controller-plugin-authorization": "^2.0",
+        "dotkernel/dot-controller-plugin-flashmessenger": "^2.0",
+        "dotkernel/dot-controller-plugin-forms": "^2.0",
+        "dotkernel/dot-controller-plugin-mail": "^2.0",
+        "dotkernel/dot-controller-plugin-session": "^2.0",
+        "dotkernel/dot-event": "^2.0",
+        "dotkernel/dot-filter": "^2.0",
+        "dotkernel/dot-flashmessenger": "^2.0",
+        "dotkernel/dot-form": "^2.0",
+        "dotkernel/dot-helpers": "^2.0",
+        "dotkernel/dot-hydrator": "^2.0",
+        "dotkernel/dot-inputfilter": "^2.0",
+        "dotkernel/dot-log": "^2.0",
+        "dotkernel/dot-mail": "^2.0",
+        "dotkernel/dot-mapper": "^2.0",
+        "dotkernel/dot-navigation": "^2.0",
+        "dotkernel/dot-paginator": "^2.0",
+        "dotkernel/dot-rbac": "^2.0",
+        "dotkernel/dot-rbac-guard": "^2.0",
+        "dotkernel/dot-session": "^4.0",
+        "dotkernel/dot-twigrenderer": "^2.0",
+        "dotkernel/dot-user": "^2.0",
+        "dotkernel/dot-validator": "^2.0",
+        "roave/security-advisories": "dev-master",
+        "laminas/laminas-captcha": "^2.6",
+        "laminas/laminas-component-installer": "^2.0",
+        "laminas/laminas-config": "^3.1",
+        "laminas/laminas-config-aggregator": "^0.2.0",
+        "laminas/laminas-db": "^2.8",
+        "mezzio/mezzio": "^3.0",
+        "mezzio/mezzio-fastroute": "^3.0",
+        "mezzio/mezzio-twigrenderer": "^2.0",
+        "laminas/laminas-i18n": "^2.7",
+        "laminas/laminas-i18n-resources": "^2.5",
+        "laminas/laminas-psr7bridge": "^0.2.2",
+        "laminas/laminas-servicemanager": "^3.3.0",
+        "laminas/laminas-stdlib": "^3.0",
+        "laminas/laminas-text": "^2.6",
+        "laminas/laminas-recaptcha": "^3.0",
+        "laminas/laminas-dependency-plugin": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0.8 || ^5.7.15",
+        "squizlabs/php_codesniffer": "^2.8.1",
+        "mezzio/mezzio-tooling": "^1.0",
+        "filp/whoops": "^2.1.7",
+        "laminas/laminas-development-mode": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Admin\\App\\": "src/App/src",
+            "Admin\\Admin\\": "src/Admin/src",
+            "Admin\\User\\": "src/User/src",
+            "Admin\\Console\\": "src/Console/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AdminTest\\App\\": "test/AppTest/"
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "development-disable": "laminas-development-mode disable",
+        "development-enable": "laminas-development-mode enable",
+        "development-status": "laminas-development-mode status",
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "clear-config-cache": "php bin/clear-config-cache.php",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "upload-coverage": "coveralls -v"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev",
+            "dev-develop": "2.1-dev"
+        }
     }
-  }
 }

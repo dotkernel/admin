@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Admin\App\Mapper;
 
-use Zend\Db\Sql\Select;
-use Zend\Db\Sql\Where;
+use Laminas\Db\Sql\Select;
+use Laminas\Db\Sql\Where;
 
 /**
  * Class SearchFinderMapperTrait

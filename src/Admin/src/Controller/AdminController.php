@@ -17,8 +17,8 @@ use Dot\User\Event\UserControllerEvent;
 use Dot\User\Event\UserControllerEventListenerInterface;
 use Dot\User\Event\UserControllerEventListenerTrait;
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Diactoros\Uri;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Uri;
 
 /**
  * Class AdminController

@@ -8,8 +8,8 @@
 namespace Admin\App\Form;
 
 use Admin\App\Messages;
-use Zend\Form\Element\Csrf;
-use Zend\Form\Form;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Form;
 
 /**
  * Class ConfirmDeleteForm

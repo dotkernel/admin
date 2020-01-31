@@ -12,7 +12,7 @@ use Dot\Mapper\Mapper\MapperInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareTrait;
 use Dot\Paginator\Adapter\MapperAdapter;
-use Zend\Paginator\Paginator;
+use Laminas\Paginator\Paginator;
 
 /**
  * Class AbstractEntityService

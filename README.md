@@ -16,7 +16,7 @@ $ composer create-project dotkernel/admin .
 The setup script will prompt for some custom settings. When encountering a question like the one below:
 
 ```shell
-Please select which config file you wish to inject 'Zend\Session\ConfigProvider' into:
+Please select which config file you wish to inject 'Laminas\Session\ConfigProvider' into:
   [0] Do not inject
   [1] config/config.php
   Make your selection (default is 0):

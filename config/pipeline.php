@@ -7,19 +7,19 @@ use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
 use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
 use Dot\Session\SessionMiddleware;
 use Dot\User\Middleware\AutoLogin;
-use Zend\Expressive\Helper\ServerUrlMiddleware;
-use Zend\Expressive\Helper\UrlHelperMiddleware;
-use Zend\Expressive\Middleware\ImplicitHeadMiddleware;
-use Zend\Expressive\Middleware\ImplicitOptionsMiddleware;
-use Zend\Expressive\Middleware\NotFoundHandler;
-use Zend\Stratigility\Middleware\ErrorHandler;
+use Mezzio\Helper\ServerUrlMiddleware;
+use Mezzio\Helper\UrlHelperMiddleware;
+use Mezzio\Middleware\ImplicitHeadMiddleware;
+use Mezzio\Middleware\ImplicitOptionsMiddleware;
+use Mezzio\Middleware\NotFoundHandler;
+use Laminas\Stratigility\Middleware\ErrorHandler;
 
 // new middleware
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Application;
-use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Router\Middleware\RouteMiddleware;
-use Zend\Expressive\Router\Middleware\DispatchMiddleware;
+use Mezzio\Application;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Router\Middleware\RouteMiddleware;
+use Mezzio\Router\Middleware\DispatchMiddleware;
 
 /**
  * Setup middleware pipeline:
@@ -27,7 +27,7 @@ use Zend\Expressive\Router\Middleware\DispatchMiddleware;
 
 // The error handler should be the first (most outer) middleware to catch
 // all Exceptions.
-/** @var \Zend\Expressive\Application $app */
+/** @var \Mezzio\Application $app */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->pipe(ErrorHandler::class);
     $app->pipe(ServerUrlMiddleware::class);
@@ -46,7 +46,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // Register the routing middleware in the middleware pipeline
     $app->pipe(RouteMiddleware::class);
 
-    // zend expressive middleware
+    // mezzio middleware
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);
     $app->pipe(UrlHelperMiddleware::class);

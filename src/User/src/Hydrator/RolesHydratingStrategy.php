@@ -15,7 +15,7 @@ use Dot\Mapper\Mapper\MapperInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareInterface;
 use Dot\Mapper\Mapper\MapperManagerAwareTrait;
 use Dot\User\Entity\RoleEntity;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Laminas\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class RolesHydratingStrategy

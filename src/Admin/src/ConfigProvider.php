@@ -29,7 +29,7 @@ use Dot\User\Entity\ResetTokenEntity;
 use Dot\User\Factory\UserDbMapperFactory;
 use Dot\User\Factory\UserFieldsetFactory;
 use Dot\User\Options\MessagesOptions;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider

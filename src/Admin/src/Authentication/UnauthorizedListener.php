@@ -11,8 +11,8 @@ use Dot\Authentication\Web\Event\AbstractAuthenticationEventListener;
 use Dot\Authentication\Web\Event\AuthenticationEvent;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response;
-use Zend\Expressive\Router\RouteResult;
+use Laminas\Diactoros\Response;
+use Mezzio\Router\RouteResult;
 
 /**
  * Class UnauthorizedListener

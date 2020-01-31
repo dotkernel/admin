@@ -18,12 +18,12 @@ use Dot\Controller\Plugin\UrlHelperPlugin;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Form\Form;
-use Zend\Paginator\Paginator;
-use Zend\Session\Container;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Form\Form;
+use Laminas\Paginator\Paginator;
+use Laminas\Session\Container;
 
 /**
  * Class EntityManageBaseController

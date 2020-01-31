@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Admin\User\Hydrator;
 
 use Dot\Hydrator\ClassMethodsCamelCase;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Laminas\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class AdminHydrator

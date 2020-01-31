@@ -7,7 +7,7 @@
 
 namespace Admin\App\Service;
 
-use Zend\Paginator\Paginator;
+use Laminas\Paginator\Paginator;
 
 /**
  * Interface EntityServiceInterface
