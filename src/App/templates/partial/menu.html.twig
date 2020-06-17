@@ -1,0 +1,65 @@
+<ul class="{{ ulClass }}" id="{{ ulId }}">
+    {% for page in container %}
+
+        {% if navigation.isAllowed(page) %}
+
+            {% set liClass = '' %}
+            {% set extraAttributes = '' %}
+            {% if navigation.isActive(page) %}
+                {% set liClass = 'active' %}
+            {% endif %}
+
+            {% if page.hasChildren() %}
+                {% set liClass = liClass ~ ' parent' %}
+            {% endif %}
+
+            {% if page.getOption('type') and page.getOption('type') == 'separator' %}
+                <li role="presentation" class="divider"></li>
+            {% else %}
+                <li class="{{ liClass }}">
+
+                    {% if page.hasChildren() %}
+                        {% if depth == 0 %}
+                            <div class="submenu master-tooltip clearfix" data-toggle="collapse" href="#sub-item-{{ loop.index }}" title="{{ page.getOption('label') }}">
+                                <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
+                                <div class="item-label master-tooltip" title="{{ page.getOption('label') }}">{{ page.getOption('label') }}</div>
+                                <i class="fa fa-chevron-circle-down pull-right"></i>
+                            </div>
+                        {% else %}
+                            <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
+                            {{ page.getOption('label') }}
+                        {% endif %}
+                    {% else %}
+                        {% if depth == 0 %}
+                            <a class="master-tooltip clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} title="{{ page.getOption('label') }}">
+                                <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
+                                <div class="item-label">{{ page.getOption('label') }}</div>
+                            </a>
+                        {% else %}
+                            <a class="clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
+                                <i class="{{ page.getOption('icon') }}"></i>
+                                {{ page.getOption('label') }}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+
+
+                    {% if page.hasChildren() %}
+                        {% set subitemUlClass = 'children collapse' %}
+                        {% if navigation.isActive(page) %}
+                            {% set subitemUlClass = subitemUlClass ~ ' in' %}
+                        {% endif %}
+
+                        {% set ulId = 'sub-item-' ~ loop.index %}
+                        {{ navigationPartial(page, 'partial::menu', {'ulClass' : subitemUlClass, 'ulId': ulId, 'depth' : depth + 1}) }}
+
+                    {% endif %}
+
+                </li>
+            {% endif %}
+
+        {% endif %}
+
+    {% endfor %}
+</ul>

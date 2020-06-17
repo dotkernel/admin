@@ -1,0 +1,1796 @@
+# Danish translations for PACKAGE package.
+# Copyright (C) 2019 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# radu <radu@localhost.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zimplify\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-10 10:44+0000\n"
+"PO-Revision-Date: 2019-11-18 16:36+0200\n"
+"Last-Translator: Radu Indries <radu@apidemia.net>\n"
+"Language-Team: English\n"
+"Language: da_DK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Flags-xgettext: --add-comments=TRANSLATORS:twig\n"
+"X-Poedit-Basepath: ../../../../src\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: public/i18n.php:13
+msgid "Invites"
+msgstr "Projekt Invitationer"
+
+msgid "My Projects"
+msgstr "Mine Projekter"
+
+msgid "My projects"
+msgstr "Mine projekter"
+
+msgid "Past Projects"
+msgstr "Tidligere Projekter"
+
+msgid "Past projects"
+msgstr "Tidligere projekter"
+
+msgid "Password"
+msgstr "Kodeord"
+
+msgid "Change Password"
+msgstr "Skift kodeord"
+
+msgid "Settings"
+msgstr "Indstillinger"
+
+msgid "Sign Out"
+msgstr "Log ud"
+
+msgid "Your current password"
+msgstr "Din nuværende adgangskode"
+
+msgid "New password"
+msgstr "Nyt kodeord"
+
+msgid "Confirm new password"
+msgstr "Bekræft ny adgangskode"
+
+msgid "Sign in"
+msgstr "Log ind"
+
+msgid "Sign In"
+msgstr "Log Ind"
+
+msgid "Log in"
+msgstr "Log ind"
+
+msgid "Log In"
+msgstr "Log Ind"
+
+msgid "Log out"
+msgstr "Log ud"
+
+msgid "Log Out"
+msgstr "Log Ud"
+
+msgid "Into Your Expert Account"
+msgstr "På din ekspertkonto"
+
+msgid "Forgot Password"
+msgstr "Glemt Kodeord"
+
+msgid "Forgot password"
+msgstr "Glemt kodeord"
+
+msgid "Don't have an account?"
+msgstr "Har du ikke en konto?"
+
+msgid "Password is required and cannot be empty"
+msgstr "Adgangskode er påkrævet og kan ikke være tom"
+
+msgid "<b>Password</b> is required and cannot be empty"
+msgstr "<b>Adgangskode</b> er påkrævet og kan ikke være tom"
+
+msgid "Identity is required and cannot be empty"
+msgstr "Identitet kræves og kan ikke være tom"
+
+msgid "<b>Identity</b> is required and cannot be empty"
+msgstr "<b>Identitet</b> kræves og kan ikke være tom"
+
+msgid "Authentication failure. Check your credentials"
+msgstr "Autentificeringsfejl. Tjek dine legitimationsoplysninger"
+
+msgid "<b>Password</b> must have between 4 and 150 characters"
+msgstr "<b>Adgangskode</b> skal have mellem 4 og 150 tegn"
+
+msgid "<b>Password confirm</b> does not match"
+msgstr "<b>Bekræftelse af adgangskode</b> stemmer ikke overens"
+
+msgid "<b>Password confirmation</b> is required and cannot be empty"
+msgstr "<b>Adgangskodekontrol</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>Current password</b> is required and cannot be empty"
+msgstr "<b>Nuværende adgangskode</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>Current password</b> is not valid"
+msgstr "<b>Aktuel adgangskode</b> er ikke gyldig"
+
+msgid "<b>Username</b> is required and cannot be empty"
+msgstr "<b>Brugernavn</b> er påkrævet og kan ikke være tomt"
+
+msgid "<b>Username</b> contains invalid characters"
+msgstr "<b>Brugernavn</b> indeholder ugyldige tegn"
+
+msgid "<b>Username</b> must have between 3 and 150 characters"
+msgstr "<b>Brugernavn</b> skal have mellem 3 og 150 tegn"
+
+msgid "<b>Username</b> cannot be used as it's already taken"
+msgstr "<b>Brugernavn</b> kan ikke bruges, da det allerede er ta"
+
+msgid "<b>E-mail address</b> is required and cannot be empty"
+msgstr "<b>E-mail-adresse</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>E-mail address</b> is not valid"
+msgstr "<b>E-mail-adresse</b> er ikke gyldig"
+
+msgid "<b>E-mail address</b> is already registered with an account"
+msgstr "<b>E-mail-adresse</b> er allerede registreret med en konto"
+
+msgid "Account activation failed. Please try again or contact us"
+msgstr "Kontoaktivering mislykkedes. Prøv igen eller kontakt o"
+
+msgid "Account activation failed due to invalid token or e-mail"
+msgstr "Kontoaktivering mislykkedes på grund af ugyldig token eller e-m"
+
+msgid "Account activation link could not be generated. Please try again"
+msgstr "Kontoaktiveringslink kunne ikke genereres. Prøv igen"
+
+msgid "Account successfully activated. You may sign in now"
+msgstr "Kontoen er aktiveret. Du kan logge ind nu"
+
+msgid "Account activation is disabled"
+msgstr "Kontoaktivering er deaktiveret"
+
+msgid "Remember me feature has encountered and error. This will not affect general usability"
+msgstr "Husk mig, at funktionen er stødt og fejl. Dette vil ikke påvirke generel brugervenlighed"
+
+msgid "Remember me token is not valid"
+msgstr "Husk mig token er ikke gyldig"
+
+msgid "Could not process the password recovery request. Please try again"
+msgstr "Kunne ikke behandle anmodningen om gendannelse af adgangskode. Prøv igen"
+
+msgid "Failed to update account password. Please try again"
+msgstr "Kunne ikke opdatere kontoadgangskoden. Prøv igen"
+
+msgid "Reset token has expired. Please submit another password recovery request"
+msgstr "Nulstil token er udløbet. Indsend en anden anmodning om gendannelse af adgangskode"
+
+msgid "Could not reset password due to invalid token or e-mail address"
+msgstr "Kunne ikke nulstille adgangskode på grund af ugyldig token eller e-mail-adresse"
+
+msgid "Password was successfully reset"
+msgstr "Adgangskoden blev nulstillet"
+
+msgid "Password recovery is disabled"
+msgstr "Gendannelse af adgangskode er deaktiveret"
+
+msgid "Change password has failed. Please try again"
+msgstr "Skift adgangskode mislykkedes. Prøv igen"
+
+msgid "Password was successfully updated"
+msgstr "Adgangskoden blev opdateret"
+
+msgid "Could not delete user account"
+msgstr "Brugerkontoen kunne ikke slettes"
+
+msgid "Account creation has failed. Please try again"
+msgstr "Kontooprettelse mislykkedes. Prøv igen"
+
+msgid "Account update has failed. Please try again"
+msgstr "Kontoopdatering mislykkedes. Prøv igen"
+
+msgid "Account information was successfully updated"
+msgstr "Kontooplysninger blev opdateret"
+
+msgid "Account registration is disabled"
+msgstr "Kontoregistrering er deaktiveret"
+
+msgid "Account was successfully created"
+msgstr "Kontoen blev oprettet"
+
+msgid "Password recovery e-mail was sent to %s"
+msgstr "E-mail til gendannelse af adgangskode blev sendt til %s"
+
+msgid "The form CSRF has expired and was refreshed. Try again now"
+msgstr "Formularen CSRF er udløbet og blev opdateret. Prøv igen nu"
+
+msgid "You must sign in first in order to access the requested content"
+msgstr "Du skal først logge ind for at få adgang til det ønskede indhold"
+
+msgid "Could not sign in. Account is disabled"
+msgstr "Kunne ikke logge ind. Kontoen er deaktiveret"
+
+msgid "Account needs to be confirmed."
+msgstr "Kontoen skal bekræftes."
+
+msgid "Account has been disabled or deleted"
+msgstr "Kontoen er deaktiveret eller slettet"
+
+msgid "Account failed to be un-registered. Please try again or contact us"
+msgstr "Kontoen kunne ikke afregistreres. Prøv igen eller kontakt os"
+
+msgid "Account was successfully un-registered"
+msgstr "Kontoen blev ikke registreret"
+
+msgid "Account has failed to be un-registered due to invalid parameters"
+msgstr "Kontoen kunne ikke afregistreres på grund af ugyldige parametre"
+
+msgid "Sign out first in order to access the requested link"
+msgstr "Log først ud for at få adgang til det ønskede link"
+
+msgid "Your e-mail address..."
+msgstr "Din email adresse..."
+
+msgid "Reset password"
+msgstr "Nulstille kodeord"
+
+msgid "Password..."
+msgstr "Adgangskode..."
+
+msgid "FAQ"
+msgstr "Ofte stillede spørgsmål"
+
+msgid "Privacy policy"
+msgstr "Fortrolighedspolitik"
+
+msgid "Privacy Policy"
+msgstr "Fortrolighedspolitik"
+
+msgid "Sign Up"
+msgstr "Tilmelde"
+
+msgid "Not Interested"
+msgstr "Ikke interesseret"
+
+msgid "Task"
+msgstr "Opgave"
+
+msgid "Back to projects"
+msgstr "Tilbage til projekter"
+
+msgid "Invite"
+msgstr "Invitere"
+
+msgid "Confirm account with your password"
+msgstr "Bekræft konto med dit kodeord"
+
+msgid "Field Of Expertise"
+msgstr "Fagområde"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Experience years..."
+msgstr "Erfaringsår..."
+
+msgid "Confirm Invitation"
+msgstr "Bekræft Invitation"
+
+msgid "Confirm invitation"
+msgstr "Bekræft invitation"
+
+msgid "Insert your email to get started."
+msgstr "Indsæt din e-mail for at komme i gang."
+
+msgid "Email address"
+msgstr "Email adresse"
+
+msgid "E-mail address"
+msgstr "Email adresse"
+
+msgid "E-mail address..."
+msgstr "Email adresse..."
+
+msgid "I accept the"
+msgstr "Jeg accepterer"
+
+msgid "Next"
+msgstr "Næste"
+
+msgid "You must accept the terms and conditions"
+msgstr "Du skal acceptere betingelserne"
+
+msgid "Terms and Conditions"
+msgstr "Betingelserne"
+
+msgid "Hello"
+msgstr "Hej"
+
+msgid "We would like to know a bit about you."
+msgstr "Vi vil gerne vide lidt om dig."
+
+msgid "Name..."
+msgstr "Navn..."
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "Age..."
+msgstr "Alder..."
+
+msgid "Age"
+msgstr "Alder"
+
+msgid "Please insert your name."
+msgstr "Indsæt dit navn."
+
+msgid "Please insert your name"
+msgstr "Indsæt dit navn"
+
+msgid "Please insert your age."
+msgstr "Indsæt venligst din alder."
+
+msgid "Please insert your Age"
+msgstr "Indsæt venligst din alder"
+
+msgid "Age must be between '18' and '80', inclusively."
+msgstr "Alder skal være mellem '18' og '80', inklusive."
+
+msgid "Age must be between '18' and '80', inclusively"
+msgstr "Alder skal være mellem '18' og '80', inklusive"
+
+msgid "Please select your city"
+msgstr "Vælg din By"
+
+msgid "Please select your City"
+msgstr "Vælg din By"
+
+msgid "Other"
+msgstr "Andet"
+
+msgid "Other input"
+msgstr "Andet"
+
+msgid "Please complete all questions!"
+msgstr "Udfyld venligst alle spørgsmål!"
+
+msgid "Congratulations, you were invited to participate in the following projects!"
+msgstr "Tillykke, du er inviteret til at deltage i følgende projekter!"
+
+msgid "Not interested"
+msgstr "Ikke interesseret"
+
+msgid "Participate"
+msgstr "Deltager"
+
+msgid "You successfully accepted to participate to"
+msgstr "Du har accepteret at deltage i"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Idea"
+msgstr "Ide"
+
+msgid "Final Product"
+msgstr "Slutprodukt"
+
+msgid "Concept Design"
+msgstr "Konceptdesign"
+
+msgid "Instructions"
+msgstr "Instruktioner"
+
+msgid "Start Questions"
+msgstr "Start spørgsmål"
+
+msgid "Please select at least one response."
+msgstr "Vælg mindst et svar."
+
+msgid "Continue"
+msgstr "Fortsæt"
+
+msgid "Please select one response."
+msgstr "Vælg et svar."
+
+msgid "Response is required and cannot be empty."
+msgstr "Dit svar er påkrævet og kan ikke være tomt."
+
+msgid "Thanks"
+msgstr "Tak"
+
+msgid "THANKS"
+msgstr "Tak"
+
+msgid "Thank you for helping us out!"
+msgstr "Tak til dig for at hjælpe os!"
+
+msgid "You will be notified whenever a new project is waiting for your input."
+msgstr "Du får besked, når et nyt projekt venter på dine input."
+
+msgid "Best"
+msgstr "De bedste hilsner"
+
+msgid "Thank you for your choice."
+msgstr "Tak for dit valg."
+
+msgid "You will shortly receive an email so you can confirm your new WeZimplify account."
+msgstr "Du vil snart modtage en e-mail, så du kan bekræfte din nye WeZimplify-konto."
+
+msgid "Logout in"
+msgstr "Log ud på"
+
+msgid "Contact us"
+msgstr "Kontakt os"
+
+msgid "Message..."
+msgstr "Besked..."
+
+msgid "What are you interested in?"
+msgstr "Hvad er du interesseret i?"
+
+msgid "The areas of interest that attract you personally and/or proffesionally."
+msgstr "De områder af interesse, der tiltrækker dig personligt og/eller professionelt."
+
+msgid "They are sources of inspiration, but could also be fields you have vast experience in. IF areas are missing, please let us know."
+msgstr "De er inspirationskilder, men kan også være felter, du har stor erfaring i. Hvis der mangler områder, så lad os vide det."
+
+msgid "Add your own interest"
+msgstr "Tilføj din egen interesse"
+
+msgid "Add"
+msgstr "Tilføje"
+
+msgid "What are your competencies?"
+msgstr "Hvad er dine kompetencer?"
+
+msgid "In order to match you with the right projects on the platform, select the competencies which you think characterize your profile and skills in the best way."
+msgstr "For at matche dig med de rigtige projekter på platformen skal du vælge de kompetencer, som du synes, karakteriserer din profil og dine færdigheder på den bedste måde."
+
+msgid "Add your own competence"
+msgstr "Tilføj din egen kompetence"
+
+msgid "Sign up in seconds"
+msgstr "Tilmeld dig på få sekunder"
+
+msgid "Already have an account?"
+msgstr "Har du allerede en bruger?"
+
+msgid "Create account"
+msgstr "Opret konto"
+
+msgid "Email..."
+msgstr "Email..."
+
+msgid "Confirm password"
+msgstr "Bekræft kodeord"
+
+msgid "Confirm password..."
+msgstr "Bekræft kodeord..."
+
+msgid "You must accept the terms and conditions."
+msgstr "Du skal acceptere betingelserne og betingelserne."
+
+msgid "E-mail address is required and cannot be empty."
+msgstr "E-mail-adresse er påkrævet og kan ikke være tom."
+
+msgid "Password condirmation is required and cannot be empty."
+msgstr "Adgangskodeadministration er påkrævet og kan ikke være tom."
+
+msgid "Account was successfully created. Check your e-mail for account activation."
+msgstr "Kontoen blev oprettet. Kontroller din e-mail for kontoaktivering."
+
+msgid "Account successfully activated. You may sign in now."
+msgstr "Kontoen er aktiveret. Du kan logge ind nu."
+
+msgid "Profile picture"
+msgstr "Profilbillede"
+
+msgid "Field of expertise"
+msgstr "Fagområde"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Work address"
+msgstr "Arbejdsadresse"
+
+msgid "Years of experience in your current work field"
+msgstr "Års erfaring i dit nuværende arbejdsområde"
+
+msgid "Interests"
+msgstr "Interesser"
+
+msgid "Competencies"
+msgstr "Kompetencer"
+
+msgid "Update Account"
+msgstr "Opdater konto"
+
+msgid "Replace"
+msgstr "Erstatte"
+
+msgid "Edit"
+msgstr "Redigere"
+
+msgid "Update Profile Picture"
+msgstr "Opdater profilbillede"
+
+msgid "Select File"
+msgstr "Vælg Fil"
+
+msgid "Browse"
+msgstr "Gennemse"
+
+msgid "Upload Image"
+msgstr "Upload billede"
+
+msgid "Cancel"
+msgstr "Afbestille"
+
+msgid "Change"
+msgstr "Skift"
+
+msgid "Apply"
+msgstr "Ansøge"
+
+msgid "No projects found!"
+msgstr "Ingen projekter fundet!"
+
+msgid "Thank you for taking part in our project."
+msgstr "Tak, fordi du deltog i vores projekt."
+
+msgid "Give your input to more projects by choosing:"
+msgstr "Giv dit input til flere projekter ved at vælge:"
+
+msgid "Become part of the WeZimplify Experts Community"
+msgstr "Bliv en del af WeZimplify Experts Community"
+
+msgid "Be matched to projects according to your expertise and interests"
+msgstr "Bliv tilpasset projekter i henhold til din ekspertise og interesser"
+
+msgid "Became part of"
+msgstr "Bliv en del af"
+
+msgid "Feedback Community"
+msgstr "Brugerpanel"
+
+msgid "Receive invitations for future"
+msgstr "Modtag invitationer til fremtidige"
+
+msgid "projects"
+msgstr "projekter"
+
+msgid "Help Danish companies, including"
+msgstr "Hjælp danske virksomheder, herunder"
+
+msgid "to receive feedback"
+msgstr "med at modtage feedback"
+
+msgid "Choose"
+msgstr "Vælg her"
+
+msgid "Male"
+msgstr "Mand"
+
+msgid "Female"
+msgstr "Kvinde"
+
+msgid "Select your gender"
+msgstr "Vælg dit køn"
+
+msgid "Select your country"
+msgstr "Vælg dit land"
+
+msgid "Select your city"
+msgstr "Vælg dit by"
+
+msgid "Dear"
+msgstr "Kære"
+
+msgid "We will be in touch"
+msgstr "Vi vil være i kontakt"
+
+msgid "Go to Homepage"
+msgstr "Gå til hjemmesiden"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "Could not engage due to unexpected error. Please try again!"
+msgstr "Kunne ikke aktivere på grund af uventet fejl. Prøv igen!"
+
+msgid "Unexpected error. Please try again!"
+msgstr "Uforventet fejl. Prøv igen!"
+
+msgid "Could save responses due to unexpected error. Please try again!"
+msgstr "Kunne gemme svar på grund af uventet fejl. Prøv igen!"
+
+msgid "Scroll down the presentation and the first question will pop-up!"
+msgstr "Rul ned præsentationen, så vises det første spørgsmål!"
+
+msgid "Start watching the video and the first question will pop-up!"
+msgstr "Begynd at se videoen, og det første spørgsmål dukker op!"
+
+msgid "Read more until a new question appears!"
+msgstr "Læs mere, indtil et nyt spørgsmål vises!"
+
+msgid "Continue to watch and the next question will pop-up!"
+msgstr "Fortsæt med at se, og det næste spørgsmål vises!"
+
+msgid "Interest successfully added!"
+msgstr "Interesse med succes tilføjet!"
+
+msgid "Could not add interest due to unexpected error. Please try again!"
+msgstr "Kunne ikke tilføje interesse på grund af uventet fejl. Prøv igen!"
+
+msgid "Could not add competence due to unexpected error. Please try again!"
+msgstr "Kunne ikke tilføje kompetence på grund af uventet fejl. Prøv igen!"
+
+msgid "Competence successfully added!"
+msgstr "Kompetence med succes tilføjet!"
+
+msgid "Something went wrong! Please try again!"
+msgstr "Noget gik galt! Prøv igen!"
+
+msgid "Could not save responses due to unexpected error. Please try again!"
+msgstr "Kunne ikke gemme svar på grund af uventet fejl. Prøv igen!"
+
+msgid "Unknown time limit type:"
+msgstr "Ukendt tidsbegrænsningstype:"
+
+msgid "Invalid parameters"
+msgstr "Ugyldige parametre"
+
+msgid "Question not found"
+msgstr "Spørgsmål ikke fundet"
+
+msgid "Could not save your option to unexpected error. Please try again!"
+msgstr "Kunne ikke gemme din mulighed for en uventet fejl. Prøv igen!"
+
+msgid "Others"
+msgstr "Andre"
+
+msgid "Please enter interest!"
+msgstr "Indtast interesse!"
+
+msgid "Please enter competence!"
+msgstr "Indtast kompetence!"
+
+msgid "No e-mail address changes detected"
+msgstr "Ingen e-mail-adresseændringer registreret"
+
+msgid "Request saved! Check your new email inbox to confirm the change"
+msgstr "Anmodning gemt! Kontroller din nye e-mail-indbakke for at bekræfte ændringen"
+
+msgid "Invalid account password provided"
+msgstr "Ugyldig kontoadgangskode angivet"
+
+msgid "Request remove account successfully registered!"
+msgstr "Anmodning om at fjerne konto er registreret!"
+
+msgid "Registration is not possible right now. Try later."
+msgstr "Registrering er ikke mulig lige nu. Prøv senere."
+
+msgid "You are not allowed to log in with this email address here. Try an alternative email address."
+msgstr "Du har ikke tilladelse til at logge ind med denne e-mail-adresse her. Prøv en alternativ e-mail-adresse."
+
+msgid "Authentication failed. Check your credentials and try again"
+msgstr "Godkendelse mislykkedes. Kontroller dine legitimationsoplysninger, og prøv igen"
+
+msgid "Please select a file for upload"
+msgstr "Vælg en fil til upload"
+
+msgid "Invalid file - only image files smaller than 10MB allowed"
+msgstr "Ugyldig fil - kun tilladte billedfiler, der er mindre end 10 MB"
+
+msgid "Profile image updated successfully!"
+msgstr "Profilbillede blev opdateret!"
+
+msgid "Error updating profile image. Please try again"
+msgstr "Fejl ved opdatering af profilbillede. Prøv igen"
+
+msgid "You must be authenticated"
+msgstr "Du skal godkendes"
+
+msgid "Project not found"
+msgstr "Projektet blev ikke fundet"
+
+msgid "Something went wrong!"
+msgstr "Noget gik galt!"
+
+msgid "This action only allows post method"
+msgstr "Denne handling tillader kun indlægsmetode"
+
+msgid "Thank You for contacting us!"
+msgstr "Tak fordi du kontaktede os!"
+
+msgid "Thank you for your participation."
+msgstr "Tak for din deltagelse."
+
+msgid "You can now close this page or choose one of the below options:"
+msgstr "Du kan nu lukke denne side eller vælge en af nedenstående muligheder:"
+
+msgid "Be a part of the future development of"
+msgstr "Vær en del af den fremtidige udvikling af"
+
+msgid "We are sorry"
+msgstr "Vi beklager"
+
+msgid "It is too late to take part into the feedback session."
+msgstr "Det er for sent at deltage i feedback-sessionen."
+
+msgid "You will be notified by email when your feedback is needed next time."
+msgstr "Du får besked via email, når der er behov for din feedback igen."
+
+msgid "Type in your new password."
+msgstr "Indtast din nye adgangskode."
+
+msgid "Save password"
+msgstr "Gem adgangskode"
+
+msgid "Your password was saved."
+msgstr "Din adgangskode blev gemt."
+
+msgid "Create Pattern"
+msgstr "Opret opskrift"
+
+msgid "Pattern Name"
+msgstr "Opskrifts navn"
+
+msgid "Level"
+msgstr "Niveau"
+
+msgid "1 - Easy"
+msgstr "1 - Let"
+
+msgid "2 - Moderate"
+msgstr "2 - Moderat"
+
+msgid "3 - Challenging"
+msgstr "3 - Udfordrende"
+
+msgid "4 - Difficult"
+msgstr "4 - Svær"
+
+msgid "5 - Very difficult"
+msgstr "5 - Meget svær"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "Currency"
+msgstr "Valuta"
+
+msgid "Knitting Tension (Gauge)"
+msgstr "Strikkefasthed"
+
+msgid "Categories"
+msgstr "Kategorier"
+
+msgid "Fashion"
+msgstr "Mode"
+
+msgid "Dress & skirt"
+msgstr "Kjole & nederdel"
+
+msgid "Foodwear"
+msgstr "Sokker"
+
+msgid "Jacket & cardigan"
+msgstr "Jakke & cardigan"
+
+msgid "Pants"
+msgstr "Bukser"
+
+msgid "Poncho"
+msgstr "Poncho"
+
+msgid "Shorts"
+msgstr "Shorts"
+
+msgid "Sweater, blouse & pullover"
+msgstr "Sweater, bluse & pullover"
+
+msgid "T-shirt & top"
+msgstr "T-shirt & top"
+
+msgid "Underwear"
+msgstr "Undertøj & bikini"
+
+msgid "Vest"
+msgstr "Vest"
+
+msgid "Season"
+msgstr "Højtider & Mærkedage"
+
+msgid "Autumn & Winter"
+msgstr "Efterår & vinter"
+
+msgid "Baptism"
+msgstr "Dåb"
+
+msgid "Christmas"
+msgstr "Jul"
+
+msgid "Easter"
+msgstr "Påske"
+
+msgid "Halloween"
+msgstr "Halloween/Fastelavn"
+
+msgid "Nordic"
+msgstr "Nordisk"
+
+msgid "Spring & Summer"
+msgstr "Forår & sommer"
+
+msgid "Wedding"
+msgstr "Bryllup"
+
+msgid "Interior"
+msgstr "Interiør"
+
+msgid "Blankets"
+msgstr "Tæpper"
+
+msgid "Cloths"
+msgstr "Klude"
+
+msgid "Ornaments"
+msgstr "Pynt"
+
+msgid "Accessories"
+msgstr "Tilbehør"
+
+msgid "Bags"
+msgstr "Tasker, poser & net"
+
+msgid "Handfashion"
+msgstr "Handsker"
+
+msgid "Headfashion"
+msgstr "Hovedbeklædning"
+
+msgid "Scarfs"
+msgstr "Tørklæder & sjaler"
+
+msgid "Baby & Kids"
+msgstr "Baby & børn"
+
+msgid "Blankets & pillows"
+msgstr "Tæpper & puder"
+
+msgid "Clothes"
+msgstr "Tøj"
+
+msgid "Doll"
+msgstr "Dukker & bamser"
+
+msgid "Playfood"
+msgstr "Legemad"
+
+msgid "Toys & animals"
+msgstr "Legetøj & dyr"
+
+msgid "Unisex"
+msgstr "Unisex"
+
+msgid "Size Classification"
+msgstr "Størrelser"
+
+msgid "Category"
+msgstr "Kategorier"
+
+msgid "Headwear"
+msgstr "Hovedbeklædning"
+
+msgid "Footwear"
+msgstr "Fodtøj"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Circular"
+msgstr "Rundpind"
+
+msgid "Double-pointed"
+msgstr "Strømpepind"
+
+msgid "Knitting"
+msgstr "Strikkepind"
+
+msgid "Size"
+msgstr "Størrelse"
+
+msgid "Length"
+msgstr "Længde"
+
+msgid "Size guide"
+msgstr "Størrelsesguide"
+
+msgid "Attributes"
+msgstr "Egenskaber"
+
+msgid "Chart"
+msgstr "Diagram"
+
+msgid "Photo tutorial"
+msgstr "Fotovejledning"
+
+msgid "Schematic"
+msgstr "Skema"
+
+msgid "Video tutorial"
+msgstr "Videovejledning"
+
+msgid "Written pattern"
+msgstr "Skriftlig vejledning"
+
+msgid "Shape"
+msgstr "Form & detaljer"
+
+msgid "A-Shape"
+msgstr "A-facon"
+
+msgid "Asymmetric"
+msgstr "Asymmetrisk"
+
+msgid "Curved front piece"
+msgstr "Buet forstykke"
+
+msgid "Circle"
+msgstr "Cirkel"
+
+msgid "Square"
+msgstr "Firkant"
+
+msgid "High Neck"
+msgstr "Høj hals"
+
+msgid "Shawl collar"
+msgstr "Sjalskrave"
+
+msgid "V-neck"
+msgstr "V-hals"
+
+msgid "Fit"
+msgstr "Pasform"
+
+msgid "Fitted"
+msgstr "Tætsiddende"
+
+msgid "Regular"
+msgstr "Normal"
+
+msgid "Oversized"
+msgstr "Oversized"
+
+msgid "Constructions"
+msgstr "Konstruktion"
+
+msgid "Buttom-up"
+msgstr "Nedefra og op"
+
+msgid "Top-down"
+msgstr "Oppefra og ned"
+
+msgid "Raglan"
+msgstr "Raglan"
+
+msgid "Circular Yolk"
+msgstr "Rundt bærestykke"
+
+msgid "Sideways"
+msgstr "Sidelæns"
+
+msgid "Contiguous"
+msgstr "Contiguous"
+
+msgid "Seemless"
+msgstr "Monteringsfri"
+
+msgid "Worked and around"
+msgstr "Strikkes rundt"
+
+msgid "Worked flat"
+msgstr "Strikkes frem og tilbage"
+
+msgid "Angles"
+msgstr "Vinkelstrik"
+
+msgid "Characteristics"
+msgstr "Struktur & Teknik"
+
+msgid "Structure"
+msgstr "Struktur"
+
+msgid "Blackberry stitch"
+msgstr "Brombær"
+
+msgid "Bobble & popcorn"
+msgstr "Bobler & popcorn"
+
+msgid "Cables (braids)"
+msgstr "Snoning"
+
+msgid "Drop Stitch"
+msgstr "Tabte masker"
+
+msgid "Feather & fan"
+msgstr "Viftemønster"
+
+msgid "Fishbone/Herringbone"
+msgstr "Fiskebensmønster"
+
+msgid "Fisherman's Rib/Brioche"
+msgstr "Patent"
+
+msgid "Leafe"
+msgstr "Bladmønster"
+
+msgid "Rib (ribbing)"
+msgstr "Rib"
+
+msgid "Rib"
+msgstr "Rib"
+
+msgid "Seed/moss stitch"
+msgstr "Perlestrik"
+
+msgid "Siksak"
+msgstr "Sik-sak"
+
+msgid "Smock"
+msgstr "Smock"
+
+msgid "Spiral"
+msgstr "Spiral"
+
+msgid "Star Stitch"
+msgstr "Stjernemønster"
+
+msgid "Wave stitch"
+msgstr "Bølgemønster"
+
+msgid "Multicolor"
+msgstr "Flerfarver"
+
+msgid "Color grading & deep dye"
+msgstr "Farvegraduering"
+
+msgid "Domino"
+msgstr "Domino"
+
+msgid "Entrelac"
+msgstr "Entrelac"
+
+msgid "Fair isle"
+msgstr "Fair isle"
+
+msgid "Intarsia"
+msgstr "Intarsia"
+
+msgid "Stribes"
+msgstr "Striber"
+
+msgid "Techniques"
+msgstr "Teknikker"
+
+msgid "Buttonhole"
+msgstr "Knappehul"
+
+msgid "Eyelet (lace)"
+msgstr "Hulmønster"
+
+msgid "Eyelet"
+msgstr "Hulmønster"
+
+msgid "Provisional cast-on"
+msgstr "Provisional opslag"
+
+msgid "Ruffles"
+msgstr "Flæse"
+
+msgid "Short rows"
+msgstr "Vendepinde"
+
+msgid "Tubular bind off"
+msgstr "Italiensk aflukning"
+
+msgid "Tubular cast on"
+msgstr "Italiensk opslag"
+
+msgid "Pattern URL"
+msgstr "URL link til opskrift"
+
+msgid "Create"
+msgstr "Opret"
+
+msgid "is required"
+msgstr "skal udfyldes"
+
+msgid "Edit Details"
+msgstr "Rediger detaljer"
+
+msgid "Add Images"
+msgstr "Tilføj billeder"
+
+msgid "Add File"
+msgstr "Tilføj PDF"
+
+msgid "Delete File"
+msgstr "Slet PDF"
+
+msgid "Contact"
+msgstr "Kontakt os"
+
+msgid "Links"
+msgstr "Læs mere"
+
+msgid "Stay in touch"
+msgstr "Følg os"
+
+msgid "Home"
+msgstr "Hjem"
+
+msgid "Patterns"
+msgstr "Opskrifter"
+
+msgid "View Basket"
+msgstr "Se indkøbskurv"
+
+msgid "Hi"
+msgstr "Hej"
+
+msgid "what are you looking for?"
+msgstr "hvad leder du efter?"
+
+msgid "What are you looking for?"
+msgstr "Hvad leder du efter?"
+
+msgid "Hi, what are you looking for?"
+msgstr "Hej, hvad leder du efter?"
+
+msgid "Search by category, designer name, etc."
+msgstr "Søg ud fra kategori, designernavn, osv."
+
+msgid "by"
+msgstr "af"
+
+msgid "Add to basket"
+msgstr "Læg i kurven"
+
+msgid "Language"
+msgstr "Sprog"
+
+msgid "Difficulty"
+msgstr "Sværhedsgrad"
+
+msgid "Gender"
+msgstr "Køn"
+
+msgid "Knitting Tension"
+msgstr "Strikkefasthed"
+
+msgid "Sizes"
+msgstr "Størrelser"
+
+msgid "Needles"
+msgstr "Pinde"
+
+msgid "Pattern added to basket"
+msgstr "Opskrift tilføjet til indkøbskurv"
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Materials"
+msgstr "Materialer"
+
+msgid "Guide"
+msgstr "Guide"
+
+msgid "Basket"
+msgstr "Indkøbskurv"
+
+msgid "Checkout"
+msgstr "Gå til kassen"
+
+msgid "Complete Order"
+msgstr "Gennemfør ordre"
+
+msgid "Sub-total"
+msgstr "Sub-total"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Continue to Checkout"
+msgstr "Forsæt til kassen"
+
+msgid "Billing Details"
+msgstr "Betalingsoplysninger"
+
+msgid "First Name"
+msgstr "Fornavn"
+
+msgid "First Name ..."
+msgstr "Fornavn ..."
+
+msgid "First name ..."
+msgstr "Fornavn ..."
+
+msgid "First Name..."
+msgstr "Fornavn..."
+
+msgid "Last Name"
+msgstr "Efternavn"
+
+msgid "Last Name ..."
+msgstr "Efternavn ..."
+
+msgid "Last name ..."
+msgstr "Efternavn ..."
+
+msgid "Last Name..."
+msgstr "Efternavn..."
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Address line 1"
+msgstr "Adresse 1"
+
+msgid "Address line 1 ..."
+msgstr "Adresse 1 ..."
+
+msgid "Address line 1..."
+msgstr "Adresse 1..."
+
+msgid "Address line 2"
+msgstr "Adresse 2"
+
+msgid "Address line 2 ..."
+msgstr "Adresse 2 ..."
+
+msgid "Address line 2..."
+msgstr "Adresse 2..."
+
+msgid "ZIP / Postal Code"
+msgstr "Postnr."
+
+msgid "ZIP"
+msgstr "Postnr."
+
+msgid "ZIP ..."
+msgstr "Postnr. ..."
+
+msgid "ZIP..."
+msgstr "Postnr..."
+
+msgid "City"
+msgstr "By"
+
+msgid "City ..."
+msgstr "By ..."
+
+msgid "City..."
+msgstr "By..."
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Country ..."
+msgstr "Land ..."
+
+msgid "Country..."
+msgstr "Land..."
+
+msgid "Company Name"
+msgstr "Virksomhedsnavn"
+
+msgid "Company Name..."
+msgstr "Virksomhedsnavn..."
+
+msgid "Company Name ..."
+msgstr "Virksomhedsnavn ..."
+
+msgid "EU VAT Identification Number (CIF)"
+msgstr "CVR"
+
+msgid "EU VAT"
+msgstr "CVR"
+
+msgid "EU VAT ..."
+msgstr "CVR ..."
+
+msgid "EU VAT..."
+msgstr "CVR..."
+
+msgid "Notes"
+msgstr "Noter"
+
+msgid "Notes ..."
+msgstr "Noter ..."
+
+msgid "Notes..."
+msgstr "Noter..."
+
+msgid "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our"
+msgstr "Dine personlige data vil blive brugt til at behandle din ordre, støtte din oplevelse på hele dette websted og til andre formål beskrevet i vores"
+
+msgid "privacy policy"
+msgstr "privatlivspolitik"
+
+msgid "I read and I agree with"
+msgstr "Jeg har læst og accepterer vilkår og"
+
+msgid "Terms and conditions"
+msgstr "Betingelser"
+
+msgid "of this site"
+msgstr "på dette websted"
+
+msgid "Place Order"
+msgstr "Gennemfør ordren"
+
+msgid "INFO: The pattern will not be sent per email, but can be found under 'My Patterns' as soon as payment is completed."
+msgstr "INFO: Opskriften vil ikke blive sendt pr. mail, men vil være at finde under 'Mine Opskrifter', så snart betalingen er gennemført."
+
+msgid "INFO"
+msgstr "INFO"
+
+msgid "The pattern will not be sent per email, but can be found under 'My Patterns' as soon as payment is completed."
+msgstr "Opskriften vil ikke blive sendt pr. mail, men vil være at finde under 'Mine Opskrifter', så snart betalingen er gennemført."
+
+msgid "Review Order"
+msgstr "Gennemse ordre"
+
+msgid "Order number"
+msgstr "Ordrenummer"
+
+msgid "Date"
+msgstr "Dato"
+
+msgid "Order Summary"
+msgstr "Ordreresumé"
+
+msgid "Payment"
+msgstr "Betalingskort"
+
+msgid "Online with Stripe"
+msgstr "Online med Stripe"
+
+msgid "Pay"
+msgstr "Betal"
+
+msgid "Thanks for your order. You can know see the pattern under"
+msgstr "Tak for dit køb. Opskriften finder du under"
+
+msgid "My Patterns"
+msgstr "Mine Opskrifter"
+
+msgid "My patterns"
+msgstr "Mine opskrifter"
+
+msgid "View PDF"
+msgstr "Se PDF"
+
+msgid "View Details"
+msgstr "Se detaljer"
+
+msgid "Contact Us"
+msgstr "Kontakt os"
+
+msgid "Any issues or good feedback?"
+msgstr "Kan vi hjælpe dig med noget?"
+
+msgid "Write us here and we will get in touch with you as soon as possible."
+msgstr "Send os en besked og vi vender tilbage hurtigst muligt."
+
+msgid "E-mail adress"
+msgstr "Email"
+
+msgid "Your name"
+msgstr "Dit navn"
+
+msgid "Your name..."
+msgstr "Dit navn..."
+
+msgid "Message"
+msgstr "Besked"
+
+msgid "Message is required and cannot be empty."
+msgstr "Besked er påkrævet og kan ikke være tom."
+
+msgid "Message is required and cannot be empty"
+msgstr "Besked er påkrævet og kan ikke være tom"
+
+msgid "<b>Message</b> is required and cannot be empty"
+msgstr "<b>Besked</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>Message</b> is required and cannot be empty."
+msgstr "<b>Besked</b> er påkrævet og kan ikke være tom."
+
+msgid "Close"
+msgstr "Luk"
+
+msgid "Send"
+msgstr "Send"
+
+msgid "You can't filter patterns. To enable this feature, login to your account."
+msgstr "For at kunne filtrere opskrifter, er du nødt til at være logget in."
+
+msgid "Guest"
+msgstr "Gæst"
+
+msgid "FREE"
+msgstr "GRATIS"
+
+msgid "Anonymous"
+msgstr "Anonym"
+
+msgid "No patterns are matching your requirements."
+msgstr "Ingen opskrifter matcher din forespørgsel."
+
+msgid "see all"
+msgstr "se alle"
+
+msgid "Welcome"
+msgstr "Velkommen"
+
+msgid "You are one step away from accessing your new account."
+msgstr "Du er nu tæt på at have adgang til din nye konto."
+
+msgid "Click the button or copy the link below in your browser to activate the account."
+msgstr "Klik på knappen eller kopier nedenstående link i din browser for at aktivere kontoen."
+
+msgid "Activate my account"
+msgstr "Aktiver min konto"
+
+msgid "Activation link"
+msgstr "Aktiveringslink"
+
+msgid "You will be redirected to the sign-in page upon successful confirmation."
+msgstr "Du bliver omdirigeret til login-siden efter bekræftelse."
+
+msgid "If you received this e-mail without you registering, please click the link below, to un-register your e-mail address"
+msgstr "Hvis du har modtaget denne email, uden at have tilmeldt dig, skal du klikke på linket herunder for at fjerne din email-adresse"
+
+msgid "If you received this e-mail without you registering, please click the link below, to un-register your e-mail address."
+msgstr "Hvis du har modtaget denne email, uden at have tilmeldt dig, skal du klikke på linket herunder for at fjerne din email-adresse."
+
+msgid "Un-register my account"
+msgstr "Fjern registrering af min konto"
+
+msgid "You don't have an account?"
+msgstr "Du har desværre ikke en konto?"
+
+msgid "Sign up"
+msgstr "Bliv medlem"
+
+msgid "Something went wrong. Please try again."
+msgstr "Noget gik galt. Venligst prøv igen."
+
+msgid "Unexpected error. Please try again."
+msgstr "Uforventet fejl. Venligst prøv igen."
+
+msgid "Something is wrong!"
+msgstr "Noget er galt!"
+
+msgid "You can't search patterns. To enable this feature, login to your account."
+msgstr "Du kan ikke søge opskrifter. Venligst log in på din konto."
+
+msgid "You can't buy patterns. To enable this feature, login to your account."
+msgstr "Du kan ikke købe opskrifter. Venligst log in på din konto."
+
+msgid "Basket is empty."
+msgstr "Indkøbskurven er tom."
+
+msgid "Enjoy our patterns"
+msgstr "Du er logget ind. God fornøjelse."
+
+msgid "All rights reserved."
+msgstr "Alle rettigheder forbeholdes."
+
+msgid "Load more"
+msgstr "Indlæs flere"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Pattern added to basket."
+msgstr "Opskriften er tilføjet indkøbskurven."
+
+msgid "No patterns selected."
+msgstr "Der er ikke valgt nogen opskrift."
+
+msgid "Pattern removed from cart."
+msgstr "Opskriften er fjernet fra indkøbskurven."
+
+msgid "Pattern not found in cart."
+msgstr "Opskriften er ikke fundet i indkøbskurven."
+
+msgid "Your Order"
+msgstr "Din ordre"
+
+msgid "Order Notes"
+msgstr "Noter til din ordre"
+
+msgid "Company details"
+msgstr "Virksomhedsnavn"
+
+msgid "You must accept"
+msgstr "Nu skal acceptere"
+
+msgid "First Name is required and cannot be empty"
+msgstr "Fornavn er påkrævet og skal udfyldes"
+
+msgid "<b>First Name</b> is required and cannot be empty"
+msgstr "<b>Fornavn</b> er påkrævet og skal udfyldes"
+
+msgid "Last Name is required and cannot be empty"
+msgstr "Efternavn er påkrævet og skal udfyldes"
+
+msgid "<b>Last Name</b> is required and cannot be empty"
+msgstr "<b>Efternavn</b> er påkrævet og skal udfyldes"
+
+msgid "Accept order"
+msgstr "Accepter ordre"
+
+msgid "Confirm Order"
+msgstr "Bekræft ordre"
+
+msgid "No patterns found"
+msgstr "Ingen opskrifter er fundet"
+
+msgid "You don't have an account"
+msgstr "Du har ikke nogen medlemskonto"
+
+msgid "Sign in to your account"
+msgstr "Log in på din konto"
+
+msgid "By signing up, you agree to our"
+msgstr "Ved at tilmelde dig accepterer du samtidig vores"
+
+msgid "and"
+msgstr "samt"
+
+msgid "Already a member?"
+msgstr "Allerede medlem?"
+
+msgid "Register"
+msgstr "Registrer"
+
+msgid "Request new password"
+msgstr "Anmod om nyt password"
+
+msgid "Request"
+msgstr "Anmod"
+
+msgid "If the provided email identifies an account in our system, you will receive an email with further instructions on resetting your account's password."
+msgstr "Hvis den angivne email identificerer en konto i vores system, vil du modtage en email med yderligere instruktioner om nulstilling af din kontos adgangskode."
+
+msgid "Password Successfully reset."
+msgstr "Adgangskoden er nulstillet."
+
+msgid "<b>Name</b> is required and cannot be empty"
+msgstr "<b>Navn</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>E-mail address</b> is invalid"
+msgstr "<b>E-mail-adresse</b> er ikke gyldig"
+
+msgid "<b>Password</b> must have between 8 and 150 characters"
+msgstr "<b>Adgangskode</b> skal have mellem 8 og 150 tegn"
+
+msgid "<b>Confirm Password</b> is required and cannot be empty"
+msgstr "<b>Adgangskodekontrol</b> er påkrævet og kan ikke være tom"
+
+msgid "<b>Confirm Password</b> must have between 8 and 150 characters"
+msgstr "<b>Adgangskodekontrol</b> skal have mellem 8 og 150 tegn"
+
+msgid "Terms of Use"
+msgstr "Vilkår og Betingelser"
+
+msgid "Create your account"
+msgstr "Opret din konto"
+
+msgid "out of"
+msgstr "ud af"
+
+msgid "1 out of 5"
+msgstr "1 ud af 5"
+
+msgid "2 out of 5"
+msgstr "2 ud af 5"
+
+msgid "3 out of 5"
+msgstr "3 ud af 5"
+
+msgid "4 out of 5"
+msgstr "4 ud af 5"
+
+msgid "5 out of 5"
+msgstr "5 ud af 5"
+
+msgid "Danish"
+msgstr "Dansk"
+
+msgid "Your shopping basket is empty."
+msgstr "Din indkøbskurven er tom."
+
+msgid "Back to patterns"
+msgstr "Tilbage til opskrifter"
+
+msgid "View details"
+msgstr "Se detaljer"
+
+msgid "Review order"
+msgstr "Gennemse ordre"
+
+msgid "Order details"
+msgstr "Ordre detaljer"
+
+msgid "Order Status"
+msgstr "Ordre status"
+
+msgid "completed"
+msgstr "Gennemført "
+
+msgid "processing"
+msgstr "Behandler"
+
+msgid "Your order is complete."
+msgstr "Din ordre er gennemført."
+
+msgid "on-hold"
+msgstr "På pause"
+
+msgid "failed"
+msgstr "Mislykket"
+
+msgid "trash"
+msgstr "Affald"
+
+msgid "Check the email to activate your account."
+msgstr "Kontoen blev oprettet. Tjek din e-mail for at aktivere din konto. Tjek venligst også din spam!"
+
+msgid "A record with the supplied Identity could not be found."
+msgstr "Autentifikationsfejl. Tjek dit brugernavn og din adgangskode."
+
+msgid "You are not allowed to access that resource."
+msgstr "Du har ikke tilladelse til at få adgang til denne ressource."
+
+msgid "Genders"
+msgstr "Køn"
+
+msgid "Uncategorised"
+msgstr "Ikke kategoriseret"
+
+msgid "Successfully activated."
+msgstr "Kontoen er aktiveret. Du kan logge ind nu."
+
+msgid "Someone requested a password reset for this account"
+msgstr "Nogen har anmodet om at gendanne password for din konto"
+
+msgid "If you did not make this request, just ignore this email - no changes have been made to your account yet."
+msgstr "Hvis du ikke har anmodet om denne gendannelse, skal du bare ignorere denne mail, der er endnu ikke foretaget nogle ændringer."
+
+msgid "Otherwise, you can reset your password by clicking the button or copy the link below in your browser."
+msgstr "Ellers kan du gendanne dit password, ved at klikke på knappen eller kopier nedenstående link i din browser."
+
+msgid "Reset password link"
+msgstr "Gendan password link"
+
+msgid "Have a great day,"
+msgstr "Hav en god dag,"
+
+msgid "The Team"
+msgstr "Holdet"
+
+msgid "Team"
+msgstr "Hold"
+
+msgid "You can now access your account using the email and password you just set"
+msgstr "Du kan nu tilgå din konto med den email og password du har angivet"
+
+msgid "You have successfully reset your"
+msgstr "Du har nulstillet din"
+
+msgid "You can now access your account using your email"
+msgstr "Du kan nu tilgå din konto med den email"
+
+msgid "and the password you just set"
+msgstr "og password du har angivet"
+
+msgid "Designers"
+msgstr "Designere"
+
+msgid "Your basket is empty. Add a pattern before trying to view details."
+msgstr "Din indkøbskurv er tom. Tilføj venligst en opskrift og prøv igen."
+
+msgid "You must accept <b>Terms and conditions</b>"
+msgstr "Du skal acceptere <b>betingelserne</b>"
+
+msgid "My orders"
+msgstr "Mine ordre"
+
+msgid "My Orders"
+msgstr "Mine Ordre"
+
+msgid "Order Id"
+msgstr "Ordre ID"
+
+msgid "Order ID"
+msgstr "Ordre ID"
+
+msgid "Order price"
+msgstr "Ordrens pris"
+
+msgid "Order Price"
+msgstr "Ordrens Pris"
+
+msgid "No orders found"
+msgstr "Ingen ordre er fundet"
+
+msgid "Search by pattern name"
+msgstr "Søg ud fra opskriftens navn"
+
+msgid "Total including 25% tax"
+msgstr "Total inkl. 25% moms"
+
+msgid "Implicit sorting"
+msgstr "Alfabetisk"
+
+msgid "Newest first"
+msgstr "Nyeste"
+
+msgid "Older first"
+msgstr "Ældste"
+
+msgid "Lowest price"
+msgstr "Pris - stigende"
+
+msgid "Highest price"
+msgstr "Pris - faldende"
+
+msgid "Try Yarnbook for free"
+msgstr "PRØV YARNBOOK GRATIS"
+
+msgid "Become Yarnbook Member"
+msgstr "Bliv Yarnbook medlem"
+
+msgid "Free without any bindings"
+msgstr "GRATIS og helt uden binding"
+
+msgid "Yes please, send emails with news, inspiration and offers related to yarn (you can always unsubscribe with one click)"
+msgstr "Ja tak, send gerne emails med nyheder, inspiration og tilbud relateret til garn (Du kan altid afmelde dig med ét klik)"
+
+msgid "Sign me up for free"
+msgstr "Opret mig gratis"
+
+msgid "When you sign up for an account, you agree to Yarnbook's"
+msgstr "Når du opretter et medlemskab accepterer du Yarnbooks"
+
+msgid "terms and conditions"
+msgstr "vilkår og betingelser"
+
+msgid "Newsletter"
+msgstr "Nyhedsbrev"
+
+msgid "Subscribe"
+msgstr "Tilmeld"
+
+msgid "You have been subscribed!"
+msgstr "Du er blevet abonneret!"

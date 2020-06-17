@@ -1,0 +1,46 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}{% trans 'Log in' %}{% endblock %}
+
+{% block page_title %}{% endblock %}
+
+{% block body_class %}user-form{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="sign-in-block">
+                    <h3>{% trans 'Log in to your account' %}</h3>
+
+                    {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
+
+                    {% set dummy = form.prepare() %}
+                    {{ form().openTag(form) | raw }}
+
+                    {% set username = form.get('username') %}
+                    {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
+                    {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                    {{ formElement(username) }}
+
+                    {% set password = form.get('password') %}
+                    {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
+                    {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                    {{ formElement(password) }}
+
+                    {% set submit = form.get('submit') %}
+                    {% set submitValue = submit.getValue|trans|raw %}
+                    {% set dummy = submit.setAttribute('value', submitValue) %}
+                    {{ formSubmit(submit) }}
+
+                    {{ form().closeTag() | raw }}
+
+                    <hr>
+
+                    <p class="forgot-password"><a href="{{ path('account', {'action' : 'request-reset-password' } )}}">{% trans 'Forgot password' %}</a></p>
+                    <p>{% trans "You don't have an account?" %} <a href="{{ path('user', {'action' : 'register'}) }}">{% trans 'Register' %}</a>!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

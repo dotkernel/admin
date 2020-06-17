@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <title>{% block title %}{% endblock %} - DotKernel</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!--Icons-->
+    <script src="{{ asset('js/lumino.glyphs.js') }}"></script>
+
+    <!--[if lt IE 9]>
+    <script src="{{ asset('js/html5shiv.js') }}"></script>
+    <script src="{{ asset('js/respond.min.js') }}"></script>
+    <![endif]-->
+
+</head>
+
+<body class="side-collapse-container">
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <img src="{{ asset('img/logo.svg') }}" alt="DotKernel"
+                     onerror="this.onerror=null; this.src={{ asset('img/logo.png') }}" />
+            </a>
+            <div class="collapse navbar-collapse user-menu-collapse">
+
+                {% if hasIdentity() %}
+                    <!-- navbar-right with login form or account menu -->
+                    {{ navigationPartial('account_menu', 'partial::account-menu') }}
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+{% if hasIdentity() %}
+    <div id="sidebar-collapse" class="sidebar side-collapse sideRightIn in">
+        <div class="nav-placeholder">
+            <a class="logo" href="/">
+                <img src="{{ asset('img/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
+            </a>
+        </div>
+        <form role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+        </form>
+        <div class="toggle">
+            <a id="left-menu-toggle" href="#sidebar-collapse" class="slide-right">&nbsp;</a>
+        </div>
+
+        <div class="nano nano-sidebar">
+            {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu nano-content', 'ulId': '', 'depth': 0}) }}
+        </div>
+
+    </div><!--/.sidebar-->
+{% endif %}
+
+<main class="container-fluid  main-content">
+    {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
+
+    {% if hasIdentity() %}
+        <div class="breadcrumb-section">
+            <div class="row">
+                <button data-toggle="collapse-side" data-target=".side-collapse"
+                        data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
+                </ol>
+            </div><!--/.row-->
+        </div>
+    {% endif %}
+
+    <div class="main {{ mainClass }}">
+
+        {% block content %}{% endblock %}
+
+        {% include '@partial/modals.html.twig' %}
+
+    </div>    <!--/.main-->
+</main>
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chart.min.js') }}"></script>
+<script src="{{ asset('js/chart-data.js') }}"></script>
+<script src="{{ asset('js/jquery.easypiechart.js') }}"></script>
+<script src="{{ asset('js/easypiechart-data.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+<script src="{{ asset('js/bootstrap-table/bootstrap-table.js') }}"></script>
+<script src="{{ asset('js/bootstrap-table/extension/bootstrap-table-mobile.js') }}"></script>
+<script src="{{ asset('js/nanoScroller.js') }}"></script>
+<script src="{{ asset('js/admin.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+    $('#calendar').datepicker({});
+
+    !function ($) {
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+            $(this).find('em:first').toggleClass("fa fa-minus-circle");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("fa fa-plus-circle");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    });
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    });
+
+    var showAlertDialog = function (title, message, type) {
+        var iconClass = 'fa-info-circle color-blue';
+        if (type == 'error') {
+            iconClass = 'fa-exclamation-circle color-red';
+        }
+
+        var modal = $("#modalAlert");
+        modal.find("#modalAlertIcon").addClass(iconClass);
+        modal.find("#modalAlertTitle").text(title);
+        modal.find("#modalAlertMessage").text(message);
+        modal.modal('show');
+    };
+
+    var showLoading = function () {
+        $("#loading").modal({backdrop:false,show:true});
+    };
+
+    var hideLoading = function () {
+        $("#loading").modal('hide');
+    };
+</script>
+
+{% block javascript %}{% endblock %}
+
+</body>
+
+</html>

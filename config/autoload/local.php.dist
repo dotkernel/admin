@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Local configuration.
+ *
+ * Copy this file to `local.php` and change its settings as required.
+ * `local.php` is ignored by git and safe to use for local and sensitive data like usernames and passwords.
+ */
+
+declare(strict_types=1);
+
+$baseUrl = 'http://localhost:8080';
+
+$databases = [
+    'default' => [
+        'host' => 'localhost',
+        'dbname' => '',
+        'user' => '',
+        'password' => '',
+        'port' => 3306,
+        'driver' => 'pdo_mysql',
+        'charset' => 'utf8mb4',
+        'collate' => 'utf8mb4_general_ci'
+    ]
+    // you can add more database connections into this array
+];
+
+return [
+    'annotations_cache_dir' => getcwd() . '/data/cache/annotations',
+    'application' => [
+        'name' => 'DotKernel',
+        'url' => $baseUrl
+    ],
+    'databases' => $databases,
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => $databases['default']
+            ]
+        ]
+    ],
+    'uploads' => [
+        'user' => [
+            'url'  => $baseUrl . '/uploads/user',
+            'path' => \realpath(__DIR__ . '/../../public/uploads/user'),
+        ]
+    ],
+    'contact' => [
+        'notification_receivers' => [
+        ],
+        'message_receivers' => [
+            'to' => [
+                'tech@example.com'
+            ],
+            'cc' => [
+                'tech@example.com'
+            ]
+        ]
+    ],
+    'translator' => [
+        'cookie' => [
+            'name' => 'dk30Translator',
+            'lifetime' => 3600 * 24 * 30,
+        ],
+        'default' => 'en',
+        'locale' => [
+            'en' => 'en_EN',
+            'dk' => 'da_DK',
+        ],
+        'code_set' => 'UTF-8',
+        'domain' => 'messages',
+        'base_dir' => getcwd() . '/data/language',
+    ],
+];

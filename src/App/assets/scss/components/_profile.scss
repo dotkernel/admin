@@ -1,0 +1,141 @@
+.my-profile {
+  .profile-details-header {
+    padding: 25px 0 15px;
+    border-bottom: 2px solid #f5f6fa;
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 24px;
+    }
+  }
+
+  .profile-actions {
+    padding-top: 40px;
+    padding-bottom: 50px;
+
+    .actions {
+      margin-bottom: 30px;
+
+      .collapse-menu {
+        display: none;
+        padding-bottom: 10px;
+        text-align: right;
+        cursor: pointer;
+        border-bottom: 1px solid #f5f6fa;
+
+        span {
+          display: block;
+          float: left;
+          font-weight: bold;
+        }
+
+        i {
+          display: block;
+          padding-top: 5px;
+          margin: 0 auto;
+        }
+      }
+
+      ul {
+        display: block;
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: block;
+          margin: 0;
+          padding: 10px;
+          border-bottom: 1px solid #f5f6fa;
+
+          a {
+            display: block;
+            color: #2C2C2C;
+          }
+
+          a:hover {
+            text-decoration: none;
+          }
+        }
+
+        li:hover,
+        li.active {
+          background-color: #C60B31;
+
+          a {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+
+    .sub-title {
+      display: block;
+      margin-bottom: 25px;
+      width: 50px;
+      border-bottom: 1px solid #e6e7eb;
+    }
+
+    .delete-checkbox {
+      input {
+        display: block;
+        float: left;
+        margin: 4px 6px 0 0;
+        width: auto;
+        height: auto;
+      }
+    }
+
+    input {
+      margin-bottom: 15px;
+    }
+
+    input[type="submit"] {
+      display: block;
+      margin: 0 0 0 auto;
+      max-width: 140px;
+      background-color: #C60B31;
+    }
+
+    input.file-caption-name {
+      height: auto;
+      line-height: normal;
+      padding: 15px;
+    }
+
+    .file-caption-main {
+      margin-bottom: 15px;
+
+      .file-caption {
+        padding: 0;
+        height: 50px;
+        border-radius: 2px;
+      }
+
+      .btn-file {
+        background-color: #C60B31;
+        width: 140px;
+        color: #fff;
+        line-height: 20.8px;
+        padding: 15px;
+        height: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .my-profile {
+    .profile-actions {
+      .actions {
+        .collapse-menu {
+          display: block;
+        }
+
+        ul {
+          display: none;
+        }
+      }
+    }
+  }
+}

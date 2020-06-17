@@ -1,0 +1,38 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}{% trans 'My Profile' %}{% endblock %}
+
+{% block body_class %}{% endblock %}
+
+{% block content %}
+    <div class="my-profile">
+        <div class="container ">
+            <div class="profile-details-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{% trans 'My Profile' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <div class="row">
+                    <div class="col-md-4 actions">
+                        <div class="collapse-menu clearfix">
+                            <span>{% trans 'Profile menu' %}</span>
+                            <i class="fas fa-bars"></i>
+                        </div>
+                        <ul class="profile-action-menu">
+                            <li class="{% if action is defined and action is same as ('avatar') %}active{% endif %}"><a href="{{ path('account', {'action' : 'avatar'}) }}">{% trans 'Avatar' %}</a></li>
+                            <li class="{% if action is defined and action is same as ('details') %}active{% endif %}"><a href="{{ path('account', {'action' : 'details'}) }}">{% trans 'Details' %}</a></li>
+                            <li class="{% if action is defined and action is same as ('change-password') %}active{% endif %}"><a href="{{ path('account', {'action' : 'change-password'}) }}">{% trans 'Change password' %}</a></li>
+                            <li class="{% if action is defined and action is same as ('delete-account') %}active{% endif %}"><a href="{{ path('account', {'action' : 'delete-account'}) }}">{% trans 'Delete account' %}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8">
+                        {{ content|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<h3>Update details</h3>
+<span class="sub-title"></span>
+
+{{ messagesPartial('partial::alerts', {}, null, 'profile-details') }}
+
+{% set dummy = form.prepare() %}
+{{ form().openTag(form) | raw }}
+
+{% set details = form.get('detail') %}
+
+{% set firstName = details.get('firstName') %}
+{% set elementTranslatePlaceholder = firstName.getAttribute('placeholder')|trans|raw %}
+{% set dummy = firstName.setAttribute('placeholder', elementTranslatePlaceholder) %}
+{{ formElement(firstName) }}
+
+{% set lastName = details.get('lastName') %}
+{% set elementTranslatePlaceholder = lastName.getAttribute('placeholder')|trans|raw %}
+{% set dummy = lastName.setAttribute('placeholder', elementTranslatePlaceholder) %}
+{{ formElement(lastName) }}
+
+{% set submit = form.get('submit') %}
+{% set submitValue = submit.getValue|trans|raw %}
+{% set dummy = submit.setAttribute('value', submitValue) %}
+{{ formSubmit(submit) }}
+
+{{ form().closeTag() | raw }}

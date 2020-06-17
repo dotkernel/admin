@@ -1,0 +1,75 @@
+.language-container {
+  position: absolute;
+  top: 75px;
+  right: 20px;
+  display: block;
+
+  .languages {
+    position: relative;
+    width: 45px;
+
+    .language-active {
+      display: block;
+      padding-bottom: 5px;
+      width: 50px;
+      cursor: pointer;
+
+      img {
+        display: block;
+        float: left;
+        width: 18px;
+        height: 12px;
+      }
+
+      .language-selector {
+        display: block;
+        float: left;
+        margin-left: 10px;
+        margin-top: 3px;
+        width: 14px;
+        height: 8px;
+        background: url("/images/app/icon/dropdown.png");
+        cursor: pointer;
+      }
+    }
+
+    .language-list {
+      display: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: block;
+        padding: 5px 5px 5px 0;
+        cursor: pointer;
+
+        img {
+          display: block;
+          float: left;
+          margin-right: 5px;
+          width: 18px;
+          height: 12px;
+        }
+        span {
+          display: block;
+          float: left;
+          font-size: 12px;
+          line-height: 12px;
+        }
+      }
+
+      li.active,
+      li:hover {
+        background: #C60B31;
+      }
+    }
+  }
+}
+
+.full-page {
+  .language-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}

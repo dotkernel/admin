@@ -1,0 +1,20 @@
+<h3>Delete account</h3>
+<span class="sub-title"></span>
+
+{{ messagesPartial('partial::alerts', {}, null, 'profile-delete') }}
+
+{% set dummy = form.prepare() %}
+{{ form().openTag(form) | raw }}
+
+<div class="checkbox delete-checkbox">
+    {% set deleted = form.get('isDeleted') %}
+    {{ formElement(deleted) }}
+    <p>I accept the <a href="#" target="_blank">Terms and Conditions</a> and i want to delete my account with all additional data.</p>
+</div>
+
+{% set submit = form.get('submit') %}
+{% set submitValue = submit.getValue|trans|raw %}
+{% set dummy = submit.setAttribute('value', submitValue) %}
+{{ formSubmit(submit) }}
+
+{{ form().closeTag() | raw }}
