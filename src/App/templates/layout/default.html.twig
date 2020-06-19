@@ -9,14 +9,7 @@
     <title>{% block title %}{% endblock %} - DotKernel</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-table.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-datepicker3.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!--Icons-->
-    <script src="{{ asset('js/lumino.glyphs.js') }}"></script>
 
     <!--[if lt IE 9]>
     <script src="{{ asset('js/html5shiv.js') }}"></script>
@@ -30,8 +23,8 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('img/logo.svg') }}" alt="DotKernel"
-                     onerror="this.onerror=null; this.src={{ asset('img/logo.png') }}" />
+                <img src="{{ asset('images/app/logo.svg') }}" alt="DotKernel"
+                     onerror="this.onerror=null; this.src={{ asset('images/app/logo.png') }}" />
             </a>
             <div class="collapse navbar-collapse user-menu-collapse">
 
@@ -50,7 +43,7 @@
     <div id="sidebar-collapse" class="sidebar side-collapse sideRightIn in">
         <div class="nav-placeholder">
             <a class="logo" href="/">
-                <img src="{{ asset('img/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
+                <img src="{{ asset('images/app/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
             </a>
         </div>
         <form role="search">
@@ -99,18 +92,6 @@
     </div>    <!--/.main-->
 </main>
 
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/chart.min.js') }}"></script>
-<script src="{{ asset('js/chart-data.js') }}"></script>
-<script src="{{ asset('js/jquery.easypiechart.js') }}"></script>
-<script src="{{ asset('js/easypiechart-data.js') }}"></script>
-<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
-<script src="{{ asset('js/bootstrap-table/bootstrap-table.js') }}"></script>
-<script src="{{ asset('js/bootstrap-table/extension/bootstrap-table-mobile.js') }}"></script>
-<script src="{{ asset('js/nanoScroller.js') }}"></script>
-<script src="{{ asset('js/admin.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
     $('#calendar').datepicker({});

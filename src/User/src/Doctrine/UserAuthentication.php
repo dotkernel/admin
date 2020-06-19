@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Frontend\User\Doctrine;
 
-use Frontend\User\Entity\User;
+use Frontend\User\Entity\Admin;
 
 /**
  * Class UserAuthentication
- * @package Frontend\User\Doctrine
+ * @package Frontend\Admin\Doctrine
  */
 class UserAuthentication
 {
-    public static function verifyCredential(User $user, $inputPassword)
+    public static function verifyCredential(Admin $user, $inputPassword)
     {
         return password_verify($inputPassword, $user->getPassword());
     }

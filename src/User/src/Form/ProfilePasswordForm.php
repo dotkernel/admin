@@ -12,7 +12,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class ProfilePasswordForm
- * @package Frontend\User\Form
+ * @package Frontend\Admin\Form
  */
 class ProfilePasswordForm extends Form
 {

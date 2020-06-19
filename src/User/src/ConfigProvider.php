@@ -6,20 +6,12 @@ namespace Frontend\User;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
+use Frontend\User\Controller\AdminController;
 use Frontend\User\Doctrine\EntityListenerResolver;
 use Frontend\User\Doctrine\EntityListenerResolverFactory;
-use Frontend\User\Entity\User;
-use Frontend\User\Entity\UserInterface;
+use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Form\LoginForm;
-use Frontend\User\Controller\ActivateHandler;
-use Frontend\User\Controller\LoginHandler;
-use Frontend\User\Controller\LogoutHandler;
-use Frontend\User\Controller\AccountController;
-use Frontend\User\Controller\ProfileHandler;
-use Frontend\User\Controller\RegisterHandler;
-use Frontend\User\Controller\RequestResetPasswordHandler;
-use Frontend\User\Controller\ResetPasswordHandler;
-use Frontend\User\Controller\UnregisterHandler;
 use Frontend\User\Controller\UserController;
 use Frontend\User\Service\UserRoleService;
 use Frontend\User\Service\UserRoleServiceInterface;
@@ -29,7 +21,7 @@ use Laminas\Form\ElementFactory;
 
 /**
  * Class ConfigProvider
- * @package Frontend\User
+ * @package Frontend\Admin
  */
 class ConfigProvider
 {
@@ -54,13 +46,13 @@ class ConfigProvider
         return [
             'factories'  => [
                 UserController::class => AnnotatedServiceFactory::class,
-                AccountController::class => AnnotatedServiceFactory::class,
+                AdminController::class => AnnotatedServiceFactory::class,
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 UserService::class => AnnotatedServiceFactory::class,
                 UserRoleService::class => AnnotatedServiceFactory::class,
             ],
             'aliases' => [
-                UserInterface::class => User::class,
+                AdminInterface::class => Admin::class,
                 UserServiceInterface::class => UserService::class,
                 UserRoleServiceInterface::class => UserRoleService::class,
             ]
@@ -75,7 +67,8 @@ class ConfigProvider
         return [
             'paths' => [
                 'user' => [__DIR__ . '/../templates/user'],
-                'profile' => [__DIR__ . '/../templates/profile']
+                'profile' => [__DIR__ . '/../templates/profile'],
+                'admin' => [__DIR__ . '/../templates/admin']
             ],
         ];
     }

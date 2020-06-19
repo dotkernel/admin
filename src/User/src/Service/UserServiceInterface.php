@@ -3,44 +3,44 @@
 namespace Frontend\User\Service;
 
 use Dot\Mail\Exception\MailException;
-use Frontend\User\Entity\User;
-use Frontend\User\Entity\UserInterface;
+use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminInterface;
 
 /**
  * Interface UserServiceInterface
- * @package Frontend\User\Service
+ * @package Frontend\Admin\Service
  */
 interface UserServiceInterface
 {
     /**
      * @param array $data
-     * @return UserInterface
+     * @return AdminInterface
      * @throws \Exception
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(array $data): UserInterface;
+    public function createUser(array $data): AdminInterface;
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @return bool
      * @throws MailException
      */
-    public function sendActivationMail(User $user);
+    public function sendActivationMail(Admin $user);
 
     /**
      * @param array $params
-     * @return User|null
+     * @return Admin|null
      */
-    public function findOneBy(array $params = []): ?User;
+    public function findOneBy(array $params = []): ?Admin;
 
     /**
-     * @param User $user
-     * @return User
+     * @param Admin $user
+     * @return Admin
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function activateUser(User $user);
+    public function activateUser(Admin $user);
 
     /**
      * @param string $email

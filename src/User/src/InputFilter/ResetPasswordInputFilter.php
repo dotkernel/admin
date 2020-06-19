@@ -14,7 +14,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class RegisterInputFilter
- * @package Frontend\User\InputFilter
+ * @package Frontend\Admin\InputFilter
  */
 class ResetPasswordInputFilter extends InputFilter
 {

@@ -34,11 +34,6 @@
                     {{ formSubmit(submit) }}
 
                     {{ form().closeTag() | raw }}
-
-                    <hr>
-
-                    <p class="forgot-password"><a href="{{ path('account', {'action' : 'request-reset-password' } )}}">{% trans 'Forgot password' %}</a></p>
-                    <p>{% trans "You don't have an account?" %} <a href="{{ path('user', {'action' : 'register'}) }}">{% trans 'Register' %}</a>!</p>
                 </div>
             </div>
         </div>

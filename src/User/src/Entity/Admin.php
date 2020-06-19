@@ -11,13 +11,13 @@ use Frontend\App\Entity\AbstractEntity;
 use function array_map;
 
 /**
- * Class User
+ * Class Admin
  * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRepository")
  * @ORM\Table(name="admin")
  * @ORM\HasLifecycleCallbacks()
- * @package Frontend\User\Entity
+ * @package Frontend\Admin\Entity
  */
-class User extends AbstractEntity implements UserInterface
+class Admin extends AbstractEntity implements AdminInterface
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACTIVE = 'active';
@@ -56,7 +56,7 @@ class User extends AbstractEntity implements UserInterface
     protected $roles = [];
 
     /**
-     * User constructor.
+     * Admin constructor.
      */
     public function __construct()
     {
@@ -148,9 +148,9 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @param UserRole $role
-     * @return UserInterface
+     * @return AdminInterface
      */
-    public function addRole(UserRole $role): UserInterface
+    public function addRole(UserRole $role): AdminInterface
     {
         if (!$this->roles->contains($role)) {
             $this->roles->add($role);
@@ -161,9 +161,9 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @param UserRole $role
-     * @return UserInterface
+     * @return AdminInterface
      */
-    public function removeRole(UserRole $role): UserInterface
+    public function removeRole(UserRole $role): AdminInterface
     {
         if (!$this->roles->contains($role)) {
             $this->roles->removeElement($role);

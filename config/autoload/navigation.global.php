@@ -24,7 +24,7 @@ return [
                             'options' => [
                                 'label' => 'Manage admins',
                                 'route' => [
-                                    'route_name' => 'user',
+                                    'route_name' => 'admin',
                                     'route_params' => ['action' => 'manage']
                                 ],
                                 'icon' => 'fa fa-user-circle-o',

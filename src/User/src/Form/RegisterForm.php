@@ -17,7 +17,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class RegisterForm
- * @package Frontend\User\Form
+ * @package Frontend\Admin\Form
  */
 class RegisterForm extends Form
 {

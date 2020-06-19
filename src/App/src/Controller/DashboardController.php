@@ -50,7 +50,7 @@ class DashboardController extends AbstractActionController
     public function indexAction()
     {
         if (!$this->authenticationService->hasIdentity()) {
-            return new RedirectResponse($this->router->generateUri('user', ['action' => 'login']));
+            return new RedirectResponse($this->router->generateUri('admin', ['action' => 'login']));
         }
 
         return new HtmlResponse($this->template->render('app::dashboard'));

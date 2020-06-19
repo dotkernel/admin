@@ -11,12 +11,12 @@ namespace Frontend\App\Common;
 class Message
 {
     public const DUPLICATE_EMAIL = 'An account with this email address already exists.';
-    public const RESTRICTION_ROLES = 'User accounts must have at least one role.';
+    public const RESTRICTION_ROLES = 'Admin accounts must have at least one role.';
     public const INVALID_ACTIVATION_CODE = 'Invalid activation code.';
     public const INVALID_VALUE = 'The value specified for \'%s\' is invalid.';
     public const MAIL_SENT_RESET_PASSWORD = 'If the provided email identifies an account in our system, ' .
     'you will receive an email with further instructions on resetting your account\'s password.';
-    public const MAIL_SENT_USER_ACTIVATION = 'User activation mail has been successfully sent to \'%s\'';
+    public const MAIL_SENT_USER_ACTIVATION = 'Admin activation mail has been successfully sent to \'%s\'';
     public const MISSING_PARAMETER = 'Missing parameter: \'%s\'';
     public const NOT_FOUND_BY_UUID = 'Unable to find %s identified by uuid: %s';
     public const RESET_PASSWORD_EXPIRED = 'Password reset request for hash: \'%s\' is invalid (expired).';
@@ -30,7 +30,7 @@ class Message
     public const USER_ACTIVATED_SUCCESSFULLY = 'Successfully activated.';
     public const USER_DEACTIVATED_SUCCESSFULLY = 'Successfully deactivated.';
     public const PASSWORD_RESET_SUCCESSFULLY = 'Password Successfully reset.';
-    public const USER_NOT_ACTIVATED = 'User account must be activated first.';
+    public const USER_NOT_ACTIVATED = 'Admin account must be activated first.';
     public const USER_NOT_FOUND_BY_EMAIL = 'Could not find account identified by email \'%s\'';
     public const VALIDATOR_REQUIRED_FIELD = 'This field is required and cannot be empty.';
     public const VALIDATOR_REQUIRED_UPLOAD = 'A file must be uploaded first.';

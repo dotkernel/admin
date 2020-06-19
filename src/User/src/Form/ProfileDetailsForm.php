@@ -17,7 +17,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class ProfileDetailsForm
- * @package Frontend\User\Form
+ * @package Frontend\Admin\Form
  */
 class ProfileDetailsForm extends Form
 {

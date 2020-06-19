@@ -11,7 +11,7 @@ use Dot\AnnotatedServices\Annotation\Inject;
 
 /**
  * Class UserRoleService
- * @package Frontend\User\Service
+ * @package Frontend\Admin\Service
  */
 class UserRoleService implements UserRoleServiceInterface
 {

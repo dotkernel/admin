@@ -11,7 +11,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class ProfileDeleteForm
- * @package Frontend\User\Form
+ * @package Frontend\Admin\Form
  */
 class ProfileDeleteForm extends Form
 {

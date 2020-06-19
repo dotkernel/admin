@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Frontend\User\Entity\User;
+use Frontend\User\Entity\Admin;
 
 class DefaultAdminSchema extends AbstractMigration
 {
@@ -43,8 +43,8 @@ class DefaultAdminSchema extends AbstractMigration
             ->addColumn('lastName', 'string', ['null' => true, 'limit' => 255])
             ->addColumn('status', 'enum',
                 [
-                    'default' => User::STATUS_PENDING,
-                    'values' => User::STATUSES
+                    'default' => Admin::STATUS_PENDING,
+                    'values' => Admin::STATUSES
                 ]
             )
             ->addTimestamps('created', 'updated')

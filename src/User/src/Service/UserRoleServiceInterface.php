@@ -6,7 +6,7 @@ use Frontend\User\Entity\UserRole;
 
 /**
  * Class UserRoleService
- * @package Frontend\User\Service
+ * @package Frontend\Admin\Service
  */
 interface UserRoleServiceInterface
 {

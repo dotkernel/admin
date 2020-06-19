@@ -14,7 +14,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class LoginInputFilter
- * @package Frontend\User\InputFilter
+ * @package Frontend\Admin\InputFilter
  */
 class LoginInputFilter extends InputFilter
 {

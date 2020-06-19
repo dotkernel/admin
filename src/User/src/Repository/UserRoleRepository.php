@@ -9,7 +9,7 @@ use Frontend\User\Entity\UserRole;
 
 /**
  * Class UserRoleRepository
- * @package Frontend\User\Repository
+ * @package Frontend\Admin\Repository
  */
 class UserRoleRepository extends AbstractRepository
 {

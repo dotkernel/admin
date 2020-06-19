@@ -1,7 +1,7 @@
 <?php
 namespace Data\Database\Seeds;
 
-use Frontend\User\Entity\User;
+use Frontend\User\Entity\Admin;
 use Phinx\Seed\AbstractSeed;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use Ramsey\Uuid\Uuid;
@@ -46,7 +46,7 @@ class AdminSeeder extends AbstractSeed
             'password' => '$2y$11$OwMimRB1aTrv.VH0uRIDFeU3eh7NNraKncCRruhW.lKOPyz/R7Fq6',
             'firstName' => 'DotKernel',
             'lastName' => 'Admin',
-            'status' => User::STATUS_ACTIVE
+            'status' => Admin::STATUS_ACTIVE
         ];
 
         $adminRoles = [

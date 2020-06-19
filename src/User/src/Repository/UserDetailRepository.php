@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Class UserDetailRepository
- * @package Frontend\User\Repository
+ * @package Frontend\Admin\Repository
  */
 class UserDetailRepository extends EntityRepository
 {

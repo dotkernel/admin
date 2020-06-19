@@ -3,23 +3,14 @@
 namespace Frontend\User;
 
 use Fig\Http\Message\RequestMethodInterface;
-use Frontend\User\Controller\ActivateHandler;
-use Frontend\User\Controller\LoginHandler;
-use Frontend\User\Controller\LogoutHandler;
-use Frontend\User\Controller\AccountController;
-use Frontend\User\Controller\ProfileHandler;
-use Frontend\User\Controller\RegisterHandler;
-use Frontend\User\Controller\RequestResetPasswordHandler;
-use Frontend\User\Controller\ResetPasswordHandler;
-use Frontend\User\Controller\UnregisterHandler;
+use Frontend\User\Controller\AdminController;
 use Frontend\User\Controller\UserController;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
-use Twig\Profiler\Profile;
 
 /**
  * Class RoutesDelegator
- * @package Frontend\User
+ * @package Frontend\Admin
  */
 class RoutesDelegator
 {
@@ -42,10 +33,10 @@ class RoutesDelegator
         );
 
         $app->route(
-            '/account[/{action}[/{hash}]]',
-            AccountController::class,
+            '/admin[/{action}]',
+            AdminController::class,
             [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
-            'account'
+            'admin'
         );
 
         return $app;

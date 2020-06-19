@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Frontend\User\Repository;
 
 use Frontend\App\Repository\AbstractRepository;
-use Frontend\User\Entity\User;
-use Frontend\User\Entity\UserInterface;
+use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminInterface;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
@@ -17,16 +17,16 @@ class UserRepository extends AbstractRepository
 {
     /**
      * @param string $identity
-     * @return UserInterface|null
+     * @return AdminInterface|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findByIdentity(string $identity): ?UserInterface
+    public function findByIdentity(string $identity): ?AdminInterface
     {
         $qb = $this->getQueryBuilder();
 
         $qb
             ->select('user')
-            ->from(User::class, 'user')
+            ->from(Admin::class, 'user')
             ->andWhere('user.identity = :identity')
             ->setParameter('identity', $identity);
 
@@ -34,11 +34,11 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveUser(User $user)
+    public function saveUser(Admin $user)
     {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -56,9 +56,9 @@ class UserRepository extends AbstractRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('user')
-            ->from(User::class, 'user')
+            ->from(Admin::class, 'user')
             ->where('user.identity = :email')->setParameter('email', $email)
-            ->andWhere('user.isDeleted = :isDeleted')->setParameter('isDeleted', User::IS_DELETED_NO);
+            ->andWhere('user.isDeleted = :isDeleted')->setParameter('isDeleted', Admin::IS_DELETED_NO);
         if (!empty($uuid)) {
             $qb->andWhere('user.uuid != :uuid')->setParameter('uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
         }
@@ -79,7 +79,7 @@ class UserRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('user')
-            ->from(User::class, 'user')
+            ->from(Admin::class, 'user')
             ->where('user.identity = :identity')->setParameter('identity', $email);
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -87,15 +87,15 @@ class UserRepository extends AbstractRepository
 
     /**
      * @param string $hash
-     * @return User|null
+     * @return Admin|null
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findByResetPasswordHash(string $hash): ?User
+    public function findByResetPasswordHash(string $hash): ?Admin
     {
         try {
             $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb->select(['user', 'resetPasswords'])->from(User::class, 'user')
+            $qb->select(['user', 'resetPasswords'])->from(Admin::class, 'user')
                 ->leftJoin('user.resetPasswords', 'resetPasswords')
                 ->andWhere('resetPasswords.hash = :hash')->setParameter('hash', $hash);
 

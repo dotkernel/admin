@@ -1,0 +1,343 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Manage admins{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Manage admins</h1>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="messages"></div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="tableToolbar" class="btn-group">
+                        <button type="button" class="btn btn-default" id="addButton">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" id="editButton">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" id="deleteButton">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <table data-toggle="table" data-url="/admin/list" data-click-to-select="true"
+                           data-mobile-responsive="true" data-check-on-init="true" data-min-width="800"
+                           data-id-field="id" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                           data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
+                           data-silent-sort="false" data-search-on-enter-key="true" data-pagination-loop="false"
+                           data-side-pagination="server" data-page-list="[10, 30, 50, 100, 200]" data-page-size="30"
+                           data-sort-name="dateCreated" data-sort-order="desc" id="bsTable">
+                        <thead>
+
+                        <tr>
+                            <th data-field="checked" data-checkbox="true">Id</th>
+                            <th data-field="id" data-sortable="true">#ID</th>
+                            <th data-field="username" data-sortable="true">Username</th>
+                            <th data-field="email" data-sortable="true">E-mail</th>
+                            <th data-field="firstName" data-sortable="true">First Name</th>
+                            <th data-field="lastName" data-sortable="true">Last Name</th>
+                            <th data-field="roles" data-formatter="rolesFormatter" data-sortable="false">Roles</th>
+                            <th data-field="status" data-sortable="true">Status</th>
+                            <th data-field="dateCreated" data-sortable="true">Created</th>
+                        </tr>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="formModal" aria-labelledby="formModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="formModalTitle"></h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="formMessages"></div>
+                    <div id="formPlaceholder"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="formModalSubmit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{#{% block javascript %}#}
+{#<script>#}
+
+{#$( document ).ready(function(){#}
+{#    $("#editButton").prop('disabled', true);#}
+{#    $("#deleteButton").prop('disabled', true);#}
+
+{#    var showFailDialog = function (data) {#}
+{#        if(data.status == 0 && data.statusText == 'abort')#}
+{#            return;#}
+
+{#        if (data.status == 401) {#}
+{#            $("#modalCloseButton").click(function () {#}
+{#                window.location.reload();#}
+{#            });#}
+{#            showAlertDialog('Authorization error',#}
+{#                'You session has expired. The page will be reloaded in order to re-authenticate',#}
+{#                'error');#}
+{#        }#}
+{#        else if (data.status == 403) {#}
+{#            showAlertDialog('Authorization error',#}
+{#                'You are not authorized to run this operation',#}
+{#                'error');#}
+{#        }#}
+{#        else {#}
+{#            showAlertDialog('Unexpected server error',#}
+{#                'Could not load form due to a server error. Please try again',#}
+{#                'error');#}
+{#        }#}
+{#    };#}
+
+{#    /**#}
+{#     * disables UI buttons based on the selection count#}
+{#     * @param selections#}
+{#     */#}
+{#    var uiButtons = function (selections) {#}
+{#        var count = selections.length;#}
+{#        if (count == 0) {#}
+{#            $("#editButton").prop('disabled', true);#}
+{#            $("#deleteButton").prop('disabled', true);#}
+{#        }#}
+{#        else if (count == 1) {#}
+{#            $("#editButton").prop('disabled', false);#}
+{#            $("#deleteButton").prop('disabled', false);#}
+{#        }#}
+{#        else {#}
+{#            $("#editButton").prop('disabled', true);#}
+{#            $("#deleteButton").prop('disabled', false);#}
+{#        }#}
+{#    };#}
+
+{#    $("#addButton").click(function () {#}
+{#        showLoading();#}
+{#        $.get('{{ addUri }}')#}
+{#                    .done(function (data) {#}
+{#                        $("#formModalTitle").html('Add {{ entityNameSingular }}');#}
+{#                        $("#formPlaceholder").html(data);#}
+
+{#                        $("#loading").on('hidden.bs.modal', function () {#}
+{#                            $("#loading").off('hidden');#}
+{#                            $("#formModal").modal('show');#}
+{#                        });#}
+
+{#                        hideLoading();#}
+{#                    })#}
+{#                    .fail(function (data) {#}
+{#                        $("#loading").on('hidden.bs.modal', function () {#}
+{#                            $("#loading").off('hidden');#}
+{#                            showFailDialog(data);#}
+{#                        });#}
+{#                        hideLoading();#}
+
+{#                    });#}
+{#            });#}
+
+{#            $("#editButton").click(function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                if (selections.length != 1) {#}
+{#                    showAlertDialog('Selection error',#}
+{#                        'Multiple or no {{ entityNamePlural }} selected. Only one {{ entityNameSingular }} can be edited a time',#}
+{#                        'error');#}
+{#                }#}
+{#                else {#}
+{#                    showLoading();#}
+{#                    $.get('{{ editUri }}/' + selections[0].id)#}
+{#                        .done(function (data) {#}
+{#                            $("#formModalTitle").html('Edit {{ entityNameSingular }}');#}
+{#                            $("#formPlaceholder").html(data);#}
+
+{#                            $("#loading").on('hidden.bs.modal', function () {#}
+{#                                $("#loading").off('hidden');#}
+{#                                $("#formModal").modal('show');#}
+{#                            });#}
+{#                            hideLoading();#}
+{#                        })#}
+{#                        .fail(function (data) {#}
+{#                            $("#loading").on('hidden.bs.modal', function () {#}
+{#                                $("#loading").off('hidden');#}
+{#                                showFailDialog(data);#}
+{#                            });#}
+{#                            hideLoading();#}
+{#                        });#}
+{#                }#}
+
+{#            });#}
+
+{#            $("#deleteButton").click(function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                if (selections.length === 0) {#}
+{#                    return;#}
+{#                }#}
+{#                showLoading();#}
+{#                $.post('{{ deleteUri }}', {'{{ entityNamePlural }}': selections})#}
+{#                    .done(function (data) {#}
+{#                        $("#formModalSubmit").text('Delete').removeClass('btn-primary').addClass('btn-danger');#}
+{#                        $("#formModalTitle").html('Delete {{ entityNamePlural }}');#}
+{#                        $("#formPlaceholder").html(data);#}
+
+{#                        $("#loading").on('hidden.bs.modal', function () {#}
+{#                            $("#loading").off('hidden');#}
+{#                            $("#formModal").modal('show');#}
+{#                        });#}
+{#                        hideLoading();#}
+{#                    })#}
+{#                    .fail(function (data) {#}
+{#                        $("#loading").on('hidden.bs.modal', function () {#}
+{#                            $("#loading").off('hidden');#}
+{#                            showFailDialog(data);#}
+{#                        });#}
+{#                        hideLoading();#}
+{#                    });#}
+
+{#            });#}
+
+{#            var formInputErrors = function (data, prevName) {#}
+{#                //mark form input with errors#}
+{#                $.each(data, function (name, value) {#}
+{#                    if ($.isArray(value)) {#}
+{#                        $("#ajaxForm input[name='" + prevName + "[" + name + "]']")#}
+{#                            .closest('.form-group').addClass('has-error');#}
+{#                    }#}
+{#                    else if ($.isPlainObject(value)) {#}
+{#                        if (prevName == '') {#}
+{#                            formInputErrors(value, name);#}
+{#                        } else {#}
+{#                            formInputErrors(value, prevName + "[" + name + "]");#}
+{#                        }#}
+
+{#                    }#}
+{#                });#}
+{#            };#}
+
+{#            var resetFormInputErrors = function () {#}
+{#                $("#ajaxForm :input").closest('.form-group').removeClass('has-error');#}
+{#            };#}
+
+{#            $("#formModalSubmit").click(function () {#}
+{#                $('#formModal').modal('handleUpdate');#}
+{#                showLoading();#}
+{#                resetFormInputErrors();#}
+
+{#                $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())#}
+{#                    .done(function (data) {#}
+{#                        if (typeof data.success !== 'undefined') {#}
+{#                            hideLoading();#}
+{#                            $('#formModal').modal('hide');#}
+{#                            modalReset();#}
+{#                            $("#messages").html(data.alerts);#}
+{#                            $("#bsTable").bootstrapTable('refresh');#}
+{#                        }#}
+{#                        else if (typeof data.validation !== 'undefined') {#}
+{#                            hideLoading();#}
+{#                            $("#formMessages").html(data.alerts);#}
+{#                            formInputErrors(data.validation, "");#}
+{#                            $('#formModal').modal('handleUpdate');#}
+{#                        }#}
+{#                        else {#}
+{#                            hideLoading();#}
+{#                            $('#formModal').modal('hide');#}
+{#                            modalReset();#}
+{#                            if (data.alerts !== 'undefined') {#}
+{#                                $("#messages").html(data.alerts);#}
+{#                            }#}
+{#                        }#}
+{#                    })#}
+{#                    .fail(function (data) {#}
+{#                        hideLoading();#}
+{#                        $('#formModal').modal('hide');#}
+{#                        modalReset();#}
+{#                    });#}
+{#            });#}
+
+{#            $("#formModal").on('shown.bs.modal', function () {#}
+
+{#            });#}
+
+
+{#            $("#formModal").on('hidden.bs.modal', function () {#}
+{#                    modalReset();#}
+{#            });#}
+
+{#            var modalReset = function() {#}
+{#                $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');#}
+{#                $("#ajaxForm")[0].reset();#}
+{#                $("#formMessages").html('');#}
+{#                $("#ajaxForm :input")#}
+{#                    .closest('.form-group').removeClass('has-error');#}
+{#            };#}
+
+{#            var resetUiButtonState = function () {#}
+{#                $("#editButton").prop('disabled', true);#}
+{#                $("#deleteButton").prop('disabled', true);#}
+{#            };#}
+
+{#            $("#bsTable").on('load-success.bs.table', function () {#}
+{#                resetUiButtonState();#}
+{#            });#}
+
+{#            $("#bsTable").on('load-error.bs.table', function (e, status, res) {#}
+{#                showFailDialog(res);#}
+{#                resetUiButtonState();#}
+{#            });#}
+
+{#            $("#bsTable").on('check.bs.table', function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                uiButtons(selections);#}
+{#            });#}
+
+{#            $("#bsTable").on('uncheck.bs.table', function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                uiButtons(selections);#}
+{#            });#}
+
+{#            $("#bsTable").on('check-all.bs.table', function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                uiButtons(selections);#}
+{#            });#}
+
+{#            $("#bsTable").on('uncheck-all.bs.table', function () {#}
+{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
+{#                uiButtons(selections);#}
+{#            });#}
+{#        });#}
+
+{#    var rolesFormatter = function (value, row) {#}
+{#                if (row.roles != null) {#}
+{#                    var roles = [];#}
+{#                    row.roles.forEach(function(role) {#}
+{#                        roles.push(role.name);#}
+{#                    });#}
+
+{#                    return roles.join(', ');#}
+{#                }#}
+{#            }#}
+{#    </script>#}
+{#{% endblock %}#}

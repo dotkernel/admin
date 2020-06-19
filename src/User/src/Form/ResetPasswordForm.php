@@ -18,7 +18,7 @@ use Laminas\InputFilter\InputFilter;
 
 /**
  * Class ResetPasswordForm
- * @package Frontend\User\Form
+ * @package Frontend\Admin\Form
  */
 class ResetPasswordForm extends Form
 {

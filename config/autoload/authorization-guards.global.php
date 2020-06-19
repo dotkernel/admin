@@ -24,6 +24,11 @@ return [
                                 [
                                     'route' => 'user',
                                     'actions' => [],
+                                    'permissions' => ['authenticated']
+                                ],
+                                [
+                                    'route' => 'admin',
+                                    'actions' => [],
                                     'permissions' => ['*']
                                 ],
                             ],

@@ -12,10 +12,10 @@ use Dot\Mail\Exception\MailException;
 use Dot\Mail\Service\MailService;
 use Frontend\App\Common\Message;
 use Frontend\App\Common\UuidOrderedTimeGenerator;
-use Frontend\User\Entity\User;
+use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\UserAvatar;
 use Frontend\User\Entity\UserDetail;
-use Frontend\User\Entity\UserInterface;
+use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Entity\UserRole;
 use Frontend\User\Repository\UserRepository;
 use Frontend\User\Repository\UserRoleRepository;
@@ -24,7 +24,7 @@ use Mezzio\Template\TemplateRendererInterface;
 
 /**
  * Class UserService
- * @package Frontend\User\Service
+ * @package Frontend\Admin\Service
  *
  * @Service()
  */
@@ -76,7 +76,7 @@ class UserService implements UserServiceInterface
         array $config = []
     ) {
         $this->em = $em;
-        $this->userRepository = $em->getRepository(User::class);
+        $this->userRepository = $em->getRepository(Admin::class);
         $this->userRoleRepository = $em->getRepository(UserRole::class);
         $this->userRoleService = $userRoleService;
         $this->mailService = $mailService;
@@ -86,18 +86,18 @@ class UserService implements UserServiceInterface
 
     /**
      * @param array $data
-     * @return UserInterface
+     * @return AdminInterface
      * @throws \Exception
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(array $data): UserInterface
+    public function createUser(array $data): AdminInterface
     {
         if ($this->exists($data['email'])) {
             throw new ORMException(Message::DUPLICATE_EMAIL);
         }
 
-        $user = new User();
+        $user = new Admin();
         $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT))->setIdentity($data['email']);
 
         $detail = new UserDetail();
@@ -135,15 +135,15 @@ class UserService implements UserServiceInterface
 
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @param array $data
-     * @return User
+     * @return Admin
      * @throws ORMException
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updateUser(User $user, array $data = [])
+    public function updateUser(Admin $user, array $data = [])
     {
         if (isset($data['email']) && !is_null($data['email'])) {
             if ($this->exists($data['email'], $user->getUuid()->toString())) {
@@ -211,11 +211,11 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @param UploadedFile $uploadedFile
      * @return UserAvatar
      */
-    protected function createAvatar(User $user, UploadedFile $uploadedFile)
+    protected function createAvatar(Admin $user, UploadedFile $uploadedFile)
     {
         $path = $this->config['uploads']['user']['path'] . DIRECTORY_SEPARATOR;
         $path .= $user->getUuid()->toString() . DIRECTORY_SEPARATOR;
@@ -287,11 +287,11 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @return bool
      * @throws MailException
      */
-    public function sendActivationMail(User $user)
+    public function sendActivationMail(Admin $user)
     {
         if ($user->isActive()) {
             return false;
@@ -312,27 +312,27 @@ class UserService implements UserServiceInterface
 
     /**
      * @param array $params
-     * @return User|null
+     * @return Admin|null
      */
-    public function findOneBy(array $params = []): ?User
+    public function findOneBy(array $params = []): ?Admin
     {
         if (empty($params)) {
             return null;
         }
 
-        /** @var User $user */
+        /** @var Admin $user */
         $user = $this->userRepository->findOneBy($params);
 
         return $user;
     }
 
     /**
-     * @param User $user
-     * @return User
+     * @param Admin $user
+     * @return Admin
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function activateUser(User $user)
+    public function activateUser(Admin $user)
     {
         $this->userRepository->saveUser($user->activate());
 
@@ -348,7 +348,7 @@ class UserService implements UserServiceInterface
     {
         $roleList = [];
 
-        /** @var User $user */
+        /** @var Admin $user */
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!empty($user)) {
@@ -362,11 +362,11 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @return bool
      * @throws MailException
      */
-    public function sendResetPasswordRequestedMail(User $user)
+    public function sendResetPasswordRequestedMail(Admin $user)
     {
         $this->mailService->setBody(
             $this->templateRenderer->render('user::reset-password-requested', [
@@ -384,11 +384,11 @@ class UserService implements UserServiceInterface
 
     /**
      * @param string|null $hash
-     * @return User|null
+     * @return Admin|null
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findByResetPasswordHash(?string $hash): ?User
+    public function findByResetPasswordHash(?string $hash): ?Admin
     {
         if (empty($hash)) {
             return null;
@@ -398,11 +398,11 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param User $user
+     * @param Admin $user
      * @return bool
      * @throws MailException
      */
-    public function sendResetPasswordCompletedMail(User $user)
+    public function sendResetPasswordCompletedMail(Admin $user)
     {
         $this->mailService->setBody(
             $this->templateRenderer->render('user::reset-password-completed', [

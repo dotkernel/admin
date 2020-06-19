@@ -10,7 +10,7 @@ use Frontend\App\Entity\AbstractEntity;
 /**
  * Class UserRole
  * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRoleRepository")
- * @ORM\Table(name="user_role")
+ * @ORM\Table(name="admin_role")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\User\Entity
  */
@@ -29,7 +29,7 @@ class UserRole extends AbstractEntity
      * @ORM\Column(name="name", type="string", length=30, nullable=false, unique=true)
      * @var string $name
      */
-    protected $name;
+    protected string $name;
 
     /**
      * UserRole constructor.

@@ -18,7 +18,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class AuthTeamMiddleware
- * @package App\User\Middleware
+ * @package App\Admin\Middleware
  *
  */
 class AuthMiddleware implements MiddlewareInterface
@@ -88,7 +88,7 @@ class AuthMiddleware implements MiddlewareInterface
                 'user-login'
             );
 
-            return new RedirectResponse($this->router->generateUri("user", ['action' => 'login']));
+            return new RedirectResponse($this->router->generateUri("admin", ['action' => 'login']));
         }
 
         return $handler->handle($request);

@@ -5,13 +5,13 @@ namespace Frontend\User\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class User
+ * Class Admin
  * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRepository")
  * @ORM\Table(name="admin")
  * @ORM\HasLifecycleCallbacks()
- * @package Frontend\User\Entity
+ * @package Frontend\Admin\Entity
  */
-interface UserInterface
+interface AdminInterface
 {
     /**
      * @return array
@@ -60,13 +60,13 @@ interface UserInterface
 
     /**
      * @param UserRole $role
-     * @return \Frontend\User\Entity\UserInterface
+     * @return \Frontend\User\Entity\AdminInterface
      */
-    public function addRole(UserRole $role): UserInterface;
+    public function addRole(UserRole $role): AdminInterface;
 
     /**
      * @param UserRole $role
-     * @return \Frontend\User\Entity\UserInterface
+     * @return \Frontend\User\Entity\AdminInterface
      */
-    public function removeRole(UserRole $role): UserInterface;
+    public function removeRole(UserRole $role): AdminInterface;
 }
