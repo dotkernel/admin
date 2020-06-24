@@ -34,3 +34,4 @@ require('./components/_language');
 require('./components/_profile');
 require('./components/_main');
 require('./components/_bootstrap-table');
+require('./components/_bootstrap');

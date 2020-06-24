@@ -7,6 +7,7 @@ namespace Frontend\User\Repository;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\AdminInterface;
+use ProxyManager\Example\GhostObjectSkippedProperties\User;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
@@ -34,11 +35,22 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * @param Admin $user
+     * @param Admin $admin
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveUser(Admin $user)
+    public function saveAdmin(Admin $admin)
+    {
+        $this->getEntityManager()->persist($admin);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param User $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveUser(User $user)
     {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -47,9 +59,7 @@ class UserRepository extends AbstractRepository
     /**
      * @param string $email
      * @param string|null $uuid
-     * @return mixed|null
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int|mixed|string|null
      */
     public function exists(string $email = '', ?string $uuid = '')
     {
@@ -57,8 +67,7 @@ class UserRepository extends AbstractRepository
 
         $qb->select('user')
             ->from(Admin::class, 'user')
-            ->where('user.identity = :email')->setParameter('email', $email)
-            ->andWhere('user.isDeleted = :isDeleted')->setParameter('isDeleted', Admin::IS_DELETED_NO);
+            ->where('user.identity = :email')->setParameter('email', $email);
         if (!empty($uuid)) {
             $qb->andWhere('user.uuid != :uuid')->setParameter('uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
         }
@@ -86,22 +95,33 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * @param string $hash
-     * @return Admin|null
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param int $offset
+     * @param int $limit
+     * @param string|null $search
+     * @param string $sort
+     * @param string $order
+     * @return int|mixed|string
      */
-    public function findByResetPasswordHash(string $hash): ?Admin
-    {
-        try {
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb->select(['user', 'resetPasswords'])->from(Admin::class, 'user')
-                ->leftJoin('user.resetPasswords', 'resetPasswords')
-                ->andWhere('resetPasswords.hash = :hash')->setParameter('hash', $hash);
+    public function getAdmins(
+        int $offset = 0,
+        int $limit = 30,
+        string $search = null,
+        string $sort = 'created',
+        string $order = 'desc'
+    ) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('admin')
+            ->from(Admin::class, 'admin');
 
-            return $qb->getQuery()->getSingleResult();
-        } catch (\Exception $exception) {
-            return null;
+        if (!is_null($search)) {
+            $qb->where($qb->expr()->like('admin.email', ':search'))
+                ->setParameter('search', '%' . $search . '%');
         }
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+        $qb->orderBy('admin.' . $sort, $order);
+
+        return $qb->getQuery()->getResult();
     }
 }

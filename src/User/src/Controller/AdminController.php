@@ -74,6 +74,20 @@ class AdminController extends AbstractActionController
         $this->forms = $forms;
     }
 
+    public function listAction()
+    {
+        $params = $this->getRequest()->getQueryParams();
+
+        $search = (!empty($params['search'])) ? $params['search'] : null;
+        $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
+        $order = (!empty($params['order'])) ? $params['order'] : "desc";
+        $offset = (!empty($params['offset'])) ? $params['offset'] : 0;
+        $limit = (!empty($params['limit'])) ? $params['limit'] : 30;
+
+        $result = $this->userService->getAdmins($offset, $limit, $search, $sort, $order);
+        $users = $this->userService;
+    }
+
     /**
      * @return HtmlResponse
      */

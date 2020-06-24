@@ -85,6 +85,22 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * @return UserRepository
+     */
+    public function getUserRepository(): UserRepository
+    {
+        return $this->userRepository;
+    }
+
+    /**
+     * @return UserRoleRepository
+     */
+    public function getUserRoleRepository(): UserRoleRepository
+    {
+        return $this->userRoleRepository;
+    }
+
+    /**
      * @param array $data
      * @return AdminInterface
      * @throws \Exception
@@ -287,30 +303,6 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param Admin $user
-     * @return bool
-     * @throws MailException
-     */
-    public function sendActivationMail(Admin $user)
-    {
-        if ($user->isActive()) {
-            return false;
-        }
-
-        $this->mailService->setBody(
-            $this->templateRenderer->render('user::activate', [
-                'config' => $this->config,
-                'user' => $user
-            ])
-        );
-
-        $this->mailService->setSubject('Welcome');
-        $this->mailService->getMessage()->addTo($user->getIdentity(), $user->getName());
-
-        return $this->mailService->send()->isValid();
-    }
-
-    /**
      * @param array $params
      * @return Admin|null
      */
@@ -322,19 +314,6 @@ class UserService implements UserServiceInterface
 
         /** @var Admin $user */
         $user = $this->userRepository->findOneBy($params);
-
-        return $user;
-    }
-
-    /**
-     * @param Admin $user
-     * @return Admin
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function activateUser(Admin $user)
-    {
-        $this->userRepository->saveUser($user->activate());
 
         return $user;
     }
@@ -361,60 +340,34 @@ class UserService implements UserServiceInterface
         return $roleList;
     }
 
-    /**
-     * @param Admin $user
-     * @return bool
-     * @throws MailException
-     */
-    public function sendResetPasswordRequestedMail(Admin $user)
-    {
-        $this->mailService->setBody(
-            $this->templateRenderer->render('user::reset-password-requested', [
-                'config' => $this->config,
-                'user' => $user
-            ])
-        );
-        $this->mailService->setSubject(
-            'Reset password instructions for your ' . $this->config['application']['name'] . ' account'
-        );
-        $this->mailService->getMessage()->addTo($user->getIdentity(), $user->getName());
+    public function getAdmins(
+        int $offset = 0,
+        int $limit = 30,
+        string $search = null,
+        string $sort = 'created',
+        string $order = 'desc'
+    ) {
+        $result = [
+            'rows' => [],
+            'total' => 0
+        ];
+        $admins = $this->getUserRepository()->getAdmins($offset, $limit, $search, $sort, $order);
 
-        return $this->mailService->send()->isValid();
-    }
-
-    /**
-     * @param string|null $hash
-     * @return Admin|null
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findByResetPasswordHash(?string $hash): ?Admin
-    {
-        if (empty($hash)) {
-            return null;
+        /** @var Admin $admin */
+        foreach ($admins as $admin)
+        {
+            $result['rows'][] = [
+                'uuid' => $admin->getUuid()->toString(),
+                'username' => $admin->getUsername(),
+                'email' => $admin->getEmail(),
+                'firtname' => $admin->getFirstname(),
+                'lastname' => $admin->getLastname(),
+                'roles' => $admin->getRoles(),
+                'status' => $admin->getStatus(),
+                'created' => $admin->getCreated()
+            ];
         }
 
-        return $this->userRepository->findByResetPasswordHash($hash);
-    }
-
-    /**
-     * @param Admin $user
-     * @return bool
-     * @throws MailException
-     */
-    public function sendResetPasswordCompletedMail(Admin $user)
-    {
-        $this->mailService->setBody(
-            $this->templateRenderer->render('user::reset-password-completed', [
-                'config' => $this->config,
-                'user' => $user
-            ])
-        );
-        $this->mailService->setSubject(
-            'You have successfully reset the password for your ' . $this->config['application']['name'] . ' account'
-        );
-        $this->mailService->getMessage()->addTo($user->getIdentity(), $user->getName());
-
-        return $this->mailService->send()->isValid();
+        var_dump($result);exit;
     }
 }

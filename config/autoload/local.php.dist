@@ -39,24 +39,6 @@ return [
             ]
         ]
     ],
-    'uploads' => [
-        'user' => [
-            'url'  => $baseUrl . '/uploads/user',
-            'path' => \realpath(__DIR__ . '/../../public/uploads/user'),
-        ]
-    ],
-    'contact' => [
-        'notification_receivers' => [
-        ],
-        'message_receivers' => [
-            'to' => [
-                'tech@example.com'
-            ],
-            'cc' => [
-                'tech@example.com'
-            ]
-        ]
-    ],
     'translator' => [
         'cookie' => [
             'name' => 'dk30Translator',

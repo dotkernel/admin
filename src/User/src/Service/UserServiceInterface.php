@@ -22,25 +22,10 @@ interface UserServiceInterface
     public function createUser(array $data): AdminInterface;
 
     /**
-     * @param Admin $user
-     * @return bool
-     * @throws MailException
-     */
-    public function sendActivationMail(Admin $user);
-
-    /**
      * @param array $params
      * @return Admin|null
      */
     public function findOneBy(array $params = []): ?Admin;
-
-    /**
-     * @param Admin $user
-     * @return Admin
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function activateUser(Admin $user);
 
     /**
      * @param string $email

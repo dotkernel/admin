@@ -33,6 +33,24 @@ class Admin extends AbstractEntity implements AdminInterface
     protected string $username;
 
     /**
+     * @ORM\Column(name="email", type="string", length=100, nullable=false, unique=true)
+     * @var string $email
+     */
+    protected string $email;
+
+    /**
+     * @ORM\Column(name="firstname", type="string", length=255)
+     * @var $firstname
+     */
+    protected $firstname;
+
+    /**
+     * @ORM\Column(name="lastname", type="string", length=255)
+     * @var $lastname
+     */
+    protected $lastname;
+
+    /**
      * @ORM\Column(name="password", type="string", length=100, nullable=false)
      * @var string $password
      */
@@ -73,6 +91,9 @@ class Admin extends AbstractEntity implements AdminInterface
         return [
             'uuid' => $this->getUuid()->toString(),
             'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'firstname' => $this->getFirstname(),
+            'lastname' => $this->getLastname(),
             'status' => $this->getStatus(),
             'roles' => array_map(function (UserRole $role) {
                 return $role->toArray();
@@ -96,6 +117,54 @@ class Admin extends AbstractEntity implements AdminInterface
     public function setUsername(string $username): void
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname): void
+    {
+        $this->lastname = $lastname;
     }
 
     /**
