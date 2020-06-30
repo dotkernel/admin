@@ -1,4 +1,5 @@
 // Load jQuery and Bootstrap
+
 try {
     window.$ = window.jQuery = require('jquery');
     require('bootstrap');

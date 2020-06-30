@@ -1,3 +1,5 @@
+window.chart = require('chart.js');
+
 var randomScalingFactor = function () {
     return Math.round(Math.random() * 1000)
 };
@@ -110,10 +112,12 @@ window.onload = function () {
     var chart1 = document.getElementById("line-chart");
     if (chart1) {
         chart1 = chart1.getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
-            responsive: true
+        var mychart = new Chart(chart1, {
+            type: 'line',
+            data: lineChartData
         });
     }
+};
 
     /*var chart2 = document.getElementById("bar-chart").getContext("2d");
      window.myBar = new Chart(chart2).Bar(barChartData, {
@@ -127,5 +131,3 @@ window.onload = function () {
      window.myPie = new Chart(chart4).Pie(pieData, {
      responsive: true
      });*/
-
-};
