@@ -36,3 +36,6 @@ require('./components/_main');
 require('./components/_bootstrap-table');
 require('./components/_sidebar');
 require('./components/_nanoScroller');
+require('./components/_chart-data');
+require('./components/_easypiechart');
+require('./components/_easypiechart-data');
