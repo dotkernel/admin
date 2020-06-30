@@ -1093,9 +1093,10 @@ label {
   border-color: #E9ECF2;
   border-radius: 0px;
   z-index: 1000;
+  padding: 0 15px;
 }
 
-.navbar-header .navbar-brand {
+.navbar-brand {
   color: #fff;
   font-size: 16px;
   text-transform: uppercase;
@@ -1103,11 +1104,11 @@ label {
   letter-spacing: 2px;
 }
 
-.navbar-header .navbar-brand span {
+.navbar-brand span {
   color: #30a5ff;
 }
 
-.navbar-header .navbar-brand img {
+.navbar-brand img {
   display: block;
   height: 30px;
   width: auto;
@@ -1285,17 +1286,18 @@ label {
   text-decoration: none;
 }
 
-.user-menu .dropdown-toggle {
+.user-menu .nav-link {
   display: block;
+  padding: 0;
 }
 
-.user-menu .dropdown-toggle span {
+.user-menu .nav-link span {
   display: block;
   float: left;
   margin-right: 5px;
 }
 
-.user-menu .dropdown-toggle .fa-angle-down {
+.user-menu .nav-link .fa-angle-down {
   padding-top: 1px;
   padding-left: 5px;
   font-size: 28px;
@@ -1326,12 +1328,18 @@ label {
     display: block;
   }
 
-  .user-menu .dropdown-toggle span.user-message {
+  .user-menu .nav-link span.user-message {
     display: none;
   }
 
   .user-menu .fa-angle-down {
     display: none;
+  }
+
+  .user-menu .dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: auto;
   }
 }
 
@@ -1382,10 +1390,6 @@ label {
     width: 60px;
     background-color: #282828;
     box-shadow: 1px 0px 10px rgba(0, 0, 0, .05);
-  }
-
-  .navbar-header {
-    width: 100%;
   }
 
   .sidebar .item-label {
@@ -1635,6 +1639,12 @@ sideRightIn .sidebar .nano-sidebar {
   font-size: 12px;
 }
 
+@media (min-width: 768px ){
+  .navbar-toggler {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
   .sidebar .toggle {
     display: none;
@@ -1649,17 +1659,17 @@ sideRightIn .sidebar .nano-sidebar {
     line-height: 22px;
   }
 
-  .navbar-toggle:focus, .navbar-toggle:hover, .navbar-toggle:active {
+  .navbar-toggler:focus, .navbar-toggler:hover, .navbar-toggler:active {
     background: transparent;
     box-shadow: none;
   }
 
-  .navbar-toggle {
+  .navbar-toggler {
     margin: 10px 5px 8px 7px;
     background-color: #E9ECF2;
   }
 
-  .navbar-toggle .icon-bar {
+  .navbar-toggler-icon {
     background: #C71F3A;
   }
 
