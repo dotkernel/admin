@@ -2,7 +2,7 @@
 
 namespace Frontend\User\Service;
 
-use Frontend\User\Entity\UserRole;
+use Frontend\User\Entity\AdminRole;
 
 /**
  * Class UserRoleService
@@ -12,7 +12,7 @@ interface UserRoleServiceInterface
 {
     /**
      * @param array $params
-     * @return UserRole|null
+     * @return AdminRole|null
      */
-    public function findOneBy(array $params = []): ?UserRole;
+    public function findOneBy(array $params = []): ?AdminRole;
 }

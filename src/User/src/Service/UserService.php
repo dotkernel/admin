@@ -16,7 +16,7 @@ use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\UserAvatar;
 use Frontend\User\Entity\UserDetail;
 use Frontend\User\Entity\AdminInterface;
-use Frontend\User\Entity\UserRole;
+use Frontend\User\Entity\AdminRole;
 use Frontend\User\Repository\UserRepository;
 use Frontend\User\Repository\UserRoleRepository;
 use Laminas\Diactoros\UploadedFile;
@@ -77,7 +77,7 @@ class UserService implements UserServiceInterface
     ) {
         $this->em = $em;
         $this->userRepository = $em->getRepository(Admin::class);
-        $this->userRoleRepository = $em->getRepository(UserRole::class);
+        $this->userRoleRepository = $em->getRepository(AdminRole::class);
         $this->userRoleService = $userRoleService;
         $this->mailService = $mailService;
         $this->templateRenderer = $templateRenderer;
@@ -128,14 +128,14 @@ class UserService implements UserServiceInterface
         if (!empty($data['roles'])) {
             foreach ($data['roles'] as $roleName) {
                 $role = $this->userRoleRepository->findByName($roleName);
-                if (!$role instanceof UserRole) {
+                if (!$role instanceof AdminRole) {
                     throw new \Exception('Role not found: ' . $roleName);
                 }
                 $user->addRole($role);
             }
         } else {
-            $role = $this->userRoleService->findOneBy(['name' => UserRole::ROLE_USER]);
-            if ($role instanceof UserRole) {
+            $role = $this->userRoleService->findOneBy(['name' => AdminRole::ROLE_USER]);
+            if ($role instanceof AdminRole) {
                 $user->addRole($role);
             }
         }
@@ -212,7 +212,7 @@ class UserService implements UserServiceInterface
             $user->resetRoles();
             foreach ($data['roles'] as $roleData) {
                 $role = $this->userRoleService->findOneBy(['uuid' => $roleData['uuid']]);
-                if ($role instanceof UserRole) {
+                if ($role instanceof AdminRole) {
                     $user->addRole($role);
                 }
             }
@@ -331,7 +331,7 @@ class UserService implements UserServiceInterface
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!empty($user)) {
-            /** @var UserRole $role */
+            /** @var AdminRole $role */
             foreach ($user->getRoles() as $role) {
                 $roleList[] = $role->getName();
             }
@@ -340,6 +340,15 @@ class UserService implements UserServiceInterface
         return $roleList;
     }
 
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param string|null $search
+     * @param string $sort
+     * @param string $order
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getAdmins(
         int $offset = 0,
         int $limit = 30,
@@ -349,25 +358,48 @@ class UserService implements UserServiceInterface
     ) {
         $result = [
             'rows' => [],
-            'total' => 0
+            'total' => $this->getUserRepository()->countAdmins($search)
         ];
         $admins = $this->getUserRepository()->getAdmins($offset, $limit, $search, $sort, $order);
 
         /** @var Admin $admin */
-        foreach ($admins as $admin)
-        {
+        foreach ($admins as $admin) {
+            $roles = [];
+            /** @var AdminRole $role */
+            foreach ($admin->getRoles() as $role) {
+                $roles[] = $role->getName();
+            }
+
             $result['rows'][] = [
                 'uuid' => $admin->getUuid()->toString(),
                 'username' => $admin->getUsername(),
                 'email' => $admin->getEmail(),
-                'firtname' => $admin->getFirstname(),
-                'lastname' => $admin->getLastname(),
-                'roles' => $admin->getRoles(),
+                'firstName' => $admin->getFirstname(),
+                'lastName' => $admin->getLastname(),
+                'roles' => implode(", ", $roles),
                 'status' => $admin->getStatus(),
-                'created' => $admin->getCreated()
+                'created' => $admin->getCreated()->format("Y-m-d")
             ];
         }
 
-        var_dump($result);exit;
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormProcessedRoles()
+    {
+        $roles = [];
+        $result = $this->getUserRoleRepository()->getRoles();
+
+        if (!empty($result)) {
+            /** @var AdminRole $role */
+            foreach ($result as $role) {
+                $roles[$role->getUuid()->toString()] = $role->getName();
+            }
+        }
+
+        return $roles;
     }
 }

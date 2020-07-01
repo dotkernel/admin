@@ -19,11 +19,11 @@ use function array_map;
  */
 class Admin extends AbstractEntity implements AdminInterface
 {
-    public const STATUS_PENDING = 'pending';
     public const STATUS_ACTIVE = 'active';
+    public const STATUS_INACTIVE = 'inactive';
     public const STATUSES = [
-        self::STATUS_PENDING,
-        self::STATUS_ACTIVE
+        self::STATUS_ACTIVE,
+        self::STATUS_INACTIVE
     ];
 
     /**
@@ -60,10 +60,10 @@ class Admin extends AbstractEntity implements AdminInterface
      * @ORM\Column(name="status", type="string", length=20, columnDefinition="ENUM('pending', 'active')")
      * @var string $status
      */
-    protected string $status = self::STATUS_PENDING;
+    protected string $status = self::STATUS_ACTIVE;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Frontend\User\Entity\UserRole")
+     * @ORM\ManyToMany(targetEntity="Frontend\User\Entity\AdminRole")
      * @ORM\JoinTable(
      *     name="admin_roles",
      *     joinColumns={@ORM\JoinColumn(name="userUuid", referencedColumnName="uuid")},
@@ -95,7 +95,7 @@ class Admin extends AbstractEntity implements AdminInterface
             'firstname' => $this->getFirstname(),
             'lastname' => $this->getLastname(),
             'status' => $this->getStatus(),
-            'roles' => array_map(function (UserRole $role) {
+            'roles' => array_map(function (AdminRole $role) {
                 return $role->toArray();
             }, $this->getRoles()),
             'created' => $this->getCreated(),
@@ -216,10 +216,10 @@ class Admin extends AbstractEntity implements AdminInterface
     }
 
     /**
-     * @param UserRole $role
+     * @param AdminRole $role
      * @return AdminInterface
      */
-    public function addRole(UserRole $role): AdminInterface
+    public function addRole(AdminRole $role): AdminInterface
     {
         if (!$this->roles->contains($role)) {
             $this->roles->add($role);
@@ -229,10 +229,10 @@ class Admin extends AbstractEntity implements AdminInterface
     }
 
     /**
-     * @param UserRole $role
+     * @param AdminRole $role
      * @return AdminInterface
      */
-    public function removeRole(UserRole $role): AdminInterface
+    public function removeRole(AdminRole $role): AdminInterface
     {
         if (!$this->roles->contains($role)) {
             $this->roles->removeElement($role);

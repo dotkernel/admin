@@ -124,4 +124,23 @@ class UserRepository extends AbstractRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param string|null $search
+     * @return int|mixed|string|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countAdmins(string $search = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(admin)')
+            ->from(Admin::class, 'admin');
+
+        if (!is_null($search)) {
+            $qb->where($qb->expr()->like('admin.email', ':search'))
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

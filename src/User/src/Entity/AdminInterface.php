@@ -59,14 +59,14 @@ interface AdminInterface
     public function setRoles(ArrayCollection $roles): void;
 
     /**
-     * @param UserRole $role
+     * @param AdminRole $role
      * @return \Frontend\User\Entity\AdminInterface
      */
-    public function addRole(UserRole $role): AdminInterface;
+    public function addRole(AdminRole $role): AdminInterface;
 
     /**
-     * @param UserRole $role
+     * @param AdminRole $role
      * @return \Frontend\User\Entity\AdminInterface
      */
-    public function removeRole(UserRole $role): AdminInterface;
+    public function removeRole(AdminRole $role): AdminInterface;
 }
