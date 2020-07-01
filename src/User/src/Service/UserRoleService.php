@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\User\Service;
 
-use Frontend\User\Entity\UserRole;
+use Frontend\User\Entity\AdminRole;
 use Frontend\User\Repository\UserRoleRepository;
 use Doctrine\ORM\EntityManager;
 use Dot\AnnotatedServices\Annotation\Inject;
@@ -26,20 +26,20 @@ class UserRoleService implements UserRoleServiceInterface
      */
     public function __construct(EntityManager $entityManager)
     {
-        $this->roleRepository = $entityManager->getRepository(UserRole::class);
+        $this->roleRepository = $entityManager->getRepository(AdminRole::class);
     }
 
     /**
      * @param array $params
-     * @return UserRole|null
+     * @return AdminRole|null
      */
-    public function findOneBy(array $params = []): ?UserRole
+    public function findOneBy(array $params = []): ?AdminRole
     {
         if (empty($params)) {
             return null;
         }
 
-        /** @var UserRole $role */
+        /** @var AdminRole $role */
         $role = $this->roleRepository->findOneBy($params);
 
         return $role;

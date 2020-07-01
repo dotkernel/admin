@@ -2,16 +2,18 @@
 
 namespace Frontend\User\Controller;
 
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Plugin\FormsPlugin;
+use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\LoginForm;
+use Frontend\User\FormData\RoleData;
 use Frontend\User\Service\UserService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -41,22 +43,18 @@ class AdminController extends AbstractActionController
     /** @var FormsPlugin $forms */
     protected FormsPlugin $forms;
 
+    /** @var AdminForm $adminForm */
+    protected AdminForm $adminForm;
+
     /**
-     * UserController constructor.
+     * AdminController constructor.
      * @param UserService $userService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
      * @param AuthenticationService $authenticationService
      * @param FlashMessenger $messenger
      * @param FormsPlugin $forms
-     * @Inject({
-     *     UserService::class,
-     *     RouterInterface::class,
-     *     TemplateRendererInterface::class,
-     *     AuthenticationService::class,
-     *     FlashMessenger::class,
-     *     FormsPlugin::class
-     *     })
+     * @param AdminForm $adminForm
      */
     public function __construct(
         UserService $userService,
@@ -64,7 +62,8 @@ class AdminController extends AbstractActionController
         TemplateRendererInterface $template,
         AuthenticationService $authenticationService,
         FlashMessenger $messenger,
-        FormsPlugin $forms
+        FormsPlugin $forms,
+        AdminForm $adminForm
     ) {
         $this->userService = $userService;
         $this->router = $router;
@@ -72,8 +71,54 @@ class AdminController extends AbstractActionController
         $this->authenticationService = $authenticationService;
         $this->messenger = $messenger;
         $this->forms = $forms;
+        $this->adminForm = $adminForm;
     }
 
+    /**
+     * @return ResponseInterface
+     */
+    public function addAction(): ResponseInterface
+    {
+        $request = $this->request;
+
+//        if ($request->getMethod() === 'POST') {
+//            $data = $request->getParsedBody();
+//            $form->setData($data);
+//            if ($form->isValid()) {
+//                $entity = $form->getData();
+//                try {
+//                    $entity = $this->service->save($entity);
+//                    if ($entity) {
+//                        return $this->generateJsonOutput($this->getEntityCreateSuccessMessage());
+//                    } else {
+//                        return $this->generateJsonOutput($this->getEntityCreateErrorMessage(), 'error');
+//                    }
+//                } catch (\Exception $e) {
+//                    $message = $this->getEntityCreateErrorMessage();
+//                    if ($this->isDebug()) {
+//                        $message = (array)$e->getMessage();
+//                    }
+//                    return $this->generateJsonOutput($message, 'error');
+//                }
+//            } else {
+//                return $this->generateJsonOutput($this->forms()->getErrors($form), 'validation', $form);
+//            }
+//        }
+
+        return new HtmlResponse(
+            $this->template->render(
+                'partial::ajax-form',
+                [
+                    'form' => $this->adminForm,
+                    'formAction' => '/admin/add'
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function listAction()
     {
         $params = $this->getRequest()->getQueryParams();
@@ -85,7 +130,8 @@ class AdminController extends AbstractActionController
         $limit = (!empty($params['limit'])) ? $params['limit'] : 30;
 
         $result = $this->userService->getAdmins($offset, $limit, $search, $sort, $order);
-        $users = $this->userService;
+
+        return new JsonResponse($result);
     }
 
     /**

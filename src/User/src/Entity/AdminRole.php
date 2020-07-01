@@ -8,21 +8,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Frontend\App\Entity\AbstractEntity;
 
 /**
- * Class UserRole
+ * Class AdminRole
  * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRoleRepository")
  * @ORM\Table(name="admin_role")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\User\Entity
  */
-class UserRole extends AbstractEntity
+class AdminRole extends AbstractEntity
 {
     public const ROLE_ADMIN = 'admin';
-    public const ROLE_USER = 'user';
-    public const ROLE_GUEST = 'guest';
+    public const ROLE_SUPERUSER = 'superuser';
     public const ROLES = [
         self::ROLE_ADMIN,
-        self::ROLE_USER,
-        self::ROLE_GUEST
+        self::ROLE_SUPERUSER
     ];
 
     /**
@@ -32,7 +30,7 @@ class UserRole extends AbstractEntity
     protected string $name;
 
     /**
-     * UserRole constructor.
+     * AdminRole constructor.
      */
     public function __construct()
     {
@@ -49,7 +47,7 @@ class UserRole extends AbstractEntity
 
     /**
      * @param string $name
-     * @return UserRole
+     * @return AdminRole
      */
     public function setName(string $name): self
     {

@@ -108,7 +108,7 @@
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     });
 
-    var showAlertDialog = function (title, message, type) {
+    function showAlertDialog(title, message, type) {
         var iconClass = 'fa-info-circle color-blue';
         if (type == 'error') {
             iconClass = 'fa-exclamation-circle color-red';
@@ -119,15 +119,15 @@
         modal.find("#modalAlertTitle").text(title);
         modal.find("#modalAlertMessage").text(message);
         modal.modal('show');
-    };
+    }
 
-    var showLoading = function () {
+    function showLoading() {
         $("#loading").modal({backdrop:false,show:true});
-    };
+    }
 
-    var hideLoading = function () {
+    function hideLoading() {
         $("#loading").modal('hide');
-    };
+    }
 </script>
 
 {% block javascript %}{% endblock %}

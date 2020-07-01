@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace Frontend\User\Form;
 
-use Frontend\User\Fieldset\UserDetailFieldset;
-use Frontend\User\InputFilter\RegisterInputFilter;
 use Frontend\User\InputFilter\ResetPasswordInputFilter;
-use Frontend\User\InputFilter\UserDetailInputFilter;
-use Laminas\Form\Element\Collection;
-use Laminas\Form\Element\Email;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
-use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
 

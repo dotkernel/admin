@@ -1,0 +1,23 @@
+{% set dummy = form.setAttribute('method', 'post') %}
+{% set dummy = form.setAttribute('id', 'ajaxForm') %}
+{% set dummy = form.setAttribute('action', formAction) %}
+{% set dummy = form.prepare() %}
+
+{{ form().openTag(form) | raw }}
+{% include '@partial/form-display-elements.html.twig' with {'form' : form, 'showLabels' : true} only %}
+{{ form().closeTag() | raw }}
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        var roleSelect = $('#rolesSelect');
+        if (roleSelect.length) {
+            roleSelect.multiselect({
+                buttonContainer: '<div class="input-group"></div>',
+                nonSelectedText: 'Select at least one user role...',
+                allSelectedText: false,
+                numberDisplayed: 4,
+                maxHeight: 200
+            });
+        }
+    });
+</script>
