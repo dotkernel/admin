@@ -47,6 +47,7 @@ class LoginForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Username',
+                'class' => 'form-control'
             ],
             'type' => Text::class
         ]);
@@ -58,6 +59,7 @@ class LoginForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Password',
+                'class' => 'form-control'
             ],
             'type' => Password::class
         ]);
@@ -66,7 +68,8 @@ class LoginForm extends Form
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
-                'value' => 'Log in'
+                'value' => 'Log in',
+                'class' => 'btn btn-primary btn-block'
             ],
             'type' => Submit::class
         ]);

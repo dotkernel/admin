@@ -105,11 +105,6 @@ h3, h4 {
   color: #ef4040;
 }
 
-.no-padding {
-  padding: 0;
-  margin: 0;
-}
-
 .glyphicon-xl {
   font-size: 6em;
 }
@@ -340,97 +335,63 @@ a.bg-danger:hover {
 
 /*Panels*/
 
-.panel {
-  border: 0;
+.card {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 20px;
+
+  .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 10px 15px;
+
+    svg {
+      width: 26px;
+      height: 26px;
+      margin-right: 10px;
+    }
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+
+  .card-footer {
+    background-color: #ffffff;
+    padding: 10px 15px;
+  }
 }
 
-.panel-heading {
-  font-size: 18px;
-  font-weight: 300;
-  letter-spacing: 0.025em;
-  height: 66px;
-  line-height: 45px;
+.card.card-blue {
+  .card-header {
+    background-color: #2E9DF2;
+    color: #ffffff;
+  }
+
+  .card-footer {
+    border-top: 3px solid #30A5FF;
+  }
 }
 
-.panel-default .panel-heading {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  color: #5f6468;
-}
-
-.panel-footer {
-  background: #fff;
-  border-top: 1px solid #eee;
-}
-
-.panel-widget {
-  padding: 0;
-  position: relative;
-}
-
-.panel-widget .panel-footer {
-  border: 0;
-  text-align: center;
-}
-
-.panel-footer .input-group {
-  padding: 0px;
-  margin: 0 -5px;
-}
-
-.panel-footer .input-group-btn:last-child > .btn,
-.panel-footer .input-group-btn:last-child > .btn-group {
-  margin: 0;
-}
-
-.panel-widget .panel-footer a {
-  color: #999;
-}
-
-.panel-widget .panel-footer a:hover {
-  color: #666;
-  text-decoration: none;
-}
-
-.panel-blue {
-  background: #30a5ff;
-  color: #fff;
-}
-
-.panel-teal {
-  background: #1ebfae;
-  color: #fff;
-}
-
-.panel-orange {
-  background: #ffb53e;
-  color: #fff;
-}
-
-.panel-red {
-  background: #f9243f;
-  color: #fff;
-}
-
-.panel-blue .panel-body p,
-.panel-teal .panel-body p,
-.panel-orange .panel-body p,
-.panel-red .panel-body p {
+.card-blue .card-body p,
+.card-teal .card-body p,
+.card-orange .card-body p,
+.card-red .card-body p {
   color: #fff;
   color: rgba(255, 255, 255, .8);
 }
 
-.panel-blue .panel-heading,
-.panel-teal .panel-heading,
-.panel-orange .panel-heading,
-.panel-red .panel-heading {
+.card-blue .card-header,
+.card-teal .card-header,
+.card-orange .card-header,
+.card-red .card-header {
   border-bottom: 1px solid rgba(255, 255, 255, .2);
 }
 
-.panel-blue .text-muted,
-.panel-teal .text-muted,
-.panel-orange .text-muted,
-.panel-red .text-muted {
+.card-blue .text-muted,
+.card-teal .text-muted,
+.card-orange .text-muted,
+.card-red .text-muted {
   color: rgba(255, 255, 255, .5);
 }
 
@@ -451,7 +412,7 @@ a.bg-danger:hover {
   text-align: left;
   line-height: 1.6em;
   margin: 0px;
-  padding: 35px 20px;
+  padding: 35px 20px !important;
   height: 110px;
   color: #999;
   font-weight: 300;
@@ -489,28 +450,24 @@ a.bg-danger:hover {
   color: #5f6468;
 }
 
-.panel-blue .widget-left {
+.card-blue .widget-left {
   background: #30a5ff;
   color: #fff;
 }
 
-.panel-teal .widget-left {
+.card-teal .widget-left {
   background: #1ebfae;
   color: #fff;
 }
 
-.panel-orange .widget-left {
+.card-orange .widget-left {
   background: #ffb53e;
   color: #fff;
 }
 
-.panel-red .widget-left {
+.card-red .widget-left {
   background: #f9243f;
   color: #fff;
-}
-
-.panel-widget {
-  background: #fff;
 }
 
 /*Jumbotron*/
@@ -579,6 +536,7 @@ a.bg-danger:hover {
   background: #e9ecf2;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
   margin: 0px;
+  width: 100%;
 }
 
 @media (max-width: 767px) {
@@ -600,8 +558,7 @@ h1.page-header {
 
 .easypiechart-panel {
   text-align: center;
-  padding: 1px 0;
-  margin-bottom: 20px;
+  padding: 15px 0 0;
 }
 
 .placeholder h2 {
@@ -778,7 +735,7 @@ h1.page-header {
   margin-right: 5px;
 }
 
-.chat .panel-body {
+.chat .card-body {
   overflow-y: scroll;
   height: 300px;
 }
@@ -847,7 +804,7 @@ h1.page-header {
   stroke-width: 4px;
 }
 
-.alert .glyph, .panel-heading .glyph {
+.alert .glyph {
   width: 26px;
   height: 26px;
   margin: 0 10px 0 0;
@@ -1069,6 +1026,13 @@ input.form-control {
   border-color: #C60B31;
   color: #FFFFFF;
 }
+
+.btn-success {
+  height: 50px;
+  border-radius: 2px;
+}
+
+
 
 .btn-primary:hover,
 .btn-primary:active,
@@ -1718,6 +1682,7 @@ sideRightIn .sidebar .nano-sidebar {
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  width: calc(100% - 60px);
 }
 
 .main-content .main {
@@ -1732,6 +1697,7 @@ sideRightIn .sidebar .nano-sidebar {
 @media (max-width: 767px) {
   .main-content {
     margin-left: 0px;
+    width: 100%;
   }
 
   .main-content .main {
