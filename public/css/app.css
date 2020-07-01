@@ -8658,17 +8658,21 @@ h1.page-header {
   margin: 0; }
 
 .todo-list .checkbox {
-  display: inline-block;
-  margin: 0px; }
+  margin: 0px;
+  flex: 1; }
 
-.panel-body input[type=checkbox]:checked + label {
+.todo-list .checkbox .form-check-label {
+  padding-left: 15px; }
+
+.card-body input[type=checkbox]:checked + label {
   text-decoration: line-through;
   color: #777; }
 
 .todo-list-item {
   list-style: none;
   line-height: 0.9;
-  padding: 14px 15px 8px 15px; }
+  padding: 14px 15px 8px 15px;
+  display: flex; }
 
 .todo-list-item:hover, a.todo-list-item:focus {
   text-decoration: none;
