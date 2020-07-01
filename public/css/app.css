@@ -8102,7 +8102,8 @@ a, a:hover, a:focus {
   color: #30a5ff; }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #5f6468; }
+  color: #5f6468;
+  font-family: 'Source Sans Pro', sans-serif; }
 
 h1 {
   font-weight: 300;
@@ -8193,6 +8194,9 @@ h3, h4 {
   border: 1px solid #30a5ff;
   outline: 0;
   box-shadow: inset 0px 0px 0px 1px #30a5ff; }
+
+button, input, select, textarea {
+  font-family: 'Source Sans Pro', sans-serif; }
 
 /*Buttons*/
 a.btn:hover,
@@ -8380,7 +8384,9 @@ a.bg-danger:hover {
   .card .card-header {
     background-color: #ffffff;
     border-bottom: 1px solid #EEEEEE;
-    padding: 10px 15px; }
+    padding: 10px 15px;
+    font-weight: 400;
+    font-size: 18px; }
     .card .card-header svg {
       width: 26px;
       height: 26px;
@@ -8461,7 +8467,8 @@ a.bg-danger:hover {
   color: #9fadbb; }
 
 .widget-right .large {
-  color: #5f6468; }
+  color: #5f6468;
+  font-weight: 400; }
 
 .card-blue .widget-left {
   background: #30a5ff;
@@ -8530,13 +8537,14 @@ a.bg-danger:hover {
   border-radius: 0;
   padding: 15px 40px;
   background: #e9ecf2;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  margin: 0px;
-  width: 100%; }
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+  margin: 0;
+  width: 100%;
+  flex: 1; }
 
 @media (max-width: 767px) {
   .breadcrumb {
-    padding: 15px; } }
+    padding: 15px 0 0 0; } }
 
 h1.page-header {
   margin-top: 15px;
@@ -8863,6 +8871,7 @@ Version 3.0
   height: 1px; }
 
 body {
+  font-family: 'Source Sans Pro', sans-serif;
   background: #f1f4f7;
   color: #5f6468;
   font-size: 16px;
@@ -9105,6 +9114,15 @@ label {
 .user-menu a {
   color: #A2A2A2;
   line-height: 30px; }
+
+.user-menu .dropdown-item {
+  color: #333333;
+  padding: 3px 20px;
+  font-size: 14px;
+  line-height: 20px; }
+
+.user-menu .dropdown-item:active {
+  background-color: #F8F9FA; }
 
 .user-menu a:hover,
 .user-menu a:focus {
@@ -9397,13 +9415,20 @@ sideRightIn .sidebar .nano-sidebar {
     font-size: 22px;
     line-height: 22px; }
   .navbar-toggler:focus, .navbar-toggler:hover, .navbar-toggler:active {
-    background: transparent;
-    box-shadow: none; }
-  .navbar-toggler {
-    margin: 10px 5px 8px 7px;
+    box-shadow: none;
     background-color: #E9ECF2; }
-  .navbar-toggler-icon {
-    background: #C71F3A; }
+  .navbar-toggler {
+    height: 58px;
+    background-color: #E9ECF2;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05); }
+    .navbar-toggler svg {
+      width: 32px;
+      height: 32px;
+      color: #C71F3A; }
+  .navbar .navbar-toggler .icon-bar {
+    background: black !important; }
   .user-menu-collapse {
     display: block;
     border: 0px; }
@@ -9735,7 +9760,8 @@ p.tooltip-title {
   margin-right: 5px; }
 
 .bootstrap-table .fixed-table-toolbar .columns-right {
-  margin-left: 5px; }
+  margin-left: 5px;
+  height: 50px; }
 
 .bootstrap-table .fixed-table-toolbar .pull-right .dropdown-menu {
   right: 0;

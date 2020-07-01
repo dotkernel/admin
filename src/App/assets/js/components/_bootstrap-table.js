@@ -2916,7 +2916,7 @@
 	    icons: {
 	      paginationSwitchDown: 'fa-caret-square-down',
 	      paginationSwitchUp: 'fa-caret-square-up',
-	      refresh: 'fa-sync',
+	      refresh: 'fa-refresh',
 	      toggleOff: 'fa-toggle-off',
 	      toggleOn: 'fa-toggle-on',
 	      columns: 'fa-th-list',
