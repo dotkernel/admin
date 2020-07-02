@@ -14,7 +14,9 @@
 
     <title>{% block title %}{% endblock %} - DotKernel</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>#}
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -25,7 +27,7 @@
 </head>
 
 <body class="side-collapse-container">
-<nav class="navbar navbar-expand-md navbar-light bg-light" role="navigation">
+<nav class="navbar navbar-expand-md navbar-light" role="navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="{{ asset('images/app/logo.svg') }}" alt="DotKernel"
@@ -70,9 +72,9 @@
         <div class="breadcrumb-section">
             <div class="row">
                 <button data-toggle="collapse-side" data-target=".side-collapse"
-                        data-target-2=".side-collapse-container" type="button" class="navbar-toggler pull-left"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="navbar-toggler-icon"></span>
+                        data-target-2=".side-collapse-container" type="button" class="navbar-toggler float-left"
+                        aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
                 </button>
                 <ol class="breadcrumb">
                     <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
