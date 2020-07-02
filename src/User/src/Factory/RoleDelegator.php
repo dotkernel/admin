@@ -10,10 +10,10 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 
 /**
- * Class RoleFieldsetDelegator
+ * Class RoleDelegator
  * @package Frontend\User\Factory
  */
-class RoleFieldsetDelegator implements DelegatorFactoryInterface
+class RoleDelegator implements DelegatorFactoryInterface
 {
     /**
      * @param ContainerInterface $container

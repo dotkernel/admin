@@ -12,10 +12,10 @@ use function array_map;
 
 /**
  * Class Admin
- * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Frontend\User\Repository\AdminRepository")
  * @ORM\Table(name="admin")
  * @ORM\HasLifecycleCallbacks()
- * @package Frontend\Admin\Entity
+ * @package Frontend\User\Entity
  */
 class Admin extends AbstractEntity implements AdminInterface
 {
@@ -39,16 +39,16 @@ class Admin extends AbstractEntity implements AdminInterface
     protected string $email;
 
     /**
-     * @ORM\Column(name="firstname", type="string", length=255)
-     * @var $firstname
+     * @ORM\Column(name="firstName", type="string", length=255)
+     * @var $firstName
      */
-    protected $firstname;
+    protected $firstName;
 
     /**
-     * @ORM\Column(name="lastname", type="string", length=255)
-     * @var $lastname
+     * @ORM\Column(name="lastName", type="string", length=255)
+     * @var $lastName
      */
-    protected $lastname;
+    protected $lastName;
 
     /**
      * @ORM\Column(name="password", type="string", length=100, nullable=false)
@@ -92,8 +92,8 @@ class Admin extends AbstractEntity implements AdminInterface
             'uuid' => $this->getUuid()->toString(),
             'username' => $this->getUsername(),
             'email' => $this->getEmail(),
-            'firstname' => $this->getFirstname(),
-            'lastname' => $this->getLastname(),
+            'firstName' => $this->getfirstName(),
+            'lastName' => $this->getlastName(),
             'status' => $this->getStatus(),
             'roles' => array_map(function (AdminRole $role) {
                 return $role->toArray();
@@ -138,33 +138,33 @@ class Admin extends AbstractEntity implements AdminInterface
     /**
      * @return mixed
      */
-    public function getFirstname()
+    public function getFirstName()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
     /**
-     * @param mixed $firstname
+     * @param mixed $firstName
      */
-    public function setFirstname($firstname): void
+    public function setFirstName($firstName): void
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
     }
 
     /**
      * @return mixed
      */
-    public function getLastname()
+    public function getLastName()
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
     /**
-     * @param mixed $lastname
+     * @param mixed $lastName
      */
-    public function setLastname($lastname): void
+    public function setLastName($lastName): void
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
     }
 
     /**

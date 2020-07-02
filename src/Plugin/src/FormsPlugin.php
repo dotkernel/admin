@@ -124,6 +124,31 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
+     * @param Form $form
+     * @return string
+     */
+    public function getMessagesAsString(Form $form)
+    {
+        $formMessages = $form->getMessages();
+        $messages = '';
+        foreach ($formMessages as $message) {
+            if (is_array($message)) {
+                foreach ($message as $m) {
+                    if (is_string($m)) {
+                        $messages .= $m . '<br>';
+                    } elseif (is_array($m)) {
+                        $messages .= $this->getMessagesAsString($m);
+                    }
+                }
+            } elseif (is_string($message)) {
+                $messages .= $message . '<br>';
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
      * @param array $formMessages
      * @return array
      */

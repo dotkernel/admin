@@ -8,11 +8,20 @@ use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\AdminRole;
 
 /**
- * Class UserRoleRepository
+ * Class AdminRoleRepository
  * @package Frontend\Admin\Repository
  */
-class UserRoleRepository extends AbstractRepository
+class AdminRoleRepository extends AbstractRepository
 {
+    /**
+     * @param string $uuid
+     * @return object|null
+     */
+    public function getRole(string $uuid)
+    {
+        return $this->find($uuid);
+    }
+
     /**
      * @param string $name
      * @return AdminRole|null

@@ -2,13 +2,17 @@
 
 namespace Frontend\User\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Plugin\FormsPlugin;
+use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
+use Frontend\User\Form\ChangePasswordForm;
 use Frontend\User\Form\LoginForm;
-use Frontend\User\FormData\RoleData;
+use Frontend\User\InputFilter\EditAdminInputFilter;
+use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -34,6 +38,9 @@ class AdminController extends AbstractActionController
     /** @var UserService $userService */
     protected UserService $userService;
 
+    /** @var AdminService $adminService */
+    protected AdminService $adminService;
+
     /** @var AuthenticationServiceInterface $authenticationService */
     protected AuthenticationServiceInterface $authenticationService;
 
@@ -49,6 +56,7 @@ class AdminController extends AbstractActionController
     /**
      * AdminController constructor.
      * @param UserService $userService
+     * @param AdminService $adminService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
      * @param AuthenticationService $authenticationService
@@ -58,6 +66,7 @@ class AdminController extends AbstractActionController
      */
     public function __construct(
         UserService $userService,
+        AdminService $adminService,
         RouterInterface $router,
         TemplateRendererInterface $template,
         AuthenticationService $authenticationService,
@@ -72,6 +81,7 @@ class AdminController extends AbstractActionController
         $this->messenger = $messenger;
         $this->forms = $forms;
         $this->adminForm = $adminForm;
+        $this->adminService = $adminService;
     }
 
     /**
@@ -81,29 +91,26 @@ class AdminController extends AbstractActionController
     {
         $request = $this->request;
 
-//        if ($request->getMethod() === 'POST') {
-//            $data = $request->getParsedBody();
-//            $form->setData($data);
-//            if ($form->isValid()) {
-//                $entity = $form->getData();
-//                try {
-//                    $entity = $this->service->save($entity);
-//                    if ($entity) {
-//                        return $this->generateJsonOutput($this->getEntityCreateSuccessMessage());
-//                    } else {
-//                        return $this->generateJsonOutput($this->getEntityCreateErrorMessage(), 'error');
-//                    }
-//                } catch (\Exception $e) {
-//                    $message = $this->getEntityCreateErrorMessage();
-//                    if ($this->isDebug()) {
-//                        $message = (array)$e->getMessage();
-//                    }
-//                    return $this->generateJsonOutput($message, 'error');
-//                }
-//            } else {
-//                return $this->generateJsonOutput($this->forms()->getErrors($form), 'validation', $form);
-//            }
-//        }
+        if ($request->getMethod() === 'POST') {
+            $data = $request->getParsedBody();
+            $this->adminForm->setData($data);
+            if ($this->adminForm->isValid()) {
+                $result = $this->adminForm->getData();
+                try {
+                    $this->adminService->createAdmin($result);
+                    return new JsonResponse(['success' => 'success', 'message' => 'Admin created successfully']);
+                } catch (\Exception $e) {
+                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                }
+            } else {
+                return new JsonResponse(
+                    [
+                        'success' => 'error',
+                        'message' => $this->forms->getMessagesAsString($this->adminForm)
+                    ]
+                );
+            }
+        }
 
         return new HtmlResponse(
             $this->template->render(
@@ -114,6 +121,73 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function editAction(): ResponseInterface
+    {//verify if username and email already exists
+        $request = $this->getRequest();
+        $uuid = $request->getAttribute('uuid');
+
+        $admin = $this->adminService->getAdminRepository()->find($uuid);
+
+        if ($request->getMethod() === 'POST') {
+            $data = $request->getParsedBody();
+            $this->adminForm->setData($data);
+            $this->adminForm->setDifferentInputFilter(new EditAdminInputFilter());
+            if ($this->adminForm->isValid()) {
+                $result = $this->adminForm->getData();
+                try {
+                    $this->adminService->updateAdmin($admin, $result);
+                    return new JsonResponse(['success' => 'success', 'message' => 'Admin updated successfully']);
+                } catch (\Exception $e) {
+                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                }
+            } else {
+                return new JsonResponse(
+                    [
+                        'success' => 'error',
+                        'message' => $this->forms->getMessagesAsString($this->adminForm)
+                    ]
+                );
+            }
+        }
+
+        $this->adminForm->bind($admin);
+
+        return new HtmlResponse(
+            $this->template->render(
+                'partial::ajax-form',
+                [
+                    'form' => $this->adminForm,
+                    'formAction' => '/admin/edit/' . $uuid
+                ]
+            )
+        );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function deleteAction()
+    {
+        $request = $this->getRequest();
+        $data = $request->getParsedBody();
+
+        if (!empty($data['uuid'])) {
+            $admin = $this->adminService->getAdminRepository()->find($data['uuid']);
+        } else {
+            return new JsonResponse(['success' => 'error', 'message' => 'Could not find user']);
+        }
+
+        try {
+            $this->adminService->getAdminRepository()->deleteAdmin($admin);
+            return new JsonResponse(['success' => 'success', 'message' => 'Admin Deleted Successfully']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -129,7 +203,7 @@ class AdminController extends AbstractActionController
         $offset = (!empty($params['offset'])) ? $params['offset'] : 0;
         $limit = (!empty($params['limit'])) ? $params['limit'] : 30;
 
-        $result = $this->userService->getAdmins($offset, $limit, $search, $sort, $order);
+        $result = $this->adminService->getAdmins($offset, $limit, $search, $sort, $order);
 
         return new JsonResponse($result);
     }
@@ -201,6 +275,22 @@ class AdminController extends AbstractActionController
         $this->authenticationService->clearIdentity();
         return new RedirectResponse(
             $this->router->generateUri('admin', ['action' => 'login'])
+        );
+    }
+
+    /**
+     * @return HtmlResponse
+     */
+    public function accountAction()
+    {
+        $form = new AccountForm();
+        $changePasswordForm = new ChangePasswordForm();
+
+        return new HtmlResponse(
+            $this->template->render('admin::account', [
+                'form' => $form,
+                'changePasswordForm' => $changePasswordForm
+            ])
         );
     }
 }

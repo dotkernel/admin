@@ -12,10 +12,11 @@ use Frontend\User\Doctrine\EntityListenerResolverFactory;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Factory\AdminControllerFactory;
-use Frontend\User\Factory\RoleFieldsetDelegator;
+use Frontend\User\Factory\RoleDelegator;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\LoginForm;
 use Frontend\User\Controller\UserController;
+use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserRoleService;
 use Frontend\User\Service\UserRoleServiceInterface;
 use Frontend\User\Service\UserService;
@@ -52,6 +53,7 @@ class ConfigProvider
                 AdminController::class => AdminControllerFactory::class,
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 UserService::class => AnnotatedServiceFactory::class,
+                AdminService::class => AnnotatedServiceFactory::class,
                 UserRoleService::class => AnnotatedServiceFactory::class,
                 AdminForm::class => ElementFactory::class,
             ],
@@ -62,7 +64,7 @@ class ConfigProvider
             ],
             'delegators' => [
                 AdminForm::class => [
-                    RoleFieldsetDelegator::class
+                    RoleDelegator::class
                 ],
             ]
         ];
@@ -87,7 +89,7 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories' => [
-                    LoginForm::class => ElementFactory::class,
+                    LoginForm::class => ElementFactory::class
                 ],
                 'aliases' => [
                 ],

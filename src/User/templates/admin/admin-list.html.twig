@@ -12,12 +12,6 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div id="messages"></div>
-        </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="tableToolbar" class="btn-group">
@@ -37,7 +31,7 @@
                            data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
                            data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
-                           data-page-list="[10, 30, 50, 100, 200]" data-page-size="30"
+                           data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
                            data-sort-name="created" data-sort-order="desc" id="bsTable">
                         <thead>
 
@@ -82,14 +76,37 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteFormModal" aria-labelledby="deleteFormModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="deleteFormModalTitle">Delete Admin</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="deleteFormMessages"></div>
+                    <div id="deleteFormPlaceholder"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteFormModalSubmit">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascript %}
 <script>
 
-{#$( document ).ready(function(){#}
-{#    $("#editButton").prop('disabled', true);#}
-{#    $("#deleteButton").prop('disabled', true);#}
+$( document ).ready(function(){
+    $("#editButton").prop('disabled', true);
+    $("#deleteButton").prop('disabled', true);
 
     var showFailDialog = function (data) {
         if(data.status == 0 && data.statusText == 'abort')
@@ -115,25 +132,21 @@
         }
     };
 
-{#    /**#}
-{#     * disables UI buttons based on the selection count#}
-{#     * @param selections#}
-{#     */#}
-{#    var uiButtons = function (selections) {#}
-{#        var count = selections.length;#}
-{#        if (count == 0) {#}
-{#            $("#editButton").prop('disabled', true);#}
-{#            $("#deleteButton").prop('disabled', true);#}
-{#        }#}
-{#        else if (count == 1) {#}
-{#            $("#editButton").prop('disabled', false);#}
-{#            $("#deleteButton").prop('disabled', false);#}
-{#        }#}
-{#        else {#}
-{#            $("#editButton").prop('disabled', true);#}
-{#            $("#deleteButton").prop('disabled', false);#}
-{#        }#}
-{#    };#}
+    var uiButtons = function (selections) {
+        var count = selections.length;
+        if (count == 0) {
+            $("#editButton").prop('disabled', true);
+            $("#deleteButton").prop('disabled', true);
+        }
+        else if (count == 1) {
+            $("#editButton").prop('disabled', false);
+            $("#deleteButton").prop('disabled', false);
+        }
+        else {
+            $("#editButton").prop('disabled', true);
+            $("#deleteButton").prop('disabled', false);
+        }
+    };
 
     $("#addButton").click(function () {
         showLoading();
@@ -146,187 +159,156 @@
                     $("#loading").off('hidden');
                     $("#formModal").modal('show');
                 });
+                $('#formMessages').empty();
 
                 hideLoading();
             })
             .fail(function (data) {
-                console.log(data);
                 $("#loading").on('hidden.bs.modal', function () {
                     $("#loading").off('hidden');
                     showFailDialog(data);
                 });
                 hideLoading();
-
             });
     });
 
-{#            $("#editButton").click(function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                if (selections.length != 1) {#}
-{#                    showAlertDialog('Selection error',#}
-{#                        'Multiple or no {{ entityNamePlural }} selected. Only one {{ entityNameSingular }} can be edited a time',#}
-{#                        'error');#}
-{#                }#}
-{#                else {#}
-{#                    showLoading();#}
-{#                    $.get('{{ editUri }}/' + selections[0].id)#}
-{#                        .done(function (data) {#}
-{#                            $("#formModalTitle").html('Edit {{ entityNameSingular }}');#}
-{#                            $("#formPlaceholder").html(data);#}
+    $("#editButton").click(function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        if (selections.length != 1) {
+            showAlertDialog('Selection error',
+                'Multiple or no Admin selected. Only one Admin can be edited a time',
+                'error');
+        } else {
+            showLoading();
+            $.get('/admin/edit/' + selections[0].uuid)
+                .done(function (data) {
+                    $("#formModalTitle").html('Edit Admin');
+                    $("#formPlaceholder").html(data);
 
-{#                            $("#loading").on('hidden.bs.modal', function () {#}
-{#                                $("#loading").off('hidden');#}
-{#                                $("#formModal").modal('show');#}
-{#                            });#}
-{#                            hideLoading();#}
-{#                        })#}
-{#                        .fail(function (data) {#}
-{#                            $("#loading").on('hidden.bs.modal', function () {#}
-{#                                $("#loading").off('hidden');#}
-{#                                showFailDialog(data);#}
-{#                            });#}
-{#                            hideLoading();#}
-{#                        });#}
-{#                }#}
+                    $("#loading").on('hidden.bs.modal', function () {
+                        $("#loading").off('hidden');
+                        $("#formModal").modal('show');
+                    });
+                    $('#formMessages').empty();
+                    hideLoading();
+                })
+                .fail(function (data) {
+                    $("#loading").on('hidden.bs.modal', function () {
+                        $("#loading").off('hidden');
+                        showFailDialog(data);
+                    });
+                    hideLoading();
+                });
+        }
 
-{#            });#}
+    });
 
-{#            $("#deleteButton").click(function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                if (selections.length === 0) {#}
-{#                    return;#}
-{#                }#}
-{#                showLoading();#}
-{#                $.post('{{ deleteUri }}', {'{{ entityNamePlural }}': selections})#}
-{#                    .done(function (data) {#}
-{#                        $("#formModalSubmit").text('Delete').removeClass('btn-primary').addClass('btn-danger');#}
-{#                        $("#formModalTitle").html('Delete {{ entityNamePlural }}');#}
-{#                        $("#formPlaceholder").html(data);#}
+    $("#deleteButton").click(function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        if (selections.length === 0) {
+            return;
+        }
+        $("#deleteFormPlaceholder").text('Are you sure you want to delete ' + selections[0].email + '?');
+        $("#deleteFormModal").modal('show');
+    });
 
-{#                        $("#loading").on('hidden.bs.modal', function () {#}
-{#                            $("#loading").off('hidden');#}
-{#                            $("#formModal").modal('show');#}
-{#                        });#}
-{#                        hideLoading();#}
-{#                    })#}
-{#                    .fail(function (data) {#}
-{#                        $("#loading").on('hidden.bs.modal', function () {#}
-{#                            $("#loading").off('hidden');#}
-{#                            showFailDialog(data);#}
-{#                        });#}
-{#                        hideLoading();#}
-{#                    });#}
+    $("#formModalSubmit").click(function () {
+        $('#formModal').modal('handleUpdate');
+        showLoading();
 
-{#            });#}
+        $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
+            .done(function (data) {
+                if (data.success == 'success') {
+                    hideLoading();
+                    $("#formMessages").html('<div class="alert alert-success alert-dismissible" ' +
+                'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
+                '</div>');
+                    $("#bsTable").bootstrapTable('refresh');
+                    setTimeout(function () {
+                        $('#formModal').modal('hide');
+                    },1500);
+                } else {
+                    hideLoading();
+                    $("#formMessages").html('<div class="alert alert-danger alert-dismissible" ' +
+                'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
+                '<div>');
+                }
+            })
+            .fail(function (data) {
+                hideLoading();
+                $('#formModal').modal('hide');
+            });
+    });
 
-{#            var formInputErrors = function (data, prevName) {#}
-{#                //mark form input with errors#}
-{#                $.each(data, function (name, value) {#}
-{#                    if ($.isArray(value)) {#}
-{#                        $("#ajaxForm input[name='" + prevName + "[" + name + "]']")#}
-{#                            .closest('.form-group').addClass('has-error');#}
-{#                    }#}
-{#                    else if ($.isPlainObject(value)) {#}
-{#                        if (prevName == '') {#}
-{#                            formInputErrors(value, name);#}
-{#                        } else {#}
-{#                            formInputErrors(value, prevName + "[" + name + "]");#}
-{#                        }#}
+    $("#deleteFormModalSubmit").click(function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        $('#deleteFormModal').modal('handleUpdate');
+        showLoading();
 
-{#                    }#}
-{#                });#}
-{#            };#}
+        $.post('/admin/delete', selections[0])
+            .done(function (data) {
+                if (data.success == 'success') {
+                    hideLoading();
+                    $("#deleteFormMessages").html('<div class="alert alert-success alert-dismissible" ' +
+                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
+                        '</div>');
+                    $("#bsTable").bootstrapTable('refresh');
+                    setTimeout(function () {
+                        $('#deleteFormModal').modal('hide');
+                    },1500);
+                } else {
+                    hideLoading();
+                    $("#deleteFormMessages").html('<div class="alert alert-danger alert-dismissible" ' +
+                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
+                        '<div>');
+                    setTimeout(function () {
+                        $('#deleteFormModal').modal('hide');
+                    },2000);
+                }
+            })
+            .fail(function (data) {
+                hideLoading();
+                $('#formModal').modal('hide');
+            });
+    });
 
-{#            var resetFormInputErrors = function () {#}
-{#                $("#ajaxForm :input").closest('.form-group').removeClass('has-error');#}
-{#            };#}
+    var resetUiButtonState = function () {
+        $("#editButton").prop('disabled', true);
+        $("#deleteButton").prop('disabled', true);
+    };
 
-{#            $("#formModalSubmit").click(function () {#}
-{#                $('#formModal').modal('handleUpdate');#}
-{#                showLoading();#}
-{#                resetFormInputErrors();#}
+    $("#bsTable").on('load-success.bs.table', function () {
+        resetUiButtonState();
+    });
 
-{#                $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())#}
-{#                    .done(function (data) {#}
-{#                        if (typeof data.success !== 'undefined') {#}
-{#                            hideLoading();#}
-{#                            $('#formModal').modal('hide');#}
-{#                            modalReset();#}
-{#                            $("#messages").html(data.alerts);#}
-{#                            $("#bsTable").bootstrapTable('refresh');#}
-{#                        }#}
-{#                        else if (typeof data.validation !== 'undefined') {#}
-{#                            hideLoading();#}
-{#                            $("#formMessages").html(data.alerts);#}
-{#                            formInputErrors(data.validation, "");#}
-{#                            $('#formModal').modal('handleUpdate');#}
-{#                        }#}
-{#                        else {#}
-{#                            hideLoading();#}
-{#                            $('#formModal').modal('hide');#}
-{#                            modalReset();#}
-{#                            if (data.alerts !== 'undefined') {#}
-{#                                $("#messages").html(data.alerts);#}
-{#                            }#}
-{#                        }#}
-{#                    })#}
-{#                    .fail(function (data) {#}
-{#                        hideLoading();#}
-{#                        $('#formModal').modal('hide');#}
-{#                        modalReset();#}
-{#                    });#}
-{#            });#}
+    $("#bsTable").on('load-error.bs.table', function (e, status, res) {
+        showFailDialog(res);
+        resetUiButtonState();
+    });
 
-{#            $("#formModal").on('shown.bs.modal', function () {#}
+    $("#bsTable").on('check.bs.table', function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        uiButtons(selections);
+    });
 
-{#            });#}
+    $("#bsTable").on('uncheck.bs.table', function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        uiButtons(selections);
+    });
 
+    $("#bsTable").on('check-all.bs.table', function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        uiButtons(selections);
+    });
 
-{#            $("#formModal").on('hidden.bs.modal', function () {#}
-{#                    modalReset();#}
-{#            });#}
-
-{#            var modalReset = function() {#}
-{#                $("#formModalSubmit").text('Save').addClass('btn-primary').removeClass('btn-danger');#}
-{#                $("#ajaxForm")[0].reset();#}
-{#                $("#formMessages").html('');#}
-{#                $("#ajaxForm :input")#}
-{#                    .closest('.form-group').removeClass('has-error');#}
-{#            };#}
-
-{#            var resetUiButtonState = function () {#}
-{#                $("#editButton").prop('disabled', true);#}
-{#                $("#deleteButton").prop('disabled', true);#}
-{#            };#}
-
-{#            $("#bsTable").on('load-success.bs.table', function () {#}
-{#                resetUiButtonState();#}
-{#            });#}
-
-{#            $("#bsTable").on('load-error.bs.table', function (e, status, res) {#}
-{#                showFailDialog(res);#}
-{#                resetUiButtonState();#}
-{#            });#}
-
-{#            $("#bsTable").on('check.bs.table', function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                uiButtons(selections);#}
-{#            });#}
-
-{#            $("#bsTable").on('uncheck.bs.table', function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                uiButtons(selections);#}
-{#            });#}
-
-{#            $("#bsTable").on('check-all.bs.table', function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                uiButtons(selections);#}
-{#            });#}
-
-{#            $("#bsTable").on('uncheck-all.bs.table', function () {#}
-{#                var selections = $("#bsTable").bootstrapTable('getSelections');#}
-{#                uiButtons(selections);#}
-{#            });#}
-{#        });#}
+    $("#bsTable").on('uncheck-all.bs.table', function () {
+        var selections = $("#bsTable").bootstrapTable('getSelections');
+        uiButtons(selections);
+    });
+});
 </script>
 {% endblock %}

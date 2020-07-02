@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Frontend\User\InputFilter;
 
-use Frontend\User\Entity\Admin;
 use Laminas\InputFilter\InputFilter;
-use Laminas\Validator\InArray;
 
 /**
- * Class AdminInputFilter
+ * Class AccountInputFilter
  * @package Frontend\User\InputFilter
  */
-class AdminInputFilter extends InputFilter
+class AccountInputFilter extends InputFilter
 {
     public function init()
     {
@@ -20,17 +18,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'username',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Username</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -52,17 +46,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'email',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Email</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'EmailAddress',
@@ -75,17 +65,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'password',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Password</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -100,17 +86,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'passwordConfirm',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Confirm Password</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -167,35 +149,6 @@ class AdminInputFilter extends InputFilter
                         'message' => '<b>Last Name</b> must max 150 characters',
                     ]
                 ]
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'status',
-            'required' => true,
-            'filters' => [],
-            'validators' => [
-                [
-                    'name' => InArray::class,
-                    'options' => [
-                        'haystack' => [
-                            Admin::STATUS_ACTIVE,
-                            Admin::STATUS_INACTIVE
-                        ]
-                    ],
-                ]
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'roleUuid',
-            'required' => true,
-            'filters' => [
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty',
-                ],
             ]
         ]);
     }
