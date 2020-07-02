@@ -9,8 +9,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Update personal data</div>
                 <div class="panel-body">
-                    {{ messagesPartial('partial::alerts', {}, null, 'account') }}
-
                     {% set dummy = form.prepare() %}
                     {{ form().openTag(form) | raw }}
 
@@ -58,8 +56,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Change password</div>
                 <div class="panel-body">
-                    {{ messagesPartial('partial::alerts', {}, null, 'change-password') }}
-
                     {% set dummy = changePasswordForm.setAttribute('action', '/admin/changePassword') %}
                     {% set dummy = changePasswordForm.prepare() %}
                     {{ form().openTag(changePasswordForm) | raw }}

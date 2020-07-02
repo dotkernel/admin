@@ -18,16 +18,21 @@ class AccountInputFilter extends InputFilter
 
         $this->add([
             'name' => 'username',
-            'required' => false,
+            'required' => true,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty'
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => '<b>Username</b> cannot be empty',
+                    ]
                 ],
                 [
                     'name' => 'StringLength',
+                    'break_chain_on_failure' => true,
                     'options' => [
                         'min' => 3,
                         'max' => 150,
@@ -36,6 +41,7 @@ class AccountInputFilter extends InputFilter
                 ],
                 [
                     'name' => 'Regex',
+                    'break_chain_on_failure' => true,
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_.]+$/',
                         'message' => '<b>Username</b> contains invalid characters',
@@ -46,67 +52,23 @@ class AccountInputFilter extends InputFilter
 
         $this->add([
             'name' => 'email',
-            'required' => false,
+            'required' => true,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty'
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => '<b>Email</b> cannot be empty',
+                    ]
                 ],
                 [
                     'name' => 'EmailAddress',
+                    'break_chain_on_failure' => true,
                     'options' => [
                         'message' => '<b>Email</b> is invalid'
-                    ]
-                ]
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'password',
-            'required' => false,
-            'filters' => [
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty'
-                ],
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 8,
-                        'max' => 150,
-                        'message' => '<b>Password</b> must have between 8 and 150 characters',
-                    ]
-                ]
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'passwordConfirm',
-            'required' => false,
-            'filters' => [
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty'
-                ],
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 8,
-                        'max' => 150,
-                        'message' => '<b>Confirm Password</b> must have between 8 and 150 characters',
-                    ]
-                ],
-                [
-                    'name' => 'Identical',
-                    'options' => [
-                        'token' => 'password',
-                        'message' => '<b>Password confirm</b> does not match',
                     ]
                 ]
             ]

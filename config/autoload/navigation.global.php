@@ -117,7 +117,8 @@ return [
                             'options' => [
                                 'label' => 'Sign Out',
                                 'route' => [
-                                    'route_name' => 'dashboard',
+                                    'route_name' => 'admin',
+                                    'route_params' => ['action' => 'logout']
                                 ],
                                 'icon' => 'fa fa-sign-out',
                             ]

@@ -127,7 +127,7 @@ class AdminController extends AbstractActionController
      * @return ResponseInterface
      */
     public function editAction(): ResponseInterface
-    {//verify if username and email already exists
+    {
         $request = $this->getRequest();
         $uuid = $request->getAttribute('uuid');
 
@@ -279,12 +279,33 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return HtmlResponse
+     * @return HtmlResponse|RedirectResponse
      */
     public function accountAction()
     {
+        $request = $this->getRequest();
         $form = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
+        $admin = $this->authenticationService->getIdentity();
+
+        if ($request->getMethod() == 'POST') {
+            $data = $request->getParsedBody();
+            $form->setData($data);
+            if ($form->isValid()) {
+                $result = $form->getData();
+                try {
+                    $this->adminService->updateAdmin($admin, $result);
+                    $this->messenger->addSuccess('Your account was updated successfully');
+                } catch (\Exception $e) {
+                    $this->messenger->addError($e->getMessage());
+                }
+            } else {
+                $this->messenger->addError($this->forms->getMessagesAsString($form));
+            }
+            return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
+        }
+
+        $form->bind($admin);
 
         return new HtmlResponse(
             $this->template->render('admin::account', [
@@ -292,5 +313,37 @@ class AdminController extends AbstractActionController
                 'changePasswordForm' => $changePasswordForm
             ])
         );
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function changePasswordAction()
+    {
+        $request = $this->getRequest();
+        $changePasswordForm = new ChangePasswordForm();
+        $admin = $this->authenticationService->getIdentity();
+
+        if ($request->getMethod() == 'POST') {
+            $data = $request->getParsedBody();
+            $changePasswordForm->setData($data);
+            if ($changePasswordForm->isValid()) {
+                $result = $changePasswordForm->getData();
+                if ($admin->getPassword() === password_hash($result['currentPassword'], PASSWORD_DEFAULT)) {
+                    try {
+                        $this->adminService->updateAdmin($admin, $result);
+                        $this->messenger->addSuccess('Your account was updated successfully');
+                    } catch (\Exception $e) {
+                        $this->messenger->addError($e->getMessage());
+                    }
+                } else {
+                    $this->messenger->addError('Current Password is incorrect');
+                }
+            } else {
+                $this->messenger->addError($this->forms->getMessagesAsString($changePasswordForm));
+            }
+        }
+
+        return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
     }
 }

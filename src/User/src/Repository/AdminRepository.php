@@ -41,14 +41,19 @@ class AdminRepository extends AbstractRepository
      * @param string $username
      * @return int|mixed|string|null
      */
-    public function exists(string $email = '', string $username = '')
+    public function exists(?string $email = '', ?string $username = '')
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('user')
-            ->from(Admin::class, 'user')
-            ->where('user.email = :email')->setParameter('email', $email)
-            ->orWhere('user.username = :username')->setParameter('username', $username);
+            ->from(Admin::class, 'user');
+
+        if (!empty($email)) {
+            $qb->where('user.email = :email')->setParameter('email', $email);
+        }
+        if (!empty($username)) {
+            $qb->orWhere('user.username = :username')->setParameter('username', $username);
+        }
 
         try {
             return $qb->getQuery()->getSingleResult();

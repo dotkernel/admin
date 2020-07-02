@@ -57,7 +57,7 @@ class AdminService implements AdminServiceInterface
      * @param string $username
      * @return bool
      */
-    public function exists(string $email = '', string $username = '')
+    public function exists(?string $email = '', ?string $username = '')
     {
         return !is_null(
             $this->adminRepository->exists($email, $username)
@@ -146,10 +146,18 @@ class AdminService implements AdminServiceInterface
     public function updateAdmin(Admin $admin, array $data)
     {
         if (!empty($data['email'])) {
-            $admin->setEmail($data['email']);
+            if (!$this->exists($data['email'])) {
+                $admin->setEmail($data['email']);
+            } elseif ($admin->getEmail() !== $data['email']) {
+                throw new ORMException('An account with this email address already exists.');
+            }
         }
         if (!empty($data['username'])) {
-            $admin->setUsername($data['username']);
+            if (!$this->exists(null, $data['username'])) {
+                $admin->setUsername($data['username']);
+            } elseif ($admin->getUsername() !== $data['username']) {
+                throw new ORMException('An account with this username already exists.');
+            }
         }
         if (!empty($data['password'])) {
             $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
