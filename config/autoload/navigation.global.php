@@ -17,7 +17,7 @@ return [
                                 'route' => [
                                     'route_name' => 'dashboard',
                                 ],
-                                'icon' => 'fa fa-tachometer',
+                                'icon' => 'fas fa-tachometer-alt',
                             ]
                         ],
                         [
@@ -27,7 +27,7 @@ return [
                                     'route_name' => 'admin',
                                     'route_params' => ['action' => 'manage']
                                 ],
-                                'icon' => 'fa fa-user-circle-o',
+                                'icon' => 'fas fa-user-circle',
                             ]
                         ],
                         [
@@ -37,7 +37,7 @@ return [
                                     'route_name' => 'dashboard',
                                     'route_params' => ['action' => 'manage']
                                 ],
-                                'icon' => 'fa fa-user-o',
+                                'icon' => 'fas fa-user',
                             ],
                         ],
                         [
@@ -119,7 +119,7 @@ return [
                                 'route' => [
                                     'route_name' => 'dashboard',
                                 ],
-                                'icon' => 'fa fa-sign-out',
+                                'icon' => 'fas fa-sign-out-alt',
                             ]
                         ]
                     ]

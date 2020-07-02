@@ -8939,7 +8939,8 @@ input.form-control {
   border-color: #C60B31;
   color: #FFFFFF; }
 
-.btn-success {
+.btn-success,
+.btn-default {
   height: 50px;
   border-radius: 2px; }
 
@@ -8989,8 +8990,6 @@ label {
     margin-left: 0px; } }
 
 @media (max-width: 767px) {
-  .navbar-brand {
-    margin-left: 15px; }
   .navbar-brand img {
     margin-top: 4px;
     height: 24px; } }
@@ -9140,12 +9139,6 @@ label {
   display: block;
   float: left;
   margin-right: 5px; }
-
-.user-menu .nav-link .fa-angle-down {
-  padding-top: 1px;
-  padding-left: 5px;
-  font-size: 28px;
-  font-weight: 300; }
 
 .user-menu .dropdown-menu {
   border-radius: 0px; }
@@ -9426,10 +9419,10 @@ sideRightIn .sidebar .nano-sidebar {
     background-color: #E9ECF2;
     border: none;
     border-radius: 0;
-    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05); }
-    .navbar-toggler svg {
-      width: 32px;
-      height: 32px;
+    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+    padding: 0 15px; }
+    .navbar-toggler i {
+      vertical-align: text-top;
       color: #C71F3A; }
   .navbar .navbar-toggler .icon-bar {
     background: black !important; }

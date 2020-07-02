@@ -1042,12 +1042,11 @@ input.form-control {
   color: #FFFFFF;
 }
 
-.btn-success {
+.btn-success,
+.btn-default {
   height: 50px;
   border-radius: 2px;
 }
-
-
 
 .btn-primary:hover,
 .btn-primary:active,
@@ -1101,10 +1100,6 @@ label {
 }
 
 @media (max-width: 767px) {
-  .navbar-brand {
-    margin-left: 15px;
-  }
-
   .navbar-brand img {
     margin-top: 4px;
     height: 24px;
@@ -1285,13 +1280,6 @@ label {
   display: block;
   float: left;
   margin-right: 5px;
-}
-
-.user-menu .nav-link .fa-angle-down {
-  padding-top: 1px;
-  padding-left: 5px;
-  font-size: 28px;
-  font-weight: 300;
 }
 
 .user-menu .dropdown-menu {
@@ -1660,10 +1648,10 @@ sideRightIn .sidebar .nano-sidebar {
     border: none;
     border-radius: 0;
     box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+    padding: 0 15px;
 
-    svg {
-      width: 32px;
-      height: 32px;
+    i {
+      vertical-align: text-top;
       color: #C71F3A;
     }
   }
