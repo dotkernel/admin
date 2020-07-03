@@ -5,10 +5,10 @@
 {% block content %}
     {{ messagesPartial('partial::alerts', {dismissible: true}) }}
     <div class="row account-page">
-        <div class="col-md-6 col-sm-10 col-lg-5">
-            <div class="panel panel-default">
-                <div class="panel-heading">Update personal data</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Update personal data</div>
+                <div class="card-body">
                     {% set dummy = form.prepare() %}
                     {{ form().openTag(form) | raw }}
 
@@ -52,10 +52,10 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-sm-10 col-lg-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Change password</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Change password</div>
+                <div class="card-body">
                     {% set dummy = changePasswordForm.setAttribute('action', '/admin/changePassword') %}
                     {% set dummy = changePasswordForm.prepare() %}
                     {{ form().openTag(changePasswordForm) | raw }}
