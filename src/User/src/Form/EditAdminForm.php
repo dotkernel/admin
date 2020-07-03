@@ -10,10 +10,10 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
 
 /**
- * Class AdminForm
+ * Class EditEditAdminForm
  * @package Frontend\User\Form
  */
-class AdminForm extends Form
+class EditAdminForm extends Form
 {
     /** @var InputFilter $inputFilter */
     protected InputFilter $inputFilter;
@@ -142,14 +142,5 @@ class AdminForm extends Form
     public function getInputFilter()
     {
         return $this->inputFilter;
-    }
-
-    /**
-     * @param InputFilter $inputFilter
-     */
-    public function setDifferentInputFilter(InputFilter $inputFilter)
-    {
-        $this->inputFilter = $inputFilter;
-        $this->inputFilter->init();
     }
 }

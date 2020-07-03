@@ -98,7 +98,7 @@ return [
                             'options' => [
                                 'label' => 'Profile',
                                 'route' => [
-                                    'route_name' => 'user',
+                                    'route_name' => 'admin',
                                     'route_params' => ['action' => 'account']
                                 ],
                                 'icon' => 'fa fa-user',
@@ -117,7 +117,8 @@ return [
                             'options' => [
                                 'label' => 'Sign Out',
                                 'route' => [
-                                    'route_name' => 'dashboard',
+                                    'route_name' => 'admin',
+                                    'route_params' => ['action' => 'logout']
                                 ],
                                 'icon' => 'fas fa-sign-out-alt',
                             ]

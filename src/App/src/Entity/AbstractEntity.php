@@ -2,9 +2,10 @@
 
 namespace Frontend\App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 use Exception;
+use Frontend\App\Common\UuidOrderedTimeGenerator;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -39,6 +40,7 @@ abstract class AbstractEntity
      */
     public function __construct()
     {
+        $this->uuid = UuidOrderedTimeGenerator::generateUuid();
         $this->created = new DateTime('now');
         $this->updated = new DateTime('now');
     }
@@ -60,9 +62,9 @@ abstract class AbstractEntity
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getUpdated(): DateTime
+    public function getUpdated()
     {
         return $this->updated;
     }

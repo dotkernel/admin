@@ -22,6 +22,11 @@ interface UserServiceInterface
     public function createUser(array $data): AdminInterface;
 
     /**
+     * @return array
+     */
+    public function getUsers(): array;
+
+    /**
      * @param array $params
      * @return Admin|null
      */
@@ -33,23 +38,6 @@ interface UserServiceInterface
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getRoleNamesByEmail(string $email);
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @param string|null $search
-     * @param string $sort
-     * @param string $order
-     * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getAdmins(
-        int $offset = 0,
-        int $limit = 30,
-        string $search = null,
-        string $sort = 'created',
-        string $order = 'desc'
-    );
 
     /**
      * @return array

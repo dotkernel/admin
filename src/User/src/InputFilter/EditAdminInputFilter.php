@@ -9,10 +9,10 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\InArray;
 
 /**
- * Class AdminInputFilter
+ * Class EditAdminInputFilter
  * @package Frontend\User\InputFilter
  */
-class AdminInputFilter extends InputFilter
+class EditAdminInputFilter extends InputFilter
 {
     public function init()
     {
@@ -20,17 +20,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'username',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Username</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -52,17 +48,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'email',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Email</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'EmailAddress',
@@ -75,17 +67,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'password',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Password</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -100,17 +88,13 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'passwordConfirm',
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Confirm Password</b> is required and cannot be empty',
-                    ]
+                    'name' => 'NotEmpty'
                 ],
                 [
                     'name' => 'StringLength',
@@ -172,7 +156,7 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'status',
-            'required' => true,
+            'required' => false,
             'filters' => [],
             'validators' => [
                 [
@@ -189,7 +173,7 @@ class AdminInputFilter extends InputFilter
 
         $this->add([
             'name' => 'roleUuid',
-            'required' => true,
+            'required' => false,
             'filters' => [
             ],
             'validators' => [

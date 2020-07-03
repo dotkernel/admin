@@ -16,11 +16,28 @@ use Laminas\InputFilter\InputFilter;
  * Class RegisterInputFilter
  * @package Frontend\Admin\InputFilter
  */
-class ResetPasswordInputFilter extends InputFilter
+class ChangePasswordInputFilter extends InputFilter
 {
     public function init()
     {
         parent::init();
+
+        $this->add([
+            'name' => 'currentPassword',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StringTrim']
+            ],
+            'validators' => [
+                [
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => '<b>Current Password</b> is required and cannot be empty',
+                    ]
+                ]
+            ]
+        ]);
 
         $this->add([
             'name' => 'password',

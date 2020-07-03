@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace Frontend\User\Service;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
-use Dot\Mail\Exception\MailException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Dot\Mail\Service\MailService;
 use Frontend\App\Common\Message;
 use Frontend\App\Common\UuidOrderedTimeGenerator;
 use Frontend\User\Entity\Admin;
-use Frontend\User\Entity\UserAvatar;
-use Frontend\User\Entity\UserDetail;
 use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Entity\AdminRole;
 use Frontend\User\Repository\UserRepository;
-use Frontend\User\Repository\UserRoleRepository;
+use Frontend\User\Repository\AdminRoleRepository;
 use Laminas\Diactoros\UploadedFile;
 use Mezzio\Template\TemplateRendererInterface;
 
@@ -42,7 +39,7 @@ class UserService implements UserServiceInterface
     /** @var UserRepository $userRepository */
     protected $userRepository;
 
-    /** @var UserRoleRepository $userRoleRepository */
+    /** @var AdminRoleRepository $userRoleRepository */
     protected $userRoleRepository;
 
     /** @var UserRoleServiceInterface $userRoleService */
@@ -60,7 +57,7 @@ class UserService implements UserServiceInterface
     /**
      * UserService constructor.
      * @param EntityManager $em
-     * @param @param UserRoleServiceInterface $userRoleService
+     * @param UserRoleServiceInterface $userRoleService
      * @param MailService $mailService
      * @param TemplateRendererInterface $templateRenderer
      * @param array $config
@@ -76,7 +73,6 @@ class UserService implements UserServiceInterface
         array $config = []
     ) {
         $this->em = $em;
-        $this->userRepository = $em->getRepository(Admin::class);
         $this->userRoleRepository = $em->getRepository(AdminRole::class);
         $this->userRoleService = $userRoleService;
         $this->mailService = $mailService;
@@ -93,9 +89,9 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @return UserRoleRepository
+     * @return AdminRoleRepository
      */
-    public function getUserRoleRepository(): UserRoleRepository
+    public function getUserRoleRepository(): AdminRoleRepository
     {
         return $this->userRoleRepository;
     }
@@ -338,51 +334,6 @@ class UserService implements UserServiceInterface
         }
 
         return $roleList;
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @param string|null $search
-     * @param string $sort
-     * @param string $order
-     * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getAdmins(
-        int $offset = 0,
-        int $limit = 30,
-        string $search = null,
-        string $sort = 'created',
-        string $order = 'desc'
-    ) {
-        $result = [
-            'rows' => [],
-            'total' => $this->getUserRepository()->countAdmins($search)
-        ];
-        $admins = $this->getUserRepository()->getAdmins($offset, $limit, $search, $sort, $order);
-
-        /** @var Admin $admin */
-        foreach ($admins as $admin) {
-            $roles = [];
-            /** @var AdminRole $role */
-            foreach ($admin->getRoles() as $role) {
-                $roles[] = $role->getName();
-            }
-
-            $result['rows'][] = [
-                'uuid' => $admin->getUuid()->toString(),
-                'username' => $admin->getUsername(),
-                'email' => $admin->getEmail(),
-                'firstName' => $admin->getFirstname(),
-                'lastName' => $admin->getLastname(),
-                'roles' => implode(", ", $roles),
-                'status' => $admin->getStatus(),
-                'created' => $admin->getCreated()->format("Y-m-d")
-            ];
-        }
-
-        return $result;
     }
 
     /**

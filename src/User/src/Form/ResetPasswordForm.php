@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\User\Form;
 
-use Frontend\User\InputFilter\ResetPasswordInputFilter;
+use Frontend\User\InputFilter\ChangePasswordInputFilter;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
@@ -30,7 +30,7 @@ class ResetPasswordForm extends Form
 
         $this->init();
 
-        $this->inputFilter = new ResetPasswordInputFilter();
+        $this->inputFilter = new ChangePasswordInputFilter();
         $this->inputFilter->init();
     }
 

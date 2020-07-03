@@ -50,6 +50,7 @@
         "laminas/laminas-diactoros": "^2.3",
         "laminas/laminas-form": "^2.14",
         "laminas/laminas-i18n": "^2.10",
+        "laminas/laminas-math": "^3.2",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-stdlib": "^3.2",
         "mezzio/mezzio": "^3.2",

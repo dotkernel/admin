@@ -9,7 +9,7 @@ use Frontend\App\Entity\AbstractEntity;
 
 /**
  * Class AdminRole
- * @ORM\Entity(repositoryClass="Frontend\User\Repository\UserRoleRepository")
+ * @ORM\Entity(repositoryClass="Frontend\User\Repository\AdminRoleRepository")
  * @ORM\Table(name="admin_role")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\User\Entity
