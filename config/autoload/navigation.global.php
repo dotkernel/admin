@@ -44,21 +44,21 @@ return [
                             'options' => [
                                 'label' => 'Submenu 1',
                                 'route' => '',
-                                'icon' => 'fa fa-cog',
+                                'icon' => 'fas fa-cog',
                             ],
                             'pages' => [
                                 [
                                     'options' => [
                                         'label' => 'Submenu link 1',
                                         'uri' => '#',
-                                        'icon' => 'fa fa-square',
+                                        'icon' => 'fas fa-square',
                                     ],
                                 ],
                                 [
                                     'options' => [
                                         'label' => 'Submenu link 2',
                                         'uri' => '#',
-                                        'icon' => 'fa fa-square',
+                                        'icon' => 'fas fa-square',
                                     ],
                                 ]
                             ]
@@ -67,7 +67,7 @@ return [
                             'options' => [
                                 'label' => 'Submenu 2',
                                 'route' => '',
-                                'icon' => 'fa fa-gear',
+                                'icon' => 'fas fa-cog',
                             ],
                             'pages' => [
                                 [
@@ -101,7 +101,7 @@ return [
                                     'route_name' => 'admin',
                                     'route_params' => ['action' => 'account']
                                 ],
-                                'icon' => 'fa fa-user',
+                                'icon' => 'fas fa-user',
                             ]
                         ],
                         [
@@ -110,7 +110,7 @@ return [
                                 'route' => [
                                     'route_name' => 'dashboard',
                                 ],
-                                'icon' => 'fa fa-cog',
+                                'icon' => 'fas fa-cog',
                             ]
                         ],
                         [
