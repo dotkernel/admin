@@ -40,3 +40,6 @@ require('./components/_nanoScroller');
 require('./components/_chart-data');
 require('./components/_easypiechart');
 require('./components/_easypiechart-data');
+require('./components/_bsTable');
+require('./components/_admin');
+require('./components/_user');

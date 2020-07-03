@@ -2,7 +2,6 @@
 
 namespace Frontend\User\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
@@ -213,7 +212,7 @@ class AdminController extends AbstractActionController
      */
     public function manageAction()
     {
-        return new HtmlResponse($this->template->render('admin::admin-list'));
+        return new HtmlResponse($this->template->render('admin::list'));
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Frontend\User\Service;
 
-use Dot\Mail\Exception\MailException;
+use Doctrine\ORM\ORMException;
 use Frontend\User\Entity\Admin;
-use Frontend\User\Entity\AdminInterface;
+use Frontend\User\Entity\UserInterface;
 
 /**
  * Interface UserServiceInterface
@@ -14,17 +14,34 @@ interface UserServiceInterface
 {
     /**
      * @param array $data
-     * @return AdminInterface
-     * @throws \Exception
-     * @throws \Doctrine\ORM\ORMException
+     * @return UserInterface
+     * @throws ORMException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(array $data): AdminInterface;
+    public function createUser(array $data): UserInterface;
 
     /**
+     * @param int $offset
+     * @param int $limit
+     * @param string|null $search
+     * @param string $sort
+     * @param string $order
      * @return array
      */
-    public function getUsers(): array;
+    public function getUsers(
+        int $offset = 0,
+        int $limit = 30,
+        string $search = null,
+        string $sort = 'created',
+        string $order = 'desc'
+    );
+
+    /**
+     * @param string $identity
+     * @return bool
+     */
+    public function exists(string $identity = '');
 
     /**
      * @param array $params
@@ -42,5 +59,10 @@ interface UserServiceInterface
     /**
      * @return array
      */
-    public function getFormProcessedRoles();
+    public function getAdminFormProcessedRoles();
+
+    /**
+     * @return array
+     */
+    public function getUserFormProcessedRoles();
 }

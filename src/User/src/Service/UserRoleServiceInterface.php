@@ -2,7 +2,8 @@
 
 namespace Frontend\User\Service;
 
-use Frontend\User\Entity\AdminRole;
+use Frontend\User\Repository\AdminRoleRepository;
+use Frontend\User\Repository\UserRoleRepository;
 
 /**
  * Class UserRoleService
@@ -11,8 +12,12 @@ use Frontend\User\Entity\AdminRole;
 interface UserRoleServiceInterface
 {
     /**
-     * @param array $params
-     * @return AdminRole|null
+     * @return UserRoleRepository
      */
-    public function findOneBy(array $params = []): ?AdminRole;
+    public function getUserRoleRepository(): UserRoleRepository;
+
+    /**
+     * @return AdminRoleRepository
+     */
+    public function getAdminRoleRepository(): AdminRoleRepository;
 }

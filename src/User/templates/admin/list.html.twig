@@ -1,0 +1,102 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Manage admins{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Manage admins</h1>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="tableToolbar" class="btn-group">
+                        <button type="button" class="btn btn-default" id="adminAddButton">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" id="adminEditButton">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" id="adminDeleteButton">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <table data-toggle="table" data-url="/admin/list" data-click-to-select="true"
+                           data-mobile-responsive="true" data-min-width="800" data-check-on-init="true" data-id-field="uuid"
+                           data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                           data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
+                           data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
+                           data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
+                           data-sort-name="created" data-sort-order="desc" id="bsTable">
+                        <thead>
+
+                        <tr>
+                            <th data-field="checked" data-checkbox="true">Id</th>
+                            <th data-field="username" data-sortable="true">Username</th>
+                            <th data-field="email" data-sortable="true">E-mail</th>
+                            <th data-field="firstName" data-sortable="true">First Name</th>
+                            <th data-field="lastName" data-sortable="true">Last Name</th>
+                            <th data-field="roles" data-sortable="false">Roles</th>
+                            <th data-field="status" data-sortable="false">Status</th>
+                            <th data-field="created" data-sortable="true">Created</th>
+                        </tr>
+
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="formModal" aria-labelledby="formModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="formModalTitle"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div id="formMessages"></div>
+                    <div id="formPlaceholder"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="formModalSubmit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteFormModal" aria-labelledby="deleteFormModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="deleteFormModalTitle">Delete Admin</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="deleteFormMessages"></div>
+                    <div id="deleteFormPlaceholder"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteAdminFormModalSubmit">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

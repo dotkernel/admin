@@ -26,17 +26,17 @@ class RoutesDelegator
         $app = $callback();
 
         $app->route(
-            '/user[/{action}]',
-            UserController::class,
-            [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
-            'user'
-        );
-
-        $app->route(
             '/admin[/{action}[/{uuid}]]',
             AdminController::class,
             [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
             'admin'
+        );
+
+        $app->route(
+            '/user[/{action}[/{uuid}]]',
+            UserController::class,
+            [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
+            'user'
         );
 
         return $app;

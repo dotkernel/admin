@@ -12,10 +12,13 @@ use Frontend\User\Doctrine\EntityListenerResolverFactory;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Factory\AdminControllerFactory;
-use Frontend\User\Factory\RoleDelegator;
+use Frontend\User\Factory\AdminRoleDelegator;
+use Frontend\User\Factory\UserControllerFactory;
+use Frontend\User\Factory\UserRoleDelegator;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\LoginForm;
 use Frontend\User\Controller\UserController;
+use Frontend\User\Form\UserForm;
 use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserRoleService;
 use Frontend\User\Service\UserRoleServiceInterface;
@@ -49,13 +52,14 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                UserController::class => AnnotatedServiceFactory::class,
+                UserController::class => UserControllerFactory::class,
                 AdminController::class => AdminControllerFactory::class,
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 UserService::class => AnnotatedServiceFactory::class,
                 AdminService::class => AnnotatedServiceFactory::class,
                 UserRoleService::class => AnnotatedServiceFactory::class,
                 AdminForm::class => ElementFactory::class,
+                UserForm::class => ElementFactory::class,
             ],
             'aliases' => [
                 AdminInterface::class => Admin::class,
@@ -64,8 +68,11 @@ class ConfigProvider
             ],
             'delegators' => [
                 AdminForm::class => [
-                    RoleDelegator::class
+                    AdminRoleDelegator::class
                 ],
+                UserForm::class => [
+                    UserRoleDelegator::class
+                ]
             ]
         ];
     }
@@ -78,7 +85,6 @@ class ConfigProvider
         return [
             'paths' => [
                 'user' => [__DIR__ . '/../templates/user'],
-                'profile' => [__DIR__ . '/../templates/profile'],
                 'admin' => [__DIR__ . '/../templates/admin']
             ],
         ];

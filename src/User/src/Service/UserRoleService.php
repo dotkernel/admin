@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Frontend\User\Service;
 
 use Frontend\User\Entity\AdminRole;
+use Frontend\User\Entity\UserRole;
 use Frontend\User\Repository\AdminRoleRepository;
 use Doctrine\ORM\EntityManager;
 use Dot\AnnotatedServices\Annotation\Inject;
+use Frontend\User\Repository\UserRoleRepository;
 
 /**
  * Class UserRoleService
@@ -16,7 +18,10 @@ use Dot\AnnotatedServices\Annotation\Inject;
 class UserRoleService implements UserRoleServiceInterface
 {
     /** @var AdminRoleRepository $roleRepository */
-    protected $roleRepository;
+    protected $adminRoleRepository;
+
+    /** @var UserRoleRepository $userRoleRepository */
+    protected $userRoleRepository;
 
     /**
      * RoleService constructor.
@@ -26,22 +31,23 @@ class UserRoleService implements UserRoleServiceInterface
      */
     public function __construct(EntityManager $entityManager)
     {
-        $this->roleRepository = $entityManager->getRepository(AdminRole::class);
+        $this->adminRoleRepository = $entityManager->getRepository(AdminRole::class);
+        $this->userRoleRepository = $entityManager->getRepository(UserRole::class);
     }
 
     /**
-     * @param array $params
-     * @return AdminRole|null
+     * @return AdminRoleRepository
      */
-    public function findOneBy(array $params = []): ?AdminRole
+    public function getAdminRoleRepository(): AdminRoleRepository
     {
-        if (empty($params)) {
-            return null;
-        }
+        return $this->adminRoleRepository;
+    }
 
-        /** @var AdminRole $role */
-        $role = $this->roleRepository->findOneBy($params);
-
-        return $role;
+    /**
+     * @return UserRoleRepository
+     */
+    public function getUserRoleRepository(): UserRoleRepository
+    {
+        return $this->userRoleRepository;
     }
 }

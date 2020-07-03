@@ -29,7 +29,7 @@ return [
                                 [
                                     'route' => 'admin',
                                     'actions' => [],
-                                    'permissions' => ['*']
+                                    'permissions' => ['authenticated']
                                 ],
                             ],
                             [
