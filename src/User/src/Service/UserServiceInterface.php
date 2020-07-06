@@ -5,6 +5,7 @@ namespace Frontend\User\Service;
 use Doctrine\ORM\ORMException;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\UserInterface;
+use Frontend\User\FormData\UserFormData;
 
 /**
  * Interface UserServiceInterface
@@ -13,13 +14,13 @@ use Frontend\User\Entity\UserInterface;
 interface UserServiceInterface
 {
     /**
-     * @param array $data
+     * @param UserFormData $data
      * @return UserInterface
      * @throws ORMException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(array $data): UserInterface;
+    public function createUser(UserFormData $data): UserInterface;
 
     /**
      * @param int $offset

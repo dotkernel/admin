@@ -88,38 +88,36 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param array $data
+     * @param UserFormData $data
      * @return UserInterface
      * @throws ORMException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(array $data): UserInterface
+    public function createUser(UserFormData $data): UserInterface
     {
-        if ($this->exists($data['identity'])) {
+        if ($this->exists($data->identity)) {
             throw new ORMException('An account with this identity already exists.');
         }
 
         $user = new User();
-        $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT))->setIdentity($data['identity']);
+        $user->setPassword(password_hash($data->password, PASSWORD_DEFAULT))->setIdentity($data->identity);
 
         $detail = new UserDetail();
-        $detail->setUser($user)->setFirstName($data['firstName'])->setLastName($data['lastName']);
+        $detail->setUser($user)->setFirstName($data->firstName)->setLastName($data->lastName);
 
         $user->setDetail($detail);
 
-        if (!empty($data['status'])) {
-            $user->setStatus($data['status']);
+        if (!empty($data->status)) {
+            $user->setStatus($data->status);
         }
 
-        if (!empty($data['roles'])) {
-            foreach ($data['roles'] as $roleName) {
-                $role = $this->userRoleService->getUserRoleRepository()->findByName($roleName);
-                if (!$role instanceof UserRole) {
-                    throw new \Exception('Role not found: ' . $roleName);
-                }
-                $user->addRole($role);
+        if (!empty($data->roleUuid)) {
+            $role = $this->userRoleService->getUserRoleRepository()->getRole($data->roleUuid);
+            if (!$role instanceof UserRole) {
+                throw new \Exception('Role with uuid : ' . $data->roleUuid . ' not found!');
             }
+            $user->addRole($role);
         } else {
             $role = $this->userRoleService->getUserRoleRepository()->findOneBy(['name' => UserRole::ROLE_USER]);
             if ($role instanceof UserRole) {

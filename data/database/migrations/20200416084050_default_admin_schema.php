@@ -43,7 +43,7 @@ class DefaultAdminSchema extends AbstractMigration
             ->addColumn('lastName', 'string', ['null' => true, 'limit' => 255])
             ->addColumn('status', 'enum',
                 [
-                    'default' => Admin::STATUS_PENDING,
+                    'default' => Admin::STATUS_INACTIVE,
                     'values' => Admin::STATUSES
                 ]
             )

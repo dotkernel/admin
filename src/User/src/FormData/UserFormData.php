@@ -31,6 +31,15 @@ class UserFormData implements InputFilterAwareInterface
     /** @var string $role */
     public string $role;
 
+    /** @var string $roleUuid */
+    public string $roleUuid;
+
+    /** @var string $password */
+    public string $password;
+
+    /** @var string $passwordConfirm */
+    public string $passwordConfirm;
+
     /**
      * @param User $user
      * @return UserFormData
