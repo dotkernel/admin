@@ -3,7 +3,7 @@ $( document ).ready(function(){
     $("#userDeleteButton").prop('disabled', true);
 
     $("#userAddButton").click(function () {
-        showLoading();
+        $("#loading").modal({backdrop:false,show:true});
         $.get('/user/add')
             .done(function (data) {
                 $("#formModalTitle").html('Add User');
@@ -15,14 +15,14 @@ $( document ).ready(function(){
                 });
                 $('#formMessages').empty();
 
-                hideLoading();
+                $("#loading").modal('hide');
             })
             .fail(function (data) {
                 $("#loading").on('hidden.bs.modal', function () {
                     $("#loading").off('hidden');
                     showFailDialog(data);
                 });
-                hideLoading();
+                $("#loading").modal('hide');
             });
     });
 
@@ -33,7 +33,7 @@ $( document ).ready(function(){
                 'Multiple or no Admin selected. Only one Admin can be edited a time',
                 'error');
         } else {
-            showLoading();
+            $("#loading").modal({backdrop:false,show:true});
             $.get('/user/edit/' + selections[0].uuid)
                 .done(function (data) {
                     $("#formModalTitle").html('Edit Admin');
@@ -44,14 +44,14 @@ $( document ).ready(function(){
                         $("#formModal").modal('show');
                     });
                     $('#formMessages').empty();
-                    hideLoading();
+                    $("#loading").modal('hide');
                 })
                 .fail(function (data) {
                     $("#loading").on('hidden.bs.modal', function () {
                         $("#loading").off('hidden');
                         showFailDialog(data);
                     });
-                    hideLoading();
+                    $("#loading").modal('hide');
                 });
         }
 
@@ -69,12 +69,12 @@ $( document ).ready(function(){
     $("#deleteUserFormModalSubmit").click(function () {
         var selections = $("#bsTable").bootstrapTable('getSelections');
         $('#deleteFormModal').modal('handleUpdate');
-        showLoading();
+        $("#loading").modal({backdrop:false,show:true});
 
         $.post('/user/delete', selections[0])
             .done(function (data) {
                 if (data.success == 'success') {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#deleteFormMessages").html('<div class="alert alert-success alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -84,7 +84,7 @@ $( document ).ready(function(){
                         $('#deleteFormModal').modal('hide');
                     },1500);
                 } else {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#deleteFormMessages").html('<div class="alert alert-danger alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -95,7 +95,7 @@ $( document ).ready(function(){
                 }
             })
             .fail(function (data) {
-                hideLoading();
+                $("#loading").modal('hide');
                 $('#formModal').modal('hide');
             });
     });

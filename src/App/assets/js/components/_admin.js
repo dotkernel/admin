@@ -3,26 +3,37 @@ $( document ).ready(function(){
     $("#adminDeleteButton").prop('disabled', true);
 
     $("#adminAddButton").click(function () {
-        showLoading();
+        $("#loading").modal({backdrop:false,show:true});
+        console.log('loading show');
         $.get('/admin/add')
             .done(function (data) {
                 $("#formModalTitle").html('Add Admin');
+                console.log('add admin');
                 $("#formPlaceholder").html(data);
+                console.log('print form in div');
 
                 $("#loading").on('hidden.bs.modal', function () {
                     $("#loading").off('hidden');
+                    console.log('loading hidden');
                     $("#formModal").modal('show');
+                    console.log('modal show');
                 });
                 $('#formMessages').empty();
+                console.log('messages empty');
 
-                hideLoading();
+                $("#loading").modal('hide');
+                console.log('loading hide');
             })
             .fail(function (data) {
+                console.log('fail');
                 $("#loading").on('hidden.bs.modal', function () {
                     $("#loading").off('hidden');
+                    console.log('loading hidden');
                     showFailDialog(data);
+                    console.log('showfailddialog');
                 });
-                hideLoading();
+                $("#loading").modal('hide');
+                console.log('loading hide');
             });
     });
 
@@ -33,7 +44,7 @@ $( document ).ready(function(){
                 'Multiple or no Admin selected. Only one Admin can be edited a time',
                 'error');
         } else {
-            showLoading();
+            $("#loading").modal({backdrop:false,show:true});
             $.get('/admin/edit/' + selections[0].uuid)
                 .done(function (data) {
                     $("#formModalTitle").html('Edit Admin');
@@ -44,14 +55,14 @@ $( document ).ready(function(){
                         $("#formModal").modal('show');
                     });
                     $('#formMessages').empty();
-                    hideLoading();
+                    $("#loading").modal('hide');
                 })
                 .fail(function (data) {
                     $("#loading").on('hidden.bs.modal', function () {
                         $("#loading").off('hidden');
                         showFailDialog(data);
                     });
-                    hideLoading();
+                    $("#loading").modal('hide');
                 });
         }
 
@@ -69,12 +80,12 @@ $( document ).ready(function(){
     $("#deleteAdminFormModalSubmit").click(function () {
         var selections = $("#bsTable").bootstrapTable('getSelections');
         $('#deleteFormModal').modal('handleUpdate');
-        showLoading();
+        $("#loading").modal({backdrop:false,show:true});
 
         $.post('/admin/delete', selections[0])
             .done(function (data) {
                 if (data.success == 'success') {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#deleteFormMessages").html('<div class="alert alert-success alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -84,7 +95,7 @@ $( document ).ready(function(){
                         $('#deleteFormModal').modal('hide');
                     },1500);
                 } else {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#deleteFormMessages").html('<div class="alert alert-danger alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -95,7 +106,7 @@ $( document ).ready(function(){
                 }
             })
             .fail(function (data) {
-                hideLoading();
+                $("#loading").modal('hide');
                 $('#formModal').modal('hide');
             });
     });
