@@ -9,20 +9,16 @@ $( document ).ready(function(){
                 $("#formModalTitle").html('Add User');
                 $("#formPlaceholder").html(data);
 
-                $("#loading").on('hidden.bs.modal', function () {
-                    $("#loading").off('hidden');
-                    $("#formModal").modal('show');
-                });
-                $('#formMessages').empty();
-
                 $("#loading").modal('hide');
+                $("#loading").off('hidden');
+                $('#formMessages').empty();
+                $("#formModal").modal('show');
+
             })
             .fail(function (data) {
-                $("#loading").on('hidden.bs.modal', function () {
-                    $("#loading").off('hidden');
-                    showFailDialog(data);
-                });
                 $("#loading").modal('hide');
+                $("#loading").off('hidden');
+                showFailDialog(data);
             });
     });
 
@@ -39,19 +35,15 @@ $( document ).ready(function(){
                     $("#formModalTitle").html('Edit Admin');
                     $("#formPlaceholder").html(data);
 
-                    $("#loading").on('hidden.bs.modal', function () {
-                        $("#loading").off('hidden');
-                        $("#formModal").modal('show');
-                    });
-                    $('#formMessages').empty();
                     $("#loading").modal('hide');
+                    $("#loading").off('hidden');
+                    $('#formMessages').empty();
+                    $("#formModal").modal('show');
                 })
                 .fail(function (data) {
-                    $("#loading").on('hidden.bs.modal', function () {
-                        $("#loading").off('hidden');
-                        showFailDialog(data);
-                    });
                     $("#loading").modal('hide');
+                    $("#loading").off('hidden');
+                    showFailDialog(data);
                 });
         }
 
