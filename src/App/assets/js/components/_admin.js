@@ -12,28 +12,25 @@ $( document ).ready(function(){
                 $("#formPlaceholder").html(data);
                 console.log('print form in div');
 
-                $("#loading").on('hidden.bs.modal', function () {
-                    $("#loading").off('hidden');
-                    console.log('loading hidden');
-                    $("#formModal").modal('show');
-                    console.log('modal show');
-                });
+                $("#loading").modal('hide');
+                console.log('loading hide');
+                $("#loading").off('hidden');
+                console.log('loading hidden');
+
+                $("#formModal").modal('show');
+                console.log('modal show');
                 $('#formMessages').empty();
                 console.log('messages empty');
-
-                $("#loading").modal('hide');
-                console.log('loading hide');
             })
             .fail(function (data) {
-                console.log('fail');
-                $("#loading").on('hidden.bs.modal', function () {
-                    $("#loading").off('hidden');
-                    console.log('loading hidden');
-                    showFailDialog(data);
-                    console.log('showfailddialog');
-                });
                 $("#loading").modal('hide');
-                console.log('loading hide');
+                console.log('modal hide');
+                console.log('fail');
+                $("#loading").off('hidden');
+                console.log('loading hidden');
+                showFailDialog(data);
+                console.log('showfailddialog');
+
             });
     });
 
@@ -50,19 +47,16 @@ $( document ).ready(function(){
                     $("#formModalTitle").html('Edit Admin');
                     $("#formPlaceholder").html(data);
 
-                    $("#loading").on('hidden.bs.modal', function () {
-                        $("#loading").off('hidden');
-                        $("#formModal").modal('show');
-                    });
-                    $('#formMessages').empty();
                     $("#loading").modal('hide');
+                    $("#loading").off('hidden');
+
+                    $('#formMessages').empty();
+                    $("#formModal").modal('show');
                 })
                 .fail(function (data) {
-                    $("#loading").on('hidden.bs.modal', function () {
-                        $("#loading").off('hidden');
-                        showFailDialog(data);
-                    });
                     $("#loading").modal('hide');
+                    $("#loading").off('hidden');
+                    showFailDialog(data);
                 });
         }
 
