@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $app = [
-    'name' => 'DotKernel admin V3'
+    'name' => 'DotKernel Admin V3'
 ];
 
 return [
