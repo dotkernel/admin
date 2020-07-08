@@ -9,16 +9,20 @@ $( document ).ready(function(){
                 $("#formModalTitle").html('Add User');
                 $("#formPlaceholder").html(data);
 
-                $("#loading").modal('hide');
-                $("#loading").off('hidden');
+                $("#loading").on('hidden.bs.modal', function () {
+                    $("#loading").off('hidden');
+                    $("#formModal").modal('show');
+                });
                 $('#formMessages').empty();
-                $("#formModal").modal('show');
 
+                $("#loading").modal('hide');
             })
             .fail(function (data) {
+                $("#loading").on('hidden.bs.modal', function () {
+                    $("#loading").off('hidden');
+                    showFailDialog(data);
+                });
                 $("#loading").modal('hide');
-                $("#loading").off('hidden');
-                showFailDialog(data);
             });
     });
 
@@ -26,7 +30,7 @@ $( document ).ready(function(){
         var selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length != 1) {
             showAlertDialog('Selection error',
-                'Multiple or no Admin selected. Only one Admin can be edited a time',
+                'Multiple or no User selected. Only one User can be edited a time',
                 'error');
         } else {
             $("#loading").modal({backdrop:false,show:true});
@@ -35,18 +39,21 @@ $( document ).ready(function(){
                     $("#formModalTitle").html('Edit Admin');
                     $("#formPlaceholder").html(data);
 
-                    $("#loading").modal('hide');
-                    $("#loading").off('hidden');
+                    $("#loading").on('hidden.bs.modal', function () {
+                        $("#loading").off('hidden');
+                        $("#formModal").modal('show');
+                    });
                     $('#formMessages').empty();
-                    $("#formModal").modal('show');
+                    $("#loading").modal('hide');
                 })
                 .fail(function (data) {
+                    $("#loading").on('hidden.bs.modal', function () {
+                        $("#loading").off('hidden');
+                        showFailDialog(data);
+                    });
                     $("#loading").modal('hide');
-                    $("#loading").off('hidden');
-                    showFailDialog(data);
                 });
         }
-
     });
 
     $("#userDeleteButton").click(function () {

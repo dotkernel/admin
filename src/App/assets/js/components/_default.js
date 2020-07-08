@@ -24,7 +24,3 @@ function showAlertDialog(title, message, type) {
     modal.find("#modalAlertMessage").text(message);
     modal.modal('show');
 }
-
-function hideLoading() {
-    $("#loading").modal('hide');
-}
