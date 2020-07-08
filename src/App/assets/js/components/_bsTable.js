@@ -47,12 +47,12 @@ $( document ).ready(function(){
 
     $("#formModalSubmit").click(function () {
         $('#formModal').modal('handleUpdate');
-        showLoading();
+        $("#loading").modal({backdrop:false,show:true});
 
         $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
             .done(function (data) {
                 if (data.success == 'success') {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#formMessages").html('<div class="alert alert-success alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -62,7 +62,7 @@ $( document ).ready(function(){
                         $('#formModal').modal('hide');
                     },1500);
                 } else {
-                    hideLoading();
+                    $("#loading").modal('hide');
                     $("#formMessages").html('<div class="alert alert-danger alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                         '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
@@ -70,7 +70,7 @@ $( document ).ready(function(){
                 }
             })
             .fail(function (data) {
-                hideLoading();
+                $("#loading").modal('hide');
                 $('#formModal').modal('hide');
             });
     });
