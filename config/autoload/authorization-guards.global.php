@@ -28,8 +28,13 @@ return [
                                 ],
                                 [
                                     'route' => 'admin',
-                                    'actions' => [],
+                                    'actions' => ['login'],
                                     'permissions' => ['*']
+                                ],
+                                [
+                                    'route' => 'admin',
+                                    'actions' => [],
+                                    'permissions' => ['authenticated']
                                 ],
                             ],
                             [
