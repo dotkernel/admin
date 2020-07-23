@@ -41,8 +41,7 @@ class AdminSeeder extends AbstractSeed
 
         $admin = [
             'uuid' => $adminUuid,
-            'username' => 'admin',
-            'email' => 'admin@dotkernel.com',
+            'identity' => 'admin',
             'password' => '$2y$11$OwMimRB1aTrv.VH0uRIDFeU3eh7NNraKncCRruhW.lKOPyz/R7Fq6',
             'firstName' => 'DotKernel',
             'lastName' => 'Admin',
