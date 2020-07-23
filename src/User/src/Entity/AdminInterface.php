@@ -21,12 +21,12 @@ interface AdminInterface
     /**
      * @return string
      */
-    public function getUsername(): string;
+    public function getIdentity(): string;
 
     /**
-     * @param string $username
+     * @param string $identity
      */
-    public function setUsername(string $username): void;
+    public function setIdentity(string $identity): void;
 
     /**
      * @return string

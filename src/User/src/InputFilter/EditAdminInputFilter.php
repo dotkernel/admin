@@ -19,7 +19,7 @@ class EditAdminInputFilter extends InputFilter
         parent::init();
 
         $this->add([
-            'name' => 'username',
+            'name' => 'identity',
             'required' => false,
             'filters' => [
                 ['name' => 'StringTrim']
@@ -32,36 +32,17 @@ class EditAdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'min' => 3,
-                        'max' => 150,
-                        'message' => '<b>Username</b> must have between 3 and 150 characters',
+                        'max' => 100,
+                        'message' => '<b>Identity</b> must have between 3 and 100 characters',
                     ]
                 ],
                 [
                     'name' => 'Regex',
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-                        'message' => '<b>Username</b> contains invalid characters',
+                        'message' => '<b>Identity</b> contains invalid characters',
                     ]
                 ],
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'email',
-            'required' => false,
-            'filters' => [
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty'
-                ],
-                [
-                    'name' => 'EmailAddress',
-                    'options' => [
-                        'message' => '<b>Email</b> is invalid'
-                    ]
-                ]
             ]
         ]);
 

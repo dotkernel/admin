@@ -54,7 +54,7 @@
     <li class="nav-item dropdown float-right">
         <a class="nav-link" href="#" role="button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">
             <i class="fa fa-user-o user-icon"></i>
-            <span class="user-message">Welcome, {{ getIdentity().getUsername() }}</span> <i class="fas fa-angle-down"></i></a>
+            <span class="user-message">Welcome, {{ getIdentity().getIdentity() }}</span> <i class="fas fa-angle-down"></i></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% for page in container %}
                 {% if navigation.isAllowed(page) %}

@@ -15,7 +15,7 @@ class AdminRoleRepository extends AbstractRepository
 {
     /**
      * @param string $uuid
-     * @return object|null
+     * @return object|null|AdminRole
      */
     public function getRole(string $uuid)
     {
