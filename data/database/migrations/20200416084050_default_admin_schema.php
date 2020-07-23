@@ -47,7 +47,7 @@ class DefaultAdminSchema extends AbstractMigration
                 ]
             )
             ->addTimestamps('created', 'updated')
-            ->addIndex(['username'], ['name' => 'username', 'unique' => true])
+            ->addIndex(['identity'], ['name' => 'identity', 'unique' => true])
             ->create();
 
         $this->table('admin_role', ['id' => false, 'primary_key' => 'uuid', 'collation' => 'utf8mb4_general_ci'])
