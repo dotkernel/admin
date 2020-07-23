@@ -12,18 +12,11 @@
                     {% set dummy = form.prepare() %}
                     {{ form().openTag(form) | raw }}
 
-                    {% set username = form.getElements().username %}
-                    <div class="form-group {% if username.getMessages() %}has-error{% endif %}">
-                        {% set dummy = username.setAttribute('class', 'form-control') %}
-                        {{ formLabel(username) }}
-                        {{ formElement(username) }}
-                    </div>
-
-                    {% set email = form.getElements().email %}
-                    <div class="form-group {% if email.getMessages() %}has-error{% endif %}">
-                        {% set dummy = email.setAttribute('class', 'form-control') %}
-                        {{ formLabel(email) }}
-                        {{ formElement(email) }}
+                    {% set identity = form.getElements().identity %}
+                    <div class="form-group {% if identity.getMessages() %}has-error{% endif %}">
+                        {% set dummy = identity.setAttribute('class', 'form-control') %}
+                        {{ formLabel(identity) }}
+                        {{ formElement(identity) }}
                     </div>
 
                     {% set firstName = form.getElements().firstName %}

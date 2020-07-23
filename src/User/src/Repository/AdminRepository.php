@@ -26,7 +26,7 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @param Admin $admin
+     * @param Admin|object $admin
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -37,22 +37,18 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @param string $email
-     * @param string $username
+     * @param string $identity
      * @return int|mixed|string|null
      */
-    public function exists(?string $email = '', ?string $username = '')
+    public function exists(string $identity)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('user')
-            ->from(Admin::class, 'user');
+        $qb->select('admin')
+            ->from(Admin::class, 'admin');
 
-        if (!empty($email)) {
-            $qb->where('user.email = :email')->setParameter('email', $email);
-        }
-        if (!empty($username)) {
-            $qb->orWhere('user.username = :username')->setParameter('username', $username);
+        if (!empty($identity)) {
+            $qb->where('admin.identity = :identity')->setParameter('identity', $identity);
         }
 
         try {
@@ -82,7 +78,7 @@ class AdminRepository extends AbstractRepository
             ->from(Admin::class, 'admin');
 
         if (!is_null($search)) {
-            $qb->where($qb->expr()->like('admin.email', ':search'))
+            $qb->where($qb->expr()->like('admin.identity', ':search'))
                 ->setParameter('search', '%' . $search . '%');
         }
 
@@ -106,7 +102,7 @@ class AdminRepository extends AbstractRepository
             ->from(Admin::class, 'admin');
 
         if (!is_null($search)) {
-            $qb->where($qb->expr()->like('admin.email', ':search'))
+            $qb->where($qb->expr()->like('admin.identity', ':search'))
                 ->setParameter('search', '%' . $search . '%');
         }
 

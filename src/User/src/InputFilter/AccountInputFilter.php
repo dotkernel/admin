@@ -17,7 +17,7 @@ class AccountInputFilter extends InputFilter
         parent::init();
 
         $this->add([
-            'name' => 'username',
+            'name' => 'identity',
             'required' => true,
             'filters' => [
                 ['name' => 'StringTrim']
@@ -27,7 +27,7 @@ class AccountInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => '<b>Username</b> cannot be empty',
+                        'message' => '<b>Identity</b> cannot be empty',
                     ]
                 ],
                 [
@@ -35,8 +35,8 @@ class AccountInputFilter extends InputFilter
                     'break_chain_on_failure' => true,
                     'options' => [
                         'min' => 3,
-                        'max' => 150,
-                        'message' => '<b>Username</b> must have between 3 and 150 characters',
+                        'max' => 100,
+                        'message' => '<b>Identity</b> must have between 3 and 100 characters',
                     ]
                 ],
                 [
@@ -44,33 +44,9 @@ class AccountInputFilter extends InputFilter
                     'break_chain_on_failure' => true,
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-                        'message' => '<b>Username</b> contains invalid characters',
+                        'message' => '<b>Identity</b> contains invalid characters',
                     ]
                 ],
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'email',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Email</b> cannot be empty',
-                    ]
-                ],
-                [
-                    'name' => 'EmailAddress',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Email</b> is invalid'
-                    ]
-                ]
             ]
         ]);
 

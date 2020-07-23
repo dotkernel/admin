@@ -58,24 +58,13 @@ class AdminForm extends Form
         parent::init();
 
         $this->add([
-            'name' => 'username',
+            'name' => 'identity',
             'type' => 'text',
             'options' => [
-                'label' => 'Username'
+                'label' => 'Identity'
             ],
             'attributes' => [
-                'placeholder' => 'Username...'
-            ]
-        ], ['priority' => -9]);
-
-        $this->add([
-            'name' => 'email',
-            'type' => 'text',
-            'options' => [
-                'label' => 'Email'
-            ],
-            'attributes' => [
-                'placeholder' => 'Email...'
+                'placeholder' => 'Identity...'
             ]
         ], ['priority' => -9]);
 

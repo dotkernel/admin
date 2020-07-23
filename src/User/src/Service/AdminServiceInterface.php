@@ -20,11 +20,10 @@ interface AdminServiceInterface
     public function getAdminRepository(): AdminRepository;
 
     /**
-     * @param string $email
-     * @param string $username
+     * @param string $identity
      * @return bool
      */
-    public function exists(string $email = '', string $username = '');
+    public function exists(string $identity = '');
 
     /**
      * @param int $offset
