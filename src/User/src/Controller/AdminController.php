@@ -6,6 +6,7 @@ use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Plugin\FormsPlugin;
+use Frontend\User\Entity\Admin;
 use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\ChangePasswordForm;
@@ -242,6 +243,13 @@ class AdminController extends AbstractActionController
                 $authResult = $this->authenticationService->authenticate();
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
+                    if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
+                        $this->authenticationService->clearIdentity();
+                        $this->messenger->addError('User is inactive', 'user-login');
+                        $this->messenger->addData('shouldRebind', true);
+                        $this->forms->saveState($form);
+                        return new RedirectResponse($this->getRequest()->getUri(), 303);
+                    }
                     $this->authenticationService->getStorage()->write($identity);
 
                     return new RedirectResponse($this->router->generateUri('dashboard'));
