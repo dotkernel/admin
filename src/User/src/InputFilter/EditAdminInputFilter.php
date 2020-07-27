@@ -153,13 +153,16 @@ class EditAdminInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'roleUuid',
-            'required' => false,
-            'filters' => [
-            ],
+            'name' => 'roles',
+            'required' => true,
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => 'Please select at least one role',
+                    ]
                 ],
             ]
         ]);

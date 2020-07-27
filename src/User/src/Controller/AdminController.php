@@ -11,6 +11,7 @@ use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\ChangePasswordForm;
 use Frontend\User\Form\LoginForm;
+use Frontend\User\FormData\AdminRoleData;
 use Frontend\User\InputFilter\EditAdminInputFilter;
 use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserService;
@@ -132,6 +133,8 @@ class AdminController extends AbstractActionController
         $uuid = $request->getAttribute('uuid');
 
         $admin = $this->adminService->getAdminRepository()->find($uuid);
+        $rolesData = new AdminRoleData();
+        $rolesData->fromEntity($admin);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
@@ -155,7 +158,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $this->adminForm->bind($admin);
+        $this->adminForm->bind($rolesData);
 
         return new HtmlResponse(
             $this->template->render(

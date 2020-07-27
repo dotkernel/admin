@@ -17,6 +17,8 @@
             {{ formCaptcha(element) }}
 
         </div>
+    {% elseif element is MultiCheckbox %}
+        {{ formElement(element) }}
 
     {% elseif element is Checkbox %}
 
