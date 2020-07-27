@@ -18,6 +18,7 @@
 
         </div>
     {% elseif element is MultiCheckbox %}
+        {{ element.getLabel() }}
         {{ formElement(element) }}
 
     {% elseif element is Checkbox %}
