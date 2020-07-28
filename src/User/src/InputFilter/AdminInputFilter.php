@@ -165,13 +165,16 @@ class AdminInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'roleUuid',
+            'name' => 'roles',
             'required' => true,
-            'filters' => [
-            ],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => 'Please select at least one role',
+                    ]
                 ],
             ]
         ]);

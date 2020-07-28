@@ -17,6 +17,11 @@
             {{ formCaptcha(element) }}
 
         </div>
+    {% elseif element is MultiCheckbox %}
+        <label>{{ element.getLabel() }}</label>
+        <div class="form-group">
+            {{ formElement(element) }}
+        </div>
 
     {% elseif element is Checkbox %}
 

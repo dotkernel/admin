@@ -44,12 +44,12 @@ class AdminForm extends Form
         $this->roles = $roles;
 
         $this->add([
-            'name' => 'roleUuid',
-            'type' => 'select',
+            'name' => 'roles',
+            'type' => 'MultiCheckbox',
             'options' => [
-                'label' => 'Role',
-                'value_options' => $roles
-            ]
+                'label' => 'Roles',
+                'value_options' => $roles,
+            ],
         ]);
     }
 

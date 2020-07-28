@@ -125,8 +125,10 @@ class AdminService implements AdminServiceInterface
         $admin->setFirstname($data['firstName']);
         $admin->setLastname($data['lastName']);
         $admin->setStatus($data['status']);
-        $role = $this->adminRoleRepository->getRole($data['roleUuid']);
-        $admin->addRole($role);
+        foreach ($data['roles'] as $roleUuid) {
+            $role = $this->adminRoleRepository->getRole($roleUuid);
+            $admin->addRole($role);
+        }
 
         $this->getAdminRepository()->saveAdmin($admin);
 
@@ -161,10 +163,12 @@ class AdminService implements AdminServiceInterface
         if (!empty($data['status'])) {
             $admin->setStatus($data['status']);
         }
-        if (!empty($data['roleUuid'])) {
-            $role = $this->adminRoleRepository->getRole($data['roleUuid']);
+        if (!empty($data['roles'])) {
             $admin->setRoles(new ArrayCollection());
-            $admin->addRole($role);
+            foreach ($data['roles'] as $roleUuid) {
+                $role = $this->adminRoleRepository->getRole($roleUuid);
+                $admin->addRole($role);
+            }
         }
 
         $this->getAdminRepository()->saveAdmin($admin);
