@@ -11,6 +11,18 @@ return [
             'type' => 'InMemory',
             'options' => [
                 'roles' => [
+                    'superuser' => [
+                        'permissions' => [
+                            'authenticated',
+                            'premium'
+                        ]
+                    ],
+                    'admin' => [
+                        'permissions' => [
+                            'authenticated',
+                            'premium'
+                        ]
+                    ],
                     'user' => [
                         'permissions' => [
                             'authenticated',

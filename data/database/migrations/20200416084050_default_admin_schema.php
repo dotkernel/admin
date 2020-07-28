@@ -36,19 +36,18 @@ class DefaultAdminSchema extends AbstractMigration
     {
         $this->table('admin', ['id' => false, 'primary_key' => 'uuid', 'collation' => 'utf8mb4_general_ci'])
             ->addColumn('uuid', 'binary', ['null' => false, 'limit' => 16])
-            ->addColumn('username', 'string', ['null' => false, 'limit' => 100])
-            ->addColumn('email', 'string', ['null' => false, 'limit' => 100])
+            ->addColumn('identity', 'string', ['null' => false, 'limit' => 100])
             ->addColumn('password', 'string', ['null' => false, 'limit' => 100])
             ->addColumn('firstName', 'string', ['null' => true, 'limit' => 255])
             ->addColumn('lastName', 'string', ['null' => true, 'limit' => 255])
             ->addColumn('status', 'enum',
                 [
-                    'default' => Admin::STATUS_PENDING,
+                    'default' => Admin::STATUS_INACTIVE,
                     'values' => Admin::STATUSES
                 ]
             )
             ->addTimestamps('created', 'updated')
-            ->addIndex(['username'], ['name' => 'username', 'unique' => true])
+            ->addIndex(['identity'], ['name' => 'identity', 'unique' => true])
             ->create();
 
         $this->table('admin_role', ['id' => false, 'primary_key' => 'uuid', 'collation' => 'utf8mb4_general_ci'])

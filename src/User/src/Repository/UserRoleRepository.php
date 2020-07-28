@@ -6,16 +6,17 @@ namespace Frontend\User\Repository;
 
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\AdminRole;
+use Frontend\User\Entity\UserRole;
 
 /**
- * Class AdminRoleRepository
+ * Class UserRoleRepository
  * @package Frontend\Admin\Repository
  */
-class AdminRoleRepository extends AbstractRepository
+class UserRoleRepository extends AbstractRepository
 {
     /**
      * @param string $uuid
-     * @return object|null|AdminRole
+     * @return object|null
      */
     public function getRole(string $uuid)
     {
@@ -33,7 +34,7 @@ class AdminRoleRepository extends AbstractRepository
 
         $qb
             ->select('role')
-            ->from(AdminRole::class, 'role')
+            ->from(UserRole::class, 'role')
             ->andWhere('role.name = :name')
             ->setParameter('name', $name);
 

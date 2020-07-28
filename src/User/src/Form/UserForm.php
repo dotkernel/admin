@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Frontend\User\Form;
 
-use Frontend\User\Entity\Admin;
-use Frontend\User\InputFilter\AdminInputFilter;
+use Frontend\User\Entity\User;
+use Frontend\User\FormData\UserFormData;
+use Frontend\User\InputFilter\UserInputFilter;
 use Laminas\Form\Form;
+use Laminas\Hydrator\ObjectPropertyHydrator;
 use Laminas\InputFilter\InputFilter;
 
 /**
- * Class EditEditAdminForm
+ * Class UserForm
  * @package Frontend\User\Form
  */
-class EditAdminForm extends Form
+class UserForm extends Form
 {
     /** @var InputFilter $inputFilter */
     protected InputFilter $inputFilter;
@@ -32,7 +34,7 @@ class EditAdminForm extends Form
 
         $this->init();
 
-        $this->inputFilter = new AdminInputFilter();
+        $this->inputFilter = new UserInputFilter();
         $this->inputFilter->init();
     }
 
@@ -56,6 +58,9 @@ class EditAdminForm extends Form
     public function init()
     {
         parent::init();
+
+        $this->setObject(new UserFormData());
+        $this->setHydrator(new ObjectPropertyHydrator());
 
         $this->add([
             'name' => 'identity',
@@ -118,8 +123,8 @@ class EditAdminForm extends Form
             'options' => [
                 'label' => 'Account Status',
                 'value_options' => [
-                    ['value' => Admin::STATUS_ACTIVE, 'label' => Admin::STATUS_ACTIVE],
-                    ['value' => Admin::STATUS_INACTIVE, 'label' => Admin::STATUS_INACTIVE]
+                    ['value' => User::STATUS_ACTIVE, 'label' => User::STATUS_ACTIVE],
+                    ['value' => User::STATUS_PENDING, 'label' => User::STATUS_PENDING]
                 ]
             ],
         ], ['priority' => -30]);
@@ -131,5 +136,14 @@ class EditAdminForm extends Form
     public function getInputFilter()
     {
         return $this->inputFilter;
+    }
+
+    /**
+     * @param InputFilter $inputFilter
+     */
+    public function setDifferentInputFilter(InputFilter $inputFilter)
+    {
+        $this->inputFilter = $inputFilter;
+        $this->inputFilter->init();
     }
 }

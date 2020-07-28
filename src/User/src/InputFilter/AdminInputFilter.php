@@ -19,7 +19,7 @@ class AdminInputFilter extends InputFilter
         parent::init();
 
         $this->add([
-            'name' => 'username',
+            'name' => 'identity',
             'required' => true,
             'filters' => [
                 ['name' => 'StringTrim']
@@ -29,47 +29,24 @@ class AdminInputFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'break_chain_on_failure' => true,
                     'options' => [
-                        'message' => '<b>Username</b> is required and cannot be empty',
+                        'message' => '<b>Identity</b> is required and cannot be empty',
                     ]
                 ],
                 [
                     'name' => 'StringLength',
                     'options' => [
                         'min' => 3,
-                        'max' => 150,
-                        'message' => '<b>Username</b> must have between 3 and 150 characters',
+                        'max' => 100,
+                        'message' => '<b>Identity</b> must have between 3 and 100 characters',
                     ]
                 ],
                 [
                     'name' => 'Regex',
                     'options' => [
                         'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-                        'message' => '<b>Username</b> contains invalid characters',
+                        'message' => '<b>Identity</b> contains invalid characters',
                     ]
                 ],
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'email',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim']
-            ],
-            'validators' => [
-                [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Email</b> is required and cannot be empty',
-                    ]
-                ],
-                [
-                    'name' => 'EmailAddress',
-                    'options' => [
-                        'message' => '<b>Email</b> is invalid'
-                    ]
-                ]
             ]
         ]);
 
@@ -188,13 +165,16 @@ class AdminInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'roleUuid',
+            'name' => 'roles',
             'required' => true,
-            'filters' => [
-            ],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => 'Please select at least one role',
+                    ]
                 ],
             ]
         ]);

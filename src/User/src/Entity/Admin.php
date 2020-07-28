@@ -27,16 +27,10 @@ class Admin extends AbstractEntity implements AdminInterface
     ];
 
     /**
-     * @ORM\Column(name="username", type="string", length=100, nullable=false, unique=true)
-     * @var string $username
+     * @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true)
+     * @var string $identity
      */
-    protected string $username;
-
-    /**
-     * @ORM\Column(name="email", type="string", length=100, nullable=false, unique=true)
-     * @var string $email
-     */
-    protected string $email;
+    protected string $identity;
 
     /**
      * @ORM\Column(name="firstName", type="string", length=255)
@@ -90,8 +84,7 @@ class Admin extends AbstractEntity implements AdminInterface
     {
         return [
             'uuid' => $this->getUuid()->toString(),
-            'username' => $this->getUsername(),
-            'email' => $this->getEmail(),
+            'identity' => $this->getIdentity(),
             'firstName' => $this->getfirstName(),
             'lastName' => $this->getlastName(),
             'status' => $this->getStatus(),
@@ -106,33 +99,17 @@ class Admin extends AbstractEntity implements AdminInterface
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getIdentity(): string
     {
-        return $this->username;
+        return $this->identity;
     }
 
     /**
-     * @param string $username
+     * @param string $identity
      */
-    public function setUsername(string $username): void
+    public function setIdentity(string $identity): void
     {
-        $this->username = $username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
+        $this->identity = $identity;
     }
 
     /**

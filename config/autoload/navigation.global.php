@@ -34,7 +34,7 @@ return [
                             'options' => [
                                 'label' => 'Manage users',
                                 'route' => [
-                                    'route_name' => 'dashboard',
+                                    'route_name' => 'user',
                                     'route_params' => ['action' => 'manage']
                                 ],
                                 'icon' => 'fas fa-user',

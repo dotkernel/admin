@@ -10,10 +10,10 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 
 /**
- * Class RoleDelegator
+ * Class AdminRoleDelegator
  * @package Frontend\User\Factory
  */
-class RoleDelegator implements DelegatorFactoryInterface
+class AdminRoleDelegator implements DelegatorFactoryInterface
 {
     /**
      * @param ContainerInterface $container
@@ -28,7 +28,7 @@ class RoleDelegator implements DelegatorFactoryInterface
         if ($adminForm instanceof AdminForm) {
             /** @var UserService $userService */
             $userService = $container->get(UserService::class);
-            $roles = $userService->getFormProcessedRoles();
+            $roles = $userService->getAdminFormProcessedRoles();
 
             $adminForm->setRoles($roles);
         }

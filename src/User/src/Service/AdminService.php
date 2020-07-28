@@ -53,14 +53,13 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param string $email
-     * @param string $username
+     * @param string $identity
      * @return bool
      */
-    public function exists(?string $email = '', ?string $username = '')
+    public function exists(string $identity = '')
     {
         return !is_null(
-            $this->adminRepository->exists($email, $username)
+            $this->adminRepository->exists($identity)
         );
     }
 
@@ -96,8 +95,7 @@ class AdminService implements AdminServiceInterface
 
             $result['rows'][] = [
                 'uuid' => $admin->getUuid()->toString(),
-                'username' => $admin->getUsername(),
-                'email' => $admin->getEmail(),
+                'identity' => $admin->getIdentity(),
                 'firstName' => $admin->getFirstname(),
                 'lastName' => $admin->getLastname(),
                 'roles' => implode(", ", $roles),
@@ -117,19 +115,20 @@ class AdminService implements AdminServiceInterface
      */
     public function createAdmin(array $data)
     {
-        if ($this->exists($data['email'], $data['username'])) {
-            throw new ORMException('An account with this email address or username already exists.');
+        if ($this->exists($data['identity'])) {
+            throw new ORMException('An account with this identity already exists.');
         }
 
         $admin = new Admin();
-        $admin->setEmail($data['email']);
-        $admin->setUsername($data['username']);
+        $admin->setIdentity($data['identity']);
         $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
         $admin->setFirstname($data['firstName']);
         $admin->setLastname($data['lastName']);
         $admin->setStatus($data['status']);
-        $role = $this->adminRoleRepository->getRole($data['roleUuid']);
-        $admin->addRole($role);
+        foreach ($data['roles'] as $roleUuid) {
+            $role = $this->adminRoleRepository->getRole($roleUuid);
+            $admin->addRole($role);
+        }
 
         $this->getAdminRepository()->saveAdmin($admin);
 
@@ -137,7 +136,7 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param Admin $admin
+     * @param Admin|object $admin
      * @param array $data
      * @return Admin
      * @throws ORMException
@@ -145,18 +144,11 @@ class AdminService implements AdminServiceInterface
      */
     public function updateAdmin(Admin $admin, array $data)
     {
-        if (!empty($data['email'])) {
-            if (!$this->exists($data['email'])) {
-                $admin->setEmail($data['email']);
-            } elseif ($admin->getEmail() !== $data['email']) {
-                throw new ORMException('An account with this email address already exists.');
-            }
-        }
-        if (!empty($data['username'])) {
-            if (!$this->exists(null, $data['username'])) {
-                $admin->setUsername($data['username']);
-            } elseif ($admin->getUsername() !== $data['username']) {
-                throw new ORMException('An account with this username already exists.');
+        if (!empty($data['identity'])) {
+            if (!$this->exists($data['identity'])) {
+                $admin->setIdentity($data['identity']);
+            } elseif ($admin->getIdentity() !== $data['identity']) {
+                throw new ORMException('An account with this identity already exists');
             }
         }
         if (!empty($data['password'])) {
@@ -171,10 +163,12 @@ class AdminService implements AdminServiceInterface
         if (!empty($data['status'])) {
             $admin->setStatus($data['status']);
         }
-        if (!empty($data['roleUuid'])) {
-            $role = $this->adminRoleRepository->getRole($data['roleUuid']);
+        if (!empty($data['roles'])) {
             $admin->setRoles(new ArrayCollection());
-            $admin->addRole($role);
+            foreach ($data['roles'] as $roleUuid) {
+                $role = $this->adminRoleRepository->getRole($roleUuid);
+                $admin->addRole($role);
+            }
         }
 
         $this->getAdminRepository()->saveAdmin($admin);

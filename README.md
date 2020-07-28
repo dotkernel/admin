@@ -1,30 +1,30 @@
-# frontend
+# admin
 
-Dotkernel web starter package suitable for frontend applications.
+Dotkernel web starter package suitable for admin applications.
 
-[![GitHub issues](https://img.shields.io/github/issues/dotkernel/frontend)](https://github.com/dotkernel/frontend/issues)
-[![GitHub forks](https://img.shields.io/github/forks/dotkernel/frontend)](https://github.com/dotkernel/frontend/network)
-[![GitHub stars](https://img.shields.io/github/stars/dotkernel/frontend)](https://github.com/dotkernel/frontend/stargazers)
-[![GitHub license](https://img.shields.io/github/license/dotkernel/frontend)](https://github.com/dotkernel/frontend/blob/3.0/LICENSE.md)
-
-
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/frontend/3.0.x-dev)
+[![GitHub issues](https://img.shields.io/github/issues/dotkernel/admin)](https://github.com/dotkernel/admin/issues)
+[![GitHub forks](https://img.shields.io/github/forks/dotkernel/admin)](https://github.com/dotkernel/admin/network)
+[![GitHub stars](https://img.shields.io/github/stars/dotkernel/admin)](https://github.com/dotkernel/admin/stargazers)
+[![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/3.0/LICENSE.md)
 
 
-# Installing DotKernel `frontend`
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.0.x-dev)
 
-- [Installing DotKernel `frontend`](#installing-dotkernel-frontend)
+
+# Installing DotKernel `admin`
+
+- [Installing DotKernel `admin`](#installing-dotkernel-admin)
     - [Installation](#installation)
         - [Composer](#composer)
-    - [Choose a destination path for DotKernel `frontend` installation](#choose-a-destination-path-for-dotkernel-frontend-installation)
-    - [Installing the `frontend` Composer package](#installing-the-frontend-composer-package)
-        - [Installing DotKernel Frontend](#installing-dotkernel-frontend)
+    - [Choose a destination path for DotKernel `admin` installation](#choose-a-destination-path-for-dotkernel-admin-installation)
+    - [Installing the `admin` Composer package](#installing-the-admin-composer-package)
+        - [Installing DotKernel admin](#installing-dotkernel-admin)
     - [Configuration - First Run](#configuration---first-run)
     - [Testing (Running)](#testing-running)
 
 ## Tools
 
-DotKernel can be installed through a single command that utilizes [Composer](https://getcomposer.org/). Because of that, Composer is required to install DotKernel `frontend`.
+DotKernel can be installed through a single command that utilizes [Composer](https://getcomposer.org/). Because of that, Composer is required to install DotKernel `admin`.
 
 ### Composer
 
@@ -35,26 +35,26 @@ Installation instructions:
 
 > If you have never used composer before make sure you read the [`Composer Basic Usage`](https://getcomposer.org/doc/01-basic-usage.md) section in Composer's documentation
 
-## Choosing an installation path for DotKernel `frontend` 
+## Choosing an installation path for DotKernel `admin` 
 
 Example:
 
-- absolute path `/var/www/dk`
-- or relative path `dk` (equivalent with `./dk`)
+- absolute path `/var/www/dk-admin`
+- or relative path `dk-admin` (equivalent with `./dk-admin`)
 
-## Installing DotKernel `frontend`
+## Installing DotKernel `admin`
 
-After choosing the path for DotKernel (`dk` will be used for the remainder of this example) it must be installed. There are two installation methods. 
+After choosing the path for DotKernel (`dk-admin` will be used for the remainder of this example) it must be installed. There are two installation methods. 
 
-#### I. Installing DotKernel `frontend` using composer 
+#### I. Installing DotKernel `admin` using composer 
 
 The advantage of using this command is that it runs through the whole installation process. Run the following command:
 
 ```bash
-$ composer create-project dotkernel/frontend -s dev dk
+$ composer create-project dotkernel/admin -s dev dk
 ```
 
-The above command downloads the `frontend` package, then downloads and installs the `dependencies`.
+The above command downloads the `admin` package, then downloads and installs the `dependencies`.
 
 The setup script prompts for some configuration settings, for example the lines below:
 
@@ -74,12 +74,12 @@ The next question is:
 
 Type `y` here, and hit `enter`
 
-#### II. Installing DotKernel `frontend` using git clone
+#### II. Installing DotKernel `admin` using git clone
 
 This method requires more manual input, but it ensures that the default branch is installed, even if it is not released. Run the following command:
 
 ```bash
-$ git clone https://github.com/dotkernel/frontend.git .
+$ git clone https://github.com/dotkernel/admin.git .
 ```
 
 The dependencies have to be installed separately, by running this command
@@ -87,24 +87,12 @@ The dependencies have to be installed separately, by running this command
 $ composer install
 ```
 
-Just like for `II Installing DotKernel frontend using composer` (see above), the setup asks for configuration settings regarding injections (type `0` and hit `enter`) and a confirmation to use this setting for other packages (type `y` and hit `enter`)
+Just like for `II Installing DotKernel admin using composer` (see above), the setup asks for configuration settings regarding injections (type `0` and hit `enter`) and a confirmation to use this setting for other packages (type `y` and hit `enter`)
 
 ## Configuration - First Run
 
-- Remove the `.dist` extension from the files `config/autoload/local.php.dist` and `config/autoload/mail.local.php.dist`
+- Remove the `.dist` extension from the files `config/autoload/local.php.dist`
 - Edit `config/autoload/local.php` according to your dev machine and fill in the `database` configuration
- 
-If you want your application to send mails on registration, contact... please provide valid credentials to the following keys in `config/autoload/mail.local.php`
-
-Under `message_options` key:
-- `from` - email address from whom users will receive emails
-
-Under `smtp_options` key:
-- `host` - hostname or IP address of the mail server
-- `connection_config` - please complete the `username` and `password` keys
-
-In `config/autoload/local.php` add under `contact` => `message_receivers` => `to` key *string* values with the emails that should receive contact messages
-
 
 Run the migrations and seeds with these commands:
 
@@ -152,7 +140,7 @@ The `authorization.global.php` file provides multiple configurations specifying 
 ```php
 //example of a flat RBAC model that specifies two types of roles as well as their permission
     'roles' => [
-                'admin' => [
+                'superuser' => [
                     'permissions' => [
                         'authenticated',
                         'edit',
@@ -160,7 +148,7 @@ The `authorization.global.php` file provides multiple configurations specifying 
                         //etc..
                     ]
                 ],
-                'user' => [
+                'admin' => [
                     'permissions' => [
                         'authenticated',
                         //etc..
@@ -197,15 +185,6 @@ The `authorization-guards.global.php` file provides configuration to restrict ac
                 ]
 ```
 
-## Languages
-
-The `local.php.dist` file provides an example for working with multiple languages. The `translator` variable can be expanded to other languages using [Poedit](https://poedit.net/) which can edit `.po` files like the example in `data/language/da_DK/LC_MESSAGES/messages.po`. The compiled file will have the extension `.mo`
-
-To apply the translations 
-- the twig templates need either `{% trans 'translateText' %}` or `{{ translateText|trans }}`
-- then the js file needs `translateText("translateText")`
-
-
 ## Testing (Running)
 
 Note: **Do not enable dev mode in production**
@@ -233,4 +212,9 @@ php bin/clear-config-cache.php
 
 - Open a web browser and visit `http://localhost:8080/`
 
-You should see the `DotKernel Frontend` welcome page.
+You should see the `DotKernel admin` login page.
+
+If you ran the migrations you will have an admin user in the database with the following credentials:
+
+- User: admin
+- Password: dotadmin

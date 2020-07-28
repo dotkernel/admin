@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Frontend\User\InputFilter;
 
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\User;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\InArray;
 
 /**
- * Class EditAdminInputFilter
+ * Class EditUserInputFilter
  * @package Frontend\User\InputFilter
  */
-class EditAdminInputFilter extends InputFilter
+class EditUserInputFilter extends InputFilter
 {
     public function init()
     {
@@ -32,15 +33,8 @@ class EditAdminInputFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => [
                         'min' => 3,
-                        'max' => 100,
-                        'message' => '<b>Identity</b> must have between 3 and 100 characters',
-                    ]
-                ],
-                [
-                    'name' => 'Regex',
-                    'options' => [
-                        'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-                        'message' => '<b>Identity</b> contains invalid characters',
+                        'max' => 150,
+                        'message' => '<b>Identity</b> must have between 3 and 150 characters',
                     ]
                 ],
             ]
@@ -144,8 +138,8 @@ class EditAdminInputFilter extends InputFilter
                     'name' => InArray::class,
                     'options' => [
                         'haystack' => [
-                            Admin::STATUS_ACTIVE,
-                            Admin::STATUS_INACTIVE
+                            User::STATUS_ACTIVE,
+                            User::STATUS_PENDING
                         ]
                     ],
                 ]
@@ -153,16 +147,13 @@ class EditAdminInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'roles',
-            'required' => true,
-            'filters' => [],
+            'name' => 'roleUuid',
+            'required' => false,
+            'filters' => [
+            ],
             'validators' => [
                 [
                     'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => 'Please select at least one role',
-                    ]
                 ],
             ]
         ]);

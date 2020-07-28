@@ -2,15 +2,16 @@
 
 namespace Frontend\User\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Plugin\FormsPlugin;
+use Frontend\User\Entity\Admin;
 use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\ChangePasswordForm;
 use Frontend\User\Form\LoginForm;
+use Frontend\User\FormData\AdminRoleData;
 use Frontend\User\InputFilter\EditAdminInputFilter;
 use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserService;
@@ -132,6 +133,8 @@ class AdminController extends AbstractActionController
         $uuid = $request->getAttribute('uuid');
 
         $admin = $this->adminService->getAdminRepository()->find($uuid);
+        $rolesData = new AdminRoleData();
+        $rolesData->fromEntity($admin);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
@@ -155,7 +158,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $this->adminForm->bind($admin);
+        $this->adminForm->bind($rolesData);
 
         return new HtmlResponse(
             $this->template->render(
@@ -213,7 +216,7 @@ class AdminController extends AbstractActionController
      */
     public function manageAction()
     {
-        return new HtmlResponse($this->template->render('admin::admin-list'));
+        return new HtmlResponse($this->template->render('admin::list'));
     }
 
     /**
@@ -243,6 +246,13 @@ class AdminController extends AbstractActionController
                 $authResult = $this->authenticationService->authenticate();
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
+                    if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
+                        $this->authenticationService->clearIdentity();
+                        $this->messenger->addError('User is inactive', 'user-login');
+                        $this->messenger->addData('shouldRebind', true);
+                        $this->forms->saveState($form);
+                        return new RedirectResponse($this->getRequest()->getUri(), 303);
+                    }
                     $this->authenticationService->getStorage()->write($identity);
 
                     return new RedirectResponse($this->router->generateUri('dashboard'));
