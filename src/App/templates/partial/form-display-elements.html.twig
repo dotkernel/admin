@@ -18,8 +18,10 @@
 
         </div>
     {% elseif element is MultiCheckbox %}
-        {{ element.getLabel() }}
-        {{ formElement(element) }}
+        <label>{{ element.getLabel() }}</label>
+        <div class="form-group">
+            {{ formElement(element) }}
+        </div>
 
     {% elseif element is Checkbox %}
 
