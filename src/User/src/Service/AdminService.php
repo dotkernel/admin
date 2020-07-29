@@ -154,10 +154,10 @@ class AdminService implements AdminServiceInterface
         if (!empty($data['password'])) {
             $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
         }
-        if (!empty($data['firstName'])) {
+        if (is_string($data['firstName'])) {
             $admin->setFirstname($data['firstName']);
         }
-        if (!empty($data['lastName'])) {
+        if (is_string($data['lastName'])) {
             $admin->setLastname($data['lastName']);
         }
         if (!empty($data['status'])) {

@@ -43,6 +43,7 @@ $( document ).ready(function(){
             return;
         }
         $("#deleteFormPlaceholder").text('Are you sure you want to delete ' + selections[0].identity + '?');
+        $("#deleteFormMessages").empty();
         $("#deleteFormModal").modal('show');
     });
 

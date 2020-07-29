@@ -16,6 +16,7 @@ use Frontend\User\Factory\AdminRoleDelegator;
 use Frontend\User\Factory\UserControllerFactory;
 use Frontend\User\Factory\UserRoleDelegator;
 use Frontend\User\Form\AdminForm;
+use Frontend\User\Form\ChangePasswordForm;
 use Frontend\User\Form\LoginForm;
 use Frontend\User\Controller\UserController;
 use Frontend\User\Form\UserForm;
@@ -95,7 +96,8 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories' => [
-                    LoginForm::class => ElementFactory::class
+                    LoginForm::class => ElementFactory::class,
+                    ChangePasswordForm::class => ElementFactory::class
                 ],
                 'aliases' => [
                 ],

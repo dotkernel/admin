@@ -72,21 +72,6 @@ class ChangePasswordInputFilter extends InputFilter
             ],
             'validators' => [
                 [
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => [
-                        'message' => '<b>Confirm Password</b> is required and cannot be empty',
-                    ]
-                ],
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 8,
-                        'max' => 150,
-                        'message' => '<b>Confirm Password</b> must have between 8 and 150 characters',
-                    ]
-                ],
-                [
                     'name' => 'Identical',
                     'options' => [
                         'token' => 'password',

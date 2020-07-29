@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontend\User\InputFilter;
 
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\User;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\InArray;
 
@@ -149,8 +150,8 @@ class UserInputFilter extends InputFilter
                     'name' => InArray::class,
                     'options' => [
                         'haystack' => [
-                            Admin::STATUS_ACTIVE,
-                            Admin::STATUS_INACTIVE
+                            User::STATUS_ACTIVE,
+                            User::STATUS_PENDING
                         ]
                     ],
                 ]
@@ -158,13 +159,16 @@ class UserInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'roleUuid',
+            'name' => 'roles',
             'required' => true,
-            'filters' => [
-            ],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => [
+                        'message' => 'Please select at least one role',
+                    ]
                 ],
             ]
         ]);

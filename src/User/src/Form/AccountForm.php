@@ -80,4 +80,12 @@ class AccountForm extends Form
             ]
         ], ['priority' => -100]);
     }
+
+    /**
+     * @return null|InputFilter|\Laminas\InputFilter\InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+        return $this->inputFilter;
+    }
 }

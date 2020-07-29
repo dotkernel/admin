@@ -29,6 +29,8 @@ class ChangePasswordForm extends Form
 
     public function init()
     {
+        parent::init();
+
         $this->add([
             'name' => 'currentPassword',
             'type' => 'Password',
@@ -79,5 +81,13 @@ class ChangePasswordForm extends Form
                 'value' => 'Change Password'
             ]
         ], ['priority' => -100]);
+    }
+
+    /**
+     * @return null|InputFilter|\Laminas\InputFilter\InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+        return $this->inputFilter;
     }
 }
