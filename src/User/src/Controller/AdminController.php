@@ -11,7 +11,7 @@ use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\ChangePasswordForm;
 use Frontend\User\Form\LoginForm;
-use Frontend\User\FormData\AdminRoleData;
+use Frontend\User\FormData\AdminFormData;
 use Frontend\User\InputFilter\EditAdminInputFilter;
 use Frontend\User\Service\AdminService;
 use Frontend\User\Service\UserService;
@@ -133,8 +133,8 @@ class AdminController extends AbstractActionController
         $uuid = $request->getAttribute('uuid');
 
         $admin = $this->adminService->getAdminRepository()->find($uuid);
-        $rolesData = new AdminRoleData();
-        $rolesData->fromEntity($admin);
+        $adminFormData = new AdminFormData();
+        $adminFormData->fromEntity($admin);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
@@ -158,7 +158,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $this->adminForm->bind($rolesData);
+        $this->adminForm->bind($adminFormData);
 
         return new HtmlResponse(
             $this->template->render(
@@ -339,7 +339,7 @@ class AdminController extends AbstractActionController
             $changePasswordForm->setData($data);
             if ($changePasswordForm->isValid()) {
                 $result = $changePasswordForm->getData();
-                if ($admin->getPassword() === password_hash($result['currentPassword'], PASSWORD_DEFAULT)) {
+                if (password_verify($result['currentPassword'], $admin->getPassword())) {
                     try {
                         $this->adminService->updateAdmin($admin, $result);
                         $this->messenger->addSuccess('Your account was updated successfully');

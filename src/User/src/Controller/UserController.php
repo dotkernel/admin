@@ -149,6 +149,8 @@ class UserController extends AbstractActionController
         $uuid = $request->getAttribute('uuid');
 
         $user = $this->userService->getUserRepository()->find($uuid);
+        $formData = new UserFormData();
+        $formData->fromEntity($user);
 
         if ($request->getMethod() === 'POST') {
             $data = $request->getParsedBody();
@@ -172,8 +174,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $userFormData = UserFormData::fromUserEntity($user);
-        $this->userForm->bind($userFormData);
+        $this->userForm->bind($formData);
 
         return new HtmlResponse(
             $this->template->render(

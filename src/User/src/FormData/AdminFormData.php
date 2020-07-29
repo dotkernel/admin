@@ -8,19 +8,24 @@ use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\AdminRole;
 
 /**
- * Class AdminRoleData
+ * Class AdminFormData
  * @package Frontend\User\FormData
  */
-class AdminRoleData
+class AdminFormData
 {
+    /** @var array $roles */
     public array $roles;
 
+    /** @var string $identity */
     public string $identity;
 
+    /** @var string $firstName */
     public string $firstName;
 
+    /** @var string $lastName */
     public string $lastName;
 
+    /** @var string $status */
     public string $status;
 
     /**

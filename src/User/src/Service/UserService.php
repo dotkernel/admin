@@ -88,7 +88,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param UserFormData $data
+     * @param UserFormData|object $data
      * @return UserInterface
      * @throws ORMException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -112,12 +112,14 @@ class UserService implements UserServiceInterface
             $user->setStatus($data->status);
         }
 
-        if (!empty($data->roleUuid)) {
-            $role = $this->userRoleService->getUserRoleRepository()->getRole($data->roleUuid);
-            if (!$role instanceof UserRole) {
-                throw new \Exception('Role with uuid : ' . $data->roleUuid . ' not found!');
+        if (!empty($data->roles)) {
+            foreach ($data->roles as $roleUuid) {
+                $role = $this->userRoleService->getUserRoleRepository()->getRole($roleUuid);
+                if (!$role instanceof UserRole) {
+                    throw new \Exception('Role with uuid : ' . $roleUuid . ' not found!');
+                }
+                $user->addRole($role);
             }
-            $user->addRole($role);
         } else {
             $role = $this->userRoleService->getUserRoleRepository()->findOneBy(['name' => UserRole::ROLE_USER]);
             if ($role instanceof UserRole) {
@@ -136,8 +138,8 @@ class UserService implements UserServiceInterface
 
 
     /**
-     * @param User $user
-     * @param UserFormData $data
+     * @param User|object $user
+     * @param UserFormData|object $data
      * @return User
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -169,11 +171,13 @@ class UserService implements UserServiceInterface
             $user->getDetail()->setLastName($data->lastName);
         }
 
-        if (!empty($data->roleUuid)) {
+        if (!empty($data->roles)) {
             $user->resetRoles();
-            $role = $this->userRoleService->getUserRoleRepository()->findOneBy(['uuid' => $data->roleUuid]);
-            if ($role instanceof UserRole) {
-                $user->addRole($role);
+            foreach ($data->roles as $roleUuid) {
+                $role = $this->userRoleService->getUserRoleRepository()->findOneBy(['uuid' => $roleUuid]);
+                if ($role instanceof UserRole) {
+                    $user->addRole($role);
+                }
             }
         }
         if (empty($user->getRoles())) {
