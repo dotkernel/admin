@@ -1,14 +1,19 @@
 {
-    "name": "dotkernel/frontend",
-    "description": "Dotkernel Frontend Application",
+    "name": "dotkernel/admin",
+    "description": "Dotkernel Admin Application",
     "type": "project",
     "license": "MIT",
-    "homepage": "https://github.com/dotkernel/frontend",
+    "homepage": "https://github.com/dotkernel/admin",
     "authors": [
         {
             "name": "DotKernel Team",
             "email": "team@dotkernel.com"
         }
+    ],
+    "keywords": [
+        "dotkernel",
+        "mezzio",
+        "laminas"
     ],
     "config": {
         "sort-packages": true
