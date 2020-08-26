@@ -126,13 +126,14 @@ class AdminController extends AbstractActionController
 
     /**
      * @return ResponseInterface
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editAction(): ResponseInterface
     {
         $request = $this->getRequest();
         $uuid = $request->getAttribute('uuid');
-
         $admin = $this->adminService->getAdminRepository()->find($uuid);
+
         $adminFormData = new AdminFormData();
         $adminFormData->fromEntity($admin);
 

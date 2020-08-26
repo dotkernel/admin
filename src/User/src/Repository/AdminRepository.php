@@ -6,7 +6,6 @@ namespace Frontend\User\Repository;
 
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
-use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
  * Class AdminRepository
