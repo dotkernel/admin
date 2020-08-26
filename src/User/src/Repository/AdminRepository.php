@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
-use Doctrine\Common\Collections\Criteria;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
 
@@ -14,35 +13,6 @@ use Frontend\User\Entity\Admin;
  */
 class AdminRepository extends AbstractRepository
 {
-    /**
-     * @param mixed $uuid
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return int|mixed|object|string|null
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\Query\QueryException
-     */
-    public function find($uuid, $lockMode = null, $lockVersion = null)
-    {
-        if (is_array($uuid)) {
-            $uuidInstance = reset($uuid);
-            $criteria = Criteria::create()->where(
-                Criteria::expr()->eq('admin.uuid', $uuidInstance->getBytes())
-            );
-            return $this->createQueryBuilder('admin')
-                ->addCriteria($criteria)
-                ->getQuery()
-                ->getOneOrNullResult();
-        } else {
-            return $this->findOneBy(
-                [
-                    'uuid' => $uuid
-                ]
-            );
-        }
-    }
-
     /**
      * @param Admin $admin
      * @throws \Doctrine\ORM\ORMException
