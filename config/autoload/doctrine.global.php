@@ -17,6 +17,13 @@ return [
     ],
 
     'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'query_cache' => \Doctrine\Common\Cache\PhpFileCache::class,
+                'metadata_cache' => \Doctrine\Common\Cache\PhpFileCache::class,
+                'result_cache' => \Doctrine\Common\Cache\PhpFileCache::class
+            ]
+        ],
         'connection' => [
             'orm_default' => [
                 'doctrine_mapping_types' => [
@@ -38,5 +45,11 @@ return [
             UuidBinaryType::NAME => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
         ],
+        'cache' => [
+            \Doctrine\Common\Cache\PhpFileCache::class => [
+                'class' => \Doctrine\Common\Cache\PhpFileCache::class,
+                'directory' => getcwd() . '/data/cache/doctrine'
+            ]
+        ]
     ],
 ];

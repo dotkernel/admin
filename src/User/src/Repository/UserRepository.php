@@ -31,7 +31,7 @@ class UserRepository extends AbstractRepository
             ->andWhere('user.identity = :identity')
             ->setParameter('identity', $identity);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->useQueryCache(true)->getOneOrNullResult();
     }
 
     /**
@@ -47,7 +47,7 @@ class UserRepository extends AbstractRepository
             ->where('user.identity = :identity')->setParameter('identity', $identity);
 
         try {
-            return $qb->getQuery()->getSingleResult();
+            return $qb->getQuery()->useQueryCache(true)->getSingleResult();
         } catch (\Exception $exception) {
             return null;
         }
@@ -87,7 +87,7 @@ class UserRepository extends AbstractRepository
             ->from(Admin::class, 'user')
             ->where('user.identity = :identity')->setParameter('identity', $email);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->useQueryCache(true)->getOneOrNullResult();
     }
 
     /**
