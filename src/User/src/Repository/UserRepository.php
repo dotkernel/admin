@@ -118,7 +118,7 @@ class UserRepository extends AbstractRepository
             ->setMaxResults($limit);
         $qb->orderBy('user.' . $sort, $order);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->useQueryCache(true)->getResult();
     }
 
     /**
@@ -138,6 +138,6 @@ class UserRepository extends AbstractRepository
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return $qb->getQuery()->useQueryCache(true)->getSingleScalarResult();
     }
 }
