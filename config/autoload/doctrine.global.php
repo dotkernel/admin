@@ -52,4 +52,5 @@ return [
             ]
         ]
     ],
+    'resultCacheLifetime' => 300
 ];

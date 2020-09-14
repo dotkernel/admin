@@ -31,17 +31,22 @@ class AdminService implements AdminServiceInterface
     /** @var AdminRoleRepository $adminRoleRepository */
     protected AdminRoleRepository $adminRoleRepository;
 
+    /** @var int $cacheLifetime */
+    protected int $cacheLifetime;
+
     /**
      * AdminService constructor.
      * @param EntityManager $em
+     * @param $cacheLifetime
      *
-     * @Inject({EntityManager::class})
+     * @Inject({EntityManager::class, "config.resultCacheLifetime"})
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, int $cacheLifetime)
     {
         $this->em = $em;
         $this->adminRepository = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
+        $this->adminRepository->setCacheLifetime($cacheLifetime);
     }
 
     /**

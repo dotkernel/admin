@@ -13,6 +13,9 @@ use Frontend\User\Entity\Admin;
  */
 class AdminRepository extends AbstractRepository
 {
+    /** @var int $cacheLifetime */
+    protected int $cacheLifetime;
+
     /**
      * @param Admin $admin
      * @throws \Doctrine\ORM\ORMException
@@ -85,7 +88,7 @@ class AdminRepository extends AbstractRepository
             ->setMaxResults($limit);
         $qb->orderBy('admin.' . $sort, $order);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->enableResultCache($this->getCacheLifetime())->getResult();
     }
 
     /**
@@ -106,5 +109,21 @@ class AdminRepository extends AbstractRepository
         }
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCacheLifetime(): int
+    {
+        return $this->cacheLifetime;
+    }
+
+    /**
+     * @param int $cacheLifetime
+     */
+    public function setCacheLifetime(int $cacheLifetime): void
+    {
+        $this->cacheLifetime = $cacheLifetime;
     }
 }
