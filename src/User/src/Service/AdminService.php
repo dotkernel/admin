@@ -39,7 +39,7 @@ class AdminService implements AdminServiceInterface
      * @param EntityManager $em
      * @param $cacheLifetime
      *
-     * @Inject({EntityManager::class, "config.cacheLifetime"})
+     * @Inject({EntityManager::class, "config.resultCacheLifetime"})
      */
     public function __construct(EntityManager $em, int $cacheLifetime)
     {

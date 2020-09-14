@@ -88,7 +88,7 @@ class AdminRepository extends AbstractRepository
             ->setMaxResults($limit);
         $qb->orderBy('admin.' . $sort, $order);
 
-        return $qb->getQuery()->enableResultCache($this->cacheLifetime)->getResult();
+        return $qb->getQuery()->enableResultCache($this->getCacheLifetime())->getResult();
     }
 
     /**
