@@ -47,7 +47,7 @@
         "dotkernel/dot-rbac": "^3.0",
         "dotkernel/dot-rbac-guard": "^3.0",
         "dotkernel/dot-session": "^4.0",
-        "dotkernel/dot-twigrenderer": "^3.0",
+        "dotkernel/dot-twigrenderer": "^3.1.0",
         "laminas/laminas-authentication": "^2.7",
         "laminas/laminas-component-installer": "^2.1.1",
         "laminas/laminas-config-aggregator": "^1.0",
@@ -66,8 +66,7 @@
         "ramsey/uuid-doctrine": "^1.6",
         "roave/psr-container-doctrine": "^2.2",
         "robmorgan/phinx": "^0.12",
-        "tuupola/cors-middleware": "^1.1",
-        "twig/extensions": "^1.5"
+        "tuupola/cors-middleware": "^1.1"
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.2",
