@@ -26,7 +26,6 @@ class PluginManagerAwareInitializer
      */
     public function __invoke(ContainerInterface $container, $instance)
     {
-        error_log(get_class($instance));
         if ($instance instanceof PluginManagerAwareInterface) {
             $pluginManager = $container->get(PluginManager::class);
             $instance->setPluginManager($pluginManager);
