@@ -95,7 +95,6 @@ return [
 
                     //the smtp authentication credential
                     'password' => '',
-                    'host' => '',
 
                     //the encryption type to be used, ssl or tls
                     //null should be used to disable SSL

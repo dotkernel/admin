@@ -3,11 +3,11 @@
 return [
     'dot_flashmessenger' => [
         'options' => [
-            'namespace' => 'frontend_messenger'
+            'namespace' => 'admin_messenger'
         ]
     ],
     'session_config' => [
-        'name' => 'FRONTEND_SESSID',
+        'name' => 'ADMIN_SESSID',
     ],
     'session_containers' => [
         'user'
