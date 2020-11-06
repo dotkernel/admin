@@ -1,19 +1,21 @@
 {
     "name": "dotkernel/admin",
-    "description": "Dotkernel Admin Application",
     "type": "project",
+    "description": "Dotkernel Admin Application",
     "license": "MIT",
     "homepage": "https://github.com/dotkernel/admin",
+    "keywords": [
+        "dotkernel",
+        "mezzio",
+        "laminas",
+        "admin panel",
+        "Dotkernel Backend"
+    ],
     "authors": [
         {
             "name": "DotKernel Team",
             "email": "team@dotkernel.com"
         }
-    ],
-    "keywords": [
-        "dotkernel",
-        "mezzio",
-        "laminas"
     ],
     "config": {
         "sort-packages": true
@@ -33,25 +35,25 @@
     "require": {
         "php": "^7.4",
         "doctrine/doctrine-module": "^4.0",
-        "dotkernel/dot-annotated-services": "^3.0",
-        "dotkernel/dot-authorization": "^3.0",
-        "dotkernel/dot-controller": "^3.0",
-        "dotkernel/dot-errorhandler": "^3.0",
-        "dotkernel/dot-event": "^3.0",
-        "dotkernel/dot-flashmessenger": "^3.0",
-        "dotkernel/dot-form": "^3.1",
-        "dotkernel/dot-helpers": "^3.0",
-        "dotkernel/dot-log": "^3.0",
-        "dotkernel/dot-mail": "^3.0",
-        "dotkernel/dot-navigation": "^3.0",
-        "dotkernel/dot-rbac": "^3.0",
-        "dotkernel/dot-rbac-guard": "^3.0",
-        "dotkernel/dot-session": "^4.0",
-        "dotkernel/dot-twigrenderer": "^3.1.0",
+        "dotkernel/dot-annotated-services": "^3.1",
+        "dotkernel/dot-authorization": "^3.1",
+        "dotkernel/dot-controller": "^3.1.1",
+        "dotkernel/dot-errorhandler": "^3.1",
+        "dotkernel/dot-event": "^3.1",
+        "dotkernel/dot-flashmessenger": "^3.1.1",
+        "dotkernel/dot-form": "^3.2",
+        "dotkernel/dot-helpers": "^3.1",
+        "dotkernel/dot-log": "^3.1",
+        "dotkernel/dot-mail": "^3.1",
+        "dotkernel/dot-navigation": "^3.1",
+        "dotkernel/dot-rbac": "^3.2",
+        "dotkernel/dot-rbac-guard": "^3.1",
+        "dotkernel/dot-session": "^4.2",
+        "dotkernel/dot-twigrenderer": "^3.1.1",
         "laminas/laminas-authentication": "^2.7",
         "laminas/laminas-component-installer": "^2.1.1",
-        "laminas/laminas-config-aggregator": "^1.0",
-        "laminas/laminas-dependency-plugin": "^1.0",
+        "laminas/laminas-config-aggregator": "^1.3",
+        "laminas/laminas-dependency-plugin": "^2.1",
         "laminas/laminas-diactoros": "^2.3",
         "laminas/laminas-form": "^2.14",
         "laminas/laminas-i18n": "^2.10",
