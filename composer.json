@@ -49,7 +49,7 @@
         "dotkernel/dot-rbac": "^3.2",
         "dotkernel/dot-rbac-guard": "^3.1",
         "dotkernel/dot-session": "^4.2",
-        "dotkernel/dot-twigrenderer": "^3.1",
+        "dotkernel/dot-twigrenderer": "^3.1.1",
         "laminas/laminas-authentication": "^2.7",
         "laminas/laminas-component-installer": "^2.1.1",
         "laminas/laminas-config-aggregator": "^1.3",
