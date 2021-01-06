@@ -2,6 +2,9 @@
 
 Dotkernel web starter package suitable for admin applications.
 
+![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/admin)
+
+
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/admin)](https://github.com/dotkernel/admin/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/admin)](https://github.com/dotkernel/admin/network)
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/admin)](https://github.com/dotkernel/admin/stargazers)
