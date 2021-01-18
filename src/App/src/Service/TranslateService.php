@@ -47,11 +47,14 @@ class TranslateService implements TranslateServiceInterface
             setcookie(
                 $this->translatorConfig['cookie']['name'],
                 $languageKey,
-                time() + $this->translatorConfig['cookie']['lifetime'],
-                $config->getCookiePath(),
-                $config->getCookieDomain(),
-                (bool) $config->getCookieSecure(),
-                (bool) $config->getCookieHttpOnly()
+                [
+                    'expires' => time() + $this->translatorConfig['cookie']['lifetime'],
+                    'path' => $config->getCookiePath(),
+                    'domain' => $config->getCookieDomain(),
+                    'samesite' => $this->translatorConfig['cookie']['samesite'],
+                    'secure' => $this->translatorConfig['cookie']['secure'],
+                    'httponly' => $this->translatorConfig['cookie']['httponly']
+                ]
             );
         }
     }
