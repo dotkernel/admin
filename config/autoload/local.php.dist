@@ -52,7 +52,11 @@ return [
         'cookie' => [
             'name' => 'dk30Translator',
             'lifetime' => 3600 * 24 * 30,
+            'samesite' => 'Lax',
+            'secure' => true,
+            'httponly' => true
         ],
+
         'default' => 'en',
         'locale' => [
             'en' => 'en_EN',
