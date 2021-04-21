@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Frontend\User\Entity;
 
-use DateTime;
-use Ramsey\Uuid\UuidInterface;
-
 /**
  * Interface UserInterface
  * @package Frontend\User\Entity
@@ -84,32 +81,6 @@ interface UserInterface
      * @return UserInterface
      */
     public function removeRole(UserRole $role): UserInterface;
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface;
-
-    /**
-     * @return DateTime
-     */
-    public function getCreated(): DateTime;
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdated();
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function updateTimestamps();
-
-    /**
-     * @return void
-     */
-    public function touch(): void;
 
     /**
      * @return array
