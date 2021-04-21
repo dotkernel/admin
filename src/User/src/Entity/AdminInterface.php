@@ -3,6 +3,7 @@
 namespace Frontend\User\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Admin
@@ -60,13 +61,13 @@ interface AdminInterface
 
     /**
      * @param AdminRole $role
-     * @return \Frontend\User\Entity\AdminInterface
+     * @return AdminInterface
      */
     public function addRole(AdminRole $role): AdminInterface;
 
     /**
      * @param AdminRole $role
-     * @return \Frontend\User\Entity\AdminInterface
+     * @return AdminInterface
      */
     public function removeRole(AdminRole $role): AdminInterface;
 }

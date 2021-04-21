@@ -17,12 +17,12 @@ use Ramsey\Uuid\UuidInterface;
 final class UuidOrderedTimeGenerator
 {
     /** @var UuidFactory $factory */
-    private static $factory;
+    private static UuidFactory $factory;
 
     /**
-     * @return UuidInterface
+     * @return UuidInterface|null
      */
-    public static function generateUuid(): UuidInterface
+    public static function generateUuid(): ?UuidInterface
     {
         try {
             return self::getFactory()->uuid1();

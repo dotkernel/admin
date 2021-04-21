@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Frontend\User\Entity;
 
+use DateInterval;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Frontend\App\Entity\AbstractEntity;
 
 /**
@@ -32,8 +35,8 @@ class UserResetPassword extends AbstractEntity
     protected $user;
 
     /**
-     * @ORM\Column(name="expires", type="datetime", nullable=false)
-     * @var DateTime
+     * @ORM\Column(name="expires", type="datetime_immutable", nullable=false)
+     * @var DateTimeImmutable
      */
     protected $expires;
 
@@ -56,8 +59,9 @@ class UserResetPassword extends AbstractEntity
     {
         parent::__construct();
 
-        $this->expires = new DateTime();
-        $this->expires->add(new \DateInterval('P1D'));
+        $tomorrow = new DateTime();
+        $tomorrow->add(new DateInterval('P1D'));
+        $this->expires = DateTimeImmutable::createFromMutable($tomorrow);
     }
 
     /**
@@ -80,18 +84,18 @@ class UserResetPassword extends AbstractEntity
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getExpires(): DateTime
+    public function getExpires(): DateTimeImmutable
     {
         return $this->expires;
     }
 
     /**
-     * @param DateTime $expires
+     * @param DateTimeImmutable $expires
      * @return $this
      */
-    public function setExpires(DateTime $expires)
+    public function setExpires(DateTimeImmutable $expires)
     {
         $this->expires = $expires;
 
@@ -154,8 +158,8 @@ class UserResetPassword extends AbstractEntity
     public function isValid(): bool
     {
         try {
-            return $this->getExpires() > (new DateTime());
-        } catch (\Exception $exception) {
+            return $this->getExpires() > (new DateTimeImmutable());
+        } catch (Exception $exception) {
         }
 
         return false;
