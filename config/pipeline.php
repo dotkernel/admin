@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Mezzio\Application;
+use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
 use Mezzio\Helper\UrlHelperMiddleware;
@@ -14,7 +15,6 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Psr\Container\ContainerInterface;
-use Tuupola\Middleware\CorsMiddleware;
 use Frontend\App\Middleware\TranslatorMiddleware;
 use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
 use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
