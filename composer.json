@@ -62,13 +62,13 @@
         "laminas/laminas-stdlib": "^3.2",
         "mezzio/mezzio": "^3.2",
         "mezzio/mezzio-authorization-rbac": "^1.0",
+        "mezzio/mezzio-cors": "^1.0",
         "mezzio/mezzio-fastroute": "^3.0",
         "mezzio/mezzio-helpers": "^5.3",
         "mezzio/mezzio-twigrenderer": "^2.2",
         "ramsey/uuid-doctrine": "^1.6",
         "roave/psr-container-doctrine": "^2.2",
-        "robmorgan/phinx": "^0.12",
-        "tuupola/cors-middleware": "^1.1"
+        "robmorgan/phinx": "^0.12"
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.2",

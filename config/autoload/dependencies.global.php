@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Dot\Mail\Factory\MailOptionsAbstractFactory;
 use Dot\Mail\Factory\MailServiceAbstractFactory;
 use Dot\Mail\Service\MailService;
-use Frontend\App\Factory\CorsFactory;
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Dot\ErrorHandler\LogErrorHandler;
 use Frontend\App\Middleware\AuthMiddleware;
@@ -34,7 +33,6 @@ return [
         'factories'  => [
             'dot-mail.options.default' => MailOptionsAbstractFactory::class,
             'dot-mail.service.default' => MailServiceAbstractFactory::class,
-            Tuupola\Middleware\CorsMiddleware::class => CorsFactory::class,
             AuthMiddleware::class => AuthMiddlewareFactory::class,
         ],
     ],
