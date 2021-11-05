@@ -30,8 +30,6 @@ $aggregator = new ConfigAggregator([
         ? \Mezzio\Swoole\ConfigProvider::class
         : function(){ return[]; },
 
-    \DoctrineModule\ConfigProvider::class,
-
     // DotKernel packages
     \Dot\Mail\ConfigProvider::class,
     \Dot\Form\ConfigProvider::class,
