@@ -20,7 +20,6 @@ return [
         'aliases' => [
             ErrorHandlerInterface::class => LogErrorHandler::class,
             \Dot\Authorization\AuthorizationInterface::class => \Dot\Rbac\Authorization\AuthorizationService::class,
-            \Laminas\Authentication\AuthenticationService::class => 'doctrine.authenticationservice.orm_default',
             MailService::class => 'dot-mail.service.default',
         ],
         // Use 'invokables' for constructor-less services, or services that do
