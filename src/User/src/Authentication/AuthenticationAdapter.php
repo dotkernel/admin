@@ -149,6 +149,11 @@ class AuthenticationAdapter implements AdapterInterface
             }
         }
 
+        /**
+         * Overwrite encrypted password, so it does not get stored in the session
+         */
+        $identityClass->setPassword('');
+
         return new Result(Result::SUCCESS, $identityClass, [
             $this->config['orm_default']['messages']['success']
         ]);
