@@ -57,7 +57,7 @@ class Admin extends AbstractEntity implements AdminInterface
     protected string $status = self::STATUS_ACTIVE;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Frontend\User\Entity\AdminRole")
+     * @ORM\ManyToMany(targetEntity="Frontend\User\Entity\AdminRole", fetch="EAGER")
      * @ORM\JoinTable(
      *     name="admin_roles",
      *     joinColumns={@ORM\JoinColumn(name="userUuid", referencedColumnName="uuid")},

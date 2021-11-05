@@ -3,7 +3,7 @@
 namespace Frontend\User\Authentication;
 
 use Doctrine\ORM\EntityManager;
-use Frontend\User\Entity\User;
+use Frontend\User\Entity\Admin;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Exception;
 use Laminas\Authentication\Result;
@@ -84,7 +84,7 @@ class AuthenticationAdapter implements AdapterInterface
         /** Get the identity class object */
         $repository = $this->entityManager->getRepository($this->config['orm_default']['identity_class']);
 
-        /** @var User $identityClass */
+        /** @var Admin $identityClass */
         $identityClass = $repository->findOneBy([
                 $this->config['orm_default']['identity_property'] => $this->getIdentity()
             ]);
@@ -149,11 +149,9 @@ class AuthenticationAdapter implements AdapterInterface
             }
         }
 
-        return new Result(
-            Result::SUCCESS,
-            $identityClass,
-            [$this->config['orm_default']['messages']['success']]
-        );
+        return new Result(Result::SUCCESS, $identityClass, [
+            $this->config['orm_default']['messages']['success']
+        ]);
     }
 
     /**

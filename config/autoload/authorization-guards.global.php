@@ -36,11 +36,11 @@ return [
                                     'actions' => [],
                                     'permissions' => ['authenticated']
                                 ],
-                            ],
-                            [
-                                'route' => 'dashboard',
-                                'actions' => [],
-                                'permissions' => ['authenticated']
+                                [
+                                    'route' => 'dashboard',
+                                    'actions' => [],
+                                    'permissions' => ['authenticated']
+                                ],
                             ],
                         ]
                     ]
