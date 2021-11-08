@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+use Exception;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
  * Class AdminRepository
@@ -55,7 +58,7 @@ class AdminRepository extends AbstractRepository
 
         try {
             return $qb->getQuery()->getSingleResult();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return null;
         }
     }
@@ -125,5 +128,49 @@ class AdminRepository extends AbstractRepository
     public function setCacheLifetime(int $cacheLifetime): void
     {
         $this->cacheLifetime = $cacheLifetime;
+    }
+
+    /**
+     * @param array $params
+     * @return Admin|null
+     */
+    public function findAdminBy(array $params): ?Admin
+    {
+        if (empty($params)) {
+            return null;
+        }
+
+        $qb = $this->getQueryBuilder()->select('admin')->from(Admin::class, 'admin');
+        $this->addUuidFilter($qb, $params['uuid'] ?? null);
+        $this->addIdentityFilter($qb, $params['identity'] ?? null);
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param string|null $uuid
+     */
+    public function addUuidFilter(QueryBuilder $qb, ?string $uuid): void
+    {
+        if (!empty($uuid)) {
+            $qb->where('admin.uuid = :admin_uuid')
+                ->setParameter('admin_uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param string|null $identity
+     */
+    public function addIdentityFilter(QueryBuilder $qb, ?string $identity): void
+    {
+        if (!empty($identity)) {
+            $qb->where('admin.identity = :admin_identity')->setParameter('admin_identity', $identity);
+        }
     }
 }

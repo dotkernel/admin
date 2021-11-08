@@ -50,6 +50,15 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
+     * @param array $params
+     * @return Admin|null
+     */
+    public function findAdminBy(array $params): ?Admin
+    {
+        return $this->adminRepository->findAdminBy($params);
+    }
+
+    /**
      * @return AdminRepository
      */
     public function getAdminRepository(): AdminRepository

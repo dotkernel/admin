@@ -297,7 +297,8 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         $form = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
-        $admin = $this->authenticationService->getIdentity();
+        $identity = $this->authenticationService->getIdentity();
+        $admin = $this->adminService->findAdminBy(['uuid' => $identity->getUuid()]);
 
         if ($request->getMethod() == 'POST') {
             $data = $request->getParsedBody();
