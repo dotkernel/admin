@@ -4,6 +4,8 @@ namespace Frontend\User\Authentication;
 
 use Doctrine\ORM\EntityManager;
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminIdentity;
+use Frontend\User\Entity\AdminRole;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Exception;
 use Laminas\Authentication\Result;
@@ -86,8 +88,8 @@ class AuthenticationAdapter implements AdapterInterface
 
         /** @var Admin $identityClass */
         $identityClass = $repository->findOneBy([
-                $this->config['orm_default']['identity_property'] => $this->getIdentity()
-            ]);
+            $this->config['orm_default']['identity_property'] => $this->getIdentity()
+        ]);
 
         if (null === $identityClass) {
             return new Result(
@@ -149,14 +151,24 @@ class AuthenticationAdapter implements AdapterInterface
             }
         }
 
-        /**
-         * Overwrite encrypted password, so it does not get stored in the session
-         */
-        $identityClass->setPassword('');
+        $adminIdentity = new AdminIdentity(
+            $identityClass->getUuid()->toString(),
+            $identityClass->getIdentity(),
+            $identityClass->getStatus(),
+            array_map(function (AdminRole $role) {
+                return $role->getName();
+            }, $identityClass->getRoles()),
+            [
+                'firstName' => $identityClass->getFirstName(),
+                'lastName' => $identityClass->getLastName()
+            ]
+        );
 
-        return new Result(Result::SUCCESS, $identityClass, [
-            $this->config['orm_default']['messages']['success']
-        ]);
+        return new Result(
+            Result::SUCCESS,
+            $adminIdentity,
+            [$this->config['orm_default']['messages']['success']]
+        );
     }
 
     /**
