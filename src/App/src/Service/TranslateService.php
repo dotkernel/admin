@@ -14,11 +14,9 @@ use Laminas\Session\SessionManager;
  */
 class TranslateService implements TranslateServiceInterface
 {
-    /** @var  SessionManager */
-    protected $defaultSessionManager;
+    protected SessionManager $defaultSessionManager;
 
-    /** @var array */
-    protected $translatorConfig;
+    protected array $translatorConfig = [];
 
     /**
      * TranslateService constructor.
@@ -27,10 +25,8 @@ class TranslateService implements TranslateServiceInterface
      *
      * @Inject({SessionManager::class, "config.translator"})
      */
-    public function __construct(
-        SessionManager $defaultSessionManager,
-        array $translatorConfig = []
-    ) {
+    public function __construct(SessionManager $defaultSessionManager, array $translatorConfig = [])
+    {
         $this->defaultSessionManager = $defaultSessionManager;
         $this->translatorConfig = $translatorConfig;
     }

@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\User\Authentication;
 
 use Doctrine\ORM\EntityManager;
-use Psr\Container\ContainerInterface;
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class AuthenticationAdapterFactory
 {
     /**
      * @param ContainerInterface $container
      * @return AuthenticationAdapter
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws Exception
      */
     public function __invoke(ContainerInterface $container): AuthenticationAdapter

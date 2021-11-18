@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
+use Laminas\ZendFrameworkBridge\ConfigPostProcessor;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -28,7 +29,9 @@ $aggregator = new ConfigAggregator([
     // Swoole config to overwrite some services (if installed)
     class_exists(\Mezzio\Swoole\ConfigProvider::class)
         ? \Mezzio\Swoole\ConfigProvider::class
-        : function(){ return[]; },
+        : function () {
+            return[];
+        },
 
     // DotKernel packages
     \Dot\Mail\ConfigProvider::class,
@@ -45,7 +48,6 @@ $aggregator = new ConfigAggregator([
 
     // Default App module config
     \Frontend\App\ConfigProvider::class,
-    \Frontend\Plugin\ConfigProvider::class,
     \Frontend\User\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
@@ -58,6 +60,6 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),
-], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
+], $cacheConfig['config_cache_path'], [ConfigPostProcessor::class]);
 
 return $aggregator->getMergedConfig();

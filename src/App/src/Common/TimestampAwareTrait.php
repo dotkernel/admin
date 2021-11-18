@@ -6,7 +6,6 @@ namespace Frontend\App\Common;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 
 /**
  * Trait TimestampAwareTrait
@@ -14,22 +13,19 @@ use Exception;
  */
 trait TimestampAwareTrait
 {
-    /**
-     * @var string $dateFormat
-     */
-    private $dateFormat = 'Y-m-d H:i:s';
+    private string $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * @ORM\Column(name="created", type="datetime_immutable")
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      */
-    protected $created;
+    protected ?DateTimeImmutable $created = null;
 
     /**
      * @ORM\Column(name="updated", type="datetime_immutable", nullable=true)
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      */
-    protected $updated;
+    protected ?DateTimeImmutable $updated = null;
 
     /**
      * @ORM\PrePersist()
@@ -91,18 +87,16 @@ trait TimestampAwareTrait
     }
 
     /**
-     * @return void
+     * @return $this
      */
-    public function touch(): void
+    public function touch(): self
     {
-        try {
-            if (!($this->created instanceof DateTimeImmutable)) {
-                $this->created = new DateTimeImmutable();
-            }
-
-            $this->updated = new DateTimeImmutable();
-        } catch (Exception $exception) {
-            #TODO save the error message
+        if (!($this->created instanceof DateTimeImmutable)) {
+            $this->created = new DateTimeImmutable();
         }
+
+        $this->updated = new DateTimeImmutable();
+
+        return $this;
     }
 }

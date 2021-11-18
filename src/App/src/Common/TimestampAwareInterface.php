@@ -25,5 +25,5 @@ interface TimestampAwareInterface
     /**
      * Update internal timestamps
      */
-    public function touch(): void;
+    public function touch(): self;
 }

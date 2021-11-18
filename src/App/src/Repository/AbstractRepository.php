@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontend\App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
@@ -27,7 +28,7 @@ abstract class AbstractRepository extends EntityRepository
      * @param null $lockMode
      * @param null $lockVersion
      * @return int|mixed|object|string|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function find($uuid, $lockMode = null, $lockVersion = null)
     {

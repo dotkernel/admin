@@ -80,7 +80,7 @@ class DefaultSchema extends AbstractMigration
             ->addIndex(['name'], ['name' => 'name', 'unique' => true])
             ->create();
 
-        $this->table('user_roles', ['id' => false, 'primary_key' => ['userUuid', 'roleUuid']])
+        $this->table('user_roles', ['id' => false, 'primary_key' => ['userUuid', 'roleUuid'], 'collation' => 'utf8mb4_general_ci'])
             ->addColumn('userUuid', 'binary', ['null' => false, 'limit' => 16])
             ->addColumn('roleUuid', 'binary', ['null' => false, 'limit' => 16])
             ->addTimestamps('created', 'updated')

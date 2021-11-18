@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Twig\Environment;
 use Mezzio\Twig\TwigEnvironmentFactory;
 use Mezzio\Twig\TwigRendererFactory;

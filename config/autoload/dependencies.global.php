@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use Dot\Authorization\AuthorizationInterface;
 use Dot\Mail\Factory\MailOptionsAbstractFactory;
 use Dot\Mail\Factory\MailServiceAbstractFactory;
 use Dot\Mail\Service\MailService;
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Dot\ErrorHandler\LogErrorHandler;
+use Dot\Rbac\Authorization\AuthorizationService;
 use Frontend\App\Middleware\AuthMiddleware;
 use Frontend\App\Factory\AuthMiddlewareFactory;
 
@@ -19,7 +21,7 @@ return [
         // key is the alias name, the value is the service to which it points.
         'aliases' => [
             ErrorHandlerInterface::class => LogErrorHandler::class,
-            \Dot\Authorization\AuthorizationInterface::class => \Dot\Rbac\Authorization\AuthorizationService::class,
+            AuthorizationInterface::class => AuthorizationService::class,
             MailService::class => 'dot-mail.service.default',
         ],
         // Use 'invokables' for constructor-less services, or services that do

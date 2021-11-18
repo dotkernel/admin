@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontend\User\FormData;
 
 use Frontend\User\Entity\User;
+use Frontend\User\Entity\UserRole;
 
 /**
  * Class UserFormData
@@ -12,27 +13,18 @@ use Frontend\User\Entity\User;
  */
 class UserFormData
 {
-    /** @var string $identity */
-    public string $identity;
-
-    /** @var string $firstName */
-    public string $firstName;
-
-    /** @var string $lastName */
-    public string $lastName;
-
-    /** @var string $status */
-    public string $status;
-
-    /** @var array $roles */
-    public array $roles;
+    public ?string $identity = null;
+    public ?string $firstName = null;
+    public ?string $lastName = null;
+    public ?string $status = null;
+    public array $roles = [];
 
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        return $this->roles ?? [];
+        return $this->roles;
     }
 
     /**
@@ -40,6 +32,7 @@ class UserFormData
      */
     public function fromEntity(User $user)
     {
+        /** @var UserRole $role */
         foreach ($user->getRoles() as $role) {
             $this->roles[] = $role->getUuid()->toString();
         }
@@ -50,16 +43,16 @@ class UserFormData
     }
 
     /**
-     * @return array[]
+     * @return array
      */
     public function getArrayCopy()
     {
         return [
-            'roles' => $this->roles,
             'identity' => $this->identity,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'status' => $this->status,
+            'roles' => $this->roles
         ];
     }
 }

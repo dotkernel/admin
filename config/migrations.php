@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // Load configuration
 $container = require __DIR__ . '/container.php';
 $config = $container->get('config');

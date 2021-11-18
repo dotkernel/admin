@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Exception;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
+use Throwable;
 
 /**
  * Class AdminRepository
@@ -16,13 +20,12 @@ use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
  */
 class AdminRepository extends AbstractRepository
 {
-    /** @var int $cacheLifetime */
-    protected int $cacheLifetime;
+    protected int $cacheLifetime = 0;
 
     /**
      * @param Admin $admin
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveAdmin(Admin $admin)
     {
@@ -32,8 +35,8 @@ class AdminRepository extends AbstractRepository
 
     /**
      * @param Admin|object $admin
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function deleteAdmin(Admin $admin)
     {
@@ -58,7 +61,7 @@ class AdminRepository extends AbstractRepository
 
         try {
             return $qb->getQuery()->getSingleResult();
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return null;
         }
     }
@@ -97,8 +100,8 @@ class AdminRepository extends AbstractRepository
     /**
      * @param string|null $search
      * @return int|mixed|string
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function countAdmins(string $search = null)
     {
@@ -146,7 +149,7 @@ class AdminRepository extends AbstractRepository
 
         try {
             return $qb->getQuery()->getSingleResult();
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return null;
         }
     }

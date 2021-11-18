@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\App\Controller;
 
 use Dot\Controller\AbstractActionController;
@@ -12,20 +14,19 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Dot\AnnotatedServices\Annotation\Inject;
 
-
+/**
+ * Class LanguageController
+ * @package Frontend\App\Controller
+ */
 class LanguageController extends AbstractActionController
 {
-    /** @var TranslateServiceInterface $translateService */
     protected TranslateServiceInterface $translateService;
 
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
 
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
 
-    /** @var array $translatorConfig */
-    protected array $translatorConfig;
+    protected array $translatorConfig = [];
 
     /**
      * LanguageHandler constructor.
@@ -34,8 +35,12 @@ class LanguageController extends AbstractActionController
      * @param TemplateRendererInterface $template
      * @param array $translatorConfig
      *
-     * @Inject({TranslateServiceInterface::class, RouterInterface::class, TemplateRendererInterface::class,
-     *     "config.translator"})
+     * @Inject({
+     *     TranslateServiceInterface::class,
+     *     RouterInterface::class,
+     *     TemplateRendererInterface::class,
+     *     "config.translator"
+     * })
      */
     public function __construct(
         TranslateServiceInterface $translateService,
@@ -64,7 +69,7 @@ class LanguageController extends AbstractActionController
     /**
      * @return JsonResponse
      */
-    public function translateTextAction()
+    public function translateTextAction(): ResponseInterface
     {
         $translation = '';
         $request = $this->getRequest();

@@ -2,7 +2,10 @@
 
 namespace Frontend\User\Service;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Dot\AnnotatedServices\Annotation\Service;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Repository\AdminRepository;
 
@@ -23,7 +26,7 @@ interface AdminServiceInterface
      * @param string $identity
      * @return bool
      */
-    public function exists(string $identity = '');
+    public function exists(string $identity = ''): bool;
 
     /**
      * @param int $offset
@@ -32,7 +35,7 @@ interface AdminServiceInterface
      * @param string $sort
      * @param string $order
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function getAdmins(
         int $offset = 0,
@@ -40,13 +43,13 @@ interface AdminServiceInterface
         string $search = null,
         string $sort = 'created',
         string $order = 'desc'
-    );
+    ): array;
 
     /**
      * @param array $data
      * @return Admin
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
      */
-    public function createAdmin(array $data);
+    public function createAdmin(array $data): Admin;
 }

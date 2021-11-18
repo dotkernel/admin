@@ -19,21 +19,15 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Class AuthTeamMiddleware
  * @package App\Admin\Middleware
- *
  */
 class AuthMiddleware implements MiddlewareInterface
 {
-
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
 
-    /** @var FlashMessenger $messenger */
     protected FlashMessenger $messenger;
 
-    /** @var GuardsProviderInterface $guardProvider */
     protected GuardsProviderInterface $guardProvider;
 
-    /** @var  RbacGuardOptions */
     protected RbacGuardOptions $options;
 
     /**
@@ -65,7 +59,7 @@ class AuthMiddleware implements MiddlewareInterface
         $guards = $this->guardProvider->getGuards();
 
         //iterate over guards, which are sorted by priority
-        //break on the first one that does not grants access
+        //break on the first one that does not grant access
 
         $isGranted = $this->options->getProtectionPolicy() === GuardInterface::POLICY_ALLOW;
 

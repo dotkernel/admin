@@ -10,6 +10,7 @@ use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterInterface;
 
 /**
  * Class LoginForm
@@ -17,8 +18,7 @@ use Laminas\InputFilter\InputFilter;
  */
 class LoginForm extends Form
 {
-    /** @var InputFilter $inputFilter */
-    protected $inputFilter;
+    protected InputFilter $inputFilter;
 
     /**
      * LoginForm constructor.
@@ -75,7 +75,7 @@ class LoginForm extends Form
     }
 
     /**
-     * @return null|InputFilter|\Laminas\InputFilter\InputFilterInterface
+     * @return null|InputFilter|InputFilterInterface
      */
     public function getInputFilter()
     {

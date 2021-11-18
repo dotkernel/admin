@@ -8,30 +8,30 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Plugin;
+namespace Frontend\App\Plugin;
 
-use Frontend\Plugin\Exception\RuntimeException;
+use Dot\Controller\Exception\RuntimeException;
+use Dot\Controller\Plugin\PluginInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Form\Factory\FormAbstractServiceFactory;
 use Dot\Form\FormElementManager;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class FormsPlugin
- * @package Dot\Controller\Plugin\Forms
+ * @package Frontend\App\Plugin
  */
 class FormsPlugin implements PluginInterface
 {
-    /** @var  FormElementManager */
-    protected $formElementManager;
+    protected FormElementManager $formElementManager;
 
-    /** @var  ContainerInterface */
-    protected $container;
+    protected ContainerInterface $container;
 
-    /** @var  FlashMessengerInterface */
-    protected $flashMessenger;
+    protected FlashMessengerInterface $flashMessenger;
 
     /**
      * FormsPlugin constructor.
@@ -50,8 +50,10 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param string $name
-     * @return object
+     * @param string|null $name
+     * @return $this|Form|mixed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function __invoke(string $name = null)
     {
@@ -127,7 +129,7 @@ class FormsPlugin implements PluginInterface
      * @param Form $form
      * @return string
      */
-    public function getMessagesAsString(Form $form)
+    public function getMessagesAsString(Form $form): string
     {
         $formMessages = $form->getMessages();
         $messages = '';
@@ -192,7 +194,7 @@ class FormsPlugin implements PluginInterface
         foreach ($formMessages as $key => $message) {
             if (is_array($message)) {
                 if (!isset($errors[$key])) {
-                    $errors[$key] = array();
+                    $errors[$key] = [];
                 }
 
                 foreach ($message as $k => $m) {
