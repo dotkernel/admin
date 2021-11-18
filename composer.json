@@ -72,7 +72,7 @@
         "mezzio/mezzio-twigrenderer": "^2.8",
         "ramsey/uuid-doctrine": "^1.8",
         "roave/psr-container-doctrine": "^2.2",
-        "robmorgan/phinx": "^0.12",
+        "robmorgan/phinx": "^0.12"
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.5",
