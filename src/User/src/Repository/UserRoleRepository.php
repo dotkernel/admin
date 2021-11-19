@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\AdminRole;
 use Frontend\User\Entity\UserRole;
 
 /**
  * Class UserRoleRepository
- * @package Frontend\Admin\Repository
+ * @package Frontend\User\Repository
  */
 class UserRoleRepository extends AbstractRepository
 {
     /**
      * @param string $uuid
-     * @return object|null
+     * @return UserRole|null
+     * @throws NonUniqueResultException
      */
-    public function getRole(string $uuid)
+    public function getRole(string $uuid): ?UserRole
     {
         return $this->find($uuid);
     }
@@ -26,9 +28,9 @@ class UserRoleRepository extends AbstractRepository
     /**
      * @param string $name
      * @return AdminRole|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    public function findByName(string $name): ?AdminRole
+    public function findByName(string $name): ?UserRole
     {
         $qb = $this->getQueryBuilder();
 
@@ -44,7 +46,7 @@ class UserRoleRepository extends AbstractRepository
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->findAll();
     }

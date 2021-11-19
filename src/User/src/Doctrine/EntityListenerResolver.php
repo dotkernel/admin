@@ -11,7 +11,9 @@ declare(strict_types=1);
 namespace Frontend\User\Doctrine;
 
 use Doctrine\ORM\Mapping\DefaultEntityListenerResolver;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class EntityListenerResolver
@@ -19,8 +21,7 @@ use Psr\Container\ContainerInterface;
  */
 class EntityListenerResolver extends DefaultEntityListenerResolver
 {
-    /** @var  ContainerInterface */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * EntityListenerResolver constructor.
@@ -33,7 +34,9 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
 
     /**
      * @param string $className
-     * @return mixed
+     * @return mixed|object
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function resolve($className)
     {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Frontend\User\InputFilter;
 
-use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\User;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\InArray;

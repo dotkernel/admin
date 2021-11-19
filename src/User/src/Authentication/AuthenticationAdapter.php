@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\User\Authentication;
 
 use Doctrine\ORM\EntityManager;
@@ -15,24 +17,20 @@ class AuthenticationAdapter implements AdapterInterface
     private const METHOD_NOT_EXISTS = "Method %s not found in %s .";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
 
-    /** @var string $identity */
-    private string $identity;
+    private ?string $identity = null;
 
-    /** @var string $credential */
-    private string $credential;
+    private ?string $credential = null;
 
-    /** @var EntityManager $entityManager */
     private EntityManager $entityManager;
 
-    /** @var array $config */
-    private array $config;
+    private array $config = [];
 
     /**
      * AuthenticationAdapter constructor.
-     * @param $entityManager
+     * @param EntityManager $entityManager
      * @param array $config
      */
-    public function __construct($entityManager, array $config)
+    public function __construct(EntityManager $entityManager, array $config)
     {
         $this->entityManager = $entityManager;
         $this->config = $config;
@@ -99,7 +97,6 @@ class AuthenticationAdapter implements AdapterInterface
             );
         }
 
-        /** @var callable $getCredential */
         $getCredential = "get" . ucfirst($this->config['orm_default']['credential_property']);
 
         /** Check if get credential method exist in the provided identity class */
@@ -117,7 +114,6 @@ class AuthenticationAdapter implements AdapterInterface
         /** Check for extra validation options */
         if (! empty($this->config['orm_default']['options'])) {
             foreach ($this->config['orm_default']['options'] as $property => $option) {
-                /** @var callable $methodName */
                 $methodName = "get" . ucfirst($property);
 
                 /** Check if the method exists in the provided identity class */

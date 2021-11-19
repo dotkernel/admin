@@ -2,8 +2,10 @@
 
 namespace Frontend\User\Service;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\User;
 use Frontend\User\Entity\UserInterface;
 use Frontend\User\FormData\UserFormData;
 
@@ -17,8 +19,8 @@ interface UserServiceInterface
      * @param UserFormData $data
      * @return UserInterface
      * @throws ORMException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
      */
     public function createUser(UserFormData $data): UserInterface;
 
@@ -36,7 +38,7 @@ interface UserServiceInterface
         string $search = null,
         string $sort = 'created',
         string $order = 'desc'
-    );
+    ): array;
 
     /**
      * @param string $identity
@@ -46,24 +48,24 @@ interface UserServiceInterface
 
     /**
      * @param array $params
-     * @return Admin|null
+     * @return User|null
      */
-    public function findOneBy(array $params = []): ?Admin;
+    public function findOneBy(array $params = []): ?User;
 
     /**
      * @param string $email
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    public function getRoleNamesByEmail(string $email);
+    public function getRoleNamesByEmail(string $email): array;
 
     /**
      * @return array
      */
-    public function getAdminFormProcessedRoles();
+    public function getAdminFormProcessedRoles(): array;
 
     /**
      * @return array
      */
-    public function getUserFormProcessedRoles();
+    public function getUserFormProcessedRoles(): array;
 }

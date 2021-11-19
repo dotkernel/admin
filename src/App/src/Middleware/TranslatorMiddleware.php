@@ -21,14 +21,11 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class TranslatorMiddleware implements MiddlewareInterface
 {
-    /** @var  TranslateServiceInterface */
-    protected $translateService;
+    protected TranslateServiceInterface $translateService;
 
-    /** @var TemplateRendererInterface */
-    protected $template;
+    protected TemplateRendererInterface $template;
 
-    /** @var array */
-    protected $translatorConfig;
+    protected array $translatorConfig = [];
 
     /**
      * TranslatorMiddleware constructor.

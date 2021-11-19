@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Frontend\User\Doctrine;
 
-use Frontend\User\Doctrine\EntityListenerResolver;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -23,7 +22,7 @@ class EntityListenerResolverFactory
      * @param ContainerInterface $container
      * @return EntityListenerResolver
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): EntityListenerResolver
     {
         return new EntityListenerResolver($container);
     }

@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\User\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
-use Frontend\Plugin\FormsPlugin;
+use Frontend\App\Plugin\FormsPlugin;
 use Frontend\User\Entity\User;
 use Frontend\User\Form\UserForm;
 use Frontend\User\FormData\UserFormData;
@@ -17,6 +21,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * Class UserController
@@ -24,25 +29,18 @@ use Psr\Http\Message\ResponseInterface;
  */
 class UserController extends AbstractActionController
 {
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
 
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
 
-    /** @var UserService $userService */
     protected UserService $userService;
 
-    /** @var AuthenticationServiceInterface $authenticationService */
     protected AuthenticationServiceInterface $authenticationService;
 
-    /** @var FlashMessenger $messenger */
     protected FlashMessenger $messenger;
 
-    /** @var FormsPlugin $forms */
     protected FormsPlugin $forms;
 
-    /** @var UserForm $userForm */
     protected UserForm $userForm;
 
     /**
@@ -74,27 +72,27 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @return HtmlResponse
+     * @return ResponseInterface
      */
-    public function manageAction()
+    public function manageAction(): ResponseInterface
     {
         return new HtmlResponse($this->template->render('user::list'));
     }
 
     /**
-     * @return JsonResponse
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return ResponseInterface
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $params = $this->getRequest()->getQueryParams();
 
         $search = (!empty($params['search'])) ? $params['search'] : null;
         $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
         $order = (!empty($params['order'])) ? $params['order'] : "desc";
-        $offset = (!empty($params['offset'])) ? $params['offset'] : 0;
-        $limit = (!empty($params['limit'])) ? $params['limit'] : 30;
+        $offset = (!empty($params['offset'])) ? (int)$params['offset'] : 0;
+        $limit = (!empty($params['limit'])) ? (int)$params['limit'] : 30;
 
         $result = $this->userService->getUsers($offset, $limit, $search, $sort, $order);
 
@@ -116,7 +114,7 @@ class UserController extends AbstractActionController
                 try {
                     $this->userService->createUser($result);
                     return new JsonResponse(['success' => 'success', 'message' => 'User created successfully']);
-                } catch (\Exception $e) {
+                } catch (Throwable $e) {
                     return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
                 }
             } else {
@@ -142,6 +140,7 @@ class UserController extends AbstractActionController
 
     /**
      * @return ResponseInterface
+     * @throws NonUniqueResultException
      */
     public function editAction(): ResponseInterface
     {
@@ -161,7 +160,7 @@ class UserController extends AbstractActionController
                 try {
                     $this->userService->updateUser($user, $result);
                     return new JsonResponse(['success' => 'success', 'message' => 'User updated successfully']);
-                } catch (\Exception $e) {
+                } catch (Throwable $e) {
                     return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
                 }
             } else {
@@ -188,9 +187,10 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @return JsonResponse
+     * @return ResponseInterface
+     * @throws NonUniqueResultException
      */
-    public function deleteAction()
+    public function deleteAction(): ResponseInterface
     {
         $request = $this->getRequest();
         $data = $request->getParsedBody();
@@ -211,7 +211,7 @@ class UserController extends AbstractActionController
 
             $this->userService->getUserRepository()->saveUser($user);
             return new JsonResponse(['success' => 'success', 'message' => 'User Deleted Successfully']);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
         }
     }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Frontend\App\Common;
 
-use Exception;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidInterface;
+use Throwable;
 
 /**
  * Class UuidOrderedTimeGenerator
@@ -16,8 +16,7 @@ use Ramsey\Uuid\UuidInterface;
  */
 final class UuidOrderedTimeGenerator
 {
-    /** @var UuidFactory $factory */
-    private static UuidFactory $factory;
+    private static ?UuidFactory $factory = null;
 
     /**
      * @return UuidInterface|null
@@ -26,9 +25,11 @@ final class UuidOrderedTimeGenerator
     {
         try {
             return self::getFactory()->uuid1();
-        } catch (Exception $exception) {
-            return null;
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
         }
+
+        return null;
     }
 
     /**

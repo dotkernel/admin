@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Frontend\User\Service;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
-use Dot\Mail\Service\MailService;
-use Frontend\App\Common\Message;
-use Frontend\App\Common\UuidOrderedTimeGenerator;
-use Frontend\User\Entity\Admin;
-use Frontend\User\Entity\AdminInterface;
+use Exception;
 use Frontend\User\Entity\AdminRole;
 use Frontend\User\Entity\User;
 use Frontend\User\Entity\UserDetail;
@@ -21,7 +20,6 @@ use Frontend\User\Entity\UserRole;
 use Frontend\User\FormData\UserFormData;
 use Frontend\User\Repository\UserRepository;
 use Frontend\User\Repository\AdminRoleRepository;
-use Laminas\Diactoros\UploadedFile;
 use Mezzio\Template\TemplateRendererInterface;
 
 /**
@@ -38,23 +36,17 @@ class UserService implements UserServiceInterface
         'image/png' => 'png'
     ];
 
-    /** @var EntityManager $em */
     protected EntityManager $em;
 
-    /** @var UserRepository $userRepository */
-    protected $userRepository;
+    protected UserRepository $userRepository;
 
-    /** @var UserRoleServiceInterface $userRoleService */
     protected UserRoleServiceInterface $userRoleService;
 
-    /** @var AdminRoleRepository $adminRoleRepository */
-    protected $adminRoleRepository;
+    protected AdminRoleRepository $adminRoleRepository;
 
-    /** @var TemplateRendererInterface $templateRenderer */
     protected TemplateRendererInterface $templateRenderer;
 
-    /** @var array $config */
-    protected array $config;
+    protected array $config = [];
 
     /**
      * UserService constructor.
@@ -72,8 +64,8 @@ class UserService implements UserServiceInterface
         array $config = []
     ) {
         $this->em = $em;
-        $this->userRepository = $em->getRepository(User::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
+        $this->userRepository = $em->getRepository(User::class);
         $this->userRoleService = $userRoleService;
         $this->templateRenderer = $templateRenderer;
         $this->config = $config;
@@ -91,8 +83,9 @@ class UserService implements UserServiceInterface
      * @param UserFormData|object $data
      * @return UserInterface
      * @throws ORMException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
+     * @throws Exception
      */
     public function createUser(UserFormData $data): UserInterface
     {
@@ -116,7 +109,7 @@ class UserService implements UserServiceInterface
             foreach ($data->roles as $roleUuid) {
                 $role = $this->userRoleService->getUserRoleRepository()->getRole($roleUuid);
                 if (!$role instanceof UserRole) {
-                    throw new \Exception('Role with uuid : ' . $roleUuid . ' not found!');
+                    throw new Exception('Role with uuid : ' . $roleUuid . ' not found!');
                 }
                 $user->addRole($role);
             }
@@ -128,7 +121,7 @@ class UserService implements UserServiceInterface
         }
 
         if (empty($user->getRoles())) {
-            throw new \Exception('User account must have at least one role');
+            throw new Exception('User account must have at least one role');
         }
 
         $this->userRepository->saveUser($user);
@@ -136,15 +129,15 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
-
     /**
-     * @param User|object $user
-     * @param UserFormData|object $data
+     * @param User $user
+     * @param UserFormData $data
      * @return User
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
+     * @throws Exception
      */
-    public function updateUser(User $user, UserFormData $data)
+    public function updateUser(User $user, UserFormData $data): User
     {
         if (!empty($data->identity)) {
             if ($this->exists($data->identity) && $data->identity !== $user->getIdentity()) {
@@ -181,7 +174,7 @@ class UserService implements UserServiceInterface
             }
         }
         if (empty($user->getRoles())) {
-            throw new \Exception('User accounts must have at least one role.');
+            throw new Exception('User accounts must have at least one role.');
         }
 
         $this->userRepository->saveUser($user);
@@ -193,7 +186,7 @@ class UserService implements UserServiceInterface
      * @param string $identity
      * @return bool
      */
-    public function exists(string $identity = '')
+    public function exists(string $identity = ''): bool
     {
         return !is_null(
             $this->userRepository->exists($identity)
@@ -207,8 +200,8 @@ class UserService implements UserServiceInterface
      * @param string $sort
      * @param string $order
      * @return array
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getUsers(
         int $offset = 0,
@@ -216,7 +209,7 @@ class UserService implements UserServiceInterface
         string $search = null,
         string $sort = 'created',
         string $order = 'desc'
-    ) {
+    ): array {
         $result = [
             'rows' => [],
             'total' => $this->getUserRepository()->countUsers($search)
@@ -248,34 +241,31 @@ class UserService implements UserServiceInterface
 
     /**
      * @param array $params
-     * @return Admin|null
+     * @return User|null
      */
-    public function findOneBy(array $params = []): ?Admin
+    public function findOneBy(array $params = []): ?User
     {
         if (empty($params)) {
             return null;
         }
 
-        /** @var Admin $user */
-        $user = $this->userRepository->findOneBy($params);
-
-        return $user;
+        return $this->userRepository->findOneBy($params);
     }
 
     /**
      * @param string $email
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    public function getRoleNamesByEmail(string $email)
+    public function getRoleNamesByEmail(string $email): array
     {
         $roleList = [];
 
-        /** @var Admin $user */
+        /** @var User $user */
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!empty($user)) {
-            /** @var AdminRole $role */
+            /** @var UserRole $role */
             foreach ($user->getRoles() as $role) {
                 $roleList[] = $role->getName();
             }
@@ -287,7 +277,7 @@ class UserService implements UserServiceInterface
     /**
      * @return array
      */
-    public function getAdminFormProcessedRoles()
+    public function getAdminFormProcessedRoles(): array
     {
         $roles = [];
         $result = $this->adminRoleRepository->getRoles();
@@ -305,7 +295,7 @@ class UserService implements UserServiceInterface
     /**
      * @return array
      */
-    public function getUserFormProcessedRoles()
+    public function getUserFormProcessedRoles(): array
     {
         $roles = [];
         $result = $this->userRoleService->getUserRoleRepository()->getRoles();

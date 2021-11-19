@@ -8,6 +8,7 @@ use Frontend\User\Entity\Admin;
 use Frontend\User\InputFilter\AdminInputFilter;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterInterface;
 
 /**
  * Class EditEditAdminForm
@@ -15,10 +16,8 @@ use Laminas\InputFilter\InputFilter;
  */
 class EditAdminForm extends Form
 {
-    /** @var InputFilter $inputFilter */
     protected InputFilter $inputFilter;
 
-    /** @var array $roles */
     protected array $roles = [];
 
     /**
@@ -126,7 +125,7 @@ class EditAdminForm extends Form
     }
 
     /**
-     * @return InputFilter|\Laminas\InputFilter\InputFilterInterface|null
+     * @return InputFilter|InputFilterInterface|null
      */
     public function getInputFilter()
     {

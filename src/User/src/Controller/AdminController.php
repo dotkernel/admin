@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\User\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
-use Frontend\Plugin\FormsPlugin;
+use Frontend\App\Plugin\FormsPlugin;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
@@ -23,6 +27,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * Class AdminController
@@ -30,28 +35,20 @@ use Psr\Http\Message\ResponseInterface;
  */
 class AdminController extends AbstractActionController
 {
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
 
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
 
-    /** @var UserService $userService */
     protected UserService $userService;
 
-    /** @var AdminService $adminService */
     protected AdminService $adminService;
 
-    /** @var AuthenticationServiceInterface $authenticationService */
     protected AuthenticationServiceInterface $authenticationService;
 
-    /** @var FlashMessenger $messenger */
     protected FlashMessenger $messenger;
 
-    /** @var FormsPlugin $forms */
     protected FormsPlugin $forms;
 
-    /** @var AdminForm $adminForm */
     protected AdminForm $adminForm;
 
     /**
@@ -100,7 +97,7 @@ class AdminController extends AbstractActionController
                 try {
                     $this->adminService->createAdmin($result);
                     return new JsonResponse(['success' => 'success', 'message' => 'Admin created successfully']);
-                } catch (\Exception $e) {
+                } catch (Throwable $e) {
                     return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
                 }
             } else {
@@ -126,7 +123,7 @@ class AdminController extends AbstractActionController
 
     /**
      * @return ResponseInterface
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function editAction(): ResponseInterface
     {
@@ -146,7 +143,7 @@ class AdminController extends AbstractActionController
                 try {
                     $this->adminService->updateAdmin($admin, $result);
                     return new JsonResponse(['success' => 'success', 'message' => 'Admin updated successfully']);
-                } catch (\Exception $e) {
+                } catch (Throwable $e) {
                     return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
                 }
             } else {
@@ -173,9 +170,10 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return JsonResponse
+     * @return ResponseInterface
+     * @throws NonUniqueResultException
      */
-    public function deleteAction()
+    public function deleteAction(): ResponseInterface
     {
         $request = $this->getRequest();
         $data = $request->getParsedBody();
@@ -189,23 +187,25 @@ class AdminController extends AbstractActionController
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
             return new JsonResponse(['success' => 'success', 'message' => 'Admin Deleted Successfully']);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
         }
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return ResponseInterface
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $params = $this->getRequest()->getQueryParams();
 
         $search = (!empty($params['search'])) ? $params['search'] : null;
         $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
         $order = (!empty($params['order'])) ? $params['order'] : "desc";
-        $offset = (!empty($params['offset'])) ? $params['offset'] : 0;
-        $limit = (!empty($params['limit'])) ? $params['limit'] : 30;
+        $offset = (!empty($params['offset'])) ? (int)$params['offset'] : 0;
+        $limit = (!empty($params['limit'])) ? (int)$params['limit'] : 30;
 
         $result = $this->adminService->getAdmins($offset, $limit, $search, $sort, $order);
 
@@ -213,9 +213,9 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return HtmlResponse
+     * @return ResponseInterface
      */
-    public function manageAction()
+    public function manageAction(): ResponseInterface
     {
         return new HtmlResponse($this->template->render('admin::list'));
     }
@@ -229,7 +229,6 @@ class AdminController extends AbstractActionController
             return new RedirectResponse($this->router->generateUri("dashboard"));
         }
 
-        /** @var LoginForm $form */
         $form = new LoginForm();
 
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
@@ -308,7 +307,7 @@ class AdminController extends AbstractActionController
                 try {
                     $this->adminService->updateAdmin($admin, $result);
                     $this->messenger->addSuccess('Your account was updated successfully');
-                } catch (\Exception $e) {
+                } catch (Throwable $e) {
                     $this->messenger->addError($e->getMessage());
                 }
             } else {
@@ -328,9 +327,9 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return RedirectResponse
+     * @return ResponseInterface
      */
-    public function changePasswordAction()
+    public function changePasswordAction(): ResponseInterface
     {
         $request = $this->getRequest();
         $changePasswordForm = new ChangePasswordForm();
@@ -345,7 +344,7 @@ class AdminController extends AbstractActionController
                     try {
                         $this->adminService->updateAdmin($admin, $result);
                         $this->messenger->addSuccess('Your account was updated successfully');
-                    } catch (\Exception $e) {
+                    } catch (Throwable $e) {
                         $this->messenger->addError($e->getMessage());
                     }
                 } else {

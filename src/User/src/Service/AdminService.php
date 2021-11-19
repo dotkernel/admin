@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Frontend\User\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
@@ -22,22 +25,16 @@ use Frontend\User\Repository\AdminRoleRepository;
  */
 class AdminService implements AdminServiceInterface
 {
-    /** @var EntityManager $em */
     protected EntityManager $em;
 
-    /** @var AdminRepository $adminRepository */
     protected AdminRepository $adminRepository;
 
-    /** @var AdminRoleRepository $adminRoleRepository */
     protected AdminRoleRepository $adminRoleRepository;
-
-    /** @var int $cacheLifetime */
-    protected int $cacheLifetime;
 
     /**
      * AdminService constructor.
      * @param EntityManager $em
-     * @param $cacheLifetime
+     * @param int $cacheLifetime
      *
      * @Inject({EntityManager::class, "config.resultCacheLifetime"})
      */
@@ -70,7 +67,7 @@ class AdminService implements AdminServiceInterface
      * @param string $identity
      * @return bool
      */
-    public function exists(string $identity = '')
+    public function exists(string $identity = ''): bool
     {
         return !is_null(
             $this->adminRepository->exists($identity)
@@ -84,7 +81,8 @@ class AdminService implements AdminServiceInterface
      * @param string $sort
      * @param string $order
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function getAdmins(
         int $offset = 0,
@@ -92,7 +90,7 @@ class AdminService implements AdminServiceInterface
         string $search = null,
         string $sort = 'created',
         string $order = 'desc'
-    ) {
+    ): array {
         $result = [
             'rows' => [],
             'total' => $this->getAdminRepository()->countAdmins($search)
@@ -125,9 +123,9 @@ class AdminService implements AdminServiceInterface
      * @param array $data
      * @return Admin
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
      */
-    public function createAdmin(array $data)
+    public function createAdmin(array $data): Admin
     {
         if ($this->exists($data['identity'])) {
             throw new ORMException('An account with this identity already exists.');
@@ -154,7 +152,7 @@ class AdminService implements AdminServiceInterface
      * @param array $data
      * @return Admin
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
      */
     public function updateAdmin(Admin $admin, array $data)
     {

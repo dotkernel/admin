@@ -10,6 +10,7 @@ use Frontend\User\InputFilter\UserInputFilter;
 use Laminas\Form\Form;
 use Laminas\Hydrator\ObjectPropertyHydrator;
 use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterInterface;
 
 /**
  * Class UserForm
@@ -17,10 +18,8 @@ use Laminas\InputFilter\InputFilter;
  */
 class UserForm extends Form
 {
-    /** @var InputFilter $inputFilter */
     protected InputFilter $inputFilter;
 
-    /** @var array $roles */
     protected array $roles = [];
 
     /**
@@ -131,7 +130,7 @@ class UserForm extends Form
     }
 
     /**
-     * @return InputFilter|\Laminas\InputFilter\InputFilterInterface|null
+     * @return InputFilter|InputFilterInterface|null
      */
     public function getInputFilter()
     {

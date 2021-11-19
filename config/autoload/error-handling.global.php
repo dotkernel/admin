@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laminas\Log\Formatter\Json;
 use Laminas\Log\Logger;
 

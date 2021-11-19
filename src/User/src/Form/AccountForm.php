@@ -7,6 +7,7 @@ namespace Frontend\User\Form;
 use Frontend\User\InputFilter\AccountInputFilter;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterInterface;
 
 /**
  * Class AccountForm
@@ -14,7 +15,6 @@ use Laminas\InputFilter\InputFilter;
  */
 class AccountForm extends Form
 {
-    /** @var InputFilter $inputFilter */
     protected InputFilter $inputFilter;
 
     public function __construct($name = null, array $options = [])
@@ -82,7 +82,7 @@ class AccountForm extends Form
     }
 
     /**
-     * @return null|InputFilter|\Laminas\InputFilter\InputFilterInterface
+     * @return null|InputFilter|InputFilterInterface
      */
     public function getInputFilter()
     {

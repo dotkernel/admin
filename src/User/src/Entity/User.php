@@ -6,8 +6,10 @@ namespace Frontend\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use Frontend\App\Common\UuidOrderedTimeGenerator;
 use Frontend\App\Entity\AbstractEntity;
+use Throwable;
 
 use function array_map;
 use function bin2hex;
@@ -94,7 +96,7 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * User constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -285,7 +287,7 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function renewHash()
     {
@@ -296,13 +298,13 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function generateHash(): string
     {
         try {
             $bytes = random_bytes(32);
-        } catch (\Exception $exception) {
+        } catch (Throwable $exception) {
             $bytes = UuidOrderedTimeGenerator::generateUuid()->getBytes();
         }
 
@@ -320,7 +322,7 @@ class User extends AbstractEntity implements UserInterface
     /**
      * @return $this
      */
-    public function markAsDeleted()
+    public function markAsDeleted(): self
     {
         $this->isDeleted = self::IS_DELETED_YES;
 
@@ -330,7 +332,7 @@ class User extends AbstractEntity implements UserInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getDetail()->getFirstName() . ' ' . $this->getDetail()->getLastName();
     }
@@ -345,8 +347,9 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @return $this
+     * @throws Exception
      */
-    public function resetRoles()
+    public function resetRoles(): self
     {
         foreach ($this->roles->getIterator()->getArrayCopy() as $role) {
             $this->removeRole($role);
@@ -358,9 +361,9 @@ class User extends AbstractEntity implements UserInterface
 
     /**
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
-    public function createResetPassword()
+    public function createResetPassword(): self
     {
         $resetPassword = new UserResetPassword();
         $resetPassword->setHash(self::generateHash());
@@ -391,7 +394,7 @@ class User extends AbstractEntity implements UserInterface
      * @param UserResetPassword $resetPassword
      * @return bool
      */
-    public function hasResetPassword(UserResetPassword $resetPassword)
+    public function hasResetPassword(UserResetPassword $resetPassword): bool
     {
         return $this->resetPasswords->contains($resetPassword);
     }
@@ -400,7 +403,7 @@ class User extends AbstractEntity implements UserInterface
      * @param UserResetPassword $resetPassword
      * @return $this
      */
-    public function removeResetPassword(UserResetPassword $resetPassword)
+    public function removeResetPassword(UserResetPassword $resetPassword): self
     {
         $this->resetPasswords->removeElement($resetPassword);
 
@@ -411,7 +414,7 @@ class User extends AbstractEntity implements UserInterface
      * @param array $resetPasswords
      * @return $this
      */
-    public function setResetPasswords(array $resetPasswords)
+    public function setResetPasswords(array $resetPasswords): self
     {
         foreach ($resetPasswords as $resetPassword) {
             $this->resetPasswords->add($resetPassword);

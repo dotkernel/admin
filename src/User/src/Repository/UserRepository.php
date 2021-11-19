@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
 use Frontend\User\Entity\AdminInterface;
 use Frontend\User\Entity\User;
-use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
+use Throwable;
 
 /**
  * Class UserRepository
@@ -19,7 +23,7 @@ class UserRepository extends AbstractRepository
     /**
      * @param string $identity
      * @return AdminInterface|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findByIdentity(string $identity): ?AdminInterface
     {
@@ -48,15 +52,15 @@ class UserRepository extends AbstractRepository
 
         try {
             return $qb->getQuery()->useQueryCache(true)->getSingleResult();
-        } catch (\Exception $exception) {
+        } catch (Throwable $exception) {
             return null;
         }
     }
 
     /**
      * @param Admin $admin
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveAdmin(Admin $admin)
     {
@@ -66,8 +70,8 @@ class UserRepository extends AbstractRepository
 
     /**
      * @param User $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveUser(User $user)
     {
@@ -78,7 +82,7 @@ class UserRepository extends AbstractRepository
     /**
      * @param string $email
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function getUserByEmail(string $email)
     {
@@ -114,9 +118,7 @@ class UserRepository extends AbstractRepository
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        $qb->setFirstResult($offset)
-            ->setMaxResults($limit);
-        $qb->orderBy('user.' . $sort, $order);
+        $qb->setFirstResult($offset)->setMaxResults($limit)->orderBy('user.' . $sort, $order);
 
         return $qb->getQuery()->useQueryCache(true)->getResult();
     }
@@ -124,14 +126,13 @@ class UserRepository extends AbstractRepository
     /**
      * @param string|null $search
      * @return int|mixed|string
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function countUsers(string $search = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('count(user)')
-            ->from(User::class, 'user');
+        $qb->select('count(user)')->from(User::class, 'user');
 
         if (!is_null($search)) {
             $qb->where($qb->expr()->like('user.identity', ':search'))

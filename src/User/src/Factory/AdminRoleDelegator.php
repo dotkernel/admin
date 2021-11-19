@@ -8,6 +8,8 @@ use Frontend\User\Form\AdminForm;
 use Frontend\User\Service\UserService;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class AdminRoleDelegator
@@ -20,7 +22,9 @@ class AdminRoleDelegator implements DelegatorFactoryInterface
      * @param string $name
      * @param callable $callback
      * @param array|null $options
-     * @return AdminForm|object
+     * @return AdminForm|mixed|object
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container, $name, callable $callback, array $options = null)
     {

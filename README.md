@@ -221,3 +221,6 @@ If you ran the migrations you will have an admin user in the database with the f
 
 - User: admin
 - Password: dotadmin
+
+**NOTE:**
+Make sure you modify the default admin credentials on the `production` environment.

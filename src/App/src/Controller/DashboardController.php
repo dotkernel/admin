@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\App\Controller;
 
 use Dot\AnnotatedServices\Annotation\Inject;
@@ -7,9 +9,9 @@ use Dot\Controller\AbstractActionController;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class DashboardController
@@ -17,13 +19,10 @@ use Mezzio\Template\TemplateRendererInterface;
  */
 class DashboardController extends AbstractActionController
 {
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
 
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
 
-    /** @var AuthenticationServiceInterface $authenticationService */
     protected AuthenticationServiceInterface $authenticationService;
 
     /**
@@ -45,7 +44,7 @@ class DashboardController extends AbstractActionController
     }
 
     /**
-     * @return HtmlResponse|RedirectResponse
+     * @return ResponseInterface
      */
     public function indexAction()
     {

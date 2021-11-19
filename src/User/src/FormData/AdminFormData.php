@@ -13,27 +13,18 @@ use Frontend\User\Entity\AdminRole;
  */
 class AdminFormData
 {
-    /** @var array $roles */
-    public array $roles;
-
-    /** @var string $identity */
-    public string $identity;
-
-    /** @var string $firstName */
-    public string $firstName;
-
-    /** @var string $lastName */
-    public string $lastName;
-
-    /** @var string $status */
-    public string $status;
+    public ?string $identity = null;
+    public ?string $firstName = null;
+    public ?string $lastName = null;
+    public ?string $status = null;
+    public array $roles = [];
 
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        return $this->roles ?? [];
+        return $this->roles;
     }
 
     /**
@@ -52,16 +43,16 @@ class AdminFormData
     }
 
     /**
-     * @return array[]
+     * @return array
      */
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         return [
-            'roles' => $this->roles,
             'identity' => $this->identity,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'status' => $this->status
+            'status' => $this->status,
+            'roles' => $this->roles
         ];
     }
 }

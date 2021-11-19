@@ -12,7 +12,12 @@ use Frontend\User\Entity\Admin;
  */
 class UserAuthentication
 {
-    public static function verifyCredential(Admin $user, $inputPassword)
+    /**
+     * @param Admin $user
+     * @param $inputPassword
+     * @return bool
+     */
+    public static function verifyCredential(Admin $user, $inputPassword): bool
     {
         return password_verify($inputPassword, $user->getPassword());
     }

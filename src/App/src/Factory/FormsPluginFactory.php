@@ -8,23 +8,27 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Plugin\Factory;
+namespace Frontend\App\Factory;
 
-use Frontend\Plugin\FormsPlugin;
 use Dot\FlashMessenger\FlashMessengerInterface;
+use Frontend\App\Plugin\FormsPlugin;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class FormsPluginFactory
- * @package Dot\Controller\Plugin\Forms\Factory
+ * @package Frontend\App\Factory
  */
 class FormsPluginFactory
 {
     /**
      * @param ContainerInterface $container
      * @return FormsPlugin
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): FormsPlugin
     {
         return new FormsPlugin(
             $container->get('FormElementManager'),
