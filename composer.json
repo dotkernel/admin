@@ -65,7 +65,6 @@
         "laminas/laminas-config-aggregator": "^1.7",
         "laminas/laminas-dependency-plugin": "^2.2",
         "laminas/laminas-diactoros": "^2.8",
-        "laminas/laminas-form": "^2.17",
         "laminas/laminas-i18n": "^2.13",
         "laminas/laminas-math": "^3.5",
         "laminas/laminas-servicemanager": "^3.10",
