@@ -127,7 +127,7 @@ class EditAdminForm extends Form
     /**
      * @return InputFilter|InputFilterInterface|null
      */
-    public function getInputFilter()
+    public function getInputFilter(): \Laminas\InputFilter\InputFilterInterface
     {
         return $this->inputFilter;
     }
