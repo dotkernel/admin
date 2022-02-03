@@ -73,7 +73,7 @@ class ResetPasswordForm extends Form
     /**
      * @return null|InputFilter|InputFilterInterface
      */
-    public function getInputFilter()
+    public function getInputFilter(): \Laminas\InputFilter\InputFilterInterface
     {
         return $this->inputFilter;
     }
