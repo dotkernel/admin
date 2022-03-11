@@ -1,6 +1,6 @@
 {
   "name": "admin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Web starter package suitable for admin applications.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,10 @@
     "url": "git+https://github.com/dotkernel/admin.git"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "DotKernel Team",
+    "email": "team@dotkernel.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dotkernel/admin/issues"
