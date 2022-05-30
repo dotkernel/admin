@@ -228,7 +228,7 @@ class AdminService implements AdminServiceInterface
         } else {
             $ipAddress = $request['HTTP_X_FORWARDED_FOR'];
         }
-        $ipAddress = '82.78.21.41';
+
         $adminLogins = new AdminLogin();
 
         $country = !empty($this->locationService->getCountry($ipAddress)) ?
