@@ -12,6 +12,9 @@ use Doctrine\ORM\ORMException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Doctrine\ORM\EntityManager;
+use Dot\GeoIP\Service\LocationServiceInterface;
+use Dot\UserAgentSniffer\Service\DeviceServiceInterface;
+use Frontend\User\Entity\AdminLogin;
 use Frontend\User\Entity\AdminRole;
 use Frontend\User\Repository\AdminRepository;
 use Frontend\User\Entity\Admin;
@@ -31,19 +34,33 @@ class AdminService implements AdminServiceInterface
 
     protected AdminRoleRepository $adminRoleRepository;
 
+    protected LocationServiceInterface $locationService;
+
+    protected DeviceServiceInterface $deviceService;
+
     /**
      * AdminService constructor.
      * @param EntityManager $em
+     * @param LocationServiceInterface $locationService
+     * @param DeviceServiceInterface $deviceService
      * @param int $cacheLifetime
      *
-     * @Inject({EntityManager::class, "config.resultCacheLifetime"})
+     * @Inject({EntityManager::class, LocationServiceInterface::class, DeviceServiceInterface::class,
+     *      "config.resultCacheLifetime"})
      */
-    public function __construct(EntityManager $em, int $cacheLifetime)
-    {
+    public function __construct(
+        EntityManager $em,
+        LocationServiceInterface $locationService,
+        DeviceServiceInterface $deviceService,
+        int $cacheLifetime
+    ) {
+
         $this->em = $em;
         $this->adminRepository = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
         $this->adminRepository->setCacheLifetime($cacheLifetime);
+        $this->locationService = $locationService;
+        $this->deviceService = $deviceService;
     }
 
     /**
@@ -186,5 +203,71 @@ class AdminService implements AdminServiceInterface
         $this->getAdminRepository()->saveAdmin($admin);
 
         return $admin;
+    }
+
+    /**
+     * @param $request
+     * @param $name
+     * @return AdminLogin
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws \GeoIp2\Exception\AddressNotFoundException
+     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     */
+    public function logAdminVisit($request, $name): AdminLogin
+    {
+        $deviceData = $this->deviceService->getDetails($request['HTTP_USER_AGENT']);
+        $deviceOs = !empty($deviceData->getOs()) ? $deviceData->getOs() : null;
+        $deviceClient = !empty($deviceData->getClient()) ? $deviceData->getClient() : null;
+
+        $ipAddress = null;
+        if (!empty($request['REMOTE_ADDR'])) {
+            $ipAddress = $request['REMOTE_ADDR'];
+        } elseif (!empty($request['HTTP_CLIENT_IP'])) {
+            $ipAddress = $request['HTTP_CLIENT_IP'];
+        } else {
+            $ipAddress = $request['HTTP_X_FORWARDED_FOR'];
+        }
+        $ipAddress = '82.78.21.41';
+        $adminLogins = new AdminLogin();
+
+        $country = !empty($this->locationService->getCountry($ipAddress)) ?
+            $this->locationService->getCountry($ipAddress)->getName() : '';
+        $continent = !empty($this->locationService->getContinent($ipAddress)) ?
+            $this->locationService->getContinent($ipAddress)->getName() : '';
+        $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
+            $this->locationService->getOrganization($ipAddress)->getName() : '';
+        $deviceType = !empty($deviceData->getType()) ? $deviceData->getType() : null;
+        $deviceBrand = !empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
+        $deviceModel = !empty($deviceData->getModel()) ? $deviceData->getModel() : null;
+        $isMobile = $deviceData->getIsMobile() ? AdminLogin::IS_MOBILE_YES : AdminLogin::IS_MOBILE_NO;
+        $osName = !empty($deviceOs->getName()) ? $deviceOs->getName() : null;
+        $osVersion = !empty($deviceOs->getVersion()) ? $deviceOs->getVersion() : null;
+        $osPlatform = !empty($deviceOs->getPlatform()) ? $deviceOs->getPlatform() : null;
+        $clientType = !empty($deviceClient->getType()) ? $deviceClient->getType() : null;
+        $clientName = !empty($deviceClient->getName()) ? $deviceClient->getName() : null;
+        $clientEngine = !empty($deviceClient->getEngine()) ? $deviceClient->getEngine() : null;
+        $clientVersion = !empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
+
+        $adminLogins->setAdminIp($ipAddress)
+            ->setContinent($continent)
+            ->setCountry($country)
+            ->setOrganization($organization)
+            ->setDeviceType($deviceType)
+            ->setDeviceBrand($deviceBrand)
+            ->setDeviceModel($deviceModel)
+            ->setIsMobile($isMobile)
+            ->setOsName($osName)
+            ->setOsVersion($osVersion)
+            ->setOsPlatform($osPlatform)
+            ->setClientType($clientType)
+            ->setClientName($clientName)
+            ->setClientEngine($clientEngine)
+            ->setClientVersion($clientVersion)
+            ->setIdentity($name);
+
+        $this->adminRepository->saveAdminVisit($adminLogins);
+
+        return $adminLogins;
     }
 }

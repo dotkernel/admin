@@ -11,6 +11,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminLogin;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Throwable;
 
@@ -30,6 +31,19 @@ class AdminRepository extends AbstractRepository
     public function saveAdmin(Admin $admin)
     {
         $this->getEntityManager()->persist($admin);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param AdminLogin $adminLogins
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function saveAdminVisit(AdminLogin $adminLogins)
+    {
+        $adminLogins->touch();
+
+        $this->getEntityManager()->persist($adminLogins);
         $this->getEntityManager()->flush();
     }
 

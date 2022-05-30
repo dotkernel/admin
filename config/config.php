@@ -45,6 +45,9 @@ $aggregator = new ConfigAggregator([
     \Dot\Rbac\Guard\ConfigProvider::class,
     \Dot\Helpers\ConfigProvider::class,
     \Dot\Navigation\ConfigProvider::class,
+    \Dot\GeoIP\ConfigProvider::class,
+    \Dot\Cli\ConfigProvider::class,
+    \Dot\UserAgentSniffer\ConfigProvider::class,
 
     // Default App module config
     \Frontend\App\ConfigProvider::class,

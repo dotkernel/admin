@@ -5,8 +5,8 @@ namespace Frontend\User\Service;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Dot\AnnotatedServices\Annotation\Service;
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminLogin;
 use Frontend\User\Repository\AdminRepository;
 
 /**
@@ -52,4 +52,15 @@ interface AdminServiceInterface
      * @throws OptimisticLockException
      */
     public function createAdmin(array $data): Admin;
+
+    /**
+     * @param $request
+     * @param $name
+     * @return AdminLogin
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws \GeoIp2\Exception\AddressNotFoundException
+     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     */
+    public function logAdminVisit($request, $name): AdminLogin;
 }
