@@ -11,6 +11,7 @@ use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\App\Plugin\FormsPlugin;
 use Frontend\User\Entity\Admin;
+use Frontend\User\Entity\AdminLogin;
 use Frontend\User\Form\AccountForm;
 use Frontend\User\Form\AdminForm;
 use Frontend\User\Form\ChangePasswordForm;
@@ -244,8 +245,14 @@ class AdminController extends AbstractActionController
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
                 $authResult = $this->authenticationService->authenticate();
+                $logAdmin = $this->adminService->logAdminVisit(
+                    $this->getRequest()->getServerParams(),
+                    $data['username']
+                );
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
+                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_SUCCESS);
+                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
                     if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
                         $this->authenticationService->clearIdentity();
                         $this->messenger->addError('User is inactive', 'user-login');
@@ -257,6 +264,8 @@ class AdminController extends AbstractActionController
 
                     return new RedirectResponse($this->router->generateUri('dashboard'));
                 } else {
+                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_FAIL);
+                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
                     $this->messenger->addData('shouldRebind', true);
                     $this->forms->saveState($form);
                     $this->messenger->addError($authResult->getMessages(), 'user-login');
