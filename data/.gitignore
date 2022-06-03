@@ -1,4 +1,5 @@
 !.gitignore
 cache
 geoip
-lock
+lock/*
+!lock/.gitkeep
