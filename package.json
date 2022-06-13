@@ -41,7 +41,7 @@
     "imports-loader": "0.8.0",
     "jquery": "3.5.1",
     "jquery-mousewheel": "3.1.13",
-    "npm": "7.14.0",
+    "npm": "8.11.0",
     "pdfjs-dist": "2.3.200",
     "pdfobject": "2.1.1",
     "popper.js": "1.16.1",
