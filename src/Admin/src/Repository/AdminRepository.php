@@ -105,7 +105,31 @@ class AdminRepository extends AbstractRepository
             ->setMaxResults($limit);
         $qb->orderBy('admin.' . $sort, $order);
 
-        return $qb->getQuery()->enableResultCache($this->getCacheLifetime())->getResult();
+        return $qb->getQuery()->useQueryCache(true)->getResult();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param string $sort
+     * @param string $order
+     * @return float|int|mixed|string
+     */
+    public function getAdminLogins(
+        int $offset = 0,
+        int $limit = 30,
+        string $sort = 'created',
+        string $order = 'desc'
+    ) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('adminLogin')
+            ->from(AdminLogin::class, 'adminLogin');
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+        $qb->orderBy('adminLogin.' . $sort, $order);
+
+        return $qb->getQuery()->useQueryCache(true)->getResult();
     }
 
     /**
@@ -124,6 +148,20 @@ class AdminRepository extends AbstractRepository
             $qb->where($qb->expr()->like('admin.identity', ':search'))
                 ->setParameter('search', '%' . $search . '%');
         }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return float|int|mixed|string
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countAdminLogins()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(adminLogin)')
+            ->from(AdminLogin::class, 'adminLogin');
 
         return $qb->getQuery()->getSingleScalarResult();
     }

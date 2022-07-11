@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Frontend\App;
 
-use ContainerInteropDoctrine\EntityManagerFactory;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Frontend\App\Controller\DashboardController;
-use Frontend\App\Controller\LanguageController;
 use Frontend\App\Factory\EntityListenerResolverFactory;
 use Frontend\App\Factory\FormsPluginFactory;
 use Frontend\App\Plugin\FormsPlugin;
 use Frontend\App\Resolver\EntityListenerResolver;
-use Frontend\App\Service\TranslateService;
-use Frontend\App\Service\TranslateServiceInterface;
 use Mezzio\Application;
 
 /**
@@ -52,22 +48,18 @@ class ConfigProvider
             'delegators' => [
                 Application::class => [
                     \Frontend\App\RoutesDelegator::class,
-                    \Frontend\User\RoutesDelegator::class
+                    \Frontend\Admin\RoutesDelegator::class
                 ]
             ],
             'factories'  => [
-                'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
-                TranslateService::class => AnnotatedServiceFactory::class,
-                LanguageController::class => AnnotatedServiceFactory::class,
                 DashboardController::class => AnnotatedServiceFactory::class,
                 PluginManager::class => PluginManagerFactory::class,
                 FormsPlugin::class => FormsPluginFactory::class
             ],
             'aliases' => [
                 EntityManager::class => 'doctrine.entity_manager.orm_default',
-                EntityManagerInterface::class => 'doctrine.entity_manager.default',
-                TranslateServiceInterface::class => TranslateService::class,
+                EntityManagerInterface::class => 'doctrine.entity_manager.default'
             ]
         ];
     }

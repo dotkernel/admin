@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Doctrine\Common\Cache\PhpFileCache;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;

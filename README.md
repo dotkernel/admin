@@ -11,7 +11,7 @@ Dotkernel web starter package suitable for admin applications.
 [![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/3.0/LICENSE.md)
 
 
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.0.x-dev)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.0.0)
 
 
 # Installing DotKernel `admin`
@@ -23,6 +23,7 @@ Dotkernel web starter package suitable for admin applications.
     - [Installing the `admin` Composer package](#installing-the-admin-composer-package)
         - [Installing DotKernel admin](#installing-dotkernel-admin)
     - [Configuration - First Run](#configuration---first-run)
+    - [Manage GeoLite2 database](#manage-geolite2-database)
     - [Testing (Running)](#testing-running)
 
 ## Tools

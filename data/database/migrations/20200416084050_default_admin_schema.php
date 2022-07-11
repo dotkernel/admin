@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Frontend\User\Entity\Admin;
+use Frontend\Admin\Entity\Admin;
 
 class DefaultAdminSchema extends AbstractMigration
 {

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Frontend\User\Entity\AdminLogin;
+use Frontend\Admin\Entity\AdminLogin;
 
 /**
  * ClassLogAdminLogins

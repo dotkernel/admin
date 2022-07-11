@@ -142,6 +142,55 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
+     * @param int $offset
+     * @param int $limit
+     * @param string $sort
+     * @param string $order
+     * @return array
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getAdminLogins(
+        int $offset = 0,
+        int $limit = 30,
+        string $sort = 'created',
+        string $order = 'desc'
+    ): array {
+        $result = [
+            'rows' => [],
+            'total' => $this->getAdminRepository()->countAdminLogins()
+        ];
+        $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order);
+
+        /** @var AdminLogin $login */
+        foreach ($logins as $login) {
+            $result['rows'][] = [
+                'uuid' => $login->getUuid()->toString(),
+                'identity' => $login->getIdentity(),
+                'adminIp' => $login->getAdminIp(),
+                'status' => $login->getLoginStatus(),
+                'country' => $login->getCountry(),
+                'continent' => $login->getContinent(),
+                'organization' => $login->getOrganization(),
+                'deviceType' => $login->getDeviceType(),
+                'deviceBrand' => $login->getDeviceBrand(),
+                'deviceModel' => $login->getDeviceModel(),
+                'isMobile' => $login->getIsMobile(),
+                'osName' => $login->getOsName(),
+                'osVersion' => $login->getOsVersion(),
+                'osPlatform' => $login->getOsVersion(),
+                'clientType' => $login->getClientType(),
+                'clientName' => $login->getClientName(),
+                'clientEngine' => $login->getClientEngine(),
+                'clientVersion' => $login->getClientVersion(),
+                'created' => $login->getCreated()->format("Y-m-d")
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
      * @param array $data
      * @return Admin
      * @throws ORMException
@@ -188,10 +237,10 @@ class AdminService implements AdminServiceInterface
         if (!empty($data['password'])) {
             $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
         }
-        if (is_string($data['firstName'])) {
+        if (!empty($data['firstName']) && is_string($data['firstName'])) {
             $admin->setFirstname($data['firstName']);
         }
-        if (is_string($data['lastName'])) {
+        if (!empty($data['lastName']) && is_string($data['lastName'])) {
             $admin->setLastname($data['lastName']);
         }
         if (!empty($data['status'])) {
@@ -236,12 +285,12 @@ class AdminService implements AdminServiceInterface
 
         $adminLogins = new AdminLogin();
 
-//        $country = !empty($this->locationService->getCountry($ipAddress)) ?
-//            $this->locationService->getCountry($ipAddress)->getName() : '';
-//        $continent = !empty($this->locationService->getContinent($ipAddress)) ?
-//            $this->locationService->getContinent($ipAddress)->getName() : '';
-//        $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
-//            $this->locationService->getOrganization($ipAddress)->getName() : '';
+        $country = !empty($this->locationService->getCountry($ipAddress)) ?
+            $this->locationService->getCountry($ipAddress)->getName() : '';
+        $continent = !empty($this->locationService->getContinent($ipAddress)) ?
+            $this->locationService->getContinent($ipAddress)->getName() : '';
+        $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
+            $this->locationService->getOrganization($ipAddress)->getName() : '';
         $deviceType = !empty($deviceData->getType()) ? $deviceData->getType() : null;
         $deviceBrand = !empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
         $deviceModel = !empty($deviceData->getModel()) ? $deviceData->getModel() : null;
@@ -255,9 +304,9 @@ class AdminService implements AdminServiceInterface
         $clientVersion = !empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
 
         $adminLogins->setAdminIp($ipAddress)
-            ->setContinent('')
-            ->setCountry('')
-            ->setOrganization('')
+            ->setContinent($continent)
+            ->setCountry($country)
+            ->setOrganization($organization)
             ->setDeviceType($deviceType)
             ->setDeviceBrand($deviceBrand)
             ->setDeviceModel($deviceModel)

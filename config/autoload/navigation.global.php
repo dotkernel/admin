@@ -25,22 +25,25 @@ return [
                         [
                             'options' => [
                                 'label' => 'Manage admins',
-                                'route' => [
-                                    'route_name' => 'admin',
-                                    'route_params' => ['action' => 'manage']
-                                ],
+                                'route' => '',
                                 'icon' => 'fas fa-user-circle',
-                            ]
-                        ],
-                        [
-                            'options' => [
-                                'label' => 'Manage users',
-                                'route' => [
-                                    'route_name' => 'user',
-                                    'route_params' => ['action' => 'manage']
-                                ],
-                                'icon' => 'fas fa-user',
                             ],
+                            'pages' => [
+                                [
+                                    'options' => [
+                                        'label' => 'Admins',
+                                        'uri' => '/admin/manage',
+                                        'icon' => 'fas fa-user-circle',
+                                    ],
+                                ],
+                                [
+                                    'options' => [
+                                        'label' => 'Logins',
+                                        'uri' => '/admin/logins',
+                                        'icon' => 'fas fa-sign-in-alt',
+                                    ],
+                                ]
+                            ]
                         ],
                         [
                             'options' => [

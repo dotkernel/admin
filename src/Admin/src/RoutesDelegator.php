@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\User;
+namespace Frontend\Admin;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Admin\Controller\AdminController;

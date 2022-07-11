@@ -22,11 +22,6 @@ return [
                         'options' => [
                             'rules' => [
                                 [
-                                    'route' => 'user',
-                                    'actions' => [],
-                                    'permissions' => ['authenticated']
-                                ],
-                                [
                                     'route' => 'admin',
                                     'actions' => ['login'],
                                     'permissions' => ['*']

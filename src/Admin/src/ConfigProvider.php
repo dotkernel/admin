@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\User;
+namespace Frontend\Admin;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;

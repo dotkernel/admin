@@ -1,7 +1,7 @@
 <?php
 namespace Data\Database\Seeds;
 
-use Frontend\User\Entity\Admin;
+use Frontend\Admin\Entity\Admin;
 use Phinx\Seed\AbstractSeed;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use Ramsey\Uuid\Uuid;

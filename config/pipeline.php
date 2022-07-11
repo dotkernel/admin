@@ -75,7 +75,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based validation
     // - etc.
 
-    $app->pipe(TranslatorMiddleware::class);
     $app->pipe(AuthMiddleware::class);
     $app->pipe(ForbiddenHandler::class);
     $app->pipe(RbacGuardMiddleware::class);

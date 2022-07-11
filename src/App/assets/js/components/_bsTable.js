@@ -28,20 +28,14 @@ $( document ).ready(function(){
         if (count == 0) {
             $("#adminEditButton").prop('disabled', true);
             $("#adminDeleteButton").prop('disabled', true);
-            $("#userEditButton").prop('disabled', true);
-            $("#userDeleteButton").prop('disabled', true);
         }
         else if (count == 1) {
             $("#adminEditButton").prop('disabled', false);
             $("#adminDeleteButton").prop('disabled', false);
-            $("#userEditButton").prop('disabled', false);
-            $("#userDeleteButton").prop('disabled', false);
         }
         else {
             $("#adminEditButton").prop('disabled', true);
             $("#adminDeleteButton").prop('disabled', false);
-            $("#userEditButton").prop('disabled', true);
-            $("#userDeleteButton").prop('disabled', false);
         }
     };
 
@@ -78,8 +72,6 @@ $( document ).ready(function(){
     var resetUiButtonState = function () {
         $("#adminEditButton").prop('disabled', true);
         $("#adminDeleteButton").prop('disabled', true);
-        $("#userEditButton").prop('disabled', true);
-        $("#userDeleteButton").prop('disabled', true);
     };
 
     $("#bsTable").on('load-success.bs.table', function () {

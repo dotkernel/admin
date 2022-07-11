@@ -10,6 +10,7 @@ use Doctrine\ORM\NoResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
+use Frontend\Admin\Entity\AdminIdentity;
 use Frontend\App\Plugin\FormsPlugin;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
@@ -20,7 +21,6 @@ use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
 use Frontend\Admin\Service\AdminService;
-use Frontend\Admin\Service\UserService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -43,9 +43,6 @@ class AdminController extends AbstractActionController
     /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
 
-    /** @var UserService $userService */
-    protected UserService $userService;
-
     /** @var AdminService $adminService */
     protected AdminService $adminService;
 
@@ -63,7 +60,6 @@ class AdminController extends AbstractActionController
 
     /**
      * AdminController constructor.
-     * @param UserService $userService
      * @param AdminService $adminService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
@@ -72,11 +68,10 @@ class AdminController extends AbstractActionController
      * @param FormsPlugin $forms
      * @param AdminForm $adminForm
      *
-     * @Inject({UserService::class, AdminService::class, RouterInterface::class, TemplateRendererInterface::class,
+     * @Inject({AdminService::class, RouterInterface::class, TemplateRendererInterface::class,
      *     AuthenticationService::class, FlashMessenger::class, FormsPlugin::class, AdminForm::class})
      */
     public function __construct(
-        UserService $userService,
         AdminService $adminService,
         RouterInterface $router,
         TemplateRendererInterface $template,
@@ -85,7 +80,6 @@ class AdminController extends AbstractActionController
         FormsPlugin $forms,
         AdminForm $adminForm
     ) {
-        $this->userService = $userService;
         $this->router = $router;
         $this->template = $template;
         $this->authenticationService = $authenticationService;
@@ -194,7 +188,7 @@ class AdminController extends AbstractActionController
         if (!empty($data['uuid'])) {
             $admin = $this->adminService->getAdminRepository()->find($data['uuid']);
         } else {
-            return new JsonResponse(['success' => 'error', 'message' => 'Could not find user']);
+            return new JsonResponse(['success' => 'error', 'message' => 'Could not find admin']);
         }
 
         try {
@@ -257,17 +251,17 @@ class AdminController extends AbstractActionController
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
                 $authResult = $this->authenticationService->authenticate();
-//                $logAdmin = $this->adminService->logAdminVisit(
-//                    $this->getRequest()->getServerParams(),
-//                    $data['username']
-//                );
+                $logAdmin = $this->adminService->logAdminVisit(
+                    $this->getRequest()->getServerParams(),
+                    $data['username']
+                );
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
-//                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_SUCCESS);
-//                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
+                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_SUCCESS);
+                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
                     if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
                         $this->authenticationService->clearIdentity();
-                        $this->messenger->addError('User is inactive', 'user-login');
+                        $this->messenger->addError('Admin is inactive', 'user-login');
                         $this->messenger->addData('shouldRebind', true);
                         $this->forms->saveState($form);
                         return new RedirectResponse($this->getRequest()->getUri(), 303);
@@ -276,8 +270,8 @@ class AdminController extends AbstractActionController
 
                     return new RedirectResponse($this->router->generateUri('dashboard'));
                 } else {
-//                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_FAIL);
-//                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
+                    $logAdmin->setLoginStatus(AdminLogin::LOGIN_FAIL);
+                    $this->adminService->getAdminRepository()->saveAdminVisit($logAdmin);
                     $this->messenger->addData('shouldRebind', true);
                     $this->forms->saveState($form);
                     $this->messenger->addError($authResult->getMessages(), 'user-login');
@@ -292,7 +286,7 @@ class AdminController extends AbstractActionController
         }
 
         return new HtmlResponse(
-            $this->template->render('user::login', [
+            $this->template->render('admin::login', [
                 'form' => $form
             ])
         );
@@ -354,7 +348,9 @@ class AdminController extends AbstractActionController
     {
         $request = $this->getRequest();
         $changePasswordForm = new ChangePasswordForm();
-        $admin = $this->authenticationService->getIdentity();
+        /** @var AdminIdentity $adminIdentity */
+        $adminIdentity = $this->authenticationService->getIdentity();
+        $admin = $this->adminService->getAdminRepository()->exists($adminIdentity->getIdentity());
 
         if ($request->getMethod() == 'POST') {
             $data = $request->getParsedBody();
@@ -377,5 +373,32 @@ class AdminController extends AbstractActionController
         }
 
         return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function loginsAction(): ResponseInterface
+    {
+        return new HtmlResponse($this->template->render('admin::list-logins'));
+    }
+
+    /**
+     * @return ResponseInterface
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function listLoginsAction(): ResponseInterface
+    {
+        $params = $this->getRequest()->getQueryParams();
+
+        $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
+        $order = (!empty($params['order'])) ? $params['order'] : "desc";
+        $offset = (!empty($params['offset'])) ? (int)$params['offset'] : 0;
+        $limit = (!empty($params['limit'])) ? (int)$params['limit'] : 30;
+
+        $result = $this->adminService->getAdminLogins($offset, $limit, $sort, $order);
+
+        return new JsonResponse($result);
     }
 }

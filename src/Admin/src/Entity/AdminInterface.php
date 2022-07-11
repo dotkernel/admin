@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Admin
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminRepository")
  * @ORM\Table(name="admin")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\Admin\Entity
