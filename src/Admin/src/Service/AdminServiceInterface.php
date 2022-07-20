@@ -54,13 +54,9 @@ interface AdminServiceInterface
     public function createAdmin(array $data): Admin;
 
     /**
-     * @param $request
-     * @param $name
+     * @param array $serverParams
+     * @param string $name
      * @return AdminLogin
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws \GeoIp2\Exception\AddressNotFoundException
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
      */
-    public function logAdminVisit($request, $name): AdminLogin;
+    public function logAdminVisit(array $serverParams, string $name): AdminLogin;
 }

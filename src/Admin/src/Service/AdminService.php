@@ -19,6 +19,8 @@ use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\Repository\AdminRepository;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Repository\AdminRoleRepository;
+use Frontend\App\Service\IpService;
+use GeoIp2\Exception\AddressNotFoundException;
 
 /**
  * Class AdminService
@@ -260,37 +262,39 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param $request
-     * @param $name
+     * @param array $serverParams
+     * @param string $name
      * @return AdminLogin
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws \GeoIp2\Exception\AddressNotFoundException
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException
      */
-    public function logAdminVisit($request, $name): AdminLogin
+    public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {
-        $deviceData = $this->deviceService->getDetails($request['HTTP_USER_AGENT']);
+        $deviceData = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
         $deviceOs = !empty($deviceData->getOs()) ? $deviceData->getOs() : null;
         $deviceClient = !empty($deviceData->getClient()) ? $deviceData->getClient() : null;
 
-        $ipAddress = null;
-        if (!empty($request['REMOTE_ADDR'])) {
-            $ipAddress = $request['REMOTE_ADDR'];
-        } elseif (!empty($request['HTTP_CLIENT_IP'])) {
-            $ipAddress = $request['HTTP_CLIENT_IP'];
-        } else {
-            $ipAddress = $request['HTTP_X_FORWARDED_FOR'];
-        }
+        $ipAddress = IpService::getUserIp($serverParams);
 
         $adminLogins = new AdminLogin();
 
-        $country = !empty($this->locationService->getCountry($ipAddress)) ?
-            $this->locationService->getCountry($ipAddress)->getName() : '';
-        $continent = !empty($this->locationService->getContinent($ipAddress)) ?
-            $this->locationService->getContinent($ipAddress)->getName() : '';
-        $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
-            $this->locationService->getOrganization($ipAddress)->getName() : '';
+        try {
+            $country = !empty($this->locationService->getCountry($ipAddress)) ?
+                $this->locationService->getCountry($ipAddress)->getName() : '';
+        } catch (AddressNotFoundException $e) {
+            $country = '';
+        }
+        try {
+            $continent = !empty($this->locationService->getContinent($ipAddress)) ?
+                $this->locationService->getContinent($ipAddress)->getName() : '';
+        } catch (AddressNotFoundException $e) {
+            $continent = '';
+        }
+        try {
+            $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
+                $this->locationService->getOrganization($ipAddress)->getName() : '';
+        } catch (AddressNotFoundException $e) {
+            $organization = '';
+        }
         $deviceType = !empty($deviceData->getType()) ? $deviceData->getType() : null;
         $deviceBrand = !empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
         $deviceModel = !empty($deviceData->getModel()) ? $deviceData->getModel() : null;
