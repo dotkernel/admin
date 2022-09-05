@@ -53,7 +53,7 @@
         "dotkernel/dot-form": "^4.0.1",
         "dotkernel/dot-geoip": "^3.3.1",
         "dotkernel/dot-helpers": "^3.2.0",
-        "dotkernel/dot-mail": "^3.3.0",
+        "dotkernel/dot-mail": "~3.4 || ~4.0",
         "dotkernel/dot-navigation": "^3.2.0",
         "dotkernel/dot-rbac-guard": "^3.2.1",
         "dotkernel/dot-session": "^4.3.0",
