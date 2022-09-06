@@ -30,6 +30,10 @@ return [
              **/
 
             'transport' => Laminas\Mail\Transport\Sendmail::class,
+            
+             // Uncomment the below line if you want to save a copy of all sent emails to a certain IMAP folder
+            // Valid only if the Transport is SMTP 
+            // 'save_sent_message_folder' => ['INBOX.Sent'],
 
             //message configuration
             'message_options' => [
@@ -83,8 +87,8 @@ return [
                 //hostname or IP address of the mail server
                 'host' => '',
 
-                //port of the mail server - default 25
-                'port' => 465,
+                //port of the mail server - 587 or 465 for secure connections
+                'port' => 587,
 
                 //connection class used for authentication
                 //the value can be one of smtp, plain, login or crammd5
