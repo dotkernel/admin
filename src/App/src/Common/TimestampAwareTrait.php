@@ -87,7 +87,7 @@ trait TimestampAwareTrait
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function touch(): self
     {

@@ -18,9 +18,9 @@ class AuthenticationAdapter implements AdapterInterface
     private const METHOD_NOT_EXISTS = "Method %s not found in %s .";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
 
-    private ?string $identity = null;
+    private string $identity;
 
-    private ?string $credential = null;
+    private string $credential;
 
     private EntityManager $entityManager;
 
@@ -41,7 +41,7 @@ class AuthenticationAdapter implements AdapterInterface
 
     /**
      * @param string $identity
-     * @return $this
+     * @return self
      */
     public function setIdentity(string $identity): self
     {
@@ -51,7 +51,7 @@ class AuthenticationAdapter implements AdapterInterface
 
     /**
      * @param string $credential
-     * @return $this
+     * @return self
      */
     public function setCredential(string $credential): self
     {
@@ -173,7 +173,7 @@ class AuthenticationAdapter implements AdapterInterface
     /**
      * @throws Exception
      */
-    private function validateConfig()
+    private function validateConfig(): void
     {
         if (
             ! isset($this->config['orm_default']['identity_class']) ||

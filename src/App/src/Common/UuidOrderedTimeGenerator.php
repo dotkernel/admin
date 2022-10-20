@@ -19,21 +19,16 @@ final class UuidOrderedTimeGenerator
     private static ?UuidFactory $factory = null;
 
     /**
-     * @return UuidInterface|null
+     * @return UuidInterface
      */
-    public static function generateUuid(): ?UuidInterface
+    public static function generateUuid(): UuidInterface
     {
-        try {
-            return self::getFactory()->uuid1();
-        } catch (Throwable $exception) {
-            error_log($exception->getMessage());
-        }
-
-        return null;
+        return self::getFactory()->uuid1();
     }
 
     /**
      * @return UuidFactory
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private static function getFactory(): UuidFactory
     {

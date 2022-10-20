@@ -6,7 +6,6 @@ namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\ChangePasswordInputFilter;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 
 /**
@@ -15,7 +14,7 @@ use Laminas\InputFilter\InputFilterInterface;
  */
 class ChangePasswordForm extends Form
 {
-    protected InputFilter $inputFilter;
+    protected InputFilterInterface $inputFilter;
 
     public function __construct($name = null, array $options = [])
     {
@@ -84,9 +83,9 @@ class ChangePasswordForm extends Form
     }
 
     /**
-     * @return null|InputFilter|InputFilterInterface
+     * @return InputFilterInterface
      */
-    public function getInputFilter(): \Laminas\InputFilter\InputFilterInterface
+    public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
     }

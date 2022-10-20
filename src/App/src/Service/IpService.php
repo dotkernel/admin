@@ -9,7 +9,7 @@ namespace Frontend\App\Service;
 class IpService
 {
     /**
-     * @return array|false|mixed|string
+     * @return mixed
      */
     public static function getUserIp(array $server)
     {
@@ -39,7 +39,7 @@ class IpService
     }
 
     /**
-     * @param $ip
+     * @param mixed $ip
      * @return false|string
      */
     public static function validIp($ip)

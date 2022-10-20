@@ -28,11 +28,11 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
 
     /**
      * @param string $className
-     * @return mixed|object
+     * @return object
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function resolve($className)
+    public function resolve($className): object
     {
         return $this->container->get($className);
     }

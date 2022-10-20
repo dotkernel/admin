@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Frontend\App\Entity\AbstractEntity;
@@ -34,15 +35,15 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @ORM\Column(name="firstName", type="string", length=255)
-     * @var $firstName
+     * @var string $firstName
      */
-    protected $firstName;
+    protected string $firstName;
 
     /**
      * @ORM\Column(name="lastName", type="string", length=255)
-     * @var $lastName
+     * @var string $lastName
      */
-    protected $lastName;
+    protected string $lastName;
 
     /**
      * @ORM\Column(name="password", type="string", length=100, nullable=false)
@@ -63,9 +64,8 @@ class Admin extends AbstractEntity implements AdminInterface
      *     joinColumns={@ORM\JoinColumn(name="userUuid", referencedColumnName="uuid")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="roleUuid", referencedColumnName="uuid")}
      * )
-     * @var ArrayCollection $roles
      */
-    protected $roles = [];
+    protected Collection $roles;
 
     /**
      * Admin constructor.

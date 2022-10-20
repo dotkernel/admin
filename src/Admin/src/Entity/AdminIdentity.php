@@ -60,15 +60,17 @@ class AdminIdentity implements UserInterface
     }
 
     /**
-     * @return array
+     * @return iterable
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function getRoles(): array
+    public function getRoles(): iterable
     {
         return $this->roles;
     }
 
     /**
      * @return array
+     * @psalm-return array<string, mixed>
      */
     public function getDetails(): array
     {
@@ -77,10 +79,10 @@ class AdminIdentity implements UserInterface
 
     /**
      * @param string $name
-     * @param null $default
-     * @return string|null
+     * @param mixed|null $default
+     * @return null|array<string, mixed>
      */
-    public function getDetail(string $name, $default = null): ?string
+    public function getDetail(string $name, $default = null)
     {
         return $this->details[$name] ?? $default;
     }
