@@ -30,7 +30,7 @@ class AuthMiddlewareFactory
 
     /**
      * @param ContainerInterface $container
-     * @param $requestedName
+     * @param mixed $requestedName
      * @return mixed
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface

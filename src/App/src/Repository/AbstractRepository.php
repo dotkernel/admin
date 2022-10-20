@@ -24,23 +24,23 @@ abstract class AbstractRepository extends EntityRepository
     }
 
     /**
-     * @param mixed $uuid
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return int|mixed|object|string|null
+     * @param mixed $id
+     * @param int|null $lockMode
+     * @param int|null $lockVersion
+     * @return object|null
      * @throws NonUniqueResultException
      */
-    public function find($uuid, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?object
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('entity')
             ->from($this->getEntityName(), 'entity')
             ->where('entity.uuid = :uuid');
 
-        if (is_array($uuid)) {
-            $qb->setParameter('uuid', $uuid['uuid']->getBytes());
+        if (is_array($id)) {
+            $qb->setParameter('uuid', $id['uuid']->getBytes());
         } else {
-            $qb->setParameter('uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
+            $qb->setParameter('uuid', $id, UuidBinaryOrderedTimeType::NAME);
         }
 
         return $qb->getQuery()->getOneOrNullResult();

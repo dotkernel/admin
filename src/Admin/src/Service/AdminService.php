@@ -21,6 +21,7 @@ use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Service\IpService;
 use GeoIp2\Exception\AddressNotFoundException;
+use MaxMind\Db\Reader\InvalidDatabaseException;
 
 /**
  * Class AdminService
@@ -221,13 +222,12 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param Admin|object $admin
+     * @param Admin $admin
      * @param array $data
      * @return Admin
      * @throws ORMException
-     * @throws OptimisticLockException
      */
-    public function updateAdmin(Admin $admin, array $data)
+    public function updateAdmin(Admin $admin, array $data): Admin
     {
         if (!empty($data['identity'])) {
             if (!$this->exists($data['identity'])) {
@@ -265,7 +265,7 @@ class AdminService implements AdminServiceInterface
      * @param array $serverParams
      * @param string $name
      * @return AdminLogin
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     * @throws InvalidDatabaseException
      */
     public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {

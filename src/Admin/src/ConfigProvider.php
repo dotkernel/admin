@@ -9,8 +9,6 @@ use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
 use Frontend\Admin\Authentication\AuthenticationAdapter;
 use Frontend\Admin\Authentication\AuthenticationServiceFactory;
 use Frontend\Admin\Controller\AdminController;
-use Frontend\Admin\Doctrine\EntityListenerResolver;
-use Frontend\Admin\Doctrine\EntityListenerResolverFactory;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminInterface;
 use Frontend\Admin\Delegator\AdminRoleDelegator;
@@ -48,7 +46,6 @@ class ConfigProvider
         return [
             'factories'  => [
                 AdminController::class => AnnotatedServiceFactory::class,
-                EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 AdminService::class => AnnotatedServiceFactory::class,
                 AdminForm::class => ElementFactory::class,
                 AuthenticationService::class => AuthenticationServiceFactory::class,
@@ -78,7 +75,7 @@ class ConfigProvider
     }
 
     /**
-     * @return array[]
+     * @return array
      */
     public function getForms(): array
     {
@@ -102,11 +99,6 @@ class ConfigProvider
     public function getDoctrineConfig(): array
     {
         return [
-            'configuration' => [
-                'orm_default' => [
-                    'entity_listener_resolver' => EntityListenerResolver::class,
-                ]
-            ],
             'driver' => [
                 'orm_default' => [
                     'drivers' => [

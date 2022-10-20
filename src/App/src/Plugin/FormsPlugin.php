@@ -31,7 +31,7 @@ class FormsPlugin implements PluginInterface
 
     protected ContainerInterface $container;
 
-    protected FlashMessengerInterface $flashMessenger;
+    protected ?FlashMessengerInterface $flashMessenger;
 
     /**
      * FormsPlugin constructor.
@@ -39,7 +39,8 @@ class FormsPlugin implements PluginInterface
      * @param ContainerInterface $container
      * @param FlashMessengerInterface|null $flashMessenger
      */
-    public function __construct(
+    public function __construct
+    (
         FormElementManager $formManager,
         ContainerInterface $container,
         FlashMessengerInterface $flashMessenger = null
@@ -51,7 +52,7 @@ class FormsPlugin implements PluginInterface
 
     /**
      * @param string|null $name
-     * @return $this|Form|mixed
+     * @return mixed
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -87,9 +88,9 @@ class FormsPlugin implements PluginInterface
     /**
      * @param Form $form
      */
-    public function restoreState(Form $form)
+    public function restoreState(Form $form): void
     {
-        if ($this->flashMessenger) {
+        if (! is_null($this->flashMessenger)) {
             $dataKey = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
@@ -104,9 +105,9 @@ class FormsPlugin implements PluginInterface
     /**
      * @param Form $form
      */
-    public function saveState(Form $form)
+    public function saveState(Form $form): void
     {
-        if ($this->flashMessenger) {
+        if (! is_null($this->flashMessenger)) {
             $dataKey = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
@@ -128,6 +129,7 @@ class FormsPlugin implements PluginInterface
     /**
      * @param Form $form
      * @return string
+     * @psalm-suppress InvalidArgument
      */
     public function getMessagesAsString(Form $form): string
     {
@@ -186,6 +188,7 @@ class FormsPlugin implements PluginInterface
 
     /**
      * @param array $formMessages
+     * @psalm-suppress InvalidArrayOffset
      * @return array
      */
     protected function processFormErrors(array $formMessages): array

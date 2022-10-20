@@ -28,7 +28,7 @@ class AdminFormData
     }
 
     /**
-     * @param Admin|object $admin
+     * @param Admin $admin
      */
     public function fromEntity(Admin $admin): void
     {

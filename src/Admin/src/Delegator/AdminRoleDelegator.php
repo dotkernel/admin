@@ -22,15 +22,14 @@ class AdminRoleDelegator implements DelegatorFactoryInterface
      * @param string $name
      * @param callable $callback
      * @param array|null $options
-     * @return AdminForm|mixed|object
+     * @return object
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, $name, callable $callback, array $options = null)
+    public function __invoke(ContainerInterface $container, $name, callable $callback, array $options = null): object
     {
         $adminForm = $callback();
         if ($adminForm instanceof AdminForm) {
-            /** @var $adminService $adminService */
             $adminService = $container->get(AdminService::class);
             $roles = $adminService->getAdminFormProcessedRoles();
 

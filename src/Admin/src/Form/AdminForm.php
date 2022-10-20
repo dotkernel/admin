@@ -16,12 +16,12 @@ use Laminas\InputFilter\InputFilterInterface;
  */
 class AdminForm extends Form
 {
-    protected InputFilter $inputFilter;
+    protected InputFilterInterface $inputFilter;
 
     protected array $roles = [];
 
     /**
-     * RegisterForm constructor.
+     * AdminForm constructor.
      * @param null $name
      * @param array $options
      */
@@ -125,9 +125,9 @@ class AdminForm extends Form
     }
 
     /**
-     * @return InputFilter|InputFilterInterface|null
+     * @return InputFilterInterface
      */
-    public function getInputFilter(): \Laminas\InputFilter\InputFilterInterface
+    public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
     }

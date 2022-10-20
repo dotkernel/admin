@@ -49,73 +49,73 @@ class AdminLogin extends AbstractEntity
      * @ORM\Column(name="deviceType", type="string", length=20)
      * @var string|null $deviceType
      */
-    protected $deviceType;
+    protected ?string $deviceType;
 
     /**
      * @ORM\Column(name="deviceBrand", type="string", length=20)
      * @var string|null $deviceBrand
      */
-    protected $deviceBrand;
+    protected ?string $deviceBrand;
 
     /**
      * @ORM\Column(name="deviceModel", type="string", length=40)
      * @var string|null $deviceModel
      */
-    protected $deviceModel;
+    protected ?string $deviceModel;
 
     /**
      * @ORM\Column(name="isMobile", type="string", columnDefinition="ENUM('yes', 'no')")
      * @var string|null $isMobile
      */
-    protected $isMobile;
+    protected ?string $isMobile;
 
     /**
      * @ORM\Column(name="osName", type="string", length=20)
      * @var string|null $osName
      */
-    protected $osName;
+    protected ?string $osName;
 
     /**
      * @ORM\Column(name="osVersion", type="string", length=20)
      * @var string|null $osVersion
      */
-    protected $osVersion;
+    protected ?string $osVersion;
 
     /**
      * @ORM\Column(name="osPlatform", type="string", length=20)
      * @var string|null $osPlatform
      */
-    protected $osPlatform;
+    protected ?string $osPlatform;
 
     /**
      * @ORM\Column(name="clientType", type="string", length=20)
      * @var string|null $clientType
      */
-    protected $clientType;
+    protected ?string $clientType;
 
     /**
      * @ORM\Column(name="clientName", type="string", length=40)
      * @var string|null $clientName
      */
-    protected $clientName;
+    protected ?string $clientName;
 
     /**
      * @ORM\Column(name="clientEngine", type="string", length=20)
      * @var string|null $clientEngine
      */
-    protected $clientEngine;
+    protected ?string $clientEngine;
 
     /**
      * @ORM\Column(name="clientVersion", type="string", length=20)
      * @var string|null $clientVersion
      */
-    protected $clientVersion;
+    protected ?string $clientVersion;
 
     /**
      * @ORM\Column(name="loginStatus", type="string", columnDefinition="ENUM('success', 'fail')")
      * @var string|null $loginStatus
      */
-    protected $loginStatus;
+    protected ?string $loginStatus;
 
     /**
      * @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true)
@@ -141,9 +141,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string $adminIp
-     * @return $this
+     * @return self
      */
-    public function setAdminIp(string $adminIp)
+    public function setAdminIp(string $adminIp): self
     {
         $this->adminIp = $adminIp;
 
@@ -151,7 +151,7 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCountry(): ?string
     {
@@ -160,9 +160,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string $country
-     * @return $this
+     * @return self
      */
-    public function setCountry(string $country)
+    public function setCountry(string $country): self
     {
         $this->country = $country;
 
@@ -170,7 +170,7 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getContinent(): ?string
     {
@@ -179,9 +179,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string $continent
-     * @return $this
+     * @return self
      */
-    public function setContinent(string $continent)
+    public function setContinent(string $continent): self
     {
         $this->continent = $continent;
 
@@ -189,7 +189,7 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getOrganization(): ?string
     {
@@ -198,9 +198,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string $organization
-     * @return $this
+     * @return self
      */
-    public function setOrganization(string $organization)
+    public function setOrganization(string $organization): self
     {
         $this->organization = $organization;
 
@@ -217,9 +217,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $deviceType
-     * @return $this
+     * @return self
      */
-    public function setDeviceType(?string $deviceType)
+    public function setDeviceType(?string $deviceType): self
     {
         $this->deviceType = $deviceType;
 
@@ -236,9 +236,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $deviceBrand
-     * @return $this
+     * @return self
      */
-    public function setDeviceBrand(?string $deviceBrand)
+    public function setDeviceBrand(?string $deviceBrand): self
     {
         $this->deviceBrand = $deviceBrand;
 
@@ -255,9 +255,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $deviceModel
-     * @return $this
+     * @return self
      */
-    public function setDeviceModel(?string $deviceModel)
+    public function setDeviceModel(?string $deviceModel): self
     {
         $this->deviceModel = $deviceModel;
 
@@ -274,9 +274,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $isMobile
-     * @return $this
+     * @return self
      */
-    public function setIsMobile(?string $isMobile)
+    public function setIsMobile(?string $isMobile): self
     {
         $this->isMobile = $isMobile;
 
@@ -293,9 +293,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $osName
-     * @return $this
+     * @return self
      */
-    public function setOsName(?string $osName)
+    public function setOsName(?string $osName): self
     {
         $this->osName = $osName;
 
@@ -312,9 +312,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $osVersion
-     * @return $this
+     * @return self
      */
-    public function setOsVersion(?string $osVersion)
+    public function setOsVersion(?string $osVersion): self
     {
         $this->osVersion = $osVersion;
 
@@ -331,9 +331,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $osPlatform
-     * @return $this
+     * @return self
      */
-    public function setOsPlatform(?string $osPlatform)
+    public function setOsPlatform(?string $osPlatform): self
     {
         $this->osPlatform = $osPlatform;
 
@@ -350,9 +350,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $clientType
-     * @return $this
+     * @return self
      */
-    public function setClientType(?string $clientType)
+    public function setClientType(?string $clientType): self
     {
         $this->clientType = $clientType;
 
@@ -369,9 +369,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $clientName
-     * @return $this
+     * @return self
      */
-    public function setClientName(?string $clientName)
+    public function setClientName(?string $clientName): self
     {
         $this->clientName = $clientName;
 
@@ -388,9 +388,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $clientEngine
-     * @return $this
+     * @return self
      */
-    public function setClientEngine(?string $clientEngine)
+    public function setClientEngine(?string $clientEngine): self
     {
         $this->clientEngine = $clientEngine;
 
@@ -407,9 +407,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $clientVersion
-     * @return $this
+     * @return self
      */
-    public function setClientVersion(?string $clientVersion)
+    public function setClientVersion(?string $clientVersion): self
     {
         $this->clientVersion = $clientVersion;
 
@@ -426,8 +426,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string|null $loginStatus
+     * @return $this
      */
-    public function setLoginStatus(?string $loginStatus)
+    public function setLoginStatus(?string $loginStatus): self
     {
         $this->loginStatus = $loginStatus;
 
@@ -435,7 +436,7 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIdentity(): ?string
     {
@@ -444,8 +445,9 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @param string $identity
+     * @return self
      */
-    public function setIdentity(string $identity)
+    public function setIdentity(string $identity): self
     {
         $this->identity = $identity;
 
