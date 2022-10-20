@@ -2,36 +2,18 @@
 
 declare(strict_types=1);
 
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Doctrine\Migrations\Configuration\Configuration;
-use Doctrine\Migrations\Tools\Console\Helper\ConfigurationHelper;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\Migrations\Configuration\Migration\PhpFile;
+use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Symfony\Component\Console\Helper\HelperSet;
 
 $container = require __DIR__ . '/container.php';
 
-try {
-    $connection = DriverManager::getConnection($container->get('config')['databases']['default'] ?? null);
-} catch (Exception $exception) {
-    exit($exception->getMessage());
-}
+$config = new PhpFile('config/migrations.php');
 
-$configuration = new Configuration($connection);
-$configuration->setCheckDatabasePlatform(false);
-$configuration->setName('DotKernel4 Frontend Migrations');
-$configuration->setMigrationsNamespace('DotKernel4\Frontend\Migrations');
-$configuration->setMigrationsTableName('migrations');
-$configuration->setMigrationsColumnName('version');
-$configuration->setMigrationsColumnLength(14);
-$configuration->setMigrationsExecutedAtColumnName('executedAt');
-$configuration->setMigrationsDirectory('data/doctrine/migrations');
-$configuration->setAllOrNothing(true);
+$entityManager = $container->get(EntityManager::class);
 
-$helperSet = new HelperSet();
-$helperSet->set((new EntityManagerHelper($container->get(EntityManager::class))), 'em');
-$helperSet->set((new ConnectionHelper($connection)), 'db');
-$helperSet->set((new ConfigurationHelper($connection, $configuration)));
+// register enum type for doctrine
+$entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 
-return $helperSet;
+return DependencyFactory::fromEntityManager($config, new ExistingEntityManager($entityManager));

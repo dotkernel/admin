@@ -2,38 +2,23 @@
 
 declare(strict_types=1);
 
-// Load configuration
-$container = require __DIR__ . '/container.php';
-$config = $container->get('config');
-
-$dbConfig = [
-    'adapter' => 'mysql',
-    'host' => $config['databases']['default']['host'],
-    'name' => $config['databases']['default']['dbname'],
-    'user' => $config['databases']['default']['user'],
-    'pass' => $config['databases']['default']['password'],
-    'port' => $config['databases']['default']['port'],
-    'charset' => $config['databases']['default']['charset'],
-];
-
 return [
-    'environments' => [
-        'default_migration_table' => 'migrations',
-        'default_database' =>  'development',
-
-        'production' => $dbConfig,
-        'development' => $dbConfig,
-        'testing' => $dbConfig,
+    'table_storage' => [
+        'table_name' => 'migrations',
+        'version_column_name' => 'version',
+        'version_column_length' => 191,
+        'executed_at_column_name' => 'executed_at',
+        'execution_time_column_name' => 'execution_time',
     ],
 
-    'paths' => [
-        'migrations' => 'data/database/migrations',
-        'seeds' =>  [
-            'Data\\Database\\Seeds' => 'data/database/seeds'
-        ]
+    'migrations_paths' => [
+        'Admin\Migrations' => getcwd() . '/data/doctrine/migrations',
     ],
 
-    'foreign_keys' => false,
-
-    'version_order' => 'creation',
+    'all_or_nothing' => true,
+    'transactional' => true,
+    'check_database_platform' => true,
+    'organize_migrations' => 'none',
+    'connection' => null,
+    'em' => null,
 ];
