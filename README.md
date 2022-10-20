@@ -99,8 +99,8 @@ Just like for `II Installing DotKernel admin using composer` (see above), the se
 Run the migrations and seeds with these commands:
 
 ```bash
-php vendor/bin/phinx migrate --configuration="config/migrations.php"
-php vendor/bin/phinx seed:run --configuration="config/migrations.php"
+php bin/doctrine-migrations migrate
+php bin/doctrine fixtures:execute
 ```
 - If you use `composer create-project`, the project will go into development mode automatically after installing. The development mode status can be checked and toggled by using these composer commands
 
