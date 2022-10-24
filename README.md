@@ -9,7 +9,7 @@ Dotkernel web starter package suitable for admin applications.
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/admin)](https://github.com/dotkernel/admin/stargazers)
 [![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/3.0/LICENSE.md)
 
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.0.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.0.1)
 
 
 # Installing DotKernel `admin`
