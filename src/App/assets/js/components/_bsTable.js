@@ -43,9 +43,18 @@ $( document ).ready(function(){
         $('#formModal').modal('handleUpdate');
         $("#loading").modal({backdrop:false,show:true});
 
-        $.post($("#ajaxForm").attr('action'), $("#ajaxForm").serialize())
+        let form = $("#ajaxForm");
+        let formData = new FormData(document.querySelector("#ajaxForm"));
+
+        $.ajax({
+            url: form.attr('action'),
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: form.attr('method')
+        })
             .done(function (data) {
-                if (data.success == 'success') {
+                if (data.success === 'success') {
                     $("#loading").modal('hide');
                     $("#formMessages").html('<div class="alert alert-success alert-dismissible" ' +
                         'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
