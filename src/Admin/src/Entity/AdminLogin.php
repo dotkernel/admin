@@ -22,43 +22,43 @@ class AdminLogin extends AbstractEntity
     public const LOGIN_FAIL = 'fail';
 
     /**
-     * @ORM\Column(name="adminIp", type="string", length=50, nullable=false, unique=true)
+     * @ORM\Column(name="adminIp", type="string", length=50, nullable=true)
      * @var string $adminIp
      */
     protected string $adminIp;
 
     /**
-     * @ORM\Column(name="country", type="string", length=50)
+     * @ORM\Column(name="country", type="string", length=50, nullable=true)
      * @var string $country
      */
     protected string $country;
 
     /**
-     * @ORM\Column(name="continent", type="string", length=50)
+     * @ORM\Column(name="continent", type="string", length=50, nullable=true)
      * @var string $continent
      */
     protected string $continent;
 
     /**
-     * @ORM\Column(name="organization", type="string", length=50)
+     * @ORM\Column(name="organization", type="string", length=50, nullable=true)
      * @var string $organization
      */
     protected string $organization;
 
     /**
-     * @ORM\Column(name="deviceType", type="string", length=20)
+     * @ORM\Column(name="deviceType", type="string", length=20, nullable=true)
      * @var string|null $deviceType
      */
     protected ?string $deviceType;
 
     /**
-     * @ORM\Column(name="deviceBrand", type="string", length=20)
+     * @ORM\Column(name="deviceBrand", type="string", length=20, nullable=true)
      * @var string|null $deviceBrand
      */
     protected ?string $deviceBrand;
 
     /**
-     * @ORM\Column(name="deviceModel", type="string", length=40)
+     * @ORM\Column(name="deviceModel", type="string", length=40, nullable=true)
      * @var string|null $deviceModel
      */
     protected ?string $deviceModel;
@@ -70,43 +70,43 @@ class AdminLogin extends AbstractEntity
     protected ?string $isMobile;
 
     /**
-     * @ORM\Column(name="osName", type="string", length=20)
+     * @ORM\Column(name="osName", type="string", length=20, nullable=true)
      * @var string|null $osName
      */
     protected ?string $osName;
 
     /**
-     * @ORM\Column(name="osVersion", type="string", length=20)
+     * @ORM\Column(name="osVersion", type="string", length=20, nullable=true)
      * @var string|null $osVersion
      */
     protected ?string $osVersion;
 
     /**
-     * @ORM\Column(name="osPlatform", type="string", length=20)
+     * @ORM\Column(name="osPlatform", type="string", length=20, nullable=true)
      * @var string|null $osPlatform
      */
     protected ?string $osPlatform;
 
     /**
-     * @ORM\Column(name="clientType", type="string", length=20)
+     * @ORM\Column(name="clientType", type="string", length=20, nullable=true)
      * @var string|null $clientType
      */
     protected ?string $clientType;
 
     /**
-     * @ORM\Column(name="clientName", type="string", length=40)
+     * @ORM\Column(name="clientName", type="string", length=40, nullable=true)
      * @var string|null $clientName
      */
     protected ?string $clientName;
 
     /**
-     * @ORM\Column(name="clientEngine", type="string", length=20)
+     * @ORM\Column(name="clientEngine", type="string", length=20, nullable=true)
      * @var string|null $clientEngine
      */
     protected ?string $clientEngine;
 
     /**
-     * @ORM\Column(name="clientVersion", type="string", length=20)
+     * @ORM\Column(name="clientVersion", type="string", length=20, nullable=true)
      * @var string|null $clientVersion
      */
     protected ?string $clientVersion;
@@ -118,7 +118,7 @@ class AdminLogin extends AbstractEntity
     protected ?string $loginStatus;
 
     /**
-     * @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true)
+     * @ORM\Column(name="identity", type="string", length=100)
      * @var string $identity
      */
     protected string $identity;
