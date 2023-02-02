@@ -3,11 +3,11 @@
 ## Supported Versions
 
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 4.x     | :white_check_mark: |
-| 3.x     | :white_check_mark: |
-| <= 2.0  | :x:                |
+| Version | Supported          | PHP Version |
+| ------- | ------------------ |-------------|
+| 4.x     | :white_check_mark: |![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.0.1)|
+| 3.x     | :white_check_mark: |![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.0.x-dev)|
+| <= 2.0  | :x:                |             |
 
 
 ## Reporting Potential Security Issues
