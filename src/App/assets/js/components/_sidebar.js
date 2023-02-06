@@ -7,8 +7,6 @@ $(document).ready(function() {
     sideslider.click(function (event) {
         $(sel).toggleClass('in');
         $(sel2).toggleClass('out');
-
-        console.log('test');
     });
 
     // on refresh close any submenu
@@ -20,8 +18,6 @@ $(document).ready(function() {
     // Menu Toggle Right-Left Script
     $("#left-menu-toggle").click(function (e) {
         e.preventDefault();
-
-        console.log('test');
 
         $(".main-content").toggleClass("toggled");
         $("#sidebar-collapse").toggleClass("sideRightIn sideRightOut");
