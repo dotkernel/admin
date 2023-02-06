@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Dot\ErrorHandler\ErrorHandlerInterface;
+use Dot\Session\SessionMiddleware;
 use Mezzio\Application;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
@@ -29,6 +30,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // all Exceptions.
     $app->pipe(ErrorHandlerInterface::class);
     $app->pipe(ServerUrlMiddleware::class);
+    $app->pipe(SessionMiddleware::class);
     $app->pipe(CorsMiddleware::class);
 
     // Pipe more middleware here that you want to execute on every request:
