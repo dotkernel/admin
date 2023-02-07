@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Frontend\Admin\Authentication;
 
 use Laminas\Authentication\AuthenticationService;
-use Laminas\Authentication\Storage\Session;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -22,7 +21,6 @@ class AuthenticationServiceFactory
     {
         /** @var AuthenticationAdapter $authAdapter */
         $authAdapter = $container->get(AuthenticationAdapter::class);
-        $session = new Session();
-        return new AuthenticationService($session, $authAdapter);
+        return new AuthenticationService(null, $authAdapter);
     }
 }
