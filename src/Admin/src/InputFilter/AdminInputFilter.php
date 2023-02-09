@@ -11,6 +11,7 @@ use Laminas\Validator\InArray;
 /**
  * Class AdminInputFilter
  * @package Frontend\Admin\InputFilter
+ * @psalm-suppress InvalidArgument
  */
 class AdminInputFilter extends InputFilter
 {

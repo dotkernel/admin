@@ -15,6 +15,7 @@ use Laminas\InputFilter\InputFilter;
 /**
  * Class LoginInputFilter
  * @package Frontend\Admin\InputFilter
+ * @psalm-suppress InvalidArgument
  */
 class LoginInputFilter extends InputFilter
 {

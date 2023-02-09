@@ -9,6 +9,7 @@ use Laminas\InputFilter\InputFilter;
 /**
  * Class RoleInputFilter
  * @package Frontend\Admin\InputFilter
+ * @psalm-suppress InvalidArgument
  */
 class RoleInputFilter extends InputFilter
 {
