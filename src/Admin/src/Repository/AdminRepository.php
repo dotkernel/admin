@@ -6,8 +6,6 @@ namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Frontend\App\Repository\AbstractRepository;
 use Frontend\Admin\Entity\Admin;

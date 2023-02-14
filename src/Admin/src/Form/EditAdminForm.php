@@ -16,7 +16,6 @@ use Laminas\InputFilter\InputFilterInterface;
 class EditAdminForm extends Form
 {
     protected InputFilterInterface $inputFilter;
-
     protected array $roles = [];
 
     /**

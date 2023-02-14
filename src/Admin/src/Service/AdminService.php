@@ -31,19 +31,10 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
  */
 class AdminService implements AdminServiceInterface
 {
-    /** @var EntityManager $em */
     protected EntityManager $em;
-
-    /** @var AdminRepository $adminRepository */
     protected AdminRepository $adminRepository;
-
-    /** @var AdminRoleRepository $adminRoleRepository */
     protected AdminRoleRepository $adminRoleRepository;
-
-    /** @var LocationServiceInterface $locationService */
     protected LocationServiceInterface $locationService;
-
-    /** @var DeviceServiceInterface $deviceService */
     protected DeviceServiceInterface $deviceService;
 
     /**
@@ -53,8 +44,12 @@ class AdminService implements AdminServiceInterface
      * @param DeviceServiceInterface $deviceService
      * @param int $cacheLifetime
      *
-     * @Inject({EntityManager::class, LocationServiceInterface::class, DeviceServiceInterface::class,
-     *      "config.resultCacheLifetime"})
+     * @Inject({
+     *     EntityManager::class,
+     *     LocationServiceInterface::class,
+     *     DeviceServiceInterface::class,
+     *     "config.resultCacheLifetime"
+     * })
      */
     public function __construct(
         EntityManager $em,
@@ -62,7 +57,6 @@ class AdminService implements AdminServiceInterface
         DeviceServiceInterface $deviceService,
         int $cacheLifetime
     ) {
-
         $this->em = $em;
         $this->adminRepository = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);

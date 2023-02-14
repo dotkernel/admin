@@ -9,9 +9,10 @@ namespace Frontend\App\Service;
 class IpService
 {
     /**
-     * @return mixed
+     * @param array $server
+     * @return array|false|mixed|string
      */
-    public static function getUserIp(array $server)
+    public static function getUserIp(array $server): mixed
     {
         if (!empty($server)) {
             // check if HTTP_X_FORWARDED_FOR is public network IP
@@ -39,10 +40,10 @@ class IpService
     }
 
     /**
-     * @param mixed $ip
+     * @param $ip
      * @return false|string
      */
-    public static function validIp($ip)
+    public static function validIp($ip): bool|string
     {
         // special cases that return private are the loopback address and IPv6 addresses
         if ($ip == '127.0.0.1' || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {

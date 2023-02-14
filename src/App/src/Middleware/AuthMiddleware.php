@@ -23,15 +23,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AuthMiddleware implements MiddlewareInterface
 {
     protected RouterInterface $router;
-
     protected FlashMessenger $messenger;
-
     protected GuardsProviderInterface $guardProvider;
-
     protected RbacGuardOptions $options;
 
     /**
-     * IdentityMiddleware constructor.
+     * AuthMiddleware constructor.
      * @param RouterInterface $router
      * @param FlashMessenger $messenger
      * @param GuardsProviderInterface $guardProvider

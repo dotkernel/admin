@@ -81,8 +81,7 @@ class AdminInputFilter extends InputFilter
         $firstName->setRequired(false);
         $firstName->getFilterChain()->attachByName(StringTrim::class);
         $firstName->getValidatorChain()->attachByName(NotEmpty::class);
-        $firstName->getValidatorChain()->attachByName(StringLength::class);
-        $firstName->getFilterChain()->attachByName(StringLength::class, [
+        $firstName->getValidatorChain()->attachByName(StringLength::class, [
             'max' => 150,
             'message' => '<b>FirstName</b> must max 150 characters',
         ]);

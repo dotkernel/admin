@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Controller;
 
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -21,11 +23,13 @@ use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
 use Frontend\Admin\Service\AdminService;
+use GeoIp2\Exception\AddressNotFoundException;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -37,25 +41,12 @@ use Throwable;
  */
 class AdminController extends AbstractActionController
 {
-    /** @var RouterInterface $router */
     protected RouterInterface $router;
-
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
-
-    /** @var AdminService $adminService */
     protected AdminService $adminService;
-
-    /** @var AuthenticationServiceInterface|AuthenticationService $authenticationService */
-    protected AuthenticationServiceInterface $authenticationService;
-
-    /** @var FlashMessenger $messenger */
+    protected AuthenticationService|AuthenticationServiceInterface $authenticationService;
     protected FlashMessenger $messenger;
-
-    /** @var FormsPlugin $forms */
     protected FormsPlugin $forms;
-
-    /** @var AdminForm $adminForm */
     protected AdminForm $adminForm;
 
     /**
@@ -63,19 +54,26 @@ class AdminController extends AbstractActionController
      * @param AdminService $adminService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
-     * @param AuthenticationService $authenticationService
+     * @param AuthenticationServiceInterface $authenticationService
      * @param FlashMessenger $messenger
      * @param FormsPlugin $forms
      * @param AdminForm $adminForm
      *
-     * @Inject({AdminService::class, RouterInterface::class, TemplateRendererInterface::class,
-     *     AuthenticationService::class, FlashMessenger::class, FormsPlugin::class, AdminForm::class})
+     * @Inject({
+     *     AdminService::class,
+     *     RouterInterface::class,
+     *     TemplateRendererInterface::class,
+     *     AuthenticationServiceInterface::class,
+     *     FlashMessenger::class,
+     *     FormsPlugin::class,
+     *     AdminForm::class
+     * })
      */
     public function __construct(
         AdminService $adminService,
         RouterInterface $router,
         TemplateRendererInterface $template,
-        AuthenticationService $authenticationService,
+        AuthenticationServiceInterface $authenticationService,
         FlashMessenger $messenger,
         FormsPlugin $forms,
         AdminForm $adminForm
@@ -229,10 +227,10 @@ class AdminController extends AbstractActionController
 
     /**
      * @return ResponseInterface
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \GeoIp2\Exception\AddressNotFoundException
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws AddressNotFoundException
+     * @throws InvalidDatabaseException
      */
     public function loginAction(): ResponseInterface
     {

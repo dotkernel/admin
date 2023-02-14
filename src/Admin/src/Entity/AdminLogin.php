@@ -9,7 +9,7 @@ use Frontend\App\Entity\AbstractEntity;
 
 /**
  * Class AdminLogin
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminLoginsRepository")
+ * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminLoginRepository")
  * @ORM\Table(name="admin_login")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\Admin\Entity
@@ -124,7 +124,7 @@ class AdminLogin extends AbstractEntity
     protected string $identity;
 
     /**
-     * Admin constructor.
+     * AdminLogin constructor.
      */
     public function __construct()
     {

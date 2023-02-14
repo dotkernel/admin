@@ -12,8 +12,6 @@ use Frontend\Admin\Repository\AdminRepository;
 /**
  * Class AdminService
  * @package Frontend\Admin\Service
- *
- * @Service
  */
 interface AdminServiceInterface
 {

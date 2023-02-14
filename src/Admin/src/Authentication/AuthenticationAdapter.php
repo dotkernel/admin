@@ -15,15 +15,11 @@ use Laminas\Authentication\Result;
 
 class AuthenticationAdapter implements AdapterInterface
 {
+    private EntityManager $entityManager;
     private const METHOD_NOT_EXISTS = "Method %s not found in %s .";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
-
     private string $identity;
-
     private string $credential;
-
-    private EntityManager $entityManager;
-
     private array $config = [];
 
     /**
@@ -31,7 +27,10 @@ class AuthenticationAdapter implements AdapterInterface
      * @param EntityManager $entityManager
      * @param array $config
      *
-     * @Inject({EntityManager::class, "config.doctrine.authentication"})
+     * @Inject({
+     *     EntityManager::class,
+     *     "config.doctrine.authentication"
+     * })
      */
     public function __construct(EntityManager $entityManager, array $config)
     {

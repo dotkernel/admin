@@ -28,9 +28,7 @@ use Psr\Container\NotFoundExceptionInterface;
 class FormsPlugin implements PluginInterface
 {
     protected FormElementManager $formElementManager;
-
     protected ContainerInterface $container;
-
     protected ?FlashMessengerInterface $flashMessenger;
 
     /**
@@ -39,8 +37,7 @@ class FormsPlugin implements PluginInterface
      * @param ContainerInterface $container
      * @param FlashMessengerInterface|null $flashMessenger
      */
-    public function __construct
-    (
+    public function __construct(
         FormElementManager $formManager,
         ContainerInterface $container,
         FlashMessengerInterface $flashMessenger = null
