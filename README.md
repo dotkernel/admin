@@ -242,8 +242,20 @@ You should see the `DotKernel admin` login page.
 
 If you ran the migrations you will have an admin user in the database with the following credentials:
 
-- User: admin
-- Password: dotadmin
+- **User**: `admin`
+- **Password**: `dotadmin`
 
 **NOTE:**
-Make sure you modify the default admin credentials on the `production` environment.
+- **Production only**: Make sure you modify the default admin credentials.
+- **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
+```php
+# other code
+
+return [
+    # other configurations...
+    'session_config' => [
+        'cookie_secure' => false,
+    ],
+];
+```
+Do not change this in `local.php.dist` as well because this value should remain `true` on production.

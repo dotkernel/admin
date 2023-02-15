@@ -56,7 +56,7 @@
         "dotkernel/dot-mail": "~3.4 || ~4.0",
         "dotkernel/dot-navigation": "^3.2.0",
         "dotkernel/dot-rbac-guard": "^3.2.1",
-        "dotkernel/dot-session": "^4.3.0",
+        "dotkernel/dot-session": "^5.2.0",
         "dotkernel/dot-twigrenderer": "^3.2.1",
         "dotkernel/dot-user-agent-sniffer": "^3.1.1",
         "dotkernel/dot-data-fixtures": "^1.0",
