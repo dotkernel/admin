@@ -50,22 +50,4 @@ return [
             ]
         ],
     ],
-    'translator' => [
-        'cookie' => [
-            'name' => 'dk30Translator',
-            'lifetime' => 3600 * 24 * 30,
-            'samesite' => 'Lax',
-            'secure' => true,
-            'httponly' => true,
-        ],
-
-        'default' => 'en',
-        'locale' => [
-            'en' => 'en_EN',
-            'dk' => 'da_DK',
-        ],
-        'code_set' => 'UTF-8',
-        'domain' => 'messages',
-        'base_dir' => getcwd() . '/data/language',
-    ],
 ];
