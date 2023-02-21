@@ -6,6 +6,7 @@ namespace Frontend\App\Common;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * Trait TimestampAwareTrait
@@ -17,13 +18,11 @@ trait TimestampAwareTrait
 
     /**
      * @ORM\Column(name="created", type="datetime_immutable")
-     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeImmutable $created = null;
+    protected DateTimeImmutable $created;
 
     /**
      * @ORM\Column(name="updated", type="datetime_immutable", nullable=true)
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updated = null;
 
@@ -38,23 +37,20 @@ trait TimestampAwareTrait
     }
 
     /**
-     * @return DateTimeImmutable|null
+     * @return DateTimeImmutable
      */
-    public function getCreated(): ?DateTimeImmutable
+    public function getCreated(): DateTimeImmutable
     {
         return $this->created;
     }
 
     /**
-     * @return null|string
+     * @param string|null $dateFormat
+     * @return string
      */
-    public function getCreatedFormatted(): ?string
+    public function getCreatedFormatted(?string $dateFormat = null): string
     {
-        if ($this->created instanceof DateTimeImmutable) {
-            return $this->created->format($this->dateFormat);
-        }
-
-        return null;
+        return $this->created->format($dateFormat ?? $this->dateFormat);
     }
 
     /**
@@ -66,15 +62,12 @@ trait TimestampAwareTrait
     }
 
     /**
-     * @return null|string
+     * @param string|null $dateFormat
+     * @return string|null
      */
-    public function getUpdatedFormatted(): ?string
+    public function getUpdatedFormatted(?string $dateFormat = null): ?string
     {
-        if ($this->updated instanceof DateTimeImmutable) {
-            return $this->updated->format($this->dateFormat);
-        }
-
-        return null;
+        return $this->updated?->format($dateFormat ?? $this->dateFormat);
     }
 
     /**
@@ -87,16 +80,14 @@ trait TimestampAwareTrait
     }
 
     /**
-     * @return self
+     * @return void
      */
-    public function touch(): self
+    public function touch(): void
     {
-        if (!($this->created instanceof DateTimeImmutable)) {
-            $this->created = new DateTimeImmutable();
+        try {
+            $this->updated = new DateTimeImmutable();
+        } catch (Exception) {
+            #TODO save the error message
         }
-
-        $this->updated = new DateTimeImmutable();
-
-        return $this;
     }
 }

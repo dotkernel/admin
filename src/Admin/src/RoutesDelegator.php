@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\Admin;
 
 use Fig\Http\Message\RequestMethodInterface;
@@ -19,7 +21,7 @@ class RoutesDelegator
      * @param callable $callback
      * @return Application
      */
-    public function __invoke(ContainerInterface $container, $serviceName, callable $callback)
+    public function __invoke(ContainerInterface $container, $serviceName, callable $callback): Application
     {
         /** @var Application $app */
         $app = $callback();

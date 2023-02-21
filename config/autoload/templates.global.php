@@ -21,7 +21,7 @@ return [
     ],
     'debug' => false,
     'templates' => [
-        'extension' => 'html.twig'
+        'extension' => 'html.twig',
     ],
     'twig' => [
         'assets_url' => '/',
@@ -37,7 +37,7 @@ return [
         'runtime_loaders' => [],
         //'timezone' => '',
         'globals' => [
-            'appName' => $app['name']
+            'appName' => $app['name'],
         ],
     ]
 ];

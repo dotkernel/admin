@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see https://github.com/dotkernel/frontend/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
- */
-
 declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
@@ -18,15 +12,16 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
 /**
- * Class RegisterInputFilter
+ * Class ChangePasswordInputFilter
  * @package Frontend\Admin\InputFilter
  */
 class ChangePasswordInputFilter extends InputFilter
 {
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $currentPassword = new Input('currentPassword');
         $currentPassword->setRequired(true);
         $currentPassword->getFilterChain()->attach(StringTrim::class);
@@ -34,7 +29,6 @@ class ChangePasswordInputFilter extends InputFilter
             'break_chain_on_failure' => true,
             'message' => '<b>Current Password</b> is required and cannot be empty',
         ]);
-
         $this->add($currentPassword);
 
         $password = new Input('password');
@@ -49,7 +43,6 @@ class ChangePasswordInputFilter extends InputFilter
             'max' => 150,
             'message' => '<b>Password</b> must have between 8 and 150 characters',
         ]);
-
         $this->add($password);
 
         $passwordConfirm = new Input('passwordConfirm');
@@ -59,7 +52,6 @@ class ChangePasswordInputFilter extends InputFilter
             'token' => 'password',
             'message' => '<b>Password confirm</b> does not match',
         ]);
-
         $this->add($passwordConfirm);
     }
 }

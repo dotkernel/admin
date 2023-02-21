@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\App\Service;
 
 /**
  * Class AdminService
- * @package Frontend\Admin\Service
+ * @package Frontend\App\Service
  */
 class IpService
 {

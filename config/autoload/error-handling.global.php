@@ -8,7 +8,7 @@ use Laminas\Log\Logger;
 return [
     'dot-errorhandler' => [
         'loggerEnabled' => true,
-        'logger' => 'dot-log.default_logger'
+        'logger' => 'dot-log.default_logger',
     ],
     'dot_log' => [
         'loggers' => [

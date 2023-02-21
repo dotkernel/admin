@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontend\Admin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Admin
+ * Interface AdminInterface
  * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminRepository")
  * @ORM\Table(name="admin")
  * @ORM\HasLifecycleCallbacks()
@@ -26,8 +28,31 @@ interface AdminInterface
 
     /**
      * @param string $identity
+     * @return self
      */
-    public function setIdentity(string $identity): void;
+    public function setIdentity(string $identity): self;
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string;
+
+    /**
+     * @param string $firstName
+     * @return self
+     */
+    public function setFirstName(string $firstName): self;
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string;
+
+    /**
+     * @param string $lastName
+     * @return self
+     */
+    public function setLastName(string $lastName): self;
 
     /**
      * @return string
@@ -36,8 +61,9 @@ interface AdminInterface
 
     /**
      * @param string $password
+     * @return self
      */
-    public function setPassword(string $password): void;
+    public function setPassword(string $password): self;
 
     /**
      * @return string
@@ -46,28 +72,30 @@ interface AdminInterface
 
     /**
      * @param string $status
+     * @return self
      */
-    public function setStatus(string $status): void;
+    public function setStatus(string $status): self;
 
     /**
-     * @return array|mixed
+     * @return array
      */
     public function getRoles(): array;
 
     /**
      * @param ArrayCollection $roles
+     * @return self
      */
-    public function setRoles(ArrayCollection $roles): void;
+    public function setRoles(ArrayCollection $roles): self;
 
     /**
      * @param AdminRole $role
-     * @return AdminInterface
+     * @return self
      */
-    public function addRole(AdminRole $role): AdminInterface;
+    public function addRole(AdminRole $role): self;
 
     /**
      * @param AdminRole $role
-     * @return AdminInterface
+     * @return self
      */
-    public function removeRole(AdminRole $role): AdminInterface;
+    public function removeRole(AdminRole $role): self;
 }

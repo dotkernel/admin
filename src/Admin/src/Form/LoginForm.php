@@ -34,10 +34,11 @@ class LoginForm extends Form
         $this->inputFilter->init();
     }
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $this->add([
             'name' => 'username',
             'options' => [

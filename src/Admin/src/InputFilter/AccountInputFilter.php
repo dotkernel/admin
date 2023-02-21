@@ -17,10 +17,11 @@ use Laminas\Validator\StringLength;
  */
 class AccountInputFilter extends InputFilter
 {
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $identity = new Input('identity');
         $identity->setRequired(true);
         $identity->getFilterChain()->attachByName(StringTrim::class);
@@ -39,7 +40,6 @@ class AccountInputFilter extends InputFilter
             'pattern' => '/^[a-zA-Z0-9-_.]+$/',
             'message' => '<b>Identity</b> contains invalid characters',
         ]);
-
         $this->add($identity);
 
         $firstName = new Input('firstName');
@@ -50,7 +50,6 @@ class AccountInputFilter extends InputFilter
             'max' => 150,
             'message' => '<b>First name</b> must be max 150 characters long.',
         ]);
-
         $this->add($firstName);
 
         $lastName = new Input('lastName');
@@ -61,7 +60,6 @@ class AccountInputFilter extends InputFilter
             'max' => 150,
             'message' => '<b>Last name</b> must be max 150 characters long.',
         ]);
-
         $this->add($lastName);
     }
 }

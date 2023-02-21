@@ -10,7 +10,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 
 /**
- * Class EditEditAdminForm
+ * Class EditAdminForm
  * @package Frontend\Admin\Form
  */
 class EditAdminForm extends Form
@@ -50,10 +50,11 @@ class EditAdminForm extends Form
         ]);
     }
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $this->add([
             'name' => 'identity',
             'type' => 'text',

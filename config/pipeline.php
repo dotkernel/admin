@@ -16,7 +16,6 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Psr\Container\ContainerInterface;
-use Frontend\App\Middleware\TranslatorMiddleware;
 use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
 use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
 use Frontend\App\Middleware\AuthMiddleware;
@@ -25,7 +24,7 @@ use Dot\Navigation\NavigationMiddleware;
 /**
  * Setup middleware pipeline:
  */
-return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
+return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
     $app->pipe(ErrorHandlerInterface::class);
@@ -55,8 +54,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // This middleware registers the Mezzio\Router\RouteResult request attribute.
     $app->pipe(RouteMiddleware::class);
 
-
-
     // The following handle routing failures for common conditions:
     // - HEAD request but no routes answer that method
     // - OPTIONS request but no routes answer that method
@@ -81,7 +78,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(ForbiddenHandler::class);
     $app->pipe(RbacGuardMiddleware::class);
     $app->pipe(NavigationMiddleware::class);
-
 
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);

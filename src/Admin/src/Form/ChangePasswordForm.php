@@ -16,6 +16,10 @@ class ChangePasswordForm extends Form
 {
     protected InputFilterInterface $inputFilter;
 
+    /**
+     * @param $name
+     * @param array $options
+     */
     public function __construct($name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -26,10 +30,11 @@ class ChangePasswordForm extends Form
         $this->inputFilter->init();
     }
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $this->add([
             'name' => 'currentPassword',
             'type' => 'Password',

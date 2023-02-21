@@ -24,17 +24,17 @@ return [
                                 [
                                     'route' => 'admin',
                                     'actions' => ['login'],
-                                    'permissions' => ['*']
+                                    'permissions' => ['*'],
                                 ],
                                 [
                                     'route' => 'admin',
                                     'actions' => [],
-                                    'permissions' => ['authenticated']
+                                    'permissions' => ['authenticated'],
                                 ],
                                 [
                                     'route' => 'dashboard',
                                     'actions' => [],
-                                    'permissions' => ['authenticated']
+                                    'permissions' => ['authenticated'],
                                 ],
                             ],
                         ]

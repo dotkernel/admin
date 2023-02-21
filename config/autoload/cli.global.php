@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Dot\Cli\Command\DemoCommand;
 use Dot\Cli\FileLockerInterface;
 
-/**
- * Documentation: https://docs.laminas.dev/laminas-cli/
- */
 return [
+    /**
+     * Documentation: https://docs.laminas.dev/laminas-cli/
+     */
     'dot_cli' => [
         'version' => '1.0.0',
         'name' => 'DotKernel CLI',

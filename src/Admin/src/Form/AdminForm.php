@@ -51,10 +51,11 @@ class AdminForm extends Form
         ]);
     }
 
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $this->add([
             'name' => 'identity',
             'type' => 'text',

@@ -25,7 +25,6 @@ class AdminRole extends AbstractEntity
 
     /**
      * @ORM\Column(name="name", type="string", length=30, nullable=false, unique=true)
-     * @var string $name
      */
     protected string $name;
 
@@ -65,7 +64,7 @@ class AdminRole extends AbstractEntity
             'uuid' => $this->getUuid()->toString(),
             'name' => $this->getName(),
             'created' => $this->getCreated(),
-            'updated' => $this->getUpdated()
+            'updated' => $this->getUpdated(),
         ];
     }
 }
