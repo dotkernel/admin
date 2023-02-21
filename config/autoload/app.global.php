@@ -6,9 +6,9 @@ $baseUrl = 'http://localhost:8080';
 
 $app = [
     'name' => 'DotKernel Admin V4',
-    'url' => $baseUrl
+    'url' => $baseUrl,
 ];
 
 return [
-    'app' => $app
+    'app' => $app,
 ];

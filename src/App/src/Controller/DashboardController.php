@@ -20,9 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 class DashboardController extends AbstractActionController
 {
     protected RouterInterface $router;
-
     protected TemplateRendererInterface $template;
-
     protected AuthenticationServiceInterface $authenticationService;
 
     /**
@@ -31,7 +29,11 @@ class DashboardController extends AbstractActionController
      * @param TemplateRendererInterface $template
      * @param AuthenticationService $authenticationService
      *
-     * @Inject({RouterInterface::class, TemplateRendererInterface::class, AuthenticationService::class})
+     * @Inject({
+     *     RouterInterface::class,
+     *     TemplateRendererInterface::class,
+     *     AuthenticationService::class
+     * })
      */
     public function __construct(
         RouterInterface $router,
@@ -46,7 +48,7 @@ class DashboardController extends AbstractActionController
     /**
      * @return ResponseInterface
      */
-    public function indexAction()
+    public function indexAction(): ResponseInterface
     {
         return new HtmlResponse($this->template->render('app::dashboard'));
     }

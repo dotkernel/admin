@@ -21,7 +21,9 @@ class AdminRoleRepository extends AbstractRepository
      */
     public function getRole(string $uuid): ?AdminRole
     {
-        return $this->find($uuid);
+        /** @var AdminRole $role */
+        $role = $this->find($uuid);
+        return $role;
     }
 
     /**
@@ -31,19 +33,18 @@ class AdminRoleRepository extends AbstractRepository
      */
     public function findByName(string $name): ?AdminRole
     {
-        $qb = $this->getQueryBuilder();
-
-        $qb
+        return $this->getQueryBuilder()
             ->select('role')
             ->from(AdminRole::class, 'role')
             ->andWhere('role.name = :name')
-            ->setParameter('name', $name);
-
-        return $qb->getQuery()->useQueryCache(true)->getOneOrNullResult();
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->useQueryCache(true)
+            ->getOneOrNullResult();
     }
 
     /**
-     * @return array
+     * @return AdminRole[]
      */
     public function getRoles(): array
     {

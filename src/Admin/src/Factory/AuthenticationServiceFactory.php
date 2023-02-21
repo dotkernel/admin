@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Authentication;
+namespace Frontend\Admin\Factory;
 
+use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Laminas\Authentication\AuthenticationService;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+/**
+ * Class AuthenticationAdapter
+ * @package Frontend\Admin\Factory
+ */
 class AuthenticationServiceFactory
 {
     /**
@@ -19,8 +24,9 @@ class AuthenticationServiceFactory
      */
     public function __invoke(ContainerInterface $container): AuthenticationService
     {
-        /** @var AuthenticationAdapter $authAdapter */
-        $authAdapter = $container->get(AuthenticationAdapter::class);
-        return new AuthenticationService(null, $authAdapter);
+        return new AuthenticationService(
+            null,
+            $container->get(AuthenticationAdapter::class)
+        );
     }
 }

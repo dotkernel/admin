@@ -47,7 +47,7 @@ class ConfigProvider
         return [
             'delegators' => [
                 Application::class => [
-                    \Frontend\App\RoutesDelegator::class,
+                    RoutesDelegator::class,
                     \Frontend\Admin\RoutesDelegator::class
                 ]
             ],
@@ -85,8 +85,8 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'app'    => [__DIR__ . '/../templates/app'],
-                'error'  => [__DIR__ . '/../templates/error'],
+                'app' => [__DIR__ . '/../templates/app'],
+                'error' => [__DIR__ . '/../templates/error'],
                 'layout' => [__DIR__ . '/../templates/layout'],
                 'partial' => [__DIR__ . '/../templates/partial'],
                 'language' => [__DIR__ . '/../templates/language'],

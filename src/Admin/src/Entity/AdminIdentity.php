@@ -80,9 +80,9 @@ class AdminIdentity implements UserInterface
     /**
      * @param string $name
      * @param mixed|null $default
-     * @return null|array<string, mixed>
+     * @return mixed
      */
-    public function getDetail(string $name, $default = null)
+    public function getDetail(string $name, $default = null): mixed
     {
         return $this->details[$name] ?? $default;
     }

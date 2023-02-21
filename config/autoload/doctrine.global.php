@@ -48,7 +48,7 @@ return [
         'cache' => [
             PhpFileCache::class => [
                 'class' => PhpFileCache::class,
-                'directory' => getcwd() . '/data/cache/doctrine'
+                'directory' => getcwd() . '/data/cache/doctrine',
             ]
         ],
         'fixtures' => getcwd() . '/data/doctrine/fixtures',

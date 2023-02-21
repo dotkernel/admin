@@ -16,19 +16,19 @@ return [
                     'superuser' => [
                         'permissions' => [
                             'authenticated',
-                            'premium'
+                            'premium',
                         ]
                     ],
                     'admin' => [
                         'permissions' => [
                             'authenticated',
-                            'premium'
+                            'premium',
                         ]
                     ],
                     'user' => [
                         'permissions' => [
                             'authenticated',
-                            'premium'
+                            'premium',
                         ]
                     ],
                     'guest' => [
@@ -41,6 +41,6 @@ return [
         ],
 
         'assertion_manager' => [],
-        'assertions' => []
+        'assertions' => [],
     ]
 ];

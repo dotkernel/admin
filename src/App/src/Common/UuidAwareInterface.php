@@ -13,7 +13,7 @@ use Ramsey\Uuid\UuidInterface;
 interface UuidAwareInterface
 {
     /**
-     * @return UuidInterface
+     * @return UuidInterface|null
      */
-    public function getUuid(): UuidInterface;
+    public function getUuid(): ?UuidInterface;
 }

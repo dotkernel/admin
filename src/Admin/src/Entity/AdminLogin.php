@@ -9,7 +9,7 @@ use Frontend\App\Entity\AbstractEntity;
 
 /**
  * Class AdminLogin
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminLoginsRepository")
+ * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminLoginRepository")
  * @ORM\Table(name="admin_login")
  * @ORM\HasLifecycleCallbacks()
  * @package Frontend\Admin\Entity
@@ -23,108 +23,91 @@ class AdminLogin extends AbstractEntity
 
     /**
      * @ORM\Column(name="adminIp", type="string", length=50, nullable=true)
-     * @var string $adminIp
      */
-    protected string $adminIp;
+    protected ?string $adminIp;
 
     /**
      * @ORM\Column(name="country", type="string", length=50, nullable=true)
-     * @var string $country
      */
-    protected string $country;
+    protected ?string $country;
 
     /**
      * @ORM\Column(name="continent", type="string", length=50, nullable=true)
-     * @var string $continent
      */
-    protected string $continent;
+    protected ?string $continent;
 
     /**
      * @ORM\Column(name="organization", type="string", length=50, nullable=true)
-     * @var string $organization
      */
-    protected string $organization;
+    protected ?string $organization;
 
     /**
      * @ORM\Column(name="deviceType", type="string", length=20, nullable=true)
-     * @var string|null $deviceType
      */
     protected ?string $deviceType;
 
     /**
      * @ORM\Column(name="deviceBrand", type="string", length=20, nullable=true)
-     * @var string|null $deviceBrand
      */
     protected ?string $deviceBrand;
 
     /**
      * @ORM\Column(name="deviceModel", type="string", length=40, nullable=true)
-     * @var string|null $deviceModel
      */
     protected ?string $deviceModel;
 
     /**
      * @ORM\Column(name="isMobile", type="string", columnDefinition="ENUM('yes', 'no')")
-     * @var string|null $isMobile
      */
     protected ?string $isMobile;
 
     /**
      * @ORM\Column(name="osName", type="string", length=20, nullable=true)
-     * @var string|null $osName
      */
     protected ?string $osName;
 
     /**
      * @ORM\Column(name="osVersion", type="string", length=20, nullable=true)
-     * @var string|null $osVersion
      */
     protected ?string $osVersion;
 
     /**
      * @ORM\Column(name="osPlatform", type="string", length=20, nullable=true)
-     * @var string|null $osPlatform
      */
     protected ?string $osPlatform;
 
     /**
      * @ORM\Column(name="clientType", type="string", length=20, nullable=true)
-     * @var string|null $clientType
      */
     protected ?string $clientType;
 
     /**
      * @ORM\Column(name="clientName", type="string", length=40, nullable=true)
-     * @var string|null $clientName
      */
     protected ?string $clientName;
 
     /**
      * @ORM\Column(name="clientEngine", type="string", length=20, nullable=true)
-     * @var string|null $clientEngine
      */
     protected ?string $clientEngine;
 
     /**
      * @ORM\Column(name="clientVersion", type="string", length=20, nullable=true)
-     * @var string|null $clientVersion
      */
     protected ?string $clientVersion;
 
     /**
      * @ORM\Column(name="loginStatus", type="string", columnDefinition="ENUM('success', 'fail')")
-     * @var string|null $loginStatus
      */
     protected ?string $loginStatus;
 
     /**
      * @ORM\Column(name="identity", type="string", length=100)
-     * @var string $identity
      */
     protected string $identity;
 
     /**
-     * Admin constructor.
+     * AdminLogin constructor.
      */
     public function __construct()
     {
@@ -132,18 +115,18 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAdminIp(): string
+    public function getAdminIp(): ?string
     {
         return $this->adminIp;
     }
 
     /**
-     * @param string $adminIp
+     * @param string|null $adminIp
      * @return self
      */
-    public function setAdminIp(string $adminIp): self
+    public function setAdminIp(?string $adminIp): self
     {
         $this->adminIp = $adminIp;
 
@@ -159,10 +142,10 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @param string $country
+     * @param string|null $country
      * @return self
      */
-    public function setCountry(string $country): self
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
@@ -178,10 +161,10 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @param string $continent
+     * @param string|null $continent
      * @return self
      */
-    public function setContinent(string $continent): self
+    public function setContinent(?string $continent): self
     {
         $this->continent = $continent;
 
@@ -197,10 +180,10 @@ class AdminLogin extends AbstractEntity
     }
 
     /**
-     * @param string $organization
+     * @param string|null $organization
      * @return self
      */
-    public function setOrganization(string $organization): self
+    public function setOrganization(?string $organization): self
     {
         $this->organization = $organization;
 

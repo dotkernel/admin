@@ -13,7 +13,7 @@ return [
              * To restrict, replace this line with a list of origins that should have access to your application.
              * Example: "domain1.com", "domain2.com"
              */
-            ConfigurationInterface::ANY_ORIGIN
+            ConfigurationInterface::ANY_ORIGIN,
         ],
         'allowed_headers' => ['Accept', 'Content-Type', 'Authorization'], // Custom headers
         'allowed_max_age' => '600', // 10 minutes

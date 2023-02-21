@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see https://github.com/dotkernel/frontend/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/frontend/blob/master/LICENSE.md MIT License
- */
-
 declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
@@ -21,10 +15,11 @@ use Laminas\Validator\NotEmpty;
  */
 class LoginInputFilter extends InputFilter
 {
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $username = new Input('username');
         $username->setRequired(true);
         $username->getFilterChain()->attachByName(StringTrim::class);
@@ -32,7 +27,6 @@ class LoginInputFilter extends InputFilter
             'break_chain_on_failure' => true,
             'message' => '<b>Username</b> is required and cannot be empty'
         ]);
-
         $this->add($username);
 
         $password = new Input('password');
@@ -42,7 +36,6 @@ class LoginInputFilter extends InputFilter
             'break_chain_on_failure' => true,
             'message' => '<b>Password</b> is required and cannot be empty',
         ]);
-
         $this->add($password);
     }
 }

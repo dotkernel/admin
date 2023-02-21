@@ -6,16 +6,17 @@ namespace Frontend\Admin;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
-use Frontend\Admin\Authentication\AuthenticationAdapter;
-use Frontend\Admin\Authentication\AuthenticationServiceFactory;
+use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Controller\AdminController;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminInterface;
 use Frontend\Admin\Delegator\AdminRoleDelegator;
+use Frontend\Admin\Factory\AuthenticationServiceFactory;
 use Frontend\Admin\Form\AdminForm;
 use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\Service\AdminService;
+use Frontend\Admin\Service\AdminServiceInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
 
@@ -49,16 +50,17 @@ class ConfigProvider
                 AdminService::class => AnnotatedServiceFactory::class,
                 AdminForm::class => ElementFactory::class,
                 AuthenticationService::class => AuthenticationServiceFactory::class,
-                AuthenticationAdapter::class => AnnotatedServiceFactory::class
+                AuthenticationAdapter::class => AnnotatedServiceFactory::class,
             ],
             'aliases' => [
-                AdminInterface::class => Admin::class
+                AdminInterface::class => Admin::class,
+                AdminServiceInterface::class => AdminService::class,
             ],
             'delegators' => [
                 AdminForm::class => [
-                    AdminRoleDelegator::class
+                    AdminRoleDelegator::class,
                 ]
-            ]
+            ],
         ];
     }
 
@@ -69,7 +71,7 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'admin' => [__DIR__ . '/../templates/admin']
+                'admin' => [__DIR__ . '/../templates/admin'],
             ],
         ];
     }
@@ -83,7 +85,7 @@ class ConfigProvider
             'form_manager' => [
                 'factories' => [
                     LoginForm::class => ElementFactory::class,
-                    ChangePasswordForm::class => ElementFactory::class
+                    ChangePasswordForm::class => ElementFactory::class,
                 ],
                 'aliases' => [
                 ],

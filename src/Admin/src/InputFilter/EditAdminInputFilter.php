@@ -20,10 +20,11 @@ use Laminas\Validator\StringLength;
  */
 class EditAdminInputFilter extends InputFilter
 {
-    public function init()
+    /**
+     * @return void
+     */
+    public function init(): void
     {
-        parent::init();
-
         $identity = new Input('identity');
         $identity->setRequired(false);
         $identity->getFilterChain()->attachByName(StringTrim::class);
@@ -37,7 +38,6 @@ class EditAdminInputFilter extends InputFilter
             'pattern' => '/^[a-zA-Z0-9-_.]+$/',
             'message' => '<b>Identity</b> contains invalid characters',
         ]);
-
         $this->add($identity);
 
         $password = new Input('password');
@@ -49,7 +49,6 @@ class EditAdminInputFilter extends InputFilter
             'max' => 150,
             'message' => '<b>Password</b> must have between 8 and 150 characters',
         ]);
-
         $this->add($password);
 
         $passwordConfirm = new Input('passwordConfirm');
@@ -65,19 +64,16 @@ class EditAdminInputFilter extends InputFilter
             'token' => 'password',
             'message' => '<b>Password confirm</b> does not match',
         ]);
-
         $this->add($passwordConfirm);
 
         $firstName = new Input('firstName');
         $firstName->setRequired(false);
         $firstName->getFilterChain()->attachByName(StringTrim::class);
         $firstName->getValidatorChain()->attachByName(NotEmpty::class);
-        $firstName->getValidatorChain()->attachByName(StringLength::class);
-        $firstName->getFilterChain()->attachByName(StringLength::class, [
+        $firstName->getValidatorChain()->attachByName(StringLength::class, [
             'max' => 150,
             'message' => '<b>FirstName</b> must max 150 characters',
         ]);
-
         $this->add($firstName);
 
         $lastName = new Input('lastName');
@@ -88,7 +84,6 @@ class EditAdminInputFilter extends InputFilter
             'max' => 150,
             'message' => '<b>Last Name</b> must max 150 characters',
         ]);
-
         $this->add($lastName);
 
         $status = new Input('status');
@@ -100,7 +95,6 @@ class EditAdminInputFilter extends InputFilter
                 Admin::STATUS_INACTIVE
             ]
         ]);
-
         $this->add($status);
 
         $roles = new Input('roles');
@@ -109,7 +103,6 @@ class EditAdminInputFilter extends InputFilter
             'break_chain_on_failure' => true,
             'message' => 'Please select at least one role',
         ]);
-
         $this->add($roles);
     }
 }

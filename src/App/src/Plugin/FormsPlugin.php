@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see https://github.com/dotkernel/dot-controller-plugin-forms/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-controller-plugin-forms/blob/master/LICENSE.md MIT License
- */
-
 declare(strict_types=1);
 
 namespace Frontend\App\Plugin;
@@ -15,10 +9,10 @@ use Dot\Controller\Plugin\PluginInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Form\Factory\FormAbstractServiceFactory;
 use Dot\Form\FormElementManager;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
@@ -28,9 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
 class FormsPlugin implements PluginInterface
 {
     protected FormElementManager $formElementManager;
-
     protected ContainerInterface $container;
-
     protected ?FlashMessengerInterface $flashMessenger;
 
     /**
@@ -39,8 +31,7 @@ class FormsPlugin implements PluginInterface
      * @param ContainerInterface $container
      * @param FlashMessengerInterface|null $flashMessenger
      */
-    public function __construct
-    (
+    public function __construct(
         FormElementManager $formManager,
         ContainerInterface $container,
         FlashMessengerInterface $flashMessenger = null
@@ -56,7 +47,7 @@ class FormsPlugin implements PluginInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(string $name = null)
+    public function __invoke(string $name = null): mixed
     {
         if (is_null($name)) {
             return $this;
@@ -90,7 +81,7 @@ class FormsPlugin implements PluginInterface
      */
     public function restoreState(Form $form): void
     {
-        if (! is_null($this->flashMessenger)) {
+        if ($this->flashMessenger instanceof FlashMessengerInterface) {
             $dataKey = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
@@ -107,7 +98,7 @@ class FormsPlugin implements PluginInterface
      */
     public function saveState(Form $form): void
     {
-        if (! is_null($this->flashMessenger)) {
+        if ($this->flashMessenger instanceof FlashMessengerInterface) {
             $dataKey = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
@@ -122,8 +113,9 @@ class FormsPlugin implements PluginInterface
      */
     public function getMessages(Form $form): array
     {
-        $formMessages = $form->getMessages();
-        return $this->processFormMessages($formMessages);
+        return $this->processFormMessages(
+            $form->getMessages()
+        );
     }
 
     /**
@@ -182,8 +174,9 @@ class FormsPlugin implements PluginInterface
      */
     public function getErrors(Form $form): array
     {
-        $formMessages = $form->getMessages();
-        return $this->processFormErrors($formMessages);
+        return $this->processFormErrors(
+            $form->getMessages()
+        );
     }
 
     /**

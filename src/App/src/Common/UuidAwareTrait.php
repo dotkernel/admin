@@ -18,14 +18,13 @@ trait UuidAwareTrait
      * @ORM\Column(name="uuid", type="uuid_binary_ordered_time", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidOrderedTimeGenerator")
-     * @var UuidInterface|null
     */
     protected ?UuidInterface $uuid = null;
 
     /**
-     * @return UuidInterface
+     * @return UuidInterface|null
      */
-    public function getUuid(): UuidInterface
+    public function getUuid(): ?UuidInterface
     {
         if (!$this->uuid) {
             $this->uuid = UuidOrderedTimeGenerator::generateUuid();

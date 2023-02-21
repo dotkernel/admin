@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Controller;
 
-use Dot\AnnotatedServices\Annotation\Inject;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
-use Dot\FlashMessenger\FlashMessenger;
-use Fig\Http\Message\RequestMethodInterface;
+use Dot\FlashMessenger\FlashMessengerInterface;
+use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Entity\AdminIdentity;
+use Frontend\Admin\Service\AdminServiceInterface;
+use Frontend\App\Common\ServerRequestTrait;
 use Frontend\App\Plugin\FormsPlugin;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
@@ -20,12 +24,13 @@ use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
-use Frontend\Admin\Service\AdminService;
+use GeoIp2\Exception\AddressNotFoundException;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -37,46 +42,42 @@ use Throwable;
  */
 class AdminController extends AbstractActionController
 {
-    /** @var RouterInterface $router */
+    use ServerRequestTrait;
+
     protected RouterInterface $router;
-
-    /** @var TemplateRendererInterface $template */
     protected TemplateRendererInterface $template;
-
-    /** @var AdminService $adminService */
-    protected AdminService $adminService;
-
-    /** @var AuthenticationServiceInterface|AuthenticationService $authenticationService */
-    protected AuthenticationServiceInterface $authenticationService;
-
-    /** @var FlashMessenger $messenger */
-    protected FlashMessenger $messenger;
-
-    /** @var FormsPlugin $forms */
+    protected AdminServiceInterface $adminService;
+    protected AuthenticationService|AuthenticationServiceInterface $authenticationService;
+    protected FlashMessengerInterface $messenger;
     protected FormsPlugin $forms;
-
-    /** @var AdminForm $adminForm */
     protected AdminForm $adminForm;
 
     /**
      * AdminController constructor.
-     * @param AdminService $adminService
+     * @param AdminServiceInterface $adminService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
-     * @param AuthenticationService $authenticationService
-     * @param FlashMessenger $messenger
+     * @param AuthenticationServiceInterface $authenticationService
+     * @param FlashMessengerInterface $messenger
      * @param FormsPlugin $forms
      * @param AdminForm $adminForm
      *
-     * @Inject({AdminService::class, RouterInterface::class, TemplateRendererInterface::class,
-     *     AuthenticationService::class, FlashMessenger::class, FormsPlugin::class, AdminForm::class})
+     * @Inject({
+     *     AdminServiceInterface::class,
+     *     RouterInterface::class,
+     *     TemplateRendererInterface::class,
+     *     AuthenticationServiceInterface::class,
+     *     FlashMessengerInterface::class,
+     *     FormsPlugin::class,
+     *     AdminForm::class
+     * })
      */
     public function __construct(
-        AdminService $adminService,
+        AdminServiceInterface $adminService,
         RouterInterface $router,
         TemplateRendererInterface $template,
-        AuthenticationService $authenticationService,
-        FlashMessenger $messenger,
+        AuthenticationServiceInterface $authenticationService,
+        FlashMessengerInterface $messenger,
         FormsPlugin $forms,
         AdminForm $adminForm
     ) {
@@ -94,11 +95,8 @@ class AdminController extends AbstractActionController
      */
     public function addAction(): ResponseInterface
     {
-        $request = $this->request;
-
-        if ($request->getMethod() === 'POST') {
-            $data = $request->getParsedBody();
-            $this->adminForm->setData($data);
+        if ($this->isPost()) {
+            $this->adminForm->setData($this->getPostParams());
             if ($this->adminForm->isValid()) {
                 $result = $this->adminForm->getData();
                 try {
@@ -134,16 +132,16 @@ class AdminController extends AbstractActionController
      */
     public function editAction(): ResponseInterface
     {
-        $request = $this->getRequest();
-        $uuid = $request->getAttribute('uuid');
+        $uuid = $this->getAttribute('uuid');
+
+        /** @var Admin $admin */
         $admin = $this->adminService->getAdminRepository()->find($uuid);
 
         $adminFormData = new AdminFormData();
         $adminFormData->fromEntity($admin);
 
-        if ($request->getMethod() === 'POST') {
-            $data = $request->getParsedBody();
-            $this->adminForm->setData($data);
+        if ($this->isPost()) {
+            $this->adminForm->setData($this->getPostParams());
             $this->adminForm->setDifferentInputFilter(new EditAdminInputFilter());
             if ($this->adminForm->isValid()) {
                 $result = $this->adminForm->getData();
@@ -182,14 +180,13 @@ class AdminController extends AbstractActionController
      */
     public function deleteAction(): ResponseInterface
     {
-        $request = $this->getRequest();
-        $data = $request->getParsedBody();
-
-        if (!empty($data['uuid'])) {
-            $admin = $this->adminService->getAdminRepository()->find($data['uuid']);
-        } else {
+        $uuid = $this->getPostParam('uuid');
+        if (empty($uuid)) {
             return new JsonResponse(['success' => 'error', 'message' => 'Could not find admin']);
         }
+
+        /** @var Admin $admin */
+        $admin = $this->adminService->getAdminRepository()->find($uuid);
 
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
@@ -206,15 +203,13 @@ class AdminController extends AbstractActionController
      */
     public function listAction(): ResponseInterface
     {
-        $params = $this->getRequest()->getQueryParams();
-
-        $search = (!empty($params['search'])) ? $params['search'] : null;
-        $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
-        $order = (!empty($params['order'])) ? $params['order'] : "desc";
-        $offset = (!empty($params['offset'])) ? (int)$params['offset'] : 0;
-        $limit = (!empty($params['limit'])) ? (int)$params['limit'] : 30;
-
-        $result = $this->adminService->getAdmins($offset, $limit, $search, $sort, $order);
+        $result = $this->adminService->getAdmins(
+            $this->getQueryParam('offset', 0, 'int'),
+            $this->getQueryParam('limit', 30, 'int'),
+            $this->getQueryParam('search'),
+            $this->getQueryParam('sort', 'created'),
+            $this->getQueryParam('order', 'desc')
+        );
 
         return new JsonResponse($result);
     }
@@ -224,15 +219,17 @@ class AdminController extends AbstractActionController
      */
     public function manageAction(): ResponseInterface
     {
-        return new HtmlResponse($this->template->render('admin::list'));
+        return new HtmlResponse(
+            $this->template->render('admin::list')
+        );
     }
 
     /**
      * @return ResponseInterface
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \GeoIp2\Exception\AddressNotFoundException
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws AddressNotFoundException
+     * @throws InvalidDatabaseException
      */
     public function loginAction(): ResponseInterface
     {
@@ -247,18 +244,16 @@ class AdminController extends AbstractActionController
             $this->forms->restoreState($form);
         }
 
-        if (RequestMethodInterface::METHOD_POST === $this->getRequest()->getMethod()) {
+        if ($this->isPost()) {
             $form->setData($this->getRequest()->getParsedBody());
             if ($form->isValid()) {
+                /** @var AuthenticationAdapter $adapter */
                 $adapter = $this->authenticationService->getAdapter();
                 $data = $form->getData();
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
                 $authResult = $this->authenticationService->authenticate();
-                $logAdmin = $this->adminService->logAdminVisit(
-                    $this->getRequest()->getServerParams(),
-                    $data['username']
-                );
+                $logAdmin = $this->adminService->logAdminVisit($this->getServerParams(), $data['username']);
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
                     $logAdmin->setLoginStatus(AdminLogin::LOGIN_SUCCESS);
@@ -308,19 +303,17 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return HtmlResponse|RedirectResponse
+     * @return ResponseInterface
      */
-    public function accountAction()
+    public function accountAction(): ResponseInterface
     {
-        $request = $this->getRequest();
         $form = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
         $identity = $this->authenticationService->getIdentity();
         $admin = $this->adminService->findAdminBy(['uuid' => $identity->getUuid()]);
 
-        if ($request->getMethod() == 'POST') {
-            $data = $request->getParsedBody();
-            $form->setData($data);
+        if ($this->isPost()) {
+            $form->setData($this->getPostParams());
             if ($form->isValid()) {
                 $result = $form->getData();
                 try {
@@ -350,15 +343,15 @@ class AdminController extends AbstractActionController
      */
     public function changePasswordAction(): ResponseInterface
     {
-        $request = $this->getRequest();
         $changePasswordForm = new ChangePasswordForm();
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
-        $admin = $this->adminService->getAdminRepository()->exists($adminIdentity->getIdentity());
+        $admin = $this->adminService->getAdminRepository()->findAdminBy([
+            'identity' => $adminIdentity->getIdentity(),
+        ]);
 
-        if ($request->getMethod() == 'POST') {
-            $data = $request->getParsedBody();
-            $changePasswordForm->setData($data);
+        if ($this->isPost()) {
+            $changePasswordForm->setData($this->getPostParams());
             if ($changePasswordForm->isValid()) {
                 $result = $changePasswordForm->getData();
                 if (password_verify($result['currentPassword'], $admin->getPassword())) {
@@ -384,7 +377,9 @@ class AdminController extends AbstractActionController
      */
     public function loginsAction(): ResponseInterface
     {
-        return new HtmlResponse($this->template->render('admin::list-logins'));
+        return new HtmlResponse(
+            $this->template->render('admin::list-logins')
+        );
     }
 
     /**
@@ -394,14 +389,12 @@ class AdminController extends AbstractActionController
      */
     public function listLoginsAction(): ResponseInterface
     {
-        $params = $this->getRequest()->getQueryParams();
-
-        $sort = (!empty($params['sort'])) ? $params['sort'] : "created";
-        $order = (!empty($params['order'])) ? $params['order'] : "desc";
-        $offset = (!empty($params['offset'])) ? (int)$params['offset'] : 0;
-        $limit = (!empty($params['limit'])) ? (int)$params['limit'] : 30;
-
-        $result = $this->adminService->getAdminLogins($offset, $limit, $sort, $order);
+        $result = $this->adminService->getAdminLogins(
+            $this->getQueryParam('offset', 0, 'int'),
+            $this->getQueryParam('limit', 30, 'int'),
+            $this->getQueryParam('sort', 'created'),
+            $this->getQueryParam('order', 'desc')
+        );
 
         return new JsonResponse($result);
     }

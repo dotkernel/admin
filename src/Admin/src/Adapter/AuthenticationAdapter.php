@@ -2,36 +2,39 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Authentication;
+namespace Frontend\Admin\Adapter;
 
-use Dot\AnnotatedServices\Annotation\Inject;
 use Doctrine\ORM\EntityManager;
+use Dot\AnnotatedServices\Annotation\Inject;
+use Exception;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminIdentity;
 use Frontend\Admin\Entity\AdminRole;
 use Laminas\Authentication\Adapter\AdapterInterface;
-use Exception;
 use Laminas\Authentication\Result;
 
+/**
+ * Class AuthenticationAdapter
+ * @package Frontend\Admin\Adapter
+ */
 class AuthenticationAdapter implements AdapterInterface
 {
+    private EntityManager $entityManager;
     private const METHOD_NOT_EXISTS = "Method %s not found in %s .";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
-
     private string $identity;
-
     private string $credential;
-
-    private EntityManager $entityManager;
-
-    private array $config = [];
+    private array $config;
 
     /**
      * AuthenticationAdapter constructor.
      * @param EntityManager $entityManager
      * @param array $config
      *
-     * @Inject({EntityManager::class, "config.doctrine.authentication"})
+     * @Inject({
+     *     EntityManager::class,
+     *     "config.doctrine.authentication"
+     * })
      */
     public function __construct(EntityManager $entityManager, array $config)
     {

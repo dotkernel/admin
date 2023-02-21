@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Frontend\Admin\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
-use Doctrine\ORM\EntityManager;
 use Dot\GeoIP\Service\LocationServiceInterface;
 use Dot\UserAgentSniffer\Service\DeviceServiceInterface;
+use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\Repository\AdminRepository;
-use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Service\IpService;
 use GeoIp2\Exception\AddressNotFoundException;
@@ -31,19 +31,9 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
  */
 class AdminService implements AdminServiceInterface
 {
-    /** @var EntityManager $em */
-    protected EntityManager $em;
-
-    /** @var AdminRepository $adminRepository */
-    protected AdminRepository $adminRepository;
-
-    /** @var AdminRoleRepository $adminRoleRepository */
-    protected AdminRoleRepository $adminRoleRepository;
-
-    /** @var LocationServiceInterface $locationService */
+    protected AdminRepository|EntityRepository $adminRepository;
+    protected AdminRoleRepository|EntityRepository $adminRoleRepository;
     protected LocationServiceInterface $locationService;
-
-    /** @var DeviceServiceInterface $deviceService */
     protected DeviceServiceInterface $deviceService;
 
     /**
@@ -53,8 +43,12 @@ class AdminService implements AdminServiceInterface
      * @param DeviceServiceInterface $deviceService
      * @param int $cacheLifetime
      *
-     * @Inject({EntityManager::class, LocationServiceInterface::class, DeviceServiceInterface::class,
-     *      "config.resultCacheLifetime"})
+     * @Inject({
+     *     EntityManager::class,
+     *     LocationServiceInterface::class,
+     *     DeviceServiceInterface::class,
+     *     "config.resultCacheLifetime"
+     * })
      */
     public function __construct(
         EntityManager $em,
@@ -62,8 +56,6 @@ class AdminService implements AdminServiceInterface
         DeviceServiceInterface $deviceService,
         int $cacheLifetime
     ) {
-
-        $this->em = $em;
         $this->adminRepository = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
         $this->adminRepository->setCacheLifetime($cacheLifetime);
@@ -94,9 +86,7 @@ class AdminService implements AdminServiceInterface
      */
     public function exists(string $identity = ''): bool
     {
-        return !is_null(
-            $this->adminRepository->exists($identity)
-        );
+        return $this->adminRepository->exists($identity);
     }
 
     /**
@@ -163,9 +153,8 @@ class AdminService implements AdminServiceInterface
             'rows' => [],
             'total' => $this->getAdminRepository()->countAdminLogins()
         ];
-        $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order);
 
-        /** @var AdminLogin $login */
+        $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order);
         foreach ($logins as $login) {
             $result['rows'][] = [
                 'uuid' => $login->getUuid()->toString(),
@@ -186,7 +175,7 @@ class AdminService implements AdminServiceInterface
                 'clientName' => $login->getClientName(),
                 'clientEngine' => $login->getClientEngine(),
                 'clientVersion' => $login->getClientVersion(),
-                'created' => $login->getCreated()->format("Y-m-d")
+                'created' => $login->getCreatedFormatted('Y-m-d')
             ];
         }
 
@@ -196,8 +185,8 @@ class AdminService implements AdminServiceInterface
     /**
      * @param array $data
      * @return Admin
+     * @throws NonUniqueResultException
      * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function createAdmin(array $data): Admin
     {
@@ -205,20 +194,19 @@ class AdminService implements AdminServiceInterface
             throw new ORMException('An account with this identity already exists.');
         }
 
-        $admin = new Admin();
-        $admin->setIdentity($data['identity']);
-        $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
-        $admin->setFirstname($data['firstName']);
-        $admin->setLastname($data['lastName']);
-        $admin->setStatus($data['status']);
+        $admin = (new Admin())
+            ->setIdentity($data['identity'])
+            ->setPassword(password_hash($data['password'], PASSWORD_DEFAULT))
+            ->setFirstname($data['firstName'])
+            ->setLastname($data['lastName'])
+            ->setStatus($data['status']);
         foreach ($data['roles'] as $roleUuid) {
-            $role = $this->adminRoleRepository->getRole($roleUuid);
-            $admin->addRole($role);
+            $admin->addRole(
+                $this->adminRoleRepository->getRole($roleUuid)
+            );
         }
 
-        $this->getAdminRepository()->saveAdmin($admin);
-
-        return $admin;
+        return $this->getAdminRepository()->saveAdmin($admin);
     }
 
     /**
@@ -275,8 +263,6 @@ class AdminService implements AdminServiceInterface
 
         $ipAddress = IpService::getUserIp($serverParams);
 
-        $adminLogins = new AdminLogin();
-
         try {
             $country = !empty($this->locationService->getCountry($ipAddress)) ?
                 $this->locationService->getCountry($ipAddress)->getName() : '';
@@ -307,7 +293,8 @@ class AdminService implements AdminServiceInterface
         $clientEngine = !empty($deviceClient->getEngine()) ? $deviceClient->getEngine() : null;
         $clientVersion = !empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
 
-        $adminLogins->setAdminIp($ipAddress)
+        $adminLogin = (new AdminLogin())
+            ->setAdminIp($ipAddress)
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
@@ -324,9 +311,7 @@ class AdminService implements AdminServiceInterface
             ->setClientVersion($clientVersion)
             ->setIdentity($name);
 
-        $this->adminRepository->saveAdminVisit($adminLogins);
-
-        return $adminLogins;
+        return $this->adminRepository->saveAdminVisit($adminLogin);
     }
 
     /**
@@ -334,14 +319,11 @@ class AdminService implements AdminServiceInterface
      */
     public function getAdminFormProcessedRoles(): array
     {
-        $roles = [];
-        $result = $this->adminRoleRepository->getRoles();
+        $allRoles = $this->adminRoleRepository->getRoles();
 
-        if (!empty($result)) {
-            /** @var AdminRole $role */
-            foreach ($result as $role) {
-                $roles[$role->getUuid()->toString()] = $role->getName();
-            }
+        $roles = [];
+        foreach ($allRoles as $role) {
+            $roles[$role->getUuid()->toString()] = $role->getName();
         }
 
         return $roles;

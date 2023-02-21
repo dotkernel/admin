@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Frontend\App\Entity\AbstractEntity;
-
-use function array_map;
 
 /**
  * Class Admin
@@ -21,7 +19,7 @@ use function array_map;
 class Admin extends AbstractEntity implements AdminInterface
 {
     public const STATUS_ACTIVE = 'active';
-    public const STATUS_INACTIVE = 'inactive';
+    public const STATUS_INACTIVE = 'pending';
     public const STATUSES = [
         self::STATUS_ACTIVE,
         self::STATUS_INACTIVE
@@ -29,31 +27,26 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true)
-     * @var string $identity
      */
     protected string $identity;
 
     /**
      * @ORM\Column(name="firstName", type="string", length=255)
-     * @var string $firstName
      */
     protected string $firstName;
 
     /**
      * @ORM\Column(name="lastName", type="string", length=255)
-     * @var string $lastName
      */
     protected string $lastName;
 
     /**
      * @ORM\Column(name="password", type="string", length=100, nullable=false)
-     * @var string $password
      */
     protected string $password;
 
     /**
      * @ORM\Column(name="status", type="string", length=20, columnDefinition="ENUM('pending', 'active')")
-     * @var string $status
      */
     protected string $status = self::STATUS_ACTIVE;
 
@@ -106,42 +99,51 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @param string $identity
+     * @return self
      */
-    public function setIdentity(string $identity): void
+    public function setIdentity(string $identity): self
     {
         $this->identity = $identity;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
     /**
-     * @param mixed $firstName
+     * @param string $firstName
+     * @return self
      */
-    public function setFirstName($firstName): void
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
     /**
-     * @param mixed $lastName
+     * @param string $lastName
+     * @return self
      */
-    public function setLastName($lastName): void
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
     }
 
     /**
@@ -154,10 +156,13 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @param string $password
+     * @return self
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -170,14 +175,17 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @param string $status
+     * @return self
      */
-    public function setStatus(string $status): void
+    public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
-     * @return array|mixed
+     * @return array
      */
     public function getRoles(): array
     {
@@ -186,17 +194,20 @@ class Admin extends AbstractEntity implements AdminInterface
 
     /**
      * @param ArrayCollection $roles
+     * @return self
      */
-    public function setRoles(ArrayCollection $roles): void
+    public function setRoles(ArrayCollection $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
     }
 
     /**
      * @param AdminRole $role
-     * @return AdminInterface
+     * @return self
      */
-    public function addRole(AdminRole $role): AdminInterface
+    public function addRole(AdminRole $role): self
     {
         if (!$this->roles->contains($role)) {
             $this->roles->add($role);

@@ -37,7 +37,7 @@ return [
     'doctrine' => [
         'connection' => [
             'orm_default' => [
-                'params' => $databases['default']
+                'params' => $databases['default'],
             ]
         ],
         'configuration' => [
@@ -46,7 +46,7 @@ return [
                 // just comment any type of cache you don't want to be applied on development
                 'query_cache' => PhpFileCache::class,
                 'metadata_cache' => PhpFileCache::class,
-                'result_cache' => PhpFileCache::class
+                'result_cache' => PhpFileCache::class,
             ]
         ],
     ],

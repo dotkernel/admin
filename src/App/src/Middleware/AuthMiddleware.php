@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Frontend\App\Middleware;
 
+use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Rbac\Guard\Exception\RuntimeException;
 use Dot\Rbac\Guard\Guard\GuardInterface;
 use Dot\Rbac\Guard\Options\RbacGuardOptions;
 use Dot\Rbac\Guard\Provider\GuardsProviderInterface;
-use Dot\FlashMessenger\FlashMessenger;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,29 +17,26 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class AuthTeamMiddleware
+ * Class AuthMiddleware
  * @package App\Admin\Middleware
  */
 class AuthMiddleware implements MiddlewareInterface
 {
     protected RouterInterface $router;
-
-    protected FlashMessenger $messenger;
-
+    protected FlashMessengerInterface $messenger;
     protected GuardsProviderInterface $guardProvider;
-
     protected RbacGuardOptions $options;
 
     /**
-     * IdentityMiddleware constructor.
+     * AuthMiddleware constructor.
      * @param RouterInterface $router
-     * @param FlashMessenger $messenger
+     * @param FlashMessengerInterface $messenger
      * @param GuardsProviderInterface $guardProvider
      * @param RbacGuardOptions $options
      */
     public function __construct(
         RouterInterface $router,
-        FlashMessenger $messenger,
+        FlashMessengerInterface $messenger,
         GuardsProviderInterface $guardProvider,
         RbacGuardOptions $options
     ) {
