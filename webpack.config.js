@@ -49,8 +49,8 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ExtractTextPlugin = require("mini-css-extract-plugin");
 
 
 // Prepare plugin to extract styles into a css file
@@ -78,7 +78,7 @@ appModules.forEach(function (appModule) {
         entries['css/' + appModule.name + '.css'] = appModule.assets_path + '/scss/index.scss';
     }
     if (appModule.images === true) {
-        copyImages.push({from: appModule.assets_path + '/images', to: './images/' + appModule.name});
+        copyImages.push({ from: appModule.assets_path + '/images', to: 'images/' + appModule.name });
 
         rules.push({
             test: /\.(png|svg|jpg|gif)$/,
@@ -138,14 +138,17 @@ module.exports = {
 
         // Nuke the assets folder
         // This will only be run on production
-        new CleanWebpackPlugin(pathsToNuke, {
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: pathsToNuke,
             verbose: process.env.NODE_ENV !== "development",
             dry: process.env.NODE_ENV === "development"
         }),
 
         // Copy images from the source folder to the
         // destination folder
-        new CopyWebpackPlugin(copyImages),
+        new CopyWebpackPlugin({
+            patterns: copyImages
+        }),
     ]
 };
 
@@ -181,31 +184,9 @@ function generateBaseRules()
         },
         {
             test: /\.scss$/,
-            use: extractStyles.extract({
-                use: [{
-                    loader: "css-loader",
-                    options: {
-                        url: true,
-                        sourceMap: process.env.NODE_ENV === "development"
-                    }
-                }, {
-                    loader: 'postcss-loader',
-                    options: {
-                        sourceMap: process.env.NODE_ENV === "development",
-                        plugins() {
-                            return [autoprefixer]
-                        }
-                    }
-                }, {
-                    loader: "resolve-url-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        sourceMap: true
-                    }
-                }],
-                fallback: "style-loader"
-            })
+            use: [{
+                loader: ExtractTextPlugin.loader,
+            }, 'css-loader', 'sass-loader'],
         },
         {
             test: /\.(png|jpg|gif)$/,
