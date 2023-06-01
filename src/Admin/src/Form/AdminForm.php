@@ -135,7 +135,7 @@ class AdminForm extends Form
     /**
      * @param InputFilter $inputFilter
      */
-    public function setDifferentInputFilter(InputFilter $inputFilter)
+    public function setDifferentInputFilter(InputFilter $inputFilter): void
     {
         $this->inputFilter = $inputFilter;
         $this->inputFilter->init();

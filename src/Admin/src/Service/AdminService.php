@@ -73,9 +73,9 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @return AdminRepository
+     * @return AdminRepository|EntityRepository
      */
-    public function getAdminRepository(): AdminRepository
+    public function getAdminRepository(): AdminRepository|EntityRepository
     {
         return $this->adminRepository;
     }

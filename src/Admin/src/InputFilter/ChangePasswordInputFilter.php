@@ -27,7 +27,7 @@ class ChangePasswordInputFilter extends InputFilter
         $currentPassword->getFilterChain()->attach(StringTrim::class);
         $currentPassword->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => '<b>Current Password</b> is required and cannot be empty',
+            'message' => '<b> Current Password </b> is required and cannot be empty',
         ]);
         $this->add($currentPassword);
 
@@ -36,12 +36,12 @@ class ChangePasswordInputFilter extends InputFilter
         $password->getFilterChain()->attachByName(StringTrim::class);
         $password->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => '<b>Password</b> is required and cannot be empty',
+            'message' => '<b> Password </b> is required and cannot be empty',
         ]);
         $password->getValidatorChain()->attachByName(StringLength::class, [
             'min' => 8,
             'max' => 150,
-            'message' => '<b>Password</b> must have between 8 and 150 characters',
+            'message' => '<b> Password </b> must have between 8 and 150 characters',
         ]);
         $this->add($password);
 
@@ -50,7 +50,7 @@ class ChangePasswordInputFilter extends InputFilter
         $passwordConfirm->getFilterChain()->attachByName(StringTrim::class);
         $passwordConfirm->getValidatorChain()->attachByName(Identical::class, [
             'token' => 'password',
-            'message' => '<b>Password confirm</b> does not match',
+            'message' => '<b> Password confirm </b> does not match',
         ]);
         $this->add($passwordConfirm);
     }
