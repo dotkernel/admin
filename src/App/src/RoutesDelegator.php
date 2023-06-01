@@ -16,11 +16,12 @@ class RoutesDelegator
 {
     /**
      * @param ContainerInterface $container
-     * @param $serviceName
-     * @param callable $callback
+     * @param string             $serviceName
+     * @param callable           $callback
+     *
      * @return Application
      */
-    public function __invoke(ContainerInterface $container, $serviceName, callable $callback): Application
+    public function __invoke(ContainerInterface $container, string $serviceName, callable $callback): Application
     {
         /** @var Application $app */
         $app = $callback();
