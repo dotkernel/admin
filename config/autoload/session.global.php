@@ -63,7 +63,7 @@ return [
         /**
          * Specifies whether cookies should only be sent over secure connections.
          */
-        'cookie_secure' => false,
+        'cookie_secure' => true,
 
         /**
          * Specifies the name of the session which is used as cookie name.

@@ -31,7 +31,7 @@ class EditAdminInputFilter extends InputFilter
         $identity->getValidatorChain()->attachByName(NotEmpty::class);
         $identity->getValidatorChain()->attachByName(StringLength::class, [
             'min' => 3,
-            'max' => 99,
+            'max' => 100,
             'message' => '<b>Identity</b> must have between 3 and 100 characters',
         ]);
         $identity->getValidatorChain()->attachByName(Regex::class, [
@@ -40,25 +40,25 @@ class EditAdminInputFilter extends InputFilter
         ]);
         $this->add($identity);
 
-        $firstName = new Input('firstName');
-        $firstName->setRequired(false);
-        $firstName->getFilterChain()->attachByName(StringTrim::class);
-        $firstName->getValidatorChain()->attachByName(NotEmpty::class);
-        $firstName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
-            'message' => '<b> FirstName </b> must max 150 characters',
-        ]);
-        $this->add($firstName);
-
         $lastName = new Input('lastName');
         $lastName->setRequired(false);
         $lastName->getFilterChain()->attachByName(StringTrim::class);
         $lastName->getValidatorChain()->attachByName(NotEmpty::class);
         $lastName->getValidatorChain()->attachByName(StringLength::class, [
             'max' => 150,
-            'message' => '<b> Last Name</b> must max 150 characters',
+            'message' => '<b>Last Name</b> must max 150 characters',
         ]);
         $this->add($lastName);
+
+        $firstName = new Input('firstName');
+        $firstName->setRequired(false);
+        $firstName->getFilterChain()->attachByName(StringTrim::class);
+        $firstName->getValidatorChain()->attachByName(NotEmpty::class);
+        $firstName->getValidatorChain()->attachByName(StringLength::class, [
+            'max' => 150,
+            'message' => '<b>FirstName </b> must max 150 characters',
+        ]);
+        $this->add($firstName);
 
         $status = new Input('status');
         $status->setRequired(true);
@@ -93,7 +93,7 @@ class EditAdminInputFilter extends InputFilter
         ]);
         $passwordConfirm->getValidatorChain()->attachByName(Identical::class, [
             'token' => 'password',
-            'message' => '<b> Password confirm </b> does not match',
+            'message' => '<b>Password confirm </b> does not match',
         ]);
         $this->add($passwordConfirm);
 
