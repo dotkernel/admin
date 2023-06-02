@@ -50,14 +50,11 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 // Prepare plugin to extract styles into a css file
 // instead of a javascript file
-const extractStyles = new ExtractTextPlugin({
-    filename: "[name]",
-});
 
 // dynamically build webpack entries based on registered app modules
 let entries = {};
@@ -134,8 +131,7 @@ module.exports = {
     },
 
     plugins: [
-        extractStyles,
-
+        new MiniCssExtractPlugin(),
         // Nuke the assets folder
         // This will only be run on production
         new CleanWebpackPlugin({
@@ -183,11 +179,28 @@ function generateBaseRules()
             }]
         },
         {
-            test: /\.scss$/,
-            use: [{
-                loader: ExtractTextPlugin.loader,
-            }, 'css-loader', 'sass-loader'],
+            test: /\.(css|sass|scss)$/,
+            use: [
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: 'css-loader',
+                    options: {
+                        url: true,
+                        sourceMap: process.env.NODE_ENV === "development"
+                    }
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }
+            ]
         },
+//        {
+//            test: /\.scss$/,
+//            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+//        },
         {
             test: /\.(png|jpg|gif)$/,
             include: [
