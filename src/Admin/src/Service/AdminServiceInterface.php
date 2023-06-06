@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Service;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -19,9 +20,9 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
 interface AdminServiceInterface
 {
     /**
-     * @return AdminRepository
+     * @return AdminRepository|EntityRepository
      */
-    public function getAdminRepository(): AdminRepository;
+    public function getAdminRepository(): AdminRepository|EntityRepository;
 
     /**
      * @param string $identity

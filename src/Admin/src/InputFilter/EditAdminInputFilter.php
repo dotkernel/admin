@@ -40,6 +40,37 @@ class EditAdminInputFilter extends InputFilter
         ]);
         $this->add($identity);
 
+        $lastName = new Input('lastName');
+        $lastName->setRequired(false);
+        $lastName->getFilterChain()->attachByName(StringTrim::class);
+        $lastName->getValidatorChain()->attachByName(NotEmpty::class);
+        $lastName->getValidatorChain()->attachByName(StringLength::class, [
+            'max' => 150,
+            'message' => '<b>Last Name</b> must max 150 characters',
+        ]);
+        $this->add($lastName);
+
+        $firstName = new Input('firstName');
+        $firstName->setRequired(false);
+        $firstName->getFilterChain()->attachByName(StringTrim::class);
+        $firstName->getValidatorChain()->attachByName(NotEmpty::class);
+        $firstName->getValidatorChain()->attachByName(StringLength::class, [
+            'max' => 150,
+            'message' => '<b>FirstName </b> must max 150 characters',
+        ]);
+        $this->add($firstName);
+
+        $status = new Input('status');
+        $status->setRequired(true);
+        $status->getFilterChain()->attachByName(StringTrim::class);
+        $status->getValidatorChain()->attachByName(InArray::class, [
+            'haystack' => [
+                Admin::STATUS_ACTIVE,
+                Admin::STATUS_INACTIVE
+            ]
+        ]);
+        $this->add($status);
+
         $password = new Input('password');
         $password->setRequired(false);
         $password->getFilterChain()->attachByName(StringTrim::class);
@@ -62,40 +93,9 @@ class EditAdminInputFilter extends InputFilter
         ]);
         $passwordConfirm->getValidatorChain()->attachByName(Identical::class, [
             'token' => 'password',
-            'message' => '<b>Password confirm</b> does not match',
+            'message' => '<b>Password confirm </b> does not match',
         ]);
         $this->add($passwordConfirm);
-
-        $firstName = new Input('firstName');
-        $firstName->setRequired(false);
-        $firstName->getFilterChain()->attachByName(StringTrim::class);
-        $firstName->getValidatorChain()->attachByName(NotEmpty::class);
-        $firstName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
-            'message' => '<b>FirstName</b> must max 150 characters',
-        ]);
-        $this->add($firstName);
-
-        $lastName = new Input('lastName');
-        $lastName->setRequired(false);
-        $lastName->getFilterChain()->attachByName(StringTrim::class);
-        $lastName->getValidatorChain()->attachByName(NotEmpty::class);
-        $lastName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
-            'message' => '<b>Last Name</b> must max 150 characters',
-        ]);
-        $this->add($lastName);
-
-        $status = new Input('status');
-        $status->setRequired(true);
-        $status->getFilterChain()->attachByName(StringTrim::class);
-        $status->getValidatorChain()->attachByName(InArray::class, [
-            'haystack' => [
-                Admin::STATUS_ACTIVE,
-                Admin::STATUS_INACTIVE
-            ]
-        ]);
-        $this->add($status);
 
         $roles = new Input('roles');
         $roles->setRequired(true);
