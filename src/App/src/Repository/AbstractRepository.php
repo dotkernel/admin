@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Frontend\App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ObjectRepository;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
  * Class AbstractRepository
  * @package Frontend\App\Repository
+ * @extends EntityRepository<object>
  */
 abstract class AbstractRepository extends EntityRepository
 {
