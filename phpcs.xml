@@ -17,6 +17,4 @@
 
     <!-- Include all rules from the Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>
-    <exclude-pattern>test/TestAsset/**</exclude-pattern>
-    <exclude-pattern>test/**/TestAsset/**</exclude-pattern>
 </ruleset>
