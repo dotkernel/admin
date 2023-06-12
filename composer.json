@@ -79,7 +79,7 @@
         "mezzio/mezzio-tooling": "^2.5",
         "phpunit/phpunit": "^9.5.21",
         "roave/security-advisories": "dev-master",
-        "vimeo/psalm": "^4.29"
+        "vimeo/psalm": "^5.12"
     },
     "autoload": {
         "psr-4": {

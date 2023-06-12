@@ -12,6 +12,7 @@ use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 /**
  * Class AbstractRepository
  * @package Frontend\App\Repository
+ * @extends EntityRepository<object>
  */
 abstract class AbstractRepository extends EntityRepository
 {
