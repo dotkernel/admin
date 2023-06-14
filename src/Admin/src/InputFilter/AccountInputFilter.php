@@ -11,15 +11,8 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
-/**
- * Class AccountInputFilter
- * @package Frontend\Admin\InputFilter
- */
 class AccountInputFilter extends InputFilter
 {
-    /**
-     * @return void
-     */
     public function init(): void
     {
         $identity = new Input('identity');
@@ -27,18 +20,18 @@ class AccountInputFilter extends InputFilter
         $identity->getFilterChain()->attachByName(StringTrim::class);
         $identity->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => '<b>Identity</b> cannot be empty',
+            'message'                => '<b>Identity</b> cannot be empty',
         ]);
         $identity->getValidatorChain()->attachByName(StringLength::class, [
             'break_chain_on_failure' => true,
-            'min' => 3,
-            'max' => 100,
-            'message' => '<b>Identity</b> must have between 3 and 100 characters',
+            'min'                    => 3,
+            'max'                    => 100,
+            'message'                => '<b>Identity</b> must have between 3 and 100 characters',
         ]);
         $identity->getValidatorChain()->attachByName(Regex::class, [
             'break_chain_on_failure' => true,
-            'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-            'message' => '<b>Identity</b> contains invalid characters',
+            'pattern'                => '/^[a-zA-Z0-9-_.]+$/',
+            'message'                => '<b>Identity</b> contains invalid characters',
         ]);
         $this->add($identity);
 
@@ -47,7 +40,7 @@ class AccountInputFilter extends InputFilter
         $firstName->getFilterChain()->attachByName(StringTrim::class);
         $firstName->getValidatorChain()->attachByName(NotEmpty::class);
         $firstName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
+            'max'     => 150,
             'message' => '<b>First name</b> must be max 150 characters long.',
         ]);
         $this->add($firstName);
@@ -57,7 +50,7 @@ class AccountInputFilter extends InputFilter
         $lastName->getFilterChain()->attachByName(StringTrim::class);
         $lastName->getValidatorChain()->attachByName(NotEmpty::class);
         $lastName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
+            'max'     => 150,
             'message' => '<b>Last name</b> must be max 150 characters long.',
         ]);
         $this->add($lastName);

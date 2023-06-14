@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Frontend\Admin\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -23,10 +23,13 @@ use Frontend\App\Service\IpService;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 
+use function implode;
+use function is_string;
+use function password_hash;
+
+use const PASSWORD_DEFAULT;
+
 /**
- * Class AdminService
- * @package Frontend\Admin\Service
- *
  * @Service
  */
 class AdminService implements AdminServiceInterface
@@ -37,12 +40,6 @@ class AdminService implements AdminServiceInterface
     protected DeviceServiceInterface $deviceService;
 
     /**
-     * AdminService constructor.
-     * @param EntityManager $em
-     * @param LocationServiceInterface $locationService
-     * @param DeviceServiceInterface $deviceService
-     * @param int $cacheLifetime
-     *
      * @Inject({
      *     EntityManager::class,
      *     LocationServiceInterface::class,
@@ -56,45 +53,32 @@ class AdminService implements AdminServiceInterface
         DeviceServiceInterface $deviceService,
         int $cacheLifetime
     ) {
-        $this->adminRepository = $em->getRepository(Admin::class);
+        $this->adminRepository     = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
         $this->adminRepository->setCacheLifetime($cacheLifetime);
         $this->locationService = $locationService;
-        $this->deviceService = $deviceService;
+        $this->deviceService   = $deviceService;
     }
 
     /**
      * @param array $params
-     * @return Admin|null
      */
     public function findAdminBy(array $params): ?Admin
     {
         return $this->adminRepository->findAdminBy($params);
     }
 
-    /**
-     * @return AdminRepository|EntityRepository
-     */
     public function getAdminRepository(): AdminRepository|EntityRepository
     {
         return $this->adminRepository;
     }
 
-    /**
-     * @param string $identity
-     * @return bool
-     */
     public function exists(string $identity = ''): bool
     {
         return $this->adminRepository->exists($identity);
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param string|null $search
-     * @param string $sort
-     * @param string $order
      * @return array
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -102,13 +86,13 @@ class AdminService implements AdminServiceInterface
     public function getAdmins(
         int $offset = 0,
         int $limit = 30,
-        string $search = null,
+        ?string $search = null,
         string $sort = 'created',
         string $order = 'desc'
     ): array {
         $result = [
-            'rows' => [],
-            'total' => $this->getAdminRepository()->countAdmins($search)
+            'rows'  => [],
+            'total' => $this->getAdminRepository()->countAdmins($search),
         ];
         $admins = $this->getAdminRepository()->getAdmins($offset, $limit, $search, $sort, $order);
 
@@ -121,13 +105,13 @@ class AdminService implements AdminServiceInterface
             }
 
             $result['rows'][] = [
-                'uuid' => $admin->getUuid()->toString(),
-                'identity' => $admin->getIdentity(),
+                'uuid'      => $admin->getUuid()->toString(),
+                'identity'  => $admin->getIdentity(),
                 'firstName' => $admin->getFirstname(),
-                'lastName' => $admin->getLastname(),
-                'roles' => implode(", ", $roles),
-                'status' => $admin->getStatus(),
-                'created' => $admin->getCreated()->format("Y-m-d")
+                'lastName'  => $admin->getLastname(),
+                'roles'     => implode(", ", $roles),
+                'status'    => $admin->getStatus(),
+                'created'   => $admin->getCreated()->format("Y-m-d"),
             ];
         }
 
@@ -135,10 +119,6 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param string $sort
-     * @param string $order
      * @return array
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -150,32 +130,32 @@ class AdminService implements AdminServiceInterface
         string $order = 'desc'
     ): array {
         $result = [
-            'rows' => [],
-            'total' => $this->getAdminRepository()->countAdminLogins()
+            'rows'  => [],
+            'total' => $this->getAdminRepository()->countAdminLogins(),
         ];
 
         $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order);
         foreach ($logins as $login) {
             $result['rows'][] = [
-                'uuid' => $login->getUuid()->toString(),
-                'identity' => $login->getIdentity(),
-                'adminIp' => $login->getAdminIp(),
-                'status' => $login->getLoginStatus(),
-                'country' => $login->getCountry(),
-                'continent' => $login->getContinent(),
-                'organization' => $login->getOrganization(),
-                'deviceType' => $login->getDeviceType(),
-                'deviceBrand' => $login->getDeviceBrand(),
-                'deviceModel' => $login->getDeviceModel(),
-                'isMobile' => $login->getIsMobile(),
-                'osName' => $login->getOsName(),
-                'osVersion' => $login->getOsVersion(),
-                'osPlatform' => $login->getOsVersion(),
-                'clientType' => $login->getClientType(),
-                'clientName' => $login->getClientName(),
-                'clientEngine' => $login->getClientEngine(),
+                'uuid'          => $login->getUuid()->toString(),
+                'identity'      => $login->getIdentity(),
+                'adminIp'       => $login->getAdminIp(),
+                'status'        => $login->getLoginStatus(),
+                'country'       => $login->getCountry(),
+                'continent'     => $login->getContinent(),
+                'organization'  => $login->getOrganization(),
+                'deviceType'    => $login->getDeviceType(),
+                'deviceBrand'   => $login->getDeviceBrand(),
+                'deviceModel'   => $login->getDeviceModel(),
+                'isMobile'      => $login->getIsMobile(),
+                'osName'        => $login->getOsName(),
+                'osVersion'     => $login->getOsVersion(),
+                'osPlatform'    => $login->getOsVersion(),
+                'clientType'    => $login->getClientType(),
+                'clientName'    => $login->getClientName(),
+                'clientEngine'  => $login->getClientEngine(),
                 'clientVersion' => $login->getClientVersion(),
-                'created' => $login->getCreatedFormatted('Y-m-d')
+                'created'       => $login->getCreatedFormatted('Y-m-d'),
             ];
         }
 
@@ -184,7 +164,6 @@ class AdminService implements AdminServiceInterface
 
     /**
      * @param array $data
-     * @return Admin
      * @throws NonUniqueResultException
      * @throws ORMException
      */
@@ -210,33 +189,31 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param Admin $admin
      * @param array $data
-     * @return Admin
      * @throws ORMException
      */
     public function updateAdmin(Admin $admin, array $data): Admin
     {
-        if (!empty($data['identity'])) {
-            if (!$this->exists($data['identity'])) {
+        if (! empty($data['identity'])) {
+            if (! $this->exists($data['identity'])) {
                 $admin->setIdentity($data['identity']);
             } elseif ($admin->getIdentity() !== $data['identity']) {
                 throw new ORMException('An account with this identity already exists');
             }
         }
-        if (!empty($data['password'])) {
+        if (! empty($data['password'])) {
             $admin->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
         }
-        if (!empty($data['firstName']) && is_string($data['firstName'])) {
+        if (! empty($data['firstName']) && is_string($data['firstName'])) {
             $admin->setFirstname($data['firstName']);
         }
-        if (!empty($data['lastName']) && is_string($data['lastName'])) {
+        if (! empty($data['lastName']) && is_string($data['lastName'])) {
             $admin->setLastname($data['lastName']);
         }
-        if (!empty($data['status'])) {
+        if (! empty($data['status'])) {
             $admin->setStatus($data['status']);
         }
-        if (!empty($data['roles'])) {
+        if (! empty($data['roles'])) {
             $admin->setRoles(new ArrayCollection());
             foreach ($data['roles'] as $roleUuid) {
                 $role = $this->adminRoleRepository->getRole($roleUuid);
@@ -251,47 +228,45 @@ class AdminService implements AdminServiceInterface
 
     /**
      * @param array $serverParams
-     * @param string $name
-     * @return AdminLogin
      * @throws InvalidDatabaseException
      */
     public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {
-        $deviceData = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
-        $deviceOs = !empty($deviceData->getOs()) ? $deviceData->getOs() : null;
-        $deviceClient = !empty($deviceData->getClient()) ? $deviceData->getClient() : null;
+        $deviceData   = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
+        $deviceOs     = ! empty($deviceData->getOs()) ? $deviceData->getOs() : null;
+        $deviceClient = ! empty($deviceData->getClient()) ? $deviceData->getClient() : null;
 
         $ipAddress = IpService::getUserIp($serverParams);
 
         try {
-            $country = !empty($this->locationService->getCountry($ipAddress)) ?
+            $country = ! empty($this->locationService->getCountry($ipAddress)) ?
                 $this->locationService->getCountry($ipAddress)->getName() : '';
         } catch (AddressNotFoundException $e) {
             $country = '';
         }
         try {
-            $continent = !empty($this->locationService->getContinent($ipAddress)) ?
+            $continent = ! empty($this->locationService->getContinent($ipAddress)) ?
                 $this->locationService->getContinent($ipAddress)->getName() : '';
         } catch (AddressNotFoundException $e) {
             $continent = '';
         }
         try {
-            $organization = !empty($this->locationService->getOrganization($ipAddress)) ?
+            $organization = ! empty($this->locationService->getOrganization($ipAddress)) ?
                 $this->locationService->getOrganization($ipAddress)->getName() : '';
         } catch (AddressNotFoundException $e) {
             $organization = '';
         }
-        $deviceType = !empty($deviceData->getType()) ? $deviceData->getType() : null;
-        $deviceBrand = !empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
-        $deviceModel = !empty($deviceData->getModel()) ? $deviceData->getModel() : null;
-        $isMobile = $deviceData->getIsMobile() ? AdminLogin::IS_MOBILE_YES : AdminLogin::IS_MOBILE_NO;
-        $osName = !empty($deviceOs->getName()) ? $deviceOs->getName() : null;
-        $osVersion = !empty($deviceOs->getVersion()) ? $deviceOs->getVersion() : null;
-        $osPlatform = !empty($deviceOs->getPlatform()) ? $deviceOs->getPlatform() : null;
-        $clientType = !empty($deviceClient->getType()) ? $deviceClient->getType() : null;
-        $clientName = !empty($deviceClient->getName()) ? $deviceClient->getName() : null;
-        $clientEngine = !empty($deviceClient->getEngine()) ? $deviceClient->getEngine() : null;
-        $clientVersion = !empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
+        $deviceType    = ! empty($deviceData->getType()) ? $deviceData->getType() : null;
+        $deviceBrand   = ! empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
+        $deviceModel   = ! empty($deviceData->getModel()) ? $deviceData->getModel() : null;
+        $isMobile      = $deviceData->getIsMobile() ? AdminLogin::IS_MOBILE_YES : AdminLogin::IS_MOBILE_NO;
+        $osName        = ! empty($deviceOs->getName()) ? $deviceOs->getName() : null;
+        $osVersion     = ! empty($deviceOs->getVersion()) ? $deviceOs->getVersion() : null;
+        $osPlatform    = ! empty($deviceOs->getPlatform()) ? $deviceOs->getPlatform() : null;
+        $clientType    = ! empty($deviceClient->getType()) ? $deviceClient->getType() : null;
+        $clientName    = ! empty($deviceClient->getName()) ? $deviceClient->getName() : null;
+        $clientEngine  = ! empty($deviceClient->getEngine()) ? $deviceClient->getEngine() : null;
+        $clientVersion = ! empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
 
         $adminLogin = (new AdminLogin())
             ->setAdminIp($ipAddress)

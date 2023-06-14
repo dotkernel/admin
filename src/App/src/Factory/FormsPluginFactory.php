@@ -10,15 +10,9 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Class FormsPluginFactory
- * @package Frontend\App\Factory
- */
 class FormsPluginFactory
 {
     /**
-     * @param ContainerInterface $container
-     * @return FormsPlugin
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

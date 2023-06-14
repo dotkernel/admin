@@ -7,15 +7,18 @@ namespace Frontend\App\Common;
 use Exception;
 use Fig\Http\Message\RequestMethodInterface;
 
+use function array_key_exists;
+use function array_map;
+use function is_array;
+use function sprintf;
+
 /**
  * Trait ServerRequestTrait
- * @package Frontend\App\Common
  */
 trait ServerRequestTrait
 {
     /**
      * Check if request method is DELETE
-     * @return bool
      */
     public function isDelete(): bool
     {
@@ -24,7 +27,6 @@ trait ServerRequestTrait
 
     /**
      * Check if request method is GET
-     * @return bool
      */
     public function isGet(): bool
     {
@@ -33,7 +35,6 @@ trait ServerRequestTrait
 
     /**
      * Check if request method is PATCH
-     * @return bool
      */
     public function isPatch(): bool
     {
@@ -42,7 +43,6 @@ trait ServerRequestTrait
 
     /**
      * Check if request method is POST
-     * @return bool
      */
     public function isPost(): bool
     {
@@ -51,7 +51,6 @@ trait ServerRequestTrait
 
     /**
      * Check if request method is PUT
-     * @return bool
      */
     public function isPut(): bool
     {
@@ -60,7 +59,7 @@ trait ServerRequestTrait
 
     /**
      * Get all $_POST parameters
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getPostParams(?callable $callback = null): array
@@ -79,10 +78,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific $_POST parameter
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getPostParam(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -95,7 +90,7 @@ trait ServerRequestTrait
 
     /**
      * Get all $_FILES parameters
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getUploadedFiles(?callable $callback = null): array
@@ -109,14 +104,12 @@ trait ServerRequestTrait
 
     /**
      * Get specific $_FILES parameter
-     * @param string $name
-     * @param callable|null $callback
-     * @return mixed
+     *
      * @throws Exception
      */
     public function getUploadedFile(string $name, ?callable $callback = null): mixed
     {
-        if (!array_key_exists($name, $this->request->getUploadedFiles())) {
+        if (! array_key_exists($name, $this->request->getUploadedFiles())) {
             throw new Exception(
                 sprintf('There is no file uploaded under the name: %s', $name)
             );
@@ -131,7 +124,7 @@ trait ServerRequestTrait
 
     /**
      * Get all $_GET parameters
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getQueryParams(?callable $callback = null): array
@@ -145,10 +138,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific $_GET parameter
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getQueryParam(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -161,7 +150,7 @@ trait ServerRequestTrait
 
     /**
      * Get all $_COOKIE parameters
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getCookieParams(?callable $callback = null): array
@@ -175,10 +164,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific $_COOKIE parameter
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getCookieParam(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -191,7 +176,7 @@ trait ServerRequestTrait
 
     /**
      * Get all $_SERVER parameters
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getServerParams(?callable $callback = null): array
@@ -205,10 +190,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific $_SERVER parameter
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getServerParam(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -221,7 +202,7 @@ trait ServerRequestTrait
 
     /**
      * Get all headers
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getHeaders(?callable $callback = null): array
@@ -235,10 +216,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific header
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getHeader(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -251,7 +228,7 @@ trait ServerRequestTrait
 
     /**
      * Get all request attributes
-     * @param callable|null $callback
+     *
      * @return array
      */
     public function getAttributes(?callable $callback = null): array
@@ -265,10 +242,6 @@ trait ServerRequestTrait
 
     /**
      * Get specific request attribute
-     * @param string $name
-     * @param mixed $default
-     * @param string|null $cast
-     * @return mixed
      */
     public function getAttribute(string $name, mixed $default = null, ?string $cast = null): mixed
     {
@@ -279,20 +252,15 @@ trait ServerRequestTrait
         return $default;
     }
 
-    /**
-     * @param mixed $value
-     * @param string|null $to
-     * @return mixed
-     */
     private function cast(mixed $value, ?string $to = null): mixed
     {
         return match ($to) {
-            'array' => (array)$value,
-            'bool' => (bool)$value,
-            'float' => (float)$value,
-            'int' => (int)$value,
-            'object' => (object)$value,
-            'string' => (string)$value,
+            'array' => (array) $value,
+            'bool' => (bool) $value,
+            'float' => (float) $value,
+            'int' => (int) $value,
+            'object' => (object) $value,
+            'string' => (string) $value,
             default => $value,
         };
     }

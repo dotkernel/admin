@@ -9,16 +9,13 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
+use function is_array;
+
 /**
- * Class AbstractRepository
- * @package Frontend\App\Repository
  * @extends EntityRepository<object>
  */
 abstract class AbstractRepository extends EntityRepository
 {
-    /**
-     * @return QueryBuilder
-     */
     public function getQueryBuilder(): QueryBuilder
     {
         return $this->getEntityManager()->createQueryBuilder();
@@ -28,7 +25,6 @@ abstract class AbstractRepository extends EntityRepository
      * @param mixed $id
      * @param int|null $lockMode
      * @param int|null $lockVersion
-     * @return object|null
      * @throws NonUniqueResultException
      */
     public function find($id, $lockMode = null, $lockVersion = null): ?object

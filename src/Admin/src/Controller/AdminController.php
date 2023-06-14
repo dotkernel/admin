@@ -12,11 +12,8 @@ use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
-use Frontend\Admin\Entity\AdminIdentity;
-use Frontend\Admin\Service\AdminServiceInterface;
-use Frontend\App\Common\ServerRequestTrait;
-use Frontend\App\Plugin\FormsPlugin;
 use Frontend\Admin\Entity\Admin;
+use Frontend\Admin\Entity\AdminIdentity;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Form\AccountForm;
 use Frontend\Admin\Form\AdminForm;
@@ -24,6 +21,9 @@ use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
+use Frontend\Admin\Service\AdminServiceInterface;
+use Frontend\App\Common\ServerRequestTrait;
+use Frontend\App\Plugin\FormsPlugin;
 use GeoIp2\Exception\AddressNotFoundException;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -36,10 +36,8 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-/**
- * Class AdminController
- * @package Frontend\Admin\Controller
- */
+use function password_verify;
+
 class AdminController extends AbstractActionController
 {
     use ServerRequestTrait;
@@ -53,15 +51,6 @@ class AdminController extends AbstractActionController
     protected AdminForm $adminForm;
 
     /**
-     * AdminController constructor.
-     * @param AdminServiceInterface $adminService
-     * @param RouterInterface $router
-     * @param TemplateRendererInterface $template
-     * @param AuthenticationServiceInterface $authenticationService
-     * @param FlashMessengerInterface $messenger
-     * @param FormsPlugin $forms
-     * @param AdminForm $adminForm
-     *
      * @Inject({
      *     AdminServiceInterface::class,
      *     RouterInterface::class,
@@ -81,18 +70,15 @@ class AdminController extends AbstractActionController
         FormsPlugin $forms,
         AdminForm $adminForm
     ) {
-        $this->router = $router;
-        $this->template = $template;
+        $this->router                = $router;
+        $this->template              = $template;
         $this->authenticationService = $authenticationService;
-        $this->messenger = $messenger;
-        $this->forms = $forms;
-        $this->adminForm = $adminForm;
-        $this->adminService = $adminService;
+        $this->messenger             = $messenger;
+        $this->forms                 = $forms;
+        $this->adminForm             = $adminForm;
+        $this->adminService          = $adminService;
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function addAction(): ResponseInterface
     {
         if ($this->isPost()) {
@@ -109,7 +95,7 @@ class AdminController extends AbstractActionController
                 return new JsonResponse(
                     [
                         'success' => 'error',
-                        'message' => $this->forms->getMessagesAsString($this->adminForm)
+                        'message' => $this->forms->getMessagesAsString($this->adminForm),
                     ]
                 );
             }
@@ -119,15 +105,14 @@ class AdminController extends AbstractActionController
             $this->template->render(
                 'partial::ajax-form',
                 [
-                    'form' => $this->adminForm,
-                    'formAction' => '/admin/add'
+                    'form'       => $this->adminForm,
+                    'formAction' => '/admin/add',
                 ]
             )
         );
     }
 
     /**
-     * @return ResponseInterface
      * @throws NonUniqueResultException
      */
     public function editAction(): ResponseInterface
@@ -155,7 +140,7 @@ class AdminController extends AbstractActionController
                 return new JsonResponse(
                     [
                         'success' => 'error',
-                        'message' => $this->forms->getMessagesAsString($this->adminForm)
+                        'message' => $this->forms->getMessagesAsString($this->adminForm),
                     ]
                 );
             }
@@ -167,15 +152,14 @@ class AdminController extends AbstractActionController
             $this->template->render(
                 'partial::ajax-form',
                 [
-                    'form' => $this->adminForm,
-                    'formAction' => '/admin/edit/' . $uuid
+                    'form'       => $this->adminForm,
+                    'formAction' => '/admin/edit/' . $uuid,
                 ]
             )
         );
     }
 
     /**
-     * @return ResponseInterface
      * @throws NonUniqueResultException
      */
     public function deleteAction(): ResponseInterface
@@ -197,7 +181,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return ResponseInterface
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
@@ -214,9 +197,6 @@ class AdminController extends AbstractActionController
         return new JsonResponse($result);
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function manageAction(): ResponseInterface
     {
         return new HtmlResponse(
@@ -225,7 +205,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return ResponseInterface
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws AddressNotFoundException
@@ -249,11 +228,11 @@ class AdminController extends AbstractActionController
             if ($form->isValid()) {
                 /** @var AuthenticationAdapter $adapter */
                 $adapter = $this->authenticationService->getAdapter();
-                $data = $form->getData();
+                $data    = $form->getData();
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
                 $authResult = $this->authenticationService->authenticate();
-                $logAdmin = $this->adminService->logAdminVisit($this->getServerParams(), $data['username']);
+                $logAdmin   = $this->adminService->logAdminVisit($this->getServerParams(), $data['username']);
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
                     $logAdmin->setLoginStatus(AdminLogin::LOGIN_SUCCESS);
@@ -286,14 +265,11 @@ class AdminController extends AbstractActionController
 
         return new HtmlResponse(
             $this->template->render('admin::login', [
-                'form' => $form
+                'form' => $form,
             ])
         );
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function logoutAction(): ResponseInterface
     {
         $this->authenticationService->clearIdentity();
@@ -302,15 +278,12 @@ class AdminController extends AbstractActionController
         );
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function accountAction(): ResponseInterface
     {
-        $form = new AccountForm();
+        $form               = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
-        $identity = $this->authenticationService->getIdentity();
-        $admin = $this->adminService->findAdminBy(['uuid' => $identity->getUuid()]);
+        $identity           = $this->authenticationService->getIdentity();
+        $admin              = $this->adminService->findAdminBy(['uuid' => $identity->getUuid()]);
 
         if ($this->isPost()) {
             $form->setData($this->getPostParams());
@@ -332,21 +305,18 @@ class AdminController extends AbstractActionController
 
         return new HtmlResponse(
             $this->template->render('admin::account', [
-                'form' => $form,
-                'changePasswordForm' => $changePasswordForm
+                'form'               => $form,
+                'changePasswordForm' => $changePasswordForm,
             ])
         );
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function changePasswordAction(): ResponseInterface
     {
         $changePasswordForm = new ChangePasswordForm();
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
-        $admin = $this->adminService->getAdminRepository()->findAdminBy([
+        $admin         = $this->adminService->getAdminRepository()->findAdminBy([
             'identity' => $adminIdentity->getIdentity(),
         ]);
 
@@ -372,9 +342,6 @@ class AdminController extends AbstractActionController
         return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function loginsAction(): ResponseInterface
     {
         return new HtmlResponse(
@@ -383,7 +350,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @return ResponseInterface
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
