@@ -9,15 +9,8 @@ use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\NotEmpty;
 
-/**
- * Class LoginInputFilter
- * @package Frontend\Admin\InputFilter
- */
 class LoginInputFilter extends InputFilter
 {
-    /**
-     * @return void
-     */
     public function init(): void
     {
         $username = new Input('username');
@@ -25,7 +18,7 @@ class LoginInputFilter extends InputFilter
         $username->getFilterChain()->attachByName(StringTrim::class);
         $username->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => '<b>Username</b> is required and cannot be empty'
+            'message'                => '<b>Username</b> is required and cannot be empty',
         ]);
         $this->add($username);
 
@@ -34,7 +27,7 @@ class LoginInputFilter extends InputFilter
         $password->getFilterChain()->attachByName(StringTrim::class);
         $password->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => '<b>Password</b> is required and cannot be empty',
+            'message'                => '<b>Password</b> is required and cannot be empty',
         ]);
         $this->add($password);
     }

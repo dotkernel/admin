@@ -13,10 +13,6 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * Class DashboardController
- * @package Frontend\App\Controller
- */
 class DashboardController extends AbstractActionController
 {
     protected RouterInterface $router;
@@ -24,11 +20,6 @@ class DashboardController extends AbstractActionController
     protected AuthenticationServiceInterface $authenticationService;
 
     /**
-     * DashboardController constructor.
-     * @param RouterInterface $router
-     * @param TemplateRendererInterface $template
-     * @param AuthenticationService $authenticationService
-     *
      * @Inject({
      *     RouterInterface::class,
      *     TemplateRendererInterface::class,
@@ -40,14 +31,11 @@ class DashboardController extends AbstractActionController
         TemplateRendererInterface $template,
         AuthenticationService $authenticationService
     ) {
-        $this->router = $router;
-        $this->template = $template;
+        $this->router                = $router;
+        $this->template              = $template;
         $this->authenticationService = $authenticationService;
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function indexAction(): ResponseInterface
     {
         return new HtmlResponse($this->template->render('app::dashboard'));

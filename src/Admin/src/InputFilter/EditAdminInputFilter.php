@@ -14,15 +14,8 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
-/**
- * Class EditAdminInputFilter
- * @package Frontend\Admin\InputFilter
- */
 class EditAdminInputFilter extends InputFilter
 {
-    /**
-     * @return void
-     */
     public function init(): void
     {
         $identity = new Input('identity');
@@ -30,8 +23,8 @@ class EditAdminInputFilter extends InputFilter
         $identity->getFilterChain()->attachByName(StringTrim::class);
         $identity->getValidatorChain()->attachByName(NotEmpty::class);
         $identity->getValidatorChain()->attachByName(StringLength::class, [
-            'min' => 3,
-            'max' => 100,
+            'min'     => 3,
+            'max'     => 100,
             'message' => '<b>Identity</b> must have between 3 and 100 characters',
         ]);
         $identity->getValidatorChain()->attachByName(Regex::class, [
@@ -45,7 +38,7 @@ class EditAdminInputFilter extends InputFilter
         $lastName->getFilterChain()->attachByName(StringTrim::class);
         $lastName->getValidatorChain()->attachByName(NotEmpty::class);
         $lastName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
+            'max'     => 150,
             'message' => '<b>Last Name</b> must max 150 characters',
         ]);
         $this->add($lastName);
@@ -55,7 +48,7 @@ class EditAdminInputFilter extends InputFilter
         $firstName->getFilterChain()->attachByName(StringTrim::class);
         $firstName->getValidatorChain()->attachByName(NotEmpty::class);
         $firstName->getValidatorChain()->attachByName(StringLength::class, [
-            'max' => 150,
+            'max'     => 150,
             'message' => '<b>FirstName </b> must max 150 characters',
         ]);
         $this->add($firstName);
@@ -66,8 +59,8 @@ class EditAdminInputFilter extends InputFilter
         $status->getValidatorChain()->attachByName(InArray::class, [
             'haystack' => [
                 Admin::STATUS_ACTIVE,
-                Admin::STATUS_INACTIVE
-            ]
+                Admin::STATUS_INACTIVE,
+            ],
         ]);
         $this->add($status);
 
@@ -76,8 +69,8 @@ class EditAdminInputFilter extends InputFilter
         $password->getFilterChain()->attachByName(StringTrim::class);
         $password->getValidatorChain()->attachByName(NotEmpty::class);
         $password->getValidatorChain()->attachByName(StringLength::class, [
-            'min' => 8,
-            'max' => 150,
+            'min'     => 8,
+            'max'     => 150,
             'message' => '<b>Password</b> must have between 8 and 150 characters',
         ]);
         $this->add($password);
@@ -87,12 +80,12 @@ class EditAdminInputFilter extends InputFilter
         $passwordConfirm->getFilterChain()->attachByName(StringTrim::class);
         $passwordConfirm->getValidatorChain()->attachByName(NotEmpty::class);
         $passwordConfirm->getValidatorChain()->attachByName(StringLength::class, [
-            'min' => 8,
-            'max' => 150,
+            'min'     => 8,
+            'max'     => 150,
             'message' => '<b>Confirm Password</b> must have between 8 and 150 characters',
         ]);
         $passwordConfirm->getValidatorChain()->attachByName(Identical::class, [
-            'token' => 'password',
+            'token'   => 'password',
             'message' => '<b>Password confirm </b> does not match',
         ]);
         $this->add($passwordConfirm);
@@ -101,7 +94,7 @@ class EditAdminInputFilter extends InputFilter
         $roles->setRequired(true);
         $roles->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message' => 'Please select at least one role',
+            'message'                => 'Please select at least one role',
         ]);
         $this->add($roles);
     }

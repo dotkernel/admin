@@ -9,18 +9,10 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Class EntityListenerResolver
- * @package Frontend\App\Resolver
- */
 class EntityListenerResolver extends DefaultEntityListenerResolver
 {
     protected ContainerInterface $container;
 
-    /**
-     * EntityListenerResolver constructor.
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -28,7 +20,6 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
 
     /**
      * @param string $className
-     * @return object
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

@@ -11,21 +11,14 @@ use Frontend\App\Common\UuidAwareInterface;
 use Frontend\App\Common\UuidAwareTrait;
 use Frontend\App\Common\UuidOrderedTimeGenerator;
 
-/**
- * Class Base
- * @package Frontend\App\Entity
- */
 abstract class AbstractEntity implements UuidAwareInterface, TimestampAwareInterface
 {
-    use UuidAwareTrait;
     use TimestampAwareTrait;
+    use UuidAwareTrait;
 
-    /**
-     * AbstractEntity constructor.
-     */
     public function __construct()
     {
-        $this->uuid = UuidOrderedTimeGenerator::generateUuid();
+        $this->uuid    = UuidOrderedTimeGenerator::generateUuid();
         $this->created = new DateTimeImmutable();
         $this->updated = new DateTimeImmutable();
     }
