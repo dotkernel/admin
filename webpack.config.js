@@ -46,18 +46,21 @@ const pathsToNuke = [
 
 // Include npm modules
 const path = require('path');
-const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
+
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
+
 
 
 // Prepare plugin to extract styles into a css file
 // instead of a javascript file
 
 // dynamically build webpack entries based on registered app modules
-let entries = {};
+let entries = {
+    app: []
+};
 let copyImages = [];
 let rules = generateBaseRules();
 
@@ -69,10 +72,10 @@ let rules = generateBaseRules();
  */
 appModules.forEach(function (appModule) {
     if (appModule.js === true) {
-        entries['js/' + appModule.name + '.js'] = appModule.assets_path + '/js/index.js';
+        entries.app.push(appModule.assets_path + '/js/index.js')
     }
     if (appModule.styles === true) {
-        entries['css/' + appModule.name + '.css'] = appModule.assets_path + '/scss/index.scss';
+        entries.app.push(appModule.assets_path + '/scss/index.scss')
     }
     if (appModule.images === true) {
         copyImages.push({ from: appModule.assets_path + '/images', to: 'images/' + appModule.name });
@@ -83,11 +86,8 @@ appModules.forEach(function (appModule) {
                 path.resolve(__dirname, './src/' + appModule.assets_path)
             ],
             use: [
-                // As SVG may count as both font or image
-                // we will not treat any file in a folder
-                // with the name of font(s) as an image
-                'file-loader?name=images/' + appModule.name + '/[name].[ext]'
-            ]
+                {loader: 'file-loader'}
+            ],
         })
     }
 });
@@ -114,7 +114,7 @@ module.exports = {
     // The publicPath is what it'll rewrite css relative urls to use.
     // The path is where it'll save files too
     output: {
-        filename: '[name]',
+        filename: './js/[name].js',
         publicPath: '/', // URL root
         path: path.resolve(__dirname, './public/') // Save-file root
     },
@@ -131,7 +131,9 @@ module.exports = {
     },
 
     plugins: [
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: './css/[name].css'
+        }),
         // Nuke the assets folder
         // This will only be run on production
         new CleanWebpackPlugin({
@@ -145,7 +147,12 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: copyImages
         }),
-    ]
+    ],
+    optimization: {
+    minimizer: [new TerserPlugin({
+        extractComments: false,
+        })],
+    },
 };
 
 /*
@@ -167,7 +174,7 @@ function generateBaseRules()
                     sourceMaps: process.env.NODE_ENV === "development"
                 },
             }],
-        },
+    },
         {
             test: /\.tsx?$/,
             exclude: [/node_modules/],
@@ -177,7 +184,7 @@ function generateBaseRules()
                     sourceMap: process.env.NODE_ENV === "development",
                 }
             }]
-        },
+    },
         {
             test: /\.(css|sass|scss)$/,
             use: [
@@ -188,19 +195,15 @@ function generateBaseRules()
                         url: true,
                         sourceMap: process.env.NODE_ENV === "development"
                     }
-                },
+            },
                 {
                     loader: 'sass-loader',
                     options: {
                         sourceMap: true
                     }
-                }
+            }
             ]
-        },
-//        {
-//            test: /\.scss$/,
-//            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-//        },
+    },
         {
             test: /\.(png|jpg|gif)$/,
             include: [
@@ -209,7 +212,7 @@ function generateBaseRules()
             use: [
                 'file-loader?name=images/[name].[ext]'
             ]
-        },
+    },
         {
             test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
             exclude: [/images?|img/],
@@ -219,6 +222,6 @@ function generateBaseRules()
                 // with the name image(s) or img as a font
                 'file-loader?name=fonts/[name].[ext]'
             ]
-        }
+    }
     ];
 }
