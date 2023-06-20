@@ -20,7 +20,7 @@
 
                     {% if page.hasChildren() %}
                         {% if depth == 0 %}
-                            <div class="submenu master-tooltip clearfix" data-toggle="collapse" href="#sub-item-{{ loop.index }}" title="{{ page.getOption('label') }}">
+                            <div class="submenu master-tooltip clearfix" data-bs-toggle="collapse" href="#sub-item-{{ loop.index }}" title="{{ page.getOption('label') }}">
                                 <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
                                 <div class="item-label master-tooltip" title="{{ page.getOption('label') }}">{{ page.getOption('label') }}</div>
                                 <i class="fa fa-chevron-circle-down pull-right"></i>

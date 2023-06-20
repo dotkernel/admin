@@ -1,4 +1,5 @@
 window.chart = require('chart.js');
+import Chart from 'chart.js/auto';
 
 var randomScalingFactor = function () {
     return Math.round(Math.random() * 1000)
