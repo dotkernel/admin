@@ -5,18 +5,12 @@ declare(strict_types=1);
 namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Frontend\App\Repository\AbstractRepository;
 use Frontend\Admin\Entity\AdminRole;
+use Frontend\App\Repository\AbstractRepository;
 
-/**
- * Class AdminRoleRepository
- * @package Frontend\Admin\Repository
- */
 class AdminRoleRepository extends AbstractRepository
 {
     /**
-     * @param string $uuid
-     * @return AdminRole|null
      * @throws NonUniqueResultException
      */
     public function getRole(string $uuid): ?AdminRole
@@ -27,8 +21,6 @@ class AdminRoleRepository extends AbstractRepository
     }
 
     /**
-     * @param string $name
-     * @return AdminRole|null
      * @throws NonUniqueResultException
      */
     public function findByName(string $name): ?AdminRole

@@ -13,24 +13,25 @@ use Frontend\Admin\Entity\AdminRole;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 
-/**
- * Class AuthenticationAdapter
- * @package Frontend\Admin\Adapter
- */
+use function array_key_exists;
+use function array_map;
+use function class_exists;
+use function method_exists;
+use function password_verify;
+use function sprintf;
+use function ucfirst;
+
 class AuthenticationAdapter implements AdapterInterface
 {
     private EntityManager $entityManager;
-    private const METHOD_NOT_EXISTS = "Method %s not found in %s .";
+    private const METHOD_NOT_EXISTS         = "Method %s not found in %s .";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
     private string $identity;
     private string $credential;
     private array $config;
 
     /**
-     * AuthenticationAdapter constructor.
-     * @param EntityManager $entityManager
      * @param array $config
-     *
      * @Inject({
      *     EntityManager::class,
      *     "config.doctrine.authentication"
@@ -39,47 +40,32 @@ class AuthenticationAdapter implements AdapterInterface
     public function __construct(EntityManager $entityManager, array $config)
     {
         $this->entityManager = $entityManager;
-        $this->config = $config;
+        $this->config        = $config;
     }
 
-    /**
-     * @param string $identity
-     * @return self
-     */
     public function setIdentity(string $identity): self
     {
         $this->identity = $identity;
         return $this;
     }
 
-    /**
-     * @param string $credential
-     * @return self
-     */
     public function setCredential(string $credential): self
     {
         $this->credential = $credential;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     private function getIdentity(): string
     {
         return $this->identity;
     }
 
-    /**
-     * @return string
-     */
     private function getCredential(): string
     {
         return $this->credential;
     }
 
     /**
-     * @return Result
      * @throws Exception
      */
     public function authenticate(): Result
@@ -92,7 +78,7 @@ class AuthenticationAdapter implements AdapterInterface
 
         /** @var Admin $identityClass */
         $identityClass = $repository->findOneBy([
-            $this->config['orm_default']['identity_property'] => $this->getIdentity()
+            $this->config['orm_default']['identity_property'] => $this->getIdentity(),
         ]);
 
         if (null === $identityClass) {
@@ -162,7 +148,7 @@ class AuthenticationAdapter implements AdapterInterface
             }, $identityClass->getRoles()),
             [
                 'firstName' => $identityClass->getFirstName(),
-                'lastName' => $identityClass->getLastName()
+                'lastName'  => $identityClass->getLastName(),
             ]
         );
 
@@ -199,17 +185,15 @@ class AuthenticationAdapter implements AdapterInterface
     }
 
     /**
-     * @param $identityClass
-     * @param string $methodName
      * @throws Exception
      */
-    private function checkMethod($identityClass, string $methodName): void
+    private function checkMethod(Admin $identityClass, string $methodName): void
     {
         if (! method_exists($identityClass, $methodName)) {
             throw new Exception(sprintf(
                 self::METHOD_NOT_EXISTS,
                 $methodName,
-                get_class($identityClass)
+                $identityClass::class
             ));
         }
     }
