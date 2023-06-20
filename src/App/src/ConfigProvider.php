@@ -28,7 +28,6 @@ class ConfigProvider
      *
      * To add a bit of a structure, each section is defined in a separate
      * method which returns an array with its configuration.
-     *
      */
     public function __invoke(): array
     {
@@ -48,19 +47,19 @@ class ConfigProvider
             'delegators' => [
                 Application::class => [
                     RoutesDelegator::class,
-                    \Frontend\Admin\RoutesDelegator::class
-                ]
+                    \Frontend\Admin\RoutesDelegator::class,
+                ],
             ],
             'factories'  => [
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
-                DashboardController::class => AnnotatedServiceFactory::class,
-                PluginManager::class => PluginManagerFactory::class,
-                FormsPlugin::class => FormsPluginFactory::class
+                DashboardController::class    => AnnotatedServiceFactory::class,
+                PluginManager::class          => PluginManagerFactory::class,
+                FormsPlugin::class            => FormsPluginFactory::class,
             ],
-            'aliases' => [
-                EntityManager::class => 'doctrine.entity_manager.orm_default',
-                EntityManagerInterface::class => 'doctrine.entity_manager.default'
-            ]
+            'aliases'    => [
+                EntityManager::class          => 'doctrine.entity_manager.orm_default',
+                EntityManagerInterface::class => 'doctrine.entity_manager.default',
+            ],
         ];
     }
 
@@ -73,8 +72,8 @@ class ConfigProvider
             'configuration' => [
                 'orm_default' => [
                     'entity_listener_resolver' => EntityListenerResolver::class,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -85,10 +84,10 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'app' => [__DIR__ . '/../templates/app'],
-                'error' => [__DIR__ . '/../templates/error'],
-                'layout' => [__DIR__ . '/../templates/layout'],
-                'partial' => [__DIR__ . '/../templates/partial'],
+                'app'      => [__DIR__ . '/../templates/app'],
+                'error'    => [__DIR__ . '/../templates/error'],
+                'layout'   => [__DIR__ . '/../templates/layout'],
+                'partial'  => [__DIR__ . '/../templates/partial'],
                 'language' => [__DIR__ . '/../templates/language'],
             ],
         ];

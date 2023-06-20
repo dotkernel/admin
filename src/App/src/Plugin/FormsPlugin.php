@@ -15,41 +15,33 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-/**
- * Class FormsPlugin
- * @package Frontend\App\Plugin
- */
+use function array_merge;
+use function is_array;
+use function is_string;
+
 class FormsPlugin implements PluginInterface
 {
     protected FormElementManager $formElementManager;
     protected ContainerInterface $container;
     protected ?FlashMessengerInterface $flashMessenger;
 
-    /**
-     * FormsPlugin constructor.
-     * @param FormElementManager $formManager
-     * @param ContainerInterface $container
-     * @param FlashMessengerInterface|null $flashMessenger
-     */
     public function __construct(
         FormElementManager $formManager,
         ContainerInterface $container,
-        FlashMessengerInterface $flashMessenger = null
+        ?FlashMessengerInterface $flashMessenger = null
     ) {
         $this->formElementManager = $formManager;
-        $this->container = $container;
-        $this->flashMessenger = $flashMessenger;
+        $this->container          = $container;
+        $this->flashMessenger     = $flashMessenger;
     }
 
     /**
-     * @param string|null $name
-     * @return mixed
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(string $name = null): mixed
+    public function __invoke(?string $name = null): mixed
     {
-        if (is_null($name)) {
+        if ($name === null) {
             return $this;
         }
 
@@ -62,7 +54,7 @@ class FormsPlugin implements PluginInterface
             $result = $this->formElementManager->get($name);
         }
 
-        if (!$result) {
+        if (! $result) {
             throw new RuntimeException(
                 "Form, fieldset or element with name $result could not be created. ' .
                 'Are you sure you registered it in the form manager?"
@@ -76,16 +68,13 @@ class FormsPlugin implements PluginInterface
         return $result;
     }
 
-    /**
-     * @param Form $form
-     */
     public function restoreState(Form $form): void
     {
         if ($this->flashMessenger instanceof FlashMessengerInterface) {
-            $dataKey = $form->getName() . '_data';
+            $dataKey     = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
-            $data = $this->flashMessenger->getData($dataKey) ?: [];
+            $data     = $this->flashMessenger->getData($dataKey) ?: [];
             $messages = $this->flashMessenger->getData($messagesKey) ?: [];
 
             $form->setData($data);
@@ -93,13 +82,10 @@ class FormsPlugin implements PluginInterface
         }
     }
 
-    /**
-     * @param Form $form
-     */
     public function saveState(Form $form): void
     {
         if ($this->flashMessenger instanceof FlashMessengerInterface) {
-            $dataKey = $form->getName() . '_data';
+            $dataKey     = $form->getName() . '_data';
             $messagesKey = $form->getName() . '_messages';
 
             $this->flashMessenger->addData($dataKey, $form->getData(FormInterface::VALUES_AS_ARRAY));
@@ -108,7 +94,6 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param Form $form
      * @return array
      */
     public function getMessages(Form $form): array
@@ -119,14 +104,12 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param Form $form
-     * @return string
      * @psalm-suppress InvalidArgument
      */
     public function getMessagesAsString(Form $form): string
     {
         $formMessages = $form->getMessages();
-        $messages = '';
+        $messages     = '';
         foreach ($formMessages as $message) {
             if (is_array($message)) {
                 foreach ($message as $m) {
@@ -169,7 +152,6 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param Form $form
      * @return array
      */
     public function getErrors(Form $form): array
@@ -189,7 +171,7 @@ class FormsPlugin implements PluginInterface
         $errors = [];
         foreach ($formMessages as $key => $message) {
             if (is_array($message)) {
-                if (!isset($errors[$key])) {
+                if (! isset($errors[$key])) {
                     $errors[$key] = [];
                 }
 

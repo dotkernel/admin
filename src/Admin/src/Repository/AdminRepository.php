@@ -7,24 +7,16 @@ namespace Frontend\Admin\Repository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
-use Frontend\App\Repository\AbstractRepository;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
+use Frontend\App\Repository\AbstractRepository;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Throwable;
 
-/**
- * Class AdminRepository
- * @package Frontend\Admin\Repository
- */
 class AdminRepository extends AbstractRepository
 {
     protected int $cacheLifetime = 0;
 
-    /**
-     * @param Admin $admin
-     * @return Admin
-     */
     public function saveAdmin(Admin $admin): Admin
     {
         $this->getEntityManager()->persist($admin);
@@ -33,10 +25,6 @@ class AdminRepository extends AbstractRepository
         return $admin;
     }
 
-    /**
-     * @param AdminLogin $adminLogin
-     * @return AdminLogin
-     */
     public function saveAdminVisit(AdminLogin $adminLogin): AdminLogin
     {
         $this->getEntityManager()->persist($adminLogin);
@@ -45,20 +33,12 @@ class AdminRepository extends AbstractRepository
         return $adminLogin;
     }
 
-    /**
-     * @param Admin $admin
-     * @return void
-     */
     public function deleteAdmin(Admin $admin): void
     {
         $this->getEntityManager()->remove($admin);
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param string $identity
-     * @return bool
-     */
     public function exists(string $identity): bool
     {
         if (empty($identity)) {
@@ -77,18 +57,10 @@ class AdminRepository extends AbstractRepository
         return $result instanceof Admin;
     }
 
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @param string|null $search
-     * @param string $sort
-     * @param string $order
-     * @return float|int|mixed|string
-     */
     public function getAdmins(
         int $offset = 0,
         int $limit = 30,
-        string $search = null,
+        ?string $search = null,
         string $sort = 'created',
         string $order = 'desc'
     ): mixed {
@@ -100,7 +72,7 @@ class AdminRepository extends AbstractRepository
             ->setMaxResults($limit)
             ->orderBy('admin.' . $sort, $order);
 
-        if (!is_null($search)) {
+        if (! empty($search)) {
             $qb->andWhere($qb->expr()->like('admin.identity', ':search'))
                 ->setParameter('search', '%' . $search . '%');
         }
@@ -109,10 +81,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param string $sort
-     * @param string $order
      * @return AdminLogin[]
      */
     public function getAdminLogins(
@@ -133,12 +101,10 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @param string|null $search
-     * @return float|int|mixed|string
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function countAdmins(string $search = null): mixed
+    public function countAdmins(?string $search = null): mixed
     {
         if (empty($search)) {
             return $this->countAllAdmins();
@@ -154,7 +120,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @return mixed
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -168,7 +133,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @return float|int|mixed|string
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -181,16 +145,12 @@ class AdminRepository extends AbstractRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @return int
-     */
     public function getCacheLifetime(): int
     {
         return $this->cacheLifetime;
     }
 
     /**
-     * @param int $cacheLifetime
      * @return AdminRepository
      */
     public function setCacheLifetime(int $cacheLifetime): self
@@ -202,7 +162,6 @@ class AdminRepository extends AbstractRepository
 
     /**
      * @param array $params
-     * @return Admin|null
      */
     public function findAdminBy(array $params): ?Admin
     {
@@ -221,27 +180,17 @@ class AdminRepository extends AbstractRepository
         }
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param string|null $uuid
-     * @return void
-     */
     public function addUuidFilter(QueryBuilder $qb, ?string $uuid): void
     {
-        if (!empty($uuid)) {
+        if (! empty($uuid)) {
             $qb->andWhere('admin.uuid = :admin_uuid')
                 ->setParameter('admin_uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
         }
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param string|null $identity
-     * @return void
-     */
     public function addIdentityFilter(QueryBuilder $qb, ?string $identity): void
     {
-        if (!empty($identity)) {
+        if (! empty($identity)) {
             $qb->andWhere('admin.identity = :admin_identity')->setParameter('admin_identity', $identity);
         }
     }

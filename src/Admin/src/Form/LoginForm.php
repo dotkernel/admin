@@ -11,16 +11,11 @@ use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 
-/**
- * Class LoginForm
- * @package Frontend\Admin\Form
- */
 class LoginForm extends Form
 {
     protected InputFilterInterface $inputFilter;
 
     /**
-     * LoginForm constructor.
      * @param null $name
      * @param array $options
      */
@@ -34,49 +29,43 @@ class LoginForm extends Form
         $this->inputFilter->init();
     }
 
-    /**
-     * @return void
-     */
     public function init(): void
     {
         $this->add([
-            'name' => 'username',
-            'options' => [
-                'label' => 'Username'
+            'name'       => 'username',
+            'options'    => [
+                'label' => 'Username',
             ],
             'attributes' => [
                 'placeholder' => 'Username',
-                'class' => 'form-control'
+                'class'       => 'form-control',
             ],
-            'type' => Text::class
+            'type'       => Text::class,
         ]);
 
         $this->add([
-            'name' => 'password',
-            'options' => [
-                'label' => 'Password'
+            'name'       => 'password',
+            'options'    => [
+                'label' => 'Password',
             ],
             'attributes' => [
                 'placeholder' => 'Password',
-                'class' => 'form-control'
+                'class'       => 'form-control',
             ],
-            'type' => Password::class
+            'type'       => Password::class,
         ]);
 
         $this->add([
-            'name' => 'submit',
+            'name'       => 'submit',
             'attributes' => [
-                'type' => 'submit',
+                'type'  => 'submit',
                 'value' => 'Log in',
-                'class' => 'btn btn-primary btn-block'
+                'class' => 'btn btn-primary btn-block',
             ],
-            'type' => Submit::class
+            'type'       => Submit::class,
         ]);
     }
 
-    /**
-     * @return InputFilterInterface
-     */
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;

@@ -8,19 +8,11 @@ use Frontend\Admin\InputFilter\AccountInputFilter;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 
-/**
- * Class AccountForm
- * @package Frontend\Admin\Form
- */
 class AccountForm extends Form
 {
     protected InputFilterInterface $inputFilter;
 
-    /**
-     * @param $name
-     * @param array $options
-     */
-    public function __construct($name = null, array $options = [])
+    public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
 
@@ -30,66 +22,60 @@ class AccountForm extends Form
         $this->inputFilter->init();
     }
 
-    /**
-     * @return void
-     */
     public function init(): void
     {
         $this->add([
-            'name' => 'identity',
-            'type' => 'text',
-            'options' => [
-                'label' => 'Identity'
+            'name'       => 'identity',
+            'type'       => 'text',
+            'options'    => [
+                'label' => 'Identity',
             ],
             'attributes' => [
-                'placeholder' => 'Identity...'
-            ]
+                'placeholder' => 'Identity...',
+            ],
         ], ['priority' => -9]);
 
         $this->add([
-            'name' => 'firstName',
-            'type' => 'text',
-            'options' => [
-                'label' => 'First name'
+            'name'       => 'firstName',
+            'type'       => 'text',
+            'options'    => [
+                'label' => 'First name',
             ],
             'attributes' => [
-                'placeholder' => 'First name...'
-            ]
+                'placeholder' => 'First name...',
+            ],
         ], ['priority' => -10]);
 
         $this->add([
-            'name' => 'lastName',
-            'type' => 'text',
-            'options' => [
-                'label' => 'Last name'
+            'name'       => 'lastName',
+            'type'       => 'text',
+            'options'    => [
+                'label' => 'Last name',
             ],
             'attributes' => [
-                'placeholder' => 'Last name...'
-            ]
+                'placeholder' => 'Last name...',
+            ],
         ], ['priority' => -11]);
 
         $this->add([
-            'name' => 'account_csrf',
-            'type' => 'csrf',
+            'name'    => 'account_csrf',
+            'type'    => 'csrf',
             'options' => [
                 'timeout' => 3600,
-                'message' => 'The form CSRF has expired and was refreshed. Please resend the form'
-            ]
+                'message' => 'The form CSRF has expired and was refreshed. Please resend the form',
+            ],
         ]);
 
         $this->add([
-            'name' => 'submit',
-            'type' => 'submit',
+            'name'       => 'submit',
+            'type'       => 'submit',
             'attributes' => [
-                'type' => 'submit',
-                'value' => 'Update account'
-            ]
+                'type'  => 'submit',
+                'value' => 'Update account',
+            ],
         ], ['priority' => -100]);
     }
 
-    /**
-     * @return InputFilterInterface
-     */
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
