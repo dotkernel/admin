@@ -167,12 +167,6 @@ function generateBaseRules()
             exclude: [/node_modules/],
             use: [{
                 loader: 'babel-loader',
-                options: {
-                    presets: ['babel-preset-env'],
-                    comments: process.env.NODE_ENV === "development",
-                    minified: process.env.NODE_ENV === "development",
-                    sourceMaps: process.env.NODE_ENV === "development"
-                },
             }],
     },
         {
