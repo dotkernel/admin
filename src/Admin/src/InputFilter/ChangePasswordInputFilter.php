@@ -17,7 +17,7 @@ class ChangePasswordInputFilter extends InputFilter
     {
         $currentPassword = new Input('currentPassword');
         $currentPassword->setRequired(true);
-        $currentPassword->getFilterChain()->attach(StringTrim::class);
+        $currentPassword->getFilterChain()->attachByName(StringTrim::class);
         $currentPassword->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
             'message'                => '<b> Current Password </b> is required and cannot be empty',
