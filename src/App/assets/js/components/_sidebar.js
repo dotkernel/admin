@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var sideslider = $('[data-toggle=collapse-side]'),
+    var sideslider = $('[data-bs-toggle=collapse-side]'),
         sel = sideslider.attr('data-target'),
         sel2 = sideslider.attr('data-target-2');
 
