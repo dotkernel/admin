@@ -1,16 +1,10 @@
 <?php
 
-/**
- * Local test configuration.
- *
- * Overwrites the database connection to use an in memory database
- */
-
 declare(strict_types=1);
 
-use ApiTest\Functional\AbstractFunctionalTest;
+use FrontendTest\Common\TestMode;
 
-if (! AbstractFunctionalTest::isTestMode()) {
+if (! TestMode::isEnabled()) {
     return [];
 }
 
