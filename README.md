@@ -12,6 +12,7 @@ DotKernel web starter package suitable for admin applications.
 
 [![Build Static](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml/badge.svg?branch=4.0)](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml)
 [![Build Static](https://github.com/dotkernel/admin/actions/workflows/run-tests.yml/badge.svg?branch=4.0)](https://github.com/dotkernel/admin/actions/workflows/run-tests.yml)
+[![codecov](https://codecov.io/gh/dotkernel/admin/graph/badge.svg?token=BQS43UWAM4)](https://codecov.io/gh/dotkernel/admin)
 
 [![SymfonyInsight](https://insight.symfony.com/projects/6a7ecfc1-a0ed-4901-96ac-d0ff61f7b55f/big.svg)](https://insight.symfony.com/projects/6a7ecfc1-a0ed-4901-96ac-d0ff61f7b55f)
 
