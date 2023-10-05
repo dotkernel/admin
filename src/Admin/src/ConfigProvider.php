@@ -22,22 +22,16 @@ use Laminas\Form\ElementFactory;
 
 class ConfigProvider
 {
-    /**
-     * @return array
-     */
     public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencies(),
             'templates'    => $this->getTemplates(),
-            'dot_form'     => $this->getForms(),
+            'form'         => $this->getForms(),
             'doctrine'     => $this->getDoctrineConfig(),
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return [
@@ -60,9 +54,6 @@ class ConfigProvider
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getTemplates(): array
     {
         return [
@@ -72,9 +63,6 @@ class ConfigProvider
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getForms(): array
     {
         return [
@@ -89,9 +77,6 @@ class ConfigProvider
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getDoctrineConfig(): array
     {
         return [

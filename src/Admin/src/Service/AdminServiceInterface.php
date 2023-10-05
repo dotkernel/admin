@@ -7,15 +7,10 @@ namespace Frontend\Admin\Service;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Repository\AdminRepository;
-use MaxMind\Db\Reader\InvalidDatabaseException;
 
-/**
- * Interface AdminServiceInterface
- */
 interface AdminServiceInterface
 {
     public function getAdminRepository(): AdminRepository|EntityRepository;
@@ -23,8 +18,6 @@ interface AdminServiceInterface
     public function exists(string $identity = ''): bool;
 
     /**
-     * @return array
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getAdmins(
@@ -36,8 +29,6 @@ interface AdminServiceInterface
     ): array;
 
     /**
-     * @return array
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getAdminLogins(
@@ -48,31 +39,20 @@ interface AdminServiceInterface
     ): array;
 
     /**
-     * @param array $data
      * @throws NonUniqueResultException
      * @throws ORMException
      */
     public function createAdmin(array $data): Admin;
 
     /**
-     * @param array $data
+     * @throws NonUniqueResultException
      * @throws ORMException
      */
     public function updateAdmin(Admin $admin, array $data): Admin;
 
-    /**
-     * @param array $serverParams
-     * @throws InvalidDatabaseException
-     */
     public function logAdminVisit(array $serverParams, string $name): AdminLogin;
 
-    /**
-     * @param array $params
-     */
     public function findAdminBy(array $params): ?Admin;
 
-    /**
-     * @return array
-     */
     public function getAdminFormProcessedRoles(): array;
 }

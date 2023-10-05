@@ -6,7 +6,7 @@ namespace Frontend\App\Controller;
 
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
-use Laminas\Authentication\AuthenticationService;
+use Frontend\App\Common\ServerRequestAwareTrait;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Router\RouterInterface;
@@ -15,25 +15,20 @@ use Psr\Http\Message\ResponseInterface;
 
 class DashboardController extends AbstractActionController
 {
-    protected RouterInterface $router;
-    protected TemplateRendererInterface $template;
-    protected AuthenticationServiceInterface $authenticationService;
+    use ServerRequestAwareTrait;
 
     /**
      * @Inject({
      *     RouterInterface::class,
      *     TemplateRendererInterface::class,
-     *     AuthenticationService::class
+     *     AuthenticationServiceInterface::class
      * })
      */
     public function __construct(
-        RouterInterface $router,
-        TemplateRendererInterface $template,
-        AuthenticationService $authenticationService
+        protected RouterInterface $router,
+        protected TemplateRendererInterface $template,
+        protected AuthenticationServiceInterface $authenticationService
     ) {
-        $this->router                = $router;
-        $this->template              = $template;
-        $this->authenticationService = $authenticationService;
     }
 
     public function indexAction(): ResponseInterface

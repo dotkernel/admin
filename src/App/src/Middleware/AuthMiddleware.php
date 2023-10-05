@@ -18,21 +18,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthMiddleware implements MiddlewareInterface
 {
-    protected RouterInterface $router;
-    protected FlashMessengerInterface $messenger;
-    protected GuardsProviderInterface $guardProvider;
-    protected RbacGuardOptions $options;
-
     public function __construct(
-        RouterInterface $router,
-        FlashMessengerInterface $messenger,
-        GuardsProviderInterface $guardProvider,
-        RbacGuardOptions $options
+        protected RouterInterface $router,
+        protected FlashMessengerInterface $messenger,
+        protected GuardsProviderInterface $guardProvider,
+        protected RbacGuardOptions $options
     ) {
-        $this->router        = $router;
-        $this->messenger     = $messenger;
-        $this->guardProvider = $guardProvider;
-        $this->options       = $options;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

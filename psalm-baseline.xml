@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.15.0@086b94371304750d1c673315321a55d15fc59015">
+    <file src="src/Admin/src/Controller/AdminController.php">
+        <UndefinedInterfaceMethod>
+            <code>getAdapter</code>
+            <code>getStorage</code>
+        </UndefinedInterfaceMethod>
+    </file>
+    <file src="src/App/src/Common/UuidOrderedTimeGenerator.php">
+        <UndefinedInterfaceMethod>
+            <code>getUuidBuilder</code>
+            <code>setCodec</code>
+        </UndefinedInterfaceMethod>
+    </file>
+    <file src="src/Admin/src/Entity/AdminIdentity.php">
+        <LessSpecificImplementedReturnType>
+            <code>iterable</code>
+        </LessSpecificImplementedReturnType>
+    </file>
+</files>

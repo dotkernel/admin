@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Frontend\Admin\FormData;
 
 use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminRole;
 
 class AdminFormData
 {
@@ -23,9 +22,8 @@ class AdminFormData
         return $this->roles;
     }
 
-    public function fromEntity(Admin $admin): void
+    public function fromEntity(Admin $admin): self
     {
-        /** @var AdminRole $role */
         foreach ($admin->getRoles() as $role) {
             $this->roles[] = $role->getUuid()->toString();
         }
@@ -33,6 +31,8 @@ class AdminFormData
         $this->firstName = $admin->getFirstName();
         $this->lastName  = $admin->getLastName();
         $this->status    = $admin->getStatus();
+
+        return $this;
     }
 
     /**

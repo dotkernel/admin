@@ -13,9 +13,6 @@ use const FILTER_VALIDATE_IP;
 
 class IpService
 {
-    /**
-     * @param array $server
-     */
     public static function getUserIp(array $server): mixed
     {
         if (! empty($server)) {
@@ -48,14 +45,14 @@ class IpService
      */
     public static function validIp(string $ip): bool|string
     {
-        // special cases that return private are the loopback address and IPv6 addresses
+        // special cases that return private are the loop-back address and IPv6 addresses
         if ($ip === '127.0.0.1' || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             return 'private';
         }
 
         // check if the ip is valid
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
-            // check wether it's private or not
+            // check whether it's private or not
             if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
                 return 'public';
             }

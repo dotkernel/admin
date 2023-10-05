@@ -9,6 +9,9 @@ use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\NotEmpty;
 
+/**
+ * @extends InputFilter<object>
+ */
 class LoginInputFilter extends InputFilter
 {
     public function init(): void

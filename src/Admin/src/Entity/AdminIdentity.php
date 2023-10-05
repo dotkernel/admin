@@ -8,23 +8,13 @@ use Mezzio\Authentication\UserInterface;
 
 class AdminIdentity implements UserInterface
 {
-    protected string $uuid     = '';
-    protected string $identity = '';
-    protected string $status   = '';
-    protected array $roles     = [];
-    protected array $details   = [];
-
-    /**
-     * @param array $roles
-     * @param array $details
-     */
-    public function __construct(string $uuid, string $identity, string $status, array $roles = [], array $details = [])
-    {
-        $this->uuid     = $uuid;
-        $this->identity = $identity;
-        $this->status   = $status;
-        $this->roles    = $roles;
-        $this->details  = $details;
+    public function __construct(
+        protected string $uuid,
+        protected string $identity,
+        protected string $status,
+        protected array $roles = [],
+        protected array $details = []
+    ) {
     }
 
     public function getUuid(): string
@@ -44,7 +34,6 @@ class AdminIdentity implements UserInterface
 
     /**
      * @return iterable
-     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function getRoles(): iterable
     {

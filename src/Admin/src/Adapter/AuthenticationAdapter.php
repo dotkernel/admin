@@ -23,24 +23,23 @@ use function ucfirst;
 
 class AuthenticationAdapter implements AdapterInterface
 {
-    private EntityManager $entityManager;
-    private const METHOD_NOT_EXISTS         = "Method %s not found in %s .";
+    private const METHOD_NOT_EXISTS         = "Method %s not found in %s.";
     private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
     private string $identity;
     private string $credential;
     private array $config;
 
     /**
-     * @param array $config
      * @Inject({
      *     EntityManager::class,
      *     "config.doctrine.authentication"
      * })
      */
-    public function __construct(EntityManager $entityManager, array $config)
-    {
-        $this->entityManager = $entityManager;
-        $this->config        = $config;
+    public function __construct(
+        private EntityManager $entityManager,
+        array $config
+    ) {
+        $this->config = $config;
     }
 
     public function setIdentity(string $identity): self
@@ -91,7 +90,7 @@ class AuthenticationAdapter implements AdapterInterface
 
         $getCredential = "get" . ucfirst($this->config['orm_default']['credential_property']);
 
-        /** Check if get credential method exist in the provided identity class */
+        /** Check if the get credential method exists in the provided identity class */
         $this->checkMethod($identityClass, $getCredential);
 
         /** If passwords don't match, return failure response */
@@ -172,7 +171,7 @@ class AuthenticationAdapter implements AdapterInterface
         }
 
         if (! isset($this->config['orm_default']['identity_property'])) {
-            throw new Exception("No or invalid param 'identity_class' provided.");
+            throw new Exception("No or invalid param 'identity_property' provided.");
         }
 
         if (! isset($this->config['orm_default']['credential_property'])) {

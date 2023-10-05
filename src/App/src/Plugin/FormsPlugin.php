@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Frontend\App\Plugin;
 
-use Dot\Controller\Exception\RuntimeException;
 use Dot\Controller\Plugin\PluginInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Dot\Form\Factory\FormAbstractServiceFactory;
-use Dot\Form\FormElementManager;
 use Laminas\Form\Form;
+use Laminas\Form\FormElementManager;
 use Laminas\Form\FormInterface;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 use function array_merge;
 use function is_array;
@@ -21,51 +16,10 @@ use function is_string;
 
 class FormsPlugin implements PluginInterface
 {
-    protected FormElementManager $formElementManager;
-    protected ContainerInterface $container;
-    protected ?FlashMessengerInterface $flashMessenger;
-
     public function __construct(
-        FormElementManager $formManager,
-        ContainerInterface $container,
-        ?FlashMessengerInterface $flashMessenger = null
+        protected FormElementManager $formElementManager,
+        protected ?FlashMessengerInterface $flashMessenger = null
     ) {
-        $this->formElementManager = $formManager;
-        $this->container          = $container;
-        $this->flashMessenger     = $flashMessenger;
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function __invoke(?string $name = null): mixed
-    {
-        if ($name === null) {
-            return $this;
-        }
-
-        $result = null;
-        // check the container first, in case there is a form to get through the abstract factory
-        $abstractFormName = FormAbstractServiceFactory::PREFIX . '.' . $name;
-        if ($this->container->has($abstractFormName)) {
-            $result = $this->container->get($abstractFormName);
-        } elseif ($this->formElementManager->has($name)) {
-            $result = $this->formElementManager->get($name);
-        }
-
-        if (! $result) {
-            throw new RuntimeException(
-                "Form, fieldset or element with name $result could not be created. ' .
-                'Are you sure you registered it in the form manager?"
-            );
-        }
-
-        if ($result instanceof Form) {
-            $this->restoreState($result);
-        }
-
-        return $result;
     }
 
     public function restoreState(Form $form): void
@@ -93,9 +47,6 @@ class FormsPlugin implements PluginInterface
         }
     }
 
-    /**
-     * @return array
-     */
     public function getMessages(Form $form): array
     {
         return $this->processFormMessages(
@@ -103,20 +54,22 @@ class FormsPlugin implements PluginInterface
         );
     }
 
-    /**
-     * @psalm-suppress InvalidArgument
-     */
     public function getMessagesAsString(Form $form): string
     {
-        $formMessages = $form->getMessages();
-        $messages     = '';
+        return $this->formMessagesToString($form->getMessages());
+    }
+
+    private function formMessagesToString(array $formMessages): string
+    {
+        $messages = '';
+
         foreach ($formMessages as $message) {
             if (is_array($message)) {
                 foreach ($message as $m) {
                     if (is_string($m)) {
                         $messages .= $m . '<br>';
                     } elseif (is_array($m)) {
-                        $messages .= $this->getMessagesAsString($m);
+                        $messages .= $this->formMessagesToString($m);
                     }
                 }
             } elseif (is_string($message)) {
@@ -134,6 +87,7 @@ class FormsPlugin implements PluginInterface
     protected function processFormMessages(array $formMessages): array
     {
         $messages = [];
+
         foreach ($formMessages as $message) {
             if (is_array($message)) {
                 foreach ($message as $m) {
@@ -149,44 +103,5 @@ class FormsPlugin implements PluginInterface
         }
 
         return $messages;
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(Form $form): array
-    {
-        return $this->processFormErrors(
-            $form->getMessages()
-        );
-    }
-
-    /**
-     * @param array $formMessages
-     * @psalm-suppress InvalidArrayOffset
-     * @return array
-     */
-    protected function processFormErrors(array $formMessages): array
-    {
-        $errors = [];
-        foreach ($formMessages as $key => $message) {
-            if (is_array($message)) {
-                if (! isset($errors[$key])) {
-                    $errors[$key] = [];
-                }
-
-                foreach ($message as $k => $m) {
-                    if (is_string($m)) {
-                        $errors[$key][] = $m;
-                    } elseif (is_array($m)) {
-                        $errors[$key][$k] = $this->processFormErrors($m);
-                    }
-                }
-            } elseif (is_string($message)) {
-                $errors[] = $message;
-            }
-        }
-
-        return $errors;
     }
 }

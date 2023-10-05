@@ -1,6 +1,6 @@
 clover.xml
 coveralls-upload.json
-phpunit.xml
+.phpunit.result.cache
 .phpcs-cache
 
 # Created by .ignore support plugin (hsz.mobi)

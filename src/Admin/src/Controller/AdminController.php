@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Controller;
 
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\OptimisticLockException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -22,11 +19,10 @@ use Frontend\Admin\Form\LoginForm;
 use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
 use Frontend\Admin\Service\AdminServiceInterface;
-use Frontend\App\Common\ServerRequestTrait;
+use Frontend\App\Common\ServerRequestAwareTrait;
 use Frontend\App\Plugin\FormsPlugin;
-use GeoIp2\Exception\AddressNotFoundException;
-use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\Exception\ExceptionInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -40,15 +36,7 @@ use function password_verify;
 
 class AdminController extends AbstractActionController
 {
-    use ServerRequestTrait;
-
-    protected RouterInterface $router;
-    protected TemplateRendererInterface $template;
-    protected AdminServiceInterface $adminService;
-    protected AuthenticationService $authenticationService;
-    protected FlashMessengerInterface $messenger;
-    protected FormsPlugin $forms;
-    protected AdminForm $adminForm;
+    use ServerRequestAwareTrait;
 
     /**
      * @Inject({
@@ -62,21 +50,14 @@ class AdminController extends AbstractActionController
      * })
      */
     public function __construct(
-        AdminServiceInterface $adminService,
-        RouterInterface $router,
-        TemplateRendererInterface $template,
-        AuthenticationServiceInterface $authenticationService,
-        FlashMessengerInterface $messenger,
-        FormsPlugin $forms,
-        AdminForm $adminForm
+        protected AdminServiceInterface $adminService,
+        protected RouterInterface $router,
+        protected TemplateRendererInterface $template,
+        protected AuthenticationServiceInterface $authenticationService,
+        protected FlashMessengerInterface $messenger,
+        protected FormsPlugin $forms,
+        protected AdminForm $adminForm
     ) {
-        $this->router                = $router;
-        $this->template              = $template;
-        $this->authenticationService = $authenticationService;
-        $this->messenger             = $messenger;
-        $this->forms                 = $forms;
-        $this->adminForm             = $adminForm;
-        $this->adminService          = $adminService;
     }
 
     public function addAction(): ResponseInterface
@@ -122,8 +103,7 @@ class AdminController extends AbstractActionController
         /** @var Admin $admin */
         $admin = $this->adminService->getAdminRepository()->find($uuid);
 
-        $adminFormData = new AdminFormData();
-        $adminFormData->fromEntity($admin);
+        $adminFormData = (new AdminFormData())->fromEntity($admin);
 
         if ($this->isPost()) {
             $this->adminForm->setData($this->getPostParams());
@@ -182,7 +162,6 @@ class AdminController extends AbstractActionController
 
     /**
      * @throws NonUniqueResultException
-     * @throws NoResultException
      */
     public function listAction(): ResponseInterface
     {
@@ -205,9 +184,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws AddressNotFoundException
+     * @throws ExceptionInterface
      * @throws InvalidDatabaseException
      */
     public function loginAction(): ResponseInterface
@@ -350,7 +327,6 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function listLoginsAction(): ResponseInterface

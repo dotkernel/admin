@@ -3,30 +3,24 @@
 declare(strict_types=1);
 
 use Dot\ErrorHandler\ErrorHandlerInterface;
+use Dot\Navigation\NavigationMiddleware;
+use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
+use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
 use Dot\Session\SessionMiddleware;
+use Frontend\App\Middleware\AuthMiddleware;
 use Mezzio\Application;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
 use Mezzio\Helper\UrlHelperMiddleware;
-use Mezzio\MiddlewareFactory;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\ImplicitHeadMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
-use Psr\Container\ContainerInterface;
-use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
-use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
-use Frontend\App\Middleware\AuthMiddleware;
-use Dot\Navigation\NavigationMiddleware;
 
-/**
- * Setup middleware pipeline:
- */
-return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    // The error handler should be the first (most outer) middleware to catch
-    // all Exceptions.
+return function (Application $app): void {
+    // The error handler should be the first (most outer) middleware to catch all Exceptions.
     $app->pipe(ErrorHandlerInterface::class);
     $app->pipe(ServerUrlMiddleware::class);
     $app->pipe(SessionMiddleware::class);
