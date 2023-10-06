@@ -26,70 +26,55 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "extra": {
-        "laminas": {
-            "component-whitelist": [
-                "laminas/laminas-httphandlerrunner"
-            ]
-        },
-        "mezzio": {
-            "component-whitelist": [
-                "mezzio/mezzio",
-                "mezzio/mezzio-helpers",
-                "mezzio/mezzio-router",
-                "mezzio/mezzio-fastroute",
-                "mezzio/mezzio-twigrenderer"
-            ]
-        }
-    },
     "require": {
         "php": "~8.1.0 || ~8.2.0",
         "ext-gettext": "*",
-        "dotkernel/dot-annotated-services": "^4.0.0",
-        "dotkernel/dot-cli": "^3.2.0",
-        "dotkernel/dot-controller": "^3.2.1",
-        "dotkernel/dot-data-fixtures": "^1.0",
-        "dotkernel/dot-errorhandler": "^3.2.0",
-        "dotkernel/dot-flashmessenger": "^3.2.0",
-        "dotkernel/dot-form": "^4.0.1",
-        "dotkernel/dot-geoip": "^3.3.1",
-        "dotkernel/dot-helpers": "^3.2.0",
-        "dotkernel/dot-mail": "~3.4 || ~4.0",
-        "dotkernel/dot-navigation": "^3.2.0",
-        "dotkernel/dot-rbac-guard": "^3.2.1",
-        "dotkernel/dot-session": "^5.2.0",
-        "dotkernel/dot-twigrenderer": "^3.2.1",
-        "dotkernel/dot-user-agent-sniffer": "^3.1.1",
+        "dotkernel/dot-annotated-services": "^4.1.3",
+        "dotkernel/dot-cli": "^3.4.1",
+        "dotkernel/dot-controller": "^3.4.2",
+        "dotkernel/dot-data-fixtures": "^1.1.2",
+        "dotkernel/dot-errorhandler": "^3.3.1",
+        "dotkernel/dot-flashmessenger": "^3.4.1",
+        "dotkernel/dot-geoip": "^3.5.2",
+        "dotkernel/dot-helpers": "^3.4.1",
+        "dotkernel/dot-mail": "^4.1.0",
+        "dotkernel/dot-navigation": "^3.4.1",
+        "dotkernel/dot-rbac-guard": "^3.4.1",
+        "dotkernel/dot-session": "^5.4.1",
+        "dotkernel/dot-twigrenderer": "^3.4.1",
+        "dotkernel/dot-user-agent-sniffer": "^3.3.2",
         "friendsofphp/proxy-manager-lts": "^1.0",
-        "laminas/laminas-component-installer": "^3.0.1",
-        "laminas/laminas-config-aggregator": "^1.7.0",
-        "laminas/laminas-i18n": "^2.15.0",
-        "laminas/laminas-math": "^3.5.0",
-        "mezzio/mezzio": "^3.13.0",
-        "mezzio/mezzio-authorization-rbac": "^1.3.0",
-        "mezzio/mezzio-cors": "^1.3.0",
-        "mezzio/mezzio-fastroute": "^3.5.0",
-        "ramsey/uuid-doctrine": "^1.8.1",
-        "roave/psr-container-doctrine": "^3.5.0"
+        "laminas/laminas-component-installer": "^3.3.0",
+        "laminas/laminas-config-aggregator": "^1.13.0",
+        "laminas/laminas-i18n": "^2.23.0",
+        "laminas/laminas-math": "^3.6.0",
+        "mezzio/mezzio": "^3.17.0",
+        "mezzio/mezzio-authorization-rbac": "^1.6.0",
+        "mezzio/mezzio-cors": "^1.9.0",
+        "mezzio/mezzio-fastroute": "^3.10.0",
+        "ramsey/uuid-doctrine": "^1.8.2",
+        "roave/psr-container-doctrine": "^3.9.0"
     },
     "require-dev": {
-        "filp/whoops": "^2.14",
-        "laminas/laminas-coding-standard": "^2.3",
-        "laminas/laminas-development-mode": "^3.6",
-        "mezzio/mezzio-tooling": "^2.5",
-        "phpunit/phpunit": "^9.5.21",
-        "roave/security-advisories": "dev-master",
-        "vimeo/psalm": "^5.12"
+        "filp/whoops": "^2.15.3",
+        "laminas/laminas-coding-standard": "^2.5.0",
+        "laminas/laminas-development-mode": "^3.11.0",
+        "mezzio/mezzio-tooling": "^2.8.0",
+        "phpunit/phpunit": "^10.3.2",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "^5.15.0"
     },
     "autoload": {
         "psr-4": {
-            "Frontend\\App\\": "src/App/src/",
-            "Frontend\\Admin\\": "src/Admin/src/"
+            "Frontend\\Admin\\": "src/Admin/src/",
+            "Frontend\\App\\": "src/App/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AppTest\\": "test/AppTest/"
+            "FrontendTest\\Common\\": "test/Common",
+            "FrontendTest\\Functional\\": "test/Functional/",
+            "FrontendTest\\Unit\\": "test/Unit"
         }
     },
     "scripts": {
@@ -108,6 +93,7 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
+        "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }

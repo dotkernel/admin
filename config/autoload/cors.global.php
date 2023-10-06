@@ -6,7 +6,7 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => [
+        'allowed_origins'     => [
             /**
              * Leaving this line here makes your application accessible by any origin.
              *
@@ -15,9 +15,13 @@ return [
              */
             ConfigurationInterface::ANY_ORIGIN,
         ],
-        'allowed_headers' => ['Accept', 'Content-Type', 'Authorization'], // Custom headers
-        'allowed_max_age' => '600', // 10 minutes
+        'allowed_headers'     => [
+            'Accept',
+            'Content-Type',
+            'Authorization',
+        ], // Custom headers
+        'allowed_max_age'     => '600', // 10 minutes
         'credentials_allowed' => true, // Allow cookies
-        'exposed_headers' => [], // Tell client that the API will always return this header
+        'exposed_headers'     => [], // Tell client that the API will always return this header
     ],
 ];

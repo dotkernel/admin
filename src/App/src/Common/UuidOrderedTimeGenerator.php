@@ -18,9 +18,6 @@ final class UuidOrderedTimeGenerator
         return self::getFactory()->uuid1();
     }
 
-    /**
-     * @psalm-suppress UndefinedInterfaceMethod
-     */
     private static function getFactory(): UuidFactoryInterface
     {
         self::$factory = clone Uuid::getFactory();

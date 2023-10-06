@@ -6,15 +6,15 @@ return [
     'dot-geoip' => [
         'targetDir' => getcwd() . '/data/geoip',
         'databases' => [
-            'asn' => [
+            'asn'     => [
                 'source' => 'https://download.db-ip.com/free/dbip-asn-lite-{year}-{month}.mmdb.gz',
             ],
-            'city' => [
+            'city'    => [
                 'source' => 'https://download.db-ip.com/free/dbip-city-lite-{year}-{month}.mmdb.gz',
             ],
             'country' => [
                 'source' => 'https://download.db-ip.com/free/dbip-country-lite-{year}-{month}.mmdb.gz',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

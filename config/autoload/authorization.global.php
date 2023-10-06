@@ -3,44 +3,41 @@
 declare(strict_types=1);
 
 return [
-    'dependencies' => [],
+    'dependencies'      => [],
     'dot_authorization' => [
-        'guest_role' => 'guest',
-
+        'guest_role'            => 'guest',
         'role_provider_manager' => [],
-
-        'role_provider' => [
-            'type' => 'InMemory',
+        'role_provider'         => [
+            'type'    => 'InMemory',
             'options' => [
                 'roles' => [
                     'superuser' => [
                         'permissions' => [
                             'authenticated',
                             'premium',
-                        ]
+                        ],
                     ],
-                    'admin' => [
+                    'admin'     => [
                         'permissions' => [
                             'authenticated',
                             'premium',
-                        ]
+                        ],
                     ],
-                    'user' => [
+                    'user'      => [
                         'permissions' => [
                             'authenticated',
                             'premium',
-                        ]
+                        ],
                     ],
-                    'guest' => [
+                    'guest'     => [
                         'permissions' => [
                             'unauthenticated',
-                        ]
-                    ]
-                ]
-            ]
+                        ],
+                    ],
+                ],
+            ],
         ],
-
-        'assertion_manager' => [],
-        'assertions' => [],
-    ]
+        'assertion_manager'     => [],
+        'assertions'            => [],
+    ],
 ];

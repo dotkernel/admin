@@ -17,20 +17,18 @@ use Mezzio\Middleware\ErrorResponseGenerator;
 
 return [
     'dependencies' => [
-        'invokables' => [
-        ],
+        'invokables' => [],
         'factories'  => [
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
-            'Mezzio\Whoops' => Container\WhoopsFactory::class,
-            'Mezzio\WhoopsPageHandler' => Container\WhoopsPageHandlerFactory::class,
+            'Mezzio\Whoops'               => Container\WhoopsFactory::class,
+            'Mezzio\WhoopsPageHandler'    => Container\WhoopsPageHandlerFactory::class,
         ],
     ],
-
-    'whoops' => [
+    'whoops'       => [
         'json_exceptions' => [
-            'display' => true,
+            'display'    => true,
             'show_trace' => true,
-            'ajax_only' => true,
+            'ajax_only'  => true,
         ],
     ],
 ];

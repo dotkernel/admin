@@ -8,14 +8,14 @@ return [
     'doctrine' => [
         'authentication' => [
             'orm_default' => [
-                'object_manager' => 'doctrine.entitymanager.orm_default',
-                'identity_class' => Admin::class,
-                'identity_property' => 'identity',
+                'object_manager'      => 'doctrine.entitymanager.orm_default',
+                'identity_class'      => Admin::class,
+                'identity_property'   => 'identity',
                 'credential_property' => 'password',
                 'credential_callable' => 'Frontend\Admin\Doctrine\AdminAuthentication::verifyCredential',
-                'messages' => [
-                    'success' => 'Authenticated successfully.',
-                    'not_found' => 'Identity not found.',
+                'messages'            => [
+                    'success'            => 'Authenticated successfully.',
+                    'not_found'          => 'Identity not found.',
                     'invalid_credential' => 'Invalid credentials.',
                 ],
             ],

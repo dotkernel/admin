@@ -13,7 +13,11 @@
 
     <!-- Paths to check -->
     <file>bin</file>
+    <file>config</file>
+    <file>data/doctrine/fixtures</file>
+    <file>public</file>
     <file>src</file>
+    <file>test</file>
 
     <!-- Include all rules from the Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>

@@ -20,60 +20,55 @@ class AdminLogin extends AbstractEntity
     public const LOGIN_FAIL    = 'fail';
 
     /** @ORM\Column(name="adminIp", type="string", length=50, nullable=true) */
-    protected ?string $adminIp;
+    protected ?string $adminIp = null;
 
     /** @ORM\Column(name="country", type="string", length=50, nullable=true) */
-    protected ?string $country;
+    protected ?string $country = null;
 
     /** @ORM\Column(name="continent", type="string", length=50, nullable=true) */
-    protected ?string $continent;
+    protected ?string $continent = null;
 
     /** @ORM\Column(name="organization", type="string", length=50, nullable=true) */
-    protected ?string $organization;
+    protected ?string $organization = null;
 
     /** @ORM\Column(name="deviceType", type="string", length=20, nullable=true) */
-    protected ?string $deviceType;
+    protected ?string $deviceType = null;
 
     /** @ORM\Column(name="deviceBrand", type="string", length=20, nullable=true) */
-    protected ?string $deviceBrand;
+    protected ?string $deviceBrand = null;
 
     /** @ORM\Column(name="deviceModel", type="string", length=40, nullable=true) */
-    protected ?string $deviceModel;
+    protected ?string $deviceModel = null;
 
     /** @ORM\Column(name="isMobile", type="string", columnDefinition="ENUM('yes', 'no')") */
-    protected ?string $isMobile;
+    protected ?string $isMobile = null;
 
     /** @ORM\Column(name="osName", type="string", length=20, nullable=true) */
-    protected ?string $osName;
+    protected ?string $osName = null;
 
     /** @ORM\Column(name="osVersion", type="string", length=20, nullable=true) */
-    protected ?string $osVersion;
+    protected ?string $osVersion = null;
 
     /** @ORM\Column(name="osPlatform", type="string", length=20, nullable=true) */
-    protected ?string $osPlatform;
+    protected ?string $osPlatform = null;
 
     /** @ORM\Column(name="clientType", type="string", length=20, nullable=true) */
-    protected ?string $clientType;
+    protected ?string $clientType = null;
 
     /** @ORM\Column(name="clientName", type="string", length=40, nullable=true) */
-    protected ?string $clientName;
+    protected ?string $clientName = null;
 
     /** @ORM\Column(name="clientEngine", type="string", length=20, nullable=true) */
-    protected ?string $clientEngine;
+    protected ?string $clientEngine = null;
 
     /** @ORM\Column(name="clientVersion", type="string", length=20, nullable=true) */
-    protected ?string $clientVersion;
+    protected ?string $clientVersion = null;
 
     /** @ORM\Column(name="loginStatus", type="string", columnDefinition="ENUM('success', 'fail')") */
-    protected ?string $loginStatus;
+    protected ?string $loginStatus = null;
 
     /** @ORM\Column(name="identity", type="string", length=100) */
-    protected string $identity;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected ?string $identity = null;
 
     public function getAdminIp(): ?string
     {
@@ -260,9 +255,6 @@ class AdminLogin extends AbstractEntity
         return $this->loginStatus;
     }
 
-    /**
-     * @return $this
-     */
     public function setLoginStatus(?string $loginStatus): self
     {
         $this->loginStatus = $loginStatus;

@@ -8,21 +8,21 @@ use Laminas\Log\Logger;
 return [
     'dot-errorhandler' => [
         'loggerEnabled' => true,
-        'logger' => 'dot-log.default_logger',
+        'logger'        => 'dot-log.default_logger',
     ],
-    'dot_log' => [
+    'dot_log'          => [
         'loggers' => [
             'default_logger' => [
                 'writers' => [
                     'FileWriter' => [
-                        'name' => 'stream',
+                        'name'     => 'stream',
                         'priority' => Logger::ALERT,
-                        'options' => [
+                        'options'  => [
                             'stream' => __DIR__ . '/../../log/error-log-{Y}-{m}-{d}.log',
                             // explicitly log all messages
-                            'filters' => [
+                            'filters'   => [
                                 'allMessages' => [
-                                    'name' => 'priority',
+                                    'name'    => 'priority',
                                     'options' => [
                                         'operator' => '>=',
                                         'priority' => Logger::EMERG,

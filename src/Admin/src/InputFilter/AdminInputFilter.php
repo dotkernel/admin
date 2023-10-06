@@ -14,6 +14,9 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
+/**
+ * @extends InputFilter<object>
+ */
 class AdminInputFilter extends InputFilter
 {
     public function init(): void
@@ -64,7 +67,7 @@ class AdminInputFilter extends InputFilter
         ]);
         $passwordConfirm->getValidatorChain()->attachByName(Identical::class, [
             'token'   => 'password',
-            'message' => '<b>Password confirm</b> does not match',
+            'message' => '<b>Password</b> and <b>Confirm Password</b> do not match',
         ]);
         $this->add($passwordConfirm);
 
@@ -74,7 +77,7 @@ class AdminInputFilter extends InputFilter
         $firstName->getValidatorChain()->attachByName(NotEmpty::class);
         $firstName->getValidatorChain()->attachByName(StringLength::class, [
             'max'     => 150,
-            'message' => '<b>FirstName</b> must max 150 characters',
+            'message' => '<b>First name</b> must be max 150 characters long.',
         ]);
         $this->add($firstName);
 
@@ -84,7 +87,7 @@ class AdminInputFilter extends InputFilter
         $lastName->getValidatorChain()->attachByName(NotEmpty::class);
         $lastName->getValidatorChain()->attachByName(StringLength::class, [
             'max'     => 150,
-            'message' => '<b>Last Name</b> must max 150 characters',
+            'message' => '<b>Last name</b> must be max 150 characters long.',
         ]);
         $this->add($lastName);
 

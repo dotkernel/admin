@@ -11,16 +11,20 @@ use Dot\Rbac\Guard\Provider\Factory;
 use Dot\Rbac\Guard\Provider\GuardsProviderPluginManager;
 use Frontend\App\Middleware\AuthMiddleware;
 use Mezzio\Router\RouterInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 class AuthMiddlewareFactory
 {
     use AttachAuthorizationEventListenersTrait;
 
     /**
-     * @return mixed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName): AuthMiddleware
+    public function __invoke(ContainerInterface $container): MiddlewareInterface
     {
         /** @var RbacGuardOptions $options */
         $options = $container->get(RbacGuardOptions::class);
@@ -28,7 +32,7 @@ class AuthMiddlewareFactory
         $guardsProviderFactory = new Factory($container, $container->get(GuardsProviderPluginManager::class));
         $guardsProvider        = $guardsProviderFactory->create($options->getGuardsProvider());
 
-        return new $requestedName(
+        return new AuthMiddleware(
             $container->get(RouterInterface::class),
             $container->get(FlashMessenger::class),
             $guardsProvider,

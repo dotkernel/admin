@@ -26,16 +26,16 @@ class Admin extends AbstractEntity implements AdminInterface
     ];
 
     /** @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true) */
-    protected string $identity;
+    protected ?string $identity = null;
 
     /** @ORM\Column(name="firstName", type="string", length=255) */
-    protected string $firstName;
+    protected ?string $firstName = null;
 
     /** @ORM\Column(name="lastName", type="string", length=255) */
-    protected string $lastName;
+    protected ?string $lastName = null;
 
     /** @ORM\Column(name="password", type="string", length=100, nullable=false) */
-    protected string $password;
+    protected ?string $password = null;
 
     /** @ORM\Column(name="status", type="string", length=20, columnDefinition="ENUM('pending', 'active')") */
     protected string $status = self::STATUS_ACTIVE;
@@ -69,14 +69,14 @@ class Admin extends AbstractEntity implements AdminInterface
             'lastName'  => $this->getlastName(),
             'status'    => $this->getStatus(),
             'roles'     => array_map(function (AdminRole $role) {
-                return $role->toArray();
+                return $role->getArrayCopy();
             }, $this->getRoles()),
             'created'   => $this->getCreated(),
             'updated'   => $this->getUpdated(),
         ];
     }
 
-    public function getIdentity(): string
+    public function getIdentity(): ?string
     {
         return $this->identity;
     }
@@ -88,7 +88,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -100,7 +100,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -112,7 +112,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -137,7 +137,7 @@ class Admin extends AbstractEntity implements AdminInterface
     }
 
     /**
-     * @return array
+     * @return AdminRole[]
      */
     public function getRoles(): array
     {
@@ -162,7 +162,7 @@ class Admin extends AbstractEntity implements AdminInterface
 
     public function removeRole(AdminRole $role): AdminInterface
     {
-        if (! $this->roles->contains($role)) {
+        if ($this->roles->contains($role)) {
             $this->roles->removeElement($role);
         }
 

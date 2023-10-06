@@ -22,21 +22,13 @@ class AdminRole extends AbstractEntity
     ];
 
     /** @ORM\Column(name="name", type="string", length=30, nullable=false, unique=true) */
-    protected string $name;
+    protected ?string $name = null;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return AdminRole
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -44,10 +36,7 @@ class AdminRole extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray(): array
+    public function getArrayCopy(): array
     {
         return [
             'uuid'    => $this->getUuid()->toString(),

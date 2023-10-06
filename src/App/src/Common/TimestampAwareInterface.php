@@ -6,12 +6,9 @@ namespace Frontend\App\Common;
 
 use DateTimeImmutable;
 
-/**
- * Interface TimestampAwareInterface
- */
 interface TimestampAwareInterface
 {
-    public function getCreated(): DateTimeImmutable;
+    public function getCreated(): ?DateTimeImmutable;
 
     public function getCreatedFormatted(?string $dateFormat = null): string;
 
@@ -21,8 +18,5 @@ interface TimestampAwareInterface
 
     public function setDateFormat(string $dateFormat): void;
 
-    /**
-     * Update internal timestamps
-     */
     public function touch(): void;
 }

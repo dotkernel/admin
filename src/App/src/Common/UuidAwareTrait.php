@@ -7,9 +7,6 @@ namespace Frontend\App\Common;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
-/**
- * Trait UuidAwareTrait
- */
 trait UuidAwareTrait
 {
     /**

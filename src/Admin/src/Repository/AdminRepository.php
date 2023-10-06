@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
@@ -101,7 +100,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function countAdmins(?string $search = null): mixed
@@ -120,7 +118,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     protected function countAllAdmins(): mixed
@@ -133,7 +130,6 @@ class AdminRepository extends AbstractRepository
     }
 
     /**
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function countAdminLogins(): mixed
@@ -150,9 +146,6 @@ class AdminRepository extends AbstractRepository
         return $this->cacheLifetime;
     }
 
-    /**
-     * @return AdminRepository
-     */
     public function setCacheLifetime(int $cacheLifetime): self
     {
         $this->cacheLifetime = $cacheLifetime;
@@ -160,9 +153,6 @@ class AdminRepository extends AbstractRepository
         return $this;
     }
 
-    /**
-     * @param array $params
-     */
     public function findAdminBy(array $params): ?Admin
     {
         if (empty($params)) {

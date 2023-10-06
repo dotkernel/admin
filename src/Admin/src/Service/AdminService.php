@@ -7,9 +7,9 @@ namespace Frontend\Admin\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Dot\GeoIP\Service\LocationServiceInterface;
@@ -21,7 +21,6 @@ use Frontend\Admin\Repository\AdminRepository;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Service\IpService;
 use GeoIp2\Exception\AddressNotFoundException;
-use MaxMind\Db\Reader\InvalidDatabaseException;
 
 use function implode;
 use function is_string;
@@ -36,33 +35,27 @@ class AdminService implements AdminServiceInterface
 {
     protected AdminRepository|EntityRepository $adminRepository;
     protected AdminRoleRepository|EntityRepository $adminRoleRepository;
-    protected LocationServiceInterface $locationService;
-    protected DeviceServiceInterface $deviceService;
 
     /**
      * @Inject({
-     *     EntityManager::class,
      *     LocationServiceInterface::class,
      *     DeviceServiceInterface::class,
+     *     EntityManager::class,
      *     "config.resultCacheLifetime"
      * })
+     * @throws NotSupported
      */
     public function __construct(
+        protected LocationServiceInterface $locationService,
+        protected DeviceServiceInterface $deviceService,
         EntityManager $em,
-        LocationServiceInterface $locationService,
-        DeviceServiceInterface $deviceService,
         int $cacheLifetime
     ) {
         $this->adminRepository     = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
         $this->adminRepository->setCacheLifetime($cacheLifetime);
-        $this->locationService = $locationService;
-        $this->deviceService   = $deviceService;
     }
 
-    /**
-     * @param array $params
-     */
     public function findAdminBy(array $params): ?Admin
     {
         return $this->adminRepository->findAdminBy($params);
@@ -79,8 +72,6 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @return array
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getAdmins(
@@ -119,8 +110,6 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @return array
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getAdminLogins(
@@ -163,7 +152,6 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param array $data
      * @throws NonUniqueResultException
      * @throws ORMException
      */
@@ -189,7 +177,7 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param array $data
+     * @throws NonUniqueResultException
      * @throws ORMException
      */
     public function updateAdmin(Admin $admin, array $data): Admin
@@ -226,10 +214,6 @@ class AdminService implements AdminServiceInterface
         return $admin;
     }
 
-    /**
-     * @param array $serverParams
-     * @throws InvalidDatabaseException
-     */
     public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {
         $deviceData   = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
@@ -289,9 +273,6 @@ class AdminService implements AdminServiceInterface
         return $this->adminRepository->saveAdminVisit($adminLogin);
     }
 
-    /**
-     * @return array
-     */
     public function getAdminFormProcessedRoles(): array
     {
         $allRoles = $this->adminRoleRepository->getRoles();

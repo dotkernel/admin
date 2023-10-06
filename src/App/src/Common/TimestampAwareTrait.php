@@ -10,15 +10,12 @@ use Exception;
 
 use function error_log;
 
-/**
- * Trait TimestampAwareTrait
- */
 trait TimestampAwareTrait
 {
     private string $dateFormat = 'Y-m-d H:i:s';
 
     /** @ORM\Column(name="created", type="datetime_immutable") */
-    protected DateTimeImmutable $created;
+    protected ?DateTimeImmutable $created = null;
 
     /** @ORM\Column(name="updated", type="datetime_immutable", nullable=true) */
     protected ?DateTimeImmutable $updated = null;
@@ -32,7 +29,7 @@ trait TimestampAwareTrait
         $this->touch();
     }
 
-    public function getCreated(): DateTimeImmutable
+    public function getCreated(): ?DateTimeImmutable
     {
         return $this->created;
     }
@@ -60,6 +57,7 @@ trait TimestampAwareTrait
     public function touch(): void
     {
         try {
+            $this->created = new DateTimeImmutable();
             $this->updated = new DateTimeImmutable();
         } catch (Exception $exception) {
             error_log($exception->getMessage());

@@ -11,6 +11,9 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
+/**
+ * @extends InputFilter<object>
+ */
 class AccountInputFilter extends InputFilter
 {
     public function init(): void
@@ -20,7 +23,7 @@ class AccountInputFilter extends InputFilter
         $identity->getFilterChain()->attachByName(StringTrim::class);
         $identity->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message'                => '<b>Identity</b> cannot be empty',
+            'message'                => '<b>Identity</b> is required and cannot be empty',
         ]);
         $identity->getValidatorChain()->attachByName(StringLength::class, [
             'break_chain_on_failure' => true,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Admin\Fixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -8,26 +10,22 @@ use Doctrine\Persistence\ObjectManager;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminRole;
 
-/**
- * Class AdminLoader
- * @package Admin\Fixtures
- */
+use function password_hash;
+
+use const PASSWORD_DEFAULT;
+
 class AdminLoader implements FixtureInterface, DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $admin = new Admin();
-
-        $admin->setIdentity('admin');
-        $admin->setPassword(password_hash('dotadmin', PASSWORD_DEFAULT));
-        $admin->setFirstName('DotKernel');
-        $admin->setLastName('Admin');
-
-        /** @var AdminRole $superUserRole */
-        $adminRoleRepository = $manager->getRepository(AdminRole::class);
-        $superUserRole = $adminRoleRepository->findOneBy(['name' => AdminRole::ROLE_SUPERUSER]);
-
-        $admin->addRole($superUserRole);
+        $admin = (new Admin())
+            ->setIdentity('admin')
+            ->setPassword(password_hash('dotadmin', PASSWORD_DEFAULT))
+            ->setFirstName('DotKernel')
+            ->setLastName('Admin')
+            ->addRole(
+                $manager->getRepository(AdminRole::class)->findOneBy(['name' => AdminRole::ROLE_SUPERUSER])
+            );
 
         $manager->persist($admin);
         $manager->flush();
@@ -36,7 +34,7 @@ class AdminLoader implements FixtureInterface, DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdminRoleLoader::class
+            AdminRoleLoader::class,
         ];
     }
 }
