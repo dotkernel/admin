@@ -17,8 +17,8 @@ trait FormTrait
     {
         $this->assertInstanceOf($class, new $class());
         $this->assertInstanceOf($class, new $class(null, []));
-        $this->assertInstanceOf($class, new $class('accountForm'));
-        $this->assertInstanceOf($class, new $class('accountForm', []));
+        $this->assertInstanceOf($class, new $class('form'));
+        $this->assertInstanceOf($class, new $class('form', []));
     }
 
     protected function formHasElements(FormInterface $form, array $elements = []): void
