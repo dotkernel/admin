@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Frontend\Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Entity\AbstractEntity;
 
-/**
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminRoleRepository")
- * @ORM\Table(name="admin_role")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AdminRoleRepository::class, readOnly: false)]
+#[ORM\Table(name: 'admin_role')]
+#[ORM\HasLifecycleCallbacks]
 class AdminRole extends AbstractEntity
 {
     public const ROLE_ADMIN     = 'admin';
@@ -21,7 +20,7 @@ class AdminRole extends AbstractEntity
         self::ROLE_SUPERUSER,
     ];
 
-    /** @ORM\Column(name="name", type="string", length=30, nullable=false, unique=true) */
+    #[ORM\Column(name: "name", type: "string", length: 30, unique: true, nullable: false)]
     protected ?string $name = null;
 
     public function getName(): ?string
