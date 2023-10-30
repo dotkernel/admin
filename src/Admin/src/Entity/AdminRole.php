@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Entity\AbstractEntity;
 
-#[ORM\Entity(repositoryClass: AdminRoleRepository::class, readOnly: false)]
+#[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ORM\Table(name: 'admin_role')]
 #[ORM\HasLifecycleCallbacks]
 class AdminRole extends AbstractEntity

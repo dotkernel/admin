@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminLoginRepository;
 use Frontend\App\Entity\AbstractEntity;
 
-#[ORM\Entity(repositoryClass: AdminLoginRepository::class, readOnly: false)]
+#[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
 #[ORM\Table(name: 'admin_login')]
 #[ORM\HasLifecycleCallbacks]
 class AdminLogin extends AbstractEntity
@@ -42,7 +42,6 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(
         name: "isMobile",
         type: "string",
-        length: 40,
         nullable: true,
         columnDefinition: "ENUM('yes', 'no')"
     )]

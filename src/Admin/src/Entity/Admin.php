@@ -12,7 +12,7 @@ use Frontend\App\Entity\AbstractEntity;
 
 use function array_map;
 
-#[ORM\Entity(repositoryClass: AdminRepository::class, readOnly: false)]
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: "admin")]
 #[ORM\HasLifecycleCallbacks]
 class Admin extends AbstractEntity implements AdminInterface
