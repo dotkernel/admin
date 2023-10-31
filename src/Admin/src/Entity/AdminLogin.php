@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Frontend\Admin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Frontend\Admin\Repository\AdminLoginRepository;
 use Frontend\App\Entity\AbstractEntity;
 
-/**
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminLoginRepository")
- * @ORM\Table(name="admin_login")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
+#[ORM\Table(name: 'admin_login')]
+#[ORM\HasLifecycleCallbacks]
 class AdminLogin extends AbstractEntity
 {
     public const IS_MOBILE_YES = 'yes';
@@ -19,55 +18,60 @@ class AdminLogin extends AbstractEntity
     public const LOGIN_SUCCESS = 'success';
     public const LOGIN_FAIL    = 'fail';
 
-    /** @ORM\Column(name="adminIp", type="string", length=50, nullable=true) */
+    #[ORM\Column(name: "adminIp", type: "string", length: 50, nullable: true)]
     protected ?string $adminIp = null;
 
-    /** @ORM\Column(name="country", type="string", length=50, nullable=true) */
+    #[ORM\Column(name: "country", type: "string", length: 50, nullable: true)]
     protected ?string $country = null;
 
-    /** @ORM\Column(name="continent", type="string", length=50, nullable=true) */
+    #[ORM\Column(name: "continent", type: "string", length: 50, nullable: true)]
     protected ?string $continent = null;
 
-    /** @ORM\Column(name="organization", type="string", length=50, nullable=true) */
+    #[ORM\Column(name: "organization", type: "string", length: 50, nullable: true)]
     protected ?string $organization = null;
 
-    /** @ORM\Column(name="deviceType", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "deviceType", type: "string", length: 20, nullable: true)]
     protected ?string $deviceType = null;
 
-    /** @ORM\Column(name="deviceBrand", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "deviceBrand", type: "string", length: 20, nullable: true)]
     protected ?string $deviceBrand = null;
 
-    /** @ORM\Column(name="deviceModel", type="string", length=40, nullable=true) */
+    #[ORM\Column(name: "deviceModel", type: "string", length: 40, nullable: true)]
     protected ?string $deviceModel = null;
 
-    /** @ORM\Column(name="isMobile", type="string", columnDefinition="ENUM('yes', 'no')") */
+    #[ORM\Column(
+        name: "isMobile",
+        type: "string",
+        nullable: true,
+        columnDefinition: "ENUM('yes', 'no')"
+    )]
     protected ?string $isMobile = null;
 
-    /** @ORM\Column(name="osName", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "osName", type: "string", length: 20, nullable: true)]
     protected ?string $osName = null;
 
-    /** @ORM\Column(name="osVersion", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "osVersion", type: "string", length: 20, nullable: true)]
     protected ?string $osVersion = null;
 
-    /** @ORM\Column(name="osPlatform", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "osPlatform", type: "string", length: 20, nullable: true)]
     protected ?string $osPlatform = null;
 
-    /** @ORM\Column(name="clientType", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "clientType", type: "string", length: 20, nullable: true)]
     protected ?string $clientType = null;
 
-    /** @ORM\Column(name="clientName", type="string", length=40, nullable=true) */
+    #[ORM\Column(name: "clientName", type: "string", length: 40, nullable: true)]
     protected ?string $clientName = null;
 
-    /** @ORM\Column(name="clientEngine", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "clientEngine", type: "string", length: 20, nullable: true)]
     protected ?string $clientEngine = null;
 
-    /** @ORM\Column(name="clientVersion", type="string", length=20, nullable=true) */
+    #[ORM\Column(name: "clientVersion", type: "string", length: 20, nullable: true)]
     protected ?string $clientVersion = null;
 
-    /** @ORM\Column(name="loginStatus", type="string", columnDefinition="ENUM('success', 'fail')") */
+    #[ORM\Column(name: "loginStatus", type: "string", nullable: true, columnDefinition: "ENUM('success', 'fail')")]
     protected ?string $loginStatus = null;
 
-    /** @ORM\Column(name="identity", type="string", length=100) */
+    #[ORM\Column(name: "identity", type: "string", length: 100, nullable: true)]
     protected ?string $identity = null;
 
     public function getAdminIp(): ?string

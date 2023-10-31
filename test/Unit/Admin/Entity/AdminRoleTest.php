@@ -5,23 +5,41 @@ declare(strict_types=1);
 namespace FrontendTest\Unit\Admin\Entity;
 
 use DateTimeInterface;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Table;
 use Frontend\Admin\Entity\AdminRole;
+use Frontend\Admin\Repository\AdminRoleRepository;
 use FrontendTest\Unit\UnitTest;
 use Ramsey\Uuid\Rfc4122\UuidInterface;
+use ReflectionAttribute;
 use ReflectionClass;
 
 class AdminRoleTest extends UnitTest
 {
     public function testAnnotations(): void
     {
-        $reflection = new ReflectionClass(AdminRole::class);
-        $docComment = $reflection->getDocComment();
-        $this->assertStringContainsString(
-            '@ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminRoleRepository")',
-            $docComment
-        );
-        $this->assertStringContainsString('@ORM\Table(name="admin_role")', $docComment);
-        $this->assertStringContainsString('@ORM\HasLifecycleCallbacks()', $docComment);
+        $reflection            = new ReflectionClass(AdminRole::class);
+        $entity                = $reflection->getAttributes(Entity::class);
+        $table                 = $reflection->getAttributes(Table::class);
+        $hasLifecycleCallbacks = $reflection->getAttributes(HasLifecycleCallbacks::class);
+
+        $this->assertNotEmpty($entity[0]);
+        $this->assertNotEmpty($table[0]);
+        $this->assertNotEmpty($hasLifecycleCallbacks[0]);
+        $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
+        $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
+        $this->assertInstanceOf(ReflectionAttribute::class, $hasLifecycleCallbacks[0]);
+
+        $entityArguments = $entity[0]->getArguments();
+        $tableArguments  = $table[0]->getArguments();
+
+        $this->assertIsArray($entityArguments);
+        $this->assertIsArray($tableArguments);
+        $this->assertArrayHasKey('repositoryClass', $entityArguments);
+        $this->assertArrayHasKey('name', $tableArguments);
+        $this->assertSame(AdminRoleRepository::class, $entityArguments['repositoryClass']);
+        $this->assertSame('admin_role', $tableArguments['name']);
     }
 
     public function testAccessors(): void

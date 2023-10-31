@@ -7,15 +7,14 @@ namespace Frontend\Admin\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Frontend\Admin\Repository\AdminRepository;
 use Frontend\App\Entity\AbstractEntity;
 
 use function array_map;
 
-/**
- * @ORM\Entity(repositoryClass="Frontend\Admin\Repository\AdminRepository")
- * @ORM\Table(name="admin")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[ORM\Table(name: "admin")]
+#[ORM\HasLifecycleCallbacks]
 class Admin extends AbstractEntity implements AdminInterface
 {
     public const STATUS_ACTIVE   = 'active';
@@ -25,29 +24,31 @@ class Admin extends AbstractEntity implements AdminInterface
         self::STATUS_INACTIVE,
     ];
 
-    /** @ORM\Column(name="identity", type="string", length=100, nullable=false, unique=true) */
+    #[ORM\Column(name: "identity", type: "string", length: 100, unique: true, nullable: false)]
     protected ?string $identity = null;
 
-    /** @ORM\Column(name="firstName", type="string", length=255) */
+    #[ORM\Column(name: "firstName", type: "string", length: 255)]
     protected ?string $firstName = null;
 
-    /** @ORM\Column(name="lastName", type="string", length=255) */
+    #[ORM\Column(name: "lastName", type: "string", length: 255)]
     protected ?string $lastName = null;
 
-    /** @ORM\Column(name="password", type="string", length=100, nullable=false) */
+    #[ORM\Column(name: "password", type: "string", length: 100, nullable: false)]
     protected ?string $password = null;
 
-    /** @ORM\Column(name="status", type="string", length=20, columnDefinition="ENUM('pending', 'active')") */
+    #[ORM\Column(
+        name: "status",
+        type: "string",
+        length: 20,
+        nullable: false,
+        columnDefinition: "ENUM('pending', 'active')"
+    )]
     protected string $status = self::STATUS_ACTIVE;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Frontend\Admin\Entity\AdminRole", fetch="EAGER")
-     * @ORM\JoinTable(
-     *     name="admin_roles",
-     *     joinColumns={@ORM\JoinColumn(name="userUuid", referencedColumnName="uuid")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="roleUuid", referencedColumnName="uuid")}
-     * )
-     */
+    #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: "EAGER")]
+    #[ORM\JoinTable(name: "admin_roles")]
+    #[ORM\JoinColumn(name: "userUuid", referencedColumnName: "uuid")]
+    #[ORM\InverseJoinColumn(name: "roleUuid", referencedColumnName: "uuid")]
     protected Collection $roles;
 
     public function __construct()
@@ -57,9 +58,6 @@ class Admin extends AbstractEntity implements AdminInterface
         $this->roles = new ArrayCollection();
     }
 
-    /**
-     * @return array
-     */
     public function getArrayCopy(): array
     {
         return [
@@ -136,9 +134,6 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    /**
-     * @return AdminRole[]
-     */
     public function getRoles(): array
     {
         return $this->roles->toArray();

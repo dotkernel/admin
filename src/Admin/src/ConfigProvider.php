@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Controller\AdminController;
@@ -87,7 +87,7 @@ class ConfigProvider
                     ],
                 ],
                 'AdminEntities' => [
-                    'class' => AnnotationDriver::class,
+                    'class' => AttributeDriver::class,
                     'cache' => 'array',
                     'paths' => [__DIR__ . '/Entity'],
                 ],
