@@ -68,20 +68,20 @@
 <main class="container-fluid  main-content">
     {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
 
-    {% if hasIdentity() %}
-        <div class="breadcrumb-section">
-            <div class="row">
-                <button data-bs-toggle="collapse-side" data-target=".side-collapse"
-                        data-target-2=".side-collapse-container" type="button" class="navbar-toggler float-left"
-                        aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ol class="breadcrumb">
-                    <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
-                </ol>
-            </div><!--/.row-->
-        </div>
-    {% endif %}
+{#    {% if hasIdentity() %}#}
+{#        <div class="breadcrumb-section">#}
+{#            <div class="row">#}
+{#                <button data-bs-toggle="collapse-side" data-target=".side-collapse"#}
+{#                        data-target-2=".side-collapse-container" type="button" class="navbar-toggler float-left"#}
+{#                        aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">#}
+{#                    <i class="fas fa-bars"></i>#}
+{#                </button>#}
+{#                <ol class="breadcrumb">#}
+{#                    <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>#}
+{#                </ol>#}
+{#            </div><!--/.row-->#}
+{#        </div>#}
+{#    {% endif %}#}
 
     <div class="main {{ mainClass }}">
 

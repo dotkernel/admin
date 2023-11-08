@@ -353,7 +353,7 @@ a.bg-danger:hover {
 /*Panels*/
 
 .card {
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.0625);
   border-radius: 0;
   margin-bottom: 20px;
 
@@ -392,6 +392,10 @@ a.bg-danger:hover {
   }
 }
 
+.card-dashboard {
+  display: flex;
+}
+
 .card-blue .card-body p,
 .card-teal .card-body p,
 .card-orange .card-body p,
@@ -420,8 +424,9 @@ a.bg-danger:hover {
 }
 
 .widget-left {
-  height: 110px;
-  padding: 30px;
+  height: 90px !important;
+  width: 150px !important;
+  padding: 20px !important;
   text-align: center;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -431,8 +436,8 @@ a.bg-danger:hover {
   text-align: left;
   line-height: 1.6em;
   margin: 0px;
-  padding: 35px 20px !important;
-  height: 110px;
+  padding: 25px 20px !important;
+  height: 90px;
   color: #999;
   font-weight: 300;
   background: #fff;
@@ -574,7 +579,7 @@ h1.page-header {
 /*Charts*/
 
 .main-chart {
-  background: #fff;
+
 }
 
 .easypiechart-panel {
@@ -928,7 +933,7 @@ h1.page-header {
 }
 
 .nano > .nano-pane > .nano-slider {
-  background: #444;
+  background: red;
   background: rgba(0, 0, 0, .5);
   position: relative;
   margin: 0 1px;
@@ -974,7 +979,7 @@ Version 3.0
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background: #f1f4f7;
+  background: #f9fafb;
   color: #5f6468;
   font-size: 16px;
   overflow-x: hidden;
@@ -1078,11 +1083,11 @@ label {
   margin-bottom: 0px;
   min-height: 60px;
   background: #FFFFFF;
-  border: 0px;
   border-color: #E9ECF2;
   border-radius: 0px;
   z-index: 1000;
   padding: 0 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
 }
 
 .navbar-brand {
@@ -1375,7 +1380,7 @@ label {
     margin: 0;
     padding: 0;
     width: 60px;
-    background-color: #282828;
+    background-color: #FFFFFF;
     box-shadow: 1px 0px 10px rgba(0, 0, 0, .05);
   }
 
@@ -1408,6 +1413,7 @@ sideRightIn .sidebar .nano-sidebar {
 .sidebar .nano-sidebar > .nano-pane > .nano-slider {
   background: #888;
 }
+
 
 .sidebar.sideRightIn {
   -webkit-transition: all 0.5s ease;
@@ -1446,17 +1452,18 @@ sideRightIn .sidebar .nano-sidebar {
 
 .sidebar {
   display: block;
-  background-color: #282828;
+  background-color: #FFFFFF;
   padding: 0;
   text-align: center;
   height: 100% !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.0625);
 }
 
 .sidebar .nav-placeholder {
   display: block;
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #FFFFFF;
 }
 
 .sidebar .nav-placeholder .logo {
@@ -1484,7 +1491,7 @@ sideRightIn .sidebar .nano-sidebar {
 }
 
 .sidebar .toggle a:hover, .sidebar .toggle a:focus {
-  background-color: #282828;
+  background-color: #FFFFFF;
   text-decoration: none;
 }
 
@@ -1504,12 +1511,12 @@ sideRightIn .sidebar .nano-sidebar {
 .sidebar ul.nav li a {
   padding: 15px 15px 15px 60px;
   min-height: 30px;
-  background-color: #282828;
+  background-color: #FFFFFF;
   z-index: 1;
 }
 
 .sidebar ul.nav li a .item-label {
-  color: #5f6468;
+  color: #5f6468 !important;
 }
 
 .sidebar ul.nav li.active a .item-label {
@@ -1519,7 +1526,7 @@ sideRightIn .sidebar .nano-sidebar {
 .sidebar ul.nav .submenu {
   padding: 15px 15px 15px 15px;
   cursor: pointer;
-  background-color: #282828;
+  background-color: #FFFFFF;
 }
 
 .sidebar ul.nav .submenu .item-label {
@@ -1530,7 +1537,7 @@ sideRightIn .sidebar .nano-sidebar {
 .sidebar ul.nav .submenu:focus,
 .sidebar ul.nav .submenu:hover {
   text-decoration: none;
-  background-color: #000000;
+  background-color: #FFFFFF;
 }
 
 .sidebar ul.nav li i {
@@ -1541,7 +1548,7 @@ sideRightIn .sidebar .nano-sidebar {
   width: 30px;
   font-size: 26px;
   line-height: 30px;
-  color: #FFFFFF;
+  color: #5f6468;
   text-align: center;
   z-index: 20;
   cursor: pointer;
@@ -1550,15 +1557,15 @@ sideRightIn .sidebar .nano-sidebar {
 .sidebar ul.nav a:hover,
 .sidebar ul.nav li.parent ul li a:hover {
   text-decoration: none;
-  background-color: #000000;
+  background-color: #FFFFFF;
 }
 
 .sidebar ul.nav .active a, .sidebar ul.nav li.parent a.active,
 .sidebar ul.nav .active > a:hover, .sidebar ul.nav li.parent a.active:hover,
 .sidebar ul.nav .active > a:focus, .sidebar ul.nav li.parent a.active:focus
 .sidebar ul.nav .active > a:focus .item-label, .sidebar ul.nav li.parent a.active:focus .item-label {
-  color: #fff;
-  background-color: #000000;
+  color: #000000;
+  background-color: #FFFFFF;
 }
 
 .sidebar ul.nav ul,
@@ -1574,7 +1581,7 @@ sideRightIn .sidebar .nano-sidebar {
   width: 100%;
   padding: 0px;
   margin: 0;
-  background: #282828;
+  background: #FFFFFF;
   text-align: left;
   z-index: 10;
 }
@@ -1584,14 +1591,14 @@ sideRightIn .sidebar .nano-sidebar {
   padding: 0px 0px 0px 60px;
   height: 40px;
   line-height: 40px;
-  background: #282828;
+  background: #FFFFFF;
   color: #5f6468 !important;
   text-decoration: none;
 }
 
 .sidebar ul.nav li.parent ul.children li a:hover {
   text-decoration: none;
-  background-color: #000000;
+  background-color: #FFFFFF;
 }
 
 .sidebar ul.nav li.parent ul.children li i {
@@ -1683,7 +1690,7 @@ sideRightIn .sidebar .nano-sidebar {
     bottom: 0px;
     width: 300px;
     height: 100% !important;
-    background: #282828;
+    background: #FFFFFF;
     text-align: left; /*z-index: 1;*/
   }
 
@@ -1693,7 +1700,7 @@ sideRightIn .sidebar .nano-sidebar {
   }
 
   .side-collapse .active .item-label {
-    color: #FFFFFF;
+    color: #000000;
   }
 
   .sidebar ul.nav li.parent ul.children {
@@ -1710,7 +1717,7 @@ sideRightIn .sidebar .nano-sidebar {
   left: 0px;
   margin-left: 60px;
   min-height: 100%;
-  background-color: #F1F4F7;
+  background-color: #f9fafb;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
