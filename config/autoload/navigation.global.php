@@ -89,6 +89,13 @@ return [
                                 ],
                             ],
                         ],
+                        [
+                            'options' => [
+                                'label' => 'UI Elements',
+                                'uri'   => '/admin/ui-elements',
+                                'icon'  => 'fas fa-palette',
+                            ],
+                        ],
                     ],
                 ],
             ],

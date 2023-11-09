@@ -340,4 +340,11 @@ class AdminController extends AbstractActionController
 
         return new JsonResponse($result);
     }
+
+    public function uiElementsAction(): ResponseInterface
+    {
+        return new HtmlResponse(
+            $this->template->render('admin::ui-elements')
+        );
+    }
 }
