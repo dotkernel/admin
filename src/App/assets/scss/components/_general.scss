@@ -579,7 +579,6 @@ h1.page-header {
 /*Charts*/
 
 .main-chart {
-
 }
 
 .easypiechart-panel {
@@ -782,20 +781,34 @@ h1.page-header {
   border: 1px solid #eee;
 }
 
+.fixed-table-container th {
+  border-bottom: 1px solid #000000 !important;
+}
+
 .fixed-table-container thead th {
-  background: #f7f7f8;
-  border-color: #ddd;
-  color: #5f6468;
-  font-weight: 300;
-  font-size: 16px;
+  background: #FFFFFF;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  color: #000000;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.card-body .fixed-table-container {
+  border: none !important;
 }
 
 .fixed-table-container tbody td {
   border: 1px solid #eee;
+  font-size: 14px;
 }
 
 .fixed-table-container tbody td:last-child {
   border-right: none;
+}
+
+.table-custom tr {
+  border: none !important;
 }
 
 .table > thead > tr > th {
@@ -1546,7 +1559,7 @@ sideRightIn .sidebar .nano-sidebar {
   left: 15px;
   margin-right: 15px;
   width: 30px;
-  font-size: 26px;
+  font-size: 24px;
   line-height: 30px;
   color: #5f6468;
   text-align: center;
