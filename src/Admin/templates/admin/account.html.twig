@@ -14,21 +14,21 @@
 
                     {% set identity = form.getElements().identity %}
                     <div class="form-group {% if identity.getMessages() %}has-error{% endif %}">
-                        {% set dummy = identity.setAttribute('class', 'form-control') %}
+                        {% set dummy = identity.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(identity) }}
                         {{ formElement(identity) }}
                     </div>
 
                     {% set firstName = form.getElements().firstName %}
                     <div class="form-group {% if firstName.getMessages() %}has-error{% endif %}">
-                        {% set dummy = firstName.setAttribute('class', 'form-control') %}
+                        {% set dummy = firstName.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(firstName) }}
                         {{ formElement(firstName) }}
                     </div>
 
                     {% set lastName = form.getElements().lastName %}
                     <div class="form-group {% if lastName.getMessages() %}has-error{% endif %}">
-                        {% set dummy = lastName.setAttribute('class', 'form-control') %}
+                        {% set dummy = lastName.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(lastName) }}
                         {{ formElement(lastName) }}
                     </div>
@@ -36,7 +36,7 @@
                     {{ formElement(form.get('account_csrf')) }}
 
                     {% set submit = form.get('submit') %}
-                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-block float-end mt-2') %}
                     {{ formSubmit(submit) }}
 
                     {{ form().closeTag() | raw }}
@@ -55,21 +55,21 @@
 
                     {% set currentPassword = changePasswordForm.get('currentPassword') %}
                     <div class="form-group {% if currentPassword.getMessages() %}has-error{% endif %}">
-                        {% set dummy = currentPassword.setAttribute('class', 'form-control') %}
+                        {% set dummy = currentPassword.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(currentPassword) }}
                         {{ formElement(currentPassword) }}
                     </div>
 
                     {% set password = changePasswordForm.getElements().password %}
                     <div class="form-group {% if password.getMessages() %}has-error{% endif %}">
-                        {% set dummy = password.setAttribute('class', 'form-control') %}
+                        {% set dummy = password.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(password) }}
                         {{ formElement(password) }}
                     </div>
 
                     {% set passwordConfirm = changePasswordForm.getElements().passwordConfirm %}
                     <div class="form-group {% if passwordConfirm.getMessages() %}has-error{% endif %}">
-                        {% set dummy = passwordConfirm.setAttribute('class', 'form-control') %}
+                        {% set dummy = passwordConfirm.setAttribute('class', 'form-control mb-2') %}
                         {{ formLabel(passwordConfirm) }}
                         {{ formElement(passwordConfirm) }}
                     </div>
@@ -77,7 +77,7 @@
                     {{ formElement(changePasswordForm.get('change_password_csrf')) }}
 
                     {% set submit = changePasswordForm.get('submit') %}
-                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-block mt-2 float-end') %}
                     {{ formSubmit(submit) }}
 
                     {{ form().closeTag() | raw }}

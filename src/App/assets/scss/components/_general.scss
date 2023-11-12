@@ -359,10 +359,11 @@ a.bg-danger:hover {
 
   .card-header {
     background-color: #ffffff;
-    border-bottom: 1px solid #EEEEEE;
+    border: none;
+    //border-bottom: 1px solid #EEEEEE;
     padding: 10px 15px;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
 
     svg {
       width: 26px;
@@ -404,18 +405,37 @@ a.bg-danger:hover {
   color: rgba(255, 255, 255, .8);
 }
 
-.card-blue .card-header,
-.card-teal .card-header,
-.card-orange .card-header,
-.card-red .card-header {
-  border-bottom: 1px solid rgba(255, 255, 255, .2);
-}
+//.card-blue .card-header,
+//.card-teal .card-header,
+//.card-orange .card-header,
+//.card-red .card-header {
+//  border-bottom: 1px solid rgba(255, 255, 255, .2);
+//}
 
 .card-blue .text-muted,
 .card-teal .text-muted,
 .card-orange .text-muted,
 .card-red .text-muted {
   color: rgba(255, 255, 255, .5);
+}
+
+.peers {
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  height: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.peer {
+  display: block;
+  height: auto;
+  flex: 0 0 auto;
+  padding: 8px;
 }
 
 .dark-overlay {
@@ -811,6 +831,10 @@ h1.page-header {
   border: none !important;
 }
 
+.bootstrap-table .search {
+  float: right !important;
+}
+
 .table > thead > tr > th {
   border-bottom: 1px solid #e6e7e8;
   vertical-align: middle;
@@ -1045,11 +1069,13 @@ body {
 input.form-control {
   padding: 15px 15px;
   background: #FFFFFF;
-  border-radius: 2px;
+  border-radius: 0.25rem;
   border: 1px solid #E7E7E7;
-  font-size: 16px;
-  line-height: 50px;
-  height: 50px;
+  height: 35px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
 @media ( max-width: 1199px) {
@@ -1062,18 +1088,50 @@ input.form-control {
   }
 }
 
+.bgc-deep-purple-500 {
+  background-color: #673ab7;
+}
+
+.bgc-green-500 {
+  background-color: #4caf50;
+}
+
+.bgc-light-blue-500 {
+  background-color: #03a9f4;
+}
+
+.bgc-blue-grey-500 {
+  background-color: #607d8b;
+}
+
+.c-grey-700 {
+  color: #72777a !important;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+  font-size: 0.875em;
+}
+
+.layer h5 {
+  font-weight: 600 !important;
+}
+
+.progress {
+  height: 4px;
+  background-color: #eaeef3;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
 .btn-primary {
-  height: 50px;
-  border-radius: 2px;
   background: #C60B31;
   border-color: #C60B31;
   color: #FFFFFF;
 }
 
-.btn-success,
-.btn-default,
-.btn-danger {
-  height: 50px;
+.btn-custom-style {
+  height: 35px;
   border-radius: 2px;
 }
 
