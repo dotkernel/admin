@@ -3,129 +3,193 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
-        </div>
-    </div><!--/.row-->
+    <div class="row gap-20 masonry pos-r">
+        <div class="masonry-sizer col-md-6"></div>
+        <div class="masonry-item  w-100">
+            <div class="row gap-20">
+                <div class='col-md-3'>
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Total Visits</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed">
+                                    <span id="sparklinedash"></span>
+                                </div>
+                                <div class="peer">
+                                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+10%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    {{ messagesPartial('partial::alerts', {dismissible: true}) }}
-
-    <div class="row">
-        <div class="col-xl-3 col-lg-6 col-md-12">
-            <div class="card card-blue">
-                <div class="row no-gutters">
-                    <div class="col-lg-5 col-md-3 widget-left">
-                        <i class="fa fa-shopping-bag fa-3x"></i>
+                <div class='col-md-3'>
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Total Page Views</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed">
+                                    <span id="sparklinedash2"></span>
+                                </div>
+                                <div class="peer">
+                                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-7 col-md-9 widget-right">
-                        <div class="large">120</div>
-                        <div class="text-muted">New Orders</div>
+                </div>
+                <div class='col-md-3'>
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Unique Visitor</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed">
+                                    <span id="sparklinedash3"></span>
+                                </div>
+                                <div class="peer">
+                                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">~12%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Bounce Rate</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed">
+                                    <span id="sparklinedash4"></span>
+                                </div>
+                                <div class="peer">
+                                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
-            <div class="card card-orange">
-                <div class="row no-gutters">
-                    <div class="col-lg-5 col-md-3 widget-left">
-                        <i class="fa fa-comments fa-3x"></i>
+        <div class="masonry-item col-md-6">
+            <div class="bd bgc-white">
+                <div class="layers">
+                    <div class="layer w-100 pX-20 pT-20">
+                        <h6 class="lh-1">Monthly Stats</h6>
                     </div>
-                    <div class="col-lg-7 col-md-9 widget-right">
-                        <div class="large">52</div>
-                        <div class="text-muted">Comments</div>
+                    <div class="layer w-100 p-20">
+                        <canvas id="line-chart" height="220"></canvas>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
-            <div class="card card-teal">
-                <div class="row no-gutters">
-                    <div class="col-lg-5 col-md-3 widget-left">
-                        <i class="fa fa-user-plus fa-3x"></i>
-                    </div>
-                    <div class="col-lg-7 col-md-9 widget-right">
-                        <div class="large">24</div>
-                        <div class="text-muted">New Users</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
-            <div class="card card-red">
-                <div class="row no-gutters">
-                    <div class="col-lg-5 col-md-3 widget-left">
-                        <i class="fa fa-eye fa-3x"></i>
-                    </div>
-                    <div class="col-lg-7 col-md-9 widget-right">
-                        <div class="large">25.2k</div>
-                        <div class="text-muted">Page Views</div>
+                    <div class="layer bdT p-20 w-100">
+                        <div class="peers ai-c jc-c gapX-20">
+                            <div class="peer">
+                                <span class="fsz-def fw-600 mR-10 c-grey-800">10% <i class="fa fa-level-up c-green-500"></i></span>
+                                <small class="c-grey-500 fw-600">APPL</small>
+                            </div>
+                            <div class="peer fw-600">
+                                <span class="fsz-def fw-600 mR-10 c-grey-800">2% <i class="fa fa-level-down c-red-500"></i></span>
+                                <small class="c-grey-500 fw-600">Average</small>
+                            </div>
+                            <div class="peer fw-600">
+                                <span class="fsz-def fw-600 mR-10 c-grey-800">15% <i class="fa fa-level-up c-green-500"></i></span>
+                                <small class="c-grey-500 fw-600">Sales</small>
+                            </div>
+                            <div class="peer fw-600">
+                                <span class="fsz-def fw-600 mR-10 c-grey-800">8% <i class="fa fa-level-down c-red-500"></i></span>
+                                <small class="c-grey-500 fw-600">Profit</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">Site Traffic Overview</div>
-                <div class="card-body">
-                    <div class="canvas-wrapper">
-                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+        <div class="masonry-item col-md-6">
+            <div class="bd bgc-white">
+                <div class="layers">
+                    <div class="layer w-100 p-20">
+                        <h6 class="lh-1">Sales Report</h6>
                     </div>
+                    <div class="layer w-100">
+                        <div class="bgc-light-blue-500 c-white p-20">
+                            <div class="peers ai-c jc-sb gap-40">
+                                <div class="peer peer-greed">
+                                    <h5>November 2017</h5>
+                                    <p class="mB-0">Sales Report</p>
+                                </div>
+                                <div class="peer">
+                                    <h3 class="text-end">$6,000</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive p-20">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class=" bdwT-0">Name</th>
+                                    <th class=" bdwT-0">Status</th>
+                                    <th class=" bdwT-0">Date</th>
+                                    <th class=" bdwT-0">Price</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="fw-600">Item #1 Name</td>
+                                    <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c rounded-pill">Unavailable</span> </td>
+                                    <td>Nov 18</td>
+                                    <td><span class="text-success">$12</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #2 Name</td>
+                                    <td><span class="badge bgc-deep-purple-50 c-deep-purple-700 p-10 lh-0 tt-c rounded-pill">New</span></td>
+                                    <td>Nov 19</td>
+                                    <td><span class="text-info">$34</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #3 Name</td>
+                                    <td><span class="badge bgc-pink-50 c-pink-700 p-10 lh-0 tt-c rounded-pill">New</span></td>
+                                    <td>Nov 20</td>
+                                    <td><span class="text-danger">-$45</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #4 Name</td>
+                                    <td><span class="badge bgc-green-50 c-green-700 p-10 lh-0 tt-c rounded-pill">Unavailable</span></td>
+                                    <td>Nov 21</td>
+                                    <td><span class="text-success">$65</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #5 Name</td>
+                                    <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c rounded-pill">Used</span></td>
+                                    <td>Nov 22</td>
+                                    <td><span class="text-success">$78</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #6 Name</td>
+                                    <td><span class="badge bgc-orange-50 c-orange-700 p-10 lh-0 tt-c rounded-pill">Used</span> </td>
+                                    <td>Nov 23</td>
+                                    <td><span class="text-danger">-$88</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-600">Item #7 Name</td>
+                                    <td><span class="badge bgc-yellow-50 c-yellow-700 p-10 lh-0 tt-c rounded-pill">Old</span></td>
+                                    <td>Nov 22</td>
+                                    <td><span class="text-success">$56</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="ta-c bdT w-100 p-20">
+                    <a href="#">Check all the sales</a>
                 </div>
             </div>
         </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-xl-3 col-6">
-            <div class="card">
-                <div class="card-body easypiechart-panel">
-                    <h4>New Orders</h4>
-                    <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-6">
-            <div class="card">
-                <div class="card-body easypiechart-panel">
-                    <h4>Comments</h4>
-                    <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span
-                                class="percent">65%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-6">
-            <div class="card">
-                <div class="card-body easypiechart-panel">
-                    <h4>New Users</h4>
-                    <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">56%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-6">
-            <div class="card">
-                <div class="card-body easypiechart-panel">
-                    <h4>Visitors</h4>
-                    <div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-8">
-            {% include '@partial/dashboard-chat.html.twig' %}
-        </div><!--/.col-->
-
-        <div class="col-lg-4">
-            {% include '@partial/dashboard-todo.html.twig' %}
-        </div><!--/.col-->
-    </div><!--/.row-->
+    </div>
 {% endblock %}

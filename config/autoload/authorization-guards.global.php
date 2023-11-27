@@ -33,6 +33,11 @@ return [
                                     'actions'     => [],
                                     'permissions' => ['authenticated'],
                                 ],
+                                [
+                                    'route'       => 'page',
+                                    'actions'     => [],
+                                    'permissions' => ['authenticated'],
+                                ],
                             ],
                         ],
                     ],

@@ -1,0 +1,228 @@
+@use "sass:math";
+
+// ---------------------------------------------------------
+// @TOC
+// ---------------------------------------------------------
+
+// + @Variables
+// + @Base
+// + @Gap (0 > 4 Step 1)
+// + @Gap (5 > 35 Step 5)
+// + @Gap (40 > 160 Step 10)
+
+// ---------------------------------------------------------
+// @Variables
+// ---------------------------------------------------------
+
+$responsive: true;
+
+// ---------------------------------------------------------
+// @Base
+// ---------------------------------------------------------
+
+[class*='gap'] {
+  width: auto !important;
+  overflow: hidden !important;
+}
+
+// ---------------------------------------------------------
+// @Gap (0 > 4 Step 1)
+// ---------------------------------------------------------
+
+@for $i from 0 through 4 {
+  .gapX-#{$i} {
+    margin-left: #{math.div($i, -2)}px !important;
+    margin-right: #{math.div($i, -2)}px !important;
+
+    & > * {
+      padding-left: #{math.div($i, 2)}px !important;
+      padding-right: #{math.div($i, 2)}px !important;
+    }
+  }
+
+  .gapY-#{$i} {
+    margin-top: #{math.div($i, -2)}px !important;
+    margin-bottom: #{math.div($i, -2)}px !important;
+
+    & > * {
+      padding-top: #{math.div($i, 2)}px !important;
+      padding-bottom: #{math.div($i, 2)}px !important;
+    }
+  }
+
+  .gap-#{$i} {
+    margin: #{math.div($i, -2)}px !important;
+
+    & > * {
+      padding: #{math.div($i, 2)}px !important;
+    }
+  }
+
+  @if ($responsive == true) {
+    @include generateResponsive() {
+      .gapX-#{$i}\@#{$breakpointAlias} {
+        margin-left: #{math.div($i, -2)}px !important;
+        margin-right: #{math.div($i, -2)}px !important;
+
+        & > * {
+          padding-left: #{math.div($i, 2)}px !important;
+          padding-right: #{math.div($i, 2)}px !important;
+        }
+      }
+
+      .gapY-#{$i}\@#{$breakpointAlias} {
+        margin-top: #{math.div($i, -2)}px !important;
+        margin-bottom: #{math.div($i, -2)}px !important;
+
+        & > * {
+          padding-top: #{math.div($i, 2)}px !important;
+          padding-bottom: #{math.div($i, 2)}px !important;
+        }
+      }
+
+      .gap-#{$i}\@#{$breakpointAlias} {
+        margin: #{math.div($i, -2)}px !important;
+
+        & > * {
+          padding: #{math.div($i, 2)}px !important;
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------
+// @Gap (5 > 35 Step 5)
+// ---------------------------------------------------------
+
+@for $i from 5 through 35 {
+  @if $i % 5 == 0 {
+    .gapX-#{$i} {
+      margin-left: #{math.div($i, -2)}px !important;
+      margin-right: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding-left: #{math.div($i, 2)}px !important;
+        padding-right: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    .gapY-#{$i} {
+      margin-top: #{math.div($i, -2)}px !important;
+      margin-bottom: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding-top: #{math.div($i, 2)}px !important;
+        padding-bottom: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    .gap-#{$i} {
+      margin: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    @if ($responsive == true) {
+      @include generateResponsive() {
+        .gapX-#{$i}\@#{$breakpointAlias} {
+          margin-left: #{math.div($i, -2)}px !important;
+          margin-right: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding-left: #{math.div($i, 2)}px !important;
+            padding-right: #{math.div($i, 2)}px !important;
+          }
+        }
+
+        .gapY-#{$i}\@#{$breakpointAlias} {
+          margin-top: #{math.div($i, -2)}px !important;
+          margin-bottom: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding-top: #{math.div($i, 2)}px !important;
+            padding-bottom: #{math.div($i, 2)}px !important;
+          }
+        }
+
+        .gap-#{$i}\@#{$breakpointAlias} {
+          margin: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding: #{math.div($i, 2)}px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------
+// @Gap (40 > 160 Step 10)
+// ---------------------------------------------------------
+
+@for $i from 40 through 160 {
+  @if $i % 10 == 0 {
+    .gapX-#{$i} {
+      margin-left: #{math.div($i, -2)}px !important;
+      margin-right: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding-left: #{math.div($i, 2)}px !important;
+        padding-right: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    .gapY-#{$i} {
+      margin-top: #{math.div($i, -2)}px !important;
+      margin-bottom: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding-top: #{math.div($i, 2)}px !important;
+        padding-bottom: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    .gap-#{$i} {
+      margin: #{math.div($i, -2)}px !important;
+
+      & > * {
+        padding: #{math.div($i, 2)}px !important;
+      }
+    }
+
+    @if ($responsive == true) {
+      @include generateResponsive() {
+        .gapX-#{$i}\@#{$breakpointAlias} {
+          margin-left: #{math.div($i, -2)}px !important;
+          margin-right: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding-left: #{math.div($i, 2)}px !important;
+            padding-right: #{math.div($i, 2)}px !important;
+          }
+        }
+
+        .gapY-#{$i}\@#{$breakpointAlias} {
+          margin-top: #{math.div($i, -2)}px !important;
+          margin-bottom: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding-top: #{math.div($i, 2)}px !important;
+            padding-bottom: #{math.div($i, 2)}px !important;
+          }
+        }
+
+        .gap-#{$i}\@#{$breakpointAlias} {
+          margin: #{math.div($i, -2)}px !important;
+
+          & > * {
+            padding: #{math.div($i, 2)}px !important;
+          }
+        }
+      }
+    }
+  }
+}

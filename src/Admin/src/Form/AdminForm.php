@@ -51,7 +51,7 @@ class AdminForm extends Form
                 'label' => 'Identity',
             ],
             'attributes' => [
-                'placeholder' => 'Identity...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -62,7 +62,7 @@ class AdminForm extends Form
                 'label' => 'Password',
             ],
             'attributes' => [
-                'placeholder' => 'Password...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -73,7 +73,7 @@ class AdminForm extends Form
                 'label' => 'Password Confirm',
             ],
             'attributes' => [
-                'placeholder' => 'Password Confirm...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -84,7 +84,7 @@ class AdminForm extends Form
                 'label' => 'First name',
             ],
             'attributes' => [
-                'placeholder' => 'First name...',
+                'placeholder' => '',
             ],
         ], ['priority' => -10]);
 
@@ -95,7 +95,7 @@ class AdminForm extends Form
                 'label' => 'Last name',
             ],
             'attributes' => [
-                'placeholder' => 'Last name...',
+                'placeholder' => '',
             ],
         ], ['priority' => -11]);
 

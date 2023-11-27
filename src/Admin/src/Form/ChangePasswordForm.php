@@ -31,7 +31,7 @@ class ChangePasswordForm extends Form
                 'label' => 'Your current password',
             ],
             'attributes' => [
-                'placeholder' => 'Current password...',
+                'placeholder' => '',
             ],
         ]);
 
@@ -42,7 +42,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password',
             ],
             'attributes' => [
-                'placeholder' => 'New password...',
+                'placeholder' => '',
             ],
         ]);
 
@@ -53,7 +53,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password confirm',
             ],
             'attributes' => [
-                'placeholder' => 'New password confirm...',
+                'placeholder' => '',
             ],
         ]);
 

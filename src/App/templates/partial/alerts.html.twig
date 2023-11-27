@@ -12,10 +12,7 @@
                  role="alert">
 
                 {% if dismissible %}
-
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
-
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 {% endif %}
 
                 <ul>
@@ -23,11 +20,8 @@
 
                         {% set writeMessage = message|raw %}
                         <li>{% trans writeMessage %}</li>
-
                     {% endfor %}
-
                 </ul>
-
             </div>
 
         {% endif %}

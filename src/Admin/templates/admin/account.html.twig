@@ -3,31 +3,35 @@
 {% block title %}Account{% endblock %}
 
 {% block content %}
-    {{ messagesPartial('partial::alerts', {dismissible: true}) }}
-    <div class="row account-page">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Update personal data</div>
-                <div class="card-body">
+    <div class="row m-5">
+        {{ messagesPartial('partial::alerts', { dismissible: true }) }}
+    </div>
+    <div class="row gap-20 masonry pos-r">
+        <div class="masonry-sizer col-md-6"></div>
+        <div class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd">
+                <h6 class="c-grey-900">Update personal data</h6>
+                <div class="mT-30">
+
                     {% set dummy = form.prepare() %}
                     {{ form().openTag(form) | raw }}
 
                     {% set identity = form.getElements().identity %}
-                    <div class="form-group {% if identity.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if identity.getMessages() %}has-error{% endif %}">
                         {% set dummy = identity.setAttribute('class', 'form-control') %}
                         {{ formLabel(identity) }}
                         {{ formElement(identity) }}
                     </div>
 
                     {% set firstName = form.getElements().firstName %}
-                    <div class="form-group {% if firstName.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if firstName.getMessages() %}has-error{% endif %}">
                         {% set dummy = firstName.setAttribute('class', 'form-control') %}
                         {{ formLabel(firstName) }}
                         {{ formElement(firstName) }}
                     </div>
 
                     {% set lastName = form.getElements().lastName %}
-                    <div class="form-group {% if lastName.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if lastName.getMessages() %}has-error{% endif %}">
                         {% set dummy = lastName.setAttribute('class', 'form-control') %}
                         {{ formLabel(lastName) }}
                         {{ formElement(lastName) }}
@@ -36,39 +40,37 @@
                     {{ formElement(form.get('account_csrf')) }}
 
                     {% set submit = form.get('submit') %}
-                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}
                     {{ formSubmit(submit) }}
 
                     {{ form().closeTag() | raw }}
-
                 </div>
             </div>
         </div>
-
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Change password</div>
-                <div class="card-body">
-                    {% set dummy = changePasswordForm.setAttribute('action', '/admin/changePassword') %}
+        <div class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd">
+                <h6 class="c-grey-900">Change password</h6>
+                <div class="mT-30">
                     {% set dummy = changePasswordForm.prepare() %}
+                    {% set dummy = changePasswordForm.setAttribute('action', path('admin', { action : "change-password" })) %}
                     {{ form().openTag(changePasswordForm) | raw }}
 
                     {% set currentPassword = changePasswordForm.get('currentPassword') %}
-                    <div class="form-group {% if currentPassword.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if currentPassword.getMessages() %}has-error{% endif %}">
                         {% set dummy = currentPassword.setAttribute('class', 'form-control') %}
                         {{ formLabel(currentPassword) }}
                         {{ formElement(currentPassword) }}
                     </div>
 
                     {% set password = changePasswordForm.getElements().password %}
-                    <div class="form-group {% if password.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if password.getMessages() %}has-error{% endif %}">
                         {% set dummy = password.setAttribute('class', 'form-control') %}
                         {{ formLabel(password) }}
                         {{ formElement(password) }}
                     </div>
 
                     {% set passwordConfirm = changePasswordForm.getElements().passwordConfirm %}
-                    <div class="form-group {% if passwordConfirm.getMessages() %}has-error{% endif %}">
+                    <div class="mb-3 form-group {% if passwordConfirm.getMessages() %}has-error{% endif %}">
                         {% set dummy = passwordConfirm.setAttribute('class', 'form-control') %}
                         {{ formLabel(passwordConfirm) }}
                         {{ formElement(passwordConfirm) }}
@@ -77,14 +79,12 @@
                     {{ formElement(changePasswordForm.get('change_password_csrf')) }}
 
                     {% set submit = changePasswordForm.get('submit') %}
-                    {% set dummy = submit.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+                    {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}
                     {{ formSubmit(submit) }}
 
                     {{ form().closeTag() | raw }}
-
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -1,44 +1,19 @@
-// Load jQuery and Bootstrap
-
-try {
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap');
-    require('bootstrap-slider');
-    require('jquery-mousewheel');
-
-    window.toastr = require('toastr');
-
-    window.translateText = function translateText(text)
-    {
-        let translation;
-
-        $.ajax({
-            type: 'post',
-            url: '/language/translate-text',
-            data:  {
-                'text': text
-            },
-            async: false,
-        }).done(function (response) {
-            translation = response['translation'];
-        }).fail(function (jqXHR) {
-            return text;
-        });
-
-        return translation;
-    };
-} catch (e) {
-}
-
-require('./components/_language');
-require('./components/_profile');
-require('./components/_main');
-require('./components/_bootstrap-table');
-require('./components/_sidebar');
-require('./components/_nanoScroller');
-require('./components/_chart-data');
-require('./components/_easypiechart');
-require('./components/_easypiechart-data');
-require('./components/_bsTable');
-require('./components/_default');
-require('./components/_admin');
+import './components/_fullcalendar';
+import './components/_masonry';
+import './components/_chart';
+import './components/_easyPieChart';
+import './components/_sparkline';
+import './components/_popover';
+import './components/_scrollbar';
+import './components/_search';
+import './components/_sidebar';
+import './components/_skycons';
+import './components/_vectorMaps';
+import './components/_chat';
+import './components/_bootstrapTable';
+import './components/_datepicker';
+import './components/_email';
+import './components/_googleMaps';
+import './components/_util';
+import './components/_bsTable';
+import './components/_admin';
