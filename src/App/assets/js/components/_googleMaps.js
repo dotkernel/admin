@@ -4,7 +4,7 @@ import loadGoogleMapsAPI  from 'load-google-maps-api';
 export default (function () {
   if ($('#google-map').length > 0) {
     loadGoogleMapsAPI({
-      key: 'AIzaSyDW8td30_gj6sGXjiMU0ALeMu1SDEwUnEA',
+      key: '',
     }).then(() => {
       const latitude  = 26.8206;
       const longitude = 30.8025;
