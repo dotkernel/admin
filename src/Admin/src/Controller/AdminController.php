@@ -65,6 +65,7 @@ class AdminController extends AbstractActionController
         if ($this->isPost()) {
             $this->adminForm->setData($this->getPostParams());
             if ($this->adminForm->isValid()) {
+                /** @var array $result */
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->createAdmin($result);
@@ -109,6 +110,7 @@ class AdminController extends AbstractActionController
             $this->adminForm->setData($this->getPostParams());
             $this->adminForm->setDifferentInputFilter(new EditAdminInputFilter());
             if ($this->adminForm->isValid()) {
+                /** @var array $result */
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
@@ -205,6 +207,8 @@ class AdminController extends AbstractActionController
             if ($form->isValid()) {
                 /** @var AuthenticationAdapter $adapter */
                 $adapter = $this->authenticationService->getAdapter();
+
+                /** @var array $data */
                 $data    = $form->getData();
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
@@ -265,6 +269,7 @@ class AdminController extends AbstractActionController
         if ($this->isPost()) {
             $form->setData($this->getPostParams());
             if ($form->isValid()) {
+                /** @var array $result */
                 $result = $form->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
@@ -300,6 +305,7 @@ class AdminController extends AbstractActionController
         if ($this->isPost()) {
             $changePasswordForm->setData($this->getPostParams());
             if ($changePasswordForm->isValid()) {
+                /** @var array $result */
                 $result = $changePasswordForm->getData();
                 if (password_verify($result['currentPassword'], $admin->getPassword())) {
                     try {
