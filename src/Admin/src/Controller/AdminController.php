@@ -209,7 +209,7 @@ class AdminController extends AbstractActionController
                 $adapter = $this->authenticationService->getAdapter();
 
                 /** @var array $data */
-                $data    = $form->getData();
+                $data = $form->getData();
                 $adapter->setIdentity($data['username']);
                 $adapter->setCredential($data['password']);
                 $authResult = $this->authenticationService->authenticate();
