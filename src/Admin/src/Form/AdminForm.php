@@ -7,9 +7,11 @@ namespace Frontend\Admin\Form;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\InputFilter\AdminInputFilter;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 
+/** @template-extends Form<FormInterface> */
 class AdminForm extends Form
 {
     protected InputFilterInterface $inputFilter;
