@@ -123,4 +123,40 @@ $( document ).ready(function(){
         const selections = bsTable.bootstrapTable('getSelections');
         uiButtons(selections);
     });
+
+    const identifier = bsTable.data('identifier');
+    if (! identifier) {
+        return ;
+    }
+
+    const request = (method, url, data) => {
+        return fetch(url, {
+            method: method.toUpperCase(),
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'},
+        }).then(response => {
+            if (! response.ok) {
+                throw new Error('HTTP error ' + response.status);
+            }
+            return response.json();
+        });
+    };
+
+    bsTable.on('column-switch.bs.table', () => {
+        const visibleColumns = bsTable.bootstrapTable('getVisibleColumns').map(it => {
+            return it.field;
+        });
+        request('POST', `/setting/store-setting/${identifier}`, {
+            value: visibleColumns,
+        }).catch(error => console.error('Error:', error));
+    });
+
+    request('GET', `/setting/get-setting/${identifier}`)
+        .then(data => {
+            bsTable.bootstrapTable('hideAllColumns');
+            data?.data?.value?.forEach(column => {
+                bsTable.bootstrapTable('showColumn', column);
+            });
+    }).catch(error => console.error('Error:', error));
+
 });
