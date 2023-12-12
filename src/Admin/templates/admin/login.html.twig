@@ -1,41 +1,94 @@
-{% extends '@layout/default.html.twig' %}
+{#{% extends '@layout/default.html.twig' %}#}
 
-{% block title %}{% trans 'Log in' %}{% endblock %}
+{#{% block title %}{% trans 'Log in' %}{% endblock %}#}
 
-{% block page_title %}{% endblock %}
+{#{% block page_title %}{% endblock %}#}
 
-{% block body_class %}user-form{% endblock %}
+{#{% block body_class %}user-form{% endblock %}#}
 
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="sign-in-block">
-                    <h3>{% trans 'Log in to your account' %}</h3>
+{#{% block content %}#}
+{#    <div class="row gap-20 masonry pos-r d-flex justify-content-center">#}
+{#        <div class="masonry-sizer col-md-6"></div>#}
+{#        <div class="masonry-item col-md-6">#}
+{#            <div class="bgc-white p-20 bd">#}
+{#                <h6 class="c-grey-900">Login</h6>#}
+{#                <div class="mT-30">#}
+{#                    {% set dummy = form.prepare() %}#}
+{#                    {{ form().openTag(form) | raw }}#}
+{#                    <div class="mb-3">#}
+{#                        {% set username = form.get('username') %}#}
+{#                        {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}#}
+{#                        {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}#}
+{#                        {{ formElement(username) }}#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        {% set password = form.get('password') %}#}
+{#                        {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}#}
+{#                        {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}#}
+{#                        {{ formElement(password) }}#}
+{#                    </div>#}
 
-                    {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
+{#                    {% set submit = form.get('submit') %}#}
+{#                    {% set submitValue = submit.getValue|trans|raw %}#}
+{#                    {% set dummy = submit.setAttribute('value', submitValue) %}#}
 
-                    {% set dummy = form.prepare() %}
-                    {{ form().openTag(form) | raw }}
+{#                    {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}#}
 
-                    {% set username = form.get('username') %}
-                    {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
-                    {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                    {{ formElement(username) }}
+{#                    {{ formSubmit(submit) }}#}
 
-                    {% set password = form.get('password') %}
-                    {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
-                    {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                    {{ formElement(password) }}
+{#                    {{ form().closeTag() | raw }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
 
-                    {% set submit = form.get('submit') %}
-                    {% set submitValue = submit.getValue|trans|raw %}
-                    {% set dummy = submit.setAttribute('value', submitValue) %}
-                    {{ formSubmit(submit) }}
 
-                    {{ form().closeTag() | raw }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign In</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body class="app">
+    <div class="peers ai-s fxw-nw h-100vh align-items-center">
+        <div class="col-6 col-md-6 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r">
+            <div class="pos-a centerXY">
+                <div class="bgc-white bdrs-50p w-100">
+                    <a href="{{ path('dashboard') }}">
+                        <img class="pos-a centerXY logo-img" src="{{ asset('images/app/logo.svg') }}" alt="">
+                    </a>
                 </div>
             </div>
         </div>
+        <div class="col-2 col-md-2 mL-10">
+            {% set dummy = form.prepare() %}
+            {{ form().openTag(form) | raw }}
+            <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
+            <div class="mb-3">
+                {% set username = form.get('username') %}
+                {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
+                {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                {{ formElement(username) }}
+            </div>
+            <div class="mb-3">
+                {% set password = form.get('password') %}
+                {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
+                {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                {{ formElement(password) }}
+            </div>
+            {% set submit = form.get('submit') %}
+            {% set submitValue = submit.getValue|trans|raw %}
+            {% set dummy = submit.setAttribute('value', submitValue) %}
+
+            {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
+
+            {{ formSubmit(submit) }}
+
+            {{ form().closeTag() | raw }}
+        </div>
     </div>
-{% endblock %}
+</body>
+</html>

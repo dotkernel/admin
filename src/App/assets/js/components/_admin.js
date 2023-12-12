@@ -1,6 +1,9 @@
-$( document ).ready(function(){
-    $("#adminEditButton").prop('disabled', true);
-    $("#adminDeleteButton").prop('disabled', true);
+$(document).ready(() => {
+    const adminEditButton = $("#adminEditButton");
+    const adminDeleteButton = $("#adminDeleteButton");
+
+    adminEditButton.prop('disabled', true);
+    adminDeleteButton.prop('disabled', true);
 
     $("#adminAddButton").click(function () {
         $.get('/admin/add')
@@ -14,9 +17,9 @@ $( document ).ready(function(){
             .fail(function (data) {
                 showFailDialog(data);
             });
-    });
+    });``
 
-    $("#adminEditButton").click(function () {
+    adminEditButton.click(function () {
         var selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length != 1) {
             showAlertDialog('Selection error',
@@ -38,7 +41,7 @@ $( document ).ready(function(){
 
     });
 
-    $("#adminDeleteButton").click(function () {
+    adminDeleteButton.click(function () {
         var selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length === 0) {
             return;

@@ -5,9 +5,7 @@
 {% for k,v in form.getElements() %}
     {% set element = form.get(k) %}
     {% if element is Captcha %}
-
-        <div class="form-group">
-
+        <div class="mb-3">
             {% set dummy = element.setAttribute('class', 'form-control') %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
@@ -18,15 +16,16 @@
 
         </div>
     {% elseif element is MultiCheckbox %}
-        <label>{{ element.getLabel() }}</label>
-        <div class="form-group">
+        {% set dummy = element.setAttribute('class', 'form-check-input') %}
+        {% set dummy = element.setLabelAttributes([]|merge({'class': 'form-label mR-25'})) %}
+
+        <div class="form-check gap-10">
             {{ formElement(element) }}
         </div>
-
     {% elseif element is Checkbox %}
-
-        <div class="checkbox">
-            <label>
+        {% set dummy = element.setAttribute('class', 'form-check-input') %}
+        <div class="form-check">
+            <label class="form-label">
                 {{ formCheckbox(element) }} {{ element.getLabel() }}
             </label>
         </div>
@@ -37,26 +36,26 @@
 
     {% elseif element is Button and element.getName() != 'submit' %}
 
-        {% set dummy = element.setAttribute('class', 'btn btn-block') %}
+        {% set dummy = element.setAttribute('class', 'btn btn-color') %}
         {{ formButton(element) }}
 
     {% elseif element is Submit or element is Button and element.getName() == 'submit' %}
 
-        {% set dummy = element.setAttribute('class', 'btn btn-lg btn-primary btn-block') %}
+        {% set dummy = element.setAttribute('class', 'btn btn-lg btn-primary btn-color') %}
         {{ formSubmit(element) }}
 
     {% else %}
 
-        <div class="form-group {% if element.getMessages() %}has-error{% endif %}">
+        <div class="mb-3 {% if element.getMessages() %}has-error{% endif %}">
 
             {% set dummy = element.setAttribute('class', 'form-control') %}
+            {% set dummy = element.setLabelAttributes([]|merge({'class': 'form-label'})) %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
                 {{ formLabel(element) }}
             {% endif %}
 
             {{ formElement(element) }}
-
         </div>
 
     {% endif %}

@@ -3,26 +3,20 @@
 {% block title %}Manage admins{% endblock %}
 
 {% block content %}
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Manage admins</h1>
-        </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
+    <div class="container-fluid">
+        <h4 class="c-grey-900 mT-10 mB-30">Manage admins</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 p-20 mB-20">
                     <div id="tableToolbar" class="btn-group">
                         <button type="button" class="btn btn-default" id="adminAddButton">
-                            <i class="fas fa-plus"></i>
+                            <i class="bi bi-plus-circle"></i>
                         </button>
                         <button type="button" class="btn btn-default" id="adminEditButton">
-                            <i class="fas fa-pencil-alt"></i>
+                            <i class="bi bi-pencil"></i>
                         </button>
                         <button type="button" class="btn btn-default" id="adminDeleteButton">
-                            <i class="fas fa-trash"></i>
+                            <i class="bi bi-trash"></i>
                         </button>
                     </div>
 
@@ -32,7 +26,7 @@
                            data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
                            data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
                            data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
-                           data-sort-name="created" data-sort-order="desc" id="bsTable">
+                           data-sort-name="created" data-sort-order="desc" id="bsTable" data-identifier="table_admin_list_selected_columns">
                         <thead>
 
                         <tr>
@@ -50,7 +44,7 @@
                 </div>
             </div>
         </div>
-    </div><!--/.row-->
+    </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="formModal" aria-labelledby="formModal">
         <div class="modal-dialog" role="document">
@@ -68,7 +62,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="formModalSubmit">Save</button>
+                    <button type="button" class="btn btn-primary btn-color" id="formModalSubmit">Save</button>
                 </div>
             </div>
         </div>
@@ -83,10 +77,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div id="deleteFormMessages"></div>
                     <div id="deleteFormPlaceholder"></div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -95,5 +87,5 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
+

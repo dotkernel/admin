@@ -2,7 +2,7 @@
  * Webpack is used to compile and minify/uglify JS and Sass.
  * Since this will nuke some of the directories inside the public directory,
  * you should no longer manually add images etc. to the public folder.
- * We have setup a configuration that will automatically copy any image
+ * We have set up a configuration that will automatically copy any image
  * from the images folder here to public/images/{moduleName}.
  *
  * so please, DO NOT MANUALLY ADD ASSETS TO THE PUBLIC DIRECTORY!
@@ -149,8 +149,8 @@ module.exports = {
         }),
     ],
     optimization: {
-    minimizer: [new TerserPlugin({
-        extractComments: false,
+        minimizer: [new TerserPlugin({
+            extractComments: false,
         })],
     },
 };
@@ -163,12 +163,19 @@ function generateBaseRules()
 {
     return [
         {
+            test: require.resolve("jquery"),
+            loader: "expose-loader",
+            options: {
+                exposes: ["$", "jQuery"],
+            },
+        },
+        {
             test: /\.js$/,
             exclude: [/node_modules/],
             use: [{
                 loader: 'babel-loader',
             }],
-    },
+        },
         {
             test: /\.tsx?$/,
             exclude: [/node_modules/],
@@ -178,7 +185,7 @@ function generateBaseRules()
                     sourceMap: process.env.NODE_ENV === "development",
                 }
             }]
-    },
+        },
         {
             test: /\.(css|sass|scss)$/,
             use: [
@@ -189,24 +196,24 @@ function generateBaseRules()
                         url: true,
                         sourceMap: process.env.NODE_ENV === "development"
                     }
-            },
+                },
                 {
                     loader: 'sass-loader',
                     options: {
                         sourceMap: true
                     }
-            }
+                }
             ]
-    },
+        },
         {
-            test: /\.(png|jpg|gif)$/,
+            test: /\.(png|jpg|gif|jpeg)$/,
             include: [
                 path.resolve(__dirname, 'node_modules')
             ],
             use: [
                 'file-loader?name=images/[name].[ext]'
             ]
-    },
+        },
         {
             test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
             exclude: [/images?|img/],
@@ -216,6 +223,6 @@ function generateBaseRules()
                 // with the name image(s) or img as a font
                 'file-loader?name=fonts/[name].[ext]'
             ]
-    }
+        }
     ];
 }

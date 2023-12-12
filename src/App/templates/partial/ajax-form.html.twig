@@ -8,7 +8,7 @@
 {{ form().closeTag() | raw }}
 
 <script type="application/javascript">
-    $(document).ready(function() {
+    $(document).ready(() => {
         var roleSelect = $('#rolesSelect');
         if (roleSelect.length) {
             roleSelect.multiselect({

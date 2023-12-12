@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/app/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/app/favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/app/favicon/favicon-16x16.png') }}">
@@ -14,88 +13,28 @@
 
     <title>{% block title %}{% endblock %} - DotKernel</title>
 
-{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>#}
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="{{ asset('js/html5shiv.js') }}"></script>
-    <script src="{{ asset('js/respond.min.js') }}"></script>
-    <![endif]-->
-
+        <!--[if lt IE 9]>
+        <script src="{{ asset('js/html5shiv.js') }}"></script>
+        <script src="{{ asset('js/respond.min.js') }}"></script>
+        <![endif]-->
 </head>
-
-<body class="side-collapse-container">
-<nav class="navbar navbar-expand-md navbar-light" role="navigation">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="{{ asset('images/app/logo.svg') }}" alt="DotKernel"
-                 onerror="this.onerror=null; this.src={{ asset('images/app/logo.png') }}" />
-        </a>
-
-            {% if hasIdentity() %}
-                <!-- navbar-right with login form or account menu -->
-                {{ navigationPartial('account_menu', 'partial::account-menu') }}
-            {% endif %}
-
-    </div><!-- /.container-fluid -->
-</nav>
-
-{% if hasIdentity() %}
-    <div id="sidebar-collapse" class="sidebar side-collapse sideRightIn in">
-        <div class="nav-placeholder">
-            <a class="logo" href="/">
-                <img src="{{ asset('images/app/logo-sidebar.png') }}" title="DotKernel" alt="DotKernel"/>
-            </a>
-        </div>
-        <form role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
+<body class="app">
+    {% include '@partial/left-menu.html.twig' %}
+    <div class="page-container">
+        {% include '@partial/nav-bar.html.twig' %}
+        <main class='main-content bgc-grey-100'>
+            <div id='mainContent'>
+                {% block content %}{% endblock %}
             </div>
-        </form>
-        <div class="toggle">
-            <a id="left-menu-toggle" href="#sidebar-collapse" class="slide-right"></a>
-        </div>
+        </main>
 
-        <div class="nano nano-sidebar">
-            {{ navigationPartial('main_menu', 'partial::menu', {'ulClass': 'nav menu nano-content', 'ulId': '', 'depth': 0}) }}
-        </div>
-
-    </div><!--/.sidebar-->
-{% endif %}
-
-<main class="container-fluid  main-content">
-    {% set mainClass = 'col-sm-12 col-md-12 col-lg-12' %}
-
-    {% if hasIdentity() %}
-        <div class="breadcrumb-section">
-            <div class="row">
-                <button data-bs-toggle="collapse-side" data-target=".side-collapse"
-                        data-target-2=".side-collapse-container" type="button" class="navbar-toggler float-left"
-                        aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ol class="breadcrumb">
-                    <li><a href="{{ path('dashboard') }}"><i class="fa fa-home"></i></a></li>
-                </ol>
-            </div><!--/.row-->
-        </div>
-    {% endif %}
-
-    <div class="main {{ mainClass }}">
-
-        {% block content %}{% endblock %}
-
-        {% include '@partial/modals.html.twig' %}
-
-    </div>    <!--/.main-->
-</main>
-
-<script src="{{ asset('js/app.js') }}"></script>
+        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"></footer>
+    </div>
+    <script src="{{ asset('js/app.js') }}"></script>
 
 {% block javascript %}{% endblock %}
 
 </body>
-
 </html>

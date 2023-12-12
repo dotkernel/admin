@@ -66,8 +66,9 @@
     },
     "autoload": {
         "psr-4": {
+            "Frontend\\App\\": "src/App/src/",
             "Frontend\\Admin\\": "src/Admin/src/",
-            "Frontend\\App\\": "src/App/src/"
+            "Frontend\\Setting\\": "src/Setting/src/"
         }
     },
     "autoload-dev": {

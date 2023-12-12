@@ -6,8 +6,10 @@ namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\ChangePasswordInputFilter;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 
+/** @template-extends Form<FormInterface> */
 class ChangePasswordForm extends Form
 {
     protected InputFilterInterface $inputFilter;
@@ -31,7 +33,7 @@ class ChangePasswordForm extends Form
                 'label' => 'Your current password',
             ],
             'attributes' => [
-                'placeholder' => 'Current password...',
+                'placeholder' => '',
             ],
         ]);
 
@@ -42,7 +44,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password',
             ],
             'attributes' => [
-                'placeholder' => 'New password...',
+                'placeholder' => '',
             ],
         ]);
 
@@ -53,7 +55,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password confirm',
             ],
             'attributes' => [
-                'placeholder' => 'New password confirm...',
+                'placeholder' => '',
             ],
         ]);
 

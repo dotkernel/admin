@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminRepository;
 use Frontend\App\Entity\AbstractEntity;
+use Frontend\Setting\Entity\Setting;
 
 use function array_map;
 
@@ -51,11 +52,15 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\InverseJoinColumn(name: "roleUuid", referencedColumnName: "uuid")]
     protected Collection $roles;
 
+    #[ORM\OneToMany(mappedBy: 'admin', targetEntity: Setting::class)]
+    protected Collection $settings;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->roles = new ArrayCollection();
+        $this->roles    = new ArrayCollection();
+        $this->settings = new ArrayCollection();
     }
 
     public function getArrayCopy(): array

@@ -1,55 +1,47 @@
 {% extends '@layout/default.html.twig' %}
 
-{% block title %}Admin Logins{% endblock %}
+{% block title %}Admin logins{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Admin Logins</h1>
-        </div>
-    </div><!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div id="tableToolbar" class="btn-group">
-                    </div>
-
+    <div class="container-fluid">
+        <h4 class="c-grey-900 mT-10 mB-30">Admin logins</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 p-20 mB-20">
                     <table data-toggle="table" data-url="/admin/list-logins" data-click-to-select="false"
                            data-mobile-responsive="true" data-min-width="800" data-check-on-init="true" data-id-field="uuid"
                            data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
                            data-search="false" data-pagination="true" data-toolbar="#tableToolbar"
                            data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
                            data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
-                           data-sort-name="created" data-sort-order="desc" id="bsTable">
+                           data-sort-name="created" data-sort-order="desc" data-identifier="table_admin_list_logins_selected_columns" id="bsTable">
                         <thead>
 
-                            <tr>
-                                <th data-field="identity" data-sortable="false">Identity</th>
-                                <th data-field="adminIp" data-sortable="false">Ip</th>
-                                <th data-field="status" data-sortable="false">Status</th>
-                                <th data-field="country" data-sortable="false">Country</th>
-                                <th data-field="continent" data-sortable="false">Continent</th>
-                                <th data-field="organization" data-sortable="false">Organization</th>
-                                <th data-field="deviceType" data-sortable="false">Device Type</th>
-                                <th data-field="deviceBrand" data-sortable="false">Device Brand</th>
-                                <th data-field="deviceModel" data-sortable="false">Device Model</th>
-                                <th data-field="isMobile" data-sortable="false">Is Mobile</th>
-                                <th data-field="osName" data-sortable="false">Os Name</th>
-                                <th data-field="osVersion" data-sortable="false">Os Version</th>
-                                <th data-field="osPlatform" data-sortable="false">Os Platform</th>
-                                <th data-field="clientType" data-sortable="false">Client Type</th>
-                                <th data-field="clientName" data-sortable="false">Client Name</th>
-                                <th data-field="clientEngine" data-sortable="false">Client Engine</th>
-                                <th data-field="clientVersion" data-sortable="false">Client Version</th>
-                                <th data-field="created" data-sortable="true">Created</th>
-                            </tr>
+                        <tr>
+                            <th data-field="identity" data-sortable="false">Identity</th>
+                            <th data-field="adminIp" data-sortable="false">Ip</th>
+                            <th data-field="status" data-sortable="false">Status</th>
+                            <th data-field="country" data-sortable="false">Country</th>
+                            <th data-field="continent" data-sortable="false">Continent</th>
+                            <th data-field="organization" data-sortable="false">Organization</th>
+                            <th data-field="deviceType" data-sortable="false">Device Type</th>
+                            <th data-field="deviceBrand" data-sortable="false">Device Brand</th>
+                            <th data-field="deviceModel" data-sortable="false">Device Model</th>
+                            <th data-field="isMobile" data-sortable="false">Is Mobile</th>
+                            <th data-field="osName" data-sortable="false">Os Name</th>
+                            <th data-field="osVersion" data-sortable="false">Os Version</th>
+                            <th data-field="osPlatform" data-sortable="false">Os Platform</th>
+                            <th data-field="clientType" data-sortable="false">Client Type</th>
+                            <th data-field="clientName" data-sortable="false">Client Name</th>
+                            <th data-field="clientEngine" data-sortable="false">Client Engine</th>
+                            <th data-field="clientVersion" data-sortable="false">Client Version</th>
+                            <th data-field="created" data-sortable="true">Created</th>
+                        </tr>
 
                         </thead>
                     </table>
                 </div>
             </div>
         </div>
-    </div><!--/.row-->
+    </div>
 {% endblock %}

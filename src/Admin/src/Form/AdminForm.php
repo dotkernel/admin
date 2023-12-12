@@ -7,9 +7,11 @@ namespace Frontend\Admin\Form;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\InputFilter\AdminInputFilter;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 
+/** @template-extends Form<FormInterface> */
 class AdminForm extends Form
 {
     protected InputFilterInterface $inputFilter;
@@ -51,7 +53,7 @@ class AdminForm extends Form
                 'label' => 'Identity',
             ],
             'attributes' => [
-                'placeholder' => 'Identity...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -62,7 +64,7 @@ class AdminForm extends Form
                 'label' => 'Password',
             ],
             'attributes' => [
-                'placeholder' => 'Password...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -73,7 +75,7 @@ class AdminForm extends Form
                 'label' => 'Password Confirm',
             ],
             'attributes' => [
-                'placeholder' => 'Password Confirm...',
+                'placeholder' => '',
             ],
         ], ['priority' => -9]);
 
@@ -84,7 +86,7 @@ class AdminForm extends Form
                 'label' => 'First name',
             ],
             'attributes' => [
-                'placeholder' => 'First name...',
+                'placeholder' => '',
             ],
         ], ['priority' => -10]);
 
@@ -95,7 +97,7 @@ class AdminForm extends Form
                 'label' => 'Last name',
             ],
             'attributes' => [
-                'placeholder' => 'Last name...',
+                'placeholder' => '',
             ],
         ], ['priority' => -11]);
 

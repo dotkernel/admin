@@ -48,8 +48,9 @@ $aggregator = new ConfigAggregator([
     new ArrayProvider($cacheConfig),
 
     // DotKernel modules
-    Frontend\Admin\ConfigProvider::class,
     Frontend\App\ConfigProvider::class,
+    Frontend\Admin\ConfigProvider::class,
+    Frontend\Setting\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):

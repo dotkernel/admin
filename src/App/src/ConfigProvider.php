@@ -10,6 +10,7 @@ use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Frontend\App\Controller\DashboardController;
+use Frontend\App\Controller\PageController;
 use Frontend\App\Factory\EntityListenerResolverFactory;
 use Frontend\App\Factory\FormsPluginFactory;
 use Frontend\App\Plugin\FormsPlugin;
@@ -34,17 +35,19 @@ class ConfigProvider
                 Application::class => [
                     RoutesDelegator::class,
                     \Frontend\Admin\RoutesDelegator::class,
+                    \Frontend\Setting\RoutesDelegator::class,
                 ],
             ],
             'factories'  => [
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 DashboardController::class    => AnnotatedServiceFactory::class,
+                PageController::class         => AnnotatedServiceFactory::class,
                 PluginManager::class          => PluginManagerFactory::class,
                 FormsPlugin::class            => FormsPluginFactory::class,
             ],
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
-                EntityManagerInterface::class => 'doctrine.entity_manager.default',
+                EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
             ],
         ];
     }
