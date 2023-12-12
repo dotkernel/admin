@@ -153,10 +153,13 @@ $( document ).ready(function(){
 
     request('GET', `/setting/get-setting/${identifier}`)
         .then(data => {
-            bsTable.bootstrapTable('hideAllColumns');
+            const visibleColumns = bsTable.bootstrapTable('getVisibleColumns');
+            visibleColumns.forEach(column => {
+                bsTable.bootstrapTable('hideColumn', column.field);
+            });
             data?.data?.value?.forEach(column => {
                 bsTable.bootstrapTable('showColumn', column);
             });
-    }).catch(error => console.error('Error:', error));
+        }).catch(error => console.error('Error:', error));
 
 });
