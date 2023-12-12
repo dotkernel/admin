@@ -6,8 +6,10 @@ namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\ChangePasswordInputFilter;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 
+/** @template-extends Form<FormInterface> */
 class ChangePasswordForm extends Form
 {
     protected InputFilterInterface $inputFilter;

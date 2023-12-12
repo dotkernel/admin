@@ -18,7 +18,7 @@ return [
         ],
         'aliases'   => [
             EntityManager::class                 => 'doctrine.entity_manager.orm_default',
-            EntityManagerInterface::class        => 'doctrine.entity_manager.default',
+            EntityManagerInterface::class        => 'doctrine.entity_manager.orm_default',
             'doctrine.entitymanager.orm_default' => 'doctrine.entity_manager.orm_default',
         ],
     ],

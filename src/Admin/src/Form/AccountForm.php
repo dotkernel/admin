@@ -6,8 +6,10 @@ namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\AccountInputFilter;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 
+/** @template-extends Form<FormInterface> */
 class AccountForm extends Form
 {
     protected InputFilterInterface $inputFilter;

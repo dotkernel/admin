@@ -35,6 +35,7 @@ class ConfigProvider
                 Application::class => [
                     RoutesDelegator::class,
                     \Frontend\Admin\RoutesDelegator::class,
+                    \Frontend\Setting\RoutesDelegator::class,
                 ],
             ],
             'factories'  => [
@@ -46,7 +47,7 @@ class ConfigProvider
             ],
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
-                EntityManagerInterface::class => 'doctrine.entity_manager.default',
+                EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
             ],
         ];
     }
