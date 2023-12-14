@@ -255,3 +255,9 @@
 .radio-success input[type="radio"]:checked + label::after {
   background-color: #5cb85c;
 }
+
+@media (max-width: 767px) {
+  .login-button {
+    width: 100%;
+  }
+}

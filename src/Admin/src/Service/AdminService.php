@@ -129,7 +129,7 @@ class AdminService implements AdminServiceInterface
                 'uuid'          => $login->getUuid()->toString(),
                 'identity'      => $login->getIdentity(),
                 'adminIp'       => $login->getAdminIp(),
-                'status'        => $login->getLoginStatus(),
+                'loginStatus'   => $login->getLoginStatus(),
                 'country'       => $login->getCountry(),
                 'continent'     => $login->getContinent(),
                 'organization'  => $login->getOrganization(),

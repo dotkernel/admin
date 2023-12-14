@@ -62,7 +62,7 @@ class LoginForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Log in',
-                'class' => 'btn btn-primary btn-block',
+                'class' => 'btn btn-primary btn-block login-button',
             ],
             'type'       => Submit::class,
         ]);
