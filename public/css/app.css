@@ -66783,6 +66783,11 @@ textarea.form-control-lg {
   background-color: #5cb85c;
 }
 
+@media (max-width: 767px) {
+  .login-button {
+    width: 100%;
+  }
+}
 #loader {
   transition: all 0.3s ease-in-out;
   opacity: 1;

@@ -54,40 +54,44 @@
 </head>
 <body class="app">
     <div class="peers ai-s fxw-nw h-100vh align-items-center">
-        <div class="col-6 col-md-6 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r">
-            <div class="pos-a centerXY">
-                <div class="bgc-white bdrs-50p w-100">
-                    <a href="{{ path('dashboard') }}">
-                        <img class="pos-a centerXY logo-img" src="{{ asset('images/app/logo.svg') }}" alt="">
-                    </a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r">
+                    <div class="pos-a centerXY">
+                        <div class="bgc-white bdrs-50p w-100">
+                            <a href="{{ path('dashboard') }}">
+                                <img class="pos-a centerXY logo-img" src="{{ asset('images/app/logo.svg') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {% set dummy = form.prepare() %}
+                    {{ form().openTag(form) | raw }}
+                    <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
+                    <div class="mb-3">
+                        {% set username = form.get('username') %}
+                        {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
+                        {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                        {{ formElement(username) }}
+                    </div>
+                    <div class="mb-3">
+                        {% set password = form.get('password') %}
+                        {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
+                        {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
+                        {{ formElement(password) }}
+                    </div>
+                    {% set submit = form.get('submit') %}
+                    {% set submitValue = submit.getValue|trans|raw %}
+                    {% set dummy = submit.setAttribute('value', submitValue) %}
+
+                    {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
+
+                    {{ formSubmit(submit) }}
+
+                    {{ form().closeTag() | raw }}
                 </div>
             </div>
-        </div>
-        <div class="col-2 col-md-2 mL-10">
-            {% set dummy = form.prepare() %}
-            {{ form().openTag(form) | raw }}
-            <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
-            <div class="mb-3">
-                {% set username = form.get('username') %}
-                {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
-                {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                {{ formElement(username) }}
-            </div>
-            <div class="mb-3">
-                {% set password = form.get('password') %}
-                {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
-                {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                {{ formElement(password) }}
-            </div>
-            {% set submit = form.get('submit') %}
-            {% set submitValue = submit.getValue|trans|raw %}
-            {% set dummy = submit.setAttribute('value', submitValue) %}
-
-            {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
-
-            {{ formSubmit(submit) }}
-
-            {{ form().closeTag() | raw }}
         </div>
     </div>
 </body>
