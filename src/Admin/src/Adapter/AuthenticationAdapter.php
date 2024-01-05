@@ -186,7 +186,7 @@ class AuthenticationAdapter implements AdapterInterface
     /**
      * @throws Exception
      */
-    private function checkMethod(Admin $identityClass, string $methodName): void
+    private function checkMethod(Admin $identityClass, string $methodName, int $a): void
     {
         if (! method_exists($identityClass, $methodName)) {
             throw new Exception(sprintf(
