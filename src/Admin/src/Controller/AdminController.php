@@ -26,6 +26,7 @@ use Laminas\Authentication\Exception\ExceptionInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Log\Logger;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -46,7 +47,8 @@ class AdminController extends AbstractActionController
      *     AuthenticationServiceInterface::class,
      *     FlashMessengerInterface::class,
      *     FormsPlugin::class,
-     *     AdminForm::class
+     *     AdminForm::class,
+     *     "dot-log.default_logger"
      * })
      */
     public function __construct(
@@ -56,7 +58,8 @@ class AdminController extends AbstractActionController
         protected AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
-        protected AdminForm $adminForm
+        protected AdminForm $adminForm,
+        protected Logger $logger
     ) {
     }
 
@@ -71,12 +74,17 @@ class AdminController extends AbstractActionController
                     $this->adminService->createAdmin($result);
                     return new JsonResponse(['success' => 'success', 'message' => 'Admin created successfully']);
                 } catch (Throwable $e) {
-                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                    $this->logger->err('Create admin', [
+                        'error' => $e->getMessage(),
+                        'file'  => $e->getFile(),
+                        'line'  => $e->getLine(),
+                        'trace' => $e->getTraceAsString(),
+                    ]);
+                    return new JsonResponse(['message' => $e->getMessage()]);
                 }
             } else {
                 return new JsonResponse(
                     [
-                        'success' => 'error',
                         'message' => $this->forms->getMessagesAsString($this->adminForm),
                     ]
                 );
@@ -116,12 +124,17 @@ class AdminController extends AbstractActionController
                     $this->adminService->updateAdmin($admin, $result);
                     return new JsonResponse(['success' => 'success', 'message' => 'Admin updated successfully']);
                 } catch (Throwable $e) {
-                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                    $this->logger->err('Update admin', [
+                        'error' => $e->getMessage(),
+                        'file'  => $e->getFile(),
+                        'line'  => $e->getLine(),
+                        'trace' => $e->getTraceAsString(),
+                    ]);
+                    return new JsonResponse(['message' => $e->getMessage()]);
                 }
             } else {
                 return new JsonResponse(
                     [
-                        'success' => 'error',
                         'message' => $this->forms->getMessagesAsString($this->adminForm),
                     ]
                 );
@@ -158,7 +171,13 @@ class AdminController extends AbstractActionController
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
             return new JsonResponse(['success' => 'success', 'message' => 'Admin Deleted Successfully']);
         } catch (Throwable $e) {
-            return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+            $this->logger->err('Delete admin', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return new JsonResponse(['message' => $e->getMessage()]);
         }
     }
 
