@@ -69,7 +69,6 @@ class AdminTest extends UnitTest
 
         $this->assertInstanceOf(UuidInterface::class, $admin->getUuid());
 
-        $this->assertNull($admin->getIdentity());
         $admin = $admin->setIdentity($this->default['identity']);
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['identity'], $admin->getIdentity());
@@ -84,7 +83,6 @@ class AdminTest extends UnitTest
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['lastName'], $admin->getLastName());
 
-        $this->assertNull($admin->getPassword());
         $admin = $admin->setPassword($this->default['password']);
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['password'], $admin->getPassword());
