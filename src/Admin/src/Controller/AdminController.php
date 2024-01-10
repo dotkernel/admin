@@ -132,7 +132,7 @@ class AdminController extends AbstractActionController
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
-                    return new JsonResponse(['message' => Message::ADMIN_UPDATED_SUCCESSFULLY]);
+                    return new JsonResponse(['success' => 'success', 'message' => Message::ADMIN_UPDATED_SUCCESSFULLY]);
                 } catch (ORMException $e) {
                     $this->logger->err('Update admin', [
                         'error' => $e->getMessage(),
