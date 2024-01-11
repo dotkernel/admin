@@ -37,6 +37,7 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
+use function json_decode;
 use function password_verify;
 
 class AdminController extends AbstractActionController
@@ -80,13 +81,13 @@ class AdminController extends AbstractActionController
                 } catch (ORMException $e) {
                     $this->logErrors($e, Message::CREATE_ADMIN);
                     return new JsonResponse(
-                        ['message' => $e->getMessage()], 
+                        ['message' => $e->getMessage()],
                         StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
                     );
                 } catch (Throwable $e) {
                     $this->logErrors($e, Message::CREATE_ADMIN);
                     return new JsonResponse(
-                        ['message' => Message::AN_ERROR_OCCURRED], 
+                        ['message' => Message::AN_ERROR_OCCURRED],
                         StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
                     );
                 }
@@ -133,7 +134,7 @@ class AdminController extends AbstractActionController
                 } catch (ORMException $e) {
                     $this->logErrors($e, Message::UPDATE_ADMIN);
                     return new JsonResponse(
-                        ['message' => $e->getMessage()], 
+                        ['message' => $e->getMessage()],
                         StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
                     );
                 } catch (Throwable $e) {
@@ -387,7 +388,8 @@ class AdminController extends AbstractActionController
         return new JsonResponse($result);
     }
 
-    public function logErrors(Throwable|Exception $e, string $message) {
+    public function logErrors(Throwable|Exception $e, string $message)
+    {
         $this->logger->err($message, [
             'error' => $e->getMessage(),
             'file'  => $e->getFile(),
