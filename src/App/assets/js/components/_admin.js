@@ -22,7 +22,7 @@ $(document).ready(() => {
     });
 
     adminEditButton.click(function () {
-        let selections = $("#bsTable").bootstrapTable('getSelections');
+        const selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length !== 1) {
             showAlertDialog('Selection error',
                 'Multiple or no Admin selected. Only one Admin can be edited a time',
@@ -43,7 +43,7 @@ $(document).ready(() => {
     });
 
     adminDeleteButton.click(function () {
-        let selections = $("#bsTable").bootstrapTable('getSelections');
+        const selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length === 0) {
             return;
         }
@@ -53,7 +53,7 @@ $(document).ready(() => {
     });
 
     $("#deleteAdminFormModalSubmit").click(function () {
-        let selections = $("#bsTable").bootstrapTable('getSelections');
+        const selections = $("#bsTable").bootstrapTable('getSelections');
         $('#deleteFormModal').modal('handleUpdate');
 
 

@@ -171,7 +171,7 @@ class AdminController extends AbstractActionController
     public function deleteAction(): ResponseInterface
     {
         $data = json_decode($this->getRequest()->getBody()->getContents(), true);
-        $uuid = $data['value']['uuid'];
+        $uuid = $data['value']['uuid'] ?? null;
 
         if (empty($uuid)) {
             return new JsonResponse(
@@ -388,7 +388,7 @@ class AdminController extends AbstractActionController
         return new JsonResponse($result);
     }
 
-    public function logErrors(Throwable|Exception $e, string $message)
+    public function logErrors(Throwable|Exception $e, string $message): void
     {
         $this->logger->err($message, [
             'error' => $e->getMessage(),
