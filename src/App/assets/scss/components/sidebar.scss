@@ -26,6 +26,14 @@
     list-style-type: none;
   }
 
+  #full-logo {
+    display: block;
+    width: 170px;
+  }
+  #min-logo {
+    display: none;
+  }
+
   @include between($breakpoint-md, $breakpoint-xl) {
     width: $collapsed-size;
 
@@ -140,8 +148,7 @@
       background-repeat: no-repeat;
       display: inline-block;
       min-height: calc(#{$header-height} - 1px);
-      width: 100%;
-      width: 70px;
+      width: fit-content;
     }
 
     .logo-text {
@@ -326,6 +333,14 @@
 // ---------------------------------------------------------
 
 .is-collapsed {
+  #full-logo {
+    display: none;
+  }
+  #min-logo {
+    display: block;
+    height: 34.5px;
+    margin: 0 auto;
+  }
   .sidebar {
     @include from($breakpoint-xl) {
       width: $collapsed-size;
@@ -333,7 +348,7 @@
       .sidebar-inner {
         .sidebar-logo {
           border-bottom: 1px solid transparent;
-          padding: 0;
+          padding: 0 0 0 20px;
         }
 
         .sidebar-menu {
