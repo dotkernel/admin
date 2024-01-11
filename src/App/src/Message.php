@@ -17,4 +17,8 @@ class Message
     public const ADMIN_DELETED_SUCCESSFULLY       = "Admin deleted successfully";
     public const ACCOUNT_UPDATE_SUCCESSFULLY      = "Your account was updated successfully";
     public const CURRENT_PASSWORD_INCORRECT       = "Current password is incorrect";
+    public const CREATE_ADMIN                     = "Create admin";
+    public const UPDATE_ADMIN                     = "Update admin";
+    public const DELETE_ADMIN                     = "Delete admin";
+    public const CHANGE_PASSWORD                  = "Change password";
 }

@@ -1,17 +1,19 @@
+import {request} from "./_request";
+
 $( document ).ready(function(){
     const TYPE_ERROR = 'error';
     const ERROR_TITLE_AUTHORIZATION = 'Authorization error';
-    const ERROR_UNEXCEPTED_SERVER = 'Unexpected server error';
+    const ERROR_UNEXPECTED_SERVER = 'Unexpected server error';
     const adminEditButton = $("#adminEditButton");
-    const adminDeleteButon = $("#adminDeleteButton");
+    const adminDeleteButton = $("#adminDeleteButton");
     const bsTable = $("#bsTable");
 
     const showFailDialog = (data) => {
-        if(data.status == 0 && data.statusText == 'abort') {
+        if(data.status === 0 && data.statusText === 'abort') {
             return;
         }
 
-        if (data.status == 401) {
+        if (data.status === 401) {
             $("#modalCloseButton").click(function () {
                 window.location.reload();
             });
@@ -21,7 +23,7 @@ $( document ).ready(function(){
                 TYPE_ERROR
             );
         }
-        else if (data.status == 403) {
+        else if (data.status === 403) {
             showAlertDialog(
                 ERROR_TITLE_AUTHORIZATION,
                 'You are not authorized to run this operation',
@@ -30,7 +32,7 @@ $( document ).ready(function(){
         }
         else {
             showAlertDialog(
-                ERROR_UNEXCEPTED_SERVER,
+                ERROR_UNEXPECTED_SERVER,
                 'Could not load form due to a server error. Please try again',
                 TYPE_ERROR
             );
@@ -41,15 +43,15 @@ $( document ).ready(function(){
         const count = selections.length;
         if (count === 0) {
             adminEditButton.prop('disabled', true);
-            adminDeleteButon.prop('disabled', true);
+            adminDeleteButton.prop('disabled', true);
         }
         else if (count === 1) {
             adminEditButton.prop('disabled', false);
-            adminDeleteButon.prop('disabled', false);
+            adminDeleteButton.prop('disabled', false);
         }
         else {
             adminEditButton.prop('disabled', true);
-            adminDeleteButon.prop('disabled', false);
+            adminDeleteButton.prop('disabled', false);
         }
     };
 
@@ -69,30 +71,33 @@ $( document ).ready(function(){
         })
             .done((data) => {
                 const formMessages = $("#formMessages");
-                if (data.success === 'success') {
-                    formMessages.html('<div class="alert alert-success alert-dismissible" ' +
-                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
-                        '</div>');
-                    bsTable.bootstrapTable('refresh');
-                    setTimeout(function () {
-                        formModal.modal('hide');
-                    },1500);
-                } else {
-                    formMessages.html('<div class="alert alert-danger alert-dismissible" ' +
-                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
-                        '<div>');
-                }
+                formMessages.html(
+                    $('<div>').prop({
+                        innerHTML: data.message,
+                        className: 'alert alert-success alert-dismissible',
+                        role: "alert"
+                    })
+                );
+                bsTable.bootstrapTable('refresh');
+                setTimeout(function () {
+                    formModal.modal('hide');
+                },1500);
             })
             .fail((data) => {
-                formModal.modal('hide');
+                const formMessages = $("#formMessages");
+                formMessages.html(
+                    $('<div>').prop({
+                        innerHTML: data.responseJSON.message,
+                        className: 'alert alert-danger alert-dismissible',
+                        role: "alert"
+                    })
+                );
             });
     });
 
     const resetUiButtonState = () => {
         adminEditButton.prop('disabled', true);
-        adminDeleteButon.prop('disabled', true);
+        adminDeleteButton.prop('disabled', true);
     };
 
     bsTable.on('load-success.bs.table', () => {
@@ -128,19 +133,6 @@ $( document ).ready(function(){
     if (! identifier) {
         return ;
     }
-
-    const request = (method, url, data) => {
-        return fetch(url, {
-            method: method.toUpperCase(),
-            body: JSON.stringify(data),
-            headers: {'Content-Type': 'application/json'},
-        }).then(response => {
-            if (! response.ok) {
-                throw new Error('HTTP error ' + response.status);
-            }
-            return response.json();
-        });
-    };
 
     bsTable.on('column-switch.bs.table', () => {
         const visibleColumns = bsTable.bootstrapTable('getVisibleColumns').map(it => {
