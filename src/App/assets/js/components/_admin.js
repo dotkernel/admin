@@ -61,7 +61,6 @@ $(document).ready(() => {
             value: selections[0],
         })
             .then((data) => {
-                console.log(data);
                 $('#deleteFormMessages').html(
                     $('<div>').prop({
                         innerHTML: data.message,
