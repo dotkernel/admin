@@ -81,7 +81,7 @@ appModules.forEach(function (appModule) {
         copyImages.push({ from: appModule.assets_path + '/images', to: 'images/' + appModule.name });
 
         rules.push({
-            test: /\.(png|svg|jpg|gif)$/,
+            test: /\.(png|jpg|gif)$/,
             include: [
                 path.resolve(__dirname, './src/' + appModule.assets_path)
             ],
