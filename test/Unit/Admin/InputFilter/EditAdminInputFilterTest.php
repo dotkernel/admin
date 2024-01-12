@@ -19,6 +19,7 @@ class EditAdminInputFilterTest extends UnitTest
         $inputFilter->init();
 
         $inputFilter->setData([
+            'identity'        => 'testIdentity',
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
@@ -41,7 +42,7 @@ class EditAdminInputFilterTest extends UnitTest
                 AdminRole::ROLE_ADMIN,
             ],
         ]);
-        $this->assertTrue($inputFilter->isValid());
+        $this->assertFalse($inputFilter->isValid());
 
         $inputFilter->setData([
             'identity'        => '',
@@ -54,7 +55,7 @@ class EditAdminInputFilterTest extends UnitTest
                 AdminRole::ROLE_ADMIN,
             ],
         ]);
-        $this->assertTrue($inputFilter->isValid());
+        $this->assertFalse($inputFilter->isValid());
 
         $inputFilter->setData([
             'identity'        => '   ',
@@ -67,7 +68,7 @@ class EditAdminInputFilterTest extends UnitTest
                 AdminRole::ROLE_ADMIN,
             ],
         ]);
-        $this->assertTrue($inputFilter->isValid());
+        $this->assertFalse($inputFilter->isValid());
 
         $inputFilter->setData([
             'identity' => 'id',

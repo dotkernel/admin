@@ -22,9 +22,12 @@ class EditAdminInputFilter extends InputFilter
     public function init(): void
     {
         $identity = new Input('identity');
-        $identity->setRequired(false);
+        $identity->setRequired(true);
         $identity->getFilterChain()->attachByName(StringTrim::class);
-        $identity->getValidatorChain()->attachByName(NotEmpty::class);
+        $identity->getValidatorChain()->attachByName(NotEmpty::class, [
+            'break_chain_on_failure' => true,
+            'message'                => '<b>Identity</b> is required and cannot be empty',
+        ]);
         $identity->getValidatorChain()->attachByName(StringLength::class, [
             'min'     => 3,
             'max'     => 100,
@@ -39,7 +42,10 @@ class EditAdminInputFilter extends InputFilter
         $password = new Input('password');
         $password->setRequired(false);
         $password->getFilterChain()->attachByName(StringTrim::class);
-        $password->getValidatorChain()->attachByName(NotEmpty::class);
+        $password->getValidatorChain()->attachByName(NotEmpty::class, [
+            'break_chain_on_failure' => true,
+            'message'                => '<b>Password</b> is required and cannot be empty',
+        ]);
         $password->getValidatorChain()->attachByName(StringLength::class, [
             'min'     => 8,
             'max'     => 150,
@@ -50,7 +56,10 @@ class EditAdminInputFilter extends InputFilter
         $passwordConfirm = new Input('passwordConfirm');
         $passwordConfirm->setRequired(false);
         $passwordConfirm->getFilterChain()->attachByName(StringTrim::class);
-        $passwordConfirm->getValidatorChain()->attachByName(NotEmpty::class);
+        $passwordConfirm->getValidatorChain()->attachByName(NotEmpty::class, [
+            'break_chain_on_failure' => true,
+            'message'                => '<b>Confirm Password</b> is required and cannot be empty',
+        ]);
         $passwordConfirm->getValidatorChain()->attachByName(StringLength::class, [
             'min'     => 8,
             'max'     => 150,

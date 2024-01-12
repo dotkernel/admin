@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Controller;
 
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
 use Dot\FlashMessenger\FlashMessengerInterface;
+use Exception;
+use Fig\Http\Message\StatusCodeInterface;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminIdentity;
@@ -20,18 +23,21 @@ use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
 use Frontend\Admin\Service\AdminServiceInterface;
 use Frontend\App\Common\ServerRequestAwareTrait;
+use Frontend\App\Message;
 use Frontend\App\Plugin\FormsPlugin;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Exception\ExceptionInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Log\Logger;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
+use function json_decode;
 use function password_verify;
 
 class AdminController extends AbstractActionController
@@ -46,7 +52,8 @@ class AdminController extends AbstractActionController
      *     AuthenticationServiceInterface::class,
      *     FlashMessengerInterface::class,
      *     FormsPlugin::class,
-     *     AdminForm::class
+     *     AdminForm::class,
+     *     "dot-log.default_logger"
      * })
      */
     public function __construct(
@@ -56,7 +63,8 @@ class AdminController extends AbstractActionController
         protected AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
-        protected AdminForm $adminForm
+        protected AdminForm $adminForm,
+        protected Logger $logger
     ) {
     }
 
@@ -69,16 +77,24 @@ class AdminController extends AbstractActionController
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->createAdmin($result);
-                    return new JsonResponse(['success' => 'success', 'message' => 'Admin created successfully']);
+                    return new JsonResponse(['message' => Message::ADMIN_CREATED_SUCCESSFULLY]);
+                } catch (ORMException $e) {
+                    $this->logErrors($e, Message::CREATE_ADMIN);
+                    return new JsonResponse(
+                        ['message' => $e->getMessage()],
+                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                    );
                 } catch (Throwable $e) {
-                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                    $this->logErrors($e, Message::CREATE_ADMIN);
+                    return new JsonResponse(
+                        ['message' => Message::AN_ERROR_OCCURRED],
+                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                    );
                 }
             } else {
                 return new JsonResponse(
-                    [
-                        'success' => 'error',
-                        'message' => $this->forms->getMessagesAsString($this->adminForm),
-                    ]
+                    ['message' => $this->forms->getMessagesAsString($this->adminForm)],
+                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -114,16 +130,24 @@ class AdminController extends AbstractActionController
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
-                    return new JsonResponse(['success' => 'success', 'message' => 'Admin updated successfully']);
+                    return new JsonResponse(['message' => Message::ADMIN_UPDATED_SUCCESSFULLY]);
+                } catch (ORMException $e) {
+                    $this->logErrors($e, Message::UPDATE_ADMIN);
+                    return new JsonResponse(
+                        ['message' => $e->getMessage()],
+                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                    );
                 } catch (Throwable $e) {
-                    return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+                    $this->logErrors($e, Message::UPDATE_ADMIN);
+                    return new JsonResponse(
+                        ['message' => Message::AN_ERROR_OCCURRED],
+                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                    );
                 }
             } else {
                 return new JsonResponse(
-                    [
-                        'success' => 'error',
-                        'message' => $this->forms->getMessagesAsString($this->adminForm),
-                    ]
+                    ['message' => $this->forms->getMessagesAsString($this->adminForm)],
+                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -146,9 +170,14 @@ class AdminController extends AbstractActionController
      */
     public function deleteAction(): ResponseInterface
     {
-        $uuid = $this->getPostParam('uuid');
+        $data = json_decode($this->getRequest()->getBody()->getContents(), true);
+        $uuid = $data['value']['uuid'] ?? null;
+
         if (empty($uuid)) {
-            return new JsonResponse(['success' => 'error', 'message' => 'Could not find admin']);
+            return new JsonResponse(
+                ['message' => Message::ADMIN_NOT_FOUND],
+                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+            );
         }
 
         /** @var Admin $admin */
@@ -156,9 +185,13 @@ class AdminController extends AbstractActionController
 
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
-            return new JsonResponse(['success' => 'success', 'message' => 'Admin Deleted Successfully']);
+            return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
         } catch (Throwable $e) {
-            return new JsonResponse(['success' => 'error', 'message' => $e->getMessage()]);
+            $this->logErrors($e, Message::DELETE_ADMIN);
+            return new JsonResponse(
+                ['message' => Message::AN_ERROR_OCCURRED],
+                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -273,9 +306,13 @@ class AdminController extends AbstractActionController
                 $result = $form->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
-                    $this->messenger->addSuccess('Your account was updated successfully');
-                } catch (Throwable $e) {
+                    $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+                } catch (ORMException $e) {
+                    $this->logErrors($e, Message::UPDATE_ADMIN);
                     $this->messenger->addError($e->getMessage());
+                } catch (Throwable $e) {
+                    $this->logErrors($e, Message::UPDATE_ADMIN);
+                    $this->messenger->addError(Message::AN_ERROR_OCCURRED);
                 }
             } else {
                 $this->messenger->addError($this->forms->getMessagesAsString($form));
@@ -310,12 +347,16 @@ class AdminController extends AbstractActionController
                 if (password_verify($result['currentPassword'], $admin->getPassword())) {
                     try {
                         $this->adminService->updateAdmin($admin, $result);
-                        $this->messenger->addSuccess('Your account was updated successfully');
-                    } catch (Throwable $e) {
+                        $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+                    } catch (ORMException $e) {
+                        $this->logErrors($e, Message::CHANGE_PASSWORD);
                         $this->messenger->addError($e->getMessage());
+                    } catch (Throwable $e) {
+                        $this->logErrors($e, Message::CHANGE_PASSWORD);
+                        $this->messenger->addError(Message::AN_ERROR_OCCURRED);
                     }
                 } else {
-                    $this->messenger->addError('Current Password is incorrect');
+                    $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
                 }
             } else {
                 $this->messenger->addError($this->forms->getMessagesAsString($changePasswordForm));
@@ -345,5 +386,15 @@ class AdminController extends AbstractActionController
         );
 
         return new JsonResponse($result);
+    }
+
+    public function logErrors(Throwable|Exception $e, string $message): void
+    {
+        $this->logger->err($message, [
+            'error' => $e->getMessage(),
+            'file'  => $e->getFile(),
+            'line'  => $e->getLine(),
+            'trace' => $e->getTraceAsString(),
+        ]);
     }
 }

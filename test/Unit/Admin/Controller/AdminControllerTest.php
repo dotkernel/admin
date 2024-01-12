@@ -11,6 +11,7 @@ use Frontend\Admin\Service\AdminServiceInterface;
 use Frontend\App\Plugin\FormsPlugin;
 use FrontendTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Log\Logger;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -30,6 +31,7 @@ class AdminControllerTest extends UnitTest
             $this->createMock(FlashMessengerInterface::class),
             $this->createMock(FormsPlugin::class),
             $this->createMock(AdminForm::class),
+            $this->createMock(Logger::class),
         );
         $this->assertInstanceOf(AdminController::class, $adminController);
     }

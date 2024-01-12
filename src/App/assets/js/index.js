@@ -1,3 +1,4 @@
+import './components/_request';
 import './components/_fullcalendar';
 import './components/_masonry';
 import './components/_chart';

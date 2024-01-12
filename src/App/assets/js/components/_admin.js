@@ -1,3 +1,5 @@
+import {request} from "./_request";
+
 $(document).ready(() => {
     const adminEditButton = $("#adminEditButton");
     const adminDeleteButton = $("#adminDeleteButton");
@@ -17,11 +19,11 @@ $(document).ready(() => {
             .fail(function (data) {
                 showFailDialog(data);
             });
-    });``
+    });
 
     adminEditButton.click(function () {
-        var selections = $("#bsTable").bootstrapTable('getSelections');
-        if (selections.length != 1) {
+        const selections = $("#bsTable").bootstrapTable('getSelections');
+        if (selections.length !== 1) {
             showAlertDialog('Selection error',
                 'Multiple or no Admin selected. Only one Admin can be edited a time',
                 'error');
@@ -38,11 +40,10 @@ $(document).ready(() => {
                     showFailDialog(data);
                 });
         }
-
     });
 
     adminDeleteButton.click(function () {
-        var selections = $("#bsTable").bootstrapTable('getSelections');
+        const selections = $("#bsTable").bootstrapTable('getSelections');
         if (selections.length === 0) {
             return;
         }
@@ -52,32 +53,37 @@ $(document).ready(() => {
     });
 
     $("#deleteAdminFormModalSubmit").click(function () {
-        var selections = $("#bsTable").bootstrapTable('getSelections');
+        const selections = $("#bsTable").bootstrapTable('getSelections');
         $('#deleteFormModal').modal('handleUpdate');
 
-        $.post('/admin/delete', selections[0])
-            .done(function (data) {
-                if (data.success == 'success') {
-                    $("#deleteFormMessages").html('<div class="alert alert-success alert-dismissible" ' +
-                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
-                        '</div>');
-                    $("#bsTable").bootstrapTable('refresh');
-                    setTimeout(function () {
-                        $('#deleteFormModal').modal('hide');
-                    },1500);
-                } else {
-                    $("#deleteFormMessages").html('<div class="alert alert-danger alert-dismissible" ' +
-                        'role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">×</span></button> <div>'+data.message+'</div>' +
-                        '<div>');
-                    setTimeout(function () {
-                        $('#deleteFormModal').modal('hide');
-                    },2000);
-                }
+
+        request('POST', `/admin/delete`, {
+            value: selections[0],
+        })
+            .then((data) => {
+                $('#deleteFormMessages').html(
+                    $('<div>').prop({
+                        innerHTML: data.message,
+                        className: 'alert alert-success alert-dismissible',
+                        role: "alert"
+                    })
+                );
+                $("#bsTable").bootstrapTable('refresh');
+                setTimeout(function () {
+                    $('#deleteFormModal').modal('hide');
+                },1500);
             })
-            .fail(function (data) {
-                $('#formModal').modal('hide');
-            });
+            .catch(
+                $('#deleteFormMessages').html(
+                    $('<div>').prop({
+                        innerHTML: "An error occurred",
+                        className: 'alert alert-danger alert-dismissible',
+                        role: "alert"
+                    })
+                ))
+                setTimeout(function () {
+                    $('#deleteFormModal').modal('hide');
+                },2000
+            )
     });
 });

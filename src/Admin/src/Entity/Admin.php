@@ -25,17 +25,17 @@ class Admin extends AbstractEntity implements AdminInterface
         self::STATUS_INACTIVE,
     ];
 
-    #[ORM\Column(name: "identity", type: "string", length: 100, unique: true, nullable: false)]
-    protected ?string $identity = null;
+    #[ORM\Column(name: "identity", type: "string", length: 100, unique: true)]
+    protected string $identity;
 
-    #[ORM\Column(name: "firstName", type: "string", length: 255)]
+    #[ORM\Column(name: "firstName", type: "string", length: 255, nullable: true)]
     protected ?string $firstName = null;
 
-    #[ORM\Column(name: "lastName", type: "string", length: 255)]
+    #[ORM\Column(name: "lastName", type: "string", length: 255, nullable: true)]
     protected ?string $lastName = null;
 
-    #[ORM\Column(name: "password", type: "string", length: 100, nullable: false)]
-    protected ?string $password = null;
+    #[ORM\Column(name: "password", type: "string", length: 100)]
+    protected string $password;
 
     #[ORM\Column(
         name: "status",
@@ -79,7 +79,7 @@ class Admin extends AbstractEntity implements AdminInterface
         ];
     }
 
-    public function getIdentity(): ?string
+    public function getIdentity(): string
     {
         return $this->identity;
     }
@@ -115,7 +115,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
