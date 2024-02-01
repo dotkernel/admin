@@ -217,29 +217,20 @@ class AdminService implements AdminServiceInterface
     public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {
         $deviceData   = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
-        $deviceOs     = ! empty($deviceData->getOs()) ? $deviceData->getOs() : null;
-        $deviceClient = ! empty($deviceData->getClient()) ? $deviceData->getClient() : null;
+        $deviceOs     = ! empty($deviceData->getOs()->getName()) ? $deviceData->getOs() : null;
+        $deviceClient = ! empty($deviceData->getClient()->getName()) ? $deviceData->getClient() : null;
 
         $ipAddress = IpService::getUserIp($serverParams);
 
-        try {
-            $country = ! empty($this->locationService->getCountry($ipAddress)) ?
-                $this->locationService->getCountry($ipAddress)->getName() : '';
-        } catch (AddressNotFoundException $e) {
-            $country = '';
-        }
-        try {
-            $continent = ! empty($this->locationService->getContinent($ipAddress)) ?
-                $this->locationService->getContinent($ipAddress)->getName() : '';
-        } catch (AddressNotFoundException $e) {
-            $continent = '';
-        }
-        try {
-            $organization = ! empty($this->locationService->getOrganization($ipAddress)) ?
-                $this->locationService->getOrganization($ipAddress)->getName() : '';
-        } catch (AddressNotFoundException $e) {
-            $organization = '';
-        }
+        $country = ! empty($this->locationService->getCountry($ipAddress)->getName()) ?
+            $this->locationService->getCountry($ipAddress)->getName() : '';
+
+        $continent = ! empty($this->locationService->getContinent($ipAddress)->getName()) ?
+            $this->locationService->getContinent($ipAddress)->getName() : '';
+
+        $organization = ! empty($this->locationService->getOrganization($ipAddress)->getName()) ?
+            $this->locationService->getOrganization($ipAddress)->getName() : '';
+
         $deviceType    = ! empty($deviceData->getType()) ? $deviceData->getType() : null;
         $deviceBrand   = ! empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
         $deviceModel   = ! empty($deviceData->getModel()) ? $deviceData->getModel() : null;
