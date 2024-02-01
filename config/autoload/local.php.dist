@@ -40,14 +40,5 @@ return [
                 'params' => $databases['default'],
             ],
         ],
-        'configuration' => [
-            'orm_default' => [
-                // it is recommended to disable doctrine cache on development
-                // just comment any type of cache you don't want to be applied on development
-                'query_cache'    => PhpFileCache::class,
-                'metadata_cache' => PhpFileCache::class,
-                'result_cache'   => PhpFileCache::class,
-            ],
-        ],
     ],
 ];
