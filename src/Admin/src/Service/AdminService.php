@@ -20,7 +20,6 @@ use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\Repository\AdminRepository;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Service\IpService;
-use GeoIp2\Exception\AddressNotFoundException;
 
 use function implode;
 use function is_string;
