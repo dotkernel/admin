@@ -3,7 +3,7 @@
 DotKernel web starter package suitable for admin applications.
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/admin)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.1.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.3.0)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/admin)](https://github.com/dotkernel/admin/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/admin)](https://github.com/dotkernel/admin/network)
