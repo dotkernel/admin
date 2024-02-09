@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Doctrine\Common\Cache\PhpFileCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
@@ -43,12 +42,6 @@ return [
             UuidType::NAME                  => UuidType::class,
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
-        ],
-        'cache'      => [
-            PhpFileCache::class => [
-                'class'     => PhpFileCache::class,
-                'directory' => getcwd() . '/data/cache/doctrine',
-            ],
         ],
         'fixtures'   => getcwd() . '/data/doctrine/fixtures',
     ],
