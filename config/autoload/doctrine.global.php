@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
+use Dot\Cache\Adapter\ArrayAdapter;
+use Dot\Cache\Adapter\FilesystemAdapter;
 use Frontend\App\Resolver\EntityListenerResolver;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
@@ -26,6 +28,17 @@ return [
         'configuration' => [
             'orm_default' => [
                 'entity_listener_resolver' => EntityListenerResolver::class,
+                'result_cache'       => 'filesystem',
+                'metadata_cache'     => 'filesystem',
+                'query_cache'        => 'filesystem',
+                'hydration_cache'    => 'array',
+                'second_level_cache' => [
+                    'enabled'                    => true,
+                    'default_lifetime'           => 3600,
+                    'default_lock_lifetime'      => 60,
+                    'file_lock_region_directory' => '',
+                    'regions'                    => [],
+                ],
             ],
         ],
         'connection'    => [
@@ -48,6 +61,16 @@ return [
             UuidType::NAME                  => UuidType::class,
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
+        ],
+        'cache' => [
+            'array' => [
+                'class'     => ArrayAdapter::class,
+            ],
+            'filesystem' => [
+                'class'     => FilesystemAdapter::class,
+                'directory' => getcwd() . '/data/cache',
+                'namespace' => 'doctrine',
+            ],
         ],
         'fixtures'      => getcwd() . '/data/doctrine/fixtures',
     ],
