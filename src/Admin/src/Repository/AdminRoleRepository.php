@@ -31,7 +31,7 @@ class AdminRoleRepository extends AbstractRepository
             ->andWhere('role.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
-            ->useQueryCache(true)
+            ->setCacheable(true)
             ->getOneOrNullResult();
     }
 

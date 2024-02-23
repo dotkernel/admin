@@ -76,7 +76,7 @@ class AdminRepository extends AbstractRepository
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        return $qb->getQuery()->useQueryCache(true)->getResult();
+        return $qb->getQuery()->setCacheable(true)->getResult();
     }
 
     /**
@@ -93,9 +93,9 @@ class AdminRepository extends AbstractRepository
             ->from(AdminLogin::class, 'adminLogin')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->setCacheable(true)
             ->orderBy('adminLogin.' . $sort, $order)
             ->getQuery()
-            ->useQueryCache(true)
             ->getResult();
     }
 

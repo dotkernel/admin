@@ -43,6 +43,7 @@ $aggregator = new ConfigAggregator([
     Dot\Session\ConfigProvider::class,
     Dot\Twig\ConfigProvider::class,
     Dot\UserAgentSniffer\ConfigProvider::class,
+    Dot\Cache\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),

@@ -16,6 +16,7 @@ use function array_map;
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: "admin")]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
 class Admin extends AbstractEntity implements AdminInterface
 {
     public const STATUS_ACTIVE   = 'active';
