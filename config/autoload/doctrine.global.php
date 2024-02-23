@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
+use Frontend\App\Resolver\EntityListenerResolver;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
@@ -22,6 +23,11 @@ return [
         ],
     ],
     'doctrine'            => [
+        'configuration' => [
+            'orm_default' => [
+                'entity_listener_resolver' => EntityListenerResolver::class,
+            ],
+        ],
         'connection' => [
             'orm_default' => [
                 'doctrine_mapping_types' => [
