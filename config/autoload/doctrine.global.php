@@ -28,11 +28,11 @@ return [
         'configuration' => [
             'orm_default' => [
                 'entity_listener_resolver' => EntityListenerResolver::class,
-                'result_cache'       => 'filesystem',
-                'metadata_cache'     => 'filesystem',
-                'query_cache'        => 'filesystem',
-                'hydration_cache'    => 'array',
-                'second_level_cache' => [
+                'result_cache'             => 'filesystem',
+                'metadata_cache'           => 'filesystem',
+                'query_cache'              => 'filesystem',
+                'hydration_cache'          => 'array',
+                'second_level_cache'       => [
                     'enabled'                    => true,
                     'default_lifetime'           => 3600,
                     'default_lock_lifetime'      => 60,
@@ -62,9 +62,9 @@ return [
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
         ],
-        'cache' => [
-            'array' => [
-                'class'     => ArrayAdapter::class,
+        'cache'         => [
+            'array'      => [
+                'class' => ArrayAdapter::class,
             ],
             'filesystem' => [
                 'class'     => FilesystemAdapter::class,
