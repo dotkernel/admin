@@ -43,11 +43,6 @@ class ConfigProviderTest extends UnitTest
         $this->assertArrayHasKey('form', $this->config);
     }
 
-    public function testConfigHasDoctrine(): void
-    {
-        $this->assertArrayHasKey('doctrine', $this->config);
-    }
-
     public function testDependenciesHasFactories(): void
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);

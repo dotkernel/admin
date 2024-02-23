@@ -23,7 +23,6 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'doctrine'     => $this->getDoctrineConfig(),
             'templates'    => $this->getTemplates(),
         ];
     }
@@ -48,17 +47,6 @@ class ConfigProvider
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
                 EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
-            ],
-        ];
-    }
-
-    public function getDoctrineConfig(): array
-    {
-        return [
-            'configuration' => [
-                'orm_default' => [
-                    'entity_listener_resolver' => EntityListenerResolver::class,
-                ],
             ],
         ];
     }
