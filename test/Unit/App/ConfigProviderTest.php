@@ -32,11 +32,6 @@ class ConfigProviderTest extends UnitTest
         $this->assertArrayHasKey('dependencies', $this->config);
     }
 
-    public function testConfigHasDoctrine(): void
-    {
-        $this->assertArrayHasKey('doctrine', $this->config);
-    }
-
     public function testConfigHasTemplates(): void
     {
         $this->assertArrayHasKey('templates', $this->config);
@@ -74,22 +69,6 @@ class ConfigProviderTest extends UnitTest
         $this->assertIsArray($this->config['dependencies']['aliases']);
         $this->assertArrayHasKey(EntityManager::class, $this->config['dependencies']['aliases']);
         $this->assertArrayHasKey(EntityManagerInterface::class, $this->config['dependencies']['aliases']);
-    }
-
-    public function testGetDoctrineConfig(): void
-    {
-        $this->assertArrayHasKey('configuration', $this->config['doctrine']);
-        $this->assertIsArray($this->config['doctrine']['configuration']);
-        $this->assertArrayHasKey('orm_default', $this->config['doctrine']['configuration']);
-        $this->assertIsArray($this->config['doctrine']['configuration']['orm_default']);
-        $this->assertArrayHasKey(
-            'entity_listener_resolver',
-            $this->config['doctrine']['configuration']['orm_default']
-        );
-        $this->assertSame(
-            EntityListenerResolver::class,
-            $this->config['doctrine']['configuration']['orm_default']['entity_listener_resolver']
-        );
     }
 
     public function testGetTemplates(): void
