@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto';
+import Chart from 'chart.js';
 import { COLORS } from './_colors';
 
 export default (function () {
