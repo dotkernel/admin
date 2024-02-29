@@ -21,9 +21,11 @@ class Admin extends AbstractEntity implements AdminInterface
 {
     public const STATUS_ACTIVE   = 'active';
     public const STATUS_INACTIVE = 'pending';
+    public const STATUS_DELETED = 'deleted';
     public const STATUSES        = [
         self::STATUS_ACTIVE,
         self::STATUS_INACTIVE,
+        self::STATUS_DELETED
     ];
 
     #[ORM\Column(name: "identity", type: "string", length: 100, unique: true)]
@@ -40,10 +42,10 @@ class Admin extends AbstractEntity implements AdminInterface
 
     #[ORM\Column(
         name: "status",
-        type: "string",
+        type: "admin-enum-status",
         length: 20,
         nullable: false,
-        columnDefinition: "ENUM('pending', 'active')"
+        options: ["values" => self::STATUSES, "default" => self::STATUS_ACTIVE]
     )]
     protected string $status = self::STATUS_ACTIVE;
 

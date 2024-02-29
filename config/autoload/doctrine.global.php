@@ -12,6 +12,7 @@ use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
+use Frontend\Admin\Entity\EnumAdminStatus;
 
 return [
     'dependencies'        => [
@@ -61,6 +62,7 @@ return [
             UuidType::NAME                  => UuidType::class,
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
+            EnumAdminStatus::NAME           => EnumAdminStatus::class,
         ],
         'cache'         => [
             'array'      => [
