@@ -23,6 +23,13 @@ class AdminControllerTest extends UnitTest
      */
     public function testWillCreate(): void
     {
+        $logger          = new Logger([
+            'writers' => [
+                'FileWriter' => [
+                    'name' => 'null',
+                ],
+            ],
+        ]);
         $adminController = new AdminController(
             $this->createMock(AdminServiceInterface::class),
             $this->createMock(RouterInterface::class),
@@ -31,7 +38,7 @@ class AdminControllerTest extends UnitTest
             $this->createMock(FlashMessengerInterface::class),
             $this->createMock(FormsPlugin::class),
             $this->createMock(AdminForm::class),
-            $this->createMock(Logger::class),
+            $logger
         );
         $this->assertInstanceOf(AdminController::class, $adminController);
     }

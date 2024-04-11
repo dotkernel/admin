@@ -49,12 +49,14 @@ class IpServiceTest extends UnitTest
         putenv('REMOTE_ADDR');
     }
 
-    public function testWillDetectIfValidIp(): void
+    public function testWillDetectPublicIp(): void
     {
-        $this->assertSame('private', IpService::validIp('127.0.0.1'));
+        $this->assertFalse(IpService::isPublicIp("127.0.0.1"));
+        $this->assertFalse(IpService::isPublicIp("10.0.0.0"));
+        $this->assertFalse(IpService::isPublicIp("::1"));
+        $this->assertFalse(IpService::isPublicIp("fd12:3456:789a:1::1"));
 
-        $this->assertSame('public', IpService::validIp($this->ipAddress));
-
-        $this->assertFalse(IpService::validIp('test'));
+        $this->assertTrue(IpService::isPublicIp("8.8.8.8")); // google
+        $this->assertTrue(IpService::isPublicIp("2607:f8b0:4003:c00::6a")); //google
     }
 }
