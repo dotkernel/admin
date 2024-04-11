@@ -43,7 +43,6 @@
         "dotkernel/dot-rbac-guard": "^3.4.2",
         "dotkernel/dot-session": "^5.4.2",
         "dotkernel/dot-twigrenderer": "3.4.3",
-        "dotkernel/dot-user-agent-sniffer": "^3.3.3",
         "friendsofphp/proxy-manager-lts": "^1.0.16",
         "laminas/laminas-component-installer": "^3.4.0",
         "laminas/laminas-config-aggregator": "^1.14.0",

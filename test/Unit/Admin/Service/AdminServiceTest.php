@@ -7,7 +7,6 @@ namespace FrontendTest\Unit\Admin\Service;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\NotSupported;
 use Dot\GeoIP\Service\LocationServiceInterface;
-use Dot\UserAgentSniffer\Service\DeviceServiceInterface;
 use Frontend\Admin\Service\AdminService;
 use Frontend\Admin\Service\AdminServiceInterface;
 use FrontendTest\Unit\UnitTest;
@@ -30,7 +29,6 @@ class AdminServiceTest extends UnitTest
 
         $service = new AdminService(
             $this->createMock(LocationServiceInterface::class),
-            $this->createMock(DeviceServiceInterface::class),
             $entityManager,
             0
         );

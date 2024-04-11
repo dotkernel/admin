@@ -13,7 +13,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\AnnotatedServices\Annotation\Service;
 use Dot\GeoIP\Service\LocationServiceInterface;
-use Dot\UserAgentSniffer\Service\DeviceServiceInterface;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Entity\AdminRole;
@@ -38,7 +37,6 @@ class AdminService implements AdminServiceInterface
     /**
      * @Inject({
      *     LocationServiceInterface::class,
-     *     DeviceServiceInterface::class,
      *     EntityManager::class,
      *     "config.resultCacheLifetime"
      * })
@@ -46,9 +44,8 @@ class AdminService implements AdminServiceInterface
      */
     public function __construct(
         protected LocationServiceInterface $locationService,
-        protected DeviceServiceInterface $deviceService,
         EntityManager $em,
-        int $cacheLifetime
+        int $cacheLifetime,
     ) {
         $this->adminRepository     = $em->getRepository(Admin::class);
         $this->adminRoleRepository = $em->getRepository(AdminRole::class);
@@ -215,9 +212,11 @@ class AdminService implements AdminServiceInterface
 
     public function logAdminVisit(array $serverParams, string $name): AdminLogin
     {
-        $deviceData   = $this->deviceService->getDetails($serverParams['HTTP_USER_AGENT']);
-        $deviceOs     = ! empty($deviceData->getOs()->getName()) ? $deviceData->getOs() : null;
-        $deviceClient = ! empty($deviceData->getClient()->getName()) ? $deviceData->getClient() : null;
+        /**
+         * For device information
+         *
+         * @see https://github.com/dotkernel/dot-user-agent-sniffer
+         */
 
         $ipAddress = IpService::getUserIp($serverParams);
 
@@ -230,34 +229,22 @@ class AdminService implements AdminServiceInterface
         $organization = ! empty($this->locationService->getOrganization($ipAddress)->getName()) ?
             $this->locationService->getOrganization($ipAddress)->getName() : '';
 
-        $deviceType    = ! empty($deviceData->getType()) ? $deviceData->getType() : null;
-        $deviceBrand   = ! empty($deviceData->getBrand()) ? $deviceData->getBrand() : null;
-        $deviceModel   = ! empty($deviceData->getModel()) ? $deviceData->getModel() : null;
-        $isMobile      = $deviceData->getIsMobile() ? AdminLogin::IS_MOBILE_YES : AdminLogin::IS_MOBILE_NO;
-        $osName        = ! empty($deviceOs->getName()) ? $deviceOs->getName() : null;
-        $osVersion     = ! empty($deviceOs->getVersion()) ? $deviceOs->getVersion() : null;
-        $osPlatform    = ! empty($deviceOs->getPlatform()) ? $deviceOs->getPlatform() : null;
-        $clientType    = ! empty($deviceClient->getType()) ? $deviceClient->getType() : null;
-        $clientName    = ! empty($deviceClient->getName()) ? $deviceClient->getName() : null;
-        $clientEngine  = ! empty($deviceClient->getEngine()) ? $deviceClient->getEngine() : null;
-        $clientVersion = ! empty($deviceClient->getVersion()) ? $deviceClient->getVersion() : null;
-
         $adminLogin = (new AdminLogin())
             ->setAdminIp($ipAddress)
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
-            ->setDeviceType($deviceType)
-            ->setDeviceBrand($deviceBrand)
-            ->setDeviceModel($deviceModel)
-            ->setIsMobile($isMobile)
-            ->setOsName($osName)
-            ->setOsVersion($osVersion)
-            ->setOsPlatform($osPlatform)
-            ->setClientType($clientType)
-            ->setClientName($clientName)
-            ->setClientEngine($clientEngine)
-            ->setClientVersion($clientVersion)
+            ->setDeviceType(null)
+            ->setDeviceBrand(null)
+            ->setDeviceModel(null)
+            ->setIsMobile(AdminLogin::IS_MOBILE_NO)
+            ->setOsName(null)
+            ->setOsVersion(null)
+            ->setOsPlatform(null)
+            ->setClientType(null)
+            ->setClientName(null)
+            ->setClientEngine(null)
+            ->setClientVersion(null)
             ->setIdentity($name);
 
         return $this->adminRepository->saveAdminVisit($adminLogin);
