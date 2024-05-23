@@ -18,9 +18,9 @@ class AdminRoleTest extends UnitTest
 {
     public function testAnnotations(): void
     {
-        $reflection            = new ReflectionClass(AdminRole::class);
-        $entity                = $reflection->getAttributes(Entity::class);
-        $table                 = $reflection->getAttributes(Table::class);
+        $reflection = new ReflectionClass(AdminRole::class);
+        $entity     = $reflection->getAttributes(Entity::class);
+        $table      = $reflection->getAttributes(Table::class);
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
