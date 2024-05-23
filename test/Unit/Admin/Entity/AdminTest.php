@@ -7,7 +7,6 @@ namespace FrontendTest\Unit\Admin\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminRole;
