@@ -10,7 +10,6 @@ use Frontend\App\Entity\AbstractEntity;
 
 #[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ORM\Table(name: 'admin_role')]
-#[ORM\HasLifecycleCallbacks]
 #[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
 class AdminRole extends AbstractEntity
 {
