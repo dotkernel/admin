@@ -6,7 +6,6 @@ namespace FrontendTest\Unit\Admin\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Repository\AdminLoginRepository;
@@ -19,17 +18,14 @@ class AdminLoginTest extends UnitTest
 {
     public function testAnnotations(): void
     {
-        $reflection            = new ReflectionClass(AdminLogin::class);
-        $entity                = $reflection->getAttributes(Entity::class);
-        $table                 = $reflection->getAttributes(Table::class);
-        $hasLifecycleCallbacks = $reflection->getAttributes(HasLifecycleCallbacks::class);
+        $reflection = new ReflectionClass(AdminLogin::class);
+        $entity     = $reflection->getAttributes(Entity::class);
+        $table      = $reflection->getAttributes(Table::class);
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertNotEmpty($hasLifecycleCallbacks[0]);
         $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
         $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $hasLifecycleCallbacks[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
