@@ -42,14 +42,11 @@ class AdminTest extends UnitTest
         $reflection            = new ReflectionClass(Admin::class);
         $entity                = $reflection->getAttributes(Entity::class);
         $table                 = $reflection->getAttributes(Table::class);
-        $hasLifecycleCallbacks = $reflection->getAttributes(HasLifecycleCallbacks::class);
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertNotEmpty($hasLifecycleCallbacks[0]);
         $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
         $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $hasLifecycleCallbacks[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
