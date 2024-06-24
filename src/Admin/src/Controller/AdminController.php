@@ -6,8 +6,8 @@ namespace Frontend\Admin\Controller;
 
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
+use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
@@ -44,18 +44,16 @@ class AdminController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
 
-    /**
-     * @Inject({
-     *     AdminServiceInterface::class,
-     *     RouterInterface::class,
-     *     TemplateRendererInterface::class,
-     *     AuthenticationServiceInterface::class,
-     *     FlashMessengerInterface::class,
-     *     FormsPlugin::class,
-     *     AdminForm::class,
-     *     "dot-log.default_logger"
-     * })
-     */
+    #[Inject(
+        AdminServiceInterface::class,
+        RouterInterface::class,
+        TemplateRendererInterface::class,
+        AuthenticationServiceInterface::class,
+        FlashMessengerInterface::class,
+        FormsPlugin::class,
+        AdminForm::class,
+        "dot-log.default_logger"
+    )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,

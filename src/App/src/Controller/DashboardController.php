@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Frontend\App\Controller;
 
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
+use Dot\DependencyInjection\Attribute\Inject;
 use Frontend\App\Common\ServerRequestAwareTrait;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -17,13 +17,11 @@ class DashboardController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
 
-    /**
-     * @Inject({
-     *     RouterInterface::class,
-     *     TemplateRendererInterface::class,
-     *     AuthenticationServiceInterface::class
-     * })
-     */
+    #[Inject(
+        RouterInterface::class,
+        TemplateRendererInterface::class,
+        AuthenticationServiceInterface::class
+    )]
     public function __construct(
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,

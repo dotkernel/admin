@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Frontend\Setting\Controller;
 
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
+use Dot\DependencyInjection\Attribute\Inject;
 use Fig\Http\Message\StatusCodeInterface;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Service\AdminService;
@@ -26,14 +26,12 @@ class SettingController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
 
-    /**
-     * @Inject({
-     *     AuthenticationServiceInterface::class,
-     *     RouterInterface::class,
-     *     AdminService::class,
-     *     SettingService::class,
-     * })
-     */
+    #[Inject(
+        AuthenticationServiceInterface::class,
+        RouterInterface::class,
+        AdminService::class,
+        SettingService::class,
+    )]
     public function __construct(
         protected AuthenticationServiceInterface $authenticationService,
         protected RouterInterface $router,

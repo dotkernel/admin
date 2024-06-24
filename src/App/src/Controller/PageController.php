@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Frontend\App\Controller;
 
-use Dot\AnnotatedServices\Annotation\Inject;
 use Dot\Controller\AbstractActionController;
+use Dot\DependencyInjection\Attribute\Inject;
 use Frontend\App\Common\ServerRequestAwareTrait;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Router\RouterInterface;
@@ -16,12 +16,10 @@ class PageController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
 
-    /**
-     * @Inject({
-     *     RouterInterface::class,
-     *     TemplateRendererInterface::class
-     * })
-     */
+    #[Inject(
+        RouterInterface::class,
+        TemplateRendererInterface::class,
+    )]
     public function __construct(protected RouterInterface $router, protected TemplateRendererInterface $template)
     {
     }
