@@ -30,6 +30,7 @@ $aggregator = new ConfigAggregator([
     // DotKernel packages
     Dot\Cli\ConfigProvider::class,
     Dot\DataFixtures\ConfigProvider::class,
+    Dot\DependencyInjection\ConfigProvider::class,
     Dot\ErrorHandler\ConfigProvider::class,
     Dot\FlashMessenger\ConfigProvider::class,
     Dot\GeoIP\ConfigProvider::class,
