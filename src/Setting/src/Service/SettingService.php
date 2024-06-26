@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Frontend\Setting\Service;
 
-use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\DependencyInjection\Attribute\Inject;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Setting\Entity\Setting;
 use Frontend\Setting\Repository\SettingRepository;
 
 class SettingService
 {
-    /**
-     * @Inject({SettingRepository::class})
-     */
+    #[Inject(
+        SettingRepository::class,
+    )]
     public function __construct(private SettingRepository $settingRepository)
     {
     }

@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Frontend\Admin\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Dot\AnnotatedServices\Annotation\Inject;
-use Dot\AnnotatedServices\Annotation\Service;
+use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationServiceInterface;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
@@ -26,29 +23,20 @@ use function password_hash;
 
 use const PASSWORD_DEFAULT;
 
-/**
- * @Service
- */
 class AdminService implements AdminServiceInterface
 {
-    protected AdminRepository|EntityRepository $adminRepository;
-    protected AdminRoleRepository|EntityRepository $adminRoleRepository;
-
-    /**
-     * @Inject({
-     *     LocationServiceInterface::class,
-     *     EntityManager::class,
-     *     "config.resultCacheLifetime"
-     * })
-     * @throws NotSupported
-     */
+    #[Inject(
+        LocationServiceInterface::class,
+        AdminRepository::class,
+        AdminRoleRepository::class,
+        "config.resultCacheLifetime"
+    )]
     public function __construct(
         protected LocationServiceInterface $locationService,
-        EntityManager $em,
+        protected AdminRepository $adminRepository,
+        protected AdminRoleRepository $adminRoleRepository,
         int $cacheLifetime,
     ) {
-        $this->adminRepository     = $em->getRepository(Admin::class);
-        $this->adminRoleRepository = $em->getRepository(AdminRole::class);
         $this->adminRepository->setCacheLifetime($cacheLifetime);
     }
 

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Frontend\Setting;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Dot\AnnotatedServices\Factory\AnnotatedRepositoryFactory;
-use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
+use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
+use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Frontend\Setting\Controller\SettingController;
 use Frontend\Setting\Repository\SettingRepository;
 use Frontend\Setting\Service\SettingService;
@@ -25,9 +25,9 @@ class ConfigProvider
     {
         return [
             'factories' => [
-                SettingController::class => AnnotatedServiceFactory::class,
-                SettingService::class    => AnnotatedServiceFactory::class,
-                SettingRepository::class => AnnotatedRepositoryFactory::class,
+                SettingController::class => AttributedServiceFactory::class,
+                SettingService::class    => AttributedServiceFactory::class,
+                SettingRepository::class => AttributedRepositoryFactory::class,
             ],
         ];
     }

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace FrontendTest\Unit\Admin\Service;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\NotSupported;
 use Dot\GeoIP\Service\LocationServiceInterface;
+use Frontend\Admin\Repository\AdminRepository;
+use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\Admin\Service\AdminService;
 use Frontend\Admin\Service\AdminServiceInterface;
 use FrontendTest\Unit\UnitTest;
@@ -24,12 +25,13 @@ class AdminServiceTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = $this->getContainer()->get(EntityManager::class);
+        $adminRepository     = $this->createMock(AdminRepository::class);
+        $adminRoleRepository = $this->createMock(AdminRoleRepository::class);
 
         $service = new AdminService(
             $this->createMock(LocationServiceInterface::class),
-            $entityManager,
+            $adminRepository,
+            $adminRoleRepository,
             0
         );
 

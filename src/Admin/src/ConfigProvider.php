@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Frontend\Admin;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
+use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
+use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Controller\AdminController;
 use Frontend\Admin\Delegator\AdminRoleDelegator;
@@ -15,6 +16,8 @@ use Frontend\Admin\Factory\AuthenticationServiceFactory;
 use Frontend\Admin\Form\AdminForm;
 use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
+use Frontend\Admin\Repository\AdminRepository;
+use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\Admin\Service\AdminService;
 use Frontend\Admin\Service\AdminServiceInterface;
 use Laminas\Authentication\AuthenticationService;
@@ -36,11 +39,13 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                AdminController::class       => AnnotatedServiceFactory::class,
-                AdminService::class          => AnnotatedServiceFactory::class,
+                AdminController::class       => AttributedServiceFactory::class,
+                AdminService::class          => AttributedServiceFactory::class,
+                AdminRepository::class       => AttributedRepositoryFactory::class,
+                AdminRoleRepository::class   => AttributedRepositoryFactory::class,
                 AdminForm::class             => ElementFactory::class,
                 AuthenticationService::class => AuthenticationServiceFactory::class,
-                AuthenticationAdapter::class => AnnotatedServiceFactory::class,
+                AuthenticationAdapter::class => AttributedServiceFactory::class,
             ],
             'aliases'    => [
                 AdminInterface::class        => Admin::class,

@@ -6,9 +6,9 @@ namespace Frontend\App;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Dot\AnnotatedServices\Factory\AnnotatedServiceFactory;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
+use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Frontend\App\Controller\DashboardController;
 use Frontend\App\Controller\PageController;
 use Frontend\App\Factory\EntityListenerResolverFactory;
@@ -39,8 +39,8 @@ class ConfigProvider
             ],
             'factories'  => [
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
-                DashboardController::class    => AnnotatedServiceFactory::class,
-                PageController::class         => AnnotatedServiceFactory::class,
+                DashboardController::class    => AttributedServiceFactory::class,
+                PageController::class         => AttributedServiceFactory::class,
                 PluginManager::class          => PluginManagerFactory::class,
                 FormsPlugin::class            => FormsPluginFactory::class,
             ],

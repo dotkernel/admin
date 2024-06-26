@@ -6,12 +6,14 @@ namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Dot\DependencyInjection\Attribute\Entity;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\App\Repository\AbstractRepository;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Throwable;
 
+#[Entity(Admin::class)]
 class AdminRepository extends AbstractRepository
 {
     protected int $cacheLifetime = 0;

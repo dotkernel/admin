@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frontend\Admin\Adapter;
 
 use Doctrine\ORM\EntityManager;
-use Dot\AnnotatedServices\Annotation\Inject;
+use Dot\DependencyInjection\Attribute\Inject;
 use Exception;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminIdentity;
@@ -29,12 +29,10 @@ class AuthenticationAdapter implements AdapterInterface
     private string $credential;
     private array $config;
 
-    /**
-     * @Inject({
-     *     EntityManager::class,
-     *     "config.doctrine.authentication"
-     * })
-     */
+    #[Inject(
+        EntityManager::class,
+        "config.doctrine.authentication"
+    )]
     public function __construct(
         private EntityManager $entityManager,
         array $config

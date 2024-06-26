@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
+use Dot\DependencyInjection\Attribute\Entity;
 use Frontend\Admin\Entity\AdminRole;
 use Frontend\App\Repository\AbstractRepository;
 
+#[Entity(AdminRole::class)]
 class AdminRoleRepository extends AbstractRepository
 {
     /**
