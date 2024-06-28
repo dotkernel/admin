@@ -7,12 +7,16 @@ namespace Frontend\Admin\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminLoginRepository;
 use Frontend\App\Entity\AbstractEntity;
+use Frontend\App\Entity\TimestampsTrait;
 
 #[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
 #[ORM\Table(name: 'admin_login')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
 class AdminLogin extends AbstractEntity
 {
+    use TimestampsTrait;
+
     public const IS_MOBILE_YES = 'yes';
     public const IS_MOBILE_NO  = 'no';
     public const LOGIN_SUCCESS = 'success';

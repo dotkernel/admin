@@ -6,7 +6,6 @@ namespace FrontendTest\Unit\Admin\Adapter;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Persisters\Exception\UnrecognizedField;
-use Error;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Repository\AdminRepository;
@@ -101,6 +100,7 @@ class AuthenticationAdapterTest extends UnitTest
     /**
      * @throws Exception
      * @throws \Exception
+     * @group testing
      */
     public function testWillNotAuthenticateWithInvalidIdentityClassConfig(): void
     {
@@ -111,14 +111,20 @@ class AuthenticationAdapterTest extends UnitTest
                     'identity_class'      => \Exception::class,
                     'identity_property'   => 'identity',
                     'credential_property' => 'password',
+                    'messages'            => [
+                        'success'            => 'Authenticated successfully.',
+                        'not_found'          => 'Identity not found.',
+                        'invalid_credential' => 'Invalid credentials.',
+                    ],
                 ],
             ],
         );
         $adapter->setCredential('test');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(Error::class);
-        $adapter->authenticate();
+        $auth = $adapter->authenticate();
+
+        $this->assertSame(-1, $auth->getCode());
     }
 
     /**

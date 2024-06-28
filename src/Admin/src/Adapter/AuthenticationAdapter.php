@@ -34,7 +34,7 @@ class AuthenticationAdapter implements AdapterInterface
         "config.doctrine.authentication"
     )]
     public function __construct(
-        private EntityManager $entityManager,
+        private readonly EntityManager $entityManager,
         array $config
     ) {
         $this->config = $config;

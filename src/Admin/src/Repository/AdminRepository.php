@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Frontend\Admin\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\QueryBuilder;
 use Dot\DependencyInjection\Attribute\Entity;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\App\Repository\AbstractRepository;
-use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Throwable;
 
 #[Entity(Admin::class)]
@@ -47,10 +45,7 @@ class AdminRepository extends AbstractRepository
         }
 
         try {
-            $result = $this->getQueryBuilder()->select('admin')
-                ->from(Admin::class, 'admin')
-                ->andWhere('admin.identity = :identity')
-                ->setParameter('identity', $identity)->getQuery()->getSingleResult();
+            $result = $this->findOneBy(['identity' => $identity]);
         } catch (Throwable) {
             $result = null;
         }
@@ -153,37 +148,5 @@ class AdminRepository extends AbstractRepository
         $this->cacheLifetime = $cacheLifetime;
 
         return $this;
-    }
-
-    public function findAdminBy(array $params): ?Admin
-    {
-        if (empty($params)) {
-            return null;
-        }
-
-        try {
-            $qb = $this->getQueryBuilder()->select('admin')->from(Admin::class, 'admin');
-            $this->addUuidFilter($qb, $params['uuid'] ?? null);
-            $this->addIdentityFilter($qb, $params['identity'] ?? null);
-
-            return $qb->getQuery()->getSingleResult();
-        } catch (Throwable) {
-            return null;
-        }
-    }
-
-    public function addUuidFilter(QueryBuilder $qb, ?string $uuid): void
-    {
-        if (! empty($uuid)) {
-            $qb->andWhere('admin.uuid = :admin_uuid')
-                ->setParameter('admin_uuid', $uuid, UuidBinaryOrderedTimeType::NAME);
-        }
-    }
-
-    public function addIdentityFilter(QueryBuilder $qb, ?string $identity): void
-    {
-        if (! empty($identity)) {
-            $qb->andWhere('admin.identity = :admin_identity')->setParameter('admin_identity', $identity);
-        }
     }
 }

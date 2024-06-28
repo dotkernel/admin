@@ -7,12 +7,16 @@ namespace Frontend\Admin\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use Frontend\App\Entity\AbstractEntity;
+use Frontend\App\Entity\TimestampsTrait;
 
 #[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ORM\Table(name: 'admin_role')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
 class AdminRole extends AbstractEntity
 {
+    use TimestampsTrait;
+
     public const ROLE_ADMIN     = 'admin';
     public const ROLE_SUPERUSER = 'superuser';
     public const ROLES          = [

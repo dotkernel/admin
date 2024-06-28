@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace FrontendTest\Unit\Admin\Entity;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\Repository\AdminRoleRepository;
 use FrontendTest\Unit\UnitTest;
-use Ramsey\Uuid\Rfc4122\UuidInterface;
+use Ramsey\Uuid\UuidInterface;
 use ReflectionAttribute;
 use ReflectionClass;
 
@@ -49,12 +48,6 @@ class AdminRoleTest extends UnitTest
         $adminRole = $adminRole->setName(AdminRole::ROLE_ADMIN);
         $this->assertInstanceOf(AdminRole::class, $adminRole);
         $this->assertSame(AdminRole::ROLE_ADMIN, $adminRole->getName());
-
-        $this->assertInstanceOf(DateTimeInterface::class, $adminRole->getCreated());
-        $this->assertIsString($adminRole->getCreatedFormatted());
-
-        $this->assertInstanceOf(DateTimeInterface::class, $adminRole->getUpdated());
-        $this->assertIsString($adminRole->getUpdatedFormatted());
     }
 
     public function testWillGetArrayCopy(): void
@@ -72,9 +65,7 @@ class AdminRoleTest extends UnitTest
         $this->assertSame(AdminRole::ROLE_ADMIN, $copy['name']);
 
         $this->assertArrayHasKey('created', $copy);
-        $this->assertInstanceOf(DateTimeInterface::class, $copy['created']);
 
         $this->assertArrayHasKey('updated', $copy);
-        $this->assertInstanceOf(DateTimeInterface::class, $copy['updated']);
     }
 }

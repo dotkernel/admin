@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
 use Dot\Cache\Adapter\FilesystemAdapter;
@@ -54,7 +55,14 @@ return [
             // Override `orm_default` only if you know what you're doing
             'orm_default' => [
                 'class'   => MappingDriverChain::class,
-                'drivers' => [],
+                'drivers' => [
+                    'Frontend\\App\\Entity' => 'AppEntities',
+                ],
+            ],
+            'AppEntities' => [
+                'class' => AttributeDriver::class,
+                'cache' => 'array',
+                'paths' => __DIR__ . '/../../src/App/src/Entity',
             ],
         ],
         'types'         => [
