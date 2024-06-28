@@ -95,28 +95,18 @@ hit `enter`)
 
 Run the migrations and seeds with these commands:
 
-```shell
-php bin/doctrine-migrations migrate
-```
+    php bin/doctrine-migrations migrate
 
-```shell
-php bin/doctrine fixtures:execute
-```
+    php bin/doctrine fixtures:execute
 
 - If you use `composer create-project`, the project will go into development mode automatically after installing. The
   development mode status can be checked and toggled by using these composer commands:
 
-```shell
-composer development-status
-```
+      composer development-status
+  
+      composer development-enable
 
-```shell
-composer development-enable
-```
-
-```shell
-composer development-disable
-```
+      composer development-disable
 
 - If not already done on installation, remove the `.dist` extension from `config/autoload/development.global.php.dist`.
 This will enable dev mode by turning debug flag to `true` and turning configuration caching to `off`. It will also
@@ -234,11 +224,8 @@ configuration file first to specify the action restriction permissions.
 Note: **Do not enable dev mode in production**
 
 - Run the following command in your project's directory to start PHPs built-in server:
--
 
-```shell
-php -S 0.0.0.0:8080 -t public
-```
+      php -S 0.0.0.0:8080 -t public
 
 > Running command `composer serve` will do the exact same, but the above is faster.
 
