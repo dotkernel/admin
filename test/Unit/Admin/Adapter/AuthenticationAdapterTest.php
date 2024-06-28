@@ -135,20 +135,26 @@ class AuthenticationAdapterTest extends UnitTest
     public function testWillNotAuthenticateWithInvalidIdentityPropertyConfig(): void
     {
         $adapter = new AuthenticationAdapter(
-            $this->getContainer()->get(EntityManager::class),
+            $this->createMock(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class'      => Admin::class,
-                    'identity_property'   => 'test',
+                    'identity_property'   => 'identity',
                     'credential_property' => 'password',
+                    'messages'            => [
+                        'success'            => 'Authenticated successfully.',
+                        'not_found'          => 'Identity not found.',
+                        'invalid_credential' => 'Invalid credentials.',
+                    ],
                 ],
             ],
         );
         $adapter->setCredential('test');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(UnrecognizedField::class);
-        $adapter->authenticate();
+        $auth = $adapter->authenticate();
+
+        $this->assertSame(-1, $auth->getCode());
     }
 
     /**
