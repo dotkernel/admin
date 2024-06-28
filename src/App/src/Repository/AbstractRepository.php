@@ -7,6 +7,7 @@ namespace Frontend\App\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Frontend\App\Entity\AbstractEntity;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 use function is_array;
@@ -31,7 +32,7 @@ abstract class AbstractRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('entity')
-            ->from($this->getEntityName(), 'entity')
+            ->from($this->getEntityName()/** @type AbstractEntity */, 'entity')
             ->where('entity.uuid = :uuid');
 
         if (is_array($id)) {
