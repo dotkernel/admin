@@ -40,11 +40,11 @@ class ConfigProvider
             ],
             'factories'  => [
                 'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
-                EntityListenerResolver::class => EntityListenerResolverFactory::class,
-                DashboardController::class    => AttributedServiceFactory::class,
-                PageController::class         => AttributedServiceFactory::class,
-                PluginManager::class          => PluginManagerFactory::class,
-                FormsPlugin::class            => FormsPluginFactory::class,
+                EntityListenerResolver::class         => EntityListenerResolverFactory::class,
+                DashboardController::class            => AttributedServiceFactory::class,
+                PageController::class                 => AttributedServiceFactory::class,
+                PluginManager::class                  => PluginManagerFactory::class,
+                FormsPlugin::class                    => FormsPluginFactory::class,
             ],
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',

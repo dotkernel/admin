@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
@@ -12,7 +10,6 @@ use Frontend\App\Resolver\EntityListenerResolver;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
-use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 return [
     'doctrine'            => [

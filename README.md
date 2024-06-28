@@ -169,55 +169,49 @@ the platform by specifying the type of role the user has.
 The `authorization.global.php` file provides multiple configurations specifying multiple roles as well as the types of
 permissions to which these roles have access.
 
-```php
-//example of a flat RBAC model that specifies two types of roles as well as their permission
-'roles' => [
-    'superuser' => [
-        'permissions' => [
-            'authenticated',
-            'edit',
-            'delete',
-            //etc..
-        ]
-    ],
-    'admin' => [
-        'permissions' => [
-            'authenticated',
-            //etc..
+    'roles' => [
+        'superuser' => [
+            'permissions' => [
+                'authenticated',
+                'edit',
+                'delete',
+                //etc..
+            ]
+        ],
+        'admin' => [
+            'permissions' => [
+                'authenticated',
+                //etc..
+            ]
         ]
     ]
-]
-```
 
 The `authorization-guards.global.php` file provides configuration to restrict access to certain actions based on the
 permissions defined in `authorization.global.php` so basically we have to add the permissions in the dot-rbac
 configuration file first to specify the action restriction permissions.
 
-```php
-//example of configuration example to restrict certain actions of some routes based on the permissions specified in the dot-rbac configuration file
     'rules' => [
-        [
-            'route' => 'account',
-            'actions' => [//list of actions to apply , or empty array for all actions
-                'unregister',
-                'avatar',
-                'details',
-                'changePassword'
-            ],
-            'permissions' => ['authenticated']
-        ],
-        [
-            'route' => 'admin',
-            'actions' => [
-                'deleteAccount'
-            ],
-             'permissions' => [
-                'delete'
-                //list of roles to allow
-            ]
-        ]
+      [
+          'route' => 'account',
+          'actions' => [//list of actions to apply , or empty array for all actions
+              'unregister',
+              'avatar',
+              'details',
+              'changePassword'
+          ],
+          'permissions' => ['authenticated']
+      ],
+      [
+          'route' => 'admin',
+          'actions' => [
+              'deleteAccount'
+          ],
+           'permissions' => [
+              'delete'
+              //list of roles to allow
+          ]
+      ]
     ]
-```
 
 ## Testing (Running)
 
@@ -253,18 +247,12 @@ If you ran the migrations you will have an admin user in the database with the f
 **NOTE:**
 
 - **Production only**: Make sure you modify the default admin credentials.
-- **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per
-  the following:
+- **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
 
-```php
-# other code
-
-return [
-    # other configurations...
-    'session_config' => [
-        'cookie_secure' => false,
-    ],
-];
-```
+      return [
+        'session_config' => [
+            'cookie_secure' => false,
+        ]
+      ];
 
 Do not change this in `local.php.dist` as well because this value should remain `true` on production.

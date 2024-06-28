@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FrontendTest\Unit\Admin\Adapter;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Persisters\Exception\UnrecognizedField;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Repository\AdminRepository;

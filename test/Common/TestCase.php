@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-
 use RuntimeException;
 
 use function realpath;
@@ -23,7 +22,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         TestMode::enable();
         $this->ensureTestMode();
-
     }
 
     private function ensureTestMode(): void
