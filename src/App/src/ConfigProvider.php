@@ -16,6 +16,7 @@ use Frontend\App\Factory\FormsPluginFactory;
 use Frontend\App\Plugin\FormsPlugin;
 use Frontend\App\Resolver\EntityListenerResolver;
 use Mezzio\Application;
+use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 class ConfigProvider
 {
@@ -38,6 +39,7 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
+                'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 EntityListenerResolver::class => EntityListenerResolverFactory::class,
                 DashboardController::class    => AttributedServiceFactory::class,
                 PageController::class         => AttributedServiceFactory::class,

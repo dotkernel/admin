@@ -171,22 +171,22 @@ permissions to which these roles have access.
 
 ```php
 //example of a flat RBAC model that specifies two types of roles as well as their permission
-    'roles' => [
-        'superuser' => [
-            'permissions' => [
-                'authenticated',
-                'edit',
-                'delete',
-                //etc..
-            ]
-        ],
-        'admin' => [
-            'permissions' => [
-                'authenticated',
-                //etc..
-            ]
+'roles' => [
+    'superuser' => [
+        'permissions' => [
+            'authenticated',
+            'edit',
+            'delete',
+            //etc..
+        ]
+    ],
+    'admin' => [
+        'permissions' => [
+            'authenticated',
+            //etc..
         ]
     ]
+]
 ```
 
 The `authorization-guards.global.php` file provides configuration to restrict access to certain actions based on the

@@ -15,16 +15,6 @@ use Ramsey\Uuid\Doctrine\UuidType;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 return [
-    'dependencies'        => [
-        'factories' => [
-            'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
-        ],
-        'aliases'   => [
-            EntityManager::class                 => 'doctrine.entity_manager.orm_default',
-            EntityManagerInterface::class        => 'doctrine.entity_manager.orm_default',
-            'doctrine.entitymanager.orm_default' => 'doctrine.entity_manager.orm_default',
-        ],
-    ],
     'doctrine'            => [
         'configuration' => [
             'orm_default' => [
