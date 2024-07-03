@@ -72,7 +72,7 @@ class SettingController extends AbstractActionController
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
 
-        $admin = $this->adminService->findAdminBy([
+        $admin = $this->adminService->getAdminRepository()->findOneBy([
             'uuid' => $this->authenticationService->getIdentity()->getUuid(),
         ]);
 
@@ -125,9 +125,11 @@ class SettingController extends AbstractActionController
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
 
-        $admin = $this->adminService->findAdminBy([
-            'uuid' => $this->authenticationService->getIdentity()->getUuid(),
-        ]);
+        $admin = $this->adminService->getAdminRepository()->findOneBy(
+            [
+                'uuid' => $this->authenticationService->getIdentity()->getUuid(),
+            ]
+        );
 
         if (! $admin instanceof Admin) {
             return new JsonResponse([

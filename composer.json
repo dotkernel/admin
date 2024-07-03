@@ -52,8 +52,9 @@
         "mezzio/mezzio-authorization-rbac": "^1.7.0",
         "mezzio/mezzio-cors": "^1.11.1",
         "mezzio/mezzio-fastroute": "^3.11.0",
-        "ramsey/uuid-doctrine": "^2.0.0",
-        "roave/psr-container-doctrine": "^4.1.0"
+        "ramsey/uuid-doctrine": "^2.1.0",
+        "roave/psr-container-doctrine": "^5.1.0",
+        "doctrine/orm": "^3.2"
     },
     "require-dev": {
         "filp/whoops": "^2.15.4",

@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
 use Dot\Cache\Adapter\FilesystemAdapter;
@@ -11,19 +10,8 @@ use Frontend\App\Resolver\EntityListenerResolver;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
-use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 return [
-    'dependencies'        => [
-        'factories' => [
-            'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
-        ],
-        'aliases'   => [
-            EntityManager::class                 => 'doctrine.entity_manager.orm_default',
-            EntityManagerInterface::class        => 'doctrine.entity_manager.orm_default',
-            'doctrine.entitymanager.orm_default' => 'doctrine.entity_manager.orm_default',
-        ],
-    ],
     'doctrine'            => [
         'configuration' => [
             'orm_default' => [
@@ -54,7 +42,14 @@ return [
             // Override `orm_default` only if you know what you're doing
             'orm_default' => [
                 'class'   => MappingDriverChain::class,
-                'drivers' => [],
+                'drivers' => [
+                    'Frontend\\App\\Entity' => 'AppEntities',
+                ],
+            ],
+            'AppEntities' => [
+                'class' => AttributeDriver::class,
+                'cache' => 'array',
+                'paths' => __DIR__ . '/../../src/App/src/Entity',
             ],
         ],
         'types'         => [

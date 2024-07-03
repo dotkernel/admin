@@ -116,7 +116,7 @@ class AdminController extends AbstractActionController
         $uuid = $this->getAttribute('uuid');
 
         /** @var Admin $admin */
-        $admin = $this->adminService->getAdminRepository()->find($uuid);
+        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
 
         $adminFormData = (new AdminFormData())->fromEntity($admin);
 
@@ -179,7 +179,7 @@ class AdminController extends AbstractActionController
         }
 
         /** @var Admin $admin */
-        $admin = $this->adminService->getAdminRepository()->find($uuid);
+        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
 
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
@@ -295,7 +295,7 @@ class AdminController extends AbstractActionController
         $form               = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
         $identity           = $this->authenticationService->getIdentity();
-        $admin              = $this->adminService->findAdminBy(['uuid' => $identity->getUuid()]);
+        $admin              = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
 
         if ($this->isPost()) {
             $form->setData($this->getPostParams());
@@ -333,7 +333,7 @@ class AdminController extends AbstractActionController
         $changePasswordForm = new ChangePasswordForm();
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
-        $admin         = $this->adminService->getAdminRepository()->findAdminBy([
+        $admin         = $this->adminService->getAdminRepository()->findOneBy([
             'identity' => $adminIdentity->getIdentity(),
         ]);
 

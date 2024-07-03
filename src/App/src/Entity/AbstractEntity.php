@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Frontend\App\Entity;
 
-use DateTimeImmutable;
-use Frontend\App\Common\TimestampAwareInterface;
-use Frontend\App\Common\TimestampAwareTrait;
-use Frontend\App\Common\UuidAwareInterface;
-use Frontend\App\Common\UuidAwareTrait;
-use Frontend\App\Common\UuidOrderedTimeGenerator;
+use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
-abstract class AbstractEntity implements UuidAwareInterface, TimestampAwareInterface
+#[ORM\MappedSuperclass]
+abstract class AbstractEntity
 {
-    use TimestampAwareTrait;
-    use UuidAwareTrait;
+    #[ORM\Id]
+    #[ORM\Column(name: 'uuid', type: "uuid_binary", unique: true)]
+    protected UuidInterface $uuid;
 
     public function __construct()
     {
-        $this->uuid    = UuidOrderedTimeGenerator::generateUuid();
-        $this->created = new DateTimeImmutable();
-        $this->updated = new DateTimeImmutable();
+        $this->uuid = Uuid::uuid4();
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
     }
 }

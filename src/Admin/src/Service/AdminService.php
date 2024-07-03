@@ -40,11 +40,6 @@ class AdminService implements AdminServiceInterface
         $this->adminRepository->setCacheLifetime($cacheLifetime);
     }
 
-    public function findAdminBy(array $params): ?Admin
-    {
-        return $this->adminRepository->findAdminBy($params);
-    }
-
     public function getAdminRepository(): AdminRepository|EntityRepository
     {
         return $this->adminRepository;
@@ -142,7 +137,7 @@ class AdminService implements AdminServiceInterface
     public function createAdmin(array $data): Admin
     {
         if ($this->exists($data['identity'])) {
-            throw new ORMException('An account with this identity already exists.');
+            throw new \Frontend\App\Exception\ORMException('An account with this identity already exists.');
         }
 
         $admin = (new Admin())
@@ -170,7 +165,7 @@ class AdminService implements AdminServiceInterface
             if (! $this->exists($data['identity'])) {
                 $admin->setIdentity($data['identity']);
             } elseif ($admin->getIdentity() !== $data['identity']) {
-                throw new ORMException('An account with this identity already exists');
+                throw new \Frontend\App\Exception\ORMException('An account with this identity already exists');
             }
         }
         if (! empty($data['password'])) {

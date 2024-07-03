@@ -52,7 +52,5 @@ interface AdminServiceInterface
 
     public function logAdminVisit(array $serverParams, string $name): AdminLogin;
 
-    public function findAdminBy(array $params): ?Admin;
-
     public function getAdminFormProcessedRoles(): array;
 }

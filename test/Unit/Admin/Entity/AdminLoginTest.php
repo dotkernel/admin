@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace FrontendTest\Unit\Admin\Entity;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Repository\AdminLoginRepository;
 use FrontendTest\Unit\UnitTest;
-use Ramsey\Uuid\Rfc4122\UuidInterface;
+use Ramsey\Uuid\UuidInterface;
 use ReflectionAttribute;
 use ReflectionClass;
 
@@ -129,11 +128,5 @@ class AdminLoginTest extends UnitTest
         $adminLogin = $adminLogin->setIdentity('test');
         $this->assertInstanceOf(AdminLogin::class, $adminLogin);
         $this->assertSame('test', $adminLogin->getIdentity());
-
-        $this->assertInstanceOf(DateTimeInterface::class, $adminLogin->getCreated());
-        $this->assertIsString($adminLogin->getCreatedFormatted());
-
-        $this->assertInstanceOf(DateTimeInterface::class, $adminLogin->getUpdated());
-        $this->assertIsString($adminLogin->getUpdatedFormatted());
     }
 }

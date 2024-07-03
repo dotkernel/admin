@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use RuntimeException;
 
 use function realpath;
 
@@ -20,6 +21,22 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         TestMode::enable();
+        $this->ensureTestMode();
+    }
+
+    private function ensureTestMode(): void
+    {
+        if (! TestMode::isEnabled()) {
+            throw new RuntimeException(
+                'You are running tests, but test mode is NOT enabled. Did you forget to create local.test.php?'
+            );
+        }
+
+        if (! $this->getEntityManager()->getConnection()->getParams()['memory'] ?? false) {
+            throw new RuntimeException(
+                'You are running tests in a non in-memory database. Did you forget to create local.test.php?'
+            );
+        }
     }
 
     protected function tearDown(): void

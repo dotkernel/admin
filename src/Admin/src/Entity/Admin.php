@@ -9,15 +9,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Repository\AdminRepository;
 use Frontend\App\Entity\AbstractEntity;
+use Frontend\App\Entity\TimestampsTrait;
 use Frontend\Setting\Entity\Setting;
 
 use function array_map;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: "admin")]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
 class Admin extends AbstractEntity implements AdminInterface
 {
+    use TimestampsTrait;
+
     public const STATUS_ACTIVE   = 'active';
     public const STATUS_INACTIVE = 'pending';
     public const STATUSES        = [

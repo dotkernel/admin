@@ -7,6 +7,7 @@ namespace Frontend\Setting\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Frontend\Admin\Entity\Admin;
 use Frontend\App\Entity\AbstractEntity;
+use Frontend\App\Entity\TimestampsTrait;
 use Frontend\Setting\Repository\SettingRepository;
 
 use function array_unique;
@@ -15,8 +16,11 @@ use function json_encode;
 
 #[ORM\Entity(repositoryClass: SettingRepository::class)]
 #[ORM\Table(name: 'settings')]
+#[ORM\HasLifecycleCallbacks]
 class Setting extends AbstractEntity
 {
+    use TimestampsTrait;
+
     public const IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS        = 'table_admin_list_selected_columns';
     public const IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS = 'table_admin_list_logins_selected_columns';
     public const IDENTIFIERS                                         = [

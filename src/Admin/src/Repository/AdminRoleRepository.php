@@ -18,7 +18,7 @@ class AdminRoleRepository extends AbstractRepository
     public function getRole(string $uuid): ?AdminRole
     {
         /** @var AdminRole $role */
-        $role = $this->find($uuid);
+        $role = $this->findOneBy(['uuid' => $uuid]);
         return $role;
     }
 

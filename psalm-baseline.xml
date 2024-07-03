@@ -6,12 +6,6 @@
             <code>getStorage</code>
         </UndefinedInterfaceMethod>
     </file>
-    <file src="src/App/src/Common/UuidOrderedTimeGenerator.php">
-        <UndefinedInterfaceMethod>
-            <code>getUuidBuilder</code>
-            <code>setCodec</code>
-        </UndefinedInterfaceMethod>
-    </file>
     <file src="src/Admin/src/Entity/AdminIdentity.php">
         <LessSpecificImplementedReturnType>
             <code>iterable</code>
