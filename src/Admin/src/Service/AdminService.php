@@ -193,7 +193,7 @@ class AdminService implements AdminServiceInterface
         return $admin;
     }
 
-    public function logAdminVisit(array $serverParams, string $name): AdminLogin
+    public function logAdminVisit(array $serverParams, string $name, string $status): AdminLogin
     {
         /**
          * For device information
@@ -228,6 +228,7 @@ class AdminService implements AdminServiceInterface
             ->setClientName(null)
             ->setClientEngine(null)
             ->setClientVersion(null)
+            ->setLoginStatus($status)
             ->setIdentity($name);
 
         return $this->adminRepository->saveAdminVisit($adminLogin);
