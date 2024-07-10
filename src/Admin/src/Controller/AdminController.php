@@ -37,7 +37,6 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-use function json_decode;
 use function password_verify;
 
 class AdminController extends AbstractActionController
@@ -97,12 +96,15 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return new JsonResponse(['data' => $this->template->render(
-            'partial::ajax-form', [
-                'form'       => $this->adminForm,
-                'formAction' => '/admin/add',
-            ]
-        )]);
+        return new JsonResponse([
+            'data' => $this->template->render(
+                'partial::ajax-form',
+                [
+                    'form'       => $this->adminForm,
+                    'formAction' => '/admin/add',
+                ]
+            ),
+        ]);
     }
 
     /**
@@ -151,11 +153,12 @@ class AdminController extends AbstractActionController
 
         return new JsonResponse([
             'data' => $this->template->render(
-                'partial::ajax-form', [
+                'partial::ajax-form',
+                [
                     'form'       => $this->adminForm,
                     'formAction' => '/admin/edit/' . $uuid,
                 ]
-            )
+            ),
         ]);
     }
 
