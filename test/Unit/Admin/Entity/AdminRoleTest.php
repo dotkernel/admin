@@ -15,7 +15,7 @@ use ReflectionClass;
 
 class AdminRoleTest extends UnitTest
 {
-    public function testAnnotations(): void
+    public function testAttributes(): void
     {
         $reflection = new ReflectionClass(AdminRole::class);
         $entity     = $reflection->getAttributes(Entity::class);

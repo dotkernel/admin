@@ -9,7 +9,7 @@ use Frontend\Admin\Entity\Admin;
 use Frontend\Setting\Entity\Setting;
 use Frontend\Setting\Repository\SettingRepository;
 
-readonly class SettingService
+class SettingService
 {
     #[Inject(
         SettingRepository::class,

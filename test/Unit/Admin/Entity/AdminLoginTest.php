@@ -15,7 +15,7 @@ use ReflectionClass;
 
 class AdminLoginTest extends UnitTest
 {
-    public function testAnnotations(): void
+    public function testAttributes(): void
     {
         $reflection = new ReflectionClass(AdminLogin::class);
         $entity     = $reflection->getAttributes(Entity::class);

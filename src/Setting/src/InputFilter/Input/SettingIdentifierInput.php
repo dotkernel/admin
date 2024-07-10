@@ -28,7 +28,7 @@ class SettingIdentifierInput extends Input
 
         $this->getValidatorChain()
             ->attachByName(NotEmpty::class, [
-                'message' => sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, 'Identifier'),
+                'message' => sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, '<b>Identifier</b>'),
             ], true)
             ->attachByName(InArray::class, [
                 'haystack' => Setting::IDENTIFIERS,
