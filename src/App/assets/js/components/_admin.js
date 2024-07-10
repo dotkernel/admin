@@ -1,89 +1,114 @@
 import {request} from "./_request";
 
 $(document).ready(() => {
-    const adminEditButton = $("#adminEditButton");
-    const adminDeleteButton = $("#adminDeleteButton");
+    const adminModal = $('#adminModal');
+    const adminDeleteModal = $('#deleteFormModal');
+    const bsTable = $("#bsTable");
 
-    adminEditButton.prop('disabled', true);
-    adminDeleteButton.prop('disabled', true);
+    $("#adminEditBtn").prop('disabled', true);
+    $("#adminDeleteBtn").prop('disabled', true);
 
-    $("#adminAddButton").click(function () {
-        $.get('/admin/add')
-            .done(function (data) {
-                $("#formModalTitle").html('Add Admin');
-                $("#formPlaceholder").html(data);
-
-                $('#formMessages').empty();
-                $("#formModal").modal('show');
-            })
-            .fail(function (data) {
-                showFailDialog(data);
+    $(document).on('click', '#adminAddBtn', () => {
+        adminModal.find('.modal-messages').html('');
+        request('GET', '/admin/add')
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+                adminModal.find('.modal-title').text('Add admin');
+                adminModal.find('.modal-form').html(data.data);
+                adminModal.modal('show');
             });
     });
 
-    adminEditButton.click(function () {
-        const selections = $("#bsTable").bootstrapTable('getSelections');
-        if (selections.length !== 1) {
-            showAlertDialog('Selection error',
-                'Multiple or no Admin selected. Only one Admin can be edited a time',
-                'error');
-        } else {
-            $.get('/admin/edit/' + selections[0].uuid)
-                .done(function (data) {
-                    $("#formModalTitle").html('Edit Admin');
-                    $("#formPlaceholder").html(data);
-
-                    $('#formMessages').empty();
-                    $("#formModal").modal('show');
-                })
-                .fail(function (data) {
-                    showFailDialog(data);
-                });
-        }
-    });
-
-    adminDeleteButton.click(function () {
-        const selections = $("#bsTable").bootstrapTable('getSelections');
-        if (selections.length === 0) {
+    $(document).on('click', '#formModalSubmit', () => {
+        const form = $('#ajaxForm');
+        const messages = adminModal.find('.modal-messages');
+        if (form.length < 1) {
             return;
         }
-        $("#deleteFormPlaceholder").text('Are you sure you want to delete ' + selections[0].identity + '?');
-        $("#deleteFormMessages").empty();
-        $("#deleteFormModal").modal('show');
-    });
 
-    $("#deleteAdminFormModalSubmit").click(function () {
-        const selections = $("#bsTable").bootstrapTable('getSelections');
-        $('#deleteFormModal').modal('handleUpdate');
-
-
-        request('POST', `/admin/delete`, {
-            value: selections[0],
-        })
-            .then((data) => {
-                $('#deleteFormMessages').html(
+        request('POST', form.attr('action'), new FormData(form.get(0)))
+            .then(data => {
+                messages.html('');
+                messages.append(
                     $('<div>').prop({
                         innerHTML: data.message,
-                        className: 'alert alert-success alert-dismissible',
+                        className: 'alert alert-success',
                         role: "alert"
                     })
                 );
-                $("#bsTable").bootstrapTable('refresh');
+                bsTable.bootstrapTable('refresh');
                 setTimeout(function () {
-                    $('#deleteFormModal').modal('hide');
+                    adminModal.modal('hide');
                 },1500);
-            })
-            .catch(
-                $('#deleteFormMessages').html(
+            }).catch(error => {
+                messages.html('');
+                messages.append(
                     $('<div>').prop({
-                        innerHTML: "An error occurred",
-                        className: 'alert alert-danger alert-dismissible',
+                        innerHTML: error.cause,
+                        className: 'alert alert-danger',
                         role: "alert"
                     })
-                ))
+                );
+            }).finally(() => {
+                adminModal.modal('show');
+            });
+    });
+
+
+    $(document).on('click', '#adminEditBtn', () => {
+        const selections = $("#bsTable").bootstrapTable('getSelections');
+        if (selections.length !== 1) {
+            return;
+        }
+
+        adminModal.find('.modal-messages').html('');
+        request('GET', `/admin/edit/${selections[0].uuid}`)
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+                adminModal.find('.modal-title').text('Edit admin');
+                adminModal.find('.modal-form').html(data.data);
+                adminModal.modal('show');
+            });
+    });
+
+    $(document).on('click', '#adminDeleteBtn', () => {
+        const selections = $("#bsTable").bootstrapTable('getSelections');
+        if (selections.length !== 1) {
+            return;
+        }
+
+        adminDeleteModal.find('.modal-body').html(`Are you sure you want to delete <b>${selections[0].identity}?</b>`);
+        adminDeleteModal.modal('show');
+    });
+
+    $(document).on('click', '#modalDeleteBtn', () => {
+        const selections = $("#bsTable").bootstrapTable('getSelections');
+        const messages = adminDeleteModal.find('.modal-messages');
+        request('DELETE', `/admin/delete/${selections[0].uuid}`)
+            .then(data => {
+                messages.html('');
+                messages.append(
+                    $('<div>').prop({
+                        innerHTML: data.message,
+                        className: 'alert alert-success',
+                        role: "alert"
+                    })
+                );
+                bsTable.bootstrapTable('refresh');
                 setTimeout(function () {
-                    $('#deleteFormModal').modal('hide');
-                },2000
-            )
+                    adminDeleteModal.modal('hide');
+                },1500);
+            }).catch(error => {
+                messages.html('');
+                messages.append(
+                    $('<div>').prop({
+                        innerHTML: error.cause,
+                        className: 'alert alert-danger',
+                        role: "alert"
+                    })
+                );
+            }).finally(() => {
+            adminDeleteModal.modal('show');
+            });
     });
 });

@@ -9,7 +9,6 @@ import './components/_scrollbar';
 import './components/_search';
 import './components/_sidebar';
 import './components/_skycons';
-import './components/_vectorMaps';
 import './components/_chat';
 import './components/_bootstrapTable';
 import './components/_datepicker';

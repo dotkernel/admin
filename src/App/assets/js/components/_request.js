@@ -1,12 +1,16 @@
-exports.request = (method, url, data) => {
-    return fetch(url, {
-        method: method.toUpperCase(),
-        body: JSON.stringify(data),
-        headers: {'Content-Type': 'application/json'},
-    }).then(response => {
-        if (! response.ok) {
-            throw new Error('HTTP error ' + response.status);
-        }
-        return response.json();
+exports.request = async function request(method, url, data, headers = {}) {
+    const response = await fetch(url, {
+        method: method,
+        headers: headers,
+        body: data,
     });
-};
+
+    data = await response.json();
+    if (! response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`, {
+            cause: data.message
+        });
+    }
+
+    return data;
+}
