@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FrontendTest\Unit\Setting\InputFilter;
 
 use Frontend\App\Message;
-use Frontend\Setting\InputFilter\Input\SettingValueInputFilter;
 use Frontend\Setting\InputFilter\SettingInputFilter;
 use FrontendTest\Common\TestCase;
 
