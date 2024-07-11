@@ -16,6 +16,6 @@ class SettingInputFilter extends InputFilter
     public function __construct()
     {
         $this->add(new SettingIdentifierInput('identifier', true));
-        $this->add(new SettingValueInputFilter('value', true));
+        $this->add(new SettingValueInputFilter('value', false));
     }
 }

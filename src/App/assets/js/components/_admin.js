@@ -61,7 +61,7 @@ $(document).ready(() => {
             return;
         }
 
-        adminModal.find('.modal-messages').html('');
+        adminModal.find('.modal-messages')?.html('');
         request('GET', `/admin/edit/${selections[0].uuid}`)
             .catch(error => console.error('Error:', error))
             .then(data => {
@@ -77,7 +77,7 @@ $(document).ready(() => {
             return;
         }
 
-        adminDeleteModal.find('.modal-body').html(`Are you sure you want to delete <b>${selections[0].identity}?</b>`);
+        adminDeleteModal.find('.modal-form').html(`Are you sure you want to delete <b>${selections[0].identity}?</b>`);
         adminDeleteModal.modal('show');
     });
 
@@ -99,7 +99,6 @@ $(document).ready(() => {
                     adminDeleteModal.modal('hide');
                 },1500);
             }).catch(error => {
-                messages.html('');
                 messages.append(
                     $('<div>').prop({
                         innerHTML: error.cause,
@@ -108,7 +107,7 @@ $(document).ready(() => {
                     })
                 );
             }).finally(() => {
-            adminDeleteModal.modal('show');
+                adminDeleteModal.modal('show');
             });
     });
 });

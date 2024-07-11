@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FrontendTest\Unit\Setting\InputFilter;
 
 use Frontend\App\Message;
+use Frontend\Setting\InputFilter\Input\SettingValueInputFilter;
 use Frontend\Setting\InputFilter\SettingInputFilter;
 use FrontendTest\Common\TestCase;
 
@@ -34,21 +35,5 @@ class SettingInputFilterTest extends TestCase
         $this->assertIsArray($messages['identifier']);
         $this->assertArrayHasKey('notInArray', $messages['identifier']);
         $this->assertSame(sprintf(Message::INVALID_VALUE, 'identifier'), $messages['identifier']['notInArray']);
-    }
-
-    public function testWillValidateValue(): void
-    {
-        $inputFilter = new SettingInputFilter();
-        $inputFilter->init();
-
-        $inputFilter->setData([]);
-        $this->assertFalse($inputFilter->isValid());
-        $messages = $inputFilter->getMessages();
-        $this->assertIsArray($messages);
-
-        $this->assertArrayHasKey('value', $messages);
-        $this->assertIsArray($messages['value']);
-        $this->assertArrayHasKey('isEmpty', $messages['value']);
-        $this->assertSame(sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, 'value'), $messages['value']['isEmpty']);
     }
 }
