@@ -69,5 +69,4 @@ return [
         ],
         'fixtures'      => getcwd() . '/data/doctrine/fixtures',
     ],
-    'resultCacheLifetime' => 300,
 ];

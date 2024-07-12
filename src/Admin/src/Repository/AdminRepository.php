@@ -137,16 +137,4 @@ class AdminRepository extends AbstractRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
-    public function getCacheLifetime(): int
-    {
-        return $this->cacheLifetime;
-    }
-
-    public function setCacheLifetime(int $cacheLifetime): self
-    {
-        $this->cacheLifetime = $cacheLifetime;
-
-        return $this;
-    }
 }

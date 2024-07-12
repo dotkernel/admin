@@ -26,7 +26,6 @@ $databases = [
 ];
 
 return [
-    'annotations_cache_dir' => getcwd() . '/data/cache/annotations',
     'application'           => [
         'name' => $app['name'] ?? '',
         'url'  => $baseUrl,
