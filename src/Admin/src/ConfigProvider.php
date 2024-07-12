@@ -22,6 +22,7 @@ use Frontend\Admin\Service\AdminService;
 use Frontend\Admin\Service\AdminServiceInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
+use Mezzio\Application;
 
 class ConfigProvider
 {
@@ -38,6 +39,14 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'delegators' => [
+                Application::class => [
+                    RoutesDelegator::class,
+                ],
+                AdminForm::class   => [
+                    AdminRoleDelegator::class,
+                ],
+            ],
             'factories'  => [
                 AdminController::class       => AttributedServiceFactory::class,
                 AdminService::class          => AttributedServiceFactory::class,
@@ -50,11 +59,6 @@ class ConfigProvider
             'aliases'    => [
                 AdminInterface::class        => Admin::class,
                 AdminServiceInterface::class => AdminService::class,
-            ],
-            'delegators' => [
-                AdminForm::class => [
-                    AdminRoleDelegator::class,
-                ],
             ],
         ];
     }
