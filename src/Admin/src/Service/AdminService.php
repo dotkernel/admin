@@ -29,15 +29,12 @@ class AdminService implements AdminServiceInterface
         LocationServiceInterface::class,
         AdminRepository::class,
         AdminRoleRepository::class,
-        "config.resultCacheLifetime"
     )]
     public function __construct(
         protected LocationServiceInterface $locationService,
         protected AdminRepository $adminRepository,
         protected AdminRoleRepository $adminRoleRepository,
-        int $cacheLifetime,
     ) {
-        $this->adminRepository->setCacheLifetime($cacheLifetime);
     }
 
     public function getAdminRepository(): AdminRepository|EntityRepository

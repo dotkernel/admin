@@ -12,7 +12,7 @@ use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 return [
-    'doctrine'            => [
+    'doctrine' => [
         'configuration' => [
             'orm_default' => [
                 'entity_listener_resolver' => EntityListenerResolver::class,
@@ -69,5 +69,4 @@ return [
         ],
         'fixtures'      => getcwd() . '/data/doctrine/fixtures',
     ],
-    'resultCacheLifetime' => 300,
 ];
