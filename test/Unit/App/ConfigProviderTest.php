@@ -7,7 +7,6 @@ namespace FrontendTest\Unit\App;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Dot\Controller\Plugin\PluginManager;
-use Frontend\Admin\RoutesDelegator as AdminDelegator;
 use Frontend\App\ConfigProvider;
 use Frontend\App\Controller\DashboardController;
 use Frontend\App\Plugin\FormsPlugin;
@@ -43,10 +42,6 @@ class ConfigProviderTest extends UnitTest
         $this->assertIsArray($this->config['dependencies']['delegators']);
         $this->assertArrayHasKey(Application::class, $this->config['dependencies']['delegators']);
         $this->assertIsArray($this->config['dependencies']['delegators'][Application::class]);
-        $this->assertContainsEquals(
-            AdminDelegator::class,
-            $this->config['dependencies']['delegators'][Application::class]
-        );
         $this->assertContainsEquals(
             AppDelegator::class,
             $this->config['dependencies']['delegators'][Application::class]

@@ -6,6 +6,7 @@ namespace Frontend\App;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
@@ -34,8 +35,6 @@ class ConfigProvider
             'delegators' => [
                 Application::class => [
                     RoutesDelegator::class,
-                    \Frontend\Admin\RoutesDelegator::class,
-                    \Frontend\Setting\RoutesDelegator::class,
                 ],
             ],
             'factories'  => [
@@ -49,6 +48,24 @@ class ConfigProvider
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
                 EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
+            ],
+        ];
+    }
+
+    public function getDoctrineConfig(): array
+    {
+        return [
+            'driver' => [
+                'orm_default' => [
+                    'drivers' => [
+                        'Frontend\App\Entity' => 'AppEntities',
+                    ],
+                ],
+                'AppEntities' => [
+                    'class' => AttributeDriver::class,
+                    'cache' => 'array',
+                    'paths' => [__DIR__ . '/Entity'],
+                ],
             ],
         ];
     }

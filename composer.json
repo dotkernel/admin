@@ -53,8 +53,7 @@
         "mezzio/mezzio-cors": "^1.11.1",
         "mezzio/mezzio-fastroute": "^3.11.0",
         "ramsey/uuid-doctrine": "^2.1.0",
-        "roave/psr-container-doctrine": "^5.1.0",
-        "doctrine/orm": "^3.2"
+        "roave/psr-container-doctrine": "^5.2.2"
     },
     "require-dev": {
         "filp/whoops": "^2.15.4",

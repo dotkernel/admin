@@ -10,6 +10,7 @@ use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Frontend\Setting\Controller\SettingController;
 use Frontend\Setting\Repository\SettingRepository;
 use Frontend\Setting\Service\SettingService;
+use Mezzio\Application;
 
 class ConfigProvider
 {
@@ -24,7 +25,12 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'factories' => [
+            'delegators' => [
+                Application::class => [
+                    RoutesDelegator::class,
+                ],
+            ],
+            'factories'  => [
                 SettingController::class => AttributedServiceFactory::class,
                 SettingService::class    => AttributedServiceFactory::class,
                 SettingRepository::class => AttributedRepositoryFactory::class,

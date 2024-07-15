@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
 use Dot\Cache\Adapter\FilesystemAdapter;
@@ -20,6 +19,7 @@ return [
                 'metadata_cache'           => 'filesystem',
                 'query_cache'              => 'filesystem',
                 'hydration_cache'          => 'array',
+                'typed_field_mapper'       => null,
                 'second_level_cache'       => [
                     'enabled'                    => true,
                     'default_lifetime'           => 3600,
@@ -42,14 +42,7 @@ return [
             // Override `orm_default` only if you know what you're doing
             'orm_default' => [
                 'class'   => MappingDriverChain::class,
-                'drivers' => [
-                    'Frontend\\App\\Entity' => 'AppEntities',
-                ],
-            ],
-            'AppEntities' => [
-                'class' => AttributeDriver::class,
-                'cache' => 'array',
-                'paths' => __DIR__ . '/../../src/App/src/Entity',
+                'drivers' => [],
             ],
         ],
         'types'         => [
