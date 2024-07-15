@@ -35,7 +35,7 @@ class AdminTest extends UnitTest
         ];
     }
 
-    public function testAnnotations(): void
+    public function testAttributes(): void
     {
         $reflection = new ReflectionClass(Admin::class);
         $entity     = $reflection->getAttributes(Entity::class);

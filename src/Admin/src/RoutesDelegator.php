@@ -19,7 +19,11 @@ class RoutesDelegator
         $app->route(
             '/admin[/{action}[/{uuid}]]',
             AdminController::class,
-            [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
+            [
+                RequestMethodInterface::METHOD_GET,
+                RequestMethodInterface::METHOD_POST,
+                RequestMethodInterface::METHOD_DELETE,
+            ],
             'admin'
         );
 

@@ -37,7 +37,6 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-use function json_decode;
 use function password_verify;
 
 class AdminController extends AbstractActionController
@@ -92,20 +91,20 @@ class AdminController extends AbstractActionController
             } else {
                 return new JsonResponse(
                     ['message' => $this->forms->getMessagesAsString($this->adminForm)],
-                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                    StatusCodeInterface::STATUS_BAD_REQUEST
                 );
             }
         }
 
-        return new HtmlResponse(
-            $this->template->render(
+        return new JsonResponse([
+            'data' => $this->template->render(
                 'partial::ajax-form',
                 [
                     'form'       => $this->adminForm,
                     'formAction' => '/admin/add',
                 ]
-            )
-        );
+            ),
+        ]);
     }
 
     /**
@@ -152,15 +151,15 @@ class AdminController extends AbstractActionController
 
         $this->adminForm->bind($adminFormData);
 
-        return new HtmlResponse(
-            $this->template->render(
+        return new JsonResponse([
+            'data' => $this->template->render(
                 'partial::ajax-form',
                 [
                     'form'       => $this->adminForm,
                     'formAction' => '/admin/edit/' . $uuid,
                 ]
-            )
-        );
+            ),
+        ]);
     }
 
     /**
@@ -168,13 +167,21 @@ class AdminController extends AbstractActionController
      */
     public function deleteAction(): ResponseInterface
     {
-        $data = json_decode($this->getRequest()->getBody()->getContents(), true);
-        $uuid = $data['value']['uuid'] ?? null;
+        if (! $this->isDelete()) {
+            return new JsonResponse([
+                'error' => [
+                    'messages' => [
+                        [Message::METHOD_NOT_ALLOWED],
+                    ],
+                ],
+            ], StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED);
+        }
 
+        $uuid = $this->getAttribute('uuid');
         if (empty($uuid)) {
             return new JsonResponse(
                 ['message' => Message::ADMIN_NOT_FOUND],
-                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                StatusCodeInterface::STATUS_NOT_FOUND
             );
         }
 

@@ -9,13 +9,13 @@
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
                     <div id="tableToolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" id="adminAddButton">
+                        <button type="button" class="btn btn-default" id="adminAddBtn">
                             <i class="bi bi-plus-circle"></i>
                         </button>
-                        <button type="button" class="btn btn-default" id="adminEditButton">
+                        <button type="button" class="btn btn-default" id="adminEditBtn">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button type="button" class="btn btn-default" id="adminDeleteButton">
+                        <button type="button" class="btn btn-default" id="adminDeleteBtn">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -46,19 +46,16 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="formModal" aria-labelledby="formModal">
+    <div class="modal fade" tabindex="-1" role="dialog" id="adminModal" aria-labelledby="formModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="formModalTitle"></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    <div id="formMessages"></div>
-                    <div id="formPlaceholder"></div>
-
+                    <div class="modal-form"></div>
+                    <div class="modal-messages"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -72,17 +69,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteFormModalTitle">Delete Admin</h4>
+                    <h4 class="modal-title" id="deleteFormModalTitle">Confirm Delete</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="deleteFormMessages"></div>
-                    <div id="deleteFormPlaceholder"></div>
+                    <div class="modal-form"></div>
+                    <div class="modal-messages"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="deleteAdminFormModalSubmit">Delete</button>
+                    <button type="button" class="btn btn-danger" id="modalDeleteBtn">Delete</button>
                 </div>
             </div>
         </div>
