@@ -26,7 +26,7 @@ $(document).ready(() => {
             return;
         }
 
-        request('POST', form.attr('action'), new FormData(form.get(0)))
+        request(form.attr('method'), form.attr('action'), new FormData(form.get(0)))
             .then(data => {
                 messages.html('');
                 messages.append(

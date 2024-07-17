@@ -13,6 +13,7 @@ use Frontend\App\Entity\TimestampsTrait;
 use Frontend\Setting\Entity\Setting;
 
 use function array_map;
+use function password_verify;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: "admin")]
@@ -129,6 +130,11 @@ class Admin extends AbstractEntity implements AdminInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function verifyPassword(string $password): bool
+    {
+        return password_verify($password, $this->getPassword());
     }
 
     public function getStatus(): string

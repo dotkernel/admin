@@ -6,6 +6,7 @@ namespace Frontend\App\Common;
 
 use Exception;
 use Fig\Http\Message\RequestMethodInterface;
+use Laminas\Diactoros\Response\JsonResponse;
 
 use function array_key_exists;
 use function array_map;
@@ -173,6 +174,22 @@ trait ServerRequestAwareTrait
         }
 
         return $this->cast($default, $cast);
+    }
+
+    /**
+     * @return JsonResponse|void
+     */
+    protected function denyRequest(bool $rule, string $message, int $errorCode)
+    {
+        if ($rule) {
+            return new JsonResponse([
+                'error' => [
+                    'messages' => [
+                        [$message],
+                    ],
+                ],
+            ], $errorCode);
+        }
     }
 
     private function cast(mixed $value, ?string $to = null): mixed
