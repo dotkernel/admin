@@ -9,7 +9,7 @@ $(document).ready(() => {
     $("#adminDeleteBtn").prop('disabled', true);
 
     $(document).on('click', '#adminAddBtn', () => {
-        adminModal.find('.modal-messages').html('');
+        adminModal.find('.modal-messages').html('');``
         request('GET', '/admin/add')
             .catch(error => console.error('Error:', error))
             .then(data => {

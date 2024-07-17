@@ -214,7 +214,7 @@ class AdminController extends AbstractActionController
             return new RedirectResponse($this->router->generateUri("dashboard"));
         }
 
-        $form = new LoginForm();
+        $form         = new LoginForm();
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
         if ($shouldRebind) {
             $this->forms->restoreState($form);

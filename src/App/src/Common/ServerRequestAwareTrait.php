@@ -6,7 +6,6 @@ namespace Frontend\App\Common;
 
 use Exception;
 use Fig\Http\Message\RequestMethodInterface;
-use Laminas\Diactoros\Response\JsonResponse;
 
 use function array_key_exists;
 use function array_map;
