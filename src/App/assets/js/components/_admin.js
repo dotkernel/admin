@@ -84,7 +84,7 @@ $(document).ready(() => {
     $(document).on('click', '#modalDeleteBtn', () => {
         const selections = $("#bsTable").bootstrapTable('getSelections');
         const messages = adminDeleteModal.find('.modal-messages');
-        request('DELETE', `/admin/delete/${selections[0].uuid}`)
+        request('GET', `/admin/delete/${selections[0].uuid}`)
             .then(data => {
                 messages.html('');
                 messages.append(

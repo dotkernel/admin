@@ -65,12 +65,6 @@ class AdminController extends AbstractActionController
 
     public function addAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet() || ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         if ($this->isPost()) {
             $this->adminForm->setData($this->getPostParams());
             if ($this->adminForm->isValid()) {
@@ -114,12 +108,6 @@ class AdminController extends AbstractActionController
 
     public function editAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet() || ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $uuid = $this->getAttribute('uuid');
 
         /** @var Admin $admin */
@@ -173,12 +161,6 @@ class AdminController extends AbstractActionController
 
     public function deleteAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isDelete(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $uuid = $this->getAttribute('uuid');
         if (empty($uuid)) {
             return new JsonResponse(
@@ -204,12 +186,6 @@ class AdminController extends AbstractActionController
 
     public function listAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $result = $this->adminService->getAdmins(
             $this->getQueryParam('offset', 0, 'int'),
             $this->getQueryParam('limit', 30, 'int'),
@@ -223,12 +199,6 @@ class AdminController extends AbstractActionController
 
     public function manageAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         return new HtmlResponse(
             $this->template->render('admin::list')
         );
@@ -240,18 +210,11 @@ class AdminController extends AbstractActionController
      */
     public function loginAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet() || ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         if ($this->authenticationService->hasIdentity()) {
             return new RedirectResponse($this->router->generateUri("dashboard"));
         }
 
         $form = new LoginForm();
-
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
         if ($shouldRebind) {
             $this->forms->restoreState($form);
@@ -313,13 +276,8 @@ class AdminController extends AbstractActionController
 
     public function logoutAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $this->authenticationService->clearIdentity();
+
         return new RedirectResponse(
             $this->router->generateUri('admin', ['action' => 'login'])
         );
@@ -327,12 +285,6 @@ class AdminController extends AbstractActionController
 
     public function accountAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet() || ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $form               = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
         $identity           = $this->authenticationService->getIdentity();
@@ -371,12 +323,6 @@ class AdminController extends AbstractActionController
 
     public function changePasswordAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet() || ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $changePasswordForm = new ChangePasswordForm();
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
@@ -413,12 +359,6 @@ class AdminController extends AbstractActionController
 
     public function loginsAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         return new HtmlResponse(
             $this->template->render('admin::list-logins')
         );
@@ -429,12 +369,6 @@ class AdminController extends AbstractActionController
      */
     public function listLoginsAction(): ResponseInterface
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $result = $this->adminService->getAdminLogins(
             $this->getQueryParam('offset', 0, 'int'),
             $this->getQueryParam('limit', 30, 'int'),
