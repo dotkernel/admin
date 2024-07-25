@@ -68,19 +68,33 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="deleteFormModal" aria-labelledby="deleteFormModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                {% set dummy = form.prepare() %}
+                {% set dummy = form.setAttribute('id', 'deleteAdminForm') %}
+                {{ form().openTag(form) | raw }}
                 <div class="modal-header">
                     <h4 class="modal-title" id="deleteFormModalTitle">Confirm Delete</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-form"></div>
-                    <div class="modal-messages"></div>
+                        <div class="modal-form">
+                            <p>Are you sure you want to delete <span id="adminIdentity"></span>?</p>
+                            <div class="form-check">
+                                {% set element = form.get('confirmation') %}
+                                {{ formElement(element) }}
+                                <label class="form-check-label" for="confirmation">Yes</label>
+                            </div>
+                        </div>
+                        <div class="modal-messages"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="modalDeleteBtn">Delete</button>
+                    {% set element = form.get('close') %}
+                    {{ formElement(element) }}
+
+                    {% set element = form.get('submit') %}
+                    {{ formElement(element) }}
                 </div>
+                {{ form().closeTag() | raw }}
             </div>
         </div>
     </div>

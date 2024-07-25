@@ -11,4 +11,14 @@
             <code>iterable</code>
         </LessSpecificImplementedReturnType>
     </file>
+    <file src="src/Admin/src/Form/AdminForm.php">
+        <UndefinedInterfaceMethod>
+            <code>init</code>
+        </UndefinedInterfaceMethod>
+    </file>
+    <file src="src/Admin/src/Form/AdminDeleteForm.php">
+        <UndefinedInterfaceMethod>
+            <code>init</code>
+        </UndefinedInterfaceMethod>
+    </file>
 </files>

@@ -12,6 +12,4 @@ if [[ ${COMMAND} =~ phpunit ]];then
   cp config/autoload/mail.local.php.dist config/autoload/mail.local.php
   cp config/autoload/local.test.php.dist config/autoload/local.test.php
 
-  echo 'running if'
-
 fi

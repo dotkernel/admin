@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\Controller;
 
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Exception;
+use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Frontend\Admin\Adapter\AuthenticationAdapter;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminIdentity;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Form\AccountForm;
+use Frontend\Admin\Form\AdminDeleteForm;
 use Frontend\Admin\Form\AdminForm;
 use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
@@ -23,6 +23,7 @@ use Frontend\Admin\FormData\AdminFormData;
 use Frontend\Admin\InputFilter\EditAdminInputFilter;
 use Frontend\Admin\Service\AdminServiceInterface;
 use Frontend\App\Common\ServerRequestAwareTrait;
+use Frontend\App\Exception\IdentityException;
 use Frontend\App\Message;
 use Frontend\App\Plugin\FormsPlugin;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -36,8 +37,6 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-
-use function password_verify;
 
 class AdminController extends AbstractActionController
 {
@@ -75,11 +74,11 @@ class AdminController extends AbstractActionController
                 try {
                     $this->adminService->createAdmin($result);
                     return new JsonResponse(['message' => Message::ADMIN_CREATED_SUCCESSFULLY]);
-                } catch (ORMException $e) {
+                } catch (IdentityException $e) {
                     $this->logErrors($e, Message::CREATE_ADMIN);
                     return new JsonResponse(
                         ['message' => $e->getMessage()],
-                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                        StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                     );
                 } catch (Throwable $e) {
                     $this->logErrors($e, Message::CREATE_ADMIN);
@@ -102,14 +101,12 @@ class AdminController extends AbstractActionController
                 [
                     'form'       => $this->adminForm,
                     'formAction' => '/admin/add',
+                    'method'     => RequestMethodInterface::METHOD_POST,
                 ]
             ),
         ]);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function editAction(): ResponseInterface
     {
         $uuid = $this->getAttribute('uuid');
@@ -121,18 +118,18 @@ class AdminController extends AbstractActionController
 
         if ($this->isPost()) {
             $this->adminForm->setData($this->getPostParams());
-            $this->adminForm->setDifferentInputFilter(new EditAdminInputFilter());
+            $this->adminForm->setInputFilter(new EditAdminInputFilter());
             if ($this->adminForm->isValid()) {
                 /** @var array $result */
                 $result = $this->adminForm->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
                     return new JsonResponse(['message' => Message::ADMIN_UPDATED_SUCCESSFULLY]);
-                } catch (ORMException $e) {
+                } catch (IdentityException $e) {
                     $this->logErrors($e, Message::UPDATE_ADMIN);
                     return new JsonResponse(
                         ['message' => $e->getMessage()],
-                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                        StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                     );
                 } catch (Throwable $e) {
                     $this->logErrors($e, Message::UPDATE_ADMIN);
@@ -157,24 +154,19 @@ class AdminController extends AbstractActionController
                 [
                     'form'       => $this->adminForm,
                     'formAction' => '/admin/edit/' . $uuid,
+                    'method'     => RequestMethodInterface::METHOD_POST,
                 ]
             ),
         ]);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function deleteAction(): ResponseInterface
     {
-        if (! $this->isDelete()) {
-            return new JsonResponse([
-                'error' => [
-                    'messages' => [
-                        [Message::METHOD_NOT_ALLOWED],
-                    ],
-                ],
-            ], StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED);
+        if (! $this->isPost()) {
+            return new JsonResponse(
+                ['message' => Message::METHOD_NOT_ALLOWED],
+                StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
+            );
         }
 
         $uuid = $this->getAttribute('uuid');
@@ -185,9 +177,17 @@ class AdminController extends AbstractActionController
             );
         }
 
+        $form = new AdminDeleteForm();
+        $form->setData($this->getPostParams());
+        if (! $form->isValid()) {
+            return new JsonResponse(
+                ['message' => $this->forms->getMessages($form)],
+                StatusCodeInterface::STATUS_BAD_REQUEST
+            );
+        }
+
         /** @var Admin $admin */
         $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
-
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
             return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
@@ -200,9 +200,6 @@ class AdminController extends AbstractActionController
         }
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function listAction(): ResponseInterface
     {
         $result = $this->adminService->getAdmins(
@@ -219,7 +216,9 @@ class AdminController extends AbstractActionController
     public function manageAction(): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('admin::list')
+            $this->template->render('admin::list', [
+                'form' => new AdminDeleteForm(),
+            ])
         );
     }
 
@@ -233,8 +232,7 @@ class AdminController extends AbstractActionController
             return new RedirectResponse($this->router->generateUri("dashboard"));
         }
 
-        $form = new LoginForm();
-
+        $form         = new LoginForm();
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
         if ($shouldRebind) {
             $this->forms->restoreState($form);
@@ -297,6 +295,7 @@ class AdminController extends AbstractActionController
     public function logoutAction(): ResponseInterface
     {
         $this->authenticationService->clearIdentity();
+
         return new RedirectResponse(
             $this->router->generateUri('admin', ['action' => 'login'])
         );
@@ -317,7 +316,7 @@ class AdminController extends AbstractActionController
                 try {
                     $this->adminService->updateAdmin($admin, $result);
                     $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                } catch (ORMException $e) {
+                } catch (IdentityException $e) {
                     $this->logErrors($e, Message::UPDATE_ADMIN);
                     $this->messenger->addError($e->getMessage());
                 } catch (Throwable $e) {
@@ -354,11 +353,11 @@ class AdminController extends AbstractActionController
             if ($changePasswordForm->isValid()) {
                 /** @var array $result */
                 $result = $changePasswordForm->getData();
-                if (password_verify($result['currentPassword'], $admin->getPassword())) {
+                if ($admin->verifyPassword($result['currentPassword'])) {
                     try {
                         $this->adminService->updateAdmin($admin, $result);
                         $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                    } catch (ORMException $e) {
+                    } catch (IdentityException $e) {
                         $this->logErrors($e, Message::CHANGE_PASSWORD);
                         $this->messenger->addError($e->getMessage());
                     } catch (Throwable $e) {
@@ -398,7 +397,7 @@ class AdminController extends AbstractActionController
         return new JsonResponse($result);
     }
 
-    public function logErrors(Throwable|Exception $e, string $message): void
+    private function logErrors(Throwable $e, string $message): void
     {
         $this->logger->err($message, [
             'error' => $e->getMessage(),

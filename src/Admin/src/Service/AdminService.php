@@ -6,7 +6,6 @@ namespace Frontend\Admin\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationServiceInterface;
@@ -15,6 +14,7 @@ use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\Repository\AdminRepository;
 use Frontend\Admin\Repository\AdminRoleRepository;
+use Frontend\App\Exception\IdentityException;
 use Frontend\App\Service\IpService;
 
 use function implode;
@@ -127,14 +127,10 @@ class AdminService implements AdminServiceInterface
         return $result;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws ORMException
-     */
     public function createAdmin(array $data): Admin
     {
         if ($this->exists($data['identity'])) {
-            throw new \Frontend\App\Exception\ORMException('An account with this identity already exists.');
+            throw IdentityException::duplicate();
         }
 
         $admin = (new Admin())
@@ -152,17 +148,13 @@ class AdminService implements AdminServiceInterface
         return $this->getAdminRepository()->saveAdmin($admin);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws ORMException
-     */
     public function updateAdmin(Admin $admin, array $data): Admin
     {
         if (! empty($data['identity'])) {
             if (! $this->exists($data['identity'])) {
                 $admin->setIdentity($data['identity']);
             } elseif ($admin->getIdentity() !== $data['identity']) {
-                throw new \Frontend\App\Exception\ORMException('An account with this identity already exists');
+                throw IdentityException::duplicate();
             }
         }
         if (! empty($data['password'])) {

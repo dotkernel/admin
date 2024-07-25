@@ -8,7 +8,6 @@ use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\InputFilter\AdminInputFilter;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
-use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 
 /** @template-extends Form<FormInterface> */
@@ -119,7 +118,7 @@ class AdminForm extends Form
         return $this->inputFilter;
     }
 
-    public function setDifferentInputFilter(InputFilter $inputFilter): void
+    public function setInputFilter(InputFilterInterface $inputFilter): void
     {
         $this->inputFilter = $inputFilter;
         $this->inputFilter->init();
