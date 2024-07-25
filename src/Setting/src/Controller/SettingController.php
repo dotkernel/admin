@@ -42,12 +42,6 @@ class SettingController extends AbstractActionController
 
     public function storeSettingAction(): JsonResponse
     {
-        $this->denyRequest(
-            ! $this->isPost(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $data       = json_decode($this->getRequest()->getBody()->getContents(), true);
         $identifier = $this->getRequest()->getAttribute('identifier');
         $value      = $data['value'] ?? null;
@@ -96,12 +90,6 @@ class SettingController extends AbstractActionController
 
     public function getSettingAction(): JsonResponse
     {
-        $this->denyRequest(
-            ! $this->isGet(),
-            Message::METHOD_NOT_ALLOWED,
-            StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-        );
-
         $identifier  = $this->getRequest()->getAttribute('identifier');
         $inputFilter = new SettingInputFilter();
         $inputFilter->setData([

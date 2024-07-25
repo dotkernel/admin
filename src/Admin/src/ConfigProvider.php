@@ -13,6 +13,7 @@ use Frontend\Admin\Delegator\AdminRoleDelegator;
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminInterface;
 use Frontend\Admin\Factory\AuthenticationServiceFactory;
+use Frontend\Admin\Form\AdminDeleteForm;
 use Frontend\Admin\Form\AdminForm;
 use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
@@ -79,6 +80,7 @@ class ConfigProvider
                 'factories'  => [
                     LoginForm::class          => ElementFactory::class,
                     ChangePasswordForm::class => ElementFactory::class,
+                    AdminDeleteForm::class    => ElementFactory::class,
                 ],
                 'aliases'    => [],
                 'delegators' => [],

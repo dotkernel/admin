@@ -15,6 +15,7 @@ use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminIdentity;
 use Frontend\Admin\Entity\AdminLogin;
 use Frontend\Admin\Form\AccountForm;
+use Frontend\Admin\Form\AdminDeleteForm;
 use Frontend\Admin\Form\AdminForm;
 use Frontend\Admin\Form\ChangePasswordForm;
 use Frontend\Admin\Form\LoginForm;
@@ -161,6 +162,13 @@ class AdminController extends AbstractActionController
 
     public function deleteAction(): ResponseInterface
     {
+        if (! $this->isPost()) {
+            return new JsonResponse(
+                ['message' => Message::METHOD_NOT_ALLOWED],
+                StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
+            );
+        }
+
         $uuid = $this->getAttribute('uuid');
         if (empty($uuid)) {
             return new JsonResponse(
@@ -169,9 +177,17 @@ class AdminController extends AbstractActionController
             );
         }
 
+        $form = new AdminDeleteForm();
+        $form->setData($this->getPostParams());
+        if (! $form->isValid()) {
+            return new JsonResponse(
+                ['message' => $this->forms->getMessages($form)],
+                StatusCodeInterface::STATUS_BAD_REQUEST
+            );
+        }
+
         /** @var Admin $admin */
         $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
-
         try {
             $this->adminService->getAdminRepository()->deleteAdmin($admin);
             return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
@@ -200,7 +216,9 @@ class AdminController extends AbstractActionController
     public function manageAction(): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('admin::list')
+            $this->template->render('admin::list', [
+                'form' => new AdminDeleteForm(),
+            ])
         );
     }
 
