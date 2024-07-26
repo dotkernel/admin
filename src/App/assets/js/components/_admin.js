@@ -117,9 +117,4 @@ $(document).ready(() => {
         adminDeleteModal.find('#confirmation').prop('checked', false);
         adminDeleteModal.find('.modal-messages').html('');
     });
-
-    adminDeleteModal.on('hide.bs.modal', function () {
-        adminDeleteModal.find('#confirmation').prop('checked', false);
-        adminDeleteModal.find('.modal-messages').html('');
-    });
 });
