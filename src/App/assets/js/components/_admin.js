@@ -113,7 +113,8 @@ $(document).ready(() => {
         });
     });
 
-    adminDeleteModal.on('show.bs.modal', 'hidden.bs.modal', function () {
+    adminDeleteModal.on('show.bs.modal', function () {
         adminDeleteModal.find('#confirmation').prop('checked', false);
+        adminDeleteModal.find('.modal-messages').html('');
     });
 });
