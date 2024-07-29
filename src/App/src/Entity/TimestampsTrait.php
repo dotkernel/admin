@@ -7,7 +7,6 @@ namespace Frontend\App\Entity;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\HasLifecycleCallbacks]
 trait TimestampsTrait
 {
     #[ORM\Column(name: "created", type: "datetime_immutable")]
