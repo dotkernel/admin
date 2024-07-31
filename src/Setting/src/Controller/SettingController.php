@@ -12,7 +12,7 @@ use Frontend\Admin\Service\AdminService;
 use Frontend\App\Common\ServerRequestAwareTrait;
 use Frontend\App\Message;
 use Frontend\Setting\Entity\Setting;
-use Frontend\Setting\InputFilter\Input\SettingValueInputFilter;
+use Frontend\Setting\InputFilter\Input\SettingValueInput;
 use Frontend\Setting\InputFilter\SettingInputFilter;
 use Frontend\Setting\Service\SettingService;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -47,7 +47,7 @@ class SettingController extends AbstractActionController
         $value      = $data['value'] ?? null;
 
         $inputFilter = new SettingInputFilter();
-        $inputFilter->add(new SettingValueInputFilter('value', true));
+        $inputFilter->add(new SettingValueInput('value', true));
         $inputFilter->setData([
             'identifier' => $identifier,
             'value'      => $value,

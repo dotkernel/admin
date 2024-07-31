@@ -22,8 +22,8 @@ class AccountFormTest extends UnitTest
             'identity',
             'firstName',
             'lastName',
-            'account_csrf',
             'submit',
+            'accountCsrf',
         ]);
     }
 
@@ -33,6 +33,7 @@ class AccountFormTest extends UnitTest
             'identity',
             'firstName',
             'lastName',
+            'accountCsrf',
         ]);
     }
 }

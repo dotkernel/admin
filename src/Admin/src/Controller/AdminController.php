@@ -38,6 +38,8 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
+use function assert;
+
 class AdminController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
@@ -162,13 +164,6 @@ class AdminController extends AbstractActionController
 
     public function deleteAction(): ResponseInterface
     {
-        if (! $this->isPost()) {
-            return new JsonResponse(
-                ['message' => Message::METHOD_NOT_ALLOWED],
-                StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED
-            );
-        }
-
         $uuid = $this->getAttribute('uuid');
         if (empty($uuid)) {
             return new JsonResponse(
@@ -176,28 +171,47 @@ class AdminController extends AbstractActionController
                 StatusCodeInterface::STATUS_NOT_FOUND
             );
         }
+        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
+        assert($admin instanceof Admin);
 
         $form = new AdminDeleteForm();
-        $form->setData($this->getPostParams());
-        if (! $form->isValid()) {
-            return new JsonResponse(
-                ['message' => $this->forms->getMessages($form)],
-                StatusCodeInterface::STATUS_BAD_REQUEST
-            );
+        $form->setAttribute('id', 'deleteAdminForm');
+        $form->setAttribute('method', RequestMethodInterface::METHOD_POST);
+        $form->setAttribute(
+            'action',
+            $this->router->generateUri('admin', ['action' => 'delete', 'uuid' => $uuid])
+        );
+
+        if ($this->isPost()) {
+            $form->setData($this->getPostParams());
+            if (! $form->isValid()) {
+                return new JsonResponse(
+                    ['message' => $this->forms->getMessages($form)],
+                    StatusCodeInterface::STATUS_BAD_REQUEST
+                );
+            }
+
+            try {
+                $this->adminService->getAdminRepository()->deleteAdmin($admin);
+                return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
+            } catch (Throwable $e) {
+                $this->logErrors($e, Message::DELETE_ADMIN);
+                return new JsonResponse(
+                    ['message' => Message::AN_ERROR_OCCURRED],
+                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                );
+            }
         }
 
-        /** @var Admin $admin */
-        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
-        try {
-            $this->adminService->getAdminRepository()->deleteAdmin($admin);
-            return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
-        } catch (Throwable $e) {
-            $this->logErrors($e, Message::DELETE_ADMIN);
-            return new JsonResponse(
-                ['message' => Message::AN_ERROR_OCCURRED],
-                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
-            );
-        }
+        return new JsonResponse([
+            'data' => $this->template->render(
+                'admin::delete',
+                [
+                    'admin' => $admin,
+                    'form'  => $form->prepare(),
+                ]
+            ),
+        ]);
     }
 
     public function listAction(): ResponseInterface
@@ -216,9 +230,7 @@ class AdminController extends AbstractActionController
     public function manageAction(): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('admin::list', [
-                'form' => new AdminDeleteForm(),
-            ])
+            $this->template->render('admin::list')
         );
     }
 

@@ -48,6 +48,7 @@
         "laminas/laminas-config-aggregator": "^1.14.0",
         "laminas/laminas-i18n": "^2.26.0",
         "laminas/laminas-math": "^3.7.0",
+        "laminas/laminas-session": "^2.21.0",
         "mezzio/mezzio": "^3.18.0",
         "mezzio/mezzio-authorization-rbac": "^1.7.0",
         "mezzio/mezzio-cors": "^1.11.1",

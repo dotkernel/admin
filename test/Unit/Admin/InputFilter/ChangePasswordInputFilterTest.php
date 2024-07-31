@@ -6,6 +6,8 @@ namespace FrontendTest\Unit\Admin\InputFilter;
 
 use Frontend\Admin\InputFilter\ChangePasswordInputFilter;
 use FrontendTest\Unit\UnitTest;
+use Laminas\Session\Container;
+use Laminas\Session\Validator\Csrf;
 
 use function str_repeat;
 
@@ -285,12 +287,15 @@ class ChangePasswordInputFilterTest extends UnitTest
 
     public function testWillAcceptValidData(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new ChangePasswordInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
-            'currentPassword' => 'password',
-            'password'        => 'password',
-            'passwordConfirm' => 'password',
+            'currentPassword'    => 'password',
+            'password'           => 'password',
+            'passwordConfirm'    => 'password',
+            'changePasswordCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
     }

@@ -27,6 +27,7 @@ class AdminFormTest extends UnitTest
             'firstName',
             'lastName',
             'status',
+            'adminManageCsrf',
         ]);
     }
 
@@ -40,6 +41,7 @@ class AdminFormTest extends UnitTest
             'lastName',
             'status',
             'roles',
+            'adminManageCsrf',
         ]);
     }
 

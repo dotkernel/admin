@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
 
+use Frontend\App\InputFilter\Input\CsrfInput;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
@@ -33,5 +34,7 @@ class LoginInputFilter extends InputFilter
             'message'                => '<b>Password</b> is required and cannot be empty',
         ]);
         $this->add($password);
+
+        $this->add(new CsrfInput('loginCsrf', true));
     }
 }

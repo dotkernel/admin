@@ -22,8 +22,8 @@ class ChangePasswordFormTest extends UnitTest
             'currentPassword',
             'password',
             'passwordConfirm',
-            'change_password_csrf',
             'submit',
+            'changePasswordCsrf',
         ]);
     }
 
@@ -33,6 +33,7 @@ class ChangePasswordFormTest extends UnitTest
             'currentPassword',
             'password',
             'passwordConfirm',
+            'changePasswordCsrf',
         ]);
     }
 }

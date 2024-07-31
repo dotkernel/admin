@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
 
+use Frontend\App\InputFilter\Input\CsrfInput;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
@@ -57,5 +58,7 @@ class AccountInputFilter extends InputFilter
             'message' => '<b>Last name</b> must be max 150 characters long.',
         ]);
         $this->add($lastName);
+
+        $this->add(new CsrfInput('accountCsrf', true));
     }
 }

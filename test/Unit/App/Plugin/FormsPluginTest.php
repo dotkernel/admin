@@ -9,6 +9,8 @@ use Frontend\Admin\Form\LoginForm;
 use Frontend\App\Plugin\FormsPlugin;
 use FrontendTest\Unit\UnitTest;
 use Laminas\Form\FormElementManager;
+use Laminas\Session\Container;
+use Laminas\Session\Validator\Csrf;
 use PHPUnit\Framework\MockObject\Exception;
 
 class FormsPluginTest extends UnitTest
@@ -33,15 +35,19 @@ class FormsPluginTest extends UnitTest
      */
     public function testWillRestoreState(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $oldData     = [
-            'username' => 'old-username',
-            'password' => 'old-password',
+            'username'  => 'old-username',
+            'password'  => 'old-password',
+            'loginCsrf' => $hash,
         ];
         $oldMessages = [];
 
         $newData     = [
-            'username' => 'new-username',
-            'password' => 'new-password',
+            'username'  => 'new-username',
+            'password'  => 'new-password',
+            'loginCsrf' => $hash,
         ];
         $newMessages = [
             'test-message',
@@ -92,9 +98,12 @@ class FormsPluginTest extends UnitTest
      */
     public function testWillSaveState(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $data     = [
-            'username' => 'username',
-            'password' => 'password',
+            'username'  => 'username',
+            'password'  => 'password',
+            'loginCsrf' => $hash,
         ];
         $messages = [
             'test-message',

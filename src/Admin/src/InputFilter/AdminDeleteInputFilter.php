@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
 
+use Frontend\App\InputFilter\Input\CsrfInput;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\InArray;
@@ -30,5 +31,7 @@ class AdminDeleteInputFilter extends InputFilter
         ]);
 
         $this->add($confirmation);
+
+        $this->add(new CsrfInput('adminDeleteCsrf', true));
     }
 }

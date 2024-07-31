@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\AccountInputFilter;
+use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Session\Container;
 
 /** @template-extends Form<FormInterface> */
 class AccountForm extends Form
@@ -60,15 +62,6 @@ class AccountForm extends Form
         ], ['priority' => -11]);
 
         $this->add([
-            'name'    => 'account_csrf',
-            'type'    => 'csrf',
-            'options' => [
-                'timeout' => 3600,
-                'message' => 'The form CSRF has expired and was refreshed. Please resend the form',
-            ],
-        ]);
-
-        $this->add([
             'name'       => 'submit',
             'type'       => 'submit',
             'attributes' => [
@@ -76,6 +69,13 @@ class AccountForm extends Form
                 'value' => 'Update account',
             ],
         ], ['priority' => -100]);
+
+        $this->add(new Csrf('accountCsrf', [
+            'csrf_options' => [
+                'timeout' => 3600,
+                'session' => new Container(),
+            ],
+        ]));
     }
 
     public function getInputFilter(): InputFilterInterface

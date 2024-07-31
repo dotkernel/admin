@@ -11,7 +11,6 @@ use Frontend\Setting\Entity\Setting;
 use Frontend\Setting\Repository\SettingRepository;
 use FrontendTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
-use Ramsey\Uuid\UuidInterface;
 use ReflectionAttribute;
 use ReflectionClass;
 
@@ -58,7 +57,6 @@ class SettingEntityTest extends UnitTest
         $setting = new Setting($this->admin, $this->identifier, $this->values);
         $this->assertInstanceOf(Setting::class, $setting);
 
-        $this->assertInstanceOf(UuidInterface::class, $this->admin->getUuid());
         $this->assertSame($this->admin, $setting->getAdmin());
         $this->assertSame($this->identifier, $setting->getIdentifier());
         $this->assertSame($this->values, $setting->getValue());
@@ -74,7 +72,6 @@ class SettingEntityTest extends UnitTest
         $setting = new Setting($this->admin, $this->identifier, $this->values);
 
         $copy = $setting->getArrayCopy();
-        $this->assertIsArray($copy);
 
         $this->assertArrayHasKey('uuid', $copy);
         $this->assertIsString($copy['uuid']);
