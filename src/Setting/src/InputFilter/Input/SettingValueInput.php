@@ -12,7 +12,7 @@ use Laminas\Validator\NotEmpty;
 
 use function sprintf;
 
-class SettingValueInputFilter extends Input
+class SettingValueInput extends Input
 {
     public function __construct(?string $name = null, bool $isRequired = true)
     {

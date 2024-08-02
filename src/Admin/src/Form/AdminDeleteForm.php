@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Frontend\Admin\Form;
 
 use Frontend\Admin\InputFilter\AdminDeleteInputFilter;
+use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Session\Container;
 
 /** @template-extends Form<FormInterface> */
 class AdminDeleteForm extends Form
@@ -63,6 +65,13 @@ class AdminDeleteForm extends Form
                 'value' => 'Delete',
             ],
         ]);
+
+        $this->add(new Csrf('adminDeleteCsrf', [
+            'csrf_options' => [
+                'timeout' => 3600,
+                'session' => new Container(),
+            ],
+        ]));
     }
 
     public function getInputFilter(): InputFilterInterface

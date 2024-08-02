@@ -6,6 +6,8 @@ namespace FrontendTest\Unit\Admin\InputFilter;
 
 use Frontend\Admin\InputFilter\LoginInputFilter;
 use FrontendTest\Unit\UnitTest;
+use Laminas\Session\Container;
+use Laminas\Session\Validator\Csrf;
 
 class LoginInputFilterTest extends UnitTest
 {
@@ -112,11 +114,14 @@ class LoginInputFilterTest extends UnitTest
 
     public function testWillAcceptValidData(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new LoginInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
-            'username' => 'username',
-            'password' => 'password',
+            'username'  => 'username',
+            'password'  => 'password',
+            'loginCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
     }

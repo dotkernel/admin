@@ -37,7 +37,7 @@
                         {{ formElement(lastName) }}
                     </div>
 
-                    {{ formElement(form.get('account_csrf')) }}
+                    {{ formElement(form.get('accountCsrf')) }}
 
                     {% set submit = form.get('submit') %}
                     {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}
@@ -76,7 +76,7 @@
                         {{ formElement(passwordConfirm) }}
                     </div>
 
-                    {{ formElement(changePasswordForm.get('change_password_csrf')) }}
+                    {{ formElement(changePasswordForm.get('changePasswordCsrf')) }}
 
                     {% set submit = changePasswordForm.get('submit') %}
                     {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}

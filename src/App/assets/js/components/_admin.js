@@ -20,7 +20,7 @@ $(document).ready(() => {
     });
 
     $(document).on('click', '#formModalSubmit', () => {
-        const form = $('#ajaxForm');
+        const form     = $('#ajaxForm');
         const messages = adminModal.find('.modal-messages');
         if (form.length < 1) {
             return;
@@ -76,17 +76,20 @@ $(document).ready(() => {
             return;
         }
 
-        adminDeleteModal.find('#adminIdentity').html(`<b>${selections[0].identity}</b>`);
-        adminDeleteModal.modal('show');
+        $('.delete-modal-messages').empty();
+        request('GET', `/admin/delete/${selections[0].uuid}`)
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+                adminDeleteModal.find('.modal-form').html(data.data);
+                adminDeleteModal.modal('show');
+            });
     });
 
-    $("#deleteAdminForm").on('submit', (e) => {
-        e.preventDefault();
-        const selections = $("#bsTable").bootstrapTable('getSelections');
-        const form = $('#deleteAdminForm');
-        const messages = $(form).find('.modal-messages');
-        messages.html('');
-        request('POST', `/admin/delete/${selections[0].uuid}`, new FormData(form.get(0)))
+    $('#deleteAdminFormSubmit').on('click', () => {
+        const form     = $('#deleteAdminForm');
+        const messages = $('.delete-modal-messages');
+        messages.empty();
+        request(form.attr('method'), form.attr('action'), new FormData(form.get(0)))
             .then(data => {
                 messages.append(
                     $('<div>').prop({
@@ -98,23 +101,17 @@ $(document).ready(() => {
                 bsTable.bootstrapTable('refresh');
                 setTimeout(function () {
                     adminDeleteModal.modal('hide');
-                    messages.html('');
                 },1500);
             }).catch(error => {
-            messages.append(
-                $('<div>').prop({
-                    innerHTML: error.cause,
-                    className: 'alert alert-danger',
-                    role: "alert"
-                })
-            );
-        }).finally(() => {
-            adminDeleteModal.modal('show');
-        });
-    });
-
-    adminDeleteModal.on('show.bs.modal', function () {
-        adminDeleteModal.find('#confirmation').prop('checked', false);
-        adminDeleteModal.find('.modal-messages').html('');
+                messages.append(
+                    $('<div>').prop({
+                        innerHTML: error.cause.join('<br />'),
+                        className: 'alert alert-danger',
+                        role: "alert"
+                    })
+                );
+            }).finally(() => {
+                adminDeleteModal.modal('show');
+            });
     });
 });

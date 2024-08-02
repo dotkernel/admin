@@ -22,6 +22,7 @@ class LoginFormTest extends UnitTest
             'username',
             'password',
             'submit',
+            'loginCsrf',
         ]);
     }
 
@@ -30,6 +31,7 @@ class LoginFormTest extends UnitTest
         $this->formHasInputFilter((new LoginForm())->getInputFilter(), [
             'username',
             'password',
+            'loginCsrf',
         ]);
     }
 }

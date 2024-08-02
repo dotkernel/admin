@@ -6,9 +6,11 @@ namespace Frontend\Admin\Form;
 
 use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\InputFilter\AdminInputFilter;
+use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Session\Container;
 
 /** @template-extends Form<FormInterface> */
 class AdminForm extends Form
@@ -111,6 +113,13 @@ class AdminForm extends Form
                 ],
             ],
         ], ['priority' => -30]);
+
+        $this->add(new Csrf('adminManageCsrf', [
+            'csrf_options' => [
+                'timeout' => 3600,
+                'session' => new Container(),
+            ],
+        ]));
     }
 
     public function getInputFilter(): InputFilterInterface

@@ -8,6 +8,8 @@ use Frontend\Admin\Entity\Admin;
 use Frontend\Admin\Entity\AdminRole;
 use Frontend\Admin\InputFilter\AdminInputFilter;
 use FrontendTest\Unit\UnitTest;
+use Laminas\Session\Container;
+use Laminas\Session\Validator\Csrf;
 
 use function str_repeat;
 
@@ -305,6 +307,8 @@ class AdminInputFilterTest extends UnitTest
 
     public function testWillValidateFirstName(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AdminInputFilter();
         $inputFilter->init();
 
@@ -316,6 +320,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -328,6 +333,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -340,6 +346,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -352,6 +359,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -367,6 +375,8 @@ class AdminInputFilterTest extends UnitTest
 
     public function testWillValidateLastName(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AdminInputFilter();
         $inputFilter->init();
 
@@ -379,6 +389,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -392,6 +403,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -405,6 +417,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -418,6 +431,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -527,6 +541,8 @@ class AdminInputFilterTest extends UnitTest
 
     public function testWillAcceptValidData(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AdminInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
@@ -539,6 +555,7 @@ class AdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
+            'adminManageCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
     }

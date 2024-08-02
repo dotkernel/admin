@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frontend\Setting\InputFilter;
 
 use Frontend\Setting\InputFilter\Input\SettingIdentifierInput;
-use Frontend\Setting\InputFilter\Input\SettingValueInputFilter;
+use Frontend\Setting\InputFilter\Input\SettingValueInput;
 use Laminas\InputFilter\InputFilter;
 
 /**
@@ -16,6 +16,6 @@ class SettingInputFilter extends InputFilter
     public function __construct()
     {
         $this->add(new SettingIdentifierInput('identifier', true));
-        $this->add(new SettingValueInputFilter('value', false));
+        $this->add(new SettingValueInput('value', false));
     }
 }

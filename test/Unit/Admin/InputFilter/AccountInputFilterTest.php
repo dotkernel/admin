@@ -6,6 +6,8 @@ namespace FrontendTest\Unit\Admin\InputFilter;
 
 use Frontend\Admin\InputFilter\AccountInputFilter;
 use FrontendTest\Unit\UnitTest;
+use Laminas\Session\Container;
+use Laminas\Session\Validator\Csrf;
 
 use function str_repeat;
 
@@ -103,23 +105,28 @@ class AccountInputFilterTest extends UnitTest
 
     public function testWillValidateFirstName(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AccountInputFilter();
         $inputFilter->init();
 
         $inputFilter->setData([
-            'identity' => 'test',
+            'identity'    => 'test',
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
         $inputFilter->setData([
-            'identity'  => 'test',
-            'firstName' => null,
+            'identity'    => 'test',
+            'firstName'   => null,
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
         $inputFilter->setData([
-            'identity'  => 'test',
-            'firstName' => '',
+            'identity'    => 'test',
+            'firstName'   => '',
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -141,29 +148,35 @@ class AccountInputFilterTest extends UnitTest
 
     public function testWillValidateLastName(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AccountInputFilter();
         $inputFilter->init();
 
         $inputFilter->setData([
-            'identity' => 'test',
+            'identity'    => 'test',
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
         $inputFilter->setData([
-            'identity' => 'test',
-            'lastName' => null,
+            'identity'    => 'test',
+            'lastName'    => null,
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
         $inputFilter->setData([
-            'identity' => 'test',
-            'lastName' => '',
+            'identity'    => 'test',
+            'lastName'    => '',
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
         $inputFilter->setData([
-            'identity' => 'test',
-            'lastName' => str_repeat('a', 151),
+            'identity'    => 'test',
+            'lastName'    => str_repeat('a', 151),
+            'accountCsrf' => $hash,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -179,12 +192,15 @@ class AccountInputFilterTest extends UnitTest
 
     public function testWillAcceptValidData(): void
     {
+        $hash = (new Csrf(['session' => new Container()]))->getHash();
+
         $inputFilter = new AccountInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
-            'identity'  => 'identity',
-            'firstName' => 'firstName',
-            'lastName'  => 'lastName',
+            'identity'    => 'identity',
+            'firstName'   => 'firstName',
+            'lastName'    => 'lastName',
+            'accountCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
     }

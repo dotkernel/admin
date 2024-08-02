@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\Admin\InputFilter;
 
+use Frontend\App\InputFilter\Input\CsrfInput;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;
@@ -58,5 +59,7 @@ class ChangePasswordInputFilter extends InputFilter
             'message' => '<b>Password</b> and <b>Confirm Password</b> do not match',
         ]);
         $this->add($passwordConfirm);
+
+        $this->add(new CsrfInput('changePasswordCsrf', true));
     }
 }
