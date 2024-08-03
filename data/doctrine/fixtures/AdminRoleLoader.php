@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Fixtures;
 
+use Admin\Admin\Entity\AdminRole;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Frontend\Admin\Entity\AdminRole;
 
 class AdminRoleLoader implements FixtureInterface
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit;
+namespace AdminTest\Unit;
 
-use FrontendTest\Common\TestCase;
+use AdminTest\Common\TestCase;
 
 class UnitTest extends TestCase
 {

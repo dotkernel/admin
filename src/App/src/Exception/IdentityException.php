@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Exception;
+namespace Admin\App\Exception;
 
+use Admin\App\Message;
 use Fig\Http\Message\StatusCodeInterface;
-use Frontend\App\Message;
 use RuntimeException;
 
 class IdentityException extends RuntimeException

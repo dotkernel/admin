@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Repository;
+namespace Admin\App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;

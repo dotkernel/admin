@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Service;
+namespace Admin\Admin\Service;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Repository\AdminRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminLogin;
-use Frontend\Admin\Repository\AdminRepository;
 
 interface AdminServiceInterface
 {

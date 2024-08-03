@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App;
+namespace Admin\App;
 
 class Message
 {

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Service;
+namespace Admin\Admin\Service;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Repository\AdminRepository;
+use Admin\Admin\Repository\AdminRoleRepository;
+use Admin\App\Exception\IdentityException;
+use Admin\App\Service\IpService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationServiceInterface;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminLogin;
-use Frontend\Admin\Entity\AdminRole;
-use Frontend\Admin\Repository\AdminRepository;
-use Frontend\Admin\Repository\AdminRoleRepository;
-use Frontend\App\Exception\IdentityException;
-use Frontend\App\Service\IpService;
 
 use function implode;
 use function is_string;

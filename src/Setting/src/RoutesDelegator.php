@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting;
+namespace Admin\Setting;
 
+use Admin\Setting\Controller\SettingController;
 use Fig\Http\Message\RequestMethodInterface;
-use Frontend\Setting\Controller\SettingController;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 

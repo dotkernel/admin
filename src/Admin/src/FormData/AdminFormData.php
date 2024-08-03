@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\FormData;
+namespace Admin\Admin\FormData;
 
-use Frontend\Admin\Entity\Admin;
+use Admin\Admin\Entity\Admin;
 
 class AdminFormData
 {

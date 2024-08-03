@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Entity;
+namespace Admin\Admin\Entity;
 
+use Admin\Admin\Repository\AdminRepository;
+use Admin\App\Entity\AbstractEntity;
+use Admin\App\Entity\TimestampsTrait;
+use Admin\Setting\Entity\Setting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Frontend\Admin\Repository\AdminRepository;
-use Frontend\App\Entity\AbstractEntity;
-use Frontend\App\Entity\TimestampsTrait;
-use Frontend\Setting\Entity\Setting;
 
 use function array_map;
 use function password_verify;

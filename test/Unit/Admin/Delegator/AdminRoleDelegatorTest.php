@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Delegator;
+namespace AdminTest\Unit\Admin\Delegator;
 
-use Frontend\Admin\Delegator\AdminRoleDelegator;
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Service\AdminService;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Delegator\AdminRoleDelegator;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Service\AdminService;
+use AdminTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

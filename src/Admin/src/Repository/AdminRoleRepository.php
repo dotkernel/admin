@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Repository;
+namespace Admin\Admin\Repository;
 
+use Admin\Admin\Entity\AdminRole;
+use Admin\App\Repository\AbstractRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Entity;
-use Frontend\Admin\Entity\AdminRole;
-use Frontend\App\Repository\AbstractRepository;
 
 #[Entity(AdminRole::class)]
 class AdminRoleRepository extends AbstractRepository

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Middleware;
+namespace Admin\App\Middleware;
 
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Rbac\Guard\Exception\RuntimeException;

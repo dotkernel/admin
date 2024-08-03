@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Entity;
+namespace AdminTest\Unit\Admin\Entity;
 
+use Admin\Admin\Entity\AdminInterface;
+use Admin\Admin\Entity\AdminRole;
+use AdminTest\Unit\UnitTest;
 use Doctrine\Common\Collections\ArrayCollection;
-use Frontend\Admin\Entity\AdminInterface;
-use Frontend\Admin\Entity\AdminRole;
-use FrontendTest\Unit\UnitTest;
 
 class AdminInterfaceTest extends UnitTest
 {

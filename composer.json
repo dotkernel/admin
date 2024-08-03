@@ -68,16 +68,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Frontend\\App\\": "src/App/src/",
-            "Frontend\\Admin\\": "src/Admin/src/",
-            "Frontend\\Setting\\": "src/Setting/src/"
+            "Admin\\App\\": "src/App/src/",
+            "Admin\\Admin\\": "src/Admin/src/",
+            "Admin\\Setting\\": "src/Setting/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FrontendTest\\Common\\": "test/Common",
-            "FrontendTest\\Functional\\": "test/Functional/",
-            "FrontendTest\\Unit\\": "test/Unit"
+            "AdminTest\\Common\\": "test/Common",
+            "AdminTest\\Functional\\": "test/Functional/",
+            "AdminTest\\Unit\\": "test/Unit"
         }
     },
     "scripts": {

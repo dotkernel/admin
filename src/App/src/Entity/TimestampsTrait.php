@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Entity;
+namespace Admin\App\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;

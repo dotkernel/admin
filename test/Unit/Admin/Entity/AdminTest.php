@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Entity;
+namespace AdminTest\Unit\Admin\Entity;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Repository\AdminRepository;
+use AdminTest\Unit\UnitTest;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminRole;
-use Frontend\Admin\Repository\AdminRepository;
-use FrontendTest\Unit\UnitTest;
 use Ramsey\Uuid\UuidInterface;
 use ReflectionAttribute;
 use ReflectionClass;

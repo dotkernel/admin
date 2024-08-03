@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Frontend\Admin\Entity\Admin;
+use Admin\Admin\Entity\Admin;
 
 return [
     'doctrine' => [
@@ -12,7 +12,7 @@ return [
                 'identity_class'      => Admin::class,
                 'identity_property'   => 'identity',
                 'credential_property' => 'password',
-                'credential_callable' => 'Frontend\Admin\Doctrine\AdminAuthentication::verifyCredential',
+                'credential_callable' => 'Admin\Admin\Doctrine\AdminAuthentication::verifyCredential',
                 'messages'            => [
                     'success'            => 'Authenticated successfully.',
                     'not_found'          => 'Identity not found.',

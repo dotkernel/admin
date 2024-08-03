@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Setting\Service;
+namespace AdminTest\Unit\Setting\Service;
 
-use Frontend\Setting\Repository\SettingRepository;
-use Frontend\Setting\Service\SettingService;
-use FrontendTest\Unit\UnitTest;
+use Admin\Setting\Repository\SettingRepository;
+use Admin\Setting\Service\SettingService;
+use AdminTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 
 class SettingServiceTest extends UnitTest

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Form;
+namespace AdminTest\Unit\Admin\Form;
 
-use Frontend\Admin\Form\LoginForm;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Form\LoginForm;
+use AdminTest\Unit\UnitTest;
 
 class LoginFormTest extends UnitTest
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Setting;
+namespace AdminTest\Unit\Setting;
 
-use Frontend\App\RoutesDelegator;
-use FrontendTest\Unit\UnitTest;
+use Admin\App\RoutesDelegator;
+use AdminTest\Unit\UnitTest;
 use Mezzio\Application;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerInterface;

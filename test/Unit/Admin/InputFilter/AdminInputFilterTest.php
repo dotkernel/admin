@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\InputFilter;
+namespace AdminTest\Unit\Admin\InputFilter;
 
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminRole;
-use Frontend\Admin\InputFilter\AdminInputFilter;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\InputFilter\AdminInputFilter;
+use AdminTest\Unit\UnitTest;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 

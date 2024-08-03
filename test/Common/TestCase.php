@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Common;
+namespace AdminTest\Common;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;

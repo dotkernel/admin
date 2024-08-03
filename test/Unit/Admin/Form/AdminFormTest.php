@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Form;
+namespace AdminTest\Unit\Admin\Form;
 
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\InputFilter\AdminInputFilter;
-use Frontend\Admin\InputFilter\EditAdminInputFilter;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\InputFilter\AdminInputFilter;
+use Admin\Admin\InputFilter\EditAdminInputFilter;
+use AdminTest\Unit\UnitTest;
 
 class AdminFormTest extends UnitTest
 {

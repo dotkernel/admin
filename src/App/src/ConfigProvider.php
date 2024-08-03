@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App;
+namespace Admin\App;
 
+use Admin\App\Controller\DashboardController;
+use Admin\App\Controller\PageController;
+use Admin\App\Factory\EntityListenerResolverFactory;
+use Admin\App\Factory\FormsPluginFactory;
+use Admin\App\Plugin\FormsPlugin;
+use Admin\App\Resolver\EntityListenerResolver;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
-use Frontend\App\Controller\DashboardController;
-use Frontend\App\Controller\PageController;
-use Frontend\App\Factory\EntityListenerResolverFactory;
-use Frontend\App\Factory\FormsPluginFactory;
-use Frontend\App\Plugin\FormsPlugin;
-use Frontend\App\Resolver\EntityListenerResolver;
 use Mezzio\Application;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
@@ -58,7 +58,7 @@ class ConfigProvider
             'driver' => [
                 'orm_default' => [
                     'drivers' => [
-                        'Frontend\App\Entity' => 'AppEntities',
+                        'Admin\App\Entity' => 'AppEntities',
                     ],
                 ],
                 'AppEntities' => [

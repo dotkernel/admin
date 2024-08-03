@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App;
+namespace AdminTest\Unit\App;
 
+use Admin\App\ConfigProvider;
+use Admin\App\Controller\DashboardController;
+use Admin\App\Plugin\FormsPlugin;
+use Admin\App\Resolver\EntityListenerResolver;
+use Admin\App\RoutesDelegator as AppDelegator;
+use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Dot\Controller\Plugin\PluginManager;
-use Frontend\App\ConfigProvider;
-use Frontend\App\Controller\DashboardController;
-use Frontend\App\Plugin\FormsPlugin;
-use Frontend\App\Resolver\EntityListenerResolver;
-use Frontend\App\RoutesDelegator as AppDelegator;
-use FrontendTest\Unit\UnitTest;
 use Mezzio\Application;
 
 class ConfigProviderTest extends UnitTest

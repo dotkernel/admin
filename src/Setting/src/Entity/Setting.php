@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\Entity;
+namespace Admin\Setting\Entity;
 
+use Admin\Admin\Entity\Admin;
+use Admin\App\Entity\AbstractEntity;
+use Admin\App\Entity\TimestampsTrait;
+use Admin\Setting\Repository\SettingRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Frontend\Admin\Entity\Admin;
-use Frontend\App\Entity\AbstractEntity;
-use Frontend\App\Entity\TimestampsTrait;
-use Frontend\Setting\Repository\SettingRepository;
 
 use function array_unique;
 use function json_decode;

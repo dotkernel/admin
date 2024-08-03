@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Factory;
+namespace AdminTest\Unit\App\Factory;
 
+use Admin\App\Factory\FormsPluginFactory;
+use Admin\App\Plugin\FormsPlugin;
+use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Frontend\App\Factory\FormsPluginFactory;
-use Frontend\App\Plugin\FormsPlugin;
-use FrontendTest\Unit\UnitTest;
 use Laminas\Form\FormElementManager;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Fixtures;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminRole;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminRole;
 
 use function password_hash;
 

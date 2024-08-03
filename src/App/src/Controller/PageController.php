@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Controller;
+namespace Admin\App\Controller;
 
+use Admin\App\Common\ServerRequestAwareTrait;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
-use Frontend\App\Common\ServerRequestAwareTrait;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;

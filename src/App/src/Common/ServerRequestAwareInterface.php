@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Common;
+namespace Admin\App\Common;
 
 interface ServerRequestAwareInterface
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Service;
+namespace AdminTest\Unit\Admin\Service;
 
+use Admin\Admin\Repository\AdminRepository;
+use Admin\Admin\Repository\AdminRoleRepository;
+use Admin\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
+use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\Exception\NotSupported;
 use Dot\GeoIP\Service\LocationServiceInterface;
-use Frontend\Admin\Repository\AdminRepository;
-use Frontend\Admin\Repository\AdminRoleRepository;
-use Frontend\Admin\Service\AdminService;
-use Frontend\Admin\Service\AdminServiceInterface;
-use FrontendTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

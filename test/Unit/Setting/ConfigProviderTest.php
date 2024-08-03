@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Setting;
+namespace AdminTest\Unit\Setting;
 
-use Frontend\Setting\ConfigProvider;
-use Frontend\Setting\Controller\SettingController;
-use Frontend\Setting\Repository\SettingRepository;
-use Frontend\Setting\Service\SettingService;
-use FrontendTest\Unit\UnitTest;
+use Admin\Setting\ConfigProvider;
+use Admin\Setting\Controller\SettingController;
+use Admin\Setting\Repository\SettingRepository;
+use Admin\Setting\Service\SettingService;
+use AdminTest\Unit\UnitTest;
 
 class ConfigProviderTest extends UnitTest
 {
@@ -42,7 +42,7 @@ class ConfigProviderTest extends UnitTest
         $this->assertIsArray($this->config['doctrine']['driver']['orm_default']);
         $this->assertArrayHasKey('drivers', $this->config['doctrine']['driver']['orm_default']);
         $this->assertArrayHasKey(
-            'Frontend\Setting\Entity',
+            'Admin\Setting\Entity',
             $this->config['doctrine']['driver']['orm_default']['drivers']
         );
         $this->assertArrayHasKey('SettingEntities', $this->config['doctrine']['driver']);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Service;
+namespace Admin\App\Service;
 
 use function filter_var;
 use function getenv;

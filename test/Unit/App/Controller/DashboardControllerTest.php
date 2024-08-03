@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Controller;
+namespace AdminTest\Unit\App\Controller;
 
-use Frontend\App\Controller\DashboardController;
-use FrontendTest\Unit\UnitTest;
+use Admin\App\Controller\DashboardController;
+use AdminTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;

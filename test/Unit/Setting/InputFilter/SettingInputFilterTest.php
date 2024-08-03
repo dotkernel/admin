@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Setting\InputFilter;
+namespace AdminTest\Unit\Setting\InputFilter;
 
-use Frontend\App\Message;
-use Frontend\Setting\InputFilter\SettingInputFilter;
-use FrontendTest\Common\TestCase;
+use Admin\App\Message;
+use Admin\Setting\InputFilter\SettingInputFilter;
+use AdminTest\Common\TestCase;
 
 use function sprintf;
 

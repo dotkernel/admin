@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Form;
+namespace Admin\Admin\Form;
 
-use Frontend\Admin\InputFilter\AccountInputFilter;
+use Admin\Admin\InputFilter\AccountInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;

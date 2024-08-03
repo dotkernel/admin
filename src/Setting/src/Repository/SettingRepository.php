@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\Repository;
+namespace Admin\Setting\Repository;
 
+use Admin\App\Repository\AbstractRepository;
+use Admin\Setting\Entity\Setting;
 use Dot\DependencyInjection\Attribute\Entity;
-use Frontend\App\Repository\AbstractRepository;
-use Frontend\Setting\Entity\Setting;
 
 #[Entity(Setting::class)]
 class SettingRepository extends AbstractRepository

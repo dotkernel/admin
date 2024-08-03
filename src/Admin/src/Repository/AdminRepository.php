@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Repository;
+namespace Admin\Admin\Repository;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminLogin;
+use Admin\App\Repository\AbstractRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Entity;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminLogin;
-use Frontend\App\Repository\AbstractRepository;
 use Throwable;
 
 #[Entity(Admin::class)]

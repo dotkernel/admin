@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Form;
+namespace Admin\Admin\Form;
 
-use Frontend\Admin\InputFilter\AdminDeleteInputFilter;
+use Admin\Admin\InputFilter\AdminDeleteInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;

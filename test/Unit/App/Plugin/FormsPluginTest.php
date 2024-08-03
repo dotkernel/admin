@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Plugin;
+namespace AdminTest\Unit\App\Plugin;
 
+use Admin\Admin\Form\LoginForm;
+use Admin\App\Plugin\FormsPlugin;
+use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Frontend\Admin\Form\LoginForm;
-use Frontend\App\Plugin\FormsPlugin;
-use FrontendTest\Unit\UnitTest;
 use Laminas\Form\FormElementManager;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
