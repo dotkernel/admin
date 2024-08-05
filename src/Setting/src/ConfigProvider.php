@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting;
+namespace Admin\Setting;
 
+use Admin\Setting\Controller\SettingController;
+use Admin\Setting\Repository\SettingRepository;
+use Admin\Setting\Service\SettingService;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
-use Frontend\Setting\Controller\SettingController;
-use Frontend\Setting\Repository\SettingRepository;
-use Frontend\Setting\Service\SettingService;
 use Mezzio\Application;
 
 class ConfigProvider
@@ -44,7 +44,7 @@ class ConfigProvider
             'driver' => [
                 'orm_default'     => [
                     'drivers' => [
-                        'Frontend\Setting\Entity' => 'SettingEntities',
+                        'Admin\Setting\Entity' => 'SettingEntities',
                     ],
                 ],
                 'SettingEntities' => [

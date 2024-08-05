@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\FormData;
+namespace AdminTest\Unit\Admin\FormData;
 
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminRole;
-use Frontend\Admin\FormData\AdminFormData;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\FormData\AdminFormData;
+use AdminTest\Unit\UnitTest;
 
 use function array_map;
 

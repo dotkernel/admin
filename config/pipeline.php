@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
+use Admin\App\Middleware\AuthMiddleware;
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Dot\Navigation\NavigationMiddleware;
 use Dot\Rbac\Guard\Middleware\ForbiddenHandler;
 use Dot\Rbac\Guard\Middleware\RbacGuardMiddleware;
 use Dot\Session\SessionMiddleware;
-use Frontend\App\Middleware\AuthMiddleware;
 use Mezzio\Application;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;

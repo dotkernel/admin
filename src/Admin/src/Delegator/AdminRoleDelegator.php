@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Delegator;
+namespace Admin\Admin\Delegator;
 
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Service\AdminService;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Service\AdminService;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Service;
+namespace AdminTest\Unit\App\Service;
 
-use Frontend\App\Service\IpService;
-use FrontendTest\Unit\UnitTest;
+use Admin\App\Service\IpService;
+use AdminTest\Unit\UnitTest;
 
 use function putenv;
 use function sprintf;

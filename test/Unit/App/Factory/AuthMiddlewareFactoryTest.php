@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Factory;
+namespace AdminTest\Unit\App\Factory;
 
+use Admin\App\Factory\AuthMiddlewareFactory;
+use Admin\App\Middleware\AuthMiddleware;
+use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessenger;
 use Dot\Navigation\Provider\ArrayProvider;
 use Dot\Rbac\Guard\Options\RbacGuardOptions;
 use Dot\Rbac\Guard\Provider\GuardsProviderInterface;
 use Dot\Rbac\Guard\Provider\GuardsProviderPluginManager;
-use Frontend\App\Factory\AuthMiddlewareFactory;
-use Frontend\App\Middleware\AuthMiddleware;
-use FrontendTest\Unit\UnitTest;
 use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;

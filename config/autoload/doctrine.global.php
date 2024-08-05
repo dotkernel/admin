@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
+use Admin\App\Resolver\EntityListenerResolver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
 use Dot\Cache\Adapter\FilesystemAdapter;
-use Frontend\App\Resolver\EntityListenerResolver;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;

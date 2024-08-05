@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Form;
+namespace AdminTest\Unit\Admin\Form;
 
-use Frontend\Admin\Form\ChangePasswordForm;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Form\ChangePasswordForm;
+use AdminTest\Unit\UnitTest;
 
 class ChangePasswordFormTest extends UnitTest
 {

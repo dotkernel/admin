@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Adapter;
+namespace AdminTest\Unit\Admin\Adapter;
 
+use Admin\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Repository\AdminRepository;
+use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
-use Frontend\Admin\Adapter\AuthenticationAdapter;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Repository\AdminRepository;
-use FrontendTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

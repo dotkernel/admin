@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\InputFilter;
+namespace Admin\Admin\InputFilter;
 
-use Frontend\App\InputFilter\Input\CsrfInput;
+use Admin\App\InputFilter\Input\CsrfInput;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;

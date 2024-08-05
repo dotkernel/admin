@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Resolver;
+namespace Admin\App\Resolver;
 
 use Doctrine\ORM\Mapping\DefaultEntityListenerResolver;
 use Psr\Container\ContainerExceptionInterface;

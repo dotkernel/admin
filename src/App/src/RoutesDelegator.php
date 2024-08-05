@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App;
+namespace Admin\App;
 
-use Frontend\App\Controller\DashboardController;
-use Frontend\App\Controller\PageController;
+use Admin\App\Controller\DashboardController;
+use Admin\App\Controller\PageController;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 

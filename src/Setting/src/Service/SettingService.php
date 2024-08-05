@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\Service;
+namespace Admin\Setting\Service;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Setting\Entity\Setting;
+use Admin\Setting\Repository\SettingRepository;
 use Dot\DependencyInjection\Attribute\Inject;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Setting\Entity\Setting;
-use Frontend\Setting\Repository\SettingRepository;
 
 class SettingService
 {

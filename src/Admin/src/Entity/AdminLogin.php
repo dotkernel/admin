@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Entity;
+namespace Admin\Admin\Entity;
 
+use Admin\Admin\Repository\AdminLoginRepository;
+use Admin\App\Entity\AbstractEntity;
+use Admin\App\Entity\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Frontend\Admin\Repository\AdminLoginRepository;
-use Frontend\App\Entity\AbstractEntity;
-use Frontend\App\Entity\TimestampsTrait;
 
 #[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
 #[ORM\Table(name: 'admin_login')]

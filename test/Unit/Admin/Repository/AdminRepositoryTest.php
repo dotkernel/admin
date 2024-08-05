@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Repository;
+namespace AdminTest\Unit\Admin\Repository;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Repository\AdminRepository;
+use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Repository\AdminRepository;
-use FrontendTest\Unit\UnitTest;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 

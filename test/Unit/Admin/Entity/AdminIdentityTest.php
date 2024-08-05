@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Entity;
+namespace AdminTest\Unit\Admin\Entity;
 
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminIdentity;
-use Frontend\Admin\Entity\AdminRole;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Entity\AdminRole;
+use AdminTest\Unit\UnitTest;
 
 class AdminIdentityTest extends UnitTest
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Functional;
+namespace AdminTest\Functional;
 
+use AdminTest\Common\TestCase;
 use Doctrine\ORM\Tools\SchemaTool;
-use FrontendTest\Common\TestCase;
 use Mezzio\Application;
 use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerExceptionInterface;

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\Controller;
+namespace Admin\Setting\Controller;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Service\AdminService;
+use Admin\App\Common\ServerRequestAwareTrait;
+use Admin\App\Message;
+use Admin\Setting\Entity\Setting;
+use Admin\Setting\InputFilter\Input\SettingValueInput;
+use Admin\Setting\InputFilter\SettingInputFilter;
+use Admin\Setting\Service\SettingService;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
 use Fig\Http\Message\StatusCodeInterface;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Service\AdminService;
-use Frontend\App\Common\ServerRequestAwareTrait;
-use Frontend\App\Message;
-use Frontend\Setting\Entity\Setting;
-use Frontend\Setting\InputFilter\Input\SettingValueInput;
-use Frontend\Setting\InputFilter\SettingInputFilter;
-use Frontend\Setting\Service\SettingService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Router\RouterInterface;

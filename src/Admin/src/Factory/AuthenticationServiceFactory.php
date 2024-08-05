@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Factory;
+namespace Admin\Admin\Factory;
 
-use Frontend\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\Adapter\AuthenticationAdapter;
 use Laminas\Authentication\AuthenticationService;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use FrontendTest\Common\TestMode;
+use AdminTest\Common\TestMode;
 
 if (! TestMode::isEnabled()) {
     return [];

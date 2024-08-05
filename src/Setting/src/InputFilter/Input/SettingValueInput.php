@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\InputFilter\Input;
+namespace Admin\Setting\InputFilter\Input;
 
-use Frontend\App\Message;
+use Admin\App\Message;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\InputFilter\Input;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Setting\Controller;
+namespace AdminTest\Unit\Setting\Controller;
 
-use Frontend\Admin\Service\AdminService;
-use Frontend\Setting\Controller\SettingController;
-use Frontend\Setting\Service\SettingService;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Service\AdminService;
+use Admin\Setting\Controller\SettingController;
+use Admin\Setting\Service\SettingService;
+use AdminTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\Exception;

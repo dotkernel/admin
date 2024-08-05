@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Factory;
+namespace Admin\App\Factory;
 
-use Frontend\App\Resolver\EntityListenerResolver;
+use Admin\App\Resolver\EntityListenerResolver;
 use Psr\Container\ContainerInterface;
 
 class EntityListenerResolverFactory

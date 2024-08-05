@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Functional;
+namespace AdminTest\Functional;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

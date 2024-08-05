@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Resolver;
+namespace AdminTest\Unit\App\Resolver;
 
-use Frontend\App\Resolver\EntityListenerResolver;
-use FrontendTest\Unit\UnitTest;
+use Admin\App\Resolver\EntityListenerResolver;
+use AdminTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

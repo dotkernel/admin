@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Middleware;
+namespace AdminTest\Unit\App\Middleware;
 
+use Admin\App\Middleware\AuthMiddleware;
+use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Rbac\Guard\Exception\RuntimeException;
 use Dot\Rbac\Guard\Guard\GuardInterface;
 use Dot\Rbac\Guard\Options\RbacGuardOptions;
 use Dot\Rbac\Guard\Provider\GuardsProviderInterface;
-use Frontend\App\Middleware\AuthMiddleware;
-use FrontendTest\Unit\UnitTest;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Http\Response;
 use Mezzio\Router\RouterInterface;

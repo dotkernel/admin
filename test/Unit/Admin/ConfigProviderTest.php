@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin;
+namespace AdminTest\Unit\Admin;
 
-use Frontend\Admin\Adapter\AuthenticationAdapter;
-use Frontend\Admin\ConfigProvider;
-use Frontend\Admin\Controller\AdminController;
-use Frontend\Admin\Delegator\AdminRoleDelegator;
-use Frontend\Admin\Entity\AdminInterface;
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Form\ChangePasswordForm;
-use Frontend\Admin\Form\LoginForm;
-use Frontend\Admin\Service\AdminService;
-use Frontend\Admin\Service\AdminServiceInterface;
-use FrontendTest\Unit\UnitTest;
+use Admin\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\ConfigProvider;
+use Admin\Admin\Controller\AdminController;
+use Admin\Admin\Delegator\AdminRoleDelegator;
+use Admin\Admin\Entity\AdminInterface;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\Form\LoginForm;
+use Admin\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
+use AdminTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationService;
 
 class ConfigProviderTest extends UnitTest
@@ -97,7 +97,7 @@ class ConfigProviderTest extends UnitTest
         $this->assertIsArray($this->config['doctrine']['driver']['orm_default']);
         $this->assertArrayHasKey('drivers', $this->config['doctrine']['driver']['orm_default']);
         $this->assertArrayHasKey(
-            'Frontend\Admin\Entity',
+            'Admin\Admin\Entity',
             $this->config['doctrine']['driver']['orm_default']['drivers']
         );
         $this->assertArrayHasKey('AdminEntities', $this->config['doctrine']['driver']);

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Adapter;
+namespace Admin\Admin\Adapter;
 
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Entity\AdminRole;
 use Doctrine\ORM\EntityManager;
 use Dot\DependencyInjection\Attribute\Inject;
 use Exception;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminIdentity;
-use Frontend\Admin\Entity\AdminRole;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 

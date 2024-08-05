@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Controller;
+namespace Admin\Admin\Controller;
 
+use Admin\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Form\AccountForm;
+use Admin\Admin\Form\AdminDeleteForm;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\Form\LoginForm;
+use Admin\Admin\FormData\AdminFormData;
+use Admin\Admin\InputFilter\EditAdminInputFilter;
+use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Common\ServerRequestAwareTrait;
+use Admin\App\Exception\IdentityException;
+use Admin\App\Message;
+use Admin\App\Plugin\FormsPlugin;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Frontend\Admin\Adapter\AuthenticationAdapter;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminIdentity;
-use Frontend\Admin\Entity\AdminLogin;
-use Frontend\Admin\Form\AccountForm;
-use Frontend\Admin\Form\AdminDeleteForm;
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Form\ChangePasswordForm;
-use Frontend\Admin\Form\LoginForm;
-use Frontend\Admin\FormData\AdminFormData;
-use Frontend\Admin\InputFilter\EditAdminInputFilter;
-use Frontend\Admin\Service\AdminServiceInterface;
-use Frontend\App\Common\ServerRequestAwareTrait;
-use Frontend\App\Exception\IdentityException;
-use Frontend\App\Message;
-use Frontend\App\Plugin\FormsPlugin;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Exception\ExceptionInterface;
 use Laminas\Diactoros\Response\HtmlResponse;

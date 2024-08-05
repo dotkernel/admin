@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Common;
+namespace AdminTest\Unit\App\Common;
 
+use Admin\App\Common\ServerRequestAwareInterface;
+use Admin\App\Common\ServerRequestAwareTrait;
+use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\RequestMethodInterface;
-use Frontend\App\Common\ServerRequestAwareInterface;
-use Frontend\App\Common\ServerRequestAwareTrait;
-use FrontendTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;

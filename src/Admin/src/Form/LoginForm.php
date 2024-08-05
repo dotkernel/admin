@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Form;
+namespace Admin\Admin\Form;
 
-use Frontend\Admin\InputFilter\LoginInputFilter;
+use Admin\Admin\InputFilter\LoginInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;

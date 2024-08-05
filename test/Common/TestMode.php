@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Common;
+namespace AdminTest\Common;
 
 use function getenv;
 use function putenv;

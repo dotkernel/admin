@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Controller;
+namespace AdminTest\Unit\Admin\Controller;
 
+use Admin\Admin\Controller\AdminController;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Plugin\FormsPlugin;
+use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Frontend\Admin\Controller\AdminController;
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Service\AdminServiceInterface;
-use Frontend\App\Plugin\FormsPlugin;
-use FrontendTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Log\Logger;
 use Mezzio\Router\RouterInterface;

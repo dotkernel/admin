@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin;
+namespace Admin\Admin;
 
+use Admin\Admin\Controller\AdminController;
 use Fig\Http\Message\RequestMethodInterface;
-use Frontend\Admin\Controller\AdminController;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 

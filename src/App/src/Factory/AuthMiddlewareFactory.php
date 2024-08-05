@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Factory;
+namespace Admin\App\Factory;
 
+use Admin\App\Middleware\AuthMiddleware;
 use Dot\FlashMessenger\FlashMessenger;
 use Dot\Rbac\Guard\Factory\AttachAuthorizationEventListenersTrait;
 use Dot\Rbac\Guard\Options\RbacGuardOptions;
 use Dot\Rbac\Guard\Provider\Factory;
 use Dot\Rbac\Guard\Provider\GuardsProviderPluginManager;
-use Frontend\App\Middleware\AuthMiddleware;
 use Mezzio\Router\RouterInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

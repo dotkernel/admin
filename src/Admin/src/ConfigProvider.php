@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin;
+namespace Admin\Admin;
 
+use Admin\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\Controller\AdminController;
+use Admin\Admin\Delegator\AdminRoleDelegator;
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminInterface;
+use Admin\Admin\Factory\AuthenticationServiceFactory;
+use Admin\Admin\Form\AdminDeleteForm;
+use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\Form\LoginForm;
+use Admin\Admin\Repository\AdminRepository;
+use Admin\Admin\Repository\AdminRoleRepository;
+use Admin\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
-use Frontend\Admin\Adapter\AuthenticationAdapter;
-use Frontend\Admin\Controller\AdminController;
-use Frontend\Admin\Delegator\AdminRoleDelegator;
-use Frontend\Admin\Entity\Admin;
-use Frontend\Admin\Entity\AdminInterface;
-use Frontend\Admin\Factory\AuthenticationServiceFactory;
-use Frontend\Admin\Form\AdminDeleteForm;
-use Frontend\Admin\Form\AdminForm;
-use Frontend\Admin\Form\ChangePasswordForm;
-use Frontend\Admin\Form\LoginForm;
-use Frontend\Admin\Repository\AdminRepository;
-use Frontend\Admin\Repository\AdminRoleRepository;
-use Frontend\Admin\Service\AdminService;
-use Frontend\Admin\Service\AdminServiceInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
 use Mezzio\Application;
@@ -94,7 +94,7 @@ class ConfigProvider
             'driver' => [
                 'orm_default'   => [
                     'drivers' => [
-                        'Frontend\Admin\Entity' => 'AdminEntities',
+                        'Admin\Admin\Entity' => 'AdminEntities',
                     ],
                 ],
                 'AdminEntities' => [

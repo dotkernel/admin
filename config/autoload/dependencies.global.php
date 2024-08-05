@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Admin\App\Factory\AuthMiddlewareFactory;
+use Admin\App\Middleware\AuthMiddleware;
 use Dot\Authorization\AuthorizationInterface;
 use Dot\ErrorHandler\ErrorHandlerInterface;
 use Dot\ErrorHandler\LogErrorHandler;
@@ -9,8 +11,6 @@ use Dot\Mail\Factory\MailOptionsAbstractFactory;
 use Dot\Mail\Factory\MailServiceAbstractFactory;
 use Dot\Mail\Service\MailService;
 use Dot\Rbac\Authorization\AuthorizationService;
-use Frontend\App\Factory\AuthMiddlewareFactory;
-use Frontend\App\Middleware\AuthMiddleware;
 
 return [
     // Provides application-wide services.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\Admin\Form;
+namespace AdminTest\Unit\Admin\Form;
 
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FormInterface;

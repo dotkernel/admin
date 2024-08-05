@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\App\Plugin;
+namespace Admin\App\Plugin;
 
 use Dot\Controller\Plugin\PluginInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FrontendTest\Unit\App\Entity;
+namespace AdminTest\Unit\App\Entity;
 
-use Frontend\App\Entity\AbstractEntity;
-use FrontendTest\Unit\UnitTest;
+use Admin\App\Entity\AbstractEntity;
+use AdminTest\Unit\UnitTest;
 use Ramsey\Uuid\UuidInterface;
 
 class AbstractEntityTest extends UnitTest

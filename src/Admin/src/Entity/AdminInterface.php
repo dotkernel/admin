@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Admin\Entity;
+namespace Admin\Admin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

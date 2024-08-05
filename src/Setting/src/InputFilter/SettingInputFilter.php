@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Frontend\Setting\InputFilter;
+namespace Admin\Setting\InputFilter;
 
-use Frontend\Setting\InputFilter\Input\SettingIdentifierInput;
-use Frontend\Setting\InputFilter\Input\SettingValueInput;
+use Admin\Setting\InputFilter\Input\SettingIdentifierInput;
+use Admin\Setting\InputFilter\Input\SettingValueInput;
 use Laminas\InputFilter\InputFilter;
 
 /**
