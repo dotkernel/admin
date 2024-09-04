@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="row m-5">
-        {{ messagesPartial('partial::alerts', { dismissible: true }) }}
+        {{ messagesPartial('partial::alerts', {dismissible: true}) }}
     </div>
     <div class="row gap-20 masonry pos-r">
         <div class="masonry-sizer col-md-6"></div>
@@ -14,7 +14,7 @@
                 <div class="mT-30">
 
                     {% set dummy = form.prepare() %}
-                    {{ form().openTag(form) | raw }}
+                    {{ form().openTag(form)|raw }}
 
                     {% set identity = form.getElements().identity %}
                     <div class="mb-3 form-group {% if identity.getMessages() %}has-error{% endif %}">
@@ -43,7 +43,7 @@
                     {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}
                     {{ formSubmit(submit) }}
 
-                    {{ form().closeTag() | raw }}
+                    {{ form().closeTag()|raw }}
                 </div>
             </div>
         </div>
@@ -52,8 +52,8 @@
                 <h6 class="c-grey-900">Change password</h6>
                 <div class="mT-30">
                     {% set dummy = changePasswordForm.prepare() %}
-                    {% set dummy = changePasswordForm.setAttribute('action', path('admin', { action : "change-password" })) %}
-                    {{ form().openTag(changePasswordForm) | raw }}
+                    {% set dummy = changePasswordForm.setAttribute('action', path('admin', {action: 'change-password'})) %}
+                    {{ form().openTag(changePasswordForm)|raw }}
 
                     {% set currentPassword = changePasswordForm.get('currentPassword') %}
                     <div class="mb-3 form-group {% if currentPassword.getMessages() %}has-error{% endif %}">
@@ -82,7 +82,7 @@
                     {% set dummy = submit.setAttribute('class', 'btn btn-primary btn-color') %}
                     {{ formSubmit(submit) }}
 
-                    {{ form().closeTag() | raw }}
+                    {{ form().closeTag()|raw }}
                 </div>
             </div>
         </div>

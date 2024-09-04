@@ -21,9 +21,9 @@
         <![endif]-->
 </head>
 <body class="app">
-    {% include '@partial/left-menu.html.twig' %}
+    {{ include('@partial/left-menu.html.twig') }}
     <div class="page-container">
-        {% include '@partial/nav-bar.html.twig' %}
+        {{ include('@partial/nav-bar.html.twig') }}
         <main class='main-content bgc-grey-100'>
             <div id='mainContent'>
                 {% block content %}{% endblock %}

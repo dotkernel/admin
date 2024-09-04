@@ -2,7 +2,7 @@
     {% set showLabels = false %}
 {% endif %}
 
-{% for k,v in form.getElements() %}
+{% for k, v in form.getElements() %}
     {% set element = form.get(k) %}
     {% if element is Captcha %}
         <div class="mb-3">
@@ -17,7 +17,7 @@
         </div>
     {% elseif element is MultiCheckbox %}
         {% set dummy = element.setAttribute('class', 'form-check-input') %}
-        {% set dummy = element.setLabelAttributes([]|merge({'class': 'form-label mR-25'})) %}
+        {% set dummy = element.setLabelAttributes([]|merge({class: 'form-label mR-25'})) %}
 
         <div class="form-check gap-10">
             {{ formElement(element) }}
@@ -49,7 +49,7 @@
         <div class="mb-3 {% if element.getMessages() %}has-error{% endif %}">
 
             {% set dummy = element.setAttribute('class', 'form-control') %}
-            {% set dummy = element.setLabelAttributes([]|merge({'class': 'form-label'})) %}
+            {% set dummy = element.setLabelAttributes([]|merge({class: 'form-label'})) %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
                 {{ formLabel(element) }}

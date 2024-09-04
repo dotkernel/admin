@@ -63,7 +63,8 @@
         "mezzio/mezzio-tooling": "^2.9.0",
         "phpunit/phpunit": "^10.5.9",
         "roave/security-advisories": "dev-latest",
-        "vimeo/psalm": "^5.20.0"
+        "vimeo/psalm": "^5.20.0",
+        "vincentlanglet/twig-cs-fixer": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -97,6 +98,8 @@
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "twig-cs-check": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php",
+        "twig-cs-fix": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php --fix"
     }
 }

@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-4">
                     {% set dummy = form.prepare() %}
-                    {{ form().openTag(form) | raw }}
+                    {{ form().openTag(form)|raw }}
                     <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
                     <div class="mb-3">
                         {% set username = form.get('username') %}
@@ -45,7 +45,7 @@
 
                     {{ formSubmit(submit) }}
 
-                    {{ form().closeTag() | raw }}
+                    {{ form().closeTag()|raw }}
                 </div>
             </div>
         </div>
