@@ -26,7 +26,8 @@ class AdminControllerTest extends UnitTest
         $logger          = new Logger([
             'writers' => [
                 'FileWriter' => [
-                    'name' => 'null',
+                    'name'     => 'null',
+                    'priority' => Logger::ALERT,
                 ],
             ],
         ]);
