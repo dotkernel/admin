@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Laminas\Log\Formatter\Json;
-use Laminas\Log\Logger;
+use Dot\Log\Formatter\Json;
+use Dot\Log\Logger;
 
 return [
     'dot-errorhandler' => [

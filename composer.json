@@ -34,7 +34,7 @@
         "dotkernel/dot-controller": "^3.4.3",
         "dotkernel/dot-data-fixtures": "^1.1.3",
         "dotkernel/dot-dependency-injection": "^1.0",
-        "dotkernel/dot-errorhandler": "^3.3.2",
+        "dotkernel/dot-errorhandler": "^4.0.0",
         "dotkernel/dot-flashmessenger": "^3.4.2",
         "dotkernel/dot-geoip": "^3.6.0",
         "dotkernel/dot-helpers": "^3.4.2",
