@@ -10,8 +10,8 @@ use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
 use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
+use Dot\Log\Logger;
 use Laminas\Authentication\AuthenticationServiceInterface;
-use Laminas\Log\Logger;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -26,7 +26,8 @@ class AdminControllerTest extends UnitTest
         $logger          = new Logger([
             'writers' => [
                 'FileWriter' => [
-                    'name' => 'null',
+                    'name'     => 'null',
+                    'priority' => Logger::ALERT,
                 ],
             ],
         ]);
