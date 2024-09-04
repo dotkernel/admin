@@ -1,8 +1,7 @@
-{% set classes = {'error': 'danger', 'info': 'info', 'warning': 'warning', 'success' : 'success'} %}
+{% set classes = {error: 'danger', info: 'info', warning: 'warning', success: 'success'} %}
 {% if dismissible is not defined %}
     {% set dismissible = false %}
 {% endif %}
-
 
 {% if messages is defined and messages is iterable %}
     {% for namespace in messages|keys %}

@@ -3,9 +3,9 @@
 {% set dummy = form.setAttribute('action', formAction) %}
 {% set dummy = form.prepare() %}
 
-{{ form().openTag(form) | raw }}
-{% include '@partial/form-display-elements.html.twig' with {'form' : form, 'showLabels' : true} only %}
-{{ form().closeTag() | raw }}
+{{ form().openTag(form)|raw }}
+{{ include('@partial/form-display-elements.html.twig', {form: form, showLabels: true}, false) }}
+{{ form().closeTag()|raw }}
 
 <script type="application/javascript">
     $(document).ready(() => {
