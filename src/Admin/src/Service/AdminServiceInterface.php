@@ -35,8 +35,11 @@ interface AdminServiceInterface
         int $offset = 0,
         int $limit = 30,
         string $sort = 'created',
-        string $order = 'desc'
+        string $order = 'desc',
+        array $filters = []
     ): array;
+
+    public function getAdminLoginIdentities(): array;
 
     /**
      * @throws NonUniqueResultException

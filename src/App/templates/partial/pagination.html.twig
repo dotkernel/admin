@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-auto">
+        <div class="dropdown">
+            <span>Found <strong>{{ pagination.getTotal() }}</strong> item(s), showing</span>
+            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ params.limit }}
+            </button>
+            <ul class="dropdown-menu" title="Items per page">
+                {% for limit in [10, 30, 50, 100] %}
+                <li>
+                    <a href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: 0, limit: limit})) }}"
+                       class="dropdown-item{{ limit == params.limit ? ' active' }}">{{ limit }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <span>per page</span>
+        </div>
+    </div>
+    <div class="col-auto ms-sm-auto">
+        <nav aria-label="Pagination">
+            <ul class="pagination pagination-sm">
+                <li class="page-item{{ pagination.isFirstPage() ? ' disabled' }}" title="Page {{ pagination.getFirstPage() }}">
+                    <a class="page-link" href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: pagination.getFirstOffset()})) }}">
+                        <i class="ti-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item{{ not pagination.hasPreviousPage() ? ' disabled' }}" title="Page {{ pagination.getPreviousPage() }}">
+                    <a class="page-link" href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: pagination.getPreviousOffset()})) }}">
+                        <i class="ti-angle-left"></i>
+                    </a>
+                </li>
+                {% for page in pagination.getPages() %}
+                <li class="page-item{{ page == pagination.getCurrentPage() ? ' active' }}" title="Page {{ page }}">
+                    <a class="page-link" href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: (page - 1) * params.limit})) }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-item{{ not pagination.hasNextPage() ? ' disabled' }}" title="Page {{ pagination.getNextPage() }}">
+                    <a class="page-link" href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: pagination.getNextOffset()})) }}">
+                        <i class="ti-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item{{ pagination.isLastPage() ? ' disabled' }}" title="Page {{ pagination.getLastPage() }}">
+                    <a class="page-link" href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: pagination.getLastOffset()})) }}">
+                        <i class="ti-angle-double-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

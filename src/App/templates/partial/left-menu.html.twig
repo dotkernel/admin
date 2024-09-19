@@ -3,7 +3,7 @@
         <div class="sidebar-logo">
             <div class="peers ai-c fxw-nw">
                 <div class="peer peer-greed">
-                    <a class="sidebar-link td-n" href="">
+                    <a class="sidebar-link td-n" href="{{ path('dashboard') }}">
                         <div class="peers ai-c fxw-nw">
                             <div class="peer">
                                 <div class="logo d-flex align-items-center">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <ul class="sidebar-menu scrollable pos-r">
-            <li class="nav-item mT-30 actived">
+            <li class="nav-item mT-30">
                 <a class="sidebar-link" href="{{ path('dashboard') }}">
                     <span class="icon-holder">
                         <i class="c-blue-500 ti-home"></i>
@@ -54,6 +54,11 @@
                     <li class="nav-item dropdown">
                         <a href="{{ path('admin', {action: 'logins'}) }}">
                             <span>View logins</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="{{ path('admin', {action: 'simple-logins'}) }}">
+                            <span>View logins v2</span>
                         </a>
                     </li>
                 </ul>

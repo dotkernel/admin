@@ -8,6 +8,7 @@ use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
+use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -39,7 +40,8 @@ class AdminControllerTest extends UnitTest
             $this->createMock(FlashMessengerInterface::class),
             $this->createMock(FormsPlugin::class),
             $this->createMock(AdminForm::class),
-            $logger
+            $this->createMock(SettingService::class),
+            $logger,
         );
         $this->assertInstanceOf(AdminController::class, $adminController);
     }
