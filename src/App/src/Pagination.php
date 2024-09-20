@@ -57,14 +57,14 @@ readonly class Pagination
         return $this->currentPage;
     }
 
-    public function getNextPage(): int
-    {
-        return min($this->currentPage + 1, $this->lastPage);
-    }
-
     public function hasNextPage(): bool
     {
         return $this->currentPage < $this->lastPage;
+    }
+
+    public function getNextPage(): int
+    {
+        return min($this->currentPage + 1, $this->lastPage);
     }
 
     public function getLastPage(): int
@@ -77,6 +77,11 @@ readonly class Pagination
         return $this->currentPage === $this->lastPage;
     }
 
+    public function isOutOfBounds(): bool
+    {
+        return $this->currentPage > $this->lastPage;
+    }
+
     public function getFirstOffset(): int
     {
         return 0;
@@ -84,12 +89,12 @@ readonly class Pagination
 
     public function getPreviousOffset(): int
     {
-        return $this->offset - $this->limit;
+        return max(0, $this->offset - $this->limit);
     }
 
     public function getNextOffset(): int
     {
-        return $this->offset + $this->limit;
+        return min($this->offset + $this->limit, $this->getLastOffset());
     }
 
     public function getLastOffset(): int

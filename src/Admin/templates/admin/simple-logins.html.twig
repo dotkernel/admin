@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped table-light" style="display: none;">
+                    <table id="admin-logins-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
                         <thead>
                             <tr>
                                 <th class="column-identity">
@@ -167,6 +167,12 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% if pagination.isOutOfBounds() %}
+                    <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                        Out of bounds! Return to
+                        <a href="{{ path('admin', {action: 'simple-logins'}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
@@ -182,8 +188,8 @@
     {{ parent() }}
     <script>
         $(function() {
-            const hideColumns = (visibleColumns) => {
-                const table = $('table');
+            const hideColumns = (tableId, visibleColumns) => {
+                const table = $(tableId);
                 if (visibleColumns.length === 0) {
                     table.show();
                     return;
@@ -242,11 +248,15 @@
             const columnsSettings = JSON.parse('{{ settings|json_encode()|raw }}');
 
             populateColumnSelector('#column-selector', columnsSettings);
-            hideColumns(columnsSettings);
+            hideColumns('#admin-logins-table', columnsSettings);
 
             $(document).on('change', '.toggle-column-checkbox', function () {
+                $('#admin-logins-table').addClass('border-danger-subtle');
                 saveColumnSettings('{{ identifier }}')
                     .then(() => toggleColumnVisibility($(this).data('column'), $(this).prop('checked')))
+                    .then(() => {
+                        $('#admin-logins-table').removeClass('border-danger-subtle');
+                    })
                     .catch(error => console.error('Error: ', error));
             });
         });
