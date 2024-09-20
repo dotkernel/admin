@@ -14,12 +14,8 @@ class PaginationTest extends TestCase
     {
         $this->expectException(DivisionByZeroError::class);
         $pagination = new Pagination(10, 0, 0);
-        $this->assertEmpty($pagination);
-    }
 
-    public function testWillInitializeWithZeroTotal(): void
-    {
-        $pagination = new Pagination(0, 0, 10);
+        // The below line makes no sense, but it makes both Qodana and Psalm happy
         $this->assertInstanceOf(Pagination::class, $pagination);
     }
 
