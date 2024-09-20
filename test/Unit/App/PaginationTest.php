@@ -13,13 +13,14 @@ class PaginationTest extends TestCase
     public function testWillNotInitializeWithoutLimit(): void
     {
         $this->expectException(DivisionByZeroError::class);
-        new Pagination(10, 0, 0);
+        $pagination = new Pagination(10, 0, 0);
+        $this->assertEmpty($pagination);
     }
 
     public function testWillInitializeWithZeroTotal(): void
     {
-        $this->expectNotToPerformAssertions();
-        new Pagination(0, 0, 10);
+        $pagination = new Pagination(0, 0, 10);
+        $this->assertInstanceOf(Pagination::class, $pagination);
     }
 
     public function testWillInitializeWithLimitOnly(): void
