@@ -7,6 +7,7 @@ namespace Admin\Admin\Service;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
 use Admin\App\Exception\IdentityException;
@@ -29,11 +30,13 @@ class AdminService implements AdminServiceInterface
         LocationServiceInterface::class,
         AdminRepository::class,
         AdminRoleRepository::class,
+        AdminLoginRepository::class,
     )]
     public function __construct(
         protected LocationServiceInterface $locationService,
         protected AdminRepository $adminRepository,
         protected AdminRoleRepository $adminRoleRepository,
+        protected AdminLoginRepository $adminLoginRepository,
     ) {
     }
 
@@ -92,14 +95,15 @@ class AdminService implements AdminServiceInterface
         int $offset = 0,
         int $limit = 30,
         string $sort = 'created',
-        string $order = 'desc'
+        string $order = 'desc',
+        array $filters = []
     ): array {
         $result = [
             'rows'  => [],
-            'total' => $this->getAdminRepository()->countAdminLogins(),
+            'total' => $this->getAdminRepository()->countAdminLogins($filters),
         ];
 
-        $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order);
+        $logins = $this->getAdminRepository()->getAdminLogins($offset, $limit, $sort, $order, $filters);
         foreach ($logins as $login) {
             $result['rows'][] = [
                 'uuid'          => $login->getUuid()->toString(),
@@ -125,6 +129,11 @@ class AdminService implements AdminServiceInterface
         }
 
         return $result;
+    }
+
+    public function getAdminLoginIdentities(): array
+    {
+        return $this->adminLoginRepository->getAdminLoginIdentities();
     }
 
     public function createAdmin(array $data): Admin

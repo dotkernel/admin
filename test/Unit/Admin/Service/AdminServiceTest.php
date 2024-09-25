@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Service;
 
+use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
 use Admin\Admin\Service\AdminService;
@@ -25,14 +26,15 @@ class AdminServiceTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $adminRepository     = $this->createMock(AdminRepository::class);
-        $adminRoleRepository = $this->createMock(AdminRoleRepository::class);
+        $adminRepository      = $this->createMock(AdminRepository::class);
+        $adminRoleRepository  = $this->createMock(AdminRoleRepository::class);
+        $adminLoginRepository = $this->createMock(AdminLoginRepository::class);
 
         $service = new AdminService(
             $this->createMock(LocationServiceInterface::class),
             $adminRepository,
             $adminRoleRepository,
-            0
+            $adminLoginRepository
         );
 
         $this->assertInstanceOf(AdminServiceInterface::class, $service);

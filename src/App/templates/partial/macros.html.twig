@@ -1,0 +1,16 @@
+{% macro sortableColumn(route, routeParams, queryParams, columnName, columnTitle) %}
+    {% if queryParams.sort == columnName %}
+        <a href="{{ path(route, routeParams, queryParams|merge({order: queryParams.order == 'asc' ? 'desc' : 'asc'})) }}"
+           class="table-column text-nowrap text-primary"
+           data-column="{{ columnName }}">
+            <i class="ti-angle-{{ queryParams.order == 'desc' ? 'down' : 'up' }}"></i>
+            {{ columnTitle }}
+        </a>
+    {% else %}
+        <a href="{{ path(route, routeParams, queryParams|merge({sort: columnName, order: 'desc'})) }}"
+           class="table-column text-nowrap text-black"
+           data-column="{{ columnName }}">
+            {{ columnTitle }}
+        </a>
+    {% endif %}
+{% endmacro %}

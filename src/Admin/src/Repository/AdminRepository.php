@@ -83,11 +83,24 @@ class AdminRepository extends AbstractRepository
         int $offset = 0,
         int $limit = 30,
         string $sort = 'created',
-        string $order = 'desc'
+        string $order = 'desc',
+        array $filters = []
     ): array {
-        return $this->getQueryBuilder()
+        $qb = $this->getQueryBuilder()
             ->select('adminLogin')
-            ->from(AdminLogin::class, 'adminLogin')
+            ->from(AdminLogin::class, 'adminLogin');
+
+        if (! empty($filters['identity'])) {
+            $qb->andWhere($qb->expr()->like('adminLogin.identity', ':identity'))
+                ->setParameter('identity', $filters['identity']);
+        }
+
+        if (! empty($filters['status'])) {
+            $qb->andWhere($qb->expr()->like('adminLogin.loginStatus', ':status'))
+                ->setParameter('status', $filters['status']);
+        }
+
+        return $qb
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->setCacheable(true)
@@ -129,11 +142,23 @@ class AdminRepository extends AbstractRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function countAdminLogins(): mixed
+    public function countAdminLogins(array $filters = []): mixed
     {
-        return $this->getQueryBuilder()
+        $qb = $this->getQueryBuilder()
             ->select('count(adminLogin)')
-            ->from(AdminLogin::class, 'adminLogin')
+            ->from(AdminLogin::class, 'adminLogin');
+
+        if (! empty($filters['identity'])) {
+            $qb->andWhere($qb->expr()->like('adminLogin.identity', ':identity'))
+                ->setParameter('identity', $filters['identity']);
+        }
+
+        if (! empty($filters['status'])) {
+            $qb->andWhere($qb->expr()->like('adminLogin.loginStatus', ':status'))
+                ->setParameter('status', $filters['status']);
+        }
+
+        return $qb
             ->getQuery()
             ->getSingleScalarResult();
     }

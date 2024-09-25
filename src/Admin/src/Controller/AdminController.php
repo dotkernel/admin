@@ -19,7 +19,10 @@ use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
+use Admin\App\Pagination;
 use Admin\App\Plugin\FormsPlugin;
+use Admin\Setting\Entity\Setting;
+use Admin\Setting\Service\SettingService;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -52,7 +55,8 @@ class AdminController extends AbstractActionController
         FlashMessengerInterface::class,
         FormsPlugin::class,
         AdminForm::class,
-        "dot-log.default_logger"
+        SettingService::class,
+        "dot-log.default_logger",
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -62,7 +66,8 @@ class AdminController extends AbstractActionController
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
         protected AdminForm $adminForm,
-        protected Logger $logger
+        protected SettingService $settingService,
+        protected Logger $logger,
     ) {
     }
 
@@ -407,6 +412,48 @@ class AdminController extends AbstractActionController
         );
 
         return new JsonResponse($result);
+    }
+
+    public function simpleLoginsAction(): ResponseInterface
+    {
+        $params = [
+            'offset'   => $this->getQueryParam('offset', 0, 'int'),
+            'limit'    => $this->getQueryParam('limit', 10, 'int'),
+            'sort'     => $this->getQueryParam('sort', 'created'),
+            'order'    => $this->getQueryParam('order', 'desc'),
+            'identity' => $this->getQueryParam('identity'),
+            'status'   => $this->getQueryParam('status'),
+        ];
+
+        $logins = $this->adminService->getAdminLogins(
+            $params['offset'],
+            $params['limit'],
+            $params['sort'],
+            $params['order'],
+            [
+                'identity' => $params['identity'],
+                'status'   => $params['status'],
+            ]
+        );
+
+        $settings = $this->settingService->findOneBy([
+            'admin'      => $this->adminService->getAdminRepository()->findOneBy([
+                'identity' => $this->authenticationService->getIdentity()->getIdentity(),
+            ]),
+            'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
+        ]);
+
+        return new HtmlResponse(
+            $this->template->render('admin::simple-logins', [
+                'params'     => $params,
+                'logins'     => $logins['rows'],
+                'settings'   => $settings?->getValue() ?? [],
+                'statuses'   => [AdminLogin::LOGIN_FAIL, AdminLogin::LOGIN_SUCCESS],
+                'identities' => $this->adminService->getAdminLoginIdentities(),
+                'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
+                'pagination' => new Pagination($logins['total'], $params['offset'], $params['limit']),
+            ])
+        );
     }
 
     private function logErrors(Throwable $e, string $message): void

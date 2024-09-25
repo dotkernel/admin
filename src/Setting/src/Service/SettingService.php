@@ -18,9 +18,14 @@ class SettingService
     {
     }
 
-    public function findOneBy(array $filters): ?object
+    public function findOneBy(array $filters): ?Setting
     {
-        return $this->settingRepository->findOneBy($filters);
+        $setting = $this->settingRepository->findOneBy($filters);
+        if ($setting instanceof Setting) {
+            return $setting;
+        }
+
+        return null;
     }
 
     public function createSetting(Admin $admin, string $identifier, array $data): Setting

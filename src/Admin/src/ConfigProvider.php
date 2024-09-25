@@ -14,6 +14,7 @@ use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Form\LoginForm;
+use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
 use Admin\Admin\Service\AdminService;
@@ -53,6 +54,7 @@ class ConfigProvider
                 AdminService::class          => AttributedServiceFactory::class,
                 AdminRepository::class       => AttributedRepositoryFactory::class,
                 AdminRoleRepository::class   => AttributedRepositoryFactory::class,
+                AdminLoginRepository::class  => AttributedRepositoryFactory::class,
                 AdminForm::class             => ElementFactory::class,
                 AuthenticationService::class => AuthenticationServiceFactory::class,
                 AuthenticationAdapter::class => AttributedServiceFactory::class,
