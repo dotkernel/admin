@@ -17,3 +17,4 @@ import './components/_googleMaps';
 import './components/_util';
 import './components/_bsTable';
 import './components/_admin';
+import './components/_main';

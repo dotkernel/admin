@@ -10,6 +10,7 @@ use Admin\App\Factory\EntityListenerResolverFactory;
 use Admin\App\Factory\FormsPluginFactory;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Resolver\EntityListenerResolver;
+use Admin\App\Twig\Extension\RouteExtension;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -44,6 +45,7 @@ class ConfigProvider
                 PageController::class                 => AttributedServiceFactory::class,
                 PluginManager::class                  => PluginManagerFactory::class,
                 FormsPlugin::class                    => FormsPluginFactory::class,
+                RouteExtension::class                 => AttributedServiceFactory::class,
             ],
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
