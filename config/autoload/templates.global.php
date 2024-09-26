@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Admin\App\Twig\Extension\RouteExtension;
 use Dot\Twig\Extension\DateExtension;
 use Dot\Twig\Extension\TranslationExtension;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -31,6 +32,7 @@ return [
         'cache_dir'       => 'data/cache/twig',
         'extensions'      => [
             DateExtension::class,
+            RouteExtension::class,
             TranslationExtension::class,
         ],
         'globals'         => [

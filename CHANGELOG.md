@@ -1,5 +1,28 @@
 # Changelog
 
+## 5.0.3 - 2024-09-26
+
+### Changed
+
+* Nothing
+
+### Added
+
+* Issue [#284](https://github.com/dotkernel/admin/issues/284): Created file `CHANGELOG.md` by @alexmerlin in [#285](https://github.com/dotkernel/admin/pull/285)
+* Issue [#282](https://github.com/dotkernel/admin/issues/282): Show current page as active/open in left menu by @alexmerlin in [#286](https://github.com/dotkernel/admin/pull/286)
+
+### Deprecated
+
+* Nothing
+
+### Removed
+
+* Nothing
+
+### Fixed
+
+* Nothing
+
 ## 5.0.2 - 2024-09-25
 
 ### Changed
