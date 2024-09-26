@@ -1,3 +1,4 @@
+{% set currentRoute = getCurrentRoute() %}
 <div class="sidebar">
     <div class="sidebar-inner">
         <div class="sidebar-logo">
@@ -19,7 +20,7 @@
                 </div>
                 <div class="peer">
                     <div class="mobile-toggle sidebar-toggle">
-                        <a href="" class="td-n">
+                        <a class="td-n cur-p">
                             <i class="ti-arrow-circle-left"></i>
                         </a>
                     </div>
@@ -28,15 +29,15 @@
         </div>
         <ul class="sidebar-menu scrollable pos-r">
             <li class="nav-item mT-30">
-                <a class="sidebar-link" href="{{ path('dashboard') }}">
+                <a class="sidebar-link{{ currentRoute == path('dashboard') ? ' text-primary fw-medium current-route' }}" href="{{ path('dashboard') }}">
                     <span class="icon-holder">
                         <i class="c-blue-500 ti-home"></i>
                     </span>
                     <span class="title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
+            <li class="nav-item dropdown nav-group">
+                <a class="dropdown-toggle cur-p">
                     <span class="icon-holder">
                         <i class="c-teal-500 ti-view-list-alt"></i>
                     </span>
@@ -47,24 +48,24 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'manage'}) }}">
+                        <a href="{{ path('admin', {action: 'manage'}) }}" class="{{ currentRoute == path('admin', {action: 'manage'}) ? 'text-primary fw-medium current-route' }}">
                             <span>List</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'logins'}) }}">
+                        <a href="{{ path('admin', {action: 'logins'}) }}" class="{{ currentRoute == path('admin', {action: 'logins'}) ? 'text-primary fw-medium current-route' }}">
                             <span>View logins</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'simple-logins'}) }}">
+                        <a href="{{ path('admin', {action: 'simple-logins'}) }}" class="{{ currentRoute == path('admin', {action: 'simple-logins'}) ? 'text-primary fw-medium current-route' }}">
                             <span>View logins v2</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="sidebar-link" href="{{ path('page', {action: 'components'}) }}">
+                <a class="sidebar-link{{ currentRoute == path('page', {action: 'components'}) ? ' text-primary fw-medium current-route' }}" href="{{ path('page', {action: 'components'}) }}">
                     <span class="icon-holder">
                         <i class="c-pink-500 ti-palette"></i>
                     </span>
