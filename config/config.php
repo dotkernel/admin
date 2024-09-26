@@ -27,7 +27,7 @@ $aggregator = new ConfigAggregator([
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     Mezzio\Twig\ConfigProvider::class,
 
-    // DotKernel packages
+    // Dotkernel packages
     Dot\Cli\ConfigProvider::class,
     Dot\DataFixtures\ConfigProvider::class,
     Dot\DependencyInjection\ConfigProvider::class,
@@ -47,7 +47,7 @@ $aggregator = new ConfigAggregator([
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
-    // DotKernel modules
+    // Dotkernel modules
     Admin\App\ConfigProvider::class,
     Admin\Admin\ConfigProvider::class,
     Admin\Setting\ConfigProvider::class,

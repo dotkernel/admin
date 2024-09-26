@@ -24,7 +24,7 @@
                                     data-bs-placement="top"
                                     data-bs-custom-class="custom-tooltip"
                                     data-bs-title="Filter by login identity">
-                                <option value="">Select identity</option>
+                                <option value="">Select identity ({{ identities|length }})</option>
                                 {% for identity in identities %}
                                 <option value="{{ identity }}" {{ identity == params.identity ? 'selected' : '' }}>{{ identity }}</option>
                                 {% endfor %}

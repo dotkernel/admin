@@ -11,14 +11,14 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{% block title %}{% endblock %} - DotKernel</title>
+    <title>{% block title %}{% endblock %} - Dotkernel</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        <!--[if lt IE 9]>
-        <script src="{{ asset('js/html5shiv.js') }}"></script>
-        <script src="{{ asset('js/respond.min.js') }}"></script>
-        <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('js/html5shiv.js') }}"></script>
+    <script src="{{ asset('js/respond.min.js') }}"></script>
+    <![endif]-->
 </head>
 <body class="app">
     {{ include('@partial/left-menu.html.twig') }}
