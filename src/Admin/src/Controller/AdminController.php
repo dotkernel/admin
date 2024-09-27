@@ -180,8 +180,6 @@ class AdminController extends AbstractActionController
         assert($admin instanceof Admin);
 
         $form = new AdminDeleteForm();
-        $form->setAttribute('id', 'deleteAdminForm');
-        $form->setAttribute('method', RequestMethodInterface::METHOD_POST);
         $form->setAttribute(
             'action',
             $this->router->generateUri('admin', ['action' => 'delete', 'uuid' => $uuid])
@@ -304,7 +302,7 @@ class AdminController extends AbstractActionController
 
         return new HtmlResponse(
             $this->template->render('admin::login', [
-                'form' => $form,
+                'form' => $form->prepare(),
             ])
         );
     }
@@ -320,16 +318,19 @@ class AdminController extends AbstractActionController
 
     public function accountAction(): ResponseInterface
     {
-        $form               = new AccountForm();
+        $accountForm        = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
-        $identity           = $this->authenticationService->getIdentity();
-        $admin              = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
+        $changePasswordForm
+            ->setAttribute('action', $this->router->generateUri('admin', ['action' => 'change-password']));
+
+        $identity = $this->authenticationService->getIdentity();
+        $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
 
         if ($this->isPost()) {
-            $form->setData($this->getPostParams());
-            if ($form->isValid()) {
+            $accountForm->setData($this->getPostParams());
+            if ($accountForm->isValid()) {
                 /** @var array $result */
-                $result = $form->getData();
+                $result = $accountForm->getData();
                 try {
                     $this->adminService->updateAdmin($admin, $result);
                     $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
@@ -341,17 +342,17 @@ class AdminController extends AbstractActionController
                     $this->messenger->addError(Message::AN_ERROR_OCCURRED);
                 }
             } else {
-                $this->messenger->addError($this->forms->getMessagesAsString($form));
+                $this->messenger->addError($this->forms->getMessagesAsString($accountForm));
             }
             return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
         }
 
-        $form->bind($admin);
+        $accountForm->bind($admin);
 
         return new HtmlResponse(
             $this->template->render('admin::account', [
-                'form'               => $form,
-                'changePasswordForm' => $changePasswordForm,
+                'accountForm'        => $accountForm->prepare(),
+                'changePasswordForm' => $changePasswordForm->prepare(),
             ])
         );
     }

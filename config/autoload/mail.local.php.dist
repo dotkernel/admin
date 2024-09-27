@@ -33,7 +33,7 @@ return [
 //            message configuration
             'message_options' => [
                 'from'          => '',
-                'from_name'     => 'DotKernel',
+                'from_name'     => 'Dotkernel',
                 'reply_to'      => '',
                 'reply_to_name' => '',
                 'to'            => [],

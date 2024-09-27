@@ -22,6 +22,8 @@ class AdminDeleteForm extends Form
 
         $this->init();
 
+        $this->setAttribute('id', 'deleteAdminForm');
+
         $this->inputFilter = new AdminDeleteInputFilter();
         $this->inputFilter->init();
     }

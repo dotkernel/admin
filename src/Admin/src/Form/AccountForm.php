@@ -36,6 +36,7 @@ class AccountForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Identity...',
+                'class'       => 'form-control',
             ],
         ], ['priority' => -9]);
 
@@ -47,6 +48,7 @@ class AccountForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'First name...',
+                'class'       => 'form-control',
             ],
         ], ['priority' => -10]);
 
@@ -58,6 +60,7 @@ class AccountForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Last name...',
+                'class'       => 'form-control',
             ],
         ], ['priority' => -11]);
 
@@ -67,6 +70,7 @@ class AccountForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Update account',
+                'class' => 'btn btn-primary btn-color',
             ],
         ], ['priority' => -100]);
 

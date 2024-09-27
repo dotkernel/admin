@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/app/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/app/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/app/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('images/app/favicon/site.webmanifest') }}">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
     <title>Sign In</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -14,36 +21,25 @@
                     <div class="pos-a centerXY">
                         <div class="bgc-white bdrs-50p w-100">
                             <a href="{{ path('dashboard') }}">
-                                <img class="pos-a centerXY logo-img" src="{{ asset('images/app/logo.svg') }}" alt="">
+                                <img class="pos-a centerXY logo-img" src="{{ asset('images/app/logo.svg') }}" alt="Dotkernel logo" />
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    {% set dummy = form.prepare() %}
                     {{ form().openTag(form)|raw }}
                     <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
                     <div class="mb-3">
-                        {% set username = form.get('username') %}
-                        {% set elementTranslatePlaceholder = username.getAttribute('placeholder')|trans|raw %}
-                        {% set dummy = username.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                        {{ formElement(username) }}
+                        {{ formElement(form.get('username')) }}
                     </div>
                     <div class="mb-3">
-                        {% set password = form.get('password') %}
-                        {% set elementTranslatePlaceholder = password.getAttribute('placeholder')|trans|raw %}
-                        {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
-                        {{ formElement(password) }}
+                        {{ formElement(form.get('password')) }}
                     </div>
-                    {% set submit = form.get('submit') %}
-                    {% set submitValue = submit.getValue|trans|raw %}
-                    {% set dummy = submit.setAttribute('value', submitValue) %}
-
                     {{ messagesPartial('partial::alerts', {}, null, 'user-login') }}
 
                     {{ formElement(form.get('loginCsrf')) }}
 
-                    {{ formSubmit(submit) }}
+                    {{ formSubmit(form.get('submit')) }}
 
                     {{ form().closeTag()|raw }}
                 </div>

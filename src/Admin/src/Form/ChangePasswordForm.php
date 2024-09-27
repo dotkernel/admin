@@ -36,6 +36,7 @@ class ChangePasswordForm extends Form
             ],
             'attributes' => [
                 'placeholder' => '',
+                'class'       => 'form-control',
             ],
         ]);
 
@@ -47,6 +48,7 @@ class ChangePasswordForm extends Form
             ],
             'attributes' => [
                 'placeholder' => '',
+                'class'       => 'form-control',
             ],
         ]);
 
@@ -58,6 +60,7 @@ class ChangePasswordForm extends Form
             ],
             'attributes' => [
                 'placeholder' => '',
+                'class'       => 'form-control',
             ],
         ]);
 
@@ -67,6 +70,7 @@ class ChangePasswordForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Change Password',
+                'class' => 'btn btn-primary btn-color',
             ],
         ], ['priority' => -100]);
 
