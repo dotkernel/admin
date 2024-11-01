@@ -7,9 +7,12 @@ namespace Admin\Admin\Service;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
+use Admin\App\Enum\SuccessFailureEnum;
+use Admin\App\Enum\YesNoEnum;
 use Admin\App\Exception\IdentityException;
 use Admin\App\Service\IpService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +21,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationServiceInterface;
 
+use function assert;
 use function implode;
 use function is_string;
 use function password_hash;
@@ -81,7 +85,7 @@ class AdminService implements AdminServiceInterface
                 'lastName'  => $admin->getLastname(),
                 'roles'     => implode(", ", $roles),
                 'status'    => $admin->getStatus(),
-                'created'   => $admin->getCreated()->format("Y-m-d"),
+                'created'   => $admin->getCreated()?->format("Y-m-d"),
             ];
         }
 
@@ -142,16 +146,20 @@ class AdminService implements AdminServiceInterface
             throw IdentityException::duplicate();
         }
 
+        $status = AdminStatusEnum::tryFrom($data['status']);
+        assert($status instanceof AdminStatusEnum);
+
         $admin = (new Admin())
             ->setIdentity($data['identity'])
             ->setPassword(password_hash($data['password'], PASSWORD_DEFAULT))
             ->setFirstname($data['firstName'])
             ->setLastname($data['lastName'])
-            ->setStatus($data['status']);
+            ->setStatus($status);
         foreach ($data['roles'] as $roleUuid) {
-            $admin->addRole(
-                $this->adminRoleRepository->getRole($roleUuid)
-            );
+            $role = $this->adminRoleRepository->getRole($roleUuid);
+            if ($role instanceof AdminRole) {
+                $admin->addRole($role);
+            }
         }
 
         return $this->getAdminRepository()->saveAdmin($admin);
@@ -176,13 +184,17 @@ class AdminService implements AdminServiceInterface
             $admin->setLastname($data['lastName']);
         }
         if (! empty($data['status'])) {
-            $admin->setStatus($data['status']);
+            $status = AdminStatusEnum::tryFrom($data['status']);
+            assert($status instanceof AdminStatusEnum);
+            $admin->setStatus($status);
         }
         if (! empty($data['roles'])) {
             $admin->setRoles(new ArrayCollection());
             foreach ($data['roles'] as $roleUuid) {
                 $role = $this->adminRoleRepository->getRole($roleUuid);
-                $admin->addRole($role);
+                if ($role instanceof AdminRole) {
+                    $admin->addRole($role);
+                }
             }
         }
 
@@ -191,7 +203,7 @@ class AdminService implements AdminServiceInterface
         return $admin;
     }
 
-    public function logAdminVisit(array $serverParams, string $name, string $status): AdminLogin
+    public function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin
     {
         /**
          * For device information
@@ -201,14 +213,9 @@ class AdminService implements AdminServiceInterface
 
         $ipAddress = IpService::getUserIp($serverParams);
 
-        $country = ! empty($this->locationService->getCountry($ipAddress)->getName()) ?
-            $this->locationService->getCountry($ipAddress)->getName() : '';
-
-        $continent = ! empty($this->locationService->getContinent($ipAddress)->getName()) ?
-            $this->locationService->getContinent($ipAddress)->getName() : '';
-
-        $organization = ! empty($this->locationService->getOrganization($ipAddress)->getName()) ?
-            $this->locationService->getOrganization($ipAddress)->getName() : '';
+        $country      = (string) $this->locationService->getCountry($ipAddress)->getName();
+        $continent    = (string) $this->locationService->getContinent($ipAddress)->getName();
+        $organization = (string) $this->locationService->getOrganization($ipAddress)->getName();
 
         $adminLogin = (new AdminLogin())
             ->setAdminIp($ipAddress)
@@ -218,7 +225,7 @@ class AdminService implements AdminServiceInterface
             ->setDeviceType(null)
             ->setDeviceBrand(null)
             ->setDeviceModel(null)
-            ->setIsMobile(AdminLogin::IS_MOBILE_NO)
+            ->setIsMobile(YesNoEnum::No)
             ->setOsName(null)
             ->setOsVersion(null)
             ->setOsPlatform(null)

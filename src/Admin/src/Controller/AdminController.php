@@ -7,7 +7,7 @@ namespace Admin\Admin\Controller;
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
-use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
@@ -17,6 +17,7 @@ use Admin\Admin\FormData\AdminFormData;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
+use Admin\App\Enum\SuccessFailureEnum;
 use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
 use Admin\App\Pagination;
@@ -269,9 +270,9 @@ class AdminController extends AbstractActionController
                     $this->adminService->logAdminVisit(
                         $this->getServerParams(),
                         $data['username'],
-                        AdminLogin::LOGIN_SUCCESS
+                        SuccessFailureEnum::Success
                     );
-                    if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
+                    if ($identity->getStatus() === AdminStatusEnum::Inactive) {
                         $this->authenticationService->clearIdentity();
                         $this->messenger->addError('Admin is inactive', 'user-login');
                         $this->messenger->addData('shouldRebind', true);
@@ -285,7 +286,7 @@ class AdminController extends AbstractActionController
                     $this->adminService->logAdminVisit(
                         $this->getServerParams(),
                         $data['username'],
-                        AdminLogin::LOGIN_FAIL
+                        SuccessFailureEnum::Failure
                     );
                     $this->messenger->addData('shouldRebind', true);
                     $this->forms->saveState($form);
@@ -449,7 +450,7 @@ class AdminController extends AbstractActionController
                 'params'     => $params,
                 'logins'     => $logins['rows'],
                 'settings'   => $settings?->getValue() ?? [],
-                'statuses'   => [AdminLogin::LOGIN_FAIL, AdminLogin::LOGIN_SUCCESS],
+                'statuses'   => SuccessFailureEnum::cases(),
                 'identities' => $this->adminService->getAdminLoginIdentities(),
                 'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
                 'pagination' => new Pagination($logins['total'], $params['offset'], $params['limit']),

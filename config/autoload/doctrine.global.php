@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Admin\Admin\DBAL\Types\AdminStatusEnumType;
+use Admin\App\DBAL\Types\SuccessFailureEnumType;
+use Admin\App\DBAL\Types\YesNoEnumType;
 use Admin\App\Resolver\EntityListenerResolver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
@@ -49,6 +52,9 @@ return [
             UuidType::NAME                  => UuidType::class,
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
+            AdminStatusEnumType::NAME       => AdminStatusEnumType::class,
+            SuccessFailureEnumType::NAME    => SuccessFailureEnumType::class,
+            YesNoEnumType::NAME             => YesNoEnumType::class,
         ],
         'cache'         => [
             'array'      => [

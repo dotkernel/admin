@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\Adapter;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Entity\Admin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
@@ -272,7 +273,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ->setLastName('test')
                 ->setIdentity('test@example.com')
                 ->setPassword(password_hash('password', PASSWORD_DEFAULT))
-                ->setStatus(Admin::STATUS_ACTIVE)
+                ->setStatus(AdminStatusEnum::Active)
         );
 
         $entityManager = $this->createMock(EntityManager::class);
@@ -290,7 +291,7 @@ class AuthenticationAdapterTest extends UnitTest
                     ],
                     'options'             => [
                         'test' => [
-                            'value'   => Admin::STATUS_ACTIVE,
+                            'value'   => AdminStatusEnum::Active,
                             'message' => 'Unable to sign in because the account is not active.',
                         ],
                     ],
@@ -320,7 +321,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ->setLastName('test')
                 ->setIdentity('test@example.com')
                 ->setPassword(password_hash('password', PASSWORD_DEFAULT))
-                ->setStatus(Admin::STATUS_ACTIVE)
+                ->setStatus(AdminStatusEnum::Active)
         );
 
         $entityManager = $this->createMock(EntityManager::class);
@@ -365,7 +366,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ->setLastName('test')
                 ->setIdentity('test@example.com')
                 ->setPassword(password_hash('password', PASSWORD_DEFAULT))
-                ->setStatus(Admin::STATUS_ACTIVE)
+                ->setStatus(AdminStatusEnum::Active)
         );
 
         $entityManager = $this->createMock(EntityManager::class);
@@ -383,7 +384,7 @@ class AuthenticationAdapterTest extends UnitTest
                     ],
                     'options'             => [
                         'status' => [
-                            'value' => Admin::STATUS_ACTIVE,
+                            'value' => AdminStatusEnum::Active,
                         ],
                     ],
                 ],
@@ -410,7 +411,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ->setLastName('test')
                 ->setIdentity('test@example.com')
                 ->setPassword(password_hash('password', PASSWORD_DEFAULT))
-                ->setStatus(Admin::STATUS_ACTIVE)
+                ->setStatus(AdminStatusEnum::Active)
         );
 
         $entityManager = $this->createMock(EntityManager::class);
@@ -429,7 +430,7 @@ class AuthenticationAdapterTest extends UnitTest
                     ],
                     'options'             => [
                         'status' => [
-                            'value'   => Admin::STATUS_ACTIVE,
+                            'value'   => AdminStatusEnum::Active,
                             'message' => 'Unable to sign in because the account is not active.',
                         ],
                     ],

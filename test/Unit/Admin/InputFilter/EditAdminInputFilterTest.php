@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\InputFilter;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
 use AdminTest\Unit\UnitTest;
 use Laminas\Session\Container;
@@ -28,7 +28,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -42,7 +42,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -55,7 +55,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -68,7 +68,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -130,7 +130,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -144,7 +144,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => '',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -158,7 +158,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => null,
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -172,7 +172,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => '    ',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -186,7 +186,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => str_repeat('a', 7),
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -208,7 +208,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => str_repeat('a', 151),
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -237,7 +237,7 @@ class EditAdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -251,7 +251,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => '',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -265,7 +265,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => null,
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -279,7 +279,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => '',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -293,7 +293,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => str_repeat('a', 7),
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -315,7 +315,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => str_repeat('a', 151),
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -337,7 +337,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'passwords',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -366,7 +366,7 @@ class EditAdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -380,7 +380,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => null,
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -394,7 +394,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => '',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -408,7 +408,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => str_repeat('a', 151),
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -437,7 +437,7 @@ class EditAdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -451,7 +451,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => null,
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -465,7 +465,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => '',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -479,7 +479,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => str_repeat('a', 151),
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],
@@ -556,7 +556,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -575,7 +575,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [],
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -602,7 +602,7 @@ class EditAdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRole::ROLE_ADMIN,
             ],

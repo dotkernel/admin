@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
@@ -23,13 +24,6 @@ class Admin extends AbstractEntity implements AdminInterface
 {
     use TimestampsTrait;
 
-    public const STATUS_ACTIVE   = 'active';
-    public const STATUS_INACTIVE = 'pending';
-    public const STATUSES        = [
-        self::STATUS_ACTIVE,
-        self::STATUS_INACTIVE,
-    ];
-
     #[ORM\Column(name: "identity", type: "string", length: 100, unique: true)]
     protected string $identity;
 
@@ -42,14 +36,8 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\Column(name: "password", type: "string", length: 100)]
     protected string $password;
 
-    #[ORM\Column(
-        name: "status",
-        type: "string",
-        length: 20,
-        nullable: false,
-        columnDefinition: "ENUM('pending', 'active')"
-    )]
-    protected string $status = self::STATUS_ACTIVE;
+    #[ORM\Column(type: "admin_status_enum", options: ["default" => AdminStatusEnum::Active])]
+    protected AdminStatusEnum $status = AdminStatusEnum::Active;
 
     #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: "EAGER")]
     #[ORM\JoinTable(name: "admin_roles")]
@@ -57,7 +45,7 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\InverseJoinColumn(name: "roleUuid", referencedColumnName: "uuid")]
     protected Collection $roles;
 
-    #[ORM\OneToMany(mappedBy: 'admin', targetEntity: Setting::class)]
+    #[ORM\OneToMany(targetEntity: Setting::class, mappedBy: 'admin')]
     protected Collection $settings;
 
     public function __construct()
@@ -137,12 +125,12 @@ class Admin extends AbstractEntity implements AdminInterface
         return password_verify($password, $this->getPassword());
     }
 
-    public function getStatus(): string
+    public function getStatus(): AdminStatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(AdminStatusEnum $status): self
     {
         $this->status = $status;
 

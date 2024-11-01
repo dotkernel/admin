@@ -7,6 +7,7 @@ namespace Admin\Admin\Service;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Repository\AdminRepository;
+use Admin\App\Enum\SuccessFailureEnum;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -53,7 +54,7 @@ interface AdminServiceInterface
      */
     public function updateAdmin(Admin $admin, array $data): Admin;
 
-    public function logAdminVisit(array $serverParams, string $name, string $status): AdminLogin;
+    public function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin;
 
     public function getAdminFormProcessedRoles(): array;
 }

@@ -70,7 +70,8 @@
         "psr-4": {
             "Admin\\App\\": "src/App/src/",
             "Admin\\Admin\\": "src/Admin/src/",
-            "Admin\\Setting\\": "src/Setting/src/"
+            "Admin\\Setting\\": "src/Setting/src/",
+            "Admin\\Fixtures\\": "data/doctrine/fixtures"
         }
     },
     "autoload-dev": {
