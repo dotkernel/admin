@@ -37,11 +37,13 @@ class FormsPluginTest extends UnitTest
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
-        $oldData     = [
+        /** @var array<string, string> $oldData */
+        $oldData = [
             'username'  => 'old-username',
             'password'  => 'old-password',
             'loginCsrf' => $hash,
         ];
+
         $oldMessages = [];
 
         $newData     = [

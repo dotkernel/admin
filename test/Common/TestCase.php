@@ -32,7 +32,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             );
         }
 
-        if (! $this->getEntityManager()->getConnection()->getParams()['memory'] ?? false) {
+        if (! ($this->getEntityManager()->getConnection()->getParams()['memory'] ?? false)) {
             throw new RuntimeException(
                 'You are running tests in a non in-memory database. Did you forget to create local.test.php?'
             );

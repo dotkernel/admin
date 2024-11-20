@@ -12,7 +12,7 @@ use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
-use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\AuthenticationService;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -36,7 +36,7 @@ class AdminControllerTest extends UnitTest
             $this->createMock(AdminServiceInterface::class),
             $this->createMock(RouterInterface::class),
             $this->createMock(TemplateRendererInterface::class),
-            $this->createMock(AuthenticationServiceInterface::class),
+            $this->createMock(AuthenticationService::class),
             $this->createMock(FlashMessengerInterface::class),
             $this->createMock(FormsPlugin::class),
             $this->createMock(AdminForm::class),

@@ -1,0 +1,22 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+parameters:
+    level: 5
+    paths:
+        - src
+        - test
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '/Parameter #1 \$inputFilter of method .*::setInputFilter\(\) expects Laminas\\InputFilter\\InputFilterInterface<[^>]+>, [^ ]+ given\./'
+        - '/Parameter #1 \$expected of method PHPUnit\\Framework\\Assert::assertSame\(\) contains unresolvable type\./'
+        -
+            message: '#Call to method PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .* will always evaluate to true.#'
+            path: test
+        -
+            message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface::getInputs\(\)#'
+            path: test
+        -
+            message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface<Laminas\\Form\\FormInterface>::init\(\)#'
+            path: src
+
