@@ -14,7 +14,17 @@ use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 return [
-    'doctrine' => [
+    'doctrine'            => [
+        'cache'         => [
+            'array'      => [
+                'class' => ArrayAdapter::class,
+            ],
+            'filesystem' => [
+                'class'     => FilesystemAdapter::class,
+                'directory' => getcwd() . '/data/cache',
+                'namespace' => 'doctrine',
+            ],
+        ],
         'configuration' => [
             'orm_default' => [
                 'entity_listener_resolver' => EntityListenerResolver::class,
@@ -56,16 +66,7 @@ return [
             SuccessFailureEnumType::NAME    => SuccessFailureEnumType::class,
             YesNoEnumType::NAME             => YesNoEnumType::class,
         ],
-        'cache'         => [
-            'array'      => [
-                'class' => ArrayAdapter::class,
-            ],
-            'filesystem' => [
-                'class'     => FilesystemAdapter::class,
-                'directory' => getcwd() . '/data/cache',
-                'namespace' => 'doctrine',
-            ],
-        ],
         'fixtures'      => getcwd() . '/data/doctrine/fixtures',
     ],
+    'resultCacheLifetime' => 600,
 ];
