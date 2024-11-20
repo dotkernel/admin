@@ -63,7 +63,7 @@ class AdminController extends AbstractActionController
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
-        protected AuthenticationService $authenticationService,
+        protected AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
         protected AdminForm $adminForm,
