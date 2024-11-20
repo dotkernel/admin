@@ -93,13 +93,14 @@
         "mezzio": "mezzio --ansi",
         "check": [
             "@cs-check",
-            "@test"
+            "@test",
+            "@static-analysis"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
-        "static-analysis": "psalm --shepherd --stats",
+        "static-analysis": "phpstan analyse",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "twig-cs-check": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php",
