@@ -7,13 +7,11 @@ use Doctrine\Migrations\Configuration\Migration\PhpFile;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManager;
 
-$container = require __DIR__ . '/container.php';
+$container = require 'config/container.php';
 
-$config = new PhpFile('config/migrations.php');
-
-$entityManager = $container->get(EntityManager::class);
-
-// register enum type for doctrine
-$entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
-
-return DependencyFactory::fromEntityManager($config, new ExistingEntityManager($entityManager));
+return DependencyFactory::fromEntityManager(
+    new PhpFile('config/migrations.php'),
+    new ExistingEntityManager(
+        $container->get(EntityManager::class)
+    )
+);
