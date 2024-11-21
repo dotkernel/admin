@@ -20,7 +20,7 @@ class AdminInterfaceTest extends UnitTest
                 return [];
             }
 
-            public function getIdentity(): ?string
+            public function getIdentity(): string
             {
                 return 'test';
             }
@@ -30,7 +30,7 @@ class AdminInterfaceTest extends UnitTest
                 return $this;
             }
 
-            public function getFirstName(): ?string
+            public function getFirstName(): string
             {
                 return 'test';
             }
@@ -40,7 +40,7 @@ class AdminInterfaceTest extends UnitTest
                 return $this;
             }
 
-            public function getLastName(): ?string
+            public function getLastName(): string
             {
                 return 'test';
             }
@@ -50,7 +50,7 @@ class AdminInterfaceTest extends UnitTest
                 return $this;
             }
 
-            public function getPassword(): ?string
+            public function getPassword(): string
             {
                 return 'test';
             }

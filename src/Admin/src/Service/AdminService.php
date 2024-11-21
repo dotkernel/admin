@@ -16,7 +16,6 @@ use Admin\App\Enum\YesNoEnum;
 use Admin\App\Exception\IdentityException;
 use Admin\App\Service\IpService;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationServiceInterface;
@@ -44,7 +43,7 @@ class AdminService implements AdminServiceInterface
     ) {
     }
 
-    public function getAdminRepository(): AdminRepository|EntityRepository
+    public function getAdminRepository(): AdminRepository
     {
         return $this->adminRepository;
     }
