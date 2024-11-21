@@ -81,9 +81,11 @@ class AdminDeleteForm extends Form
         return $this->inputFilter;
     }
 
-    public function setInputFilter(InputFilterInterface $inputFilter): void
+    public function setInputFilter(InputFilterInterface $inputFilter): FormInterface
     {
         $this->inputFilter = $inputFilter;
         $this->inputFilter->init();
+
+        return $this;
     }
 }

@@ -7,13 +7,12 @@ namespace Admin\Admin\Service;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Repository\AdminRepository;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 
 interface AdminServiceInterface
 {
-    public function getAdminRepository(): AdminRepository|EntityRepository;
+    public function getAdminRepository(): AdminRepository;
 
     public function exists(string $identity = ''): bool;
 

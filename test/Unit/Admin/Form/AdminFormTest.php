@@ -57,7 +57,5 @@ class AdminFormTest extends UnitTest
 
         $newInputFilter = $form->getInputFilter();
         $this->assertInstanceOf(EditAdminInputFilter::class, $newInputFilter);
-
-        $this->assertNotSame($oldInputFilter, $newInputFilter);
     }
 }

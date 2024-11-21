@@ -63,8 +63,11 @@
         "mezzio/mezzio-tooling": "^2.9.0",
         "phpunit/phpunit": "^10.5.9",
         "roave/security-advisories": "dev-latest",
-        "vimeo/psalm": "^5.20.0",
-        "vincentlanglet/twig-cs-fixer": "^3.0"
+        "vincentlanglet/twig-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "symfony/var-dumper": "^7.1"
     },
     "autoload": {
         "psr-4": {
@@ -90,13 +93,14 @@
         "mezzio": "mezzio --ansi",
         "check": [
             "@cs-check",
-            "@test"
+            "@test",
+            "@static-analysis"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
-        "static-analysis": "psalm --shepherd --stats",
+        "static-analysis": "phpstan analyse",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "twig-cs-check": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php",
