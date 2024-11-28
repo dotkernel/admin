@@ -11,8 +11,8 @@ use Dot\Rbac\Guard\Exception\RuntimeException;
 use Dot\Rbac\Guard\Guard\GuardInterface;
 use Dot\Rbac\Guard\Options\RbacGuardOptions;
 use Dot\Rbac\Guard\Provider\GuardsProviderInterface;
+use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\Http\Response;
 use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -58,7 +58,7 @@ class AuthMiddlewareTest extends UnitTest
         );
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->hasHeader('location'));
-        $this->assertEquals(Response::STATUS_CODE_302, $response->getStatusCode());
+        $this->assertEquals(StatusCodeInterface::STATUS_FOUND, $response->getStatusCode());
     }
 
     /**
@@ -144,7 +144,7 @@ class AuthMiddlewareTest extends UnitTest
         );
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->hasHeader('location'));
-        $this->assertEquals(Response::STATUS_CODE_302, $response->getStatusCode());
+        $this->assertEquals(StatusCodeInterface::STATUS_FOUND, $response->getStatusCode());
     }
 
     /**
