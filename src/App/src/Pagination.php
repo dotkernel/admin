@@ -18,7 +18,7 @@ readonly class Pagination
 
     public function __construct(
         private int $total,
-        private int $offset,
+        private int $offset = 0,
         private int $limit,
     ) {
         $this->range       = 5;
