@@ -28,6 +28,9 @@ class AdminForm extends Form
         $this->inputFilter->init();
     }
 
+    /**
+     * @param array $roles
+     */
     public function setRoles(array $roles): void
     {
         $this->roles = $roles;

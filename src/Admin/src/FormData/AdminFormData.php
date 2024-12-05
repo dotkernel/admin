@@ -14,6 +14,9 @@ class AdminFormData
     public ?string $status    = null;
     public array $roles       = [];
 
+    /**
+     * @return array
+     */
     public function getRoles(): array
     {
         return $this->roles;
@@ -32,6 +35,9 @@ class AdminFormData
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getArrayCopy(): array
     {
         return [
