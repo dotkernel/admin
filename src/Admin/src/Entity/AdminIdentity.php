@@ -32,16 +32,12 @@ class AdminIdentity implements UserInterface
         return $this->status;
     }
 
-    /**
-     * @return iterable
-     */
     public function getRoles(): iterable
     {
         return $this->roles;
     }
 
     /**
-     * @return array
      * @psalm-return array<string, mixed>
      */
     public function getDetails(): array
