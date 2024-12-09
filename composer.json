@@ -38,7 +38,7 @@
         "dotkernel/dot-flashmessenger": "^3.4.2",
         "dotkernel/dot-geoip": "^3.6.0",
         "dotkernel/dot-helpers": "^3.4.2",
-        "dotkernel/dot-mail": "^4.1.1",
+        "dotkernel/dot-mail": "^5.1.0",
         "dotkernel/dot-navigation": "^3.4.2",
         "dotkernel/dot-rbac-guard": "^3.4.2",
         "dotkernel/dot-session": "^5.6.0",
