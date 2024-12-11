@@ -8,6 +8,7 @@ use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Entity\AdminRole;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Exception;
 use Laminas\Authentication\Adapter\AdapterInterface;
@@ -64,6 +65,7 @@ class AuthenticationAdapter implements AdapterInterface
 
     /**
      * @throws Exception
+     * @throws ORMException
      */
     public function authenticate(): Result
     {
@@ -77,6 +79,7 @@ class AuthenticationAdapter implements AdapterInterface
         $identityClass = $repository->findOneBy([
             $this->config['orm_default']['identity_property'] => $this->getIdentity(),
         ]);
+        $this->entityManager->refresh($identityClass);
 
         if (null === $identityClass) {
             return new Result(
