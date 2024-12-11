@@ -79,7 +79,6 @@ class AuthenticationAdapter implements AdapterInterface
         $identityClass = $repository->findOneBy([
             $this->config['orm_default']['identity_property'] => $this->getIdentity(),
         ]);
-        $this->entityManager->refresh($identityClass);
 
         if (null === $identityClass) {
             return new Result(
@@ -88,6 +87,7 @@ class AuthenticationAdapter implements AdapterInterface
                 [$this->config['orm_default']['messages']['not_found']]
             );
         }
+        $this->entityManager->refresh($identityClass);
 
         $getCredential = "get" . ucfirst($this->config['orm_default']['credential_property']);
 
