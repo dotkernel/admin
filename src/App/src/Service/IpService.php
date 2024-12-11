@@ -6,6 +6,9 @@ namespace Admin\App\Service;
 
 use function filter_var;
 use function getenv;
+use function preg_replace_callback;
+use function str_repeat;
+use function strlen;
 
 use const FILTER_FLAG_IPV4;
 use const FILTER_FLAG_IPV6;
@@ -52,5 +55,18 @@ class IpService
                 FILTER_FLAG_NO_PRIV_RANGE |
                 FILTER_FLAG_NO_RES_RANGE
         ) === $ipAddress;
+    }
+
+    public static function obfuscateIpAddress(string $ipAddress, string $mask = 'x'): string
+    {
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $pattern = '/\d+$/';
+        } elseif (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $pattern = '/[a-z0-9]+$/i';
+        } else {
+            return $ipAddress;
+        }
+
+        return preg_replace_callback($pattern, fn (array $last) => str_repeat($mask, strlen($last[0])), $ipAddress);
     }
 }

@@ -205,7 +205,7 @@ class AdminService implements AdminServiceInterface
         $organization = $this->locationService->getOrganization($ipAddress)->getName();
 
         $adminLogin = (new AdminLogin())
-            ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
+            ->setAdminIp(IpService::obfuscateIpAddress($ipAddress))
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
