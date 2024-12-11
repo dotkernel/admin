@@ -200,17 +200,12 @@ class AdminService implements AdminServiceInterface
 
         $ipAddress = IpService::getUserIp($serverParams);
 
-        $country = ! empty($this->locationService->getCountry($ipAddress)->getName()) ?
-            $this->locationService->getCountry($ipAddress)->getName() : '';
-
-        $continent = ! empty($this->locationService->getContinent($ipAddress)->getName()) ?
-            $this->locationService->getContinent($ipAddress)->getName() : '';
-
-        $organization = ! empty($this->locationService->getOrganization($ipAddress)->getName()) ?
-            $this->locationService->getOrganization($ipAddress)->getName() : '';
+        $country      = $this->locationService->getCountry($ipAddress)->getName();
+        $continent    = $this->locationService->getContinent($ipAddress)->getName();
+        $organization = $this->locationService->getOrganization($ipAddress)->getName();
 
         $adminLogin = (new AdminLogin())
-            ->setAdminIp($ipAddress)
+            ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
