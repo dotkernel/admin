@@ -12,7 +12,6 @@ return [
                 'identity_class'      => Admin::class,
                 'identity_property'   => 'identity',
                 'credential_property' => 'password',
-                'credential_callable' => 'Admin\Admin\Doctrine\AdminAuthentication::verifyCredential',
                 'messages'            => [
                     'success'            => 'Authenticated successfully.',
                     'not_found'          => 'Identity not found.',

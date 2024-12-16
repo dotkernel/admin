@@ -38,7 +38,7 @@
         "dotkernel/dot-flashmessenger": "^3.4.2",
         "dotkernel/dot-geoip": "^3.6.0",
         "dotkernel/dot-helpers": "^3.4.2",
-        "dotkernel/dot-mail": "^4.1.1",
+        "dotkernel/dot-mail": "^5.1.0",
         "dotkernel/dot-navigation": "^3.4.2",
         "dotkernel/dot-rbac-guard": "^3.4.2",
         "dotkernel/dot-session": "^5.6.0",
@@ -57,9 +57,8 @@
     },
     "require-dev": {
         "filp/whoops": "^2.15.4",
-        "laminas/laminas-coding-standard": "^2.5.0",
+        "laminas/laminas-coding-standard": "^3.0",
         "laminas/laminas-development-mode": "^3.12.0",
-        "laminas/laminas-http": "^2.19.0",
         "mezzio/mezzio-tooling": "^2.9.0",
         "phpunit/phpunit": "^10.5.9",
         "roave/security-advisories": "dev-latest",
@@ -88,6 +87,9 @@
         "post-create-project-cmd": [
             "@development-enable"
         ],
+        "post-update-cmd": [
+            "php bin/composer-post-install-script.php"
+        ],
         "development-disable": "laminas-development-mode disable",
         "development-enable": "laminas-development-mode enable",
         "development-status": "laminas-development-mode status",
@@ -101,7 +103,7 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
-        "static-analysis": "phpstan analyse",
+        "static-analysis": "phpstan analyse --memory-limit 1G",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "twig-cs-check": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php",

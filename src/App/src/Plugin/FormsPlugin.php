@@ -80,10 +80,6 @@ class FormsPlugin implements PluginInterface
         return $messages;
     }
 
-    /**
-     * @param array $formMessages
-     * @return array
-     */
     protected function processFormMessages(array $formMessages): array
     {
         $messages = [];
