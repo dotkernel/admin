@@ -10,7 +10,7 @@ The many graphical components at your disposal ensure an intuitive user experien
 
 ## Documentation
 
-Documentation is available at: https://docs.dotkernel.org/admin
+Documentation is available at: https://docs.dotkernel.org/admin-documentation/
 
 ## Badges
 
