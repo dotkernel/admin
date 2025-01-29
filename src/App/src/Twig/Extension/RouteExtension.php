@@ -21,11 +21,26 @@ class RouteExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getCurrentRoute', [$this, 'getCurrentRoute']),
+            new TwigFunction('isRoute', [$this, 'isRoute']),
         ];
     }
 
     public function getCurrentRoute(): ?string
     {
         return $this->urlHelper->getRequest()?->getUri()?->getPath();
+    }
+
+    public function isRoute(?string $route): bool
+    {
+        if (null === $route) {
+            return false;
+        }
+
+        $currentRoute = $this->getCurrentRoute();
+        if (null === $currentRoute) {
+            return false;
+        }
+
+        return $currentRoute === $route;
     }
 }

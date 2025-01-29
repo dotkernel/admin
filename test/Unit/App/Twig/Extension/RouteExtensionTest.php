@@ -37,7 +37,7 @@ class RouteExtensionTest extends UnitTest
         );
 
         $functions = $routeExtension->getFunctions();
-        $this->assertCount(1, $functions);
+        $this->assertCount(2, $functions);
 
         $twigFunction = $functions[0];
         $this->assertInstanceOf(TwigFunction::class, $twigFunction);
@@ -61,5 +61,18 @@ class RouteExtensionTest extends UnitTest
         $urlHelper->setRequest($request);
         $routeExtension = new RouteExtension($urlHelper);
         $this->assertSame('/test', $routeExtension->getCurrentRoute());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testIsRoute(): void
+    {
+        $router    = $this->createMock(RouterInterface::class);
+        $request   = new ServerRequest(uri: new Uri('/test'));
+        $urlHelper = new UrlHelper($router);
+        $urlHelper->setRequest($request);
+        $routeExtension = new RouteExtension($urlHelper);
+        $this->assertSame(true, $routeExtension->isRoute('/test'));
     }
 }

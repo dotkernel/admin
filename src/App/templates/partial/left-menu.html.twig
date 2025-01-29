@@ -1,4 +1,3 @@
-{% set currentRoute = getCurrentRoute() %}
 <div class="sidebar">
     <div class="sidebar-inner">
         <div class="sidebar-logo">
@@ -27,51 +26,9 @@
                 </div>
             </div>
         </div>
+
         <ul class="sidebar-menu scrollable pos-r">
-            <li class="nav-item mT-30">
-                <a class="sidebar-link{{ currentRoute == path('dashboard') ? ' text-primary fw-medium current-route' }}" href="{{ path('dashboard') }}">
-                    <span class="icon-holder">
-                        <i class="c-blue-500 ti-home"></i>
-                    </span>
-                    <span class="title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item dropdown nav-group">
-                <a class="dropdown-toggle cur-p">
-                    <span class="icon-holder">
-                        <i class="c-teal-500 ti-view-list-alt"></i>
-                    </span>
-                    <span class="title">Manage Admins</span>
-                    <span class="arrow">
-                        <i class="ti-angle-right"></i>
-                    </span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'manage'}) }}" class="{{ currentRoute == path('admin', {action: 'manage'}) ? 'text-primary fw-medium current-route' }}">
-                            <span>List</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'logins'}) }}" class="{{ currentRoute == path('admin', {action: 'logins'}) ? 'text-primary fw-medium current-route' }}">
-                            <span>View logins</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="{{ path('admin', {action: 'simple-logins'}) }}" class="{{ currentRoute == path('admin', {action: 'simple-logins'}) ? 'text-primary fw-medium current-route' }}">
-                            <span>View logins v2</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="sidebar-link{{ currentRoute == path('page', {action: 'components'}) ? ' text-primary fw-medium current-route' }}" href="{{ path('page', {action: 'components'}) }}">
-                    <span class="icon-holder">
-                        <i class="c-pink-500 ti-palette"></i>
-                    </span>
-                    <span class="title">Components</span>
-                </a>
-            </li>
+            {{ navigationPartial('main_menu', 'partial::menu') }}
         </ul>
     </div>
 </div>

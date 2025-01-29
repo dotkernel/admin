@@ -1,0 +1,14 @@
+{% set lastKey = container|keys|last %}
+{% for page in container %}
+    {% if navigation.isAllowed(page) %}
+        <li>
+            <a href="{{ navigation.getHref(page) }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                <i class="{{ page.getOption('icon') }} mR-10"></i>
+                <span>{{ page.getOption('label') }}</span>
+            </a>
+        </li>
+        {% if loop.index0 < lastKey %}
+            <li role="separator" class="divider"></li>
+        {% endif %}
+    {% endif %}
+{% endfor %}
