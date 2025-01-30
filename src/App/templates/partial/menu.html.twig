@@ -1,63 +1,45 @@
-<ul class="{{ ulClass }}" id="{{ ulId }}">
+{% set extraAttributes = '' %}
+{% if page is defined %}
+<ul class="sidebar-menu scrollable pos-r">
+{% endif %}
     {% for page in container %}
-
         {% if navigation.isAllowed(page) %}
-
-            {% set liClass = '' %}
-            {% set extraAttributes = '' %}
-            {% if navigation.isActive(page) %}
-                {% set liClass = 'active' %}
-            {% endif %}
-
             {% if page.hasChildren() %}
-                {% set liClass = liClass ~ ' parent' %}
-            {% endif %}
+                <li class="nav-item dropdown nav-group {% if loop.first %} mT-30 {% endif %} {% if isRoute(page.getOption('uri')) %} open {% endif %}">
+                    <a class="dropdown-toggle cur-p" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}>
+                        <span class="icon-holder">
+                            <i class="{{ page.getOption('icon') }}"></i>
+                        </span>
+                        <span class="title">{{ page.getOption('label') }}</span>
+                        <span class="arrow">
+                            <i class="ti-angle-right"></i>
+                        </span>
+                    </a>
 
-            {% if page.getOption('type') and page.getOption('type') == 'separator' %}
-                <li role="presentation" class="divider"></li>
-            {% else %}
-                <li class="{{ liClass }}">
-
-                    {% if page.hasChildren() %}
-                        {% if depth == 0 %}
-                            <div class="submenu master-tooltip clearfix" data-bs-toggle="collapse" href="#sub-item-{{ loop.index }}" title="{{ page.getOption('label') }}">
-                                <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
-                                <div class="item-label master-tooltip" title="{{ page.getOption('label') }}">{{ page.getOption('label') }}</div>
-                                <i class="fa fa-chevron-circle-down pull-right"></i>
-                            </div>
-                        {% else %}
-                            <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
-                            {{ page.getOption('label') }}
-                        {% endif %}
-                    {% else %}
-                        {% if depth == 0 %}
-                            <a class="master-tooltip clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} title="{{ page.getOption('label') }}">
-                                <i class="{{ page.getOption('icon') }} master-tooltip" title="{{ page.getOption('label') }}"></i>
-                                <div class="item-label">{{ page.getOption('label') }}</div>
-                            </a>
-                        {% else %}
-                            <a class="clearfix" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %} >
-                                <i class="{{ page.getOption('icon') }}"></i>
-                                {{ page.getOption('label') }}
-                            </a>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if page.hasChildren() %}
-                        {% set subitemUlClass = 'children collapse' %}
-                        {% if navigation.isActive(page) %}
-                            {% set subitemUlClass = subitemUlClass ~ ' in' %}
-                        {% endif %}
-
-                        {% set ulId = 'sub-item-' ~ loop.index %}
-                        {{ navigationPartial(page, 'partial::menu', {ulClass: subitemUlClass, ulId: ulId, depth: depth + 1}) }}
-
-                    {% endif %}
-
+                    <ul class="dropdown-menu">
+                        {{ navigationPartial(page, 'partial::menu') }}
+                    </ul>
                 </li>
+            {% else %}
+                {% if page.hasParent() %}
+                    <li class="nav-item dropdown">
+                        <a href="{{ navigation.getHref(page) }}" class="{% if isRoute(page.getOption('uri')) %} text-primary fw-medium current-route {% endif %} {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}">
+                            <span>{{ page.getOption('label') }}</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item {% if loop.first %} mT-30 {% endif %}">
+                        <a class="sidebar-link {% if isRoute(page.getOption('uri')) %} text-primary fw-medium current-route {% endif %}" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}>
+                            <span class="icon-holder">
+                                <i class="{{ page.getOption('icon') }}"></i>
+                            </span>
+                            <span class="title">{{ page.getOption('label') }}</span>
+                        </a>
+                    </li>
+                {% endif %}
             {% endif %}
-
         {% endif %}
-
     {% endfor %}
+{% if page is defined %}
 </ul>
+{% endif %}

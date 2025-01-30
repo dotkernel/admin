@@ -14,79 +14,49 @@ return [
                         [
                             'options' => [
                                 'label' => 'Dashboard',
+                                'uri'   => '/',
                                 'route' => [
                                     'route_name' => 'dashboard',
                                 ],
-                                'icon'  => 'fas fa-tachometer-alt',
+                                'icon'  => 'c-blue-500 ti-home',
                             ],
                         ],
                         [
                             'options' => [
                                 'label' => 'Manage admins',
-                                'route' => '',
-                                'icon'  => 'fas fa-user-circle',
+                                'route' => [],
+                                'icon'  => 'c-teal-500 ti-view-list-alt ',
                             ],
                             'pages'   => [
                                 [
                                     'options' => [
                                         'label' => 'Admins',
                                         'uri'   => '/admin/manage',
-                                        'icon'  => 'fas fa-user-circle',
                                     ],
                                 ],
                                 [
                                     'options' => [
                                         'label' => 'Logins',
                                         'uri'   => '/admin/logins',
-                                        'icon'  => 'fas fa-sign-in-alt',
+                                    ],
+                                ],
+                                [
+                                    'options' => [
+                                        'label' => 'View logins v2',
+                                        'uri'   => '/admin/simple-logins',
+                                        'icon'  => 'c-pink-500 ti-palette',
                                     ],
                                 ],
                             ],
                         ],
                         [
                             'options' => [
-                                'label' => 'Submenu 1',
-                                'route' => '',
-                                'icon'  => 'fas fa-cog',
-                            ],
-                            'pages'   => [
-                                [
-                                    'options' => [
-                                        'label' => 'Submenu link 1',
-                                        'uri'   => '#',
-                                        'icon'  => 'fas fa-square',
-                                    ],
+                                'label' => 'Components',
+                                'uri'   => '/page/components',
+                                'route' => [
+                                    'route_name' => 'page',
                                 ],
-                                [
-                                    'options' => [
-                                        'label' => 'Submenu link 2',
-                                        'uri'   => '#',
-                                        'icon'  => 'fas fa-square',
-                                    ],
-                                ],
-                            ],
-                        ],
-                        [
-                            'options' => [
-                                'label' => 'Submenu 2',
-                                'route' => '',
-                                'icon'  => 'fas fa-cog',
-                            ],
-                            'pages'   => [
-                                [
-                                    'options' => [
-                                        'label' => 'Submenu link 1',
-                                        'uri'   => '#',
-                                        'icon'  => 'fa fa-square',
-                                    ],
-                                ],
-                                [
-                                    'options' => [
-                                        'label' => 'Submenu link 2',
-                                        'uri'   => '#',
-                                        'icon'  => 'fa fa-square',
-                                    ],
-                                ],
+                                'icon'  => 'c-pink-500 ti-palette',
                             ],
                         ],
                     ],
@@ -105,28 +75,19 @@ return [
                                         'action' => 'account',
                                     ],
                                 ],
-                                'icon'  => 'fas fa-user',
+                                'icon'  => 'ti-user',
                             ],
                         ],
                         [
                             'options' => [
-                                'label' => 'Settings',
-                                'route' => [
-                                    'route_name' => 'dashboard',
-                                ],
-                                'icon'  => 'fas fa-cog',
-                            ],
-                        ],
-                        [
-                            'options' => [
-                                'label' => 'Sign Out',
+                                'label' => 'Logout',
                                 'route' => [
                                     'route_name'   => 'admin',
                                     'route_params' => [
                                         'action' => 'logout',
                                     ],
                                 ],
-                                'icon'  => 'fas fa-sign-out-alt',
+                                'icon'  => 'ti-power-off',
                             ],
                         ],
                     ],
