@@ -6,6 +6,8 @@ namespace AdminTest\Unit\Admin\Delegator;
 
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Service\AdminRoleService;
+use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminService;
 use AdminTest\Unit\UnitTest;
 use PHPUnit\Framework\MockObject\Exception;
@@ -43,14 +45,14 @@ class AdminRoleDelegatorTest extends UnitTest
      */
     public function testInvokeWillSucceedWithAdminForm(): void
     {
-        $adminService = $this->createMock(AdminService::class);
+        $adminRoleService = $this->createMock(AdminRoleServiceInterface::class);
 
         $container = $this->createMock(ContainerInterface::class);
         $container
             ->expects($this->once())
             ->method('get')
-            ->with(AdminService::class)
-            ->willReturn($adminService);
+            ->with(AdminRoleServiceInterface::class)
+            ->willReturn($adminRoleService);
 
         $delegator = (new AdminRoleDelegator())(
             $container,

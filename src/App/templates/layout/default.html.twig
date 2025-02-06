@@ -21,9 +21,12 @@
     <![endif]-->
 </head>
 <body class="app">
+
     {{ include('@partial/left-menu.html.twig') }}
     <div class="page-container">
         {{ include('@partial/nav-bar.html.twig') }}
+        {{ messagesPartial('partial::notifications', {dismissible: true}) }}
+
         <main class='main-content bgc-grey-100'>
             <div id='mainContent'>
                 {% block content %}{% endblock %}
@@ -32,9 +35,11 @@
 
         <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"></footer>
     </div>
+
     <script src="{{ asset('js/app.js') }}"></script>
 
-{% block javascript %}{% endblock %}
+{% block javascript %}
+{% endblock %}
 
 </body>
 </html>

@@ -1,11 +1,18 @@
+{% set submit = null %}
 {% if showLabels is not defined %}
     {% set showLabels = false %}
 {% endif %}
 
 {% for k, v in form.getElements() %}
     {% set element = form.get(k) %}
+
+    {% if element is Submit or element is Button and element.getName() == 'submit' %}
+        {% set dummy = element.setAttribute('class', 'btn btn-primary btn-color') %}
+        {% set submit = element %}
+    {% endif %}
+
     {% if element is Captcha %}
-        <div class="mb-3">
+        <div class="col-md-12">
             {% set dummy = element.setAttribute('class', 'form-control') %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
@@ -18,15 +25,31 @@
     {% elseif element is MultiCheckbox %}
         {% set dummy = element.setAttribute('class', 'form-check-input') %}
         {% set dummy = element.setLabelAttributes([]|merge({class: 'form-label mR-25'})) %}
+        {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+            {% set dummy = element.setAttributes([]|merge({class: 'form-check-input is-invalid'})) %}
+        {% endif %}
 
-        <div class="form-check gap-10">
-            {{ formElement(element) }}
+        <div class="col-md-12">
+            {{ formLabel(element) }}
+            <br>
+            <div class="form-check form-check-inline">
+                {{ formElement(element) }}
+            </div>
+
+            {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+                <div class="invalid-feedback d-block">
+                    {% for message in element.getMessages() %}
+                        {{ message|raw }} <br>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
+
     {% elseif element is Checkbox %}
         {% set dummy = element.setAttribute('class', 'form-check-input') %}
-        <div class="form-check">
+        <div class="form-check form-check-inline">
             <label class="form-label">
-                {{ formCheckbox(element) }} {{ element.getLabel() }}
+                {{ element.getLabel() }} {{ formCheckbox(element) }}
             </label>
         </div>
 
@@ -36,18 +59,11 @@
 
     {% elseif element is Button and element.getName() != 'submit' %}
 
-        {% set dummy = element.setAttribute('class', 'btn btn-color') %}
         {{ formButton(element) }}
 
-    {% elseif element is Submit or element is Button and element.getName() == 'submit' %}
-
-        {% set dummy = element.setAttribute('class', 'btn btn-lg btn-primary btn-color') %}
-        {{ formSubmit(element) }}
-
     {% else %}
-
-        <div class="mb-3 {% if element.getMessages() %}has-error{% endif %}">
-
+        {% if element is not Submit or (element is Button and element.getName() != 'submit') %}
+        <div class="col-md-12">
             {% set dummy = element.setAttribute('class', 'form-control') %}
             {% set dummy = element.setLabelAttributes([]|merge({class: 'form-label'})) %}
 
@@ -55,9 +71,28 @@
                 {{ formLabel(element) }}
             {% endif %}
 
+            {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+                {% set dummy = element.setAttributes([]|merge({class: 'form-control is-invalid'})) %}
+            {% endif %}
+
             {{ formElement(element) }}
+
+            {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+            <div class="invalid-feedback">
+                {% for message in element.getMessages() %}
+                    {{ message|raw }} <br>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
-
+        {% endif %}
     {% endif %}
-
 {% endfor %}
+
+{% if submit is defined and submit is not null %}
+    <div class="col-md-12">
+        <div class="d-flex justify-content-end">
+            {{ formSubmit(submit) }}
+        </div>
+    </div>
+{% endif %}

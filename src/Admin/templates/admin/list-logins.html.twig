@@ -1,3 +1,5 @@
+{% from '@partial/macros.html.twig' import sortableColumn %}
+
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}Admin logins{% endblock %}
@@ -8,40 +10,246 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    <table data-toggle="table" data-url="/admin/list-logins" data-click-to-select="false"
-                           data-mobile-responsive="true" data-min-width="800" data-check-on-init="true" data-id-field="uuid"
-                           data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
-                           data-search="false" data-pagination="true" data-toolbar="#tableToolbar"
-                           data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
-                           data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
-                           data-sort-name="created" data-sort-order="desc" data-identifier="table_admin_list_logins_selected_columns" id="bsTable">
+                    <form class="row g-3" method="get" action="{{ path('admin', {action: 'logins'}) }}">
+                        <input type="hidden" name="offset" value="0" />
+                        <input type="hidden" name="limit" value="{{ params.limit }}" />
+                        <input type="hidden" name="sort" value="{{ params.sort }}" />
+                        <input type="hidden" name="order" value="{{ params.order }}" />
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm"
+                                    aria-label="Identity selector"
+                                    id="identitySelector"
+                                    name="identity">
+                                <option value="">Select identity ({{ identities|length }})</option>
+                                {% for identity in identities %}
+                                <option value="{{ identity }}" {{ identity == params.identity ? 'selected' : '' }}>{{ identity }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm"
+                                    aria-label="Status selector"
+                                    id="statusSelector"
+                                    name="status">
+                                <option value="">Select status</option>
+                                {% for status in statuses %}
+                                <option value="{{ status }}" {{ status == params.status ? 'selected' : '' }}>{{ status }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-auto">
+                            <button type="submit" class="btn btn-primary btn-sm mb-3">
+                                <i class="ti-search"></i> Filter
+                            </button>
+                        </div>
+                        <div class="col-sm-auto ms-auto">
+                            <div class="dropdown"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-custom-class="custom-tooltip"
+                                 data-bs-title="Toggle columns">
+                                <button class="btn btn-light btn-sm dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <i class="ti-view-list-alt"></i>
+                                </button>
+                                <ul class="dropdown-menu" id="column-selector"></ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="admin-logins-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
                         <thead>
-
-                        <tr>
-                            <th data-field="identity" data-sortable="true">Identity</th>
-                            <th data-field="adminIp" data-sortable="true">Ip</th>
-                            <th data-field="loginStatus" data-sortable="true">Status</th>
-                            <th data-field="country" data-sortable="true">Country</th>
-                            <th data-field="continent" data-sortable="true">Continent</th>
-                            <th data-field="organization" data-sortable="true">Organization</th>
-                            <th data-field="deviceType" data-sortable="true">Device Type</th>
-                            <th data-field="deviceBrand" data-sortable="true">Device Brand</th>
-                            <th data-field="deviceModel" data-sortable="true">Device Model</th>
-                            <th data-field="isMobile" data-sortable="true">Is Mobile</th>
-                            <th data-field="osName" data-sortable="true">Os Name</th>
-                            <th data-field="osVersion" data-sortable="true">Os Version</th>
-                            <th data-field="osPlatform" data-sortable="true">Os Platform</th>
-                            <th data-field="clientType" data-sortable="true">Client Type</th>
-                            <th data-field="clientName" data-sortable="true">Client Name</th>
-                            <th data-field="clientEngine" data-sortable="true">Client Engine</th>
-                            <th data-field="clientVersion" data-sortable="true">Client Version</th>
-                            <th data-field="created" data-sortable="true">Created</th>
-                        </tr>
-
+                            <tr>
+                                <th class="column-identity">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'identity', 'Identity') }}
+                                </th>
+                                <th class="column-adminIp text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'adminIp', 'Ip Address') }}
+                                </th>
+                                <th class="column-loginStatus">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'loginStatus', 'Status') }}
+                                </th>
+                                <th class="column-country">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'country', 'Country') }}
+                                </th>
+                                <th class="column-continent">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'continent', 'Continent') }}
+                                </th>
+                                <th class="column-organization">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'organization', 'Organization') }}
+                                </th>
+                                <th class="column-deviceType text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'deviceType', 'Device Type') }}
+                                </th>
+                                <th class="column-deviceBrand text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'deviceBrand', 'Device Brand') }}
+                                </th>
+                                <th class="column-deviceModel text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'deviceModel', 'Device Model') }}
+                                </th>
+                                <th class="column-isMobile text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'isMobile', 'Is Mobile') }}
+                                </th>
+                                <th class="column-osName text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'osName', 'Os Name') }}
+                                </th>
+                                <th class="column-osVersion text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'osVersion', 'Os Version') }}
+                                </th>
+                                <th class="column-osPlatform text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'osPlatform', 'Os Platform') }}
+                                </th>
+                                <th class="column-clientType text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'clientType', 'Client Type') }}
+                                </th>
+                                <th class="column-clientName text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'clientName', 'Client Name') }}
+                                </th>
+                                <th class="column-clientEngine text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'clientEngine', 'Client Engine') }}
+                                </th>
+                                <th class="column-clientVersion text-nowrap">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'clientVersion', 'Client Version') }}
+                                </th>
+                                <th class="column-created">
+                                    {{ sortableColumn('admin', {action: 'logins'}, params, 'created', 'Created') }}
+                                </th>
+                            </tr>
                         </thead>
+                        <tbody>
+                            {% for login in logins %}
+                            <tr>
+                                <td class="column-identity">{{ login.identity }}</td>
+                                <td class="column-adminIp">{{ login.adminIp }}</td>
+                                <td class="column-loginStatus">
+                                    {% if login.loginStatus == 'success' %}
+                                    <span class="badge text-bg-success">Success</span>
+                                    {% else %}
+                                    <span class="badge text-bg-danger">Failed</span>
+                                    {% endif %}
+                                </td>
+                                <td class="column-country">{{ login.country }}</td>
+                                <td class="column-continent">{{ login.continent }}</td>
+                                <td class="column-organization">{{ login.organization }}</td>
+                                <td class="column-deviceType">{{ login.deviceType }}</td>
+                                <td class="column-deviceBrand">{{ login.deviceBrand }}</td>
+                                <td class="column-deviceModel">{{ login.deviceModel }}</td>
+                                <td class="column-isMobile">
+                                    {% if login.isMobile == 'yes' %}
+                                    <span class="badge text-bg-primary">Yes</span>
+                                    {% else %}
+                                    <span class="badge text-bg-secondary">No</span>
+                                    {% endif %}
+                                </td>
+                                <td class="column-osName">{{ login.osName }}</td>
+                                <td class="column-osVersion">{{ login.osVersion }}</td>
+                                <td class="column-osPlatform">{{ login.osPlatform }}</td>
+                                <td class="column-clientType">{{ login.clientType }}</td>
+                                <td class="column-clientName">{{ login.clientName }}</td>
+                                <td class="column-clientEngine">{{ login.clientEngine }}</td>
+                                <td class="column-clientVersion">{{ login.clientVersion }}</td>
+                                <td class="column-created">{{ login.created }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
+                    {% if pagination.isOutOfBounds() %}
+                    <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                        Out of bounds! Return to
+                        <a href="{{ path('admin', {action: 'logins'}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin', action: 'logins', params: params}, false) }}
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            const hideColumns = (tableId, visibleColumns) => {
+                const table = $(tableId);
+                if (visibleColumns.length === 0) {
+                    table.show();
+                    return;
+                }
+                $('.table-column').each((_, element) => {
+                    const column = $(element).data('column');
+                    toggleColumnVisibility(column, visibleColumns.includes(column));
+                });
+                table.show();
+            };
+
+            const saveColumnSettings = (identifier) => {
+                return fetch(`/setting/store-setting/${identifier}`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        value: $('.toggle-column-checkbox:checked').map((_, element) => $(element).data('column')).get()
+                    })
+                })
+            };
+
+            const toggleColumnVisibility = (column, visible) => {
+                if (visible) {
+                    $(`.column-${column}`).show();
+                } else {
+                    $(`.column-${column}`).hide();
+                }
+            };
+
+            const populateColumnSelector = (columnSelectorId, columnsSettings) => {
+                const columnSelector = $(columnSelectorId);
+                $('.table-column').map((_, element) => {
+                    return {
+                        text: $(element).text().trim(),
+                        column: $(element).data('column'),
+                    };
+                }).each((_, element) => {
+                    columnSelector.append(
+                        $('<li>').append(
+                            $('<div>').addClass('dropdown-item pT-0 pB-0').append(
+                                $('<input>')
+                                    .prop('type', 'checkbox')
+                                    .prop('id', `column-selector-${element.column}`)
+                                    .prop('checked', columnsSettings.includes(element.column) || columnsSettings.length === 0)
+                                    .addClass('toggle-column-checkbox')
+                                    .data('column', element.column)
+                            ).append(
+                                $('<label>')
+                                    .prop('for', `column-selector-${element.column}`)
+                                    .addClass('pL-5').text(element.text)
+                            )
+                        )
+                    );
+                });
+            };
+
+            const columnsSettings = JSON.parse('{{ settings|json_encode()|raw }}');
+
+            populateColumnSelector('#column-selector', columnsSettings);
+            hideColumns('#admin-logins-table', columnsSettings);
+
+            $(document).on('change', '.toggle-column-checkbox', function () {
+                $('#admin-logins-table').addClass('border-danger-subtle');
+                saveColumnSettings('{{ identifier }}')
+                    .then(() => toggleColumnVisibility($(this).data('column'), $(this).prop('checked')))
+                    .then(() => {
+                        $('#admin-logins-table').removeClass('border-danger-subtle');
+                    })
+                    .catch(error => console.error('Error: ', error));
+            });
+        });
+    </script>
 {% endblock %}

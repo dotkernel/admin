@@ -1,3 +1,5 @@
+{% from '@partial/macros.html.twig' import sortableColumn %}
+
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}Manage admins{% endblock %}
@@ -8,80 +10,205 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    <div id="tableToolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" id="adminAddBtn">
-                            <i class="bi bi-plus-circle"></i>
-                        </button>
-                        <button type="button" class="btn btn-default" id="adminEditBtn">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button type="button" class="btn btn-default" id="adminDeleteBtn">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-
-                    <table data-toggle="table" data-url="/admin/list" data-click-to-select="true"
-                           data-mobile-responsive="true" data-min-width="800" data-check-on-init="true" data-id-field="uuid"
-                           data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
-                           data-search="true" data-pagination="true" data-toolbar="#tableToolbar"
-                           data-silent-sort="false" data-pagination-loop="false" data-side-pagination="server"
-                           data-page-list="[10, 30, 50, 100, 200]" data-page-size="30" data-single-select="true"
-                           data-sort-name="created" data-sort-order="desc" id="bsTable" data-identifier="table_admin_list_selected_columns">
+                    <form class="row g-3" method="get" action="{{ path('admin', {action: 'manage'}) }}">
+                        <input type="hidden" name="offset" value="0" />
+                        <input type="hidden" name="limit" value="{{ params.limit }}" />
+                        <input type="hidden" name="sort" value="{{ params.sort }}" />
+                        <input type="hidden" name="order" value="{{ params.order }}" />
+                        <div class="col-sm-auto btn-group">
+                            <button type="button" class="btn btn-default" id="btn-add-admin" data-bs-toggle="modal" data-bs-target="#add-admin-modal">
+                                <i class="ti-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-default" id="btn-edit-admin" data-bs-toggle="modal" data-bs-target="#edit-admin-modal">
+                                <i class="ti-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-default" id="btn-delete-admin" data-bs-toggle="modal" data-bs-target="#delete-admin-modal">
+                                <i class="ti-trash"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-auto">
+                            <input type="text" class="form-control" id="search" name="search" value="{{ params.search }}" placeholder="Search">
+                        </div>
+                        <div class="col-sm-auto">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="ti-search"></i> Filter
+                            </button>
+                        </div>
+                        <div class="col-sm-auto ms-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <i class="ti-view-list-alt"></i>
+                                </button>
+                                <ul class="dropdown-menu" id="column-selector"></ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="admin-logins-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
                         <thead>
-
                         <tr>
-                            <th data-field="checked" data-checkbox="true">Id</th>
-                            <th data-field="identity" data-sortable="true">Identity</th>
-                            <th data-field="firstName" data-sortable="true">First Name</th>
-                            <th data-field="lastName" data-sortable="true">Last Name</th>
-                            <th data-field="roles" data-sortable="false">Roles</th>
-                            <th data-field="status" data-sortable="false">Status</th>
-                            <th data-field="created" data-sortable="true">Created</th>
+                            <th class="column-uuid"></th>
+                            <th class="column-identity">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'identity', 'Identity') }}
+                            </th>
+                            <th class="column-firstName text-nowrap">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'firstName', 'First Name') }}
+                            </th>
+                            <th class="column-lastName">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'lastName', 'Last Name') }}
+                            </th>
+                            <th class="column-roles">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'roles', 'Roles') }}
+                            </th>
+                            <th class="column-status">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'status', 'Status') }}
+                            </th>
+                            <th class="column-created">
+                                {{ sortableColumn('admin', {action: 'manage'}, params, 'created', 'Created') }}
+                            </th>
                         </tr>
-
                         </thead>
+                        <tbody>
+                        {% for admin in admins %}
+                            <tr>
+                                <td class="column-uuid" style="width: 1vw;">
+                                    <label>
+                                        <input type="checkbox"
+                                               class="checkbox ui-checkbox"
+                                               value="{{ admin.uuid }}"
+                                               data-edit-url="{{ path('admin', {action: 'edit', uuid: admin.uuid}) }}"
+                                               data-delete-url="{{ path('admin', {action: 'delete', uuid: admin.uuid}) }}"
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td class="column-identity">{{ admin.identity }}</td>
+                                <td class="column-firstName">{{ admin.firstName }}</td>
+                                <td class="column-lastName">{{ admin.lastName }}</td>
+                                <td class="column-roles">{{ admin.roles }}</td>
+                                <td class="column-status">
+                                    <span class="badge {% if admin.status == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ admin.status|capitalize }}</span>
+                                </td>
+                                <td class="column-created">{{ admin.created }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
                     </table>
+                    {% if pagination.isOutOfBounds() %}
+                        <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                            Out of bounds! Return to
+                            <a href="{{ path('admin', {action: 'manage'}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, params: params, path: 'admin', action: 'manage'}, false) }}
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="adminModal" aria-labelledby="formModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-form"></div>
-                    <div class="modal-messages"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-color" id="formModalSubmit">Save</button>
-                </div>
-            </div>
+        <div class="modal fade" id="add-admin-modal" tabindex="-1" aria-labelledby="add-admin-modal-content" aria-hidden="true" data-add-url="{{ path('admin', {action: 'add'}) }}">
+            <div class="modal-dialog"></div>
         </div>
-    </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="deleteFormModal" aria-labelledby="deleteFormModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="deleteFormModalTitle">Confirm Delete</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-form"></div>
-                    <div class="modal-messages delete-modal-messages"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger btn-color" id="deleteAdminFormSubmit">Delete</button>
-                </div>
-            </div>
+        <div class="modal fade" id="edit-admin-modal" tabindex="-1" aria-labelledby="edit-admin-modal-content" aria-hidden="true">
+            <div class="modal-dialog"></div>
+        </div>
+
+        <div class="modal fade" id="delete-admin-modal" tabindex="-1" aria-labelledby="delete-admin-modal-content" aria-hidden="true">
+            <div class="modal-dialog"></div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    $(function() {
+        const hideColumns = (tableId, visibleColumns) => {
+            const table = $(tableId);
+            if (visibleColumns.length === 0) {
+                table.show();
+                return;
+            }
+            $('.table-column').each((_, element) => {
+                const column = $(element).data('column');
+                toggleColumnVisibility(column, visibleColumns.includes(column));
+            });
+            table.show();
+        };
+
+        const saveColumnSettings = (identifier) => {
+            return fetch(`/setting/store-setting/${identifier}`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    value: $('.toggle-column-checkbox:checked').map((_, element) => $(element).data('column')).get()
+                })
+            })
+        };
+
+        const toggleColumnVisibility = (column, visible) => {
+            if (visible) {
+                $(`.column-${column}`).show();
+            } else {
+                $(`.column-${column}`).hide();
+            }
+        };
+
+        const populateColumnSelector = (columnSelectorId, columnsSettings) => {
+            const columnSelector = $(columnSelectorId);
+            $('.table-column').map((_, element) => {
+                return {
+                    text: $(element).text().trim(),
+                    column: $(element).data('column'),
+                };
+            }).each((_, element) => {
+                columnSelector.append(
+                    $('<li>').append(
+                        $('<div>').addClass('dropdown-item pT-0 pB-0').append(
+                            $('<input>')
+                                .prop('type', 'checkbox')
+                                .prop('id', `column-selector-${element.column}`)
+                                .prop('checked', columnsSettings.includes(element.column) || columnsSettings.length === 0)
+                                .addClass('toggle-column-checkbox')
+                                .data('column', element.column)
+                        ).append(
+                            $('<label>')
+                                .prop('for', `column-selector-${element.column}`)
+                                .addClass('pL-5').text(element.text)
+                        )
+                    )
+                );
+            });
+        };
+
+        const columnsSettings = JSON.parse('{{ settings|json_encode()|raw }}');
+
+        populateColumnSelector('#column-selector', columnsSettings);
+        hideColumns('#admin-logins-table', columnsSettings);
+
+        $(document).on('change', '.toggle-column-checkbox', function () {
+            $('#admin-logins-table').addClass('border-danger-subtle');
+            saveColumnSettings('{{ identifier }}')
+                .then(() => toggleColumnVisibility($(this).data('column'), $(this).prop('checked')))
+                .then(() => {
+                    $('#admin-logins-table').removeClass('border-danger-subtle');
+                })
+                .catch(error => console.error('Error: ', error));
+        });
+
+
+
+
+
+    });
+</script>
 {% endblock %}

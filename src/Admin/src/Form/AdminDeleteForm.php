@@ -22,7 +22,9 @@ class AdminDeleteForm extends Form
 
         $this->init();
 
-        $this->setAttribute('id', 'deleteAdminForm');
+        $this->setAttribute('id', 'delete-admin-form');
+        $this->setAttribute('class', 'needs-validation');
+        $this->setAttribute('novalidate', 'novalidate');
 
         $this->inputFilter = new AdminDeleteInputFilter();
         $this->inputFilter->init();
@@ -42,19 +44,7 @@ class AdminDeleteForm extends Form
                 'value' => 'no',
                 'id'    => 'confirmation',
                 'class' => 'form-check-input',
-            ],
-        ]);
-
-        $this->add([
-            'name'       => 'close',
-            'type'       => 'button',
-            'options'    => [
-                'label' => 'Close',
-            ],
-            'attributes' => [
-                'class'           => 'btn btn-default',
-                'data-bs-dismiss' => 'modal',
-                'role'            => 'button',
+                'required' => 'required',
             ],
         ]);
 
@@ -63,7 +53,6 @@ class AdminDeleteForm extends Form
             'type'       => 'submit',
             'attributes' => [
                 'class' => 'btn btn-danger',
-                'id'    => 'modalDeleteBtn',
                 'value' => 'Delete',
             ],
         ]);
