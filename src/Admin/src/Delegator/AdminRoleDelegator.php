@@ -12,6 +12,8 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+use function array_map;
+
 class AdminRoleDelegator implements DelegatorFactoryInterface
 {
     /**

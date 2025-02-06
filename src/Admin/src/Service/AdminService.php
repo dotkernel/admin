@@ -60,10 +60,10 @@ class AdminService implements AdminServiceInterface
         string $order = 'desc'
     ): array {
         $result = [
-            'rows'  => [],
+            'rows'   => [],
             'offset' => $offset,
-            'limit' => $limit,
-            'total' => $this->getAdminRepository()->countAdmins($search),
+            'limit'  => $limit,
+            'total'  => $this->getAdminRepository()->countAdmins($search),
         ];
         $admins = $this->getAdminRepository()->getAdmins($offset, $limit, $search, $sort, $order);
 

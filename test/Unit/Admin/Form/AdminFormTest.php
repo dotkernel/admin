@@ -20,7 +20,6 @@ class AdminFormTest extends UnitTest
 
     public function testFormHasElements(): void
     {
-
         $this->formHasElements(new AdminForm(), [
             'identity',
             'password',

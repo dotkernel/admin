@@ -13,7 +13,6 @@ use Admin\Admin\Factory\AuthenticationServiceFactory;
 use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
@@ -49,9 +48,6 @@ class ConfigProvider
                     RoutesDelegator::class,
                 ],
                 AdminForm::class   => [
-                    AdminRoleDelegator::class,
-                ],
-                EditAdminForm::class   => [
                     AdminRoleDelegator::class,
                 ],
             ],

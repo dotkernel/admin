@@ -41,9 +41,9 @@ class AdminDeleteForm extends Form
                 'unchecked_value' => 'no',
             ],
             'attributes' => [
-                'value' => 'no',
-                'id'    => 'confirmation',
-                'class' => 'form-check-input',
+                'value'    => 'no',
+                'id'       => 'confirmation',
+                'class'    => 'form-check-input',
                 'required' => 'required',
             ],
         ]);

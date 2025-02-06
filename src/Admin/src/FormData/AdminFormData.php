@@ -7,6 +7,8 @@ namespace Admin\Admin\FormData;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
 
+use function array_map;
+
 final class AdminFormData
 {
     public ?string $identity  = null;
@@ -26,7 +28,7 @@ final class AdminFormData
         $this->firstName = $admin->getFirstName();
         $this->lastName  = $admin->getLastName();
         $this->status    = $admin->getStatus();
-        $this->roles = array_map(function (AdminRole $role) {
+        $this->roles     = array_map(function (AdminRole $role) {
             return [
                 'label' => $role->getName(),
                 'value' => $role->getUuid()->toString(),

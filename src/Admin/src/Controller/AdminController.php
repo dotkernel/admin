@@ -23,28 +23,21 @@ use Admin\App\Pagination;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Service\SettingService;
-use Doctrine\ORM\NonUniqueResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
-use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Exception\ExceptionInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\Diactoros\Response\TextResponse;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
-use PhpParser\Error;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-
-use function assert;
 
 class AdminController extends AbstractActionController
 {
@@ -62,15 +55,15 @@ class AdminController extends AbstractActionController
         "dot-log.default_logger",
     )]
     public function __construct(
-        protected AdminServiceInterface          $adminService,
-        protected RouterInterface                $router,
-        protected TemplateRendererInterface      $template,
+        protected AdminServiceInterface $adminService,
+        protected RouterInterface $router,
+        protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
-        protected FlashMessengerInterface        $messenger,
-        protected FormsPlugin                    $forms,
-        protected AdminForm                      $adminForm,
-        protected SettingService                 $settingService,
-        protected Logger                         $logger,
+        protected FlashMessengerInterface $messenger,
+        protected FormsPlugin $forms,
+        protected AdminForm $adminForm,
+        protected SettingService $settingService,
+        protected Logger $logger,
     ) {
     }
 
@@ -78,7 +71,7 @@ class AdminController extends AbstractActionController
     {
         try {
             $this->adminForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'add']));
-            if( ! $this->isPost()) {
+            if (! $this->isPost()) {
                 return new HtmlResponse(
                     $this->template->render('admin::add-admin-modal-content', [
                         'form' => $this->adminForm,
@@ -93,7 +86,6 @@ class AdminController extends AbstractActionController
                 $this->adminService->createAdmin($result);
                 $this->messenger->addSuccess(Message::ADMIN_CREATED_SUCCESSFULLY);
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
-
             } else {
                 return new HtmlResponse(
                     $this->template->render('admin::add-admin-modal-content', [
@@ -106,7 +98,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($e, Message::CREATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::add-admin-modal-content', [
-                    'form' => $this->adminForm,
+                    'form'     => $this->adminForm,
                     'messages' => [
                         'error' => $e->getMessage(),
                     ],
@@ -117,7 +109,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($e, Message::CREATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::add-admin-modal-content', [
-                    'form' => $this->adminForm,
+                    'form'     => $this->adminForm,
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,
                     ],
@@ -172,7 +164,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($exception, Message::UPDATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::edit-admin-modal-content', [
-                    'form' => $this->adminForm,
+                    'form'     => $this->adminForm,
                     'messages' => [
                         'error' => $exception->getMessage(),
                     ],
@@ -200,14 +192,14 @@ class AdminController extends AbstractActionController
                 'action',
                 $this->router->generateUri('admin', [
                     'action' => 'delete',
-                    'uuid' => $admin->getUuid()->toString()
+                    'uuid'   => $admin->getUuid()->toString(),
                 ])
             );
 
             if (! $this->isPost()) {
                 return new HtmlResponse(
                     $this->template->render('admin::delete-admin-modal-content', [
-                        'form' => $form,
+                        'form'  => $form,
                         'admin' => $admin,
                     ]),
                 );
@@ -222,7 +214,7 @@ class AdminController extends AbstractActionController
             } else {
                 return new HtmlResponse(
                     $this->template->render('admin::delete-admin-modal-content', [
-                        'form' => $form,
+                        'form'  => $form,
                         'admin' => $admin,
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
@@ -238,12 +230,12 @@ class AdminController extends AbstractActionController
     public function manageAction(): ResponseInterface
     {
         $params = [
-            'offset'   => $this->getQueryParam('offset', 0, 'int'),
-            'limit'    => $this->getQueryParam('limit', 10, 'int'),
-            'sort'     => $this->getQueryParam('sort', 'created'),
-            'order'    => $this->getQueryParam('order', 'desc'),
+            'offset' => $this->getQueryParam('offset', 0, 'int'),
+            'limit'  => $this->getQueryParam('limit', 10, 'int'),
+            'sort'   => $this->getQueryParam('sort', 'created'),
+            'order'  => $this->getQueryParam('order', 'desc'),
             'search' => $this->getQueryParam('search'),
-            'status'   => $this->getQueryParam('status'),
+            'status' => $this->getQueryParam('status'),
         ];
 
         $result = $this->adminService->getAdmins(
@@ -270,7 +262,7 @@ class AdminController extends AbstractActionController
                 'statuses'   => Admin::STATUSES,
                 'settings'   => $settings?->getValue() ?? [],
                 'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
-                'form' => $this->adminForm,
+                'form'       => $this->adminForm,
                 'pagination' => new Pagination($result['total'], $result['offset'], $result['limit']),
             ])
         );

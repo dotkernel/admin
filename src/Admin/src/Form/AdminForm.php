@@ -38,7 +38,7 @@ class AdminForm extends Form
             'type'    => 'MultiCheckbox',
             'options' => [
                 'label'         => 'Select at least one role:',
-                'value_options' => $this->roles
+                'value_options' => $this->roles,
             ],
         ]);
     }
@@ -65,7 +65,7 @@ class AdminForm extends Form
             'name'       => 'password',
             'type'       => 'password',
             'options'    => [
-                'label' => 'Password',
+                'label'    => 'Password',
                 'required' => 'required',
             ],
             'attributes' => [
@@ -85,25 +85,25 @@ class AdminForm extends Form
         ]);
 
         $this->add([
-            'name'       => 'firstName',
-            'type'       => 'text',
-            'options'    => [
+            'name'    => 'firstName',
+            'type'    => 'text',
+            'options' => [
                 'label' => 'First name',
             ],
         ]);
 
         $this->add([
-            'name'       => 'lastName',
-            'type'       => 'text',
-            'options'    => [
+            'name'    => 'lastName',
+            'type'    => 'text',
+            'options' => [
                 'label' => 'Last name',
             ],
         ]);
 
         $this->add([
-            'name'    => 'status',
-            'type'    => 'select',
-            'options' => [
+            'name'       => 'status',
+            'type'       => 'select',
+            'options'    => [
                 'label'         => 'Account Status',
                 'value_options' => [
                     ['value' => Admin::STATUS_ACTIVE, 'label' => Admin::STATUS_ACTIVE],
@@ -112,7 +112,7 @@ class AdminForm extends Form
             ],
             'attributes' => [
                 'required' => 'required',
-            ]
+            ],
         ]);
 
         $this->add(new Csrf('adminManageCsrf', [
