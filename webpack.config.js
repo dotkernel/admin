@@ -59,7 +59,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 // dynamically build webpack entries based on registered app modules
 let entries = {
-    app: []
+    app: [],
+    admin: [
+        './App/assets/js/components/_admin.js'
+    ],
+    table_settings: [
+        './App/assets/js/components/_table_settings.js'
+    ]
 };
 let copyImages = [];
 let rules = generateBaseRules();

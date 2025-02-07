@@ -1,6 +1,21 @@
-import {request} from './_request';
-
 $(document).ready(() => {
+    const request = async (url, options = {}) => {
+        try {
+            const response = await fetch(url, options);
+            const body = await response.text();
+            if (! response.ok) {
+                throw {
+                    data: body,
+                }
+            }
+            return body;
+        } catch (error) {
+            throw {
+                data: error.data,
+            }
+        }
+    }
+
 
     const btnEdit = $('#btn-edit-admin');
     const btnDelete = $('#btn-delete-admin');
@@ -27,7 +42,7 @@ $(document).ready(() => {
         }).then(data => {
             modal.find('.modal-dialog').html(data);
         }).catch(error => {
-            console.log('Error', error)
+            console.error('Error', error)
         });
     });
 
@@ -44,7 +59,7 @@ $(document).ready(() => {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
-        }).catch(error => {
+        }).catch(() => {
             location.reload();
         });
     });
@@ -62,7 +77,7 @@ $(document).ready(() => {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
-        }).catch(error => {
+        }).catch(() => {
             location.reload();
         });
     });
@@ -86,7 +101,7 @@ $(document).ready(() => {
         }).then(data => {
             location.reload();
         }).catch(error => {
-            console.log('Error', error);
+            console.error('Error', error);
             modal.find('.modal-dialog').html(error.data);
         });
     });
@@ -107,7 +122,7 @@ $(document).ready(() => {
         request(url, {
             method: 'POST',
             body: new FormData(form),
-        }).then(data => {
+        }).then(() => {
             location.reload();
         }).catch(error => {
             modal.find('.modal-dialog').html(error.data);

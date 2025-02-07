@@ -22,6 +22,10 @@ class AccountForm extends Form
 
         $this->init();
 
+        $this->setAttribute('id', 'account-form');
+        $this->setAttribute('class', 'needs-validation');
+        $this->setAttribute('novalidate', 'novalidate');
+
         $this->inputFilter = new AccountInputFilter();
         $this->inputFilter->init();
     }
@@ -29,16 +33,20 @@ class AccountForm extends Form
     public function init(): void
     {
         $this->add([
-            'name'       => 'identity',
-            'type'       => 'text',
-            'options'    => [
+            'name'             => 'identity',
+            'type'             => 'text',
+            'options'          => [
                 'label' => 'Identity',
             ],
-            'attributes' => [
+            'label_attributes' => [
+                'test' => 'da',
+            ],
+            'attributes'       => [
                 'placeholder' => 'Identity...',
                 'class'       => 'form-control',
+                'required'    => 'required',
             ],
-        ], ['priority' => -9]);
+        ]);
 
         $this->add([
             'name'       => 'firstName',
@@ -49,8 +57,9 @@ class AccountForm extends Form
             'attributes' => [
                 'placeholder' => 'First name...',
                 'class'       => 'form-control',
+                'required'    => 'required',
             ],
-        ], ['priority' => -10]);
+        ]);
 
         $this->add([
             'name'       => 'lastName',
@@ -61,8 +70,9 @@ class AccountForm extends Form
             'attributes' => [
                 'placeholder' => 'Last name...',
                 'class'       => 'form-control',
+                'required'    => 'required',
             ],
-        ], ['priority' => -11]);
+        ]);
 
         $this->add([
             'name'       => 'submit',
@@ -72,7 +82,7 @@ class AccountForm extends Form
                 'value' => 'Update account',
                 'class' => 'btn btn-primary btn-color',
             ],
-        ], ['priority' => -100]);
+        ]);
 
         $this->add(new Csrf('accountCsrf', [
             'csrf_options' => [

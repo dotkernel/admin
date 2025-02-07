@@ -207,7 +207,7 @@ class AdminController extends AbstractActionController
 
             $form->setData($this->getPostParams());
             if ($form->isValid()) {
-//                $this->adminService->getAdminRepository()->deleteAdmin($admin);
+                $this->adminService->getAdminRepository()->deleteAdmin($admin);
 
                 $this->messenger->addSuccess(Message::ADMIN_DELETED_SUCCESSFULLY);
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
@@ -227,7 +227,7 @@ class AdminController extends AbstractActionController
         }
     }
 
-    public function manageAction(): ResponseInterface
+    public function listAction(): ResponseInterface
     {
         $params = [
             'offset' => $this->getQueryParam('offset', 0, 'int'),
@@ -351,74 +351,104 @@ class AdminController extends AbstractActionController
     {
         $accountForm        = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
-        $changePasswordForm
-            ->setAttribute('action', $this->router->generateUri('admin', ['action' => 'change-password']));
+
+        $accountForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'account']));
+        $changePasswordForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin', ['action' => 'change-password'])
+        );
 
         $identity = $this->authenticationService->getIdentity();
         $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
 
-        if ($this->isPost()) {
-            $accountForm->setData($this->getPostParams());
-            if ($accountForm->isValid()) {
-                /** @var array $result */
-                $result = $accountForm->getData();
-                try {
-                    $this->adminService->updateAdmin($admin, $result);
-                    $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                } catch (IdentityException $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    $this->messenger->addError($e->getMessage());
-                } catch (Throwable $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-                }
-            } else {
-                $this->messenger->addError($this->forms->getMessagesAsString($accountForm));
-            }
-            return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
+        if (! $this->isPost()) {
+            $accountForm->bind($admin);
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
         }
 
-        $accountForm->bind($admin);
+        $accountForm->setData($this->getPostParams());
+        if (! $accountForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
 
-        return new HtmlResponse(
-            $this->template->render('admin::account', [
-                'accountForm'        => $accountForm->prepare(),
-                'changePasswordForm' => $changePasswordForm->prepare(),
-            ])
-        );
+        try {
+            /** @var array $result */
+            $result = $accountForm->getData();
+
+            $this->adminService->updateAdmin($admin, $result);
+            $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+        } catch (IdentityException $e) {
+            $this->logErrors($e, Message::UPDATE_ADMIN);
+            $this->messenger->addError($e->getMessage());
+        } catch (Throwable $e) {
+            $this->logErrors($e, Message::UPDATE_ADMIN);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+        }
+
+        return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
     }
 
     public function changePasswordAction(): ResponseInterface
     {
         $changePasswordForm = new ChangePasswordForm();
+        $accountForm        = new AccountForm();
+
+        $accountForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'account']));
+        $changePasswordForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin', ['action' => 'change-password'])
+        );
+
+        if (! $this->isPost()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
+
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
         $admin         = $this->adminService->getAdminRepository()->findOneBy([
             'identity' => $adminIdentity->getIdentity(),
         ]);
 
-        if ($this->isPost()) {
-            $changePasswordForm->setData($this->getPostParams());
-            if ($changePasswordForm->isValid()) {
-                /** @var array $result */
-                $result = $changePasswordForm->getData();
-                if ($admin->verifyPassword($result['currentPassword'])) {
-                    try {
-                        $this->adminService->updateAdmin($admin, $result);
-                        $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                    } catch (IdentityException $e) {
-                        $this->logErrors($e, Message::CHANGE_PASSWORD);
-                        $this->messenger->addError($e->getMessage());
-                    } catch (Throwable $e) {
-                        $this->logErrors($e, Message::CHANGE_PASSWORD);
-                        $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-                    }
-                } else {
-                    $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
-                }
+        $changePasswordForm->setData($this->getPostParams());
+        if (! $changePasswordForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
+
+        try {
+            /** @var array $result */
+            $result = $changePasswordForm->getData();
+            if ($admin->verifyPassword($result['currentPassword'])) {
+                $this->adminService->updateAdmin($admin, $result);
+                $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
             } else {
-                $this->messenger->addError($this->forms->getMessagesAsString($changePasswordForm));
+                $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
             }
+        } catch (IdentityException $e) {
+            $this->logErrors($e, Message::CHANGE_PASSWORD);
+            $this->messenger->addError($e->getMessage());
+        } catch (Throwable $e) {
+            $this->logErrors($e, Message::CHANGE_PASSWORD);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
         return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));

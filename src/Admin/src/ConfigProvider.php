@@ -63,8 +63,8 @@ class ConfigProvider
                 AuthenticationAdapter::class => AttributedServiceFactory::class,
             ],
             'aliases'    => [
-                AdminInterface::class        => Admin::class,
-                AdminServiceInterface::class => AdminService::class,
+                AdminInterface::class            => Admin::class,
+                AdminServiceInterface::class     => AdminService::class,
                 AdminRoleServiceInterface::class => AdminRoleService::class,
             ],
         ];
@@ -84,7 +84,7 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories'  => [
-                    AdminForm::class   => ElementFactory::class,
+                    AdminForm::class          => ElementFactory::class,
                     LoginForm::class          => ElementFactory::class,
                     ChangePasswordForm::class => ElementFactory::class,
                     AdminDeleteForm::class    => ElementFactory::class,

@@ -31,7 +31,7 @@ return [
                                 [
                                     'options' => [
                                         'label' => 'Admins',
-                                        'uri'   => '/admin/manage',
+                                        'uri'   => '/admin/list',
                                     ],
                                 ],
                                 [
