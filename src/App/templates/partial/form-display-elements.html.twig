@@ -7,13 +7,13 @@
     {% set element = form.get(k) %}
 
     {% if element is Submit or element is Button and element.getName() == 'submit' %}
-        {% set dummy = element.setAttribute('class', 'btn btn-primary btn-color') %}
+        {% set dummy = element.setAttribute('class', 'btn btn-primary btn-color btn-sm') %}
         {% set submit = element %}
     {% endif %}
 
     {% if element is Captcha %}
         <div class="col-md-12">
-            {% set dummy = element.setAttribute('class', 'form-control') %}
+            {% set dummy = element.setAttribute('class', 'form-control-sm') %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
                 {{ formLabel(element) }}
@@ -64,7 +64,7 @@
     {% else %}
         {% if element is not Submit or (element is Button and element.getName() != 'submit') %}
         <div class="col-md-12">
-            {% set dummy = element.setAttribute('class', 'form-control') %}
+            {% set dummy = element.setAttribute('class', 'form-control form-control-sm') %}
             {% set dummy = element.setLabelAttributes([]|merge({class: 'form-label'})) %}
 
             {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
@@ -72,7 +72,7 @@
             {% endif %}
 
             {% if element.getMessages() is not empty and element.getMessages() is iterable %}
-                {% set dummy = element.setAttributes([]|merge({class: 'form-control is-invalid'})) %}
+                {% set dummy = element.setAttributes([]|merge({class: 'form-control form-control-sm is-invalid'})) %}
             {% endif %}
 
             {{ formElement(element) }}

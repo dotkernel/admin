@@ -28,8 +28,9 @@ class AdminRoleDelegator implements DelegatorFactoryInterface
             $roleService = $container->get(AdminRoleServiceInterface::class);
             $adminForm->setRoles(array_map(function (AdminRole $role) {
                 return [
-                    'label' => $role->getName(),
-                    'value' => $role->getUuid()->toString(),
+                    'label'    => $role->getName(),
+                    'value'    => $role->getUuid()->toString(),
+                    'selected' => false,
                 ];
             }, $roleService->getRoles()));
         }

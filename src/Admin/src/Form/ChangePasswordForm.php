@@ -39,7 +39,7 @@ class ChangePasswordForm extends Form
                 'label' => 'Your current password',
             ],
             'attributes' => [
-                'class'    => 'form-control',
+                'class'    => 'form-control form-control-sm',
                 'required' => 'required',
             ],
         ]);
@@ -51,7 +51,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password',
             ],
             'attributes' => [
-                'class'    => 'form-control',
+                'class'    => 'form-control form-control-sm',
                 'required' => 'required',
             ],
         ]);
@@ -63,7 +63,7 @@ class ChangePasswordForm extends Form
                 'label' => 'New password confirm',
             ],
             'attributes' => [
-                'class'    => 'form-control',
+                'class'    => 'form-control form-control-sm',
                 'required' => 'required',
             ],
         ]);
@@ -74,7 +74,7 @@ class ChangePasswordForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Change Password',
-                'class' => 'btn btn-primary btn-color',
+                'class' => 'btn btn-primary btn-color btn-sm',
             ],
         ], ['priority' => -100]);
 

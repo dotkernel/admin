@@ -62,25 +62,19 @@ class AdminForm extends Form
         ]);
 
         $this->add([
-            'name'       => 'password',
-            'type'       => 'password',
-            'options'    => [
+            'name'    => 'password',
+            'type'    => 'password',
+            'options' => [
                 'label'    => 'Password',
-                'required' => 'required',
-            ],
-            'attributes' => [
                 'required' => 'required',
             ],
         ]);
 
         $this->add([
-            'name'       => 'passwordConfirm',
-            'type'       => 'password',
-            'options'    => [
+            'name'    => 'passwordConfirm',
+            'type'    => 'password',
+            'options' => [
                 'label' => 'Password Confirm',
-            ],
-            'attributes' => [
-                'required' => 'required',
             ],
         ]);
 
@@ -127,7 +121,7 @@ class AdminForm extends Form
             'type'       => 'submit',
             'attributes' => [
                 'type'  => 'submit',
-                'class' => 'btn btn-primary',
+                'class' => 'btn btn-sm btn-primary',
                 'value' => 'Save',
             ],
         ]);

@@ -8,6 +8,7 @@ use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Entity\AdminRole;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
@@ -15,6 +16,7 @@ use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\FormData\AdminFormData;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
+use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Exception\IdentityException;
@@ -39,12 +41,15 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
+use function array_map;
+
 class AdminController extends AbstractActionController
 {
     use ServerRequestAwareTrait;
 
     #[Inject(
         AdminServiceInterface::class,
+        AdminRoleServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
@@ -56,6 +61,7 @@ class AdminController extends AbstractActionController
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
+        protected AdminRoleServiceInterface $adminRoleService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
@@ -134,8 +140,18 @@ class AdminController extends AbstractActionController
             );
 
             if (! $this->isPost()) {
+                $roles = array_map(function (AdminRole $role) use ($admin): array {
+                    return [
+                        'label'    => $role->getName(),
+                        'value'    => $role->getUuid()->toString(),
+                        'selected' => $admin->hasRole($role),
+                    ];
+                }, $this->adminRoleService->getRoles());
+
+                $this->adminForm->setRoles($roles);
                 $adminFormData = (new AdminFormData())->fromEntity($admin);
                 $this->adminForm->bind($adminFormData);
+
                 return new HtmlResponse(
                     $this->template->render('admin::edit-admin-modal-content', [
                         'form' => $this->adminForm,

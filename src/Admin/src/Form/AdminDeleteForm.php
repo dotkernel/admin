@@ -52,7 +52,7 @@ class AdminDeleteForm extends Form
             'name'       => 'submit',
             'type'       => 'submit',
             'attributes' => [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger btn-sm',
                 'value' => 'Delete',
             ],
         ]);

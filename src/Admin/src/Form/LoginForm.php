@@ -38,7 +38,7 @@ class LoginForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Username',
-                'class'       => 'form-control',
+                'class'       => 'form-control form-control-sm',
             ],
             'type'       => Text::class,
         ]);
@@ -50,7 +50,7 @@ class LoginForm extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Password',
-                'class'       => 'form-control',
+                'class'       => 'form-control form-control-sm',
             ],
             'type'       => Password::class,
         ]);
@@ -60,7 +60,7 @@ class LoginForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Log in',
-                'class' => 'btn btn-primary btn-block login-button',
+                'class' => 'btn btn-primary btn-block btn-sm login-button',
             ],
             'type'       => Submit::class,
         ]);

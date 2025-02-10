@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\Controller;
 
 use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\Setting\Service\SettingService;
@@ -34,6 +35,7 @@ class AdminControllerTest extends UnitTest
         ]);
         $adminController = new AdminController(
             $this->createMock(AdminServiceInterface::class),
+            $this->createMock(AdminRoleServiceInterface::class),
             $this->createMock(RouterInterface::class),
             $this->createMock(TemplateRendererInterface::class),
             $this->createMock(AuthenticationServiceInterface::class),

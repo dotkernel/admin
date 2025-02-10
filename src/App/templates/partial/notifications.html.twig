@@ -18,8 +18,7 @@
                     </div>
                     <div class="toast-body">
                         {% for message in messages[namespace] %}
-                            {% set writeMessage = message|raw %}
-                            {% trans writeMessage %}<br>
+                            {{ message|raw }}
                         {% endfor %}
                     </div>
                 </div>

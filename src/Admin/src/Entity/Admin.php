@@ -161,6 +161,11 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
+    public function hasRole(AdminRole $role): bool
+    {
+        return $this->roles->contains($role);
+    }
+
     public function addRole(AdminRole $role): self
     {
         if (! $this->roles->contains($role)) {
