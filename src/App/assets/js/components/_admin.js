@@ -16,23 +16,6 @@ $(document).ready(() => {
         }
     }
 
-
-    const btnEdit = $('#btn-edit-admin');
-    const btnDelete = $('#btn-delete-admin');
-
-    btnEdit?.prop('disabled', true);
-    btnDelete?.prop('disabled', true);
-
-    $(document).on('click', '.ui-checkbox', () => {
-        if ($('.ui-checkbox:checked').length === 1) {
-            btnEdit?.prop('disabled', false);
-            btnDelete?.prop('disabled', false);
-        } else {
-            btnEdit?.prop('disabled', true);
-            btnDelete?.prop('disabled', true);
-        }
-    });
-
     $("#add-admin-modal").on('show.bs.modal', function () {
         const modal = $(this);
         const url = modal.data('add-url');

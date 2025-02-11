@@ -19,10 +19,10 @@
                             <button type="button" class="btn btn-default btn-sm" id="btn-add-admin" data-bs-toggle="modal" data-bs-target="#add-admin-modal">
                                 <i class="ti-plus"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" id="btn-edit-admin" data-bs-toggle="modal" data-bs-target="#edit-admin-modal">
+                            <button type="button" class="btn btn-default btn-sm" id="btn-edit-admin" data-bs-toggle="modal" data-bs-target="#edit-admin-modal" disabled>
                                 <i class="ti-pencil"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" id="btn-delete-admin" data-bs-toggle="modal" data-bs-target="#delete-admin-modal">
+                            <button type="button" class="btn btn-default btn-sm" id="btn-delete-admin" data-bs-toggle="modal" data-bs-target="#delete-admin-modal" disabled>
                                 <i class="ti-trash"></i>
                             </button>
                         </div>
@@ -76,7 +76,7 @@
                         </thead>
                         <tbody>
                         {% for admin in admins %}
-                            <tr>
+                            <tr class="table-row">
                                 <td class="column-uuid" style="width: 1vw;">
                                     <label>
                                         <input type="checkbox"

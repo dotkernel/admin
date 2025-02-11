@@ -72,6 +72,26 @@ $(function() {
         });
     };
 
+    $(document).on('click', '.ui-checkbox', () => {
+        toggleUiButtons();
+    });
+
+    const toggleUiButtons = () => {
+        const btnEdit = $('#btn-edit-admin');
+        const btnDelete = $('#btn-delete-admin');
+        if (! btnEdit || ! btnDelete) {
+            return;
+        }
+
+        if ($('.ui-checkbox:checked').length === 1) {
+            btnEdit?.prop('disabled', false);
+            btnDelete?.prop('disabled', false);
+        } else {
+            btnEdit?.prop('disabled', true);
+            btnDelete?.prop('disabled', true);
+        }
+    }
+
     populateColumnSelector('#column-selector', columnsSettings);
     hideColumns(tableId, columnsSettings);
 
@@ -89,5 +109,19 @@ $(function() {
                 table.removeClass('border-danger-subtle');
             })
             .catch(error => console.error('Error: ', error));
+    });
+
+    $(document).on('click', '.table-row', function (e) {
+        const checkbox = $(e.currentTarget).find('.checkbox');
+        if (! checkbox) {
+            return;
+        }
+
+        checkbox.prop('checked', !checkbox.prop('checked'));
+        toggleUiButtons();
+    });
+
+    $(document).on('click', '.ui-checkbox', function (e) {
+        $(e.currentTarget).prop('checked', !$(e.currentTarget).prop('checked'));
     });
 });
