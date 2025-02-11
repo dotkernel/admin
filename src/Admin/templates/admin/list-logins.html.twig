@@ -177,6 +177,7 @@
 {% endblock %}
 
 {% block javascript %}
+{{ parent() }}
 <script>
     const tableId = '#admin-logins-table';
     const storeSettingsUrl = '{{ path('setting', {action: 'store-setting', identifier: identifier}) }}';

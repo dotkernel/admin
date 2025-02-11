@@ -14,11 +14,6 @@
     <title>{% block title %}{% endblock %} - Dotkernel</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-    <script src="{{ asset('js/html5shiv.js') }}"></script>
-    <script src="{{ asset('js/respond.min.js') }}"></script>
-    <![endif]-->
 </head>
 <body class="app">
 
@@ -36,9 +31,8 @@
         <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"></footer>
     </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-
 {% block javascript %}
+<script src="{{ asset('js/app.js') }}"></script>
 {% endblock %}
 
 </body>
