@@ -4,7 +4,6 @@
         <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-        {% set dummy = form.prepare() %}
         {{ form().openTag(form)|raw }}
             {{ include('@partial/form-display-elements.html.twig', {form: form, showLabels: true}, false) }}
         {{ form().closeTag()|raw }}

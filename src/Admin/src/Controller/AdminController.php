@@ -80,7 +80,7 @@ class AdminController extends AbstractActionController
             if (! $this->isPost()) {
                 return new HtmlResponse(
                     $this->template->render('admin::add-admin-modal-content', [
-                        'form' => $this->adminForm,
+                        'form' => $this->adminForm->prepare(),
                     ])
                 );
             }
@@ -95,7 +95,7 @@ class AdminController extends AbstractActionController
             } else {
                 return new HtmlResponse(
                     $this->template->render('admin::add-admin-modal-content', [
-                        'form' => $this->adminForm,
+                        'form' => $this->adminForm->prepare(),
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
@@ -104,7 +104,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($e, Message::CREATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::add-admin-modal-content', [
-                    'form'     => $this->adminForm,
+                    'form'     => $this->adminForm->prepare(),
                     'messages' => [
                         'error' => $e->getMessage(),
                     ],
@@ -115,7 +115,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($e, Message::CREATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::add-admin-modal-content', [
-                    'form'     => $this->adminForm,
+                    'form'     => $this->adminForm->prepare(),
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,
                     ],
@@ -154,7 +154,7 @@ class AdminController extends AbstractActionController
 
                 return new HtmlResponse(
                     $this->template->render('admin::edit-admin-modal-content', [
-                        'form' => $this->adminForm,
+                        'form' => $this->adminForm->prepare(),
                     ])
                 );
             }
@@ -171,7 +171,7 @@ class AdminController extends AbstractActionController
             } else {
                 return new HtmlResponse(
                     $this->template->render('admin::edit-admin-modal-content', [
-                        'form' => $this->adminForm,
+                        'form' => $this->adminForm->prepare(),
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
@@ -180,7 +180,7 @@ class AdminController extends AbstractActionController
             $this->logErrors($exception, Message::UPDATE_ADMIN);
             return new HtmlResponse(
                 $this->template->render('admin::edit-admin-modal-content', [
-                    'form'     => $this->adminForm,
+                    'form'     => $this->adminForm->prepare(),
                     'messages' => [
                         'error' => $exception->getMessage(),
                     ],
@@ -278,7 +278,7 @@ class AdminController extends AbstractActionController
                 'statuses'   => Admin::STATUSES,
                 'settings'   => $settings?->getValue() ?? [],
                 'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
-                'form'       => $this->adminForm,
+                'form'       => $this->adminForm->prepare(),
                 'pagination' => new Pagination($result['total'], $result['offset'], $result['limit']),
             ])
         );
