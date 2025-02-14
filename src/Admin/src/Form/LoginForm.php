@@ -25,6 +25,10 @@ class LoginForm extends Form
 
         $this->init();
 
+        $this->setAttribute('id', 'login-form');
+        $this->setAttribute('class', 'needs-validation');
+        $this->setAttribute('novalidate', 'novalidate');
+
         $this->inputFilter = new LoginInputFilter();
         $this->inputFilter->init();
     }
@@ -39,6 +43,7 @@ class LoginForm extends Form
             'attributes' => [
                 'placeholder' => 'Username',
                 'class'       => 'form-control form-control-sm',
+                'required'    => 'required',
             ],
             'type'       => Text::class,
         ]);
@@ -51,6 +56,7 @@ class LoginForm extends Form
             'attributes' => [
                 'placeholder' => 'Password',
                 'class'       => 'form-control form-control-sm',
+                'required'    => 'required',
             ],
             'type'       => Password::class,
         ]);

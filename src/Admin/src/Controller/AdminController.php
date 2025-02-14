@@ -320,7 +320,7 @@ class AdminController extends AbstractActionController
                     );
                     if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
                         $this->authenticationService->clearIdentity();
-                        $this->messenger->addError('Admin is inactive', 'user-login');
+                        $this->messenger->addError('Admin is inactive');
                         $this->messenger->addData('shouldRebind', true);
                         $this->forms->saveState($form);
                         return new RedirectResponse($this->getRequest()->getUri(), 303);
@@ -336,13 +336,13 @@ class AdminController extends AbstractActionController
                     );
                     $this->messenger->addData('shouldRebind', true);
                     $this->forms->saveState($form);
-                    $this->messenger->addError($authResult->getMessages(), 'user-login');
+                    $this->messenger->addError($authResult->getMessages());
                     return new RedirectResponse($this->getRequest()->getUri(), 303);
                 }
             } else {
                 $this->messenger->addData('shouldRebind', true);
                 $this->forms->saveState($form);
-                $this->messenger->addError($this->forms->getMessages($form), 'user-login');
+                $this->messenger->addError($this->forms->getMessages($form));
                 return new RedirectResponse($this->getRequest()->getUri(), 303);
             }
         }
