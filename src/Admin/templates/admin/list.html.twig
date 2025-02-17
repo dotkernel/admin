@@ -30,9 +30,12 @@
                             <input type="text" class="form-control form-control-sm btn-sm" id="search" name="search" value="{{ params.search }}" placeholder="Search">
                         </div>
                         <div class="col-sm-auto">
-                            <button type="submit" class="btn btn-primary btn-sm">
+                            <button type="submit" class="btn btn-primary btn-sm mb-3">
                                 <i class="ti-search"></i> Filter
                             </button>
+                            <a href="{{ path('admin', {action: 'logins'}) }}" class="btn btn-secondary btn-sm mb-3">
+                                <i class="fa fa-undo"></i> Reset
+                            </a>
                         </div>
                         <div class="col-sm-auto ms-auto">
                             <div class="dropdown">
