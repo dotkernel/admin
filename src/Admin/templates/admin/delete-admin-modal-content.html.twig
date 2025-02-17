@@ -1,0 +1,23 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="delete-admin-modal-content">Delete admin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {{ form().openTag(form)|raw }}
+        <div class="row">
+            <div class="col-md-12">
+                <p>Are you sure you want to delete admin account with identity <span id="adminIdentity" class="fw-bold">{{ admin.identity }}</span>?</p>
+                <div class="form-check">
+                    {{ formElement(form.get('confirmation')) }}
+                    <label class="form-check-label" for="confirmation">Yes, I want to delete <span class="fw-bold">{{ admin.identity }}</span></label>
+                </div>
+                <div class="d-flex justify-content-end">
+                    {{ formElement(form.get('submit')) }}
+                    {{ formElement(form.get('adminDeleteCsrf')) }}
+                </div>
+            </div>
+        </div>
+        {{ form().closeTag()|raw }}
+    </div>
+</div>

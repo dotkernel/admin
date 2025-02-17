@@ -17,6 +17,8 @@ use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
+use Admin\Admin\Service\AdminRoleService;
+use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminService;
 use Admin\Admin\Service\AdminServiceInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -52,6 +54,7 @@ class ConfigProvider
             'factories'  => [
                 AdminController::class       => AttributedServiceFactory::class,
                 AdminService::class          => AttributedServiceFactory::class,
+                AdminRoleService::class      => AttributedServiceFactory::class,
                 AdminRepository::class       => AttributedRepositoryFactory::class,
                 AdminRoleRepository::class   => AttributedRepositoryFactory::class,
                 AdminLoginRepository::class  => AttributedRepositoryFactory::class,
@@ -60,8 +63,9 @@ class ConfigProvider
                 AuthenticationAdapter::class => AttributedServiceFactory::class,
             ],
             'aliases'    => [
-                AdminInterface::class        => Admin::class,
-                AdminServiceInterface::class => AdminService::class,
+                AdminInterface::class            => Admin::class,
+                AdminServiceInterface::class     => AdminService::class,
+                AdminRoleServiceInterface::class => AdminRoleService::class,
             ],
         ];
     }
@@ -80,6 +84,7 @@ class ConfigProvider
         return [
             'form_manager' => [
                 'factories'  => [
+                    AdminForm::class          => ElementFactory::class,
                     LoginForm::class          => ElementFactory::class,
                     ChangePasswordForm::class => ElementFactory::class,
                     AdminDeleteForm::class    => ElementFactory::class,

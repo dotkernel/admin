@@ -60,8 +60,10 @@ class AdminService implements AdminServiceInterface
         string $order = 'desc'
     ): array {
         $result = [
-            'rows'  => [],
-            'total' => $this->getAdminRepository()->countAdmins($search),
+            'rows'   => [],
+            'offset' => $offset,
+            'limit'  => $limit,
+            'total'  => $this->getAdminRepository()->countAdmins($search),
         ];
         $admins = $this->getAdminRepository()->getAdmins($offset, $limit, $search, $sort, $order);
 
@@ -224,17 +226,5 @@ class AdminService implements AdminServiceInterface
             ->setIdentity($name);
 
         return $this->adminRepository->saveAdminVisit($adminLogin);
-    }
-
-    public function getAdminFormProcessedRoles(): array
-    {
-        $allRoles = $this->adminRoleRepository->getRoles();
-
-        $roles = [];
-        foreach ($allRoles as $role) {
-            $roles[$role->getUuid()->toString()] = $role->getName();
-        }
-
-        return $roles;
     }
 }

@@ -23,27 +23,13 @@
   },
   "homepage": "https://github.com/dotkernel/admin#readme",
   "dependencies": {
-    "@fullcalendar/core": "^6.1.14",
-    "@fullcalendar/daygrid": "^6.1.14",
-    "@fullcalendar/interaction": "^6.1.14",
-    "@fullcalendar/list": "^6.1.14",
-    "@fullcalendar/timegrid": "^6.1.14",
     "@popperjs/core": "^2.11.8",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.3.3",
-    "bootstrap-datepicker": "^1.10.0",
-    "bootstrap-icons": "^1.11.3",
-    "bootstrap-table": "^1.23.0",
-    "brand-colors": "^2.1.1",
     "chart.js": "^4.4.3",
-    "easy-pie-chart": "^2.1.7",
-    "file-loader": "^6.2.0",
-    "fullcalendar": "^6.1.14",
     "jquery": "^3.7.1",
     "jquery-sparkline": "^2.4.0",
-    "load-google-maps-api": "^2.0.2",
     "lodash": "^4.17.21",
-    "masonry-layout": "^4.2.2",
     "moment": "^2.30.1",
     "perfect-scrollbar": "^1.5.5",
     "skycons": "^1.0.0"
@@ -84,6 +70,10 @@
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
     "webpack-dashboard": "^3.3.8",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.0.4",
+    "file-loader": "^6.2.0"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
   }
 }

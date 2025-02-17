@@ -1,8 +1,0 @@
-{{ form().openTag(form)|raw }}
-<p>Are you sure you want to delete admin account with identity <span id="adminIdentity" class="fw-bold">{{ admin.identity }}</span>?</p>
-<div class="form-check">
-    {{ formElement(form.get('confirmation')) }}
-    <label class="form-check-label" for="confirmation">Yes, I want to delete <span class="fw-bold">{{ admin.identity }}</span></label>
-</div>
-{{ formElement(form.get('adminDeleteCsrf')) }}
-{{ form().closeTag()|raw }}

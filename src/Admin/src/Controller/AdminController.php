@@ -8,6 +8,7 @@ use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Entity\AdminRole;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
@@ -15,6 +16,7 @@ use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\FormData\AdminFormData;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
+use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Exception\IdentityException;
@@ -23,17 +25,15 @@ use Admin\App\Pagination;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Service\SettingService;
-use Doctrine\ORM\NonUniqueResultException;
 use Dot\Controller\AbstractActionController;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
-use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Exception\ExceptionInterface;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Mezzio\Router\RouterInterface;
@@ -41,7 +41,7 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-use function assert;
+use function array_map;
 
 class AdminController extends AbstractActionController
 {
@@ -49,6 +49,7 @@ class AdminController extends AbstractActionController
 
     #[Inject(
         AdminServiceInterface::class,
+        AdminRoleServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
@@ -60,6 +61,7 @@ class AdminController extends AbstractActionController
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
+        protected AdminRoleServiceInterface $adminRoleService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
@@ -73,167 +75,212 @@ class AdminController extends AbstractActionController
 
     public function addAction(): ResponseInterface
     {
-        if ($this->isPost()) {
+        try {
+            $this->adminForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'add']));
+            if (! $this->isPost()) {
+                return new HtmlResponse(
+                    $this->template->render('admin::add-admin-modal-content', [
+                        'form' => $this->adminForm->prepare(),
+                    ])
+                );
+            }
+
             $this->adminForm->setData($this->getPostParams());
             if ($this->adminForm->isValid()) {
                 /** @var array $result */
                 $result = $this->adminForm->getData();
-                try {
-                    $this->adminService->createAdmin($result);
-                    return new JsonResponse(['message' => Message::ADMIN_CREATED_SUCCESSFULLY]);
-                } catch (IdentityException $e) {
-                    $this->logErrors($e, Message::CREATE_ADMIN);
-                    return new JsonResponse(
-                        ['message' => $e->getMessage()],
-                        StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
-                    );
-                } catch (Throwable $e) {
-                    $this->logErrors($e, Message::CREATE_ADMIN);
-                    return new JsonResponse(
-                        ['message' => Message::AN_ERROR_OCCURRED],
-                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
-                    );
-                }
+                $this->adminService->createAdmin($result);
+                $this->messenger->addSuccess(Message::ADMIN_CREATED_SUCCESSFULLY);
+                return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
-                return new JsonResponse(
-                    ['message' => $this->forms->getMessagesAsString($this->adminForm)],
-                    StatusCodeInterface::STATUS_BAD_REQUEST
+                return new HtmlResponse(
+                    $this->template->render('admin::add-admin-modal-content', [
+                        'form' => $this->adminForm->prepare(),
+                    ]),
+                    StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
             }
+        } catch (IdentityException $e) {
+            $this->logErrors($e, Message::CREATE_ADMIN);
+            return new HtmlResponse(
+                $this->template->render('admin::add-admin-modal-content', [
+                    'form'     => $this->adminForm->prepare(),
+                    'messages' => [
+                        'error' => $e->getMessage(),
+                    ],
+                ]),
+                StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
+            );
+        } catch (Throwable $e) {
+            $this->logErrors($e, Message::CREATE_ADMIN);
+            return new HtmlResponse(
+                $this->template->render('admin::add-admin-modal-content', [
+                    'form'     => $this->adminForm->prepare(),
+                    'messages' => [
+                        'error' => Message::AN_ERROR_OCCURRED,
+                    ],
+                ]),
+                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+            );
         }
-
-        return new JsonResponse([
-            'data' => $this->template->render(
-                'partial::ajax-form',
-                [
-                    'form'       => $this->adminForm,
-                    'formAction' => '/admin/add',
-                    'method'     => RequestMethodInterface::METHOD_POST,
-                ]
-            ),
-        ]);
     }
 
     public function editAction(): ResponseInterface
     {
-        $uuid = $this->getAttribute('uuid');
+        try {
+            $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $this->getAttribute('uuid')]);
+            if (! $admin instanceof Admin) {
+                $this->messenger->addError(Message::ADMIN_NOT_FOUND);
+                return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+            }
 
-        /** @var Admin $admin */
-        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
+            $this->adminForm->setAttribute(
+                'action',
+                $this->router->generateUri('admin', ['action' => 'edit', 'uuid' => $admin->getUuid()->toString()])
+            );
 
-        $adminFormData = (new AdminFormData())->fromEntity($admin);
+            if (! $this->isPost()) {
+                $roles = array_map(function (AdminRole $role) use ($admin): array {
+                    return [
+                        'label'    => $role->getName(),
+                        'value'    => $role->getUuid()->toString(),
+                        'selected' => $admin->hasRole($role),
+                    ];
+                }, $this->adminRoleService->getRoles());
 
-        if ($this->isPost()) {
-            $this->adminForm->setData($this->getPostParams());
+                $this->adminForm->setRoles($roles);
+                $adminFormData = (new AdminFormData())->fromEntity($admin);
+                $this->adminForm->bind($adminFormData);
+
+                return new HtmlResponse(
+                    $this->template->render('admin::edit-admin-modal-content', [
+                        'form' => $this->adminForm->prepare(),
+                    ])
+                );
+            }
+
             $this->adminForm->setInputFilter(new EditAdminInputFilter());
+            $this->adminForm->setData($this->getPostParams());
             if ($this->adminForm->isValid()) {
                 /** @var array $result */
                 $result = $this->adminForm->getData();
-                try {
-                    $this->adminService->updateAdmin($admin, $result);
-                    return new JsonResponse(['message' => Message::ADMIN_UPDATED_SUCCESSFULLY]);
-                } catch (IdentityException $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    return new JsonResponse(
-                        ['message' => $e->getMessage()],
-                        StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
-                    );
-                } catch (Throwable $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    return new JsonResponse(
-                        ['message' => Message::AN_ERROR_OCCURRED],
-                        StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
-                    );
-                }
+                $this->adminService->updateAdmin($admin, $result);
+
+                $this->messenger->addSuccess(Message::ADMIN_UPDATED_SUCCESSFULLY);
+                return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
-                return new JsonResponse(
-                    ['message' => $this->forms->getMessagesAsString($this->adminForm)],
-                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+                return new HtmlResponse(
+                    $this->template->render('admin::edit-admin-modal-content', [
+                        'form' => $this->adminForm->prepare(),
+                    ]),
+                    StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
             }
+        } catch (IdentityException $exception) {
+            $this->logErrors($exception, Message::UPDATE_ADMIN);
+            return new HtmlResponse(
+                $this->template->render('admin::edit-admin-modal-content', [
+                    'form'     => $this->adminForm->prepare(),
+                    'messages' => [
+                        'error' => $exception->getMessage(),
+                    ],
+                ]),
+                StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
+            );
+        } catch (Throwable $exception) {
+            $this->logErrors($exception, Message::UPDATE_ADMIN);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+            return new EmptyResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
         }
-
-        $this->adminForm->bind($adminFormData);
-
-        return new JsonResponse([
-            'data' => $this->template->render(
-                'partial::ajax-form',
-                [
-                    'form'       => $this->adminForm,
-                    'formAction' => '/admin/edit/' . $uuid,
-                    'method'     => RequestMethodInterface::METHOD_POST,
-                ]
-            ),
-        ]);
     }
 
     public function deleteAction(): ResponseInterface
     {
-        $uuid = $this->getAttribute('uuid');
-        if (empty($uuid)) {
-            return new JsonResponse(
-                ['message' => Message::ADMIN_NOT_FOUND],
-                StatusCodeInterface::STATUS_NOT_FOUND
+        try {
+            $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $this->getAttribute('uuid')]);
+            if (! $admin instanceof Admin) {
+                $this->messenger->addError(Message::ADMIN_NOT_FOUND);
+                return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+            }
+
+            $form = new AdminDeleteForm();
+            $form->setAttribute(
+                'action',
+                $this->router->generateUri('admin', [
+                    'action' => 'delete',
+                    'uuid'   => $admin->getUuid()->toString(),
+                ])
             );
-        }
-        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $uuid]);
-        assert($admin instanceof Admin);
 
-        $form = new AdminDeleteForm();
-        $form->setAttribute(
-            'action',
-            $this->router->generateUri('admin', ['action' => 'delete', 'uuid' => $uuid])
-        );
+            if (! $this->isPost()) {
+                return new HtmlResponse(
+                    $this->template->render('admin::delete-admin-modal-content', [
+                        'form'  => $form,
+                        'admin' => $admin,
+                    ]),
+                );
+            }
 
-        if ($this->isPost()) {
             $form->setData($this->getPostParams());
-            if (! $form->isValid()) {
-                return new JsonResponse(
-                    ['message' => $this->forms->getMessages($form)],
-                    StatusCodeInterface::STATUS_BAD_REQUEST
-                );
-            }
-
-            try {
+            if ($form->isValid()) {
                 $this->adminService->getAdminRepository()->deleteAdmin($admin);
-                return new JsonResponse(['message' => Message::ADMIN_DELETED_SUCCESSFULLY]);
-            } catch (Throwable $e) {
-                $this->logErrors($e, Message::DELETE_ADMIN);
-                return new JsonResponse(
-                    ['message' => Message::AN_ERROR_OCCURRED],
-                    StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+
+                $this->messenger->addSuccess(Message::ADMIN_DELETED_SUCCESSFULLY);
+                return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
+            } else {
+                return new HtmlResponse(
+                    $this->template->render('admin::delete-admin-modal-content', [
+                        'form'  => $form,
+                        'admin' => $admin,
+                    ]),
+                    StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
             }
+        } catch (Throwable $exception) {
+            $this->logErrors($exception, Message::DELETE_ADMIN);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+            return new EmptyResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
         }
-
-        return new JsonResponse([
-            'data' => $this->template->render(
-                'admin::delete',
-                [
-                    'admin' => $admin,
-                    'form'  => $form->prepare(),
-                ]
-            ),
-        ]);
     }
 
     public function listAction(): ResponseInterface
     {
+        $params = [
+            'offset' => $this->getQueryParam('offset', 0, 'int'),
+            'limit'  => $this->getQueryParam('limit', 10, 'int'),
+            'sort'   => $this->getQueryParam('sort', 'created'),
+            'order'  => $this->getQueryParam('order', 'desc'),
+            'search' => $this->getQueryParam('search'),
+            'status' => $this->getQueryParam('status'),
+        ];
+
         $result = $this->adminService->getAdmins(
-            $this->getQueryParam('offset', 0, 'int'),
-            $this->getQueryParam('limit', 30, 'int'),
-            $this->getQueryParam('search'),
-            $this->getQueryParam('sort', 'created'),
-            $this->getQueryParam('order', 'desc')
+            $params['offset'],
+            $params['limit'],
+            $params['search'],
+            $params['sort'],
+            $params['order'],
         );
 
-        return new JsonResponse($result);
-    }
+        $settings = $this->settingService->findOneBy([
+            'admin'      => $this->adminService->getAdminRepository()->findOneBy([
+                'identity' => $this->authenticationService->getIdentity()->getIdentity(),
+            ]),
+            'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
+        ]);
 
-    public function manageAction(): ResponseInterface
-    {
+        $this->adminForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'add']));
+
         return new HtmlResponse(
-            $this->template->render('admin::list')
+            $this->template->render('admin::list', [
+                'params'     => $params,
+                'admins'     => $result['rows'],
+                'statuses'   => Admin::STATUSES,
+                'settings'   => $settings?->getValue() ?? [],
+                'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
+                'form'       => $this->adminForm->prepare(),
+                'pagination' => new Pagination($result['total'], $result['offset'], $result['limit']),
+            ])
         );
     }
 
@@ -273,7 +320,7 @@ class AdminController extends AbstractActionController
                     );
                     if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
                         $this->authenticationService->clearIdentity();
-                        $this->messenger->addError('Admin is inactive', 'user-login');
+                        $this->messenger->addError('Admin is inactive');
                         $this->messenger->addData('shouldRebind', true);
                         $this->forms->saveState($form);
                         return new RedirectResponse($this->getRequest()->getUri(), 303);
@@ -289,13 +336,13 @@ class AdminController extends AbstractActionController
                     );
                     $this->messenger->addData('shouldRebind', true);
                     $this->forms->saveState($form);
-                    $this->messenger->addError($authResult->getMessages(), 'user-login');
+                    $this->messenger->addError($authResult->getMessages());
                     return new RedirectResponse($this->getRequest()->getUri(), 303);
                 }
             } else {
                 $this->messenger->addData('shouldRebind', true);
                 $this->forms->saveState($form);
-                $this->messenger->addError($this->forms->getMessages($form), 'user-login');
+                $this->messenger->addError($this->forms->getMessages($form));
                 return new RedirectResponse($this->getRequest()->getUri(), 303);
             }
         }
@@ -320,102 +367,110 @@ class AdminController extends AbstractActionController
     {
         $accountForm        = new AccountForm();
         $changePasswordForm = new ChangePasswordForm();
-        $changePasswordForm
-            ->setAttribute('action', $this->router->generateUri('admin', ['action' => 'change-password']));
+
+        $accountForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'account']));
+        $changePasswordForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin', ['action' => 'change-password'])
+        );
 
         $identity = $this->authenticationService->getIdentity();
         $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
 
-        if ($this->isPost()) {
-            $accountForm->setData($this->getPostParams());
-            if ($accountForm->isValid()) {
-                /** @var array $result */
-                $result = $accountForm->getData();
-                try {
-                    $this->adminService->updateAdmin($admin, $result);
-                    $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                } catch (IdentityException $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    $this->messenger->addError($e->getMessage());
-                } catch (Throwable $e) {
-                    $this->logErrors($e, Message::UPDATE_ADMIN);
-                    $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-                }
-            } else {
-                $this->messenger->addError($this->forms->getMessagesAsString($accountForm));
-            }
-            return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
+        if (! $this->isPost()) {
+            $accountForm->bind($admin);
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
         }
 
-        $accountForm->bind($admin);
+        $accountForm->setData($this->getPostParams());
+        if (! $accountForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
 
-        return new HtmlResponse(
-            $this->template->render('admin::account', [
-                'accountForm'        => $accountForm->prepare(),
-                'changePasswordForm' => $changePasswordForm->prepare(),
-            ])
-        );
+        try {
+            /** @var array $result */
+            $result = $accountForm->getData();
+
+            $this->adminService->updateAdmin($admin, $result);
+            $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+        } catch (IdentityException $e) {
+            $this->logErrors($e, Message::UPDATE_ADMIN);
+            $this->messenger->addError($e->getMessage());
+        } catch (Throwable $e) {
+            $this->logErrors($e, Message::UPDATE_ADMIN);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+        }
+
+        return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
     }
 
     public function changePasswordAction(): ResponseInterface
     {
         $changePasswordForm = new ChangePasswordForm();
+        $accountForm        = new AccountForm();
+
+        $accountForm->setAttribute('action', $this->router->generateUri('admin', ['action' => 'account']));
+        $changePasswordForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin', ['action' => 'change-password'])
+        );
+
+        if (! $this->isPost()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
+
         /** @var AdminIdentity $adminIdentity */
         $adminIdentity = $this->authenticationService->getIdentity();
         $admin         = $this->adminService->getAdminRepository()->findOneBy([
             'identity' => $adminIdentity->getIdentity(),
         ]);
 
-        if ($this->isPost()) {
-            $changePasswordForm->setData($this->getPostParams());
-            if ($changePasswordForm->isValid()) {
-                /** @var array $result */
-                $result = $changePasswordForm->getData();
-                if ($admin->verifyPassword($result['currentPassword'])) {
-                    try {
-                        $this->adminService->updateAdmin($admin, $result);
-                        $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-                    } catch (IdentityException $e) {
-                        $this->logErrors($e, Message::CHANGE_PASSWORD);
-                        $this->messenger->addError($e->getMessage());
-                    } catch (Throwable $e) {
-                        $this->logErrors($e, Message::CHANGE_PASSWORD);
-                        $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-                    }
-                } else {
-                    $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
-                }
+        $changePasswordForm->setData($this->getPostParams());
+        if (! $changePasswordForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account', [
+                    'accountForm'        => $accountForm->prepare(),
+                    'changePasswordForm' => $changePasswordForm->prepare(),
+                ])
+            );
+        }
+
+        try {
+            /** @var array $result */
+            $result = $changePasswordForm->getData();
+            if ($admin->verifyPassword($result['currentPassword'])) {
+                $this->adminService->updateAdmin($admin, $result);
+                $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
             } else {
-                $this->messenger->addError($this->forms->getMessagesAsString($changePasswordForm));
+                $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
             }
+        } catch (IdentityException $e) {
+            $this->logErrors($e, Message::CHANGE_PASSWORD);
+            $this->messenger->addError($e->getMessage());
+        } catch (Throwable $e) {
+            $this->logErrors($e, Message::CHANGE_PASSWORD);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
         return new RedirectResponse($this->router->generateUri('admin', ['action' => 'account']));
     }
 
     public function loginsAction(): ResponseInterface
-    {
-        return new HtmlResponse(
-            $this->template->render('admin::list-logins')
-        );
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function listLoginsAction(): ResponseInterface
-    {
-        $result = $this->adminService->getAdminLogins(
-            $this->getQueryParam('offset', 0, 'int'),
-            $this->getQueryParam('limit', 30, 'int'),
-            $this->getQueryParam('sort', 'created'),
-            $this->getQueryParam('order', 'desc')
-        );
-
-        return new JsonResponse($result);
-    }
-
-    public function simpleLoginsAction(): ResponseInterface
     {
         $params = [
             'offset'   => $this->getQueryParam('offset', 0, 'int'),
@@ -445,7 +500,7 @@ class AdminController extends AbstractActionController
         ]);
 
         return new HtmlResponse(
-            $this->template->render('admin::simple-logins', [
+            $this->template->render('admin::list-logins', [
                 'params'     => $params,
                 'logins'     => $logins['rows'],
                 'settings'   => $settings?->getValue() ?? [],

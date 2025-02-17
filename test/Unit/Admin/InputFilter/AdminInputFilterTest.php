@@ -514,7 +514,7 @@ class AdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['roles']);
         $this->assertArrayHasKey('isEmpty', $messages['roles']);
         $this->assertSame(
-            'Please select at least one role',
+            '<b>Please select at least one role</b>',
             $messages['roles']['isEmpty']
         );
 
@@ -534,7 +534,7 @@ class AdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['roles']);
         $this->assertArrayHasKey('isEmpty', $messages['roles']);
         $this->assertSame(
-            'Please select at least one role',
+            '<b>Please select at least one role</b>',
             $messages['roles']['isEmpty']
         );
     }

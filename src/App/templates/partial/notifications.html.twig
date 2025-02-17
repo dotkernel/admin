@@ -1,0 +1,29 @@
+{% set classes = {error: 'danger', info: 'info', warning: 'warning', success: 'success'} %}
+{% if dismissible is not defined %}
+    {% set dismissible = false %}
+{% endif %}
+
+{% if messages is defined and messages is iterable %}
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container top-0 end-0 p-10">
+        {% for namespace in messages|keys %}
+            {% if classes[namespace] is defined %}
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-animation="true" data-bs-delay="3000">
+                    <div class="toast-header">
+                        <div class="rounded-1 me-2 p-5 bg-{{ classes[namespace] }}"></div>
+                        <strong class="me-auto">Dotkernel</strong>
+                        {% if dismissible %}
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        {% endif %}
+                    </div>
+                    <div class="toast-body">
+                        {% for message in messages[namespace] %}
+                            {{ message|raw }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endif %}

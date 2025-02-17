@@ -30,7 +30,7 @@ class AdminFormDataTest extends UnitTest
         $this->assertSame($admin->getStatus(), $formData->status);
         $this->assertIsArray($formData->roles);
         $this->assertCount(1, $formData->roles);
-        $this->assertSame($admin->getRoles()[0]->getUuid()->toString(), $formData->roles[0]);
+        $this->assertSame($admin->getRoles()[0]->getUuid()->toString(), $formData->roles[0]['value']);
     }
 
     public function testWillGetArrayCopy(): void
@@ -55,8 +55,11 @@ class AdminFormDataTest extends UnitTest
 
         $this->assertArrayHasKey('roles', $copy);
         $this->assertIsArray($copy['roles']);
-        $this->assertSame(array_map(function (AdminRole $role): string {
-            return $role->getUuid()->toString();
+        $this->assertSame(array_map(function (AdminRole $role): array {
+            return [
+                'label' => $role->getName(),
+                'value' => $role->getUuid()->toString(),
+            ];
         }, $admin->getRoles()), $copy['roles']);
     }
 
@@ -68,7 +71,7 @@ class AdminFormDataTest extends UnitTest
 
         $this->assertIsArray($roles);
         $this->assertCount(1, $roles);
-        $this->assertSame($admin->getRoles()[0]->getUuid()->toString(), $roles[0]);
+        $this->assertSame($admin->getRoles()[0]->getUuid()->toString(), $roles[0]['value']);
     }
 
     private function getAdmin(): Admin

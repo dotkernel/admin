@@ -31,20 +31,13 @@ return [
                                 [
                                     'options' => [
                                         'label' => 'Admins',
-                                        'uri'   => '/admin/manage',
+                                        'uri'   => '/admin/list',
                                     ],
                                 ],
                                 [
                                     'options' => [
                                         'label' => 'Logins',
                                         'uri'   => '/admin/logins',
-                                    ],
-                                ],
-                                [
-                                    'options' => [
-                                        'label' => 'View logins v2',
-                                        'uri'   => '/admin/simple-logins',
-                                        'icon'  => 'c-pink-500 ti-palette',
                                     ],
                                 ],
                             ],

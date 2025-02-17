@@ -107,7 +107,7 @@ class AdminInputFilter extends InputFilter
         $roles->setRequired(true);
         $roles->getValidatorChain()->attachByName(NotEmpty::class, [
             'break_chain_on_failure' => true,
-            'message'                => 'Please select at least one role',
+            'message'                => '<b>Please select at least one role</b>',
         ]);
         $this->add($roles);
 

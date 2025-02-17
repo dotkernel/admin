@@ -27,6 +27,7 @@ class AdminFormTest extends UnitTest
             'firstName',
             'lastName',
             'status',
+            'submit',
             'adminManageCsrf',
         ]);
     }

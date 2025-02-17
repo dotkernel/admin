@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Admin\Admin\FormData;
 
 use Admin\Admin\Entity\Admin;
+use Admin\Admin\Entity\AdminRole;
 
-class AdminFormData
+use function array_map;
+
+final class AdminFormData
 {
     public ?string $identity  = null;
     public ?string $firstName = null;
@@ -21,13 +24,16 @@ class AdminFormData
 
     public function fromEntity(Admin $admin): self
     {
-        foreach ($admin->getRoles() as $role) {
-            $this->roles[] = $role->getUuid()->toString();
-        }
         $this->identity  = $admin->getIdentity();
         $this->firstName = $admin->getFirstName();
         $this->lastName  = $admin->getLastName();
         $this->status    = $admin->getStatus();
+        $this->roles     = array_map(function (AdminRole $role) {
+            return [
+                'label' => $role->getName(),
+                'value' => $role->getUuid()->toString(),
+            ];
+        }, $admin->getRoles());
 
         return $this;
     }

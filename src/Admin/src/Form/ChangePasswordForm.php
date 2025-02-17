@@ -22,6 +22,10 @@ class ChangePasswordForm extends Form
 
         $this->init();
 
+        $this->setAttribute('id', 'change-password-form');
+        $this->setAttribute('class', 'needs-validation');
+        $this->setAttribute('novalidate', 'novalidate');
+
         $this->inputFilter = new ChangePasswordInputFilter();
         $this->inputFilter->init();
     }
@@ -35,8 +39,8 @@ class ChangePasswordForm extends Form
                 'label' => 'Your current password',
             ],
             'attributes' => [
-                'placeholder' => '',
-                'class'       => 'form-control',
+                'class'    => 'form-control form-control-sm',
+                'required' => 'required',
             ],
         ]);
 
@@ -47,8 +51,8 @@ class ChangePasswordForm extends Form
                 'label' => 'New password',
             ],
             'attributes' => [
-                'placeholder' => '',
-                'class'       => 'form-control',
+                'class'    => 'form-control form-control-sm',
+                'required' => 'required',
             ],
         ]);
 
@@ -59,8 +63,8 @@ class ChangePasswordForm extends Form
                 'label' => 'New password confirm',
             ],
             'attributes' => [
-                'placeholder' => '',
-                'class'       => 'form-control',
+                'class'    => 'form-control form-control-sm',
+                'required' => 'required',
             ],
         ]);
 
@@ -70,7 +74,7 @@ class ChangePasswordForm extends Form
             'attributes' => [
                 'type'  => 'submit',
                 'value' => 'Change Password',
-                'class' => 'btn btn-primary btn-color',
+                'class' => 'btn btn-primary btn-color btn-sm',
             ],
         ], ['priority' => -100]);
 

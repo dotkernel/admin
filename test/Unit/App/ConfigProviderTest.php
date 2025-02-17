@@ -74,6 +74,5 @@ class ConfigProviderTest extends UnitTest
         $this->assertArrayHasKey('error', $this->config['templates']['paths']);
         $this->assertArrayHasKey('layout', $this->config['templates']['paths']);
         $this->assertArrayHasKey('partial', $this->config['templates']['paths']);
-        $this->assertArrayHasKey('language', $this->config['templates']['paths']);
     }
 }

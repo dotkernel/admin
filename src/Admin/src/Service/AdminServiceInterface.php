@@ -53,6 +53,4 @@ interface AdminServiceInterface
     public function updateAdmin(Admin $admin, array $data): Admin;
 
     public function logAdminVisit(array $serverParams, string $name, string $status): AdminLogin;
-
-    public function getAdminFormProcessedRoles(): array;
 }
