@@ -22,4 +22,5 @@ class Message
     public const UPDATE_ADMIN                     = "Update admin";
     public const DELETE_ADMIN                     = "Delete admin";
     public const CHANGE_PASSWORD                  = "Change password";
+    public const LOGIN_FAILED                     = "Login failed";
 }

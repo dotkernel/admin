@@ -10,7 +10,7 @@
 
         {% if messages is defined and messages is iterable %}
             {% for type, message in messages %}
-                <div class="alert alert-{% if type == 'success' %}success{% elseif type == 'warning' %}warning{% else %}danger{% endif %}" role="alert">{{ message }}</div>
+                <div class="mt-3 alert alert-{% if type == 'success' %}success{% elseif type == 'warning' %}warning{% else %}danger{% endif %}" role="alert">{{ message }}</div>
             {% endfor %}
         {% endif %}
     </div>

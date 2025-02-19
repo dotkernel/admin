@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    <form class="row g-3" method="get" action="{{ path('admin', {action: 'list'}) }}">
+                    <form class="row g-3" method="get" action="{{ path('admin::list') }}">
                         <input type="hidden" name="offset" value="0" />
                         <input type="hidden" name="limit" value="{{ params.limit }}" />
                         <input type="hidden" name="sort" value="{{ params.sort }}" />
@@ -33,7 +33,7 @@
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
                                 <i class="ti-search"></i> Filter
                             </button>
-                            <a href="{{ path('admin', {action: 'logins'}) }}" class="btn btn-secondary btn-sm mb-3">
+                            <a href="{{ path('admin::list-logins') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
@@ -58,22 +58,22 @@
                         <tr>
                             <th class="column-uuid"></th>
                             <th class="column-identity">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'identity', 'Identity') }}
+                                {{ sortableColumn('admin::list', {}, params, 'identity', 'Identity') }}
                             </th>
                             <th class="column-firstName text-nowrap">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'firstName', 'First Name') }}
+                                {{ sortableColumn('admin::list', {}, params, 'firstName', 'First Name') }}
                             </th>
                             <th class="column-lastName">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'lastName', 'Last Name') }}
+                                {{ sortableColumn('admin::list', {}, params, 'lastName', 'Last Name') }}
                             </th>
                             <th class="column-roles">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'roles', 'Roles') }}
+                                {{ sortableColumn('admin::list', {}, params, 'roles', 'Roles') }}
                             </th>
                             <th class="column-status">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'status', 'Status') }}
+                                {{ sortableColumn('admin::list', {}, params, 'status', 'Status') }}
                             </th>
                             <th class="column-created">
-                                {{ sortableColumn('admin', {action: 'list'}, params, 'created', 'Created') }}
+                                {{ sortableColumn('admin::list', {}, params, 'created', 'Created') }}
                             </th>
                         </tr>
                         </thead>
@@ -85,8 +85,8 @@
                                         <input type="checkbox"
                                                class="checkbox ui-checkbox"
                                                value="{{ admin.uuid }}"
-                                               data-edit-url="{{ path('admin', {action: 'edit', uuid: admin.uuid}) }}"
-                                               data-delete-url="{{ path('admin', {action: 'delete', uuid: admin.uuid}) }}"
+                                               data-edit-url="{{ path('admin::get-edit-admin-form', {uuid: admin.uuid}) }}"
+                                               data-delete-url="{{ path('admin::get-delete-admin-form', {uuid: admin.uuid}) }}"
                                         >
                                         <span></span>
                                     </label>
@@ -106,19 +106,19 @@
                     {% if pagination.isOutOfBounds() %}
                         <div class="alert alert-warning text-center text-black fw-bold" role="alert">
                             Out of bounds! Return to
-                            <a href="{{ path('admin', {action: 'list'}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
+                            <a href="{{ path('admin::list', {}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
                         </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, params: params, path: 'admin', action: 'list'}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, params: params, path: 'admin::list'}, false) }}
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="add-admin-modal" tabindex="-1" aria-labelledby="add-admin-modal-content" aria-hidden="true" data-add-url="{{ path('admin', {action: 'add'}) }}">
+        <div class="modal fade" id="add-admin-modal" tabindex="-1" aria-labelledby="add-admin-modal-content" aria-hidden="true" data-add-url="{{ path('admin::get-admin-form') }}">
             <div class="modal-dialog"></div>
         </div>
 
@@ -136,7 +136,7 @@
 {{ parent() }}
 <script>
     const tableId = '#admin-table';
-    const storeSettingsUrl = '{{ path('setting', {action: 'store-setting', identifier: identifier}) }}';
+    const storeSettingsUrl = '{{ path('setting::store-setting', {identifier: identifier}) }}';
     const columnsSettings = JSON.parse('{{ settings|json_encode()|raw }}');
 </script>
 <script src="{{ asset('js/table_settings.js') }}" defer></script>

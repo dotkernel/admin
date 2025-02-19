@@ -10,7 +10,7 @@
             <h3 class="message">You don't have enough permissions to access the requested content!</h3>
             <p>
                 You are looking for something that doesn't exist or may have moved. Check out one of the links on this page
-                or head back to <a href="{{ path('dashboard') }}">Dashboard</a>.
+                or head back to <a href="{{ path('page::dashboard') }}">Dashboard</a>.
             </p>
         </div>
     </div>
@@ -24,10 +24,10 @@
             <p class="fsz-def c-grey-700">You don't have enough permissions to access the requested content!</p>
             <p class="fsz-def c-grey-700">You are looking for something that doesn't exist or may have moved.
                 Check out one of the links on this page or head back to
-                <a href="{{ path('dashboard') }}">Dashboard</a>.
+                <a href="{{ path('page::dashboard') }}">Dashboard</a>.
             </p>
             <div>
-                <a href="{{ path('dashboard') }}" type="primary" class="btn btn-primary">Home</a>
+                <a href="{{ path('page::dashboard') }}" type="primary" class="btn btn-primary">Home</a>
             </div>
         </div>
     </div>
