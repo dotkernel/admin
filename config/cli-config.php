@@ -13,7 +13,4 @@ $config = new PhpFile('config/migrations.php');
 
 $entityManager = $container->get(EntityManager::class);
 
-// register enum type for doctrine
-$entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
-
 return DependencyFactory::fromEntityManager($config, new ExistingEntityManager($entityManager));

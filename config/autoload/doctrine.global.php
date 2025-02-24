@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Admin\Admin\DBAL\Types\AdminStatusEnumType;
+use Admin\App\DBAL\Types\SuccessFailureEnumType;
+use Admin\App\DBAL\Types\YesNoEnumType;
 use Admin\App\Resolver\EntityListenerResolver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Dot\Cache\Adapter\ArrayAdapter;
@@ -11,7 +14,17 @@ use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 return [
-    'doctrine' => [
+    'doctrine'            => [
+        'cache'         => [
+            'array'      => [
+                'class' => ArrayAdapter::class,
+            ],
+            'filesystem' => [
+                'class'     => FilesystemAdapter::class,
+                'directory' => getcwd() . '/data/cache',
+                'namespace' => 'doctrine',
+            ],
+        ],
         'configuration' => [
             'orm_default' => [
                 'entity_listener_resolver' => EntityListenerResolver::class,
@@ -49,17 +62,11 @@ return [
             UuidType::NAME                  => UuidType::class,
             UuidBinaryType::NAME            => UuidBinaryType::class,
             UuidBinaryOrderedTimeType::NAME => UuidBinaryOrderedTimeType::class,
-        ],
-        'cache'         => [
-            'array'      => [
-                'class' => ArrayAdapter::class,
-            ],
-            'filesystem' => [
-                'class'     => FilesystemAdapter::class,
-                'directory' => getcwd() . '/data/cache',
-                'namespace' => 'doctrine',
-            ],
+            AdminStatusEnumType::NAME       => AdminStatusEnumType::class,
+            SuccessFailureEnumType::NAME    => SuccessFailureEnumType::class,
+            YesNoEnumType::NAME             => YesNoEnumType::class,
         ],
         'fixtures'      => getcwd() . '/data/doctrine/fixtures',
     ],
+    'resultCacheLifetime' => 600,
 ];

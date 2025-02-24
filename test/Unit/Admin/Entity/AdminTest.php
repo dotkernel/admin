@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\Entity;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,7 +29,7 @@ class AdminTest extends UnitTest
             'firstName' => 'firstName',
             'lastName'  => 'lastName',
             'password'  => 'password',
-            'status'    => Admin::STATUS_INACTIVE,
+            'status'    => AdminStatusEnum::Inactive,
             'roles'     => [
                 (new AdminRole())->setName(AdminRole::ROLE_ADMIN),
             ],
@@ -82,7 +83,7 @@ class AdminTest extends UnitTest
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['password'], $admin->getPassword());
 
-        $this->assertSame(Admin::STATUS_ACTIVE, $admin->getStatus());
+        $this->assertSame(AdminStatusEnum::Active, $admin->getStatus());
         $admin = $admin->setStatus($this->default['status']);
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['status'], $admin->getStatus());

@@ -7,6 +7,8 @@ namespace Admin\Admin\Entity;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
+use Admin\App\Enum\SuccessFailureEnum;
+use Admin\App\Enum\YesNoEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
@@ -16,11 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AdminLogin extends AbstractEntity
 {
     use TimestampsTrait;
-
-    public const IS_MOBILE_YES = 'yes';
-    public const IS_MOBILE_NO  = 'no';
-    public const LOGIN_SUCCESS = 'success';
-    public const LOGIN_FAIL    = 'fail';
 
     #[ORM\Column(name: "adminIp", type: "string", length: 50, nullable: true)]
     protected ?string $adminIp = null;
@@ -43,13 +40,8 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: "deviceModel", type: "string", length: 40, nullable: true)]
     protected ?string $deviceModel = null;
 
-    #[ORM\Column(
-        name: "isMobile",
-        type: "string",
-        nullable: true,
-        columnDefinition: "ENUM('yes', 'no')"
-    )]
-    protected ?string $isMobile = null;
+    #[ORM\Column(type: "yes_no_enum")]
+    protected ?YesNoEnum $isMobile = null;
 
     #[ORM\Column(name: "osName", type: "string", length: 20, nullable: true)]
     protected ?string $osName = null;
@@ -72,8 +64,8 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: "clientVersion", type: "string", length: 20, nullable: true)]
     protected ?string $clientVersion = null;
 
-    #[ORM\Column(name: "loginStatus", type: "string", nullable: true, columnDefinition: "ENUM('success', 'fail')")]
-    protected ?string $loginStatus = null;
+    #[ORM\Column(type: "success_failure_enum")]
+    protected ?SuccessFailureEnum $loginStatus = null;
 
     #[ORM\Column(name: "identity", type: "string", length: 100, nullable: true)]
     protected ?string $identity = null;
@@ -162,12 +154,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getIsMobile(): ?string
+    public function getIsMobile(): ?YesNoEnum
     {
         return $this->isMobile;
     }
 
-    public function setIsMobile(?string $isMobile): self
+    public function setIsMobile(?YesNoEnum $isMobile): self
     {
         $this->isMobile = $isMobile;
 
@@ -258,12 +250,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getLoginStatus(): ?string
+    public function getLoginStatus(): ?SuccessFailureEnum
     {
         return $this->loginStatus;
     }
 
-    public function setLoginStatus(?string $loginStatus): self
+    public function setLoginStatus(?SuccessFailureEnum $loginStatus): self
     {
         $this->loginStatus = $loginStatus;
 
