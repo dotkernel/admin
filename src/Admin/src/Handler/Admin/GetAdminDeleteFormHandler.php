@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminDeleteForm;
@@ -19,7 +19,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetDeleteAdminFormHandler implements RequestHandlerInterface
+class GetAdminDeleteFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

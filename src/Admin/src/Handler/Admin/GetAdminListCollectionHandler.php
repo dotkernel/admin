@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Service\AdminServiceInterface;
@@ -18,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class AdminListLoginHandler implements RequestHandlerInterface
+class GetAdminListCollectionHandler implements RequestHandlerInterface
 {
     use ServerRequestAwareTrait;
 

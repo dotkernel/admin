@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
@@ -23,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class EditAccountHandler implements RequestHandlerInterface
+class EditAdminAccountResourceHandler implements RequestHandlerInterface
 {
     use ServerRequestAwareTrait;
 

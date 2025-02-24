@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Form\AdminForm;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetAdminFormHandler implements RequestHandlerInterface
+class GetAdminCreateFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         RouterInterface::class,

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AdminTest\Unit\App;
 
 use Admin\App\ConfigProvider;
-use Admin\App\Controller\DashboardController;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\RoutesDelegator as AppDelegator;
@@ -53,7 +52,6 @@ class ConfigProviderTest extends UnitTest
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
         $this->assertIsArray($this->config['dependencies']['factories']);
         $this->assertArrayHasKey(EntityListenerResolver::class, $this->config['dependencies']['factories']);
-        $this->assertArrayHasKey(DashboardController::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(PluginManager::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(FormsPlugin::class, $this->config['dependencies']['factories']);
     }

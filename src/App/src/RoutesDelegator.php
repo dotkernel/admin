@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\App;
 
-use Admin\App\Handler\ComponentHandler;
-use Admin\App\Handler\IndexHandler;
+use Admin\App\Handler\Page\ComponentHandler;
+use Admin\App\Handler\Page\IndexHandler;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 

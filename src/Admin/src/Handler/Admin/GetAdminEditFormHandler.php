@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
@@ -24,7 +24,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function array_map;
 
-class GetEditAdminFormHandler implements RequestHandlerInterface
+class GetAdminEditFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

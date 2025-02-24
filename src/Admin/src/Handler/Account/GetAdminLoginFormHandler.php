@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\LoginForm;
 use Admin\App\Plugin\FormsPlugin;
@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetLoginFormHandler implements RequestHandlerInterface
+class GetAdminLoginFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         RouterInterface::class,

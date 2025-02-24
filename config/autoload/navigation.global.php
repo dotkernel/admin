@@ -31,7 +31,7 @@ return [
                                     'options' => [
                                         'label' => 'Admins',
                                         'route' => [
-                                            'route_name' => 'admin::list',
+                                            'route_name' => 'admin::list-admins',
                                         ],
                                     ],
                                 ],
@@ -39,7 +39,7 @@ return [
                                     'options' => [
                                         'label' => 'Logins',
                                         'route' => [
-                                            'route_name' => 'admin::list-logins',
+                                            'route_name' => 'admin::list-admin-logins',
                                         ],
                                     ],
                                 ],
@@ -65,7 +65,7 @@ return [
                             'options' => [
                                 'label' => 'Profile',
                                 'route' => [
-                                    'route_name' => 'admin::account',
+                                    'route_name' => 'admin::account-form',
                                 ],
                                 'icon'  => 'ti-user',
                             ],

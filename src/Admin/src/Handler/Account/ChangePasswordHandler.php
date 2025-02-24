@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Form\AccountForm;
@@ -92,6 +92,6 @@ class ChangePasswordHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::account'));
+        return new RedirectResponse($this->router->generateUri('admin::account-form'));
     }
 }

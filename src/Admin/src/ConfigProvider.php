@@ -14,20 +14,20 @@ use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Form\LoginForm;
-use Admin\Admin\Handler\AdminListHandler;
-use Admin\Admin\Handler\AdminListLoginHandler;
-use Admin\Admin\Handler\ChangePasswordHandler;
-use Admin\Admin\Handler\CreateAdminHandler;
-use Admin\Admin\Handler\DeleteAdminHandler;
-use Admin\Admin\Handler\EditAccountHandler;
-use Admin\Admin\Handler\EditAdminHandler;
-use Admin\Admin\Handler\GetAccountFormHandler;
-use Admin\Admin\Handler\GetAdminFormHandler;
-use Admin\Admin\Handler\GetDeleteAdminFormHandler;
-use Admin\Admin\Handler\GetEditAdminFormHandler;
-use Admin\Admin\Handler\GetLoginFormHandler;
-use Admin\Admin\Handler\LoginHandler;
-use Admin\Admin\Handler\LogoutHandler;
+use Admin\Admin\Handler\Account\ChangePasswordHandler;
+use Admin\Admin\Handler\Account\EditAdminAccountResourceHandler;
+use Admin\Admin\Handler\Account\GetAdminAccountFormHandler;
+use Admin\Admin\Handler\Account\GetAdminLoginFormHandler;
+use Admin\Admin\Handler\Account\LoginHandler;
+use Admin\Admin\Handler\Account\LogoutHandler;
+use Admin\Admin\Handler\Admin\DeleteAdminResourceHandler;
+use Admin\Admin\Handler\Admin\EditAdminResourceHandler;
+use Admin\Admin\Handler\Admin\GetAdminCollectionHandler;
+use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
+use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
+use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
+use Admin\Admin\Handler\Admin\GetAdminListCollectionHandler;
+use Admin\Admin\Handler\Admin\PostAdminResourceHandler;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
@@ -66,29 +66,29 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                AdminController::class           => AttributedServiceFactory::class,
-                GetAdminFormHandler::class       => AttributedServiceFactory::class,
-                CreateAdminHandler::class        => AttributedServiceFactory::class,
-                GetEditAdminFormHandler::class   => AttributedServiceFactory::class,
-                EditAdminHandler::class          => AttributedServiceFactory::class,
-                GetDeleteAdminFormHandler::class => AttributedServiceFactory::class,
-                DeleteAdminHandler::class        => AttributedServiceFactory::class,
-                AdminListHandler::class          => AttributedServiceFactory::class,
-                AdminListLoginHandler::class     => AttributedServiceFactory::class,
-                GetAccountFormHandler::class     => AttributedServiceFactory::class,
-                EditAccountHandler::class        => AttributedServiceFactory::class,
-                ChangePasswordHandler::class     => AttributedServiceFactory::class,
-                GetLoginFormHandler::class       => AttributedServiceFactory::class,
-                LoginHandler::class              => AttributedServiceFactory::class,
-                LogoutHandler::class             => AttributedServiceFactory::class,
-                AdminService::class              => AttributedServiceFactory::class,
-                AdminRoleService::class          => AttributedServiceFactory::class,
-                AdminRepository::class           => AttributedRepositoryFactory::class,
-                AdminRoleRepository::class       => AttributedRepositoryFactory::class,
-                AdminLoginRepository::class      => AttributedRepositoryFactory::class,
-                AdminForm::class                 => ElementFactory::class,
-                AuthenticationService::class     => AuthenticationServiceFactory::class,
-                AuthenticationAdapter::class     => AttributedServiceFactory::class,
+                AdminController::class                 => AttributedServiceFactory::class,
+                GetAdminCreateFormHandler::class       => AttributedServiceFactory::class,
+                PostAdminResourceHandler::class        => AttributedServiceFactory::class,
+                GetAdminEditFormHandler::class         => AttributedServiceFactory::class,
+                EditAdminResourceHandler::class        => AttributedServiceFactory::class,
+                GetAdminDeleteFormHandler::class       => AttributedServiceFactory::class,
+                DeleteAdminResourceHandler::class      => AttributedServiceFactory::class,
+                GetAdminCollectionHandler::class       => AttributedServiceFactory::class,
+                GetAdminListCollectionHandler::class   => AttributedServiceFactory::class,
+                GetAdminAccountFormHandler::class      => AttributedServiceFactory::class,
+                EditAdminAccountResourceHandler::class => AttributedServiceFactory::class,
+                ChangePasswordHandler::class           => AttributedServiceFactory::class,
+                GetAdminLoginFormHandler::class        => AttributedServiceFactory::class,
+                LoginHandler::class                    => AttributedServiceFactory::class,
+                LogoutHandler::class                   => AttributedServiceFactory::class,
+                AdminService::class                    => AttributedServiceFactory::class,
+                AdminRoleService::class                => AttributedServiceFactory::class,
+                AdminRepository::class                 => AttributedRepositoryFactory::class,
+                AdminRoleRepository::class             => AttributedRepositoryFactory::class,
+                AdminLoginRepository::class            => AttributedRepositoryFactory::class,
+                AdminForm::class                       => ElementFactory::class,
+                AuthenticationService::class           => AuthenticationServiceFactory::class,
+                AuthenticationAdapter::class           => AttributedServiceFactory::class,
             ],
             'aliases'    => [
                 AdminInterface::class            => Admin::class,

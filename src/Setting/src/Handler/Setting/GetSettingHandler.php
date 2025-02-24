@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Setting\Handler;
+namespace Admin\Setting\Handler\Setting;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Service\AdminService;

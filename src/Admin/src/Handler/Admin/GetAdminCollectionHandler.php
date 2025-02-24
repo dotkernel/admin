@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminForm;
@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class AdminListHandler implements RequestHandlerInterface
+class GetAdminCollectionHandler implements RequestHandlerInterface
 {
     use ServerRequestAwareTrait;
 

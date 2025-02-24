@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\Handler\GetSettingHandler;
-use Admin\Setting\Handler\StoreSettingHandler;
+use Admin\Setting\Handler\Setting\GetSettingHandler;
+use Admin\Setting\Handler\Setting\StoreSettingHandler;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 

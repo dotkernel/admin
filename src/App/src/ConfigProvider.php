@@ -6,8 +6,8 @@ namespace Admin\App;
 
 use Admin\App\Factory\EntityListenerResolverFactory;
 use Admin\App\Factory\FormsPluginFactory;
-use Admin\App\Handler\ComponentHandler;
-use Admin\App\Handler\IndexHandler;
+use Admin\App\Handler\Page\ComponentHandler;
+use Admin\App\Handler\Page\IndexHandler;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\Twig\Extension\RouteExtension;

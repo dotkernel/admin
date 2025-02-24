@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler;
+namespace Admin\Admin\Handler\Account;
 
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
