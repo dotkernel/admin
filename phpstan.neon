@@ -21,8 +21,8 @@ parameters:
             path: src
         -
             message: '#Call to an undefined method Laminas\\Authentication\\AuthenticationServiceInterface::getAdapter\(\)#'
-            path: src/Admin/src/Handler/Account/LoginHandler.php
+            path: src/Admin/src/Handler/Account/PostAccountLoginHandler.php
         -
             message: '#Call to an undefined method Laminas\\Authentication\\AuthenticationServiceInterface::getStorage\(\)#'
-            path: src/Admin/src/Handler/Account/LoginHandler.php
+            path: src/Admin/src/Handler/Account/PostAccountLoginHandler.php
 

@@ -16,23 +16,51 @@ use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+
 use function json_decode;
 use function json_encode;
 use function sprintf;
 
 class StoreSettingHandlerTest extends UnitTest
 {
+    private MockObject|AuthenticationServiceInterface $authenticationService;
+    private MockObject|AdminService $adminService;
+    private MockObject|SettingService $settingService;
+    private MockObject|ServerRequestInterface $request;
+    private MockObject|StreamInterface $stream;
+    private MockObject|AdminRepository $adminRepository;
+    private MockObject|AdminIdentity $identity;
+    private MockObject|Admin $admin;
+
+    /**
+     * @throws Exception
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->authenticationService = $this->createMock(AuthenticationServiceInterface::class);
+        $this->adminService = $this->createMock(AdminService::class);
+        $this->settingService = $this->createMock(SettingService::class);
+        $this->request              = $this->createMock(ServerRequestInterface::class);
+        $this->stream                = $this->createMock(StreamInterface::class);
+        $this->adminRepository                = $this->createMock(AdminRepository::class);
+        $this->identity                = $this->createMock(AdminIdentity::class);
+        $this->admin                = $this->createMock(Admin::class);
+    }
+
     /**
      * @throws Exception
      */
     public function testWillCreate(): void
     {
         $handler = new PostSettingStoreHandler(
-            $this->createMock(AuthenticationServiceInterface::class),
-            $this->createMock(AdminService::class),
-            $this->createMock(SettingService::class),
+            $this->authenticationService,
+            $this->adminService,
+            $this->settingService,
         );
 
         $this->assertInstanceOf(PostSettingStoreHandler::class, $handler);
@@ -43,27 +71,21 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testInvalidIdentifierProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $stream                = $this->createMock(StreamInterface::class);
-
         $handler = new PostSettingStoreHandler(
-            $authenticationService,
-            $adminService,
-            $settingService,
+            $this->authenticationService,
+            $this->adminService,
+            $this->settingService,
         );
 
-        $stream->method('getContents')->willReturn(json_encode([
+        $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => 'test',
             'value'      => 'test',
         ]));
 
-        $request->method('getAttribute')->with('identifier')->willReturn('test');
-        $request->method('getBody')->willReturn($stream);
+        $this->request->method('getAttribute')->with('identifier')->willReturn('test');
+        $this->request->method('getBody')->willReturn($this->stream);
 
-        $response = $handler->handle($request);
+        $response = $handler->handle($this->request);
 
         $data = json_decode($response->getBody()->getContents(), true);
 
@@ -82,38 +104,30 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testInvalidAdminProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
-        $stream                = $this->createMock(StreamInterface::class);
-
-        $identity->method('getUuid')->willReturn('test');
-        $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn(null);
-        $adminService->method('getAdminRepository')->willReturn($adminRepository);
-        $stream->method('getContents')->willReturn(json_encode([
+        $this->identity->method('getUuid')->willReturn('test');
+        $this->authenticationService->method('getIdentity')->willReturn($this->identity);
+        $this->adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn(null);
+        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => 'test',
             'value'      => 'test',
         ]));
 
-        $request
+        $this->request
             ->method('getAttribute')
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
-        $request->method('getAttribute')->with('identifier')->willReturn('test');
-        $request->method('getBody')->willReturn($stream);
+        $this->request->method('getAttribute')->with('identifier')->willReturn('test');
+        $this->request->method('getBody')->willReturn($this->stream);
 
         $handler = new PostSettingStoreHandler(
-            $authenticationService,
-            $adminService,
-            $settingService,
+            $this->authenticationService,
+            $this->adminService,
+            $this->settingService,
         );
 
-        $response = $handler->handle($request);
+        $response = $handler->handle($this->request);
 
         $data = json_decode($response->getBody()->getContents(), true);
 
@@ -132,40 +146,32 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testUpdateSetting(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
-        $admin                 = $this->createMock(Admin::class);
-        $stream                = $this->createMock(StreamInterface::class);
-        $setting               = $this->createMock(Setting::class);
-
-        $identity->method('getUuid')->willReturn('test');
-        $authenticationService->method('getIdentity')->willReturn($identity);
-        $settingService->method('findOneBy')->willReturn($setting);
-        $settingService->expects($this->once())->method('updateSetting');
-        $adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($admin);
-        $adminService->method('getAdminRepository')->willReturn($adminRepository);
-        $stream->method('getContents')->willReturn(json_encode([
+        $this->identity->method('getUuid')->willReturn('test');
+        $this->authenticationService->method('getIdentity')->willReturn($this->identity);
+        $this->settingService->method('findOneBy')->willReturn(
+            $this->createMock(Setting::class)
+        );
+        $this->settingService->expects($this->once())->method('updateSetting');
+        $this->adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($this->admin);
+        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
             'value'      => ['test'],
         ]));
 
-        $request->method('getBody')->willReturn($stream);
-        $request
+        $this->request->method('getBody')->willReturn($this->stream);
+        $this->request
             ->method('getAttribute')
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
         $handler = new PostSettingStoreHandler(
-            $authenticationService,
-            $adminService,
-            $settingService,
+            $this->authenticationService,
+            $this->adminService,
+            $this->settingService,
         );
 
-        $response = $handler->handle($request);
+        $response = $handler->handle($this->request);
 
         $this->assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
     }

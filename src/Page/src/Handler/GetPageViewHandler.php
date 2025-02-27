@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\App\Handler;
+namespace Admin\Page\Handler;
 
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetComponentViewHandler implements RequestHandlerInterface
+class GetPageViewHandler implements RequestHandlerInterface
 {
     #[Inject(
         TemplateRendererInterface::class,

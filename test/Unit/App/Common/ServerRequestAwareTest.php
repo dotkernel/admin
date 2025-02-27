@@ -269,7 +269,7 @@ class ServerRequestAwareTest extends UnitTest
         $this->assertSame(1, $this->getHandler($request)->getCookieParam($request, 'invalid', '1', 'int'));
 
         $this->assertSame('1', $this->getHandler($request)->getCookieParam($request, 'id'));
-        $this->assertSame('1', $this->getHandler($request)->getCookieParam($request,  'id', '2'));
+        $this->assertSame('1', $this->getHandler($request)->getCookieParam($request, 'id', '2'));
         $this->assertSame(1, $this->getHandler($request)->getCookieParam($request, 'id', '2', 'int'));
     }
 
@@ -399,7 +399,7 @@ class ServerRequestAwareTest extends UnitTest
      */
     public function testWillCast(): void
     {
-        $request    = $this->createMock(ServerRequestInterface::class);
+        $request = $this->createMock(ServerRequestInterface::class);
         $handler = $this->getHandler($request);
 
         $reflection = new ReflectionClass($handler);
@@ -426,7 +426,7 @@ class ServerRequestAwareTest extends UnitTest
             {
                 $this->request = $request;
             }
-            
+
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 return new EmptyResponse(StatusCodeInterface::STATUS_OK);

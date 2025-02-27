@@ -54,7 +54,10 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
     {
         try {
             $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
-            $this->changePasswordForm->setAttribute('action', $this->router->generateUri('admin::change-password'));
+            $this->changePasswordForm->setAttribute(
+                'action',
+                $this->router->generateUri('admin::account-change-password')
+            );
 
             /** @var AdminIdentity $adminIdentity */
             $adminIdentity = $this->authenticationService->getIdentity();

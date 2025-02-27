@@ -34,8 +34,8 @@ class ConfigProvider
             'factories'  => [
                 PostSettingStoreHandler::class => AttributedServiceFactory::class,
                 GetSettingViewHandler::class   => AttributedServiceFactory::class,
-                SettingService::class      => AttributedServiceFactory::class,
-                SettingRepository::class   => AttributedRepositoryFactory::class,
+                SettingService::class          => AttributedServiceFactory::class,
+                SettingRepository::class       => AttributedRepositoryFactory::class,
             ],
         ];
     }

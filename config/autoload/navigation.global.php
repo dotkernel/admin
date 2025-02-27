@@ -74,7 +74,7 @@ return [
                             'options' => [
                                 'label' => 'Logout',
                                 'route' => [
-                                    'route_name' => 'admin::logout',
+                                    'route_name' => 'admin::admin-logout',
                                 ],
                                 'icon'  => 'ti-power-off',
                             ],

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Admin\App\Handler;
 
 use Dot\DependencyInjection\Attribute\Inject;
-use Laminas\Diactoros\Response\HtmlResponse;
-use Mezzio\Template\TemplateRendererInterface;
+use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -14,15 +15,21 @@ use Psr\Http\Server\RequestHandlerInterface;
 class GetIndexRedirectHandler implements RequestHandlerInterface
 {
     #[Inject(
-        TemplateRendererInterface::class,
+        RouterInterface::class,
+        AuthenticationServiceInterface::class,
     )]
     public function __construct(
-        protected TemplateRendererInterface $template,
+        protected RouterInterface $router,
+        protected AuthenticationServiceInterface $authenticationService,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse($this->template->render('app::dashboard'));
+        if ($this->authenticationService->hasIdentity()) {
+            return new RedirectResponse($this->router->generateUri('dashboard::dashboard-view'));
+        }
+
+        return new RedirectResponse($this->router->generateUri('admin::admin-login-form'));
     }
 }

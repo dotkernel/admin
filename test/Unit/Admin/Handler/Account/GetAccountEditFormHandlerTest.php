@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Entity\Admin;
@@ -24,16 +26,16 @@ class GetAccountEditFormHandlerTest extends UnitTest
      */
     public function testWillReturnHtmlTemplate(): void
     {
-        $adminService = $this->createMock(AdminServiceInterface::class);
-        $router = $this->createMock(RouterInterface::class);
-        $template = $this->createMock(TemplateRendererInterface::class);
+        $adminService          = $this->createMock(AdminServiceInterface::class);
+        $router                = $this->createMock(RouterInterface::class);
+        $template              = $this->createMock(TemplateRendererInterface::class);
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $accountForm = $this->createMock(AccountForm::class);
-        $changePasswordForm = $this->createMock(ChangePasswordForm::class);
-        $request = $this->createMock(ServerRequestInterface::class);
-        $identity = $this->createMock(AdminIdentity::class);
-        $adminRepository = $this->createMock(AdminRepository::class);
-        $admin = $this->createMock(Admin::class);
+        $accountForm           = $this->createMock(AccountForm::class);
+        $changePasswordForm    = $this->createMock(ChangePasswordForm::class);
+        $request               = $this->createMock(ServerRequestInterface::class);
+        $identity              = $this->createMock(AdminIdentity::class);
+        $adminRepository       = $this->createMock(AdminRepository::class);
+        $admin                 = $this->createMock(Admin::class);
 
         $identity->method('getUuid')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);

@@ -31,7 +31,6 @@
         "ext-gettext": "*",
         "dotkernel/dot-cache": "^4.0",
         "dotkernel/dot-cli": "^3.5.0",
-        "dotkernel/dot-controller": "^3.4.3",
         "dotkernel/dot-data-fixtures": "^1.1.3",
         "dotkernel/dot-dependency-injection": "^1.0",
         "dotkernel/dot-errorhandler": "^4.0.0",
@@ -72,6 +71,8 @@
         "psr-4": {
             "Admin\\App\\": "src/App/src/",
             "Admin\\Admin\\": "src/Admin/src/",
+            "Admin\\Page\\": "src/Page/src/",
+            "Admin\\Dashboard\\": "src/Dashboard/src/",
             "Admin\\Setting\\": "src/Setting/src/"
         }
     },

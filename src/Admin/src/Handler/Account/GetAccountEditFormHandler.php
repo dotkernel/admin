@@ -41,7 +41,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
         $this->changePasswordForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::change-password')
+            $this->router->generateUri('admin::account-change-password')
         );
 
         $identity = $this->authenticationService->getIdentity();

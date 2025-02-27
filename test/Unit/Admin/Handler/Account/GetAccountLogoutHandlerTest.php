@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
@@ -17,9 +19,9 @@ class GetAccountLogoutHandlerTest extends UnitTest
      */
     public function testLogoutWillReturnRedirectResponse(): void
     {
-        $router = $this->createMock(RouterInterface::class);
+        $router                = $this->createMock(RouterInterface::class);
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request               = $this->createMock(ServerRequestInterface::class);
 
         $handler = new GetAccountLogoutHandler(
             $router,

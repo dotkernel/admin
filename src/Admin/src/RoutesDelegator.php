@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Admin\Admin;
 
-use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
-use Admin\Admin\Handler\Account\PostAccountEditHandler;
 use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
 use Admin\Admin\Handler\Account\GetAccountLoginFormHandler;
-use Admin\Admin\Handler\Account\PostAccountLoginHandler;
 use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
-use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
-use Admin\Admin\Handler\Admin\PostAdminEditHandler;
-use Admin\Admin\Handler\Admin\GetAdminListHandler;
+use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
+use Admin\Admin\Handler\Account\PostAccountEditHandler;
+use Admin\Admin\Handler\Account\PostAccountLoginHandler;
 use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
 use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
 use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
+use Admin\Admin\Handler\Admin\GetAdminListHandler;
 use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
 use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
+use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
+use Admin\Admin\Handler\Admin\PostAdminEditHandler;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 
@@ -42,12 +42,11 @@ class RoutesDelegator
 
         $app->get('/admin/edit-account', GetAccountEditFormHandler::class, 'admin::account-edit-form');
         $app->post('/admin/edit-account', PostAccountEditHandler::class, 'admin::edit-account');
-
-        $app->get('/admin/login', GetAccountLoginFormHandler::class, 'admin::admin-login-form');
         $app->post('/admin/edit-password', PostAccountChangePasswordHandler::class, 'admin::account-change-password');
 
-        $app->post('/admin/login', PostAccountLoginHandler::class, 'admin::login');
-        $app->get('/admin/logout', GetAccountLogoutHandler::class, 'admin::logout');
+        $app->get('/admin/login', GetAccountLoginFormHandler::class, 'admin::admin-login-form');
+        $app->post('/admin/login', PostAccountLoginHandler::class, 'admin::admin-login');
+        $app->get('/admin/logout', GetAccountLogoutHandler::class, 'admin::admin-logout');
 
         return $app;
     }

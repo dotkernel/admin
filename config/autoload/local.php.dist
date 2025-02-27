@@ -30,6 +30,11 @@ return [
         'name' => $app['name'] ?? '',
         'url'  => $baseUrl,
     ],
+    'routes'      => [
+        'page' => [
+            'component'      => 'components',
+        ],
+    ],
     'databases'   => $databases,
     'doctrine'    => [
         'connection' => [

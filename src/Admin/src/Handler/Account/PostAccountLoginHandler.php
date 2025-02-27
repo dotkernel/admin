@@ -90,12 +90,6 @@ class PostAccountLoginHandler implements RequestHandlerInterface
 
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             } else {
-                $this->adminService->logAdminVisit(
-                    $this->getServerParams($request),
-                    $data['username'],
-                    AdminLogin::LOGIN_SUCCESS
-                );
-
                 $identity = $authResult->getIdentity();
                 if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
                     $this->authenticationService->clearIdentity();
@@ -105,12 +99,17 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                     return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
                 }
 
+                $this->adminService->logAdminVisit(
+                    $this->getServerParams($request),
+                    $data['username'],
+                    AdminLogin::LOGIN_SUCCESS
+                );
+
                 $this->authenticationService->getStorage()->write($identity);
 
                 return new RedirectResponse($this->router->generateUri('app::index-redirect'));
             }
         } catch (Throwable $e) {
-            dd('catch', $e->getMessage());
             $this->messenger->addData('shouldRebind', true);
             $this->forms->saveState($this->form);
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
