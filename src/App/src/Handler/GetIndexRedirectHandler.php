@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\App\Handler\Page;
+namespace Admin\App\Handler;
 
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -11,17 +11,18 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ComponentHandler implements RequestHandlerInterface
+class GetIndexRedirectHandler implements RequestHandlerInterface
 {
     #[Inject(
         TemplateRendererInterface::class,
     )]
-    public function __construct(protected TemplateRendererInterface $template)
-    {
+    public function __construct(
+        protected TemplateRendererInterface $template,
+    ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse($this->template->render('app::components'));
+        return new HtmlResponse($this->template->render('app::dashboard'));
     }
 }

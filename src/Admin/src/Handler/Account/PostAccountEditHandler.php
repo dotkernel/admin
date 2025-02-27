@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Account;
 
-use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Service\AdminServiceInterface;
@@ -24,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class ChangePasswordHandler implements RequestHandlerInterface
+class PostAccountEditHandler implements RequestHandlerInterface
 {
     use ServerRequestAwareTrait;
 
@@ -33,9 +32,9 @@ class ChangePasswordHandler implements RequestHandlerInterface
         RouterInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
-        FlashMessengerInterface::class,
         AccountForm::class,
         ChangePasswordForm::class,
+        FlashMessengerInterface::class,
         "dot-log.default_logger",
     )]
     public function __construct(
@@ -43,9 +42,9 @@ class ChangePasswordHandler implements RequestHandlerInterface
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
-        protected FlashMessengerInterface $messenger,
         protected AccountForm $accountForm,
         protected ChangePasswordForm $changePasswordForm,
+        protected FlashMessengerInterface $messenger,
         protected Logger $logger,
     ) {
     }
@@ -53,16 +52,17 @@ class ChangePasswordHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
-        $this->changePasswordForm->setAttribute('action', $this->router->generateUri('admin::change-password'));
 
-        /** @var AdminIdentity $adminIdentity */
-        $adminIdentity = $this->authenticationService->getIdentity();
-        $admin         = $this->adminService->getAdminRepository()->findOneBy([
-            'identity' => $adminIdentity->getIdentity(),
-        ]);
+        $this->changePasswordForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin::change-password')
+        );
 
-        $this->changePasswordForm->setData($this->getPostParams($request));
-        if (! $this->changePasswordForm->isValid()) {
+        $identity = $this->authenticationService->getIdentity();
+        $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
+
+        $this->accountForm->setData($this->getPostParams($request));
+        if (! $this->accountForm->isValid()) {
             return new HtmlResponse(
                 $this->template->render('admin::account', [
                     'accountForm'        => $this->accountForm->prepare(),
@@ -73,17 +73,14 @@ class ChangePasswordHandler implements RequestHandlerInterface
 
         try {
             /** @var array $result */
-            $result = $this->changePasswordForm->getData();
-            if ($admin->verifyPassword($result['currentPassword'])) {
-                $this->adminService->updateAdmin($admin, $result);
-                $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-            } else {
-                $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
-            }
+            $result = $this->accountForm->getData();
+
+            $this->adminService->updateAdmin($admin, $result);
+            $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
         } catch (IdentityException $e) {
             $this->messenger->addError($e->getMessage());
         } catch (Throwable $e) {
-            $this->logger->err(Message::CHANGE_PASSWORD, [
+            $this->logger->err(Message::UPDATE_ADMIN, [
                 'error' => $e->getMessage(),
                 'file'  => $e->getFile(),
                 'line'  => $e->getLine(),
@@ -92,6 +89,6 @@ class ChangePasswordHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::account-form'));
+        return new RedirectResponse($this->router->generateUri('admin::edit-account'));
     }
 }

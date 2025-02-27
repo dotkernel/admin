@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AdminTest\Unit\Setting\Handler\Setting;
+namespace AdminTest\Unit\Setting\Handler;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
@@ -10,7 +10,7 @@ use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
-use Admin\Setting\Handler\Setting\StoreSettingHandler;
+use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
@@ -18,7 +18,6 @@ use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-
 use function json_decode;
 use function json_encode;
 use function sprintf;
@@ -30,13 +29,13 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $handler = new StoreSettingHandler(
+        $handler = new PostSettingStoreHandler(
             $this->createMock(AuthenticationServiceInterface::class),
             $this->createMock(AdminService::class),
             $this->createMock(SettingService::class),
         );
 
-        $this->assertInstanceOf(StoreSettingHandler::class, $handler);
+        $this->assertInstanceOf(PostSettingStoreHandler::class, $handler);
     }
 
     /**
@@ -50,7 +49,7 @@ class StoreSettingHandlerTest extends UnitTest
         $request               = $this->createMock(ServerRequestInterface::class);
         $stream                = $this->createMock(StreamInterface::class);
 
-        $handler = new StoreSettingHandler(
+        $handler = new PostSettingStoreHandler(
             $authenticationService,
             $adminService,
             $settingService,
@@ -108,7 +107,7 @@ class StoreSettingHandlerTest extends UnitTest
         $request->method('getAttribute')->with('identifier')->willReturn('test');
         $request->method('getBody')->willReturn($stream);
 
-        $handler = new StoreSettingHandler(
+        $handler = new PostSettingStoreHandler(
             $authenticationService,
             $adminService,
             $settingService,
@@ -160,7 +159,7 @@ class StoreSettingHandlerTest extends UnitTest
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
-        $handler = new StoreSettingHandler(
+        $handler = new PostSettingStoreHandler(
             $authenticationService,
             $adminService,
             $settingService,

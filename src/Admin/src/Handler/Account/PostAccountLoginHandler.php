@@ -24,7 +24,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class LoginHandler implements RequestHandlerInterface
+class PostAccountLoginHandler implements RequestHandlerInterface
 {
     use ServerRequestAwareTrait;
 
@@ -52,7 +52,7 @@ class LoginHandler implements RequestHandlerInterface
     {
         try {
             if ($this->authenticationService->hasIdentity()) {
-                return new RedirectResponse($this->router->generateUri('page::dashboard'));
+                return new RedirectResponse($this->router->generateUri('app::index-redirect'));
             }
 
             $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
@@ -61,53 +61,60 @@ class LoginHandler implements RequestHandlerInterface
             }
 
             $this->form->setData($this->getPostParams($request));
-            if ($this->form->isValid()) {
-                /** @var AuthenticationAdapter $adapter */
-                $adapter = $this->authenticationService->getAdapter();
 
-                /** @var array $data */
-                $data = $this->form->getData();
-                $adapter->setIdentity($data['username']);
-                $adapter->setCredential($data['password']);
-                $authResult = $this->authenticationService->authenticate();
-                if ($authResult->isValid()) {
-                    $identity = $authResult->getIdentity();
-                    $this->adminService->logAdminVisit(
-                        $this->getServerParams($request),
-                        $data['username'],
-                        AdminLogin::LOGIN_SUCCESS
-                    );
-                    if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
-                        $this->authenticationService->clearIdentity();
-                        $this->messenger->addError('Admin is inactive');
-                        $this->messenger->addData('shouldRebind', true);
-                        $this->forms->saveState($this->form);
-                        return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
-                    }
-                    $this->authenticationService->getStorage()->write($identity);
-
-                    return new RedirectResponse($this->router->generateUri('page::dashboard'));
-                } else {
-                    $this->adminService->logAdminVisit(
-                        $this->getServerParams($request),
-                        $data['username'],
-                        AdminLogin::LOGIN_FAIL
-                    );
-                    $this->messenger->addData('shouldRebind', true);
-                    $this->forms->saveState($this->form);
-                    $this->messenger->addError($authResult->getMessages());
-                    return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
-                }
-            } else {
+            if (! $this->form->isValid()) {
                 $this->messenger->addData('shouldRebind', true);
                 $this->forms->saveState($this->form);
                 $this->messenger->addError($this->forms->getMessages($this->form));
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             }
+
+            /** @var AuthenticationAdapter $adapter */
+            $adapter = $this->authenticationService->getAdapter();
+
+            /** @var array $data */
+            $data = $this->form->getData();
+            $adapter->setIdentity($data['username']);
+            $adapter->setCredential($data['password']);
+            $authResult = $this->authenticationService->authenticate();
+            if (! $authResult->isValid()) {
+                $this->adminService->logAdminVisit(
+                    $this->getServerParams($request),
+                    $data['username'],
+                    AdminLogin::LOGIN_FAIL
+                );
+
+                $this->messenger->addData('shouldRebind', true);
+                $this->forms->saveState($this->form);
+                $this->messenger->addError($authResult->getMessages());
+
+                return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
+            } else {
+                $this->adminService->logAdminVisit(
+                    $this->getServerParams($request),
+                    $data['username'],
+                    AdminLogin::LOGIN_SUCCESS
+                );
+
+                $identity = $authResult->getIdentity();
+                if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
+                    $this->authenticationService->clearIdentity();
+                    $this->messenger->addError(Message::ADMIN_INACTIVE);
+                    $this->messenger->addData('shouldRebind', true);
+                    $this->forms->saveState($this->form);
+                    return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
+                }
+
+                $this->authenticationService->getStorage()->write($identity);
+
+                return new RedirectResponse($this->router->generateUri('app::index-redirect'));
+            }
         } catch (Throwable $e) {
+            dd('catch', $e->getMessage());
             $this->messenger->addData('shouldRebind', true);
             $this->forms->saveState($this->form);
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+
             $this->logger->err(Message::LOGIN_FAILED, [
                 'error' => $e->getMessage(),
                 'file'  => $e->getFile(),

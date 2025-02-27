@@ -54,7 +54,7 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
 
         $this->form->setAttribute(
             'action',
-            $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
+            $this->router->generateUri('admin::admin-edit', ['uuid' => $admin->getUuid()->toString()])
         );
 
         $roles = array_map(function (AdminRole $role) use ($admin): array {

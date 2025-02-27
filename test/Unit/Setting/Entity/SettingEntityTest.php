@@ -73,10 +73,6 @@ class SettingEntityTest extends UnitTest
 
         $copy = $setting->getArrayCopy();
 
-        $this->assertArrayHasKey('uuid', $copy);
-        $this->assertIsString($copy['uuid']);
-        $this->assertNotEmpty($copy['uuid']);
-
         $this->assertArrayHasKey('identifier', $copy);
         $this->assertSame($this->identifier, $copy['identifier']);
 

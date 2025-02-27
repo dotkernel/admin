@@ -6,8 +6,8 @@ namespace Admin\App;
 
 use Admin\App\Factory\EntityListenerResolverFactory;
 use Admin\App\Factory\FormsPluginFactory;
-use Admin\App\Handler\Page\ComponentHandler;
-use Admin\App\Handler\Page\IndexHandler;
+use Admin\App\Handler\GetComponentViewHandler;
+use Admin\App\Handler\GetIndexRedirectHandler;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\Twig\Extension\RouteExtension;
@@ -41,8 +41,8 @@ class ConfigProvider
             'factories'  => [
                 'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 EntityListenerResolver::class         => EntityListenerResolverFactory::class,
-                IndexHandler::class                   => AttributedServiceFactory::class,
-                ComponentHandler::class               => AttributedServiceFactory::class,
+                GetIndexRedirectHandler::class                   => AttributedServiceFactory::class,
+                GetComponentViewHandler::class               => AttributedServiceFactory::class,
                 PluginManager::class                  => PluginManagerFactory::class,
                 FormsPlugin::class                    => FormsPluginFactory::class,
                 RouteExtension::class                 => AttributedServiceFactory::class,
@@ -77,6 +77,7 @@ class ConfigProvider
         return [
             'paths' => [
                 'app'     => [__DIR__ . '/../templates/app'],
+                'page'     => [__DIR__ . '/../templates/page'],
                 'error'   => [__DIR__ . '/../templates/error'],
                 'layout'  => [__DIR__ . '/../templates/layout'],
                 'partial' => [__DIR__ . '/../templates/partial'],

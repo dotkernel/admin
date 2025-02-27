@@ -15,7 +15,7 @@ return [
                             'options' => [
                                 'label' => 'Dashboard',
                                 'route' => [
-                                    'route_name' => 'page::dashboard',
+                                    'route_name' => 'app::index-redirect',
                                 ],
                                 'icon'  => 'c-blue-500 ti-home',
                             ],
@@ -31,7 +31,7 @@ return [
                                     'options' => [
                                         'label' => 'Admins',
                                         'route' => [
-                                            'route_name' => 'admin::list-admins',
+                                            'route_name' => 'admin::admin-list',
                                         ],
                                     ],
                                 ],
@@ -39,7 +39,7 @@ return [
                                     'options' => [
                                         'label' => 'Logins',
                                         'route' => [
-                                            'route_name' => 'admin::list-admin-logins',
+                                            'route_name' => 'admin::admin-login-list',
                                         ],
                                     ],
                                 ],
@@ -65,7 +65,7 @@ return [
                             'options' => [
                                 'label' => 'Profile',
                                 'route' => [
-                                    'route_name' => 'admin::account-form',
+                                    'route_name' => 'admin::account-edit-form',
                                 ],
                                 'icon'  => 'ti-user',
                             ],

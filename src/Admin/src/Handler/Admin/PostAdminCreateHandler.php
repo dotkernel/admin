@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminForm;
-use Admin\Admin\InputFilter\EditAdminInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
@@ -23,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class EditAdminResourceHandler implements RequestHandlerInterface
+class PostAdminCreateHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,
@@ -46,56 +44,50 @@ class EditAdminResourceHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->getAdminRepository()->findOneBy([
-                'uuid' => $request->getAttribute('uuid'),
-            ]);
-
-            if (! $admin instanceof Admin) {
-                $this->messenger->addError(Message::ADMIN_NOT_FOUND);
-                return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
-            }
-
-            $this->form->setAttribute(
-                'action',
-                $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
-            );
-
-            $this->form->setInputFilter(new EditAdminInputFilter());
+            $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
             $this->form->setData($request->getParsedBody());
             if ($this->form->isValid()) {
                 /** @var array $result */
                 $result = $this->form->getData();
-                $this->adminService->updateAdmin($admin, $result);
+                $this->adminService->createAdmin($result);
+                $this->messenger->addSuccess(Message::ADMIN_CREATED_SUCCESSFULLY);
 
-                $this->messenger->addSuccess(Message::ADMIN_UPDATED_SUCCESSFULLY);
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
                 return new HtmlResponse(
-                    $this->template->render('admin::edit-admin-modal-content', [
+                    $this->template->render('admin::add-admin-modal-content', [
                         'form' => $this->form->prepare(),
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
                 );
             }
-        } catch (IdentityException $exception) {
+        } catch (IdentityException $e) {
             return new HtmlResponse(
-                $this->template->render('admin::edit-admin-modal-content', [
+                $this->template->render('admin::add-admin-modal-content', [
                     'form'     => $this->form->prepare(),
                     'messages' => [
-                        'error' => $exception->getMessage(),
+                        'error' => $e->getMessage(),
                     ],
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
         } catch (Throwable $e) {
-            $this->logger->err(Message::UPDATE_ADMIN, [
+            $this->logger->err(Message::CREATE_ADMIN, [
                 'error' => $e->getMessage(),
                 'file'  => $e->getFile(),
                 'line'  => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-            return new EmptyResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+
+            return new HtmlResponse(
+                $this->template->render('admin::add-admin-modal-content', [
+                    'form'     => $this->form->prepare(),
+                    'messages' => [
+                        'error' => Message::AN_ERROR_OCCURRED,
+                    ],
+                ]),
+                StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

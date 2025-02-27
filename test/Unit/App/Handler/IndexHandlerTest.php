@@ -1,8 +1,8 @@
 <?php
 
-namespace AdminTest\Unit\App\Handler\Page;
+namespace AdminTest\Unit\App\Handler;
 
-use Admin\App\Handler\Page\IndexHandler;
+use Admin\App\Handler\GetIndexRedirectHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -16,9 +16,9 @@ class IndexHandlerTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $handler = new IndexHandler($this->createMock(TemplateRendererInterface::class));
+        $handler = new GetIndexRedirectHandler($this->createMock(TemplateRendererInterface::class));
 
-        $this->assertInstanceOf(IndexHandler::class, $handler);
+        $this->assertInstanceOf(GetIndexRedirectHandler::class, $handler);
     }
 
     /**
@@ -30,7 +30,7 @@ class IndexHandlerTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
 
         $template->method('render')->willReturn('<p>test</p>');
-        $handler = new IndexHandler($template);
+        $handler = new GetIndexRedirectHandler($template);
 
         $response = $handler->handle($request);
 

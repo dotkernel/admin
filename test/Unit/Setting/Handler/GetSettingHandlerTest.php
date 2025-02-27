@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AdminTest\Unit\Setting\Handler\Setting;
+namespace AdminTest\Unit\Setting\Handler;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
@@ -10,14 +10,13 @@ use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
-use Admin\Setting\Handler\Setting\GetSettingHandler;
+use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
-
 use function json_decode;
 use function sprintf;
 
@@ -28,13 +27,13 @@ class GetSettingHandlerTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $handler = new GetSettingHandler(
+        $handler = new GetSettingViewHandler(
             $this->createMock(AuthenticationServiceInterface::class),
             $this->createMock(AdminService::class),
             $this->createMock(SettingService::class),
         );
 
-        $this->assertInstanceOf(GetSettingHandler::class, $handler);
+        $this->assertInstanceOf(GetSettingViewHandler::class, $handler);
     }
 
     /**
@@ -47,7 +46,7 @@ class GetSettingHandlerTest extends UnitTest
         $settingService        = $this->createMock(SettingService::class);
         $request               = $this->createMock(ServerRequestInterface::class);
 
-        $handler = new GetSettingHandler(
+        $handler = new GetSettingViewHandler(
             $authenticationService,
             $adminService,
             $settingService,
@@ -90,7 +89,7 @@ class GetSettingHandlerTest extends UnitTest
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
-        $handler = new GetSettingHandler(
+        $handler = new GetSettingViewHandler(
             $authenticationService,
             $adminService,
             $settingService,
@@ -132,7 +131,7 @@ class GetSettingHandlerTest extends UnitTest
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
-        $handler = new GetSettingHandler(
+        $handler = new GetSettingViewHandler(
             $authenticationService,
             $adminService,
             $settingService,
@@ -180,7 +179,7 @@ class GetSettingHandlerTest extends UnitTest
             ->with('identifier')
             ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
 
-        $handler = new GetSettingHandler(
+        $handler = new GetSettingViewHandler(
             $authenticationService,
             $adminService,
             $settingService,

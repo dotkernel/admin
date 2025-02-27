@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Setting\Handler\Setting;
+namespace Admin\Setting\Handler;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Service\AdminService;
@@ -18,11 +18,10 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
 use function is_array;
 use function json_decode;
 
-class StoreSettingHandler implements RequestHandlerInterface
+class PostSettingStoreHandler implements RequestHandlerInterface
 {
     #[Inject(
         AuthenticationServiceInterface::class,

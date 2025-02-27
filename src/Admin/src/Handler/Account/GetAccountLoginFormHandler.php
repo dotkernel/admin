@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetAdminLoginFormHandler implements RequestHandlerInterface
+class GetAccountLoginFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         RouterInterface::class,
@@ -40,7 +40,7 @@ class GetAdminLoginFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->authenticationService->hasIdentity()) {
-            return new RedirectResponse($this->router->generateUri('page::dashboard'));
+            return new RedirectResponse($this->router->generateUri('app::index-redirect'));
         }
 
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;

@@ -14,20 +14,20 @@ use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Form\LoginForm;
-use Admin\Admin\Handler\Account\ChangePasswordHandler;
-use Admin\Admin\Handler\Account\EditAdminAccountResourceHandler;
-use Admin\Admin\Handler\Account\GetAdminAccountFormHandler;
-use Admin\Admin\Handler\Account\GetAdminLoginFormHandler;
-use Admin\Admin\Handler\Account\LoginHandler;
-use Admin\Admin\Handler\Account\LogoutHandler;
-use Admin\Admin\Handler\Admin\DeleteAdminResourceHandler;
-use Admin\Admin\Handler\Admin\EditAdminResourceHandler;
-use Admin\Admin\Handler\Admin\GetAdminCollectionHandler;
+use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
+use Admin\Admin\Handler\Account\PostAccountEditHandler;
+use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
+use Admin\Admin\Handler\Account\GetAccountLoginFormHandler;
+use Admin\Admin\Handler\Account\PostAccountLoginHandler;
+use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
+use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
+use Admin\Admin\Handler\Admin\PostAdminEditHandler;
+use Admin\Admin\Handler\Admin\GetAdminListHandler;
 use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
 use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
 use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
-use Admin\Admin\Handler\Admin\GetAdminListCollectionHandler;
-use Admin\Admin\Handler\Admin\PostAdminResourceHandler;
+use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
+use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
@@ -68,19 +68,19 @@ class ConfigProvider
             'factories'  => [
                 AdminController::class                 => AttributedServiceFactory::class,
                 GetAdminCreateFormHandler::class       => AttributedServiceFactory::class,
-                PostAdminResourceHandler::class        => AttributedServiceFactory::class,
+                PostAdminCreateHandler::class        => AttributedServiceFactory::class,
                 GetAdminEditFormHandler::class         => AttributedServiceFactory::class,
-                EditAdminResourceHandler::class        => AttributedServiceFactory::class,
+                PostAdminEditHandler::class        => AttributedServiceFactory::class,
                 GetAdminDeleteFormHandler::class       => AttributedServiceFactory::class,
-                DeleteAdminResourceHandler::class      => AttributedServiceFactory::class,
-                GetAdminCollectionHandler::class       => AttributedServiceFactory::class,
-                GetAdminListCollectionHandler::class   => AttributedServiceFactory::class,
-                GetAdminAccountFormHandler::class      => AttributedServiceFactory::class,
-                EditAdminAccountResourceHandler::class => AttributedServiceFactory::class,
-                ChangePasswordHandler::class           => AttributedServiceFactory::class,
-                GetAdminLoginFormHandler::class        => AttributedServiceFactory::class,
-                LoginHandler::class                    => AttributedServiceFactory::class,
-                LogoutHandler::class                   => AttributedServiceFactory::class,
+                PostAdminDeleteHandler::class      => AttributedServiceFactory::class,
+                GetAdminListHandler::class       => AttributedServiceFactory::class,
+                GetAdminLoginListHandler::class   => AttributedServiceFactory::class,
+                GetAccountEditFormHandler::class      => AttributedServiceFactory::class,
+                PostAccountEditHandler::class => AttributedServiceFactory::class,
+                PostAccountChangePasswordHandler::class           => AttributedServiceFactory::class,
+                GetAccountLoginFormHandler::class        => AttributedServiceFactory::class,
+                PostAccountLoginHandler::class                    => AttributedServiceFactory::class,
+                GetAccountLogoutHandler::class                   => AttributedServiceFactory::class,
                 AdminService::class                    => AttributedServiceFactory::class,
                 AdminRoleService::class                => AttributedServiceFactory::class,
                 AdminRepository::class                 => AttributedRepositoryFactory::class,

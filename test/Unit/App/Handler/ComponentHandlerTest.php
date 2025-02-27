@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AdminTest\Unit\App\Handler\Page;
+namespace AdminTest\Unit\App\Handler;
 
-use Admin\App\Handler\Page\ComponentHandler;
+use Admin\App\Handler\GetComponentViewHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
+use Mezzio\Router\RouteResult;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,9 +19,9 @@ class ComponentHandlerTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $handler = new ComponentHandler($this->createMock(TemplateRendererInterface::class));
+        $handler = new GetComponentViewHandler($this->createMock(TemplateRendererInterface::class));
 
-        $this->assertInstanceOf(ComponentHandler::class, $handler);
+        $this->assertInstanceOf(GetComponentViewHandler::class, $handler);
     }
 
     /**
@@ -30,9 +31,13 @@ class ComponentHandlerTest extends UnitTest
     {
         $template = $this->createMock(TemplateRendererInterface::class);
         $request  = $this->createMock(ServerRequestInterface::class);
+        $routeResult = $this->createMock(RouteResult::class);
 
+        $routeResult->method('getMatchedRouteName')->willReturn('test');
+        $request->method('getAttribute')->with(RouteResult::class)->willReturn($routeResult);
         $template->method('render')->willReturn('<p>test</p>');
-        $handler = new ComponentHandler($template);
+
+        $handler = new GetComponentViewHandler($template);
 
         $response = $handler->handle($request);
 

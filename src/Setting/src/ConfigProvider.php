@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\Handler\Setting\GetSettingHandler;
-use Admin\Setting\Handler\Setting\StoreSettingHandler;
+use Admin\Setting\Handler\GetSettingViewHandler;
+use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Repository\SettingRepository;
 use Admin\Setting\Service\SettingService;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -32,8 +32,8 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                StoreSettingHandler::class => AttributedServiceFactory::class,
-                GetSettingHandler::class   => AttributedServiceFactory::class,
+                PostSettingStoreHandler::class => AttributedServiceFactory::class,
+                GetSettingViewHandler::class   => AttributedServiceFactory::class,
                 SettingService::class      => AttributedServiceFactory::class,
                 SettingRepository::class   => AttributedRepositoryFactory::class,
             ],
