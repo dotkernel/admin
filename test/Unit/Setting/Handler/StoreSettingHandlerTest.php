@@ -43,13 +43,13 @@ class StoreSettingHandlerTest extends UnitTest
         parent::setUp();
 
         $this->authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $this->adminService = $this->createMock(AdminService::class);
-        $this->settingService = $this->createMock(SettingService::class);
-        $this->request              = $this->createMock(ServerRequestInterface::class);
+        $this->adminService          = $this->createMock(AdminService::class);
+        $this->settingService        = $this->createMock(SettingService::class);
+        $this->request               = $this->createMock(ServerRequestInterface::class);
         $this->stream                = $this->createMock(StreamInterface::class);
-        $this->adminRepository                = $this->createMock(AdminRepository::class);
-        $this->identity                = $this->createMock(AdminIdentity::class);
-        $this->admin                = $this->createMock(Admin::class);
+        $this->adminRepository       = $this->createMock(AdminRepository::class);
+        $this->identity              = $this->createMock(AdminIdentity::class);
+        $this->admin                 = $this->createMock(Admin::class);
     }
 
     /**

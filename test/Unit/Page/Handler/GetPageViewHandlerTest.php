@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdminTest\Unit\Page\Handler;
 
 use Admin\Page\Handler\GetPageViewHandler;
@@ -17,9 +19,9 @@ class GetPageViewHandlerTest extends UnitTest
      */
     public function testPageWillReturnHtmlTemplate(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request     = $this->createMock(ServerRequestInterface::class);
         $routeResult = $this->createMock(RouteResult::class);
-        $template = $this->createMock(TemplateRendererInterface::class);
+        $template    = $this->createMock(TemplateRendererInterface::class);
 
         $routeResult->method('getMatchedRouteName')->willReturn('test');
         $template->method('render')->willReturn('<p></p>');
