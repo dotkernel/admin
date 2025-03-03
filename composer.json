@@ -13,7 +13,7 @@
     ],
     "authors": [
         {
-            "name": "DotKernel Team",
+            "name": "Dotkernel Team",
             "email": "team@dotkernel.com"
         }
     ],
@@ -93,7 +93,6 @@
         "development-disable": "laminas-development-mode disable",
         "development-enable": "laminas-development-mode enable",
         "development-status": "laminas-development-mode status",
-        "mezzio": "mezzio --ansi",
         "check": [
             "@cs-check",
             "@test",
@@ -105,7 +104,6 @@
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "static-analysis": "phpstan analyse --memory-limit 1G",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "twig-cs-check": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php",
         "twig-cs-fix": "vendor/bin/twig-cs-fixer lint --config=config/twig-cs-fixer.php --fix"
     }

@@ -32,7 +32,7 @@ class GetAdminCreateFormHandler implements RequestHandlerInterface
         $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
 
         return new HtmlResponse(
-            $this->template->render('admin::add-admin-modal-content', [
+            $this->template->render('admin::create-admin-form', [
                 'form' => $this->form->prepare(),
             ])
         );

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Admin\Admin;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminInterface;
@@ -66,7 +65,6 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                AdminController::class                  => AttributedServiceFactory::class,
                 GetAdminCreateFormHandler::class        => AttributedServiceFactory::class,
                 PostAdminCreateHandler::class           => AttributedServiceFactory::class,
                 GetAdminEditFormHandler::class          => AttributedServiceFactory::class,

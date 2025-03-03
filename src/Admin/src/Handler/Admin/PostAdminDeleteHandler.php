@@ -68,8 +68,8 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
                 return new HtmlResponse(
-                    $this->template->render('admin::delete-admin-modal-content', [
-                        'form'  => $this->form,
+                    $this->template->render('admin::delete-admin-form', [
+                        'form'  => $this->form->prepare(),
                         'admin' => $admin,
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY

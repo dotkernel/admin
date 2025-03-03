@@ -71,7 +71,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
                 return new HtmlResponse(
-                    $this->template->render('admin::edit-admin-modal-content', [
+                    $this->template->render('admin::edit-admin-form', [
                         'form' => $this->form->prepare(),
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
@@ -79,7 +79,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
             }
         } catch (IdentityException $exception) {
             return new HtmlResponse(
-                $this->template->render('admin::edit-admin-modal-content', [
+                $this->template->render('admin::edit-admin-form', [
                     'form'     => $this->form->prepare(),
                     'messages' => [
                         'error' => $exception->getMessage(),

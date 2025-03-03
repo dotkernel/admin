@@ -53,8 +53,8 @@ class GetAdminDeleteFormHandler implements RequestHandlerInterface
         );
 
         return new HtmlResponse(
-            $this->template->render('admin::delete-admin-modal-content', [
-                'form'  => $this->form,
+            $this->template->render('admin::delete-admin-form', [
+                'form'  => $this->form->prepare(),
                 'admin' => $admin,
             ]),
         );

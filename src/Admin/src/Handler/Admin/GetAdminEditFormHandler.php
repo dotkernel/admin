@@ -70,7 +70,7 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
         $this->form->bind($adminFormData);
 
         return new HtmlResponse(
-            $this->template->render('admin::edit-admin-modal-content', [
+            $this->template->render('admin::edit-admin-form', [
                 'form' => $this->form->prepare(),
             ])
         );

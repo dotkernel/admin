@@ -6,7 +6,6 @@ namespace AdminTest\Unit\Admin;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\ConfigProvider;
-use Admin\Admin\Controller\AdminController;
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Entity\AdminInterface;
 use Admin\Admin\Form\AdminForm;
@@ -46,7 +45,6 @@ class ConfigProviderTest extends UnitTest
     public function testDependenciesHasFactories(): void
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
-        $this->assertArrayHasKey(AdminController::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(AdminService::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(AdminForm::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(AuthenticationService::class, $this->config['dependencies']['factories']);
