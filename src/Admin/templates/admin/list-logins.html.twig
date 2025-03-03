@@ -183,7 +183,7 @@
 <script>
     const tableId = '#admin-logins-table';
     const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
-    const columnsSettings = JSON.parse('{{ settings|json_encode()|raw }}');
+    const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
 </script>
 <script src="{{ asset('js/table_settings.js') }}" defer></script>
 {% endblock %}

@@ -10,7 +10,6 @@ use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminServiceInterface;
-use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -29,10 +28,8 @@ class GetAdminLoginListHandlerTest extends UnitTest
         $template              = $this->createMock(TemplateRendererInterface::class);
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
         $form                  = $this->createMock(AdminForm::class);
-        $settingService        = $this->createMock(SettingService::class);
         $adminRepository       = $this->createMock(AdminRepository::class);
 
-        $settingService->method('findOneBy')->willReturn(null);
         $adminRepository->method('findOneBy')->willReturn($this->createMock(Admin::class));
         $adminService->method('getAdminLogins')->willReturn([
             'rows'   => [],
@@ -52,7 +49,6 @@ class GetAdminLoginListHandlerTest extends UnitTest
             $adminService,
             $template,
             $authenticationService,
-            $settingService,
         );
 
         $response = $handler->handle($this->createMock(ServerRequestInterface::class));

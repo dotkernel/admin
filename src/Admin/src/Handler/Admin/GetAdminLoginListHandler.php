@@ -9,7 +9,6 @@ use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Pagination;
 use Admin\Setting\Entity\Setting;
-use Admin\Setting\Service\SettingService;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -26,13 +25,11 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
         AdminServiceInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
-        SettingService::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
-        protected SettingService $settingService,
     ) {
     }
 
@@ -58,18 +55,10 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
             ]
         );
 
-        $settings = $this->settingService->findOneBy([
-            'admin'      => $this->adminService->getAdminRepository()->findOneBy([
-                'identity' => $this->authenticationService->getIdentity()->getIdentity(),
-            ]),
-            'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
-        ]);
-
         return new HtmlResponse(
             $this->template->render('admin::list-logins', [
                 'params'     => $params,
                 'logins'     => $logins['rows'],
-                'settings'   => $settings?->getValue() ?? [],
                 'statuses'   => [AdminLogin::LOGIN_FAIL, AdminLogin::LOGIN_SUCCESS],
                 'identities' => $this->adminService->getAdminLoginIdentities(),
                 'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,

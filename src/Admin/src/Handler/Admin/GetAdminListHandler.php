@@ -10,7 +10,6 @@ use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Pagination;
 use Admin\Setting\Entity\Setting;
-use Admin\Setting\Service\SettingService;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -30,7 +29,6 @@ class GetAdminListHandler implements RequestHandlerInterface
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
         AdminForm::class,
-        SettingService::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -38,7 +36,6 @@ class GetAdminListHandler implements RequestHandlerInterface
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
         protected AdminForm $form,
-        protected SettingService $settingService,
     ) {
     }
 
@@ -61,13 +58,6 @@ class GetAdminListHandler implements RequestHandlerInterface
             $params['order'],
         );
 
-        $settings = $this->settingService->findOneBy([
-            'admin'      => $this->adminService->getAdminRepository()->findOneBy([
-                'identity' => $this->authenticationService->getIdentity()->getIdentity(),
-            ]),
-            'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
-        ]);
-
         $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
 
         return new HtmlResponse(
@@ -75,7 +65,6 @@ class GetAdminListHandler implements RequestHandlerInterface
                 'params'     => $params,
                 'admins'     => $result['rows'],
                 'statuses'   => Admin::STATUSES,
-                'settings'   => $settings?->getValue() ?? [],
                 'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
                 'form'       => $this->form->prepare(),
                 'pagination' => new Pagination($result['total'], $result['offset'], $result['limit']),

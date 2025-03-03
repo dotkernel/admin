@@ -4,8 +4,8 @@ $(function() {
         return;
     }
 
-    if (! columnsSettings) {
-        console.error("Invalid or no column settings provided.")
+    if (! getSettingsUrl) {
+        console.error("Invalid or no getSettingsUrl provided.")
         return;
     }
 
@@ -14,12 +14,19 @@ $(function() {
         return;
     }
 
+    const getSettings = () => {
+        return fetch(getSettingsUrl, {
+            method: 'GET',
+        });
+    };
+
     const hideColumns = (tableId, visibleColumns) => {
         const table = $(tableId);
         if (visibleColumns.length === 0) {
             table.show();
             return;
         }
+
         $('.table-column').each((_, element) => {
             const column = $(element).data('column');
             toggleColumnVisibility(column, visibleColumns.includes(column));
@@ -92,9 +99,6 @@ $(function() {
         }
     }
 
-    populateColumnSelector('#column-selector', columnsSettings);
-    hideColumns(tableId, columnsSettings);
-
     $(document).on('change', '.toggle-column-checkbox', function () {
         const table = $(tableId);
         if (! table) {
@@ -124,4 +128,12 @@ $(function() {
     $(document).on('click', '.ui-checkbox', function (e) {
         $(e.currentTarget).prop('checked', !$(e.currentTarget).prop('checked'));
     });
+
+    getSettings()
+        .then((response) => response.json())
+        .then(settings => {
+            populateColumnSelector('#column-selector', settings.data.value);
+            hideColumns(tableId, settings.data.value);
+        })
+        .catch(error => console.error('Error: ', error));
 });

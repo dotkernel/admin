@@ -31,10 +31,8 @@ class GetAdminListHandlerTest extends UnitTest
         $template              = $this->createMock(TemplateRendererInterface::class);
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
         $form                  = $this->createMock(AdminForm::class);
-        $settingService        = $this->createMock(SettingService::class);
         $adminRepository       = $this->createMock(AdminRepository::class);
 
-        $settingService->method('findOneBy')->willReturn(null);
         $adminRepository->method('findOneBy')->willReturn($this->createMock(Admin::class));
         $adminService->method('getAdmins')->willReturn([
             'rows'   => [],
@@ -56,7 +54,6 @@ class GetAdminListHandlerTest extends UnitTest
             $template,
             $authenticationService,
             $form,
-            $settingService,
         );
 
         $response = $handler->handle($this->createMock(ServerRequestInterface::class));
