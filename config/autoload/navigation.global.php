@@ -15,7 +15,7 @@ return [
                             'options' => [
                                 'label' => 'Dashboard',
                                 'route' => [
-                                    'route_name' => 'app::index-redirect',
+                                    'route_name' => 'dashboard::dashboard-view',
                                 ],
                                 'icon'  => 'c-blue-500 ti-home',
                             ],

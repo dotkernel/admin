@@ -5,7 +5,7 @@
     {% for page in container %}
         {% if navigation.isAllowed(page) %}
             {% if page.hasChildren() %}
-                <li class="nav-item dropdown nav-group {% if loop.first %} mT-30 {% endif %} {% if isRoute(page.getOption('uri')) %} open {% endif %}">
+                <li class="nav-item dropdown nav-group {% if loop.first %} mT-30 {% endif %} {% if isRoute(page.getOption('route')['route_name'] ?? '') %} open current-route {% endif %}">
                     <a class="dropdown-toggle cur-p" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}>
                         <span class="icon-holder">
                             <i class="{{ page.getOption('icon') }}"></i>
@@ -23,13 +23,13 @@
             {% else %}
                 {% if page.hasParent() %}
                     <li class="nav-item dropdown">
-                        <a href="{{ navigation.getHref(page) }}" class="{% if isRoute(page.getOption('uri')) %} text-primary fw-medium current-route {% endif %} {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}">
+                        <a href="{{ navigation.getHref(page) }}" class="{% if isRoute(page.getOption('route')['route_name'] ?? '') %} text-primary fw-medium current-route {% endif %} {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}">
                             <span>{{ page.getOption('label') }}</span>
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item {% if loop.first %} mT-30 {% endif %}">
-                        <a class="sidebar-link {% if isRoute(page.getOption('uri')) %} text-primary fw-medium current-route {% endif %}" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}>
+                        <a class="sidebar-link {% if isRoute(page.getOption('route')['route_name'] ?? '') %} text-primary fw-medium current-route {% endif %}" href="{{ navigation.getHref(page) }}" {% autoescape false %}{{ pageAttributes(page) ~ extraAttributes }}{% endautoescape %}>
                             <span class="icon-holder">
                                 <i class="{{ page.getOption('icon') }}"></i>
                             </span>

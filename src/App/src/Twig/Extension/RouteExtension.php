@@ -6,6 +6,8 @@ namespace Admin\App\Twig\Extension;
 
 use Dot\DependencyInjection\Attribute\Inject;
 use Mezzio\Helper\UrlHelper;
+use Mezzio\Router\RouteResult;
+use Psr\Http\Message\UriInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -25,22 +27,21 @@ class RouteExtension extends AbstractExtension
         ];
     }
 
-    public function getCurrentRoute(): ?string
+    public function getCurrentRoute(): ?RouteResult
     {
-        return $this->urlHelper->getRequest()?->getUri()?->getPath();
+        return $this->urlHelper->getRouteResult();
     }
 
-    public function isRoute(?string $route): bool
+    public function isRoute(?string $routeName): bool
     {
-        if (null === $route) {
+        if (null === $routeName) {
             return false;
         }
 
-        $currentRoute = $this->getCurrentRoute();
-        if (null === $currentRoute) {
+        if (null === $this->getCurrentRoute()) {
             return false;
         }
 
-        return $currentRoute === $route;
+        return $this->getCurrentRoute()->getMatchedRouteName() === $routeName;
     }
 }
