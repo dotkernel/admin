@@ -10,7 +10,6 @@ use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\GetAdminListHandler;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminServiceInterface;
-use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
