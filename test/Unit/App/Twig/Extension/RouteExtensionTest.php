@@ -6,11 +6,10 @@ namespace AdminTest\Unit\App\Twig\Extension;
 
 use Admin\App\Twig\Extension\RouteExtension;
 use AdminTest\Unit\UnitTest;
-use Laminas\Diactoros\ServerRequest;
-use Laminas\Diactoros\Uri;
 use Mezzio\Helper\UrlHelper;
-use Mezzio\Router\RouterInterface;
+use Mezzio\Router\RouteResult;
 use PHPUnit\Framework\MockObject\Exception;
+use Psr\Http\Message\ServerRequestInterface;
 use Twig\TwigFunction;
 
 use function method_exists;
@@ -53,26 +52,18 @@ class RouteExtensionTest extends UnitTest
     /**
      * @throws Exception
      */
-    public function testWillGetCurrentRoute(): void
-    {
-        $router    = $this->createMock(RouterInterface::class);
-        $request   = new ServerRequest(uri: new Uri('/test'));
-        $urlHelper = new UrlHelper($router);
-        $urlHelper->setRequest($request);
-        $routeExtension = new RouteExtension($urlHelper);
-        $this->assertSame('/test', $routeExtension->getCurrentRoute());
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testIsRoute(): void
     {
-        $router    = $this->createMock(RouterInterface::class);
-        $request   = new ServerRequest(uri: new Uri('/test'));
-        $urlHelper = new UrlHelper($router);
+        $request     = $this->createMock(ServerRequestInterface::class);
+        $urlHelper   = $this->createMock(UrlHelper::class);
+        $routeResult = $this->createMock(RouteResult::class);
+
+        $routeResult->method('getMatchedRouteName')->willReturn('test');
+        $urlHelper->method('getRouteResult')->willReturn($routeResult);
+
         $urlHelper->setRequest($request);
         $routeExtension = new RouteExtension($urlHelper);
-        $this->assertSame(true, $routeExtension->isRoute('/test'));
+
+        $this->assertSame(true, $routeExtension->isRoute('test'));
     }
 }
