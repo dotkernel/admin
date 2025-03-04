@@ -7,7 +7,6 @@ namespace Admin\App\Twig\Extension;
 use Dot\DependencyInjection\Attribute\Inject;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Router\RouteResult;
-use Psr\Http\Message\UriInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
