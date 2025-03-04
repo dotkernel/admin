@@ -74,7 +74,6 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'page'    => [__DIR__ . '/../templates/page'],
                 'error'   => [__DIR__ . '/../templates/error'],
                 'layout'  => [__DIR__ . '/../templates/layout'],
                 'partial' => [__DIR__ . '/../templates/partial'],

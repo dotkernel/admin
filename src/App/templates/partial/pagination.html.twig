@@ -20,22 +20,22 @@
         <nav aria-label="Pagination">
             <ul class="pagination pagination-sm">
                 <li class="page-item{{ pagination.isFirstPage() ? ' disabled' }}" title="Page {{ pagination.getFirstPage() }}">
-                    <a class="page-link" href="{{ path(path, {params}|merge({offset: pagination.getFirstOffset()})) }}">
+                    <a class="page-link" href="{{ path(path, {}, {params}|merge({offset: pagination.getFirstOffset()})) }}">
                         <i class="ti-angle-double-left"></i>
                     </a>
                 </li>
                 <li class="page-item{{ not pagination.hasPreviousPage() ? ' disabled' }}" title="Page {{ pagination.getPreviousPage() }}">
-                    <a class="page-link" href="{{ path(path, params|merge({offset: pagination.getPreviousOffset()})) }}">
+                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: pagination.getPreviousOffset()})) }}">
                         <i class="ti-angle-left"></i>
                     </a>
                 </li>
                 {% for page in pagination.getPages() %}
                 <li class="page-item{{ page == pagination.getCurrentPage() ? ' active' }}" title="Page {{ page }}">
-                    <a class="page-link" href="{{ path(path, params|merge({offset: (page - 1) * params.limit})) }}">{{ page }}</a>
+                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: (page - 1) * params.limit})) }}">{{ page }}</a>
                 </li>
                 {% endfor %}
                 <li class="page-item{{ not pagination.hasNextPage() ? ' disabled' }}" title="Page {{ pagination.getNextPage() }}">
-                    <a class="page-link" href="{{ path(path, params|merge({offset: pagination.getNextOffset()})) }}">
+                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: pagination.getNextOffset()})) }}">
                         <i class="ti-angle-right"></i>
                     </a>
                 </li>
