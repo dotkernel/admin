@@ -133,7 +133,9 @@ $(function() {
         .then((response) => response.json())
         .then(settings => {
             populateColumnSelector('#column-selector', settings.data.value);
-            hideColumns(tableId, settings.data.value);
+            if (settings.data.value.length > 0) {
+                hideColumns(tableId, settings.data.value);
+            }
         })
         .catch(error => console.error('Error: ', error));
 });
