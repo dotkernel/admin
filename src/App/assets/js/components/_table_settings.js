@@ -135,6 +135,8 @@ $(function() {
             populateColumnSelector('#column-selector', settings.data.value);
             if (settings.data.value.length > 0) {
                 hideColumns(tableId, settings.data.value);
+            } else {
+                hideColumns(tableId, []);
             }
         })
         .catch(error => console.error('Error: ', error));
