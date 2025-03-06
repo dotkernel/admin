@@ -27,12 +27,12 @@ Documentation is available at: https://docs.dotkernel.org/admin-documentation/
 [![Qodana](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml/badge.svg?branch=5.0)](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml)
 [![PHPStan](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml/badge.svg?branch=5.0)](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml)
 
-## Installing DotKernel `admin`
+## Installing Dotkernel `admin`
 
 ## Tools
 
-DotKernel can be installed through a single command that utilizes [Composer](https://getcomposer.org/). Because of that,
-Composer is required to install DotKernel `admin`.
+Dotkernel can be installed through a single command that utilizes [Composer](https://getcomposer.org/). Because of that,
+Composer is required to install Dotkernel `admin`.
 
 ### Composer
 
@@ -44,19 +44,19 @@ Installation instructions:
 >If you have never used composer before make sure you read
 >the [`Composer Basic Usage`](https://getcomposer.org/doc/01-basic-usage.md) section in Composer's documentation
 
-## Choosing an installation path for DotKernel `admin`
+## Choosing an installation path for Dotkernel `admin`
 
 Example:
 
 - absolute path `/var/www/dk-admin`
 - or relative path `dk-admin` (equivalent with `./dk-admin`)
 
-## Installing DotKernel `admin`
+## Installing Dotkernel `admin`
 
-After choosing the path for DotKernel (`dk-admin` will be used for the remainder of this example) it must be installed.
+After choosing the path for Dotkernel (`dk-admin` will be used for the remainder of this example) it must be installed.
 There are two installation methods.
 
-### I. Installing DotKernel `admin` using composer
+### I. Installing Dotkernel `admin` using composer
 
 >please use the below CLI commands in terminal, do NOT use the PhpStorm buttons
 
@@ -73,7 +73,7 @@ The setup script prompts for some configuration settings, for example the lines 
       [1] config/config.php
       Make your selection (default is 1):
 
-Simply select `[0] Do not inject`, because DotKernel includes its own configProvider which already contains the prompted
+Simply select `[0] Do not inject`, because Dotkernel includes its own configProvider which already contains the prompted
 configurations.
 
 If you choose `[1] config/config.php` Laminas's `ConfigProvider` from `session` will be injected.
@@ -84,7 +84,7 @@ The next question is:
 
 Type `y` here, and hit `enter`
 
-### II. Installing DotKernel `admin` using git clone
+### II. Installing Dotkernel `admin` using git clone
 
 This method requires more manual input, but it ensures that the default branch is installed, even if it is not released.
 Run the following command:
@@ -95,7 +95,7 @@ The dependencies have to be installed separately, by running this command
 
     composer install
 
-Just like for `II Installing DotKernel admin using composer` (see above), the setup asks for configuration settings
+Just like for `II Installing Dotkernel admin using composer` (see above), the setup asks for configuration settings
 regarding injections (type `0` and hit `enter`) and a confirmation to use this setting for other packages (type `y` and
 hit `enter`)
 
@@ -248,7 +248,7 @@ If you are still getting exceptions or errors regarding some missing services, t
 
 - Open a web browser and visit `http://localhost:8080/`
 
-You should see the `DotKernel admin` login page.
+You should see the `Dotkernel admin` login page.
 
 If you ran the migrations you will have an admin user in the database with the following credentials:
 

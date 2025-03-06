@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\Controller\SettingController;
-use Fig\Http\Message\RequestMethodInterface;
+use Admin\Setting\Handler\GetSettingViewHandler;
+use Admin\Setting\Handler\PostSettingStoreHandler;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 
@@ -16,12 +16,8 @@ class RoutesDelegator
         /** @var Application $app */
         $app = $callback();
 
-        $app->route(
-            '/setting/{action}[/{identifier}]',
-            SettingController::class,
-            [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_POST],
-            'setting'
-        );
+        $app->get('/setting/{identifier}', GetSettingViewHandler::class, 'setting::setting-view');
+        $app->post('/setting/{identifier}', PostSettingStoreHandler::class, 'setting::setting-store');
 
         return $app;
     }

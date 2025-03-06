@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Setting;
 
 use Admin\Setting\ConfigProvider;
-use Admin\Setting\Controller\SettingController;
 use Admin\Setting\Repository\SettingRepository;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
@@ -29,7 +28,6 @@ class ConfigProviderTest extends UnitTest
     public function testDependenciesHasFactories(): void
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
-        $this->assertArrayHasKey(SettingController::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(SettingService::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(SettingRepository::class, $this->config['dependencies']['factories']);
     }

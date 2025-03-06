@@ -4,43 +4,75 @@ declare(strict_types=1);
 
 namespace Admin\App\Common;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 interface ServerRequestAwareInterface
 {
-    public function isDelete(): bool;
+    public function isDelete(ServerRequestInterface $request): bool;
 
-    public function isGet(): bool;
+    public function isGet(ServerRequestInterface $request): bool;
 
-    public function isPatch(): bool;
+    public function isPatch(ServerRequestInterface $request): bool;
 
-    public function isPost(): bool;
+    public function isPost(ServerRequestInterface $request): bool;
 
-    public function isPut(): bool;
+    public function isPut(ServerRequestInterface $request): bool;
 
-    public function getPostParams(?callable $callback = null): array|null|object;
+    public function getPostParams(ServerRequestInterface $request, ?callable $callback = null): array|null|object;
 
-    public function getPostParam(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getPostParam(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 
-    public function getUploadedFiles(?callable $callback = null): array;
+    public function getUploadedFiles(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getUploadedFile(string $name, ?callable $callback = null): mixed;
+    public function getUploadedFile(ServerRequestInterface $request, string $name, ?callable $callback = null): mixed;
 
-    public function getQueryParams(?callable $callback = null): array;
+    public function getQueryParams(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getQueryParam(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getQueryParam(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 
-    public function getCookieParams(?callable $callback = null): array;
+    public function getCookieParams(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getCookieParam(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getCookieParam(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 
-    public function getServerParams(?callable $callback = null): array;
+    public function getServerParams(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getServerParam(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getServerParam(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 
-    public function getHeaders(?callable $callback = null): array;
+    public function getHeaders(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getHeader(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getHeader(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 
-    public function getAttributes(?callable $callback = null): array;
+    public function getAttributes(ServerRequestInterface $request, ?callable $callback = null): array;
 
-    public function getAttribute(string $name, mixed $default = null, ?string $cast = null): mixed;
+    public function getAttribute(
+        ServerRequestInterface $request,
+        string $name,
+        mixed $default = null,
+        ?string $cast = null
+    ): mixed;
 }

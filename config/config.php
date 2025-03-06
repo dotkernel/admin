@@ -51,6 +51,8 @@ $aggregator = new ConfigAggregator([
     Admin\App\ConfigProvider::class,
     Admin\Admin\ConfigProvider::class,
     Admin\Setting\ConfigProvider::class,
+    Admin\Page\ConfigProvider::class,
+    Admin\Dashboard\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):

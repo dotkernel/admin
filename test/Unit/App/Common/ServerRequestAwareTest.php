@@ -8,7 +8,10 @@ use Admin\App\Common\ServerRequestAwareInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\RequestMethodInterface;
+use Fig\Http\Message\StatusCodeInterface;
+use Laminas\Diactoros\Response\EmptyResponse;
 use PHPUnit\Framework\MockObject\Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use ReflectionClass;
@@ -25,10 +28,12 @@ class ServerRequestAwareTest extends UnitTest
     public function testRequestMethodIsDelete(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->expects($this->once())->method('getMethod')->willReturn(RequestMethodInterface::METHOD_DELETE);
+        $request
+            ->expects($this->once())->method('getMethod')
+            ->willReturn(RequestMethodInterface::METHOD_DELETE);
 
-        $controller = $this->getController($request);
-        $this->assertTrue($controller->isDelete());
+        $handler = $this->getHandler($request);
+        $this->assertTrue($handler->isDelete($request));
     }
 
     /**
@@ -39,8 +44,8 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getMethod')->willReturn(RequestMethodInterface::METHOD_GET);
 
-        $controller = $this->getController($request);
-        $this->assertTrue($controller->isGet());
+        $handler = $this->getHandler($request);
+        $this->assertTrue($handler->isGet($request));
     }
 
     /**
@@ -51,8 +56,8 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getMethod')->willReturn(RequestMethodInterface::METHOD_PATCH);
 
-        $controller = $this->getController($request);
-        $this->assertTrue($controller->isPatch());
+        $handler = $this->getHandler($request);
+        $this->assertTrue($handler->isPatch($request));
     }
 
     /**
@@ -63,8 +68,8 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getMethod')->willReturn(RequestMethodInterface::METHOD_POST);
 
-        $controller = $this->getController($request);
-        $this->assertTrue($controller->isPost());
+        $handler = $this->getHandler($request);
+        $this->assertTrue($handler->isPost($request));
     }
 
     /**
@@ -75,8 +80,8 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getMethod')->willReturn(RequestMethodInterface::METHOD_PUT);
 
-        $controller = $this->getController($request);
-        $this->assertTrue($controller->isPut());
+        $handler = $this->getHandler($request);
+        $this->assertTrue($handler->isPut($request));
     }
 
     /**
@@ -89,9 +94,9 @@ class ServerRequestAwareTest extends UnitTest
             'test',
         ]);
 
-        $controller = $this->getController($request);
-        $this->assertIsArray($controller->getPostParams());
-        $this->assertIsArray($controller->getPostParams('strtoupper'));
+        $handler = $this->getHandler($request);
+        $this->assertIsArray($handler->getPostParams($request));
+        $this->assertIsArray($handler->getPostParams($request, 'strtoupper'));
     }
 
     /**
@@ -105,7 +110,7 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getParsedBody')->willReturn($object);
 
-        $this->assertIsObject($this->getController($request)->getPostParams());
+        $this->assertIsObject($this->getHandler($request)->getPostParams($request));
     }
 
     /**
@@ -116,7 +121,7 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->once())->method('getParsedBody')->willReturn(null);
 
-        $this->assertNull($this->getController($request)->getPostParams());
+        $this->assertNull($this->getHandler($request)->getPostParams($request));
     }
 
     /**
@@ -129,13 +134,13 @@ class ServerRequestAwareTest extends UnitTest
             'id' => '1',
         ]);
 
-        $this->assertNull($this->getController($request)->getPostParam('invalid'));
-        $this->assertSame('test', $this->getController($request)->getPostParam('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getPostParam('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getPostParam($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getPostParam($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getPostParam($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getPostParam('id'));
-        $this->assertSame('1', $this->getController($request)->getPostParam('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getPostParam('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getPostParam($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getPostParam($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getPostParam($request, 'id', '2', 'int'));
     }
 
     /**
@@ -148,10 +153,11 @@ class ServerRequestAwareTest extends UnitTest
             $this->createMock(UploadedFileInterface::class),
         ]);
 
-        $this->assertIsArray($this->getController($request)->getUploadedFiles());
+        $this->assertIsArray($this->getHandler($request)->getUploadedFiles($request));
         $this->assertIsArray(
-            $this->getController($request)
+            $this->getHandler($request)
                 ->getUploadedFiles(
+                    $request,
                     function (UploadedFileInterface $uploadedFile) {
                         return $uploadedFile;
                     }
@@ -171,18 +177,22 @@ class ServerRequestAwareTest extends UnitTest
 
         $this->assertInstanceOf(
             UploadedFileInterface::class,
-            $this->getController($request)->getUploadedFile('valid')
+            $this->getHandler($request)->getUploadedFile($request, 'valid')
         );
 
         $this->assertIsObject(
-            $this->getController($request)->getUploadedFile('valid', function (UploadedFileInterface $uploadedFile) {
-                return $uploadedFile;
-            })
+            $this->getHandler($request)->getUploadedFile(
+                $request,
+                'valid',
+                function (UploadedFileInterface $uploadedFile) {
+                    return $uploadedFile;
+                }
+            )
         );
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('There is no file uploaded under the name: invalid');
-        $this->getController($request)->getUploadedFile('invalid');
+        $this->getHandler($request)->getUploadedFile($request, 'invalid');
     }
 
     /**
@@ -197,11 +207,11 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())->method('getQueryParams')->willReturn($default);
 
-        $this->assertIsArray($this->getController($request)->getQueryParams());
-        $this->assertSame($default, $this->getController($request)->getQueryParams());
+        $this->assertIsArray($this->getHandler($request)->getQueryParams($request));
+        $this->assertSame($default, $this->getHandler($request)->getQueryParams($request));
         $this->assertSame(
             array_map('strtoupper', $default),
-            $this->getController($request)->getQueryParams('strtoupper')
+            $this->getHandler($request)->getQueryParams($request, 'strtoupper')
         );
     }
 
@@ -215,13 +225,13 @@ class ServerRequestAwareTest extends UnitTest
             'id' => '1',
         ]);
 
-        $this->assertNull($this->getController($request)->getQueryParam('invalid'));
-        $this->assertSame('test', $this->getController($request)->getQueryParam('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getQueryParam('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getQueryParam($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getQueryParam($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getQueryParam($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getQueryParam('id'));
-        $this->assertSame('1', $this->getController($request)->getQueryParam('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getQueryParam('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getQueryParam($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getQueryParam($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getQueryParam($request, 'id', '2', 'int'));
     }
 
     /**
@@ -236,11 +246,11 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())->method('getCookieParams')->willReturn($default);
 
-        $this->assertIsArray($this->getController($request)->getCookieParams());
-        $this->assertSame($default, $this->getController($request)->getCookieParams());
+        $this->assertIsArray($this->getHandler($request)->getCookieParams($request));
+        $this->assertSame($default, $this->getHandler($request)->getCookieParams($request));
         $this->assertSame(
             array_map('strtoupper', $default),
-            $this->getController($request)->getCookieParams('strtoupper')
+            $this->getHandler($request)->getCookieParams($request, 'strtoupper')
         );
     }
 
@@ -254,13 +264,13 @@ class ServerRequestAwareTest extends UnitTest
             'id' => '1',
         ]);
 
-        $this->assertNull($this->getController($request)->getCookieParam('invalid'));
-        $this->assertSame('test', $this->getController($request)->getCookieParam('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getCookieParam('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getCookieParam($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getCookieParam($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getCookieParam($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getCookieParam('id'));
-        $this->assertSame('1', $this->getController($request)->getCookieParam('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getCookieParam('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getCookieParam($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getCookieParam($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getCookieParam($request, 'id', '2', 'int'));
     }
 
     /**
@@ -275,11 +285,11 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())->method('getServerParams')->willReturn($default);
 
-        $this->assertIsArray($this->getController($request)->getServerParams());
-        $this->assertSame($default, $this->getController($request)->getServerParams());
+        $this->assertIsArray($this->getHandler($request)->getServerParams($request));
+        $this->assertSame($default, $this->getHandler($request)->getServerParams($request));
         $this->assertSame(
             array_map('strtoupper', $default),
-            $this->getController($request)->getServerParams('strtoupper')
+            $this->getHandler($request)->getServerParams($request, 'strtoupper')
         );
     }
 
@@ -293,13 +303,13 @@ class ServerRequestAwareTest extends UnitTest
             'id' => '1',
         ]);
 
-        $this->assertNull($this->getController($request)->getServerParam('invalid'));
-        $this->assertSame('test', $this->getController($request)->getServerParam('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getServerParam('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getServerParam($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getServerParam($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getServerParam($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getServerParam('id'));
-        $this->assertSame('1', $this->getController($request)->getServerParam('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getServerParam('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getServerParam($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getServerParam($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getServerParam($request, 'id', '2', 'int'));
     }
 
     /**
@@ -314,11 +324,11 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())->method('getHeaders')->willReturn($default);
 
-        $this->assertIsArray($this->getController($request)->getHeaders());
-        $this->assertSame($default, $this->getController($request)->getHeaders());
+        $this->assertIsArray($this->getHandler($request)->getHeaders($request));
+        $this->assertSame($default, $this->getHandler($request)->getHeaders($request));
         $this->assertSame(
             array_map('strtoupper', $default),
-            $this->getController($request)->getHeaders('strtoupper')
+            $this->getHandler($request)->getHeaders($request, 'strtoupper')
         );
     }
 
@@ -335,13 +345,13 @@ class ServerRequestAwareTest extends UnitTest
         $request->expects($this->any())->method('getHeaders')->willReturn($default);
         $request->expects($this->any())->method('getHeaderLine')->with('id')->willReturn($default['id']);
 
-        $this->assertNull($this->getController($request)->getHeader('invalid'));
-        $this->assertSame('test', $this->getController($request)->getHeader('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getHeader('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getHeader($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getHeader($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getHeader($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getHeader('id'));
-        $this->assertSame('1', $this->getController($request)->getHeader('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getHeader('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getHeader($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getHeader($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getHeader($request, 'id', '2', 'int'));
     }
 
     /**
@@ -356,11 +366,11 @@ class ServerRequestAwareTest extends UnitTest
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())->method('getAttributes')->willReturn($default);
 
-        $this->assertIsArray($this->getController($request)->getAttributes());
-        $this->assertSame($default, $this->getController($request)->getAttributes());
+        $this->assertIsArray($this->getHandler($request)->getAttributes($request));
+        $this->assertSame($default, $this->getHandler($request)->getAttributes($request));
         $this->assertSame(
             array_map('strtoupper', $default),
-            $this->getController($request)->getAttributes('strtoupper')
+            $this->getHandler($request)->getAttributes($request, 'strtoupper')
         );
     }
 
@@ -374,13 +384,13 @@ class ServerRequestAwareTest extends UnitTest
             'id' => '1',
         ]);
 
-        $this->assertNull($this->getController($request)->getAttribute('invalid'));
-        $this->assertSame('test', $this->getController($request)->getAttribute('invalid', 'test'));
-        $this->assertSame(1, $this->getController($request)->getAttribute('invalid', '1', 'int'));
+        $this->assertNull($this->getHandler($request)->getAttribute($request, 'invalid'));
+        $this->assertSame('test', $this->getHandler($request)->getAttribute($request, 'invalid', 'test'));
+        $this->assertSame(1, $this->getHandler($request)->getAttribute($request, 'invalid', '1', 'int'));
 
-        $this->assertSame('1', $this->getController($request)->getAttribute('id'));
-        $this->assertSame('1', $this->getController($request)->getAttribute('id', '2'));
-        $this->assertSame(1, $this->getController($request)->getAttribute('id', '2', 'int'));
+        $this->assertSame('1', $this->getHandler($request)->getAttribute($request, 'id'));
+        $this->assertSame('1', $this->getHandler($request)->getAttribute($request, 'id', '2'));
+        $this->assertSame(1, $this->getHandler($request)->getAttribute($request, 'id', '2', 'int'));
     }
 
     /**
@@ -389,23 +399,23 @@ class ServerRequestAwareTest extends UnitTest
      */
     public function testWillCast(): void
     {
-        $request    = $this->createMock(ServerRequestInterface::class);
-        $controller = $this->getController($request);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $handler = $this->getHandler($request);
 
-        $reflection = new ReflectionClass($controller);
+        $reflection = new ReflectionClass($handler);
 
         $method = $reflection->getMethod('cast');
-        $this->assertSame(['test'], $method->invoke($controller, 'test', 'array'));
-        $this->assertTrue($method->invoke($controller, 'test', 'bool'));
-        $this->assertSame(3.14, $method->invoke($controller, '3.14', 'float'));
-        $this->assertSame(256, $method->invoke($controller, '256', 'int'));
-        $this->assertIsObject($method->invoke($controller, 'test', 'object'));
-        $this->assertSame('test', $method->invoke($controller, 'test', 'string'));
-        $this->assertSame('test', $method->invoke($controller, 'test', 'invalid'));
-        $this->assertSame('test', $method->invoke($controller, 'test'));
+        $this->assertSame(['test'], $method->invoke($handler, 'test', 'array'));
+        $this->assertTrue($method->invoke($handler, 'test', 'bool'));
+        $this->assertSame(3.14, $method->invoke($handler, '3.14', 'float'));
+        $this->assertSame(256, $method->invoke($handler, '256', 'int'));
+        $this->assertIsObject($method->invoke($handler, 'test', 'object'));
+        $this->assertSame('test', $method->invoke($handler, 'test', 'string'));
+        $this->assertSame('test', $method->invoke($handler, 'test', 'invalid'));
+        $this->assertSame('test', $method->invoke($handler, 'test'));
     }
 
-    private function getController(ServerRequestInterface $request): ServerRequestAwareInterface
+    private function getHandler(ServerRequestInterface $request): ServerRequestAwareInterface
     {
         return new class ($request) implements ServerRequestAwareInterface {
             use ServerRequestAwareTrait;
@@ -415,6 +425,11 @@ class ServerRequestAwareTest extends UnitTest
             public function __construct(ServerRequestInterface $request)
             {
                 $this->request = $request;
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return new EmptyResponse(StatusCodeInterface::STATUS_OK);
             }
         };
     }

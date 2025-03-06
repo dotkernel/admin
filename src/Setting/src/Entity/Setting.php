@@ -86,7 +86,6 @@ class Setting extends AbstractEntity
     public function getArrayCopy(): array
     {
         return [
-            'uuid'       => $this->getUuid()->toString(),
             'identifier' => $this->getIdentifier(),
             'value'      => $this->getValue(),
         ];

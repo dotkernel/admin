@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\App;
 
-use Admin\App\Controller\DashboardController;
-use Admin\App\Controller\PageController;
 use Admin\App\Factory\EntityListenerResolverFactory;
 use Admin\App\Factory\FormsPluginFactory;
+use Admin\App\Handler\GetIndexRedirectHandler;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\Twig\Extension\RouteExtension;
@@ -41,8 +40,7 @@ class ConfigProvider
             'factories'  => [
                 'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 EntityListenerResolver::class         => EntityListenerResolverFactory::class,
-                DashboardController::class            => AttributedServiceFactory::class,
-                PageController::class                 => AttributedServiceFactory::class,
+                GetIndexRedirectHandler::class        => AttributedServiceFactory::class,
                 PluginManager::class                  => PluginManagerFactory::class,
                 FormsPlugin::class                    => FormsPluginFactory::class,
                 RouteExtension::class                 => AttributedServiceFactory::class,
@@ -76,7 +74,6 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'app'     => [__DIR__ . '/../templates/app'],
                 'error'   => [__DIR__ . '/../templates/error'],
                 'layout'  => [__DIR__ . '/../templates/layout'],
                 'partial' => [__DIR__ . '/../templates/partial'],

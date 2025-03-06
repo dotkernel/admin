@@ -21,7 +21,7 @@ class AdminLoader implements FixtureInterface, DependentFixtureInterface
         $admin = (new Admin())
             ->setIdentity('admin')
             ->setPassword(password_hash('dotadmin', PASSWORD_DEFAULT))
-            ->setFirstName('DotKernel')
+            ->setFirstName('Dotkernel')
             ->setLastName('Admin')
             ->addRole(
                 $manager->getRepository(AdminRole::class)->findOneBy(['name' => AdminRole::ROLE_SUPERUSER])

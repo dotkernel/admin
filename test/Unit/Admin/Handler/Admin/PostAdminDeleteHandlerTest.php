@@ -1,0 +1,176 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AdminTest\Unit\Admin\Handler\Admin;
+
+use Admin\Admin\Entity\Admin;
+use Admin\Admin\Form\AdminDeleteForm;
+use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
+use Admin\Admin\Repository\AdminRepository;
+use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Message;
+use AdminTest\Unit\UnitTest;
+use Dot\FlashMessenger\FlashMessengerInterface;
+use Dot\Log\Logger;
+use Fig\Http\Message\StatusCodeInterface;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Template\TemplateRendererInterface;
+use PHPUnit\Framework\MockObject\Exception as MockObjectException;
+use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Http\Message\ServerRequestInterface;
+use Ramsey\Uuid\Uuid;
+
+class PostAdminDeleteHandlerTest extends UnitTest
+{
+    private MockObject|AdminServiceInterface $adminService;
+    private MockObject|RouterInterface $router;
+    private MockObject|TemplateRendererInterface $template;
+    private MockObject|FlashMessengerInterface $messenger;
+    private MockObject|AdminDeleteForm $form;
+    private Logger $logger;
+    private MockObject|ServerRequestInterface $request;
+
+    /**
+     * @throws MockObjectException
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->adminService = $this->createMock(AdminServiceInterface::class);
+        $this->router       = $this->createMock(RouterInterface::class);
+        $this->template     = $this->createMock(TemplateRendererInterface::class);
+        $this->messenger    = $this->createMock(FlashMessengerInterface::class);
+        $this->form         = $this->createMock(AdminDeleteForm::class);
+        $this->request      = $this->createMock(ServerRequestInterface::class);
+        $this->logger       = new Logger([
+            'writers' => [
+                'FileWriter' => [
+                    'name'     => 'null',
+                    'priority' => Logger::ALERT,
+                ],
+            ],
+        ]);
+    }
+
+    public function testDeleteAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
+    {
+        $this->request->method('getParsedBody')->willReturn(['test']);
+        $this->form->method('isValid')->willReturn(true);
+        $this->form->method('getData')->willReturn([]);
+
+        $this
+            ->messenger
+            ->expects($this->once())
+            ->method('addError')
+            ->with(Message::ADMIN_NOT_FOUND);
+
+        $handler = new PostAdminDeleteHandler(
+            $this->adminService,
+            $this->router,
+            $this->template,
+            $this->messenger,
+            $this->form,
+            $this->logger
+        );
+
+        $response = $handler->handle($this->request);
+
+        $this->assertSame(StatusCodeInterface::STATUS_NOT_FOUND, $response->getStatusCode());
+    }
+
+    /**
+     * @throws MockObjectException
+     */
+    public function testDeleteAdminValidFormDataProvidedWillFlashSuccessMessage(): void
+    {
+        $adminRepository = $this->createMock(AdminRepository::class);
+        $uuid            = $this->createMock(Uuid::class);
+        $admin           = $this->createMock(Admin::class);
+
+        $uuid->method('toString')->willReturn('0x123');
+        $admin->method('getUuid')->willReturn($uuid);
+        $adminRepository->method('findOneBy')->willReturn($admin);
+
+        $this->adminService->method('getAdminRepository')->willReturn($adminRepository);
+        $this->request->method('getParsedBody')->willReturn(['test']);
+        $this->form->method('isValid')->willReturn(true);
+        $this->form->method('getData')->willReturn([]);
+
+        $this
+            ->messenger
+            ->expects($this->once())
+            ->method('addSuccess')
+            ->with(Message::ADMIN_DELETED_SUCCESSFULLY);
+
+        $adminRepository->expects($this->once())->method('deleteAdmin')->with($admin);
+
+        $handler = new PostAdminDeleteHandler(
+            $this->adminService,
+            $this->router,
+            $this->template,
+            $this->messenger,
+            $this->form,
+            $this->logger
+        );
+
+        $response = $handler->handle($this->request);
+
+        $this->assertSame(StatusCodeInterface::STATUS_CREATED, $response->getStatusCode());
+    }
+
+    /**
+     * @throws MockObjectException
+     */
+    public function testDeleteAdminInvalidFormDataProvidedWillReturnHtmlResponse(): void
+    {
+        $adminRepository = $this->createMock(AdminRepository::class);
+        $uuid            = $this->createMock(Uuid::class);
+        $admin           = $this->createMock(Admin::class);
+
+        $uuid->method('toString')->willReturn('0x123');
+        $admin->method('getUuid')->willReturn($uuid);
+        $adminRepository->method('findOneBy')->willReturn($admin);
+
+        $this->adminService->method('getAdminRepository')->willReturn($adminRepository);
+        $this->request->method('getParsedBody')->willReturn(['test']);
+        $this->form->method('isValid')->willReturn(false);
+        $this->form->method('getData')->willReturn([]);
+
+        $handler = new PostAdminDeleteHandler(
+            $this->adminService,
+            $this->router,
+            $this->template,
+            $this->messenger,
+            $this->form,
+            $this->logger
+        );
+
+        $response = $handler->handle($this->request);
+
+        $this->assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+    }
+
+    public function testDeleteAdminThrowsErrorWillReturnEmptyResponse(): void
+    {
+        $this
+            ->messenger
+            ->expects($this->exactly(2))
+            ->method('addError')
+            ->with(Message::AN_ERROR_OCCURRED);
+
+        $handler = new PostAdminDeleteHandler(
+            $this->adminService,
+            $this->router,
+            $this->template,
+            $this->messenger,
+            $this->form,
+            $this->logger
+        );
+
+        $response = $handler->handle($this->request);
+
+        $this->assertSame(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, $response->getStatusCode());
+    }
+}
