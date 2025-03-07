@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Enum\AdminLoginStatusEnum;
 use Admin\Admin\Enum\AdminStatusEnum;
+use Admin\Admin\Enum\SuccessFailureEnum;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
@@ -81,7 +81,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 $this->adminService->logAdminVisit(
                     $this->getServerParams($request),
                     $data['username'],
-                    AdminLoginStatusEnum::Fail,
+                    SuccessFailureEnum::Fail,
                 );
 
                 $this->messenger->addData('shouldRebind', true);
@@ -102,7 +102,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 $this->adminService->logAdminVisit(
                     $this->getServerParams($request),
                     $data['username'],
-                    AdminLoginStatusEnum::Success,
+                    SuccessFailureEnum::Success,
                 );
 
                 $this->authenticationService->getStorage()->write($identity);

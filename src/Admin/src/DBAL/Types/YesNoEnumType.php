@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Admin\Admin\DBAL\Types;
 
-use Admin\Admin\Enum\AdminLoginStatusEnum;
+use Admin\Admin\Enum\YesNoEnum;
 use Admin\App\DBAL\Types\AbstractEnumType;
 
-class AdminLoginStatusEnumType extends AbstractEnumType
+class YesNoEnumType extends AbstractEnumType
 {
-    public const NAME = 'admin_login_status_enum';
+    public const NAME = 'yes_no_enum';
 
     protected function getEnumClass(): string
     {
-        return AdminLoginStatusEnum::class;
+        return YesNoEnum::class;
     }
 
     public function getName(): string

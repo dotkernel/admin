@@ -12,7 +12,6 @@ use Laminas\InputFilter\Input;
 use Laminas\Validator\InArray;
 use Laminas\Validator\NotEmpty;
 
-use function array_map;
 use function sprintf;
 
 class SettingIdentifierInput extends Input
@@ -32,9 +31,7 @@ class SettingIdentifierInput extends Input
                 'message' => sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, '<b>Identifier</b>'),
             ], true)
             ->attachByName(InArray::class, [
-                'haystack' => array_map(function (SettingEnum $settingEnum) {
-                    return $settingEnum->value;
-                }, SettingEnum::cases()),
+                'haystack' => SettingEnum::values(),
                 'message'  => sprintf(Message::INVALID_VALUE, 'identifier'),
             ], true);
     }

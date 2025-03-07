@@ -4,9 +4,6 @@ COMMAND=$(echo "${JOB}" | jq -r '.command')
 
 echo "Running pre-run  $COMMAND"
 
-echo "Running git stash"
-git stash
-
 if [[ ${COMMAND} =~ phpunit ]];then
 
   apt-get install php"${PHP_VERSION}"-sqlite3

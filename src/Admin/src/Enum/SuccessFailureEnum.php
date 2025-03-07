@@ -6,10 +6,10 @@ namespace Admin\Admin\Enum;
 
 use function array_column;
 
-enum AdminStatusEnum: string
+enum SuccessFailureEnum: string
 {
-    case Active   = 'active';
-    case Inactive = 'inactive';
+    case Success = 'success';
+    case Fail    = 'fail';
 
     public static function values(): array
     {

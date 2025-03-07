@@ -29,7 +29,7 @@ class AdminFormDataTest extends UnitTest
         $this->assertSame($admin->getIdentity(), $formData->identity);
         $this->assertSame($admin->getFirstName(), $formData->firstName);
         $this->assertSame($admin->getLastName(), $formData->lastName);
-        $this->assertSame($admin->getStatus(), $formData->status);
+        $this->assertSame($admin->getStatus()->value, $formData->status);
         $this->assertIsArray($formData->roles);
         $this->assertCount(1, $formData->roles);
         $this->assertSame($admin->getRoles()[0]->getUuid()->toString(), $formData->roles[0]['value']);

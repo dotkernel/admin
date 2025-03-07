@@ -15,8 +15,6 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
-use function array_map;
-
 /**
  * @extends InputFilter<object>
  */
@@ -98,9 +96,7 @@ class EditAdminInputFilter extends InputFilter
         $status->setRequired(true);
         $status->getFilterChain()->attachByName(StringTrim::class);
         $status->getValidatorChain()->attachByName(InArray::class, [
-            'haystack' => array_map(function (AdminStatusEnum $adminStatusEnum) {
-                return $adminStatusEnum->value;
-            }, AdminStatusEnum::cases()),
+            'haystack' => AdminStatusEnum::values(),
         ]);
         $this->add($status);
 

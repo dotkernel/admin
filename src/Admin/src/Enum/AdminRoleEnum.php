@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Enum;
 
+use function array_column;
+
 enum AdminRoleEnum: string
 {
     case Admin     = 'admin';
     case Superuser = 'superuser';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

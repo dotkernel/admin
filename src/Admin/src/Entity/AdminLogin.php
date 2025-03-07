@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
-use Admin\Admin\Enum\AdminIsMobileEnum;
-use Admin\Admin\Enum\AdminLoginStatusEnum;
+use Admin\Admin\Enum\SuccessFailureEnum;
+use Admin\Admin\Enum\YesNoEnum;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
@@ -40,8 +40,8 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: 'deviceModel', type: 'string', length: 40, nullable: true)]
     protected ?string $deviceModel = null;
 
-    #[ORM\Column(type: 'admin_is_mobile_enum')]
-    protected ?AdminIsMobileEnum $isMobile = null;
+    #[ORM\Column(type: 'yes_no_enum')]
+    protected ?YesNoEnum $isMobile = null;
 
     #[ORM\Column(name: 'osName', type: 'string', length: 20, nullable: true)]
     protected ?string $osName = null;
@@ -64,8 +64,8 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: 'clientVersion', type: 'string', length: 20, nullable: true)]
     protected ?string $clientVersion = null;
 
-    #[ORM\Column(type: 'admin_login_status_enum', nullable: true)]
-    protected ?AdminLoginStatusEnum $loginStatus = null;
+    #[ORM\Column(type: 'success_failure_enum', nullable: true)]
+    protected ?SuccessFailureEnum $loginStatus = null;
 
     #[ORM\Column(name: 'identity', type: 'string', length: 100, nullable: true)]
     protected ?string $identity = null;
@@ -154,12 +154,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getIsMobile(): ?AdminIsMobileEnum
+    public function getIsMobile(): ?YesNoEnum
     {
         return $this->isMobile;
     }
 
-    public function setIsMobile(?AdminIsMobileEnum $isMobile): self
+    public function setIsMobile(?YesNoEnum $isMobile): self
     {
         $this->isMobile = $isMobile;
 
@@ -250,12 +250,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getLoginStatus(): ?AdminLoginStatusEnum
+    public function getLoginStatus(): ?SuccessFailureEnum
     {
         return $this->loginStatus;
     }
 
-    public function setLoginStatus(?AdminLoginStatusEnum $loginStatus): self
+    public function setLoginStatus(?SuccessFailureEnum $loginStatus): self
     {
         $this->loginStatus = $loginStatus;
 

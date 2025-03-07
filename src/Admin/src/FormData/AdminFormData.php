@@ -6,17 +6,16 @@ namespace Admin\Admin\FormData;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminStatusEnum;
 
 use function array_map;
 
 final class AdminFormData
 {
-    public ?string $identity        = null;
-    public ?string $firstName       = null;
-    public ?string $lastName        = null;
-    public ?AdminStatusEnum $status = null;
-    public array $roles             = [];
+    public ?string $identity  = null;
+    public ?string $firstName = null;
+    public ?string $lastName  = null;
+    public ?string $status    = null;
+    public array $roles       = [];
 
     public function getRoles(): array
     {
@@ -28,7 +27,7 @@ final class AdminFormData
         $this->identity  = $admin->getIdentity();
         $this->firstName = $admin->getFirstName();
         $this->lastName  = $admin->getLastName();
-        $this->status    = $admin->getStatus();
+        $this->status    = $admin->getStatus()->value;
         $this->roles     = array_map(function (AdminRole $role) {
             return [
                 'label' => $role->getName(),
@@ -45,7 +44,7 @@ final class AdminFormData
             'identity'  => $this->identity,
             'firstName' => $this->firstName,
             'lastName'  => $this->lastName,
-            'status'    => $this->status->value,
+            'status'    => $this->status,
             'roles'     => $this->roles,
         ];
     }

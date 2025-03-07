@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Enum\AdminLoginStatusEnum;
+use Admin\Admin\Enum\SuccessFailureEnum;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Pagination;
@@ -16,8 +16,6 @@ use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
-use function array_map;
 
 class GetAdminLoginListHandler implements RequestHandlerInterface
 {
@@ -61,9 +59,7 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
             $this->template->render('admin::list-logins', [
                 'params'     => $params,
                 'logins'     => $logins['rows'],
-                'statuses'   => array_map(function (AdminLoginStatusEnum $adminLoginStatusEnum) {
-                    return $adminLoginStatusEnum->value;
-                }, AdminLoginStatusEnum::cases()),
+                'statuses'   => SuccessFailureEnum::values(),
                 'identities' => $this->adminService->getAdminLoginIdentities(),
                 'identifier' => SettingEnum::IdentifierTableAdminListLoginsSelectedColumns->value,
                 'pagination' => new Pagination($logins['total'], $params['offset'], $params['limit']),

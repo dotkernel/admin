@@ -33,7 +33,7 @@
                                     name="status">
                                 <option value="">Select status</option>
                                 {% for status in statuses %}
-                                <option value="{{ status }}" {{ status == params.status ? 'selected' : '' }}>{{ status }}</option>
+                                    <option value="{{ status.value }}" {{ status.value == params.status ? 'selected' : '' }}>{{ status.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -130,7 +130,7 @@
                                 <td class="column-identity">{{ login.identity }}</td>
                                 <td class="column-adminIp">{{ login.adminIp }}</td>
                                 <td class="column-loginStatus">
-                                    {% if login.loginStatus == 'success' %}
+                                    {% if login.loginStatus.value == 'success' %}
                                     <span class="badge text-bg-success">Success</span>
                                     {% else %}
                                     <span class="badge text-bg-danger">Failed</span>
@@ -143,7 +143,7 @@
                                 <td class="column-deviceBrand">{{ login.deviceBrand }}</td>
                                 <td class="column-deviceModel">{{ login.deviceModel }}</td>
                                 <td class="column-isMobile">
-                                    {% if login.isMobile == 'yes' %}
+                                    {% if login.isMobile.value == 'yes' %}
                                     <span class="badge text-bg-primary">Yes</span>
                                     {% else %}
                                     <span class="badge text-bg-secondary">No</span>

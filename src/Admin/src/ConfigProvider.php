@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Admin\Admin;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\DBAL\Types\AdminIsMobileEnumType;
-use Admin\Admin\DBAL\Types\AdminLoginStatusEnumType;
 use Admin\Admin\DBAL\Types\AdminRoleEnumType;
 use Admin\Admin\DBAL\Types\AdminStatusEnumType;
+use Admin\Admin\DBAL\Types\SuccessFailureEnumType;
+use Admin\Admin\DBAL\Types\YesNoEnumType;
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminInterface;
@@ -141,10 +141,10 @@ class ConfigProvider
                 ],
             ],
             'types'  => [
-                AdminStatusEnumType::NAME      => AdminStatusEnumType::class,
-                AdminLoginStatusEnumType::NAME => AdminLoginStatusEnumType::class,
-                AdminIsMobileEnumType::NAME    => AdminIsMobileEnumType::class,
-                AdminRoleEnumType::NAME        => AdminRoleEnumType::class,
+                AdminStatusEnumType::NAME    => AdminStatusEnumType::class,
+                SuccessFailureEnumType::NAME => SuccessFailureEnumType::class,
+                YesNoEnumType::NAME          => YesNoEnumType::class,
+                AdminRoleEnumType::NAME      => AdminRoleEnumType::class,
             ],
         ];
     }
