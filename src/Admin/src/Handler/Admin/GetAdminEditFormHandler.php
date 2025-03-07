@@ -59,7 +59,7 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
 
         $roles = array_map(function (AdminRole $role) use ($admin): array {
             return [
-                'label'    => $role->getName(),
+                'label'    => $role->getName()->value,
                 'value'    => $role->getUuid()->toString(),
                 'selected' => $admin->hasRole($role),
             ];

@@ -33,7 +33,7 @@
                                     name="status">
                                 <option value="">Select status</option>
                                 {% for status in statuses %}
-                                    <option value="{{ status.value }}" {{ status.value == params.status ? 'selected' : '' }}>{{ status.name }}</option>
+                                    <option value="{{ status }}" {{ status == params.status ? 'selected' : '' }}>{{ status }}</option>
                                 {% endfor %}
                             </select>
                         </div>

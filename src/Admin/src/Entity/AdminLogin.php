@@ -40,7 +40,7 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: 'deviceModel', type: 'string', length: 40, nullable: true)]
     protected ?string $deviceModel = null;
 
-    #[ORM\Column(type: 'yes_no_enum')]
+    #[ORM\Column(type: 'string', nullable: true, enumType: YesNoEnum::class)]
     protected ?YesNoEnum $isMobile = null;
 
     #[ORM\Column(name: 'osName', type: 'string', length: 20, nullable: true)]
@@ -64,7 +64,7 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(name: 'clientVersion', type: 'string', length: 20, nullable: true)]
     protected ?string $clientVersion = null;
 
-    #[ORM\Column(type: 'success_failure_enum', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true, enumType: SuccessFailureEnum::class)]
     protected ?SuccessFailureEnum $loginStatus = null;
 
     #[ORM\Column(name: 'identity', type: 'string', length: 100, nullable: true)]

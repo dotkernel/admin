@@ -18,7 +18,13 @@ class AdminRole extends AbstractEntity
 {
     use TimestampsTrait;
 
-    #[ORM\Column(type: 'admin_role_enum')]
+    #[ORM\Column(
+        type: 'string',
+        nullable: true,
+        enumType: AdminRoleEnum::class,
+        options: ['default' => AdminRoleEnum::Admin]
+    )
+    ]
     protected AdminRoleEnum $name = AdminRoleEnum::Admin;
 
     public function getName(): AdminRoleEnum

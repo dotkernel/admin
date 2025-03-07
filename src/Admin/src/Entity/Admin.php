@@ -36,7 +36,7 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\Column(name: 'password', type: 'string', length: 100)]
     protected string $password;
 
-    #[ORM\Column(type: 'admin_status_enum', name: 'status', options: ['default' => AdminStatusEnum::Active])]
+    #[ORM\Column(type: 'string', enumType: AdminStatusEnum::class, options: ['default' => AdminStatusEnum::Active])]
     protected AdminStatusEnum $status = AdminStatusEnum::Active;
 
     #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: 'EAGER')]
