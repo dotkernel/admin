@@ -22,13 +22,15 @@ class AdminLoader implements FixtureInterface, DependentFixtureInterface
     {
         /** @var AdminRoleRepository $repository */
         $repository = $manager->getRepository(AdminRole::class);
+        $superuserRole = $repository->findByName(AdminRoleEnum::Superuser->value);
+        assert($superuserRole instanceof AdminRole);
 
         $admin = (new Admin())
             ->setIdentity('admin')
             ->setPassword(password_hash('dotadmin', PASSWORD_DEFAULT))
             ->setFirstName('Dotkernel')
             ->setLastName('Admin')
-            ->addRole($repository->findByName(AdminRoleEnum::Superuser->value));
+            ->addRole($superuserRole);
 
         $manager->persist($admin);
         $manager->flush();
