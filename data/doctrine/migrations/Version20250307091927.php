@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250307082457 extends AbstractMigration
+final class Version20250307091927 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,9 +20,9 @@ final class Version20250307082457 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE admin (uuid BINARY(16) NOT NULL, identity VARCHAR(100) NOT NULL, firstName VARCHAR(255) DEFAULT NULL, lastName VARCHAR(255) DEFAULT NULL, password VARCHAR(100) NOT NULL, status ENUM(\'active\', \'pending\') DEFAULT \'active\' NOT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, UNIQUE INDEX UNIQ_880E0D766A95E9C4 (identity), PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE admin (uuid BINARY(16) NOT NULL, identity VARCHAR(100) NOT NULL, firstName VARCHAR(255) DEFAULT NULL, lastName VARCHAR(255) DEFAULT NULL, password VARCHAR(100) NOT NULL, status ENUM(\'active\', \'inactive\') DEFAULT \'active\' NOT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, UNIQUE INDEX UNIQ_880E0D766A95E9C4 (identity), PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE admin_roles (userUuid BINARY(16) NOT NULL, roleUuid BINARY(16) NOT NULL, INDEX IDX_1614D53DD73087E9 (userUuid), INDEX IDX_1614D53D88446210 (roleUuid), PRIMARY KEY(userUuid, roleUuid)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE admin_login ( uuid BINARY(16) NOT NULL, adminIp VARCHAR(50) DEFAULT NULL, country VARCHAR(50) DEFAULT NULL, continent VARCHAR(50) DEFAULT NULL, organization VARCHAR(50) DEFAULT NULL, deviceType VARCHAR(20) DEFAULT NULL, deviceBrand VARCHAR(20) DEFAULT NULL, deviceModel VARCHAR(40) DEFAULT NULL, isMobile ENUM(\'yes\', \'no\') NOT NULL, osName VARCHAR(20) DEFAULT NULL, osVersion VARCHAR(20) DEFAULT NULL, osPlatform VARCHAR(20) DEFAULT NULL, clientType VARCHAR(20) DEFAULT NULL, clientName VARCHAR(40) DEFAULT NULL, clientEngine VARCHAR(20) DEFAULT NULL, clientVersion VARCHAR(20) DEFAULT NULL, loginStatus ENUM(\'success\', \'fail\') DEFAULT NULL, identity VARCHAR(100) DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE admin_login (uuid BINARY(16) NOT NULL, adminIp VARCHAR(50) DEFAULT NULL, country VARCHAR(50) DEFAULT NULL, continent VARCHAR(50) DEFAULT NULL, organization VARCHAR(50) DEFAULT NULL, deviceType VARCHAR(20) DEFAULT NULL, deviceBrand VARCHAR(20) DEFAULT NULL, deviceModel VARCHAR(40) DEFAULT NULL, isMobile ENUM(\'yes\', \'no\') NOT NULL, osName VARCHAR(20) DEFAULT NULL, osVersion VARCHAR(20) DEFAULT NULL, osPlatform VARCHAR(20) DEFAULT NULL, clientType VARCHAR(20) DEFAULT NULL, clientName VARCHAR(40) DEFAULT NULL, clientEngine VARCHAR(20) DEFAULT NULL, clientVersion VARCHAR(20) DEFAULT NULL, loginStatus ENUM(\'success\', \'fail\') DEFAULT NULL, identity VARCHAR(100) DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE admin_role (uuid BINARY(16) NOT NULL, name ENUM(\'admin\', \'superuser\') NOT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE settings (uuid BINARY(16) NOT NULL, identifier ENUM(\'table_admin_list_selected_columns\', \'table_admin_list_logins_selected_columns\') NOT NULL, value LONGTEXT NOT NULL, created DATETIME NOT NULL, updated DATETIME DEFAULT NULL, admin_uuid BINARY(16) DEFAULT NULL, INDEX IDX_E545A0C5F166D246 (admin_uuid), PRIMARY KEY(uuid)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE admin_roles ADD CONSTRAINT FK_1614D53DD73087E9 FOREIGN KEY (userUuid) REFERENCES admin (uuid)');
