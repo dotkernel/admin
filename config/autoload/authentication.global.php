@@ -8,7 +8,7 @@ return [
     'doctrine' => [
         'authentication' => [
             'orm_default' => [
-                'object_manager'      => 'doctrine.entitymanager.orm_default',
+                'object_manager'      => 'doctrine.entity_manager.orm_default',
                 'identity_class'      => Admin::class,
                 'identity_property'   => 'identity',
                 'credential_property' => 'password',

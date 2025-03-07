@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Entity;
 
 use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Enum\AdminIsMobileEnum;
+use Admin\Admin\Enum\AdminLoginStatusEnum;
 use Admin\Admin\Repository\AdminLoginRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\Mapping\Entity;
@@ -80,9 +82,9 @@ class AdminLoginTest extends UnitTest
         $this->assertSame('test', $adminLogin->getDeviceModel());
 
         $this->assertNull($adminLogin->getIsMobile());
-        $adminLogin = $adminLogin->setIsMobile('yes');
+        $adminLogin = $adminLogin->setIsMobile(AdminIsMobileEnum::Yes);
         $this->assertInstanceOf(AdminLogin::class, $adminLogin);
-        $this->assertSame('yes', $adminLogin->getIsMobile());
+        $this->assertSame('yes', $adminLogin->getIsMobile()->value);
 
         $this->assertNull($adminLogin->getOsName());
         $adminLogin = $adminLogin->setOsName('test');
@@ -120,9 +122,9 @@ class AdminLoginTest extends UnitTest
         $this->assertSame('test', $adminLogin->getClientVersion());
 
         $this->assertNull($adminLogin->getLoginStatus());
-        $adminLogin = $adminLogin->setLoginStatus('success');
+        $adminLogin = $adminLogin->setLoginStatus(AdminLoginStatusEnum::Success);
         $this->assertInstanceOf(AdminLogin::class, $adminLogin);
-        $this->assertSame('success', $adminLogin->getLoginStatus());
+        $this->assertSame('success', $adminLogin->getLoginStatus()->value);
 
         $this->assertNull($adminLogin->getIdentity());
         $adminLogin = $adminLogin->setIdentity('test');

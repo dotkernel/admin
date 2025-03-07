@@ -7,6 +7,8 @@ namespace Admin\Admin\Service;
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminLogin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminIsMobileEnum;
+use Admin\Admin\Enum\AdminLoginStatusEnum;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Repository\AdminRoleRepository;
@@ -72,7 +74,7 @@ class AdminService implements AdminServiceInterface
             $roles = [];
             /** @var AdminRole $role */
             foreach ($admin->getRoles() as $role) {
-                $roles[] = $role->getName();
+                $roles[] = $role->getName()->value;
             }
 
             $result['rows'][] = [
@@ -192,7 +194,7 @@ class AdminService implements AdminServiceInterface
         return $admin;
     }
 
-    public function logAdminVisit(array $serverParams, string $name, string $status): AdminLogin
+    public function logAdminVisit(array $serverParams, string $name, AdminLoginStatusEnum $status): AdminLogin
     {
         /**
          * For device information
@@ -214,7 +216,7 @@ class AdminService implements AdminServiceInterface
             ->setDeviceType(null)
             ->setDeviceBrand(null)
             ->setDeviceModel(null)
-            ->setIsMobile(AdminLogin::IS_MOBILE_NO)
+            ->setIsMobile(AdminIsMobileEnum::No)
             ->setOsName(null)
             ->setOsVersion(null)
             ->setOsPlatform(null)

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\Admin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
 use Admin\Admin\Repository\AdminRepository;
@@ -84,6 +85,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
 
         $uuid->method('toString')->willReturn('0x123');
         $admin->method('getUuid')->willReturn($uuid);
+        $admin->method('getStatus')->willReturn(AdminStatusEnum::Active);
 
         $this->repository->method('findOneBy')->willReturn($admin);
         $this->adminService->method('getAdminRepository')->willReturn($this->repository);

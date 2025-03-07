@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
@@ -16,45 +17,32 @@ use function array_map;
 use function password_verify;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
-#[ORM\Table(name: "admin")]
+#[ORM\Table(name: 'admin')]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class Admin extends AbstractEntity implements AdminInterface
 {
     use TimestampsTrait;
 
-    public const STATUS_ACTIVE   = 'active';
-    public const STATUS_INACTIVE = 'pending';
-    public const STATUSES        = [
-        self::STATUS_ACTIVE,
-        self::STATUS_INACTIVE,
-    ];
-
-    #[ORM\Column(name: "identity", type: "string", length: 100, unique: true)]
+    #[ORM\Column(name: 'identity', type: 'string', length: 100, unique: true)]
     protected string $identity;
 
-    #[ORM\Column(name: "firstName", type: "string", length: 255, nullable: true)]
+    #[ORM\Column(name: 'firstName', type: 'string', length: 255, nullable: true)]
     protected ?string $firstName = null;
 
-    #[ORM\Column(name: "lastName", type: "string", length: 255, nullable: true)]
+    #[ORM\Column(name: 'lastName', type: 'string', length: 255, nullable: true)]
     protected ?string $lastName = null;
 
-    #[ORM\Column(name: "password", type: "string", length: 100)]
+    #[ORM\Column(name: 'password', type: 'string', length: 100)]
     protected string $password;
 
-    #[ORM\Column(
-        name: "status",
-        type: "string",
-        length: 20,
-        nullable: false,
-        columnDefinition: "ENUM('pending', 'active')"
-    )]
-    protected string $status = self::STATUS_ACTIVE;
+    #[ORM\Column(type: 'admin_status_enum', name: 'status', options: ['default' => AdminStatusEnum::Active])]
+    protected AdminStatusEnum $status = AdminStatusEnum::Active;
 
-    #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: "EAGER")]
-    #[ORM\JoinTable(name: "admin_roles")]
-    #[ORM\JoinColumn(name: "userUuid", referencedColumnName: "uuid")]
-    #[ORM\InverseJoinColumn(name: "roleUuid", referencedColumnName: "uuid")]
+    #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: 'EAGER')]
+    #[ORM\JoinTable(name: 'admin_roles')]
+    #[ORM\JoinColumn(name: 'userUuid', referencedColumnName: 'uuid')]
+    #[ORM\InverseJoinColumn(name: 'roleUuid', referencedColumnName: 'uuid')]
     protected Collection $roles;
 
     #[ORM\OneToMany(mappedBy: 'admin', targetEntity: Setting::class)]
@@ -75,7 +63,7 @@ class Admin extends AbstractEntity implements AdminInterface
             'identity'  => $this->getIdentity(),
             'firstName' => $this->getfirstName(),
             'lastName'  => $this->getlastName(),
-            'status'    => $this->getStatus(),
+            'status'    => $this->getStatus()->value,
             'roles'     => array_map(function (AdminRole $role) {
                 return $role->getArrayCopy();
             }, $this->getRoles()),
@@ -137,12 +125,12 @@ class Admin extends AbstractEntity implements AdminInterface
         return password_verify($password, $this->getPassword());
     }
 
-    public function getStatus(): string
+    public function getStatus(): AdminStatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(AdminStatusEnum $status): self
     {
         $this->status = $status;
 
@@ -182,5 +170,10 @@ class Admin extends AbstractEntity implements AdminInterface
         }
 
         return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->getStatus() === AdminStatusEnum::Active;
     }
 }

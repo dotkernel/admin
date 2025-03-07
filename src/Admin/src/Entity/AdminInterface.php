@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminStatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 
 interface AdminInterface
@@ -26,9 +27,9 @@ interface AdminInterface
 
     public function setPassword(string $password): self;
 
-    public function getStatus(): string;
+    public function getStatus(): AdminStatusEnum;
 
-    public function setStatus(string $status): self;
+    public function setStatus(AdminStatusEnum $status): self;
 
     public function getRoles(): array;
 

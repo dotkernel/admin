@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\InputFilter;
 
-use Admin\Admin\Entity\Admin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\App\InputFilter\Input\CsrfInput;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
@@ -14,6 +14,8 @@ use Laminas\Validator\InArray;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
+
+use function array_map;
 
 /**
  * @extends InputFilter<object>
@@ -96,10 +98,9 @@ class AdminInputFilter extends InputFilter
         $status->setRequired(true);
         $status->getFilterChain()->attachByName(StringTrim::class);
         $status->getValidatorChain()->attachByName(InArray::class, [
-            'haystack' => [
-                Admin::STATUS_ACTIVE,
-                Admin::STATUS_INACTIVE,
-            ],
+            'haystack' => array_map(function (AdminStatusEnum $adminStatusEnum) {
+                return $adminStatusEnum->value;
+            }, AdminStatusEnum::cases()),
         ]);
         $this->add($status);
 

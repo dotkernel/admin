@@ -96,7 +96,7 @@
                                 <td class="column-lastName">{{ admin.lastName }}</td>
                                 <td class="column-roles">{{ admin.roles }}</td>
                                 <td class="column-status">
-                                    <span class="badge {% if admin.status == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ admin.status|capitalize }}</span>
+                                    <span class="badge {% if admin.status.value == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ admin.status.name|capitalize }}</span>
                                 </td>
                                 <td class="column-created">{{ admin.created }}</td>
                             </tr>

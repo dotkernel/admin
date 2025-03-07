@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\Entity;
 
 use Admin\Admin\Entity\AdminInterface;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminStatusEnum;
 use AdminTest\Unit\UnitTest;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -59,12 +60,12 @@ class AdminInterfaceTest extends UnitTest
                 return $this;
             }
 
-            public function getStatus(): string
+            public function getStatus(): AdminStatusEnum
             {
-                return 'test';
+                return AdminStatusEnum::Active;
             }
 
-            public function setStatus(string $status): AdminInterface
+            public function setStatus(AdminStatusEnum $status): AdminInterface
             {
                 return $this;
             }

@@ -6,6 +6,8 @@ namespace AdminTest\Unit\Admin\FormData;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\FormData\AdminFormData;
 use AdminTest\Unit\UnitTest;
 
@@ -51,7 +53,7 @@ class AdminFormDataTest extends UnitTest
         $this->assertSame($admin->getLastName(), $copy['lastName']);
 
         $this->assertArrayHasKey('status', $copy);
-        $this->assertSame($admin->getStatus(), $copy['status']);
+        $this->assertSame($admin->getStatus()->value, $copy['status']);
 
         $this->assertArrayHasKey('roles', $copy);
         $this->assertIsArray($copy['roles']);
@@ -80,9 +82,9 @@ class AdminFormDataTest extends UnitTest
             ->setIdentity('test')
             ->setFirstName('firstname')
             ->setLastName('lastname')
-            ->setStatus(Admin::STATUS_ACTIVE)
+            ->setStatus(AdminStatusEnum::Active)
             ->addRole(
-                (new AdminRole())->setName(AdminRole::ROLE_ADMIN)
+                (new AdminRole())->setName(AdminRoleEnum::Admin)
             );
     }
 }

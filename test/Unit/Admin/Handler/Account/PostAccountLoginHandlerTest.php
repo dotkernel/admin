@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Handler\Account\PostAccountLoginHandler;
 use Admin\Admin\Service\AdminServiceInterface;
@@ -150,7 +150,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
     public function testAdminInactiveWillReturnRedirectResponse(): void
     {
-        $this->identity->method('getStatus')->willReturn(Admin::STATUS_INACTIVE);
+        $this->identity->method('getStatus')->willReturn(AdminStatusEnum::Inactive);
         $this->authenticationResult->method('isValid')->willReturn(true);
         $this->authenticationResult->method('getMessages')->willReturn([]);
         $this->authenticationResult->method('getIdentity')->willReturn($this->identity);
@@ -217,7 +217,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
     public function testAdminLoginSuccessfulWillReturnRedirectResponse(): void
     {
-        $this->identity->method('getStatus')->willReturn(Admin::STATUS_ACTIVE);
+        $this->identity->method('getStatus')->willReturn(AdminStatusEnum::Active);
         $this->authenticationResult->method('isValid')->willReturn(true);
         $this->authenticationResult->method('getMessages')->willReturn([]);
         $this->authenticationResult->method('getIdentity')->willReturn($this->identity);

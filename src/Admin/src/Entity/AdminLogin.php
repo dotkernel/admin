@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminIsMobileEnum;
+use Admin\Admin\Enum\AdminLoginStatusEnum;
 use Admin\Admin\Repository\AdminLoginRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
@@ -12,70 +14,60 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
 #[ORM\Table(name: 'admin_login')]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class AdminLogin extends AbstractEntity
 {
     use TimestampsTrait;
 
-    public const IS_MOBILE_YES = 'yes';
-    public const IS_MOBILE_NO  = 'no';
-    public const LOGIN_SUCCESS = 'success';
-    public const LOGIN_FAIL    = 'fail';
-
-    #[ORM\Column(name: "adminIp", type: "string", length: 50, nullable: true)]
+    #[ORM\Column(name: 'adminIp', type: 'string', length: 50, nullable: true)]
     protected ?string $adminIp = null;
 
-    #[ORM\Column(name: "country", type: "string", length: 50, nullable: true)]
+    #[ORM\Column(name: 'country', type: 'string', length: 50, nullable: true)]
     protected ?string $country = null;
 
-    #[ORM\Column(name: "continent", type: "string", length: 50, nullable: true)]
+    #[ORM\Column(name: 'continent', type: 'string', length: 50, nullable: true)]
     protected ?string $continent = null;
 
-    #[ORM\Column(name: "organization", type: "string", length: 50, nullable: true)]
+    #[ORM\Column(name: 'organization', type: 'string', length: 50, nullable: true)]
     protected ?string $organization = null;
 
-    #[ORM\Column(name: "deviceType", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'deviceType', type: 'string', length: 20, nullable: true)]
     protected ?string $deviceType = null;
 
-    #[ORM\Column(name: "deviceBrand", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'deviceBrand', type: 'string', length: 20, nullable: true)]
     protected ?string $deviceBrand = null;
 
-    #[ORM\Column(name: "deviceModel", type: "string", length: 40, nullable: true)]
+    #[ORM\Column(name: 'deviceModel', type: 'string', length: 40, nullable: true)]
     protected ?string $deviceModel = null;
 
-    #[ORM\Column(
-        name: "isMobile",
-        type: "string",
-        nullable: true,
-        columnDefinition: "ENUM('yes', 'no')"
-    )]
-    protected ?string $isMobile = null;
+    #[ORM\Column(type: 'admin_is_mobile_enum')]
+    protected ?AdminIsMobileEnum $isMobile = null;
 
-    #[ORM\Column(name: "osName", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'osName', type: 'string', length: 20, nullable: true)]
     protected ?string $osName = null;
 
-    #[ORM\Column(name: "osVersion", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'osVersion', type: 'string', length: 20, nullable: true)]
     protected ?string $osVersion = null;
 
-    #[ORM\Column(name: "osPlatform", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'osPlatform', type: 'string', length: 20, nullable: true)]
     protected ?string $osPlatform = null;
 
-    #[ORM\Column(name: "clientType", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientType', type: 'string', length: 20, nullable: true)]
     protected ?string $clientType = null;
 
-    #[ORM\Column(name: "clientName", type: "string", length: 40, nullable: true)]
+    #[ORM\Column(name: 'clientName', type: 'string', length: 40, nullable: true)]
     protected ?string $clientName = null;
 
-    #[ORM\Column(name: "clientEngine", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientEngine', type: 'string', length: 20, nullable: true)]
     protected ?string $clientEngine = null;
 
-    #[ORM\Column(name: "clientVersion", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientVersion', type: 'string', length: 20, nullable: true)]
     protected ?string $clientVersion = null;
 
-    #[ORM\Column(name: "loginStatus", type: "string", nullable: true, columnDefinition: "ENUM('success', 'fail')")]
-    protected ?string $loginStatus = null;
+    #[ORM\Column(type: 'admin_login_status_enum', nullable: true)]
+    protected ?AdminLoginStatusEnum $loginStatus = null;
 
-    #[ORM\Column(name: "identity", type: "string", length: 100, nullable: true)]
+    #[ORM\Column(name: 'identity', type: 'string', length: 100, nullable: true)]
     protected ?string $identity = null;
 
     public function getAdminIp(): ?string
@@ -162,12 +154,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getIsMobile(): ?string
+    public function getIsMobile(): ?AdminIsMobileEnum
     {
         return $this->isMobile;
     }
 
-    public function setIsMobile(?string $isMobile): self
+    public function setIsMobile(?AdminIsMobileEnum $isMobile): self
     {
         $this->isMobile = $isMobile;
 
@@ -258,12 +250,12 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getLoginStatus(): ?string
+    public function getLoginStatus(): ?AdminLoginStatusEnum
     {
         return $this->loginStatus;
     }
 
-    public function setLoginStatus(?string $loginStatus): self
+    public function setLoginStatus(?AdminLoginStatusEnum $loginStatus): self
     {
         $this->loginStatus = $loginStatus;
 
