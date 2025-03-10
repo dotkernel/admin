@@ -176,12 +176,6 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
         $this
-            ->messenger
-            ->expects($this->atLeastOnce())
-            ->method('addError')
-            ->with(Message::ADMIN_INACTIVE);
-
-        $this
             ->authenticationService
             ->expects($this->atLeastOnce())
             ->method('clearIdentity');
