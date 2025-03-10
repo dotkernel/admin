@@ -112,7 +112,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::CURRENT_PASSWORD_INCORRECT);
 
@@ -147,13 +147,13 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with((new IdentityException())->getMessage());
 
         $this
             ->adminService
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('updateAdmin');
 
         $handler = new PostAccountChangePasswordHandler(
@@ -187,7 +187,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -221,7 +221,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addSuccess')
             ->with(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
 

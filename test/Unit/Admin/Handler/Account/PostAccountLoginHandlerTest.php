@@ -24,6 +24,7 @@ use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 
 class PostAccountLoginHandlerTest extends UnitTest
 {
@@ -95,7 +96,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError');
 
         $handler = new PostAccountLoginHandler(
@@ -130,8 +131,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->messenger->expects($this->exactly(1))->method('addError');
-        $this->adminService->expects($this->exactly(1))->method('logAdminVisit');
+        $this->messenger->expects($this->once())->method('addError');
+        $this->adminService->expects($this->once())->method('logAdminVisit');
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
@@ -166,13 +167,13 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::ADMIN_INACTIVE);
 
         $this
             ->authenticationService
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('clearIdentity');
 
         $handler = new PostAccountLoginHandler(
@@ -190,13 +191,17 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_SEE_OTHER, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testAdminLoginThrowsExceptionWillReturnRedirectResponse(): void
     {
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->throwException(new Exception());
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -232,8 +237,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->adminService->expects($this->exactly(1))->method('logAdminVisit');
-        $this->storage->expects($this->exactly(1))->method('write')->with($this->identity);
+        $this->adminService->expects($this->once())->method('logAdminVisit');
+        $this->storage->expects($this->once())->method('write')->with($this->identity);
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
