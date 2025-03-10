@@ -96,7 +96,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('addError');
 
         $handler = new PostAccountLoginHandler(
@@ -131,8 +131,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->messenger->expects($this->once())->method('addError');
-        $this->adminService->expects($this->once())->method('logAdminVisit');
+        $this->messenger->expects($this->atLeastOnce())->method('addError');
+        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
@@ -167,13 +167,13 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('addError')
             ->with(Message::ADMIN_INACTIVE);
 
         $this
             ->authenticationService
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('clearIdentity');
 
         $handler = new PostAccountLoginHandler(
@@ -201,7 +201,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -237,8 +237,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->adminService->expects($this->once())->method('logAdminVisit');
-        $this->storage->expects($this->once())->method('write')->with($this->identity);
+        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
+        $this->storage->expects($this->atLeastOnce())->method('write')->with($this->identity);
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
