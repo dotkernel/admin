@@ -36,7 +36,11 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\Column(name: 'password', type: 'string', length: 100)]
     protected string $password;
 
-    #[ORM\Column(type: 'string', enumType: AdminStatusEnum::class, options: ['default' => AdminStatusEnum::Active])]
+    #[ORM\Column(
+        type: 'admin_status_enum',
+        enumType: AdminStatusEnum::class,
+        options: ['default' => AdminStatusEnum::Active]
+    )]
     protected AdminStatusEnum $status = AdminStatusEnum::Active;
 
     #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: 'EAGER')]
@@ -45,7 +49,7 @@ class Admin extends AbstractEntity implements AdminInterface
     #[ORM\InverseJoinColumn(name: 'roleUuid', referencedColumnName: 'uuid')]
     protected Collection $roles;
 
-    #[ORM\OneToMany(mappedBy: 'admin', targetEntity: Setting::class)]
+    #[ORM\OneToMany(targetEntity: Setting::class, mappedBy: 'admin')]
     protected Collection $settings;
 
     public function __construct()

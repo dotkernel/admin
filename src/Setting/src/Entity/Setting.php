@@ -26,7 +26,7 @@ class Setting extends AbstractEntity
     #[ORM\JoinColumn(name: 'admin_uuid', referencedColumnName: 'uuid')]
     protected Admin $admin;
 
-    #[ORM\Column(type: 'string', enumType: SettingEnum::class)]
+    #[ORM\Column(type: 'setting_enum', enumType: SettingEnum::class)]
     protected SettingEnum $identifier;
 
     #[ORM\Column(name: "value", type: "text")]
