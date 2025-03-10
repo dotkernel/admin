@@ -28,7 +28,11 @@ abstract class AbstractEnumType extends Type
 
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): mixed
     {
-        return $value;
+        if (! $value instanceof BackedEnum) {
+            return $value;
+        }
+
+        return $value->value;
     }
 
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): mixed
