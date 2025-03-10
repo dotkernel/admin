@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
+use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Enum\SuccessFailureEnum;
 use Admin\Admin\Form\LoginForm;
@@ -90,8 +91,9 @@ class PostAccountLoginHandler implements RequestHandlerInterface
 
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             } else {
+                /** @var AdminIdentity $identity */
                 $identity = $authResult->getIdentity();
-                if ($identity->getStatus() === AdminStatusEnum::Inactive) {
+                if ($identity->getStatus()->value === AdminStatusEnum::Inactive->value) {
                     $this->authenticationService->clearIdentity();
                     $this->messenger->addError(Message::ADMIN_INACTIVE);
                     $this->messenger->addData('shouldRebind', true);
