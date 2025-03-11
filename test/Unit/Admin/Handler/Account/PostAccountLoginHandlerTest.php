@@ -88,9 +88,13 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_FOUND, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testInvalidLoginFormDataProvidedWillReturnRedirectResponse(): void
     {
         $this->authenticationService->method('hasIdentity')->willReturn(false);
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->loginForm->method('isValid')->willReturn(false);
 
