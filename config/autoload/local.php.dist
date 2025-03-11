@@ -32,7 +32,7 @@ return [
     ],
     'routes'      => [
         'page' => [
-            'component'      => 'components',
+            'component' => 'components',
         ],
     ],
     'databases'   => $databases,
