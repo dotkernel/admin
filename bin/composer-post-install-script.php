@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once 'vendor/autoload.php';
+
 const ENVIRONMENT_DEVELOPMENT = 'development';
 const ENVIRONMENT_PRODUCTION  = 'production';
 
@@ -9,24 +11,26 @@ const ENVIRONMENT_PRODUCTION  = 'production';
 
 function copyFile(array $file): void
 {
+    if (! in_array(getEnvironment(), $file['environment'])) {
+        echo "Skipping the copy of {$file['source']} due to environment settings." . PHP_EOL;
+        return;
+    }
+
     if (is_readable($file['destination'])) {
-        echo "File {$file['destination']} already exists." . PHP_EOL;
+        echo "File {$file['destination']} already exists. Skipping..." . PHP_EOL;
+        return;
+    }
+
+    if (! copy($file['source'], $file['destination'])) {
+        echo "Cannot copy {$file['source']} file to {$file['destination']}" . PHP_EOL;
     } else {
-        if (! in_array(getEnvironment(), $file['environment'])) {
-            echo "Skipping the copy of {$file['source']} due to environment settings." . PHP_EOL;
-        } else {
-            if (! copy($file['source'], $file['destination'])) {
-                echo "Cannot copy {$file['source']} file to {$file['destination']}" . PHP_EOL;
-            } else {
-                echo "File {$file['source']} copied successfully to {$file['destination']}." . PHP_EOL;
-            }
-        }
+        echo "File {$file['source']} copied successfully to {$file['destination']}." . PHP_EOL;
     }
 }
 
 function getEnvironment(): string
 {
-    return file_exists('config/autoload/development.local.php') ? ENVIRONMENT_DEVELOPMENT : ENVIRONMENT_PRODUCTION;
+    return getenv('COMPOSER_DEV_MODE') === '1' ? ENVIRONMENT_DEVELOPMENT : ENVIRONMENT_PRODUCTION;
 }
 
 // when adding files to the below array the `source` and `destination` paths must be relative to the project root folder
@@ -48,5 +52,7 @@ $files = [
         'environment' => [ENVIRONMENT_DEVELOPMENT, ENVIRONMENT_PRODUCTION],
     ],
 ];
+
+echo "Using environment setting: " . getEnvironment() . PHP_EOL;
 
 array_walk($files, 'copyFile');
