@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Setting\Entity;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Repository\SettingRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\Mapping\Entity;
@@ -17,8 +18,8 @@ use ReflectionClass;
 class SettingEntityTest extends UnitTest
 {
     private Admin $admin;
-    private string $identifier = 'test';
-    private array $values      = [1, 2, 3];
+    private SettingEnum $identifier = SettingEnum::IdentifierTableAdminListSelectedColumns;
+    private array $values           = [1, 2, 3];
 
     /**
      * @throws Exception
@@ -74,7 +75,7 @@ class SettingEntityTest extends UnitTest
         $copy = $setting->getArrayCopy();
 
         $this->assertArrayHasKey('identifier', $copy);
-        $this->assertSame($this->identifier, $copy['identifier']);
+        $this->assertSame($this->identifier->value, $copy['identifier']);
 
         $this->assertArrayHasKey('value', $copy);
         $this->assertSame($this->values, $copy['value']);

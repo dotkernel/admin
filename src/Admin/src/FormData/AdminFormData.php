@@ -27,7 +27,7 @@ final class AdminFormData
         $this->identity  = $admin->getIdentity();
         $this->firstName = $admin->getFirstName();
         $this->lastName  = $admin->getLastName();
-        $this->status    = $admin->getStatus();
+        $this->status    = $admin->getStatus()->value;
         $this->roles     = array_map(function (AdminRole $role) {
             return [
                 'label' => $role->getName(),

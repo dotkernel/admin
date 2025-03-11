@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Entity;
 
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
 use Admin\Admin\Repository\AdminRoleRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\Mapping\Entity;
@@ -44,15 +45,15 @@ class AdminRoleTest extends UnitTest
 
         $this->assertInstanceOf(UuidInterface::class, $adminRole->getUuid());
 
-        $this->assertNull($adminRole->getName());
-        $adminRole = $adminRole->setName(AdminRole::ROLE_ADMIN);
+        $this->assertSame(AdminRoleEnum::Admin, $adminRole->getName());
+        $adminRole = $adminRole->setName(AdminRoleEnum::Admin);
         $this->assertInstanceOf(AdminRole::class, $adminRole);
-        $this->assertSame(AdminRole::ROLE_ADMIN, $adminRole->getName());
+        $this->assertSame(AdminRoleEnum::Admin, $adminRole->getName());
     }
 
     public function testWillGetArrayCopy(): void
     {
-        $adminRole = (new AdminRole())->setName(AdminRole::ROLE_ADMIN);
+        $adminRole = (new AdminRole())->setName(AdminRoleEnum::Admin);
 
         $copy = $adminRole->getArrayCopy();
         $this->assertIsArray($copy);
@@ -62,7 +63,7 @@ class AdminRoleTest extends UnitTest
         $this->assertNotEmpty($copy['uuid']);
 
         $this->assertArrayHasKey('name', $copy);
-        $this->assertSame(AdminRole::ROLE_ADMIN, $copy['name']);
+        $this->assertSame(AdminRoleEnum::Admin->value, $copy['name']);
 
         $this->assertArrayHasKey('created', $copy);
 

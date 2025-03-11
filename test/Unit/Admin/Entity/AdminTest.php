@@ -6,6 +6,8 @@ namespace AdminTest\Unit\Admin\Entity;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,9 +30,9 @@ class AdminTest extends UnitTest
             'firstName' => 'firstName',
             'lastName'  => 'lastName',
             'password'  => 'password',
-            'status'    => Admin::STATUS_INACTIVE,
+            'status'    => AdminStatusEnum::Active,
             'roles'     => [
-                (new AdminRole())->setName(AdminRole::ROLE_ADMIN),
+                (new AdminRole())->setName(AdminRoleEnum::Admin),
             ],
         ];
     }
@@ -82,7 +84,7 @@ class AdminTest extends UnitTest
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['password'], $admin->getPassword());
 
-        $this->assertSame(Admin::STATUS_ACTIVE, $admin->getStatus());
+        $this->assertSame(AdminStatusEnum::Active, $admin->getStatus());
         $admin = $admin->setStatus($this->default['status']);
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertSame($this->default['status'], $admin->getStatus());
@@ -134,12 +136,12 @@ class AdminTest extends UnitTest
         $this->assertSame($this->default['lastName'], $copy['lastName']);
 
         $this->assertArrayHasKey('status', $copy);
-        $this->assertSame($this->default['status'], $copy['status']);
+        $this->assertSame($this->default['status']->value, $copy['status']);
 
         $this->assertArrayHasKey('roles', $copy);
         $this->assertIsArray($copy['roles']);
         $this->assertCount(1, $copy['roles']);
-        $this->assertSame($this->default['roles'][0]->getName(), $copy['roles'][0]['name']);
+        $this->assertSame($this->default['roles'][0]->getName()->value, $copy['roles'][0]['name']);
 
         $this->assertArrayHasKey('created', $copy);
 

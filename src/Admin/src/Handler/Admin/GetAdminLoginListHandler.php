@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Enum\SuccessFailureEnum;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Pagination;
-use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -59,9 +59,9 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
             $this->template->render('admin::list-logins', [
                 'params'     => $params,
                 'logins'     => $logins['rows'],
-                'statuses'   => [AdminLogin::LOGIN_FAIL, AdminLogin::LOGIN_SUCCESS],
+                'statuses'   => SuccessFailureEnum::values(),
                 'identities' => $this->adminService->getAdminLoginIdentities(),
-                'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
+                'identifier' => SettingEnum::IdentifierTableAdminListLoginsSelectedColumns->value,
                 'pagination' => new Pagination($logins['total'], $params['offset'], $params['limit']),
             ])
         );

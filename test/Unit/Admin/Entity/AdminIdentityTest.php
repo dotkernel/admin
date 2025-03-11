@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
+use Admin\Admin\Enum\AdminStatusEnum;
 use AdminTest\Unit\UnitTest;
 
 class AdminIdentityTest extends UnitTest
@@ -20,9 +21,9 @@ class AdminIdentityTest extends UnitTest
         $this->default = [
             'uuid'     => '00000000-0000-0000-0000-000000000000',
             'identity' => 'test@example.com',
-            'status'   => Admin::STATUS_INACTIVE,
+            'status'   => AdminStatusEnum::Inactive,
             'roles'    => [
-                (new AdminRole())->setName(AdminRole::ROLE_ADMIN),
+                (new AdminRole())->setName(AdminRoleEnum::Admin),
             ],
             'details'  => [
                 'firstName' => 'firstName',

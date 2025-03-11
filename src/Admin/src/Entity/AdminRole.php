@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminRoleEnum;
 use Admin\Admin\Repository\AdminRoleRepository;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
@@ -17,22 +18,21 @@ class AdminRole extends AbstractEntity
 {
     use TimestampsTrait;
 
-    public const ROLE_ADMIN     = 'admin';
-    public const ROLE_SUPERUSER = 'superuser';
-    public const ROLES          = [
-        self::ROLE_ADMIN,
-        self::ROLE_SUPERUSER,
-    ];
+    #[ORM\Column(
+        type: 'admin_role_enum',
+        nullable: true,
+        enumType: AdminRoleEnum::class,
+        options: ['default' => AdminRoleEnum::Admin]
+    )
+    ]
+    protected AdminRoleEnum $name = AdminRoleEnum::Admin;
 
-    #[ORM\Column(name: "name", type: "string", length: 30, unique: true, nullable: false)]
-    protected ?string $name = null;
-
-    public function getName(): ?string
+    public function getName(): AdminRoleEnum
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(AdminRoleEnum $name): self
     {
         $this->name = $name;
 
@@ -43,7 +43,7 @@ class AdminRole extends AbstractEntity
     {
         return [
             'uuid'    => $this->getUuid()->toString(),
-            'name'    => $this->getName(),
+            'name'    => $this->getName()->value,
             'created' => $this->getCreated(),
             'updated' => $this->getUpdated(),
         ];

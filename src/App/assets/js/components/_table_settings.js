@@ -140,5 +140,9 @@ $(function() {
                 hideColumns(tableId, []);
             }
         })
-        .catch(error => console.error('Error: ', error));
+        .catch(error => {
+            populateColumnSelector('#column-selector', []);
+            hideColumns(tableId, []);
+            console.error('Error: ', error)
+        });
 });

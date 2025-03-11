@@ -6,7 +6,6 @@ namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
-use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
 use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminServiceInterface;
@@ -27,9 +26,10 @@ class GetAdminLoginListHandlerTest extends UnitTest
         $adminService          = $this->createMock(AdminServiceInterface::class);
         $template              = $this->createMock(TemplateRendererInterface::class);
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $form                  = $this->createMock(AdminForm::class);
         $adminRepository       = $this->createMock(AdminRepository::class);
+        $request               = $this->createMock(ServerRequestInterface::class);
 
+        $request->method('getQueryParams')->willReturn([]);
         $adminRepository->method('findOneBy')->willReturn($this->createMock(Admin::class));
         $adminService->method('getAdminLogins')->willReturn([
             'rows'   => [],
@@ -51,7 +51,7 @@ class GetAdminLoginListHandlerTest extends UnitTest
             $authenticationService,
         );
 
-        $response = $handler->handle($this->createMock(ServerRequestInterface::class));
+        $response = $handler->handle($request);
 
         $this->assertSame($response->getHeader('content-type')[0], 'text/html; charset=utf-8');
         $this->assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());

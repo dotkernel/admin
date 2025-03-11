@@ -8,6 +8,7 @@ use Admin\Admin\Entity\Admin;
 use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\InputFilter\Input\SettingValueInput;
 use Admin\Setting\InputFilter\SettingInputFilter;
 use Admin\Setting\Service\SettingService;
@@ -19,6 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function assert;
 use function is_array;
 use function json_decode;
 
@@ -71,6 +73,9 @@ class PostSettingStoreHandler implements RequestHandlerInterface
                 ],
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
+
+        $identifier = SettingEnum::tryFrom($identifier);
+        assert($identifier instanceof SettingEnum);
 
         $setting = $this->settingService->findOneBy(['admin' => $admin, 'identifier' => $identifier]);
         if ($setting instanceof Setting) {

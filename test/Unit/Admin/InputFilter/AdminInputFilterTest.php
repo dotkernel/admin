@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\InputFilter;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\InputFilter\AdminInputFilter;
 use AdminTest\Unit\UnitTest;
 use Laminas\Session\Container;
@@ -316,9 +316,9 @@ class AdminInputFilterTest extends UnitTest
             'identity'        => 'test',
             'password'        => 'password',
             'passwordConfirm' => 'password',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -329,9 +329,9 @@ class AdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => null,
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -342,9 +342,9 @@ class AdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => '',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -355,9 +355,9 @@ class AdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => str_repeat('a', 151),
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -385,9 +385,9 @@ class AdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -399,9 +399,9 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => null,
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -413,9 +413,9 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => '',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -427,9 +427,9 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => str_repeat('a', 151),
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);
@@ -457,7 +457,7 @@ class AdminInputFilterTest extends UnitTest
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -479,7 +479,7 @@ class AdminInputFilterTest extends UnitTest
             'lastName'        => 'lastName',
             'status'          => 'status',
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -505,7 +505,7 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -524,7 +524,7 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [],
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -551,9 +551,9 @@ class AdminInputFilterTest extends UnitTest
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
             'lastName'        => 'lastName',
-            'status'          => Admin::STATUS_ACTIVE,
+            'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
-                AdminRole::ROLE_ADMIN,
+                AdminRoleEnum::Admin->value,
             ],
             'adminManageCsrf' => $hash,
         ]);

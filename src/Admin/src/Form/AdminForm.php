@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Form;
 
-use Admin\Admin\Entity\Admin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\InputFilter\AdminInputFilter;
 use Fig\Http\Message\RequestMethodInterface;
 use Laminas\Form\Element\Csrf;
@@ -100,8 +100,8 @@ class AdminForm extends Form
             'options'    => [
                 'label'         => 'Account Status',
                 'value_options' => [
-                    ['value' => Admin::STATUS_ACTIVE, 'label' => Admin::STATUS_ACTIVE],
-                    ['value' => Admin::STATUS_INACTIVE, 'label' => Admin::STATUS_INACTIVE],
+                    ['value' => AdminStatusEnum::Active->value, 'label' => AdminStatusEnum::Active->name],
+                    ['value' => AdminStatusEnum::Inactive->value, 'label' => AdminStatusEnum::Inactive->name],
                 ],
             ],
             'attributes' => [

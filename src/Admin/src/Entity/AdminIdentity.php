@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Entity;
 
+use Admin\Admin\Enum\AdminStatusEnum;
 use Mezzio\Authentication\UserInterface;
 
 class AdminIdentity implements UserInterface
@@ -11,7 +12,7 @@ class AdminIdentity implements UserInterface
     public function __construct(
         protected string $uuid,
         protected string $identity,
-        protected string $status,
+        protected AdminStatusEnum $status,
         protected array $roles = [],
         protected array $details = []
     ) {
@@ -27,7 +28,7 @@ class AdminIdentity implements UserInterface
         return $this->identity;
     }
 
-    public function getStatus(): string
+    public function getStatus(): AdminStatusEnum
     {
         return $this->status;
     }

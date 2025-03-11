@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminLogin;
+use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Enum\AdminStatusEnum;
+use Admin\Admin\Enum\SuccessFailureEnum;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
@@ -81,7 +82,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 $this->adminService->logAdminVisit(
                     $this->getServerParams($request),
                     $data['username'],
-                    AdminLogin::LOGIN_FAIL
+                    SuccessFailureEnum::Fail,
                 );
 
                 $this->messenger->addData('shouldRebind', true);
@@ -90,8 +91,9 @@ class PostAccountLoginHandler implements RequestHandlerInterface
 
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             } else {
+                /** @var AdminIdentity $identity */
                 $identity = $authResult->getIdentity();
-                if ($identity->getStatus() === Admin::STATUS_INACTIVE) {
+                if ($identity->getStatus()->value === AdminStatusEnum::Inactive->value) {
                     $this->authenticationService->clearIdentity();
                     $this->messenger->addError(Message::ADMIN_INACTIVE);
                     $this->messenger->addData('shouldRebind', true);
@@ -102,7 +104,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 $this->adminService->logAdminVisit(
                     $this->getServerParams($request),
                     $data['username'],
-                    AdminLogin::LOGIN_SUCCESS
+                    SuccessFailureEnum::Success,
                 );
 
                 $this->authenticationService->getStorage()->write($identity);

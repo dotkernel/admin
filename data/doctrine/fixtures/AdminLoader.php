@@ -6,6 +6,7 @@ namespace Admin\Fixtures;
 
 use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminRole;
+use Admin\Admin\Enum\AdminRoleEnum;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -24,7 +25,7 @@ class AdminLoader implements FixtureInterface, DependentFixtureInterface
             ->setFirstName('Dotkernel')
             ->setLastName('Admin')
             ->addRole(
-                $manager->getRepository(AdminRole::class)->findOneBy(['name' => AdminRole::ROLE_SUPERUSER])
+                $manager->getRepository(AdminRole::class)->findOneBy(['name' => AdminRoleEnum::Superuser])
             );
 
         $manager->persist($admin);
