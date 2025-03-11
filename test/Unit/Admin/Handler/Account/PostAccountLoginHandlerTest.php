@@ -94,6 +94,8 @@ class PostAccountLoginHandlerTest extends UnitTest
     public function testInvalidLoginFormDataProvidedWillReturnRedirectResponse(): void
     {
         $this->authenticationService->method('hasIdentity')->willReturn(false);
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
+        $this->request->method('getParsedBody')->willReturn(['test']);
         $this->loginForm->method('isValid')->willReturn(false);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getQueryParams')->willReturn([]);
@@ -123,7 +125,6 @@ class PostAccountLoginHandlerTest extends UnitTest
     }
 
     /**
-     * @throws Exception
      * @throws MockObjectException
      */
     public function testInvalidPasswordProvidedWillReturnRedirectResponse(): void
@@ -178,6 +179,12 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
+
+        $this
+            ->messenger
+            ->expects($this->atLeastOnce())
+            ->method('addError')
+            ->with(Message::ADMIN_INACTIVE);
 
         $this
             ->authenticationService

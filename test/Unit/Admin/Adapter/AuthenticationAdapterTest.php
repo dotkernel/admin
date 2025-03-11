@@ -10,9 +10,8 @@ use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
-use PHPUnit\Framework\MockObject\Exception;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Doctrine\ORM\Exception\ORMException;
+use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -24,7 +23,7 @@ use const PASSWORD_DEFAULT;
 class AuthenticationAdapterTest extends UnitTest
 {
     /**
-     * @throws Exception
+     * @throws MockObjectException
      * @throws ReflectionException
      */
     public function testAccessors(): void
@@ -48,8 +47,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWithoutValidConfig(): void
     {
@@ -98,8 +97,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      * @group testing
      */
     public function testWillNotAuthenticateWithInvalidIdentityClassConfig(): void
@@ -128,9 +127,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWithInvalidIdentityPropertyConfig(): void
     {
@@ -158,8 +156,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWithInvalidCredentialPropertyConfig(): void
     {
@@ -189,8 +187,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWhenInvalidIdentity(): void
     {
@@ -222,8 +220,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWhenInvalidPassword(): void
     {
@@ -261,8 +259,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWhenInvalidMethodSpecifiedInOptionsConfig(): void
     {
@@ -309,8 +307,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWhenMissingValueInOptionsConfig(): void
     {
@@ -354,8 +352,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillNotAuthenticateWhenMissingMessageInOptionsConfig(): void
     {
@@ -399,8 +397,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillAuthenticateWithOptionsConfig(): void
     {
@@ -445,8 +443,8 @@ class AuthenticationAdapterTest extends UnitTest
     }
 
     /**
-     * @throws Exception
-     * @throws \Exception
+     * @throws MockObjectException
+     * @throws ORMException
      */
     public function testWillAuthenticateWithoutOptionsConfig(): void
     {
