@@ -119,7 +119,7 @@ class PostAccountLoginHandlerTest extends UnitTest
     }
 
     /**
-     * @throws Exception
+     * @throws MockObjectException
      */
     public function testInvalidPasswordProvidedWillReturnRedirectResponse(): void
     {
@@ -129,6 +129,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('hasIdentity')->willReturn(false);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getServerParams')->willReturn([]);
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->loginForm->method('isValid')->willReturn(true);
         $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
