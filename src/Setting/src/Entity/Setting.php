@@ -7,6 +7,7 @@ namespace Admin\Setting\Entity;
 use Admin\Admin\Entity\Admin;
 use Admin\App\Entity\AbstractEntity;
 use Admin\App\Entity\TimestampsTrait;
+use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Repository\SettingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,24 +22,17 @@ class Setting extends AbstractEntity
 {
     use TimestampsTrait;
 
-    public const IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS        = 'table_admin_list_selected_columns';
-    public const IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS = 'table_admin_list_logins_selected_columns';
-    public const IDENTIFIERS                                         = [
-        self::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
-        self::IDENTIFIER_TABLE_ADMIN_LIST_LOGINS_SELECTED_COLUMNS,
-    ];
-
     #[ORM\ManyToOne(targetEntity: Admin::class, inversedBy: 'settings')]
     #[ORM\JoinColumn(name: 'admin_uuid', referencedColumnName: 'uuid')]
     protected Admin $admin;
 
-    #[ORM\Column(name: "identifier", type: "string", length: 50)]
-    protected string $identifier;
+    #[ORM\Column(type: 'setting_enum', enumType: SettingEnum::class)]
+    protected SettingEnum $identifier;
 
     #[ORM\Column(name: "value", type: "text")]
     protected string $value;
 
-    public function __construct(Admin $admin, string $identifier, array $value)
+    public function __construct(Admin $admin, SettingEnum $identifier, array $value)
     {
         parent::__construct();
 
@@ -59,12 +53,12 @@ class Setting extends AbstractEntity
         return $this;
     }
 
-    public function getIdentifier(): string
+    public function getIdentifier(): SettingEnum
     {
         return $this->identifier;
     }
 
-    public function setIdentifier(string $identifier): self
+    public function setIdentifier(SettingEnum $identifier): self
     {
         $this->identifier = $identifier;
 
@@ -86,7 +80,7 @@ class Setting extends AbstractEntity
     public function getArrayCopy(): array
     {
         return [
-            'identifier' => $this->getIdentifier(),
+            'identifier' => $this->getIdentifier()->value,
             'value'      => $this->getValue(),
         ];
     }

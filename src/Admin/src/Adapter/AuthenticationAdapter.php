@@ -129,7 +129,7 @@ class AuthenticationAdapter implements AdapterInterface
                     ));
                 }
 
-                if ($identityClass->$methodName() !== $option['value']) {
+                if ($identityClass->$methodName()->value !== $option['value']) {
                     return new Result(
                         Result::FAILURE,
                         null,

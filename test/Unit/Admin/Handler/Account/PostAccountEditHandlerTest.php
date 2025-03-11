@@ -106,7 +106,7 @@ class PostAccountEditHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -141,7 +141,7 @@ class PostAccountEditHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -175,7 +175,7 @@ class PostAccountEditHandlerTest extends UnitTest
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->once())
             ->method('addSuccess')
             ->with(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
 

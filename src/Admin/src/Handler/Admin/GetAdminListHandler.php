@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\Admin;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Common\ServerRequestAwareTrait;
 use Admin\App\Pagination;
-use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -64,8 +64,8 @@ class GetAdminListHandler implements RequestHandlerInterface
             $this->template->render('admin::list', [
                 'params'     => $params,
                 'admins'     => $result['rows'],
-                'statuses'   => Admin::STATUSES,
-                'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
+                'statuses'   => AdminStatusEnum::cases(),
+                'identifier' => SettingEnum::IdentifierTableAdminListSelectedColumns->value,
                 'form'       => $this->form->prepare(),
                 'pagination' => new Pagination($result['total'], $result['offset'], $result['limit']),
             ])

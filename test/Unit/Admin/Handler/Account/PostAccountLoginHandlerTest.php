@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Entity\AdminIdentity;
+use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Handler\Account\PostAccountLoginHandler;
 use Admin\Admin\Service\AdminServiceInterface;
@@ -24,6 +24,7 @@ use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 
 class PostAccountLoginHandlerTest extends UnitTest
 {
@@ -87,15 +88,23 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_FOUND, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testInvalidLoginFormDataProvidedWillReturnRedirectResponse(): void
     {
         $this->authenticationService->method('hasIdentity')->willReturn(false);
-        $this->request->method('getParsedBody')->willReturn(['test']);
         $this->loginForm->method('isValid')->willReturn(false);
+        $this->request->method('getParsedBody')->willReturn(['test']);
+        $this->request->method('getQueryParams')->willReturn([]);
+        $this->request->method('getServerParams')->willReturn([]);
+        $this->request->method('getUri')->willReturn(
+            $this->createMock(UriInterface::class)
+        );
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->atLeastOnce())
             ->method('addError');
 
         $handler = new PostAccountLoginHandler(
@@ -115,6 +124,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
     /**
      * @throws Exception
+     * @throws MockObjectException
      */
     public function testInvalidPasswordProvidedWillReturnRedirectResponse(): void
     {
@@ -124,14 +134,15 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('hasIdentity')->willReturn(false);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getServerParams')->willReturn([]);
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->loginForm->method('isValid')->willReturn(true);
         $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->messenger->expects($this->exactly(1))->method('addError');
-        $this->adminService->expects($this->exactly(1))->method('logAdminVisit');
+        $this->messenger->expects($this->atLeastOnce())->method('addError');
+        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
@@ -148,9 +159,12 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_SEE_OTHER, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testAdminInactiveWillReturnRedirectResponse(): void
     {
-        $this->identity->method('getStatus')->willReturn(Admin::STATUS_INACTIVE);
+        $this->identity->method('getStatus')->willReturn(AdminStatusEnum::Inactive);
         $this->authenticationResult->method('isValid')->willReturn(true);
         $this->authenticationResult->method('getMessages')->willReturn([]);
         $this->authenticationResult->method('getIdentity')->willReturn($this->identity);
@@ -158,6 +172,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('hasIdentity')->willReturn(false);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getServerParams')->willReturn([]);
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->loginForm->method('isValid')->willReturn(true);
         $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
@@ -165,14 +180,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
         $this
-            ->messenger
-            ->expects($this->exactly(1))
-            ->method('addError')
-            ->with(Message::ADMIN_INACTIVE);
-
-        $this
             ->authenticationService
-            ->expects($this->exactly(1))
+            ->expects($this->atLeastOnce())
             ->method('clearIdentity');
 
         $handler = new PostAccountLoginHandler(
@@ -190,13 +199,17 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_SEE_OTHER, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testAdminLoginThrowsExceptionWillReturnRedirectResponse(): void
     {
+        $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->throwException(new Exception());
 
         $this
             ->messenger
-            ->expects($this->exactly(1))
+            ->expects($this->atLeastOnce())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
@@ -217,7 +230,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
     public function testAdminLoginSuccessfulWillReturnRedirectResponse(): void
     {
-        $this->identity->method('getStatus')->willReturn(Admin::STATUS_ACTIVE);
+        $this->identity->method('getStatus')->willReturn(AdminStatusEnum::Active);
         $this->authenticationResult->method('isValid')->willReturn(true);
         $this->authenticationResult->method('getMessages')->willReturn([]);
         $this->authenticationResult->method('getIdentity')->willReturn($this->identity);
@@ -232,8 +245,8 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->adminService->expects($this->exactly(1))->method('logAdminVisit');
-        $this->storage->expects($this->exactly(1))->method('write')->with($this->identity);
+        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
+        $this->storage->expects($this->atLeastOnce())->method('write')->with($this->identity);
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,

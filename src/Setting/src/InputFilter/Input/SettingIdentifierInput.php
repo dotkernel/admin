@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Admin\Setting\InputFilter\Input;
 
 use Admin\App\Message;
-use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\InputFilter\Input;
@@ -31,7 +31,7 @@ class SettingIdentifierInput extends Input
                 'message' => sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, '<b>Identifier</b>'),
             ], true)
             ->attachByName(InArray::class, [
-                'haystack' => Setting::IDENTIFIERS,
+                'haystack' => SettingEnum::values(),
                 'message'  => sprintf(Message::INVALID_VALUE, 'identifier'),
             ], true);
     }

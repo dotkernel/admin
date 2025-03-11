@@ -10,6 +10,7 @@ use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
@@ -88,7 +89,7 @@ class GetSettingHandlerTest extends UnitTest
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
+            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,
@@ -130,7 +131,7 @@ class GetSettingHandlerTest extends UnitTest
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
+            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,
@@ -178,7 +179,7 @@ class GetSettingHandlerTest extends UnitTest
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
+            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
+use Admin\Setting\DBAL\Types\SettingEnumType;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Repository\SettingRepository;
@@ -54,6 +55,9 @@ class ConfigProvider
                     'cache' => 'array',
                     'paths' => [__DIR__ . '/Entity'],
                 ],
+            ],
+            'types'  => [
+                SettingEnumType::NAME => SettingEnumType::class,
             ],
         ];
     }

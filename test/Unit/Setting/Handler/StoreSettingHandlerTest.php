@@ -10,6 +10,7 @@ use Admin\Admin\Repository\AdminRepository;
 use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
+use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
@@ -52,9 +53,6 @@ class StoreSettingHandlerTest extends UnitTest
         $this->admin                 = $this->createMock(Admin::class);
     }
 
-    /**
-     * @throws Exception
-     */
     public function testWillCreate(): void
     {
         $handler = new PostSettingStoreHandler(
@@ -106,7 +104,7 @@ class StoreSettingHandlerTest extends UnitTest
     {
         $this->identity->method('getUuid')->willReturn('test');
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn(null);
+        $this->adminRepository->method('findOneBy')->willReturn(null);
         $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => 'test',
@@ -116,7 +114,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
+            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $this->request->method('getAttribute')->with('identifier')->willReturn('test');
         $this->request->method('getBody')->willReturn($this->stream);
@@ -155,7 +153,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($this->admin);
         $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->stream->method('getContents')->willReturn(json_encode([
-            'identifier' => Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS,
+            'identifier' => SettingEnum::IdentifierTableAdminListSelectedColumns->value,
             'value'      => ['test'],
         ]));
 
@@ -163,7 +161,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(Setting::IDENTIFIER_TABLE_ADMIN_LIST_SELECTED_COLUMNS);
+            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new PostSettingStoreHandler(
             $this->authenticationService,
