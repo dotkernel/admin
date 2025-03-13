@@ -117,6 +117,7 @@ Run the migrations and seeds with these commands:
 ```shell
 php bin/doctrine-migrations migrate
 ```
+
 ```shell
 php bin/doctrine fixtures:execute
 ```
