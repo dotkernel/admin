@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Handler;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\InputFilter\Input\SettingValueInput;
 use Admin\Setting\InputFilter\SettingInputFilter;
 use Admin\Setting\Service\SettingService;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Service\AdminService;
 use Dot\DependencyInjection\Attribute\Inject;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;

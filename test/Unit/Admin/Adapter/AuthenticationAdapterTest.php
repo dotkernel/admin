@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Adapter;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Enum\AdminStatusEnum;
-use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Enum\AdminStatusEnum;
+use Core\Admin\Repository\AdminRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;

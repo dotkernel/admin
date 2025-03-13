@@ -62,16 +62,20 @@ There are two installation methods.
 
 The advantage of using this command is that it runs through the whole installation process. Run the following command:
 
-    composer create-project dotkernel/admin -s dev dk
+```shell
+composer create-project dotkernel/admin -s dev dk
+```
 
 The above command downloads the `admin` package, then downloads and installs the `dependencies`.
 
 The setup script prompts for some configuration settings, for example the lines below:
 
-    Please select which config file you wish to inject 'Laminas\Diactoros\ConfigProvider' into:
+```text
+Please select which config file you wish to inject 'Laminas\Diactoros\ConfigProvider' into:
       [0] Do not inject
       [1] config/config.php
       Make your selection (default is 1):
+```
 
 Simply select `[0] Do not inject`, because Dotkernel includes its own configProvider which already contains the prompted
 configurations.
@@ -89,11 +93,15 @@ Type `y` here, and hit `enter`
 This method requires more manual input, but it ensures that the default branch is installed, even if it is not released.
 Run the following command:
 
-    git clone https://github.com/dotkernel/admin.git .
+```shell
+git clone https://github.com/dotkernel/admin.git .
+```
 
 The dependencies have to be installed separately, by running this command
 
-    composer install
+```shell
+composer install
+```
 
 Just like for `II Installing Dotkernel admin using composer` (see above), the setup asks for configuration settings
 regarding injections (type `0` and hit `enter`) and a confirmation to use this setting for other packages (type `y` and
@@ -106,18 +114,33 @@ hit `enter`)
 
 Run the migrations and seeds with these commands:
 
-    php bin/doctrine-migrations migrate
-
-    php bin/doctrine fixtures:execute
+```shell
+php bin/doctrine-migrations migrate
+```
+```shell
+php bin/doctrine fixtures:execute
+```
 
 - If you use `composer create-project`, the project will go into development mode automatically after installing. The
   development mode status can be checked and toggled by using these composer commands:
 
-      composer development-status
+You can check if you have development mode enabled by running:
 
-      composer development-enable
+```shell
+composer development-status
+```
 
-      composer development-disable
+You can enable development mode by running:
+
+```shell
+composer development-enable
+```
+
+You can disable development mode by running:
+
+```shell
+composer development-disable
+```
 
 - If not already done on installation, remove the `.dist` extension from `config/autoload/development.global.php.dist`.
   This will enable dev mode by turning debug flag to `true` and turning configuration caching to `off`. It will also
@@ -129,13 +152,17 @@ Run the migrations and seeds with these commands:
 
 You can download/update a specific GeoLite2 database, by running the following command:
 
-    php bin/cli.php geoip:synchronize -d {DATABASE}
+```shell
+php bin/cli.php geoip:synchronize -d {DATABASE}
+```
 
 Where _{DATABASE}_ takes one of the following values: `asn`, `city`, `country`.
 
 You can download/update all GeoLite2 databases at once, by running the following command:
 
-    php bin/cli.php geoip:synchronize
+```shell
+php bin/cli.php geoip:synchronize
+```
 
 The output should be similar to the below, displaying per
 row: `database identifier`: `previous build datetime` -> `current build datetime`.
@@ -148,7 +175,9 @@ row: `database identifier`: `previous build datetime` -> `current build datetime
 
 Get help for this command by running:
 
-    php bin/cli.php help geoip:synchronize
+```shell
+php bin/cli.php help geoip:synchronize
+```
 
 **Tip**: If you setup the synchronizer command as a cronjob, you can add the `-q|--quiet` option, and it will output
 data only if an error has occurred.
@@ -157,18 +186,24 @@ data only if an error has occurred.
 
 To install dependencies into the `node_modules` directory run this command.
 
-    npm install
+```shell
+npm install
+```
 
 If `npm install` fails, this could be caused by user permissions of npm. Recommendation is to install npm
 through `Node Version Manager`.
 
 The watch command compiles the components then watches the files and recompiles when one of them changes.
 
-    npm run watch
+```shell
+npm run watch
+```
 
 After all updates are done, this command compiles the assets locally, minifies them and makes them ready for production.
 
-    npm run prod
+```shell
+npm run prod
+```
 
 ## Authorization Guards
 
@@ -180,49 +215,53 @@ the platform by specifying the type of role the user has.
 The `authorization.global.php` file provides multiple configurations specifying multiple roles as well as the types of
 permissions to which these roles have access.
 
-    'roles' => [
-        'superuser' => [
-            'permissions' => [
-                'authenticated',
-                'edit',
-                'delete',
-                //etc..
-            ]
-        ],
-        'admin' => [
-            'permissions' => [
-                'authenticated',
-                //etc..
-            ]
-        ]
-    ]
+```text
+  'roles' => [
+      'superuser' => [
+          'permissions' => [
+              'authenticated',
+              'edit',
+              'delete',
+              //etc..
+          ]
+      ],
+      'admin' => [
+          'permissions' => [
+              'authenticated',
+              //etc..
+          ]
+      ]
+  ]
+```
 
 The `authorization-guards.global.php` file provides configuration to restrict access to certain actions based on the
 permissions defined in `authorization.global.php` so basically we have to add the permissions in the dot-rbac
 configuration file first to specify the action restriction permissions.
 
-    'rules' => [
-      [
-          'route' => 'account',
-          'actions' => [//list of actions to apply , or empty array for all actions
-              'unregister',
-              'avatar',
-              'details',
-              'changePassword'
-          ],
-          'permissions' => ['authenticated']
-      ],
-      [
-          'route' => 'admin',
-          'actions' => [
-              'deleteAccount'
-          ],
-           'permissions' => [
-              'delete'
-              //list of roles to allow
-          ]
-      ]
+```text
+  'rules' => [
+    [
+        'route' => 'account',
+        'actions' => [//list of actions to apply , or empty array for all actions
+            'unregister',
+            'avatar',
+            'details',
+            'changePassword'
+        ],
+        'permissions' => ['authenticated']
+    ],
+    [
+        'route' => 'admin',
+        'actions' => [
+            'deleteAccount'
+        ],
+         'permissions' => [
+            'delete'
+            //list of roles to allow
+        ]
     ]
+  ]
+```
 
 ## Testing (Running)
 
@@ -230,7 +269,9 @@ Note: **Do not enable dev mode in production**
 
 - Run the following command in your project's directory to start PHPs built-in server:
 
-      php -S 0.0.0.0:8080 -t public
+```shell
+php -S 0.0.0.0:8080 -t public
+```
 
 > Running command `composer serve` will do the exact same, but the above is faster.
 
@@ -241,7 +282,9 @@ Note: **Do not enable dev mode in production**
 **NOTE:**
 If you are still getting exceptions or errors regarding some missing services, try running the following command
 
-    php bin/clear-config-cache.php
+```shell
+php bin/clear-config-cache.php
+```
 
 > If `config-cache.php` is present that config will be loaded regardless of the `ConfigAggregator::ENABLE_CACHE`
 > in `config/autoload/mezzio.global.php`
@@ -260,10 +303,12 @@ If you ran the migrations you will have an admin user in the database with the f
 - **Production only**: Make sure you modify the default admin credentials.
 - **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
 
-      return [
-        'session_config' => [
-            'cookie_secure' => false,
-        ]
-      ];
+```text
+    return [
+      'session_config' => [
+          'cookie_secure' => false,
+      ]
+    ];
+```
 
 Do not change this in `local.php.dist` as well because this value should remain `true` on production.

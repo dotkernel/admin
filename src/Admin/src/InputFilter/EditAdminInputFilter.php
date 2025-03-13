@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Admin\InputFilter;
 
-use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\App\InputFilter\Input\CsrfInput;
+use Core\Admin\Enum\AdminStatusEnum;
 use Laminas\Filter\StringTrim;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilter;

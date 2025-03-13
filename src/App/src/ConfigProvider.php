@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Admin\App;
 
-use Admin\App\Factory\EntityListenerResolverFactory;
 use Admin\App\Factory\FormsPluginFactory;
 use Admin\App\Handler\GetIndexRedirectHandler;
 use Admin\App\Plugin\FormsPlugin;
-use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\Twig\Extension\RouteExtension;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
@@ -39,7 +36,6 @@ class ConfigProvider
             ],
             'factories'  => [
                 'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
-                EntityListenerResolver::class         => EntityListenerResolverFactory::class,
                 GetIndexRedirectHandler::class        => AttributedServiceFactory::class,
                 PluginManager::class                  => PluginManagerFactory::class,
                 FormsPlugin::class                    => FormsPluginFactory::class,
@@ -48,24 +44,6 @@ class ConfigProvider
             'aliases'    => [
                 EntityManager::class          => 'doctrine.entity_manager.orm_default',
                 EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
-            ],
-        ];
-    }
-
-    public function getDoctrineConfig(): array
-    {
-        return [
-            'driver' => [
-                'orm_default' => [
-                    'drivers' => [
-                        'Admin\App\Entity' => 'AppEntities',
-                    ],
-                ],
-                'AppEntities' => [
-                    'class' => AttributeDriver::class,
-                    'cache' => 'array',
-                    'paths' => [__DIR__ . '/Entity'],
-                ],
             ],
         ];
     }

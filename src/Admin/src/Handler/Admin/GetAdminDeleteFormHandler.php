@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminDeleteForm;
-use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Message;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Service\AdminServiceInterface;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;

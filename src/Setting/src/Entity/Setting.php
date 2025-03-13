@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Entity;
 
-use Admin\Admin\Entity\Admin;
-use Admin\App\Entity\AbstractEntity;
-use Admin\App\Entity\TimestampsTrait;
 use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Repository\SettingRepository;
+use Core\Admin\Entity\Admin;
+use Core\App\Entity\AbstractEntity;
+use Core\App\Entity\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 use function array_unique;

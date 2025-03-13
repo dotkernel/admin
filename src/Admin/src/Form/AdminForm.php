@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Form;
 
-use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\InputFilter\AdminInputFilter;
+use Core\Admin\Enum\AdminStatusEnum;
 use Fig\Http\Message\RequestMethodInterface;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Form;

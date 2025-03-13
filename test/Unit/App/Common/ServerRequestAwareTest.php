@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\App\Common;
 
-use Admin\App\Common\ServerRequestAwareInterface;
-use Admin\App\Common\ServerRequestAwareTrait;
 use AdminTest\Unit\UnitTest;
+use Core\App\Common\ServerRequestAwareInterface;
+use Core\App\Common\ServerRequestAwareTrait;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Diactoros\Response\EmptyResponse;

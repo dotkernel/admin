@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Repository;
 
-use Admin\App\Repository\AbstractRepository;
 use Admin\Setting\Entity\Setting;
+use Core\App\Repository\AbstractRepository;
 use Dot\DependencyInjection\Attribute\Entity;
 
 #[Entity(Setting::class)]

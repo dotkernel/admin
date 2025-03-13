@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\App\Repository;
 
-use Admin\Admin\Entity\Admin;
-use Admin\App\Repository\AbstractRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\App\Repository\AbstractRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Container\ContainerExceptionInterface;

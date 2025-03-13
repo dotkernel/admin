@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\App\Resolver;
 
-use Admin\App\Resolver\EntityListenerResolver;
 use AdminTest\Unit\UnitTest;
+use Core\App\Entity\EntityListenerResolver;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

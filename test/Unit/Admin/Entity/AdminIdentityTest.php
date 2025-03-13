@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\AdminIdentity;
-use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminRoleEnum;
-use Admin\Admin\Enum\AdminStatusEnum;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Enum\AdminRoleEnum;
+use Core\Admin\Enum\AdminStatusEnum;
 
 class AdminIdentityTest extends UnitTest
 {

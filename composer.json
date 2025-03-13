@@ -74,7 +74,8 @@
             "Admin\\Page\\": "src/Page/src/",
             "Admin\\Dashboard\\": "src/Dashboard/src/",
             "Admin\\Setting\\": "src/Setting/src/",
-            "Admin\\Fixtures\\": "data/doctrine/fixtures"
+            "Core\\App\\": "src/Core/src/App/src",
+            "Core\\Admin\\": "src/Core/src/Admin/src"
         }
     },
     "autoload-dev": {

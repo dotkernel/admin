@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\FormData;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminRoleEnum;
-use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\FormData\AdminFormData;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Enum\AdminRoleEnum;
+use Core\Admin\Enum\AdminStatusEnum;
 
 use function array_map;
 

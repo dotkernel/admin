@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\App\Entity;
 
-use Admin\App\Entity\AbstractEntity;
 use AdminTest\Unit\UnitTest;
+use Core\App\Entity\AbstractEntity;
 use Ramsey\Uuid\UuidInterface;
 
 class AbstractEntityTest extends UnitTest

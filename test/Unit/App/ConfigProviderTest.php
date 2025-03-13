@@ -6,7 +6,6 @@ namespace AdminTest\Unit\App;
 
 use Admin\App\ConfigProvider;
 use Admin\App\Plugin\FormsPlugin;
-use Admin\App\Resolver\EntityListenerResolver;
 use Admin\App\RoutesDelegator as AppDelegator;
 use AdminTest\Unit\UnitTest;
 use Doctrine\ORM\EntityManager;
@@ -51,7 +50,6 @@ class ConfigProviderTest extends UnitTest
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
         $this->assertIsArray($this->config['dependencies']['factories']);
-        $this->assertArrayHasKey(EntityListenerResolver::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(PluginManager::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(FormsPlugin::class, $this->config['dependencies']['factories']);
     }

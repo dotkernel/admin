@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting\DBAL\Types;
 
-use Admin\App\DBAL\Types\AbstractEnumType;
 use Admin\Setting\Enum\SettingEnum;
+use Core\App\DBAL\Types\AbstractEnumType;
 
 class SettingEnumType extends AbstractEnumType
 {
