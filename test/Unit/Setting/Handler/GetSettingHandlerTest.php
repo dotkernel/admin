@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Handler;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminIdentity;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Service\AdminService;
 use Admin\App\Message;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Service\AdminService;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;

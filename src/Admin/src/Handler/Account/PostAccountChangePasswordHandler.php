@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Account;
 
-use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Service\AdminServiceInterface;
-use Admin\App\Common\ServerRequestAwareTrait;
-use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Common\ServerRequestAwareTrait;
+use Core\App\Exception\IdentityException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;

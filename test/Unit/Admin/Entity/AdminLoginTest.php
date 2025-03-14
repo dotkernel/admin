@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\AdminLogin;
-use Admin\Admin\Enum\SuccessFailureEnum;
-use Admin\Admin\Enum\YesNoEnum;
-use Admin\Admin\Repository\AdminLoginRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\AdminLogin;
+use Core\Admin\Enum\SuccessFailureEnum;
+use Core\Admin\Enum\YesNoEnum;
+use Core\Admin\Repository\AdminLoginRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;

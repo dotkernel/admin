@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Entity;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Repository\SettingRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use PHPUnit\Framework\MockObject\Exception;

@@ -14,7 +14,6 @@
     <!-- Paths to check -->
     <file>bin</file>
     <file>config</file>
-    <file>data/doctrine/fixtures</file>
     <file>public</file>
     <file>src</file>
     <file>test</file>
@@ -23,5 +22,6 @@
     <rule ref="LaminasCodingStandard">
         <!-- Exclude rule -->
         <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName" />
+        <exclude-pattern>src/Core/src/App/src/Migration/*</exclude-pattern>
     </rule>
 </ruleset>

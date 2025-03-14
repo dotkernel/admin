@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Repository;
 
-use Admin\Admin\Entity\AdminLogin;
-use Admin\Admin\Repository\AdminLoginRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\AdminLogin;
+use Core\Admin\Repository\AdminLoginRepository;
 use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

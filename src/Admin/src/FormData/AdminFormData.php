@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Admin\FormData;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminRole;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminRole;
 
 use function array_map;
 

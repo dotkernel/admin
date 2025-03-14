@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Service;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Setting\Entity\Setting;
 use Admin\Setting\Enum\SettingEnum;
 use Admin\Setting\Repository\SettingRepository;
+use Core\Admin\Entity\Admin;
 use Dot\DependencyInjection\Attribute\Inject;
 
 class SettingService

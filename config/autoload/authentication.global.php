@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Admin\Admin\Entity\Admin;
+use Core\Admin\Entity\Admin;
 
 return [
     'doctrine' => [

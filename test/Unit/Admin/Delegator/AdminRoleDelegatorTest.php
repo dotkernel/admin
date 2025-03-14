@@ -6,8 +6,8 @@ namespace AdminTest\Unit\Admin\Delegator;
 
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Form\AdminForm;
-use Admin\Admin\Service\AdminRoleServiceInterface;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Service\AdminRoleServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

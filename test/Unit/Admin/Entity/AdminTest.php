@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminRoleEnum;
-use Admin\Admin\Enum\AdminStatusEnum;
-use Admin\Admin\Repository\AdminRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Enum\AdminRoleEnum;
+use Core\Admin\Enum\AdminStatusEnum;
+use Core\Admin\Repository\AdminRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;

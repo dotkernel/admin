@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Delegator;
 
-use Admin\Admin\Entity\AdminRole;
 use Admin\Admin\Form\AdminForm;
-use Admin\Admin\Service\AdminRoleServiceInterface;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Service\AdminRoleServiceInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

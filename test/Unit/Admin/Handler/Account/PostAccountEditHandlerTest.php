@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Account;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\PostAccountEditHandler;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Service\AdminServiceInterface;
-use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\IdentityException;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;

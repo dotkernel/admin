@@ -6,7 +6,7 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Service\AdminServiceInterface;
+use Core\Admin\Service\AdminServiceInterface;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;

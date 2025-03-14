@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\PostAdminEditHandler;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Service\AdminServiceInterface;
-use Admin\App\Exception\IdentityException;
 use Admin\App\Message;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\IdentityException;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;

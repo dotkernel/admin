@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Adapter;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminIdentity;
-use Admin\Admin\Entity\AdminRole;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Entity\AdminRole;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Dot\DependencyInjection\Attribute\Inject;

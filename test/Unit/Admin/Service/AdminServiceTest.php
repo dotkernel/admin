@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Service;
 
-use Admin\Admin\Repository\AdminLoginRepository;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Repository\AdminRoleRepository;
-use Admin\Admin\Service\AdminService;
-use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Repository\AdminLoginRepository;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Repository\AdminRoleRepository;
+use Core\Admin\Service\AdminService;
+use Core\Admin\Service\AdminServiceInterface;
 use Doctrine\ORM\Exception\NotSupported;
 use Dot\GeoIP\Service\LocationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;

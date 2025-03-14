@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Account;
 
-use Admin\Admin\Entity\Admin;
-use Admin\Admin\Entity\AdminIdentity;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Entity\AdminIdentity;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Service\AdminServiceInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Mezzio\Router\RouterInterface;

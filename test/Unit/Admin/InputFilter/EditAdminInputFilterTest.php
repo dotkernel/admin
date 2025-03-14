@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\InputFilter;
 
-use Admin\Admin\Enum\AdminRoleEnum;
-use Admin\Admin\Enum\AdminStatusEnum;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Enum\AdminRoleEnum;
+use Core\Admin\Enum\AdminStatusEnum;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminRoleEnum;
-use Admin\Admin\Repository\AdminRoleRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Enum\AdminRoleEnum;
+use Core\Admin\Repository\AdminRoleRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;

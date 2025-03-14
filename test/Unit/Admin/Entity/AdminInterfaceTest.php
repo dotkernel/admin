@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Entity;
 
-use Admin\Admin\Entity\AdminInterface;
-use Admin\Admin\Entity\AdminRole;
-use Admin\Admin\Enum\AdminStatusEnum;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\AdminInterface;
+use Core\Admin\Entity\AdminRole;
+use Core\Admin\Enum\AdminStatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class AdminInterfaceTest extends UnitTest

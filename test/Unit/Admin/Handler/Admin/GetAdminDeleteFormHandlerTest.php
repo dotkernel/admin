@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Entity\Admin;
 use Admin\Admin\Form\AdminDeleteForm;
 use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
-use Admin\Admin\Repository\AdminRepository;
-use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Message;
 use AdminTest\Unit\UnitTest;
+use Core\Admin\Entity\Admin;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Service\AdminServiceInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouterInterface;
