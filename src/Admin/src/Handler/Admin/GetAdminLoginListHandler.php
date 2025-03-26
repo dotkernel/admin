@@ -56,7 +56,7 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
         );
 
         return new HtmlResponse(
-            $this->template->render('admin::list-logins', [
+            $this->template->render('admin::admin-login-list', [
                 'params'     => $params,
                 'logins'     => $logins['rows'],
                 'statuses'   => SuccessFailureEnum::values(),

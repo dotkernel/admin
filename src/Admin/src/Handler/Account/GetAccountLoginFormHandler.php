@@ -49,7 +49,7 @@ class GetAccountLoginFormHandler implements RequestHandlerInterface
         }
 
         return new HtmlResponse(
-            $this->template->render('admin::login', [
+            $this->template->render('admin::login-form', [
                 'form' => $this->form->prepare(),
             ])
         );

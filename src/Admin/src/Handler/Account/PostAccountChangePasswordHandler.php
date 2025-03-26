@@ -53,7 +53,7 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
+            $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
             $this->changePasswordForm->setAttribute(
                 'action',
                 $this->router->generateUri('admin::account-change-password')
@@ -68,7 +68,7 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
             $this->changePasswordForm->setData($this->getPostParams($request));
             if (! $this->changePasswordForm->isValid()) {
                 return new HtmlResponse(
-                    $this->template->render('admin::account', [
+                    $this->template->render('admin::account-view', [
                         'accountForm'        => $this->accountForm->prepare(),
                         'changePasswordForm' => $this->changePasswordForm->prepare(),
                     ])

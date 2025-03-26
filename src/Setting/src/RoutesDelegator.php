@@ -6,19 +6,27 @@ namespace Admin\Setting;
 
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Handler\PostSettingStoreHandler;
+use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class RoutesDelegator
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container, string $serviceName, callable $callback): Application
     {
-        /** @var Application $app */
-        $app = $callback();
+        /** @var RouteCollectorInterface $routeCollector */
+        $routeCollector = $container->get(RouteCollectorInterface::class);
 
-        $app->get('/setting/{identifier}', GetSettingViewHandler::class, 'setting::setting-view');
-        $app->post('/setting/{identifier}', PostSettingStoreHandler::class, 'setting::setting-store');
+        $routeCollector->group('/setting')
+            ->get('/{identifier}', GetSettingViewHandler::class, 'setting::setting-view')
+            ->post('/{identifier}', PostSettingStoreHandler::class, 'setting::setting-store');
 
-        return $app;
+        return $callback();
     }
 }

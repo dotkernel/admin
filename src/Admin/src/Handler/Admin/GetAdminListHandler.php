@@ -61,7 +61,7 @@ class GetAdminListHandler implements RequestHandlerInterface
         $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
 
         return new HtmlResponse(
-            $this->template->render('admin::list', [
+            $this->template->render('admin::admin-list', [
                 'params'     => $params,
                 'admins'     => $result['rows'],
                 'statuses'   => AdminStatusEnum::cases(),
