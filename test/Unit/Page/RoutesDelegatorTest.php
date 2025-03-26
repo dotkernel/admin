@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Page;
 
 use Admin\Page\RoutesDelegator;
 use AdminTest\Unit\UnitTest;
+use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
@@ -15,20 +16,28 @@ use Psr\Container\NotFoundExceptionInterface;
 class RoutesDelegatorTest extends UnitTest
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testWillInvoke(): void
     {
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('get')
+            ->willReturnMap([
+                [RouteCollectorInterface::class, $this->createMock(RouteCollectorInterface::class)],
+                ['config', []],
+            ]);
+
         $application = (new RoutesDelegator())(
-            $this->createMock(ContainerInterface::class),
+            $container,
             '',
             function () {
                 return $this->createMock(Application::class);
             }
         );
 
-        $this->assertInstanceOf(Application::class, $application);
+        $this->assertContainsOnlyInstancesOf(Application::class, [$application]);
     }
 }

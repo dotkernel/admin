@@ -18,36 +18,42 @@ use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
 use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
 use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
 use Admin\Admin\Handler\Admin\PostAdminEditHandler;
+use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class RoutesDelegator
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container, string $serviceName, callable $callback): Application
     {
-        /** @var Application $app */
-        $app = $callback();
+        /** @var RouteCollectorInterface $routeCollector */
+        $routeCollector = $container->get(RouteCollectorInterface::class);
 
-        $app->get('/admin/create-admin', GetAdminCreateFormHandler::class, 'admin::admin-create-form');
-        $app->post('/admin/create-admin', PostAdminCreateHandler::class, 'admin::admin-create');
+        $routeCollector->group('/admin')
+            ->get('/create-admin', GetAdminCreateFormHandler::class, 'admin::admin-create-form')
+            ->post('/create-admin', PostAdminCreateHandler::class, 'admin::admin-create')
+            ->get('/edit-admin/{uuid}', GetAdminEditFormHandler::class, 'admin::admin-edit-form')
+            ->post('/edit-admin/{uuid}', PostAdminEditHandler::class, 'admin::admin-edit')
+            ->get('/delete-admin/{uuid}', GetAdminDeleteFormHandler::class, 'admin::admin-delete-form')
+            ->post('/delete-admin/{uuid}', PostAdminDeleteHandler::class, 'admin::admin-delete')
+            ->get('/list-admin', GetAdminListHandler::class, 'admin::admin-list')
+            ->get('/list-admin-login', GetAdminLoginListHandler::class, 'admin::admin-login-list');
 
-        $app->get('/admin/edit-admin/{uuid}', GetAdminEditFormHandler::class, 'admin::admin-edit-form');
-        $app->post('/admin/edit-admin/{uuid}', PostAdminEditHandler::class, 'admin::admin-edit');
+        $routeCollector->group('/admin')
+            ->get('/edit-account', GetAccountEditFormHandler::class, 'admin::account-edit-form')
+            ->post('/edit-account', PostAccountEditHandler::class, 'admin::account-edit')
+            ->post('/edit-password', PostAccountChangePasswordHandler::class, 'admin::account-change-password');
 
-        $app->get('/admin/delete-admin/{uuid}', GetAdminDeleteFormHandler::class, 'admin::admin-delete-form');
-        $app->post('/admin/delete-admin/{uuid}', PostAdminDeleteHandler::class, 'admin::admin-delete');
+        $routeCollector->get('/admin/login', GetAccountLoginFormHandler::class, 'admin::admin-login-form');
+        $routeCollector->post('/admin/login', PostAccountLoginHandler::class, 'admin::admin-login');
+        $routeCollector->get('/admin/logout', GetAccountLogoutHandler::class, 'admin::admin-logout');
 
-        $app->get('/admin/list-admin', GetAdminListHandler::class, 'admin::admin-list');
-        $app->get('/admin/list-admin-login', GetAdminLoginListHandler::class, 'admin::admin-login-list');
-
-        $app->get('/admin/edit-account', GetAccountEditFormHandler::class, 'admin::account-edit-form');
-        $app->post('/admin/edit-account', PostAccountEditHandler::class, 'admin::edit-account');
-        $app->post('/admin/edit-password', PostAccountChangePasswordHandler::class, 'admin::account-change-password');
-
-        $app->get('/admin/login', GetAccountLoginFormHandler::class, 'admin::admin-login-form');
-        $app->post('/admin/login', PostAccountLoginHandler::class, 'admin::admin-login');
-        $app->get('/admin/logout', GetAccountLogoutHandler::class, 'admin::admin-logout');
-
-        return $app;
+        return $callback();
     }
 }

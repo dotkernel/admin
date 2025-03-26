@@ -51,8 +51,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
-
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
         $this->changePasswordForm->setAttribute(
             'action',
             $this->router->generateUri('admin::account-change-password')
@@ -64,7 +63,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
         $this->accountForm->setData($this->getPostParams($request));
         if (! $this->accountForm->isValid()) {
             return new HtmlResponse(
-                $this->template->render('admin::account', [
+                $this->template->render('admin::account-view', [
                     'accountForm'        => $this->accountForm->prepare(),
                     'changePasswordForm' => $this->changePasswordForm->prepare(),
                 ])
@@ -89,6 +88,6 @@ class PostAccountEditHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::edit-account'));
+        return new RedirectResponse($this->router->generateUri('admin::account-edit'));
     }
 }

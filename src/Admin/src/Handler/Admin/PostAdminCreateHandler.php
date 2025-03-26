@@ -55,7 +55,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
             } else {
                 return new HtmlResponse(
-                    $this->template->render('admin::create-admin-form', [
+                    $this->template->render('admin::admin-create-form', [
                         'form' => $this->form->prepare(),
                     ]),
                     StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
@@ -63,7 +63,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
             }
         } catch (IdentityException $e) {
             return new HtmlResponse(
-                $this->template->render('admin::create-admin-form', [
+                $this->template->render('admin::admin-create-form', [
                     'form'     => $this->form->prepare(),
                     'messages' => [
                         'error' => $e->getMessage(),
@@ -80,7 +80,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
             ]);
 
             return new HtmlResponse(
-                $this->template->render('admin::create-admin-form', [
+                $this->template->render('admin::admin-create-form', [
                     'form'     => $this->form->prepare(),
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,

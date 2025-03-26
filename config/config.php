@@ -28,6 +28,7 @@ $aggregator = new ConfigAggregator([
     Mezzio\Twig\ConfigProvider::class,
 
     // Dotkernel packages
+    Dot\Cache\ConfigProvider::class,
     Dot\Cli\ConfigProvider::class,
     Dot\DataFixtures\ConfigProvider::class,
     Dot\DependencyInjection\ConfigProvider::class,
@@ -40,9 +41,9 @@ $aggregator = new ConfigAggregator([
     Dot\Navigation\ConfigProvider::class,
     Dot\Rbac\ConfigProvider::class,
     Dot\Rbac\Guard\ConfigProvider::class,
+    Dot\Router\ConfigProvider::class,
     Dot\Session\ConfigProvider::class,
     Dot\Twig\ConfigProvider::class,
-    Dot\Cache\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),

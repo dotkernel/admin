@@ -38,7 +38,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
         $this->changePasswordForm->setAttribute(
             'action',
             $this->router->generateUri('admin::account-change-password')
@@ -50,7 +50,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         $this->accountForm->bind($admin);
 
         return new HtmlResponse(
-            $this->template->render('admin::account', [
+            $this->template->render('admin::account-view', [
                 'accountForm'        => $this->accountForm->prepare(),
                 'changePasswordForm' => $this->changePasswordForm->prepare(),
             ])
