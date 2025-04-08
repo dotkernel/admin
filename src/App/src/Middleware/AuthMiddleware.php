@@ -37,7 +37,7 @@ class AuthMiddleware implements MiddlewareInterface
 
         foreach ($guards as $guard) {
             if (! $guard instanceof GuardInterface) {
-                throw new RuntimeException("Guard is not an instance of " . GuardInterface::class);
+                throw new RuntimeException('Guard is not an instance of ' . GuardInterface::class);
             }
             //according to the policy, we whitelist or blacklist matched routes
 
@@ -49,12 +49,9 @@ class AuthMiddleware implements MiddlewareInterface
         }
 
         if (! $isGranted) {
-            $this->messenger->addWarning(
-                'You must sign in first in order to access the requested content',
-                'user-login'
-            );
+            $this->messenger->addWarning('You must sign in first in order to access the requested content.');
 
-            return new RedirectResponse($this->router->generateUri("admin::get-login-form"));
+            return new RedirectResponse($this->router->generateUri('admin::admin-login-form'));
         }
 
         return $handler->handle($request);

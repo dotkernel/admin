@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
-use Admin\Admin\FormData\AdminFormData;
-use Admin\App\Message;
-use Core\Admin\Entity\Admin;
+use Admin\Admin\Form\EditAdminForm;
+use Admin\Admin\Service\AdminRoleServiceInterface;
+use Admin\Admin\Service\AdminServiceInterface;
 use Core\Admin\Entity\AdminRole;
-use Core\Admin\Service\AdminRoleServiceInterface;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -32,7 +30,7 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
         RouterInterface::class,
         TemplateRendererInterface::class,
         FlashMessengerInterface::class,
-        AdminForm::class,
+        EditAdminForm::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -40,38 +38,37 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected FlashMessengerInterface $messenger,
-        protected AdminForm $form,
+        protected EditAdminForm $editAdminForm,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $request->getAttribute('uuid')]);
-        if (! $admin instanceof Admin) {
-            $this->messenger->addError(Message::ADMIN_NOT_FOUND);
+        try {
+            $admin = $this->adminService->find($request->getAttribute('uuid'));
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
+
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->form->setAttribute(
-            'action',
-            $this->router->generateUri('admin::admin-edit', ['uuid' => $admin->getUuid()->toString()])
-        );
+        $adminRoles = array_map(fn (AdminRole $adminRole): array => [
+            'label'    => $adminRole->getName()->value,
+            'value'    => $adminRole->getUuid()->toString(),
+            'selected' => $admin->hasRole($adminRole),
+        ], $this->adminRoleService->getAdminRoleRepository()->findAll());
 
-        $roles = array_map(function (AdminRole $role) use ($admin): array {
-            return [
-                'label'    => $role->getName()->value,
-                'value'    => $role->getUuid()->toString(),
-                'selected' => $admin->hasRole($role),
-            ];
-        }, $this->adminRoleService->getRoles());
-
-        $this->form->setRoles($roles);
-        $adminFormData = (new AdminFormData())->fromEntity($admin);
-        $this->form->bind($adminFormData);
+        $this->editAdminForm
+            ->setAttribute(
+                'action',
+                $this->router->generateUri('admin::admin-edit', ['uuid' => $admin->getUuid()->toString()])
+            )
+            ->bind($admin)
+            ->setRoles($adminRoles);
 
         return new HtmlResponse(
             $this->template->render('admin::admin-edit-form', [
-                'form' => $this->form->prepare(),
+                'form' => $this->editAdminForm->prepare(),
             ])
         );
     }

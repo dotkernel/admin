@@ -6,20 +6,11 @@ namespace Core\Admin;
 
 use Core\Admin\DBAL\Types\AdminRoleEnumType;
 use Core\Admin\DBAL\Types\AdminStatusEnumType;
-use Core\Admin\DBAL\Types\SuccessFailureEnumType;
-use Core\Admin\DBAL\Types\YesNoEnumType;
-use Core\Admin\Entity\Admin;
-use Core\Admin\Entity\AdminInterface;
 use Core\Admin\Repository\AdminLoginRepository;
 use Core\Admin\Repository\AdminRepository;
 use Core\Admin\Repository\AdminRoleRepository;
-use Core\Admin\Service\AdminRoleService;
-use Core\Admin\Service\AdminRoleServiceInterface;
-use Core\Admin\Service\AdminService;
-use Core\Admin\Service\AdminServiceInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
-use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 
 class ConfigProvider
 {
@@ -31,25 +22,18 @@ class ConfigProvider
         ];
     }
 
-    public function getDependencies(): array
+    private function getDependencies(): array
     {
         return [
             'factories' => [
-                AdminService::class         => AttributedServiceFactory::class,
-                AdminRoleService::class     => AttributedServiceFactory::class,
                 AdminRepository::class      => AttributedRepositoryFactory::class,
-                AdminRoleRepository::class  => AttributedRepositoryFactory::class,
                 AdminLoginRepository::class => AttributedRepositoryFactory::class,
-            ],
-            'aliases'   => [
-                AdminInterface::class            => Admin::class,
-                AdminServiceInterface::class     => AdminService::class,
-                AdminRoleServiceInterface::class => AdminRoleService::class,
+                AdminRoleRepository::class  => AttributedRepositoryFactory::class,
             ],
         ];
     }
 
-    public function getDoctrineConfig(): array
+    private function getDoctrineConfig(): array
     {
         return [
             'driver' => [
@@ -65,10 +49,8 @@ class ConfigProvider
                 ],
             ],
             'types'  => [
-                AdminStatusEnumType::NAME    => AdminStatusEnumType::class,
-                SuccessFailureEnumType::NAME => SuccessFailureEnumType::class,
-                YesNoEnumType::NAME          => YesNoEnumType::class,
-                AdminRoleEnumType::NAME      => AdminRoleEnumType::class,
+                AdminRoleEnumType::NAME   => AdminRoleEnumType::class,
+                AdminStatusEnumType::NAME => AdminStatusEnumType::class,
             ],
         ];
     }

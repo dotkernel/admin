@@ -31,24 +31,18 @@
                     {{ form().openTag(form)|raw }}
                     <h4 class="fw-300 c-grey-900 mB-20">Login</h4>
                     <div class="mb-3">
-                        {{ formElement(form.get('username')) }}
+                        {{ formElement(form.get('identity')) }}
                     </div>
                     <div class="mb-3">
                         {{ formElement(form.get('password')) }}
                     </div>
-
                     {{ formElement(form.get('loginCsrf')) }}
-
                     {{ formSubmit(form.get('submit')) }}
-
                     {{ form().closeTag()|raw }}
                 </div>
             </div>
         </div>
     </div>
-
-{% block javascript %}
     <script src="{{ asset('js/app.js') }}"></script>
-{% endblock %}
 </body>
 </html>

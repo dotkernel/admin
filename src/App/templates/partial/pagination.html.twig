@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-auto">
         <div class="dropdown">
-            <span>Found <strong>{{ pagination.getTotal() }}</strong> item(s), showing</span>
+            <span>Found <strong>{{ pagination.count|number_format }}</strong> item(s), showing</span>
             <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ params.limit }}
+                {{ pagination.limit }}
             </button>
             <ul class="dropdown-menu" title="Items per page">
-                {% for limit in [10, 30, 50, 100] %}
+                {% for limit in [10, 25, 50, 100] %}
                 <li>
-                    <a href="{{ path(path, params|merge({offset: 0, limit: limit})) }}"
-                       class="dropdown-item{{ limit == params.limit ? ' active' }}">{{ limit }}</a>
+                    <a href="{{ path(path, {}, pagination.queryParams|merge({offset: 0, limit: limit})) }}"
+                       class="dropdown-item{{ limit == pagination.limit ? ' active' }}">{{ limit }}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -19,28 +19,28 @@
     <div class="col-auto ms-sm-auto">
         <nav aria-label="Pagination">
             <ul class="pagination pagination-sm">
-                <li class="page-item{{ pagination.isFirstPage() ? ' disabled' }}" title="Page {{ pagination.getFirstPage() }}">
-                    <a class="page-link" href="{{ path(path, {}, {params}|merge({offset: pagination.getFirstOffset()})) }}">
+                <li class="page-item{{ pagination.isFirstPage ? ' disabled' }}" title="Page {{ pagination.firstPage }}">
+                    <a class="page-link" href="{{ path(path, {}, pagination.queryParams|merge({offset: pagination.firstOffset})) }}">
                         <i class="ti-angle-double-left"></i>
                     </a>
                 </li>
-                <li class="page-item{{ not pagination.hasPreviousPage() ? ' disabled' }}" title="Page {{ pagination.getPreviousPage() }}">
-                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: pagination.getPreviousOffset()})) }}">
+                <li class="page-item{{ not pagination.hasPreviousPage ? ' disabled' }}" title="Page {{ pagination.previousPage }}">
+                    <a class="page-link" href="{{ path(path, {}, pagination.queryParams|merge({offset: pagination.previousOffset})) }}">
                         <i class="ti-angle-left"></i>
                     </a>
                 </li>
-                {% for page in pagination.getPages() %}
-                <li class="page-item{{ page == pagination.getCurrentPage() ? ' active' }}" title="Page {{ page }}">
-                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: (page - 1) * params.limit})) }}">{{ page }}</a>
+                {% for page in pagination.pages %}
+                <li class="page-item{{ page == pagination.currentPage ? ' active' }}" title="Page {{ page }}">
+                    <a class="page-link" href="{{ path(path, {}, pagination.queryParams|merge({offset: (page - 1) * pagination.limit})) }}">{{ page }}</a>
                 </li>
                 {% endfor %}
-                <li class="page-item{{ not pagination.hasNextPage() ? ' disabled' }}" title="Page {{ pagination.getNextPage() }}">
-                    <a class="page-link" href="{{ path(path, {}, params|merge({offset: pagination.getNextOffset()})) }}">
+                <li class="page-item{{ not pagination.hasNextPage ? ' disabled' }}" title="Page {{ pagination.nextPage }}">
+                    <a class="page-link" href="{{ path(path, {}, pagination.queryParams|merge({offset: pagination.nextOffset})) }}">
                         <i class="ti-angle-right"></i>
                     </a>
                 </li>
-                <li class="page-item{{ pagination.isLastPage() ? ' disabled' }}" title="Page {{ pagination.getLastPage() }}">
-                    <a class="page-link" href="{{ path(path, params|merge({offset: pagination.getLastOffset()})) }}">
+                <li class="page-item{{ pagination.isLastPage ? ' disabled' }}" title="Page {{ pagination.lastPage }}">
+                    <a class="page-link" href="{{ path(path, {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">
                         <i class="ti-angle-double-right"></i>
                     </a>
                 </li>

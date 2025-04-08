@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Delegator;
 
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\CreateAdminForm;
 use Core\Admin\Entity\AdminRole;
-use Core\Admin\Service\AdminRoleServiceInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -24,15 +24,14 @@ class AdminRoleDelegator implements DelegatorFactoryInterface
     public function __invoke(ContainerInterface $container, $name, callable $callback, ?array $options = null): object
     {
         $adminForm = $callback();
-        if ($adminForm instanceof AdminForm) {
-            $roleService = $container->get(AdminRoleServiceInterface::class);
-            $adminForm->setRoles(array_map(function (AdminRole $role) {
-                return [
+        if ($adminForm instanceof CreateAdminForm) {
+            $adminForm->setRoles(
+                array_map(fn (AdminRole $role): array => [
                     'label'    => $role->getName()->value,
                     'value'    => $role->getUuid()->toString(),
                     'selected' => false,
-                ];
-            }, $roleService->getRoles()));
+                ], $container->get(EntityManagerInterface::class)->getRepository(AdminRole::class)->findAll())
+            );
         }
 
         return $adminForm;

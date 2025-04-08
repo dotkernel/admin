@@ -17,19 +17,19 @@ return [
                                 'route' => [
                                     'route_name' => 'dashboard::dashboard-view',
                                 ],
-                                'icon'  => 'c-blue-500 ti-home',
+                                'icon'  => 'c-blue-500 fa fa-home',
                             ],
                         ],
                         [
                             'options' => [
-                                'label' => 'Manage admins',
+                                'label' => 'Admin',
                                 'route' => [],
-                                'icon'  => 'c-teal-500 ti-view-list-alt ',
+                                'icon'  => 'c-teal-500 fa fa-user-secret',
                             ],
                             'pages'   => [
                                 [
                                     'options' => [
-                                        'label' => 'Admins',
+                                        'label' => 'Admin accounts',
                                         'route' => [
                                             'route_name' => 'admin::admin-list',
                                         ],
@@ -37,9 +37,26 @@ return [
                                 ],
                                 [
                                     'options' => [
-                                        'label' => 'Logins',
+                                        'label' => 'Login attempts',
                                         'route' => [
                                             'route_name' => 'admin::admin-login-list',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'options' => [
+                                'label' => 'User',
+                                'route' => [],
+                                'icon'  => 'c-teal-500 fa fa-user',
+                            ],
+                            'pages'   => [
+                                [
+                                    'options' => [
+                                        'label' => 'User accounts',
+                                        'route' => [
+                                            'route_name' => 'user::user-list',
                                         ],
                                     ],
                                 ],
@@ -51,7 +68,7 @@ return [
                                 'route' => [
                                     'route_name' => 'page::components',
                                 ],
-                                'icon'  => 'c-pink-500 ti-palette',
+                                'icon'  => 'c-pink-500 fa fa-gears',
                             ],
                         ],
                     ],

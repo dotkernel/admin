@@ -21,9 +21,11 @@ class RouteExtensionTest extends UnitTest
      */
     public function testWillInstantiate(): void
     {
-        $urlHelper      = $this->createMock(UrlHelper::class);
-        $routeExtension = new RouteExtension($urlHelper);
-        $this->assertInstanceOf(RouteExtension::class, $routeExtension);
+        $routeExtension = new RouteExtension(
+            $this->createMock(UrlHelper::class)
+        );
+
+        $this->assertSame(RouteExtension::class, $routeExtension::class);
     }
 
     /**

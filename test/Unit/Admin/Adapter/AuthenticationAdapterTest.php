@@ -11,6 +11,7 @@ use Core\Admin\Enum\AdminStatusEnum;
 use Core\Admin\Repository\AdminRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
+use Exception;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use ReflectionClass;
 use ReflectionException;
@@ -34,9 +35,9 @@ class AuthenticationAdapterTest extends UnitTest
         );
 
         $adapter = $adapter->setIdentity('identity');
-        $this->assertInstanceOf(AuthenticationAdapter::class, $adapter);
+        $this->assertSame(AuthenticationAdapter::class, $adapter::class);
         $adapter = $adapter->setCredential('credential');
-        $this->assertInstanceOf(AuthenticationAdapter::class, $adapter);
+        $this->assertSame(AuthenticationAdapter::class, $adapter::class);
 
         $reflection = new ReflectionClass($adapter);
 
@@ -56,7 +57,7 @@ class AuthenticationAdapterTest extends UnitTest
             $this->createMock(EntityManager::class),
             []
         );
-        $this->expectExceptionMessage('No or invalid param \'identity_class\' provided.');
+        $this->expectExceptionMessage('No or invalid param "identity_class" provided.');
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
@@ -67,7 +68,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ],
             ],
         );
-        $this->expectExceptionMessage('No or invalid param \'identity_class\' provided.');
+        $this->expectExceptionMessage('No or invalid param "identity_class" provided.');
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
@@ -79,7 +80,7 @@ class AuthenticationAdapterTest extends UnitTest
                 ],
             ],
         );
-        $this->expectExceptionMessage('No or invalid param \'credential_property\' provided.');
+        $this->expectExceptionMessage('No or invalid param "credential_property" provided.');
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
@@ -107,7 +108,7 @@ class AuthenticationAdapterTest extends UnitTest
             $this->createMock(EntityManager::class),
             [
                 'orm_default' => [
-                    'identity_class'      => \Exception::class,
+                    'identity_class'      => Exception::class,
                     'identity_property'   => 'identity',
                     'credential_property' => 'password',
                     'messages'            => [
@@ -182,7 +183,7 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->setCredential('test');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $adapter->authenticate();
     }
 
@@ -299,7 +300,7 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->setCredential('password');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage(
             sprintf('Method getTest not found in %s', Admin::class)
         );
@@ -346,8 +347,8 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->setCredential('password');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Option \'value\' not provided for \'status\' option.');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Option "value" not provided for "status" option.');
         $adapter->authenticate();
     }
 
@@ -391,8 +392,8 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->setCredential('password');
         $adapter->setIdentity('test@example.com');
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Option \'message\' not provided for \'status\' option.');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Option "message" not provided for "status" option.');
         $adapter->authenticate();
     }
 

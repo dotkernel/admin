@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Service;
 
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Enum\SettingEnum;
-use Admin\Setting\Repository\SettingRepository;
 use Core\Admin\Entity\Admin;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Enum\SettingIdentifierEnum;
+use Core\Setting\Repository\SettingRepository;
 use Dot\DependencyInjection\Attribute\Inject;
 
-class SettingService
+class SettingService implements SettingServiceInterface
 {
     #[Inject(
         SettingRepository::class,
     )]
-    public function __construct(private SettingRepository $settingRepository)
-    {
+    public function __construct(
+        private SettingRepository $settingRepository,
+    ) {
     }
 
     public function findOneBy(array $filters): ?Setting
@@ -29,17 +30,21 @@ class SettingService
         return null;
     }
 
-    public function createSetting(Admin $admin, SettingEnum $identifier, array $data): Setting
+    public function createSetting(Admin $admin, SettingIdentifierEnum $identifier, array $data): Setting
     {
         $setting = new Setting($admin, $identifier, $data);
 
-        return $this->settingRepository->save($setting);
+        $this->settingRepository->saveResource($setting);
+
+        return $setting;
     }
 
     public function updateSetting(Setting $setting, array $data): Setting
     {
         $setting->setValue($data);
 
-        return $this->settingRepository->save($setting);
+        $this->settingRepository->saveResource($setting);
+
+        return $setting;
     }
 }

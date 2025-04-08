@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\CreateAdminForm;
 use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
@@ -22,7 +22,7 @@ class GetAdminCreateFormHandlerTest extends UnitTest
     {
         $router   = $this->createMock(RouterInterface::class);
         $template = $this->createMock(TemplateRendererInterface::class);
-        $form     = $this->createMock(AdminForm::class);
+        $form     = $this->createMock(CreateAdminForm::class);
         $request  = $this->createMock(ServerRequestInterface::class);
 
         $handler = new GetAdminCreateFormHandler(

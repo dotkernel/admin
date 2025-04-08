@@ -19,17 +19,17 @@ class LoginFormTest extends UnitTest
     public function testFormHasElements(): void
     {
         $this->formHasElements(new LoginForm(), [
-            'username',
+            'identity',
             'password',
-            'submit',
             'loginCsrf',
+            'submit',
         ]);
     }
 
     public function testFormHasInputFilter(): void
     {
         $this->formHasInputFilter((new LoginForm())->getInputFilter(), [
-            'username',
+            'identity',
             'password',
             'loginCsrf',
         ]);

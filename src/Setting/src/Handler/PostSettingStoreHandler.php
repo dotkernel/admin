@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Admin\Setting\Handler;
 
-use Admin\App\Message;
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Enum\SettingEnum;
-use Admin\Setting\InputFilter\Input\SettingValueInput;
-use Admin\Setting\InputFilter\SettingInputFilter;
-use Admin\Setting\Service\SettingService;
-use Core\Admin\Entity\Admin;
-use Core\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
+use Admin\Setting\InputFilter\CreateSettingInputFilter;
+use Admin\Setting\InputFilter\Input\ValueInput;
+use Admin\Setting\Service\SettingServiceInterface;
+use Core\App\Exception\NotFoundException;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Enum\SettingIdentifierEnum;
 use Dot\DependencyInjection\Attribute\Inject;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -28,28 +27,28 @@ class PostSettingStoreHandler implements RequestHandlerInterface
 {
     #[Inject(
         AuthenticationServiceInterface::class,
-        AdminService::class,
-        SettingService::class,
+        AdminServiceInterface::class,
+        SettingServiceInterface::class,
     )]
     public function __construct(
         protected AuthenticationServiceInterface $authenticationService,
-        protected AdminService $adminService,
-        protected SettingService $settingService,
+        protected AdminServiceInterface $adminService,
+        protected SettingServiceInterface $settingService,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $data       = json_decode($request->getBody()->getContents(), true);
-        $identifier = $request->getAttribute('identifier');
-        $value      = $data['value'] ?? null;
+        $data  = json_decode($request->getBody()->getContents(), true);
+        $value = $data['value'] ?? null;
 
-        $inputFilter = new SettingInputFilter();
-        $inputFilter->add(new SettingValueInput('value', true));
-        $inputFilter->setData([
-            'identifier' => $identifier,
-            'value'      => $value,
-        ]);
+        $identifier  = $request->getAttribute('identifier');
+        $inputFilter = (new CreateSettingInputFilter())
+            ->add(new ValueInput('value', true))
+            ->setData([
+                'identifier' => $identifier,
+                'value'      => $value,
+            ]);
 
         if (! $inputFilter->isValid()) {
             $messages = $inputFilter->getMessages();
@@ -60,22 +59,20 @@ class PostSettingStoreHandler implements RequestHandlerInterface
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
 
-        $admin = $this->adminService->getAdminRepository()->findOneBy([
-            'uuid' => $this->authenticationService->getIdentity()->getUuid(),
-        ]);
-
-        if (! $admin instanceof Admin) {
+        try {
+            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+        } catch (NotFoundException $exception) {
             return new JsonResponse([
                 'error' => [
                     'messages' => [
-                        Message::ADMIN_NOT_FOUND,
+                        $exception->getMessage(),
                     ],
                 ],
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
 
-        $identifier = SettingEnum::tryFrom($identifier);
-        assert($identifier instanceof SettingEnum);
+        $identifier = SettingIdentifierEnum::tryFrom($identifier);
+        assert($identifier instanceof SettingIdentifierEnum);
 
         $setting = $this->settingService->findOneBy(['admin' => $admin, 'identifier' => $identifier]);
         if ($setting instanceof Setting) {

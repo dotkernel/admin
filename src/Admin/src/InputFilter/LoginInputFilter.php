@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Admin\Admin\InputFilter;
 
 use Admin\App\InputFilter\Input\CsrfInput;
-use Laminas\Filter\StringTrim;
-use Laminas\InputFilter\Input;
+use Admin\App\InputFilter\Input\IdentityInput;
+use Admin\App\InputFilter\Input\PasswordInput;
 use Laminas\InputFilter\InputFilter;
-use Laminas\Validator\NotEmpty;
 
 /**
  * @extends InputFilter<object>
@@ -17,24 +16,9 @@ class LoginInputFilter extends InputFilter
 {
     public function init(): void
     {
-        $username = new Input('username');
-        $username->setRequired(true);
-        $username->getFilterChain()->attachByName(StringTrim::class);
-        $username->getValidatorChain()->attachByName(NotEmpty::class, [
-            'break_chain_on_failure' => true,
-            'message'                => '<b>Username</b> is required and cannot be empty',
-        ]);
-        $this->add($username);
-
-        $password = new Input('password');
-        $password->setRequired(true);
-        $password->getFilterChain()->attachByName(StringTrim::class);
-        $password->getValidatorChain()->attachByName(NotEmpty::class, [
-            'break_chain_on_failure' => true,
-            'message'                => '<b>Password</b> is required and cannot be empty',
-        ]);
-        $this->add($password);
-
-        $this->add(new CsrfInput('loginCsrf', true));
+        $this
+            ->add(new IdentityInput('identity'))
+            ->add(new PasswordInput('password'))
+            ->add(new CsrfInput('loginCsrf'));
     }
 }

@@ -7,11 +7,12 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminServiceInterface;
+use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Mezzio\Router\RouterInterface;
@@ -32,6 +33,7 @@ class GetAccountEditFormHandlerTest extends UnitTest
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
         $accountForm           = $this->createMock(AccountForm::class);
         $changePasswordForm    = $this->createMock(ChangePasswordForm::class);
+        $messenger             = $this->createMock(FlashMessengerInterface::class);
         $request               = $this->createMock(ServerRequestInterface::class);
         $identity              = $this->createMock(AdminIdentity::class);
         $adminRepository       = $this->createMock(AdminRepository::class);
@@ -50,6 +52,7 @@ class GetAccountEditFormHandlerTest extends UnitTest
             $authenticationService,
             $accountForm,
             $changePasswordForm,
+            $messenger,
         );
 
         $response = $handler->handle($request);

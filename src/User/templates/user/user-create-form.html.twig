@@ -1,0 +1,32 @@
+{% from '@partial/macros.html.twig' import inputElement, multiCheckboxElement, submitElement %}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="add-user-modal-content">Create user</h5>
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {{ form().openTag(form)|raw }}
+        {% set fieldsets = form.getFieldsets() %}
+
+        {{ inputElement(form.get('identity')) }}
+        {{ inputElement(form.get('password')) }}
+        {{ inputElement(form.get('passwordConfirm')) }}
+
+        {{ inputElement(fieldsets['detail'].get('firstName')) }}
+        {{ inputElement(fieldsets['detail'].get('lastName')) }}
+        {{ inputElement(fieldsets['detail'].get('email')) }}
+
+        {{ inputElement(form.get('status')) }}
+        {{ multiCheckboxElement(form.get('roles')) }}
+        {{ inputElement(form.get('userCreateCsrf')) }}
+        {{ submitElement(form.get('submit')) }}
+        {{ form().closeTag()|raw }}
+
+        {% if messages is defined and messages is iterable %}
+            {% for type, message in messages %}
+                <div class="mt-3 alert alert-{% if type == 'success' %}success{% elseif type == 'warning' %}warning{% else %}danger{% endif %}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

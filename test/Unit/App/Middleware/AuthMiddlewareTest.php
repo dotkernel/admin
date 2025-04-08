@@ -34,7 +34,8 @@ class AuthMiddlewareTest extends UnitTest
             $this->createMock(GuardsProviderInterface::class),
             new RbacGuardOptions([])
         );
-        $this->assertInstanceOf(AuthMiddleware::class, $authMiddleware);
+
+        $this->assertSame(AuthMiddleware::class, $authMiddleware::class);
     }
 
     /**
@@ -77,7 +78,8 @@ class AuthMiddlewareTest extends UnitTest
             $this->createMock(ServerRequestInterface::class),
             $this->createMock(RequestHandlerInterface::class)
         );
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+
+        $this->assertContainsOnlyInstancesOf(ResponseInterface::class, [$response]);
     }
 
     /**
@@ -181,6 +183,7 @@ class AuthMiddlewareTest extends UnitTest
             $this->createMock(ServerRequestInterface::class),
             $this->createMock(RequestHandlerInterface::class)
         );
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+
+        $this->assertContainsOnlyInstancesOf(ResponseInterface::class, [$response]);
     }
 }

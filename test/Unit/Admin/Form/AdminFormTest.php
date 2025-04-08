@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Form;
 
-use Admin\Admin\Form\AdminForm;
-use Admin\Admin\InputFilter\AdminInputFilter;
+use Admin\Admin\Form\CreateAdminForm;
+use Admin\Admin\InputFilter\CreateAdminInputFilter;
 use Admin\Admin\InputFilter\EditAdminInputFilter;
 use AdminTest\Unit\UnitTest;
 
@@ -15,26 +15,26 @@ class AdminFormTest extends UnitTest
 
     public function testFormWillInstantiate(): void
     {
-        $this->formWillInstantiate(AdminForm::class);
+        $this->formWillInstantiate(CreateAdminForm::class);
     }
 
     public function testFormHasElements(): void
     {
-        $this->formHasElements(new AdminForm(), [
+        $this->formHasElements(new CreateAdminForm(), [
             'identity',
             'password',
             'passwordConfirm',
             'firstName',
             'lastName',
             'status',
+            'adminCreateCsrf',
             'submit',
-            'adminManageCsrf',
         ]);
     }
 
     public function testFormHasInputFilter(): void
     {
-        $this->formHasInputFilter((new AdminForm())->getInputFilter(), [
+        $this->formHasInputFilter((new CreateAdminForm())->getInputFilter(), [
             'identity',
             'password',
             'passwordConfirm',
@@ -42,16 +42,16 @@ class AdminFormTest extends UnitTest
             'lastName',
             'status',
             'roles',
-            'adminManageCsrf',
+            'adminCreateCsrf',
         ]);
     }
 
     public function testFormWillSetDifferentInputFilter(): void
     {
-        $form = new AdminForm();
+        $form = new CreateAdminForm();
 
         $oldInputFilter = $form->getInputFilter();
-        $this->assertInstanceOf(AdminInputFilter::class, $oldInputFilter);
+        $this->assertInstanceOf(CreateAdminInputFilter::class, $oldInputFilter);
 
         $customInputFilter = new EditAdminInputFilter();
         $form->setInputFilter($customInputFilter);

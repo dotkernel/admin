@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Admin\App\InputFilter\Input;
 
-use Admin\App\Message;
+use Core\App\Message;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\InputFilter\Input;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 use Laminas\Validator\NotEmpty;
-
-use function sprintf;
 
 class CsrfInput extends Input
 {
@@ -28,11 +26,11 @@ class CsrfInput extends Input
 
         $this->getValidatorChain()
             ->attachByName(NotEmpty::class, [
-                'message' => sprintf(Message::VALIDATOR_REQUIRED_FIELD_BY_NAME, '<b>CSRF</b>'),
+                'message' => Message::VALIDATOR_REQUIRED_FIELD,
             ], true)
             ->attachByName(Csrf::class, [
                 'name'    => $name,
-                'message' => '<b>CSRF</b> is invalid',
+                'message' => Message::INVALID_CSRF,
                 'session' => new Container(),
             ], true);
     }

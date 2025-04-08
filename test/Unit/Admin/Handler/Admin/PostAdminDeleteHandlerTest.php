@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminDeleteForm;
+use Admin\Admin\Form\DeleteAdminForm;
 use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
-use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
+use Exception;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -23,13 +24,13 @@ use Ramsey\Uuid\Uuid;
 
 class PostAdminDeleteHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|RouterInterface $router;
-    private MockObject|TemplateRendererInterface $template;
-    private MockObject|FlashMessengerInterface $messenger;
-    private MockObject|AdminDeleteForm $form;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&RouterInterface $router;
+    private MockObject&TemplateRendererInterface $template;
+    private MockObject&FlashMessengerInterface $messenger;
+    private MockObject&DeleteAdminForm $form;
     private Logger $logger;
-    private MockObject|ServerRequestInterface $request;
+    private MockObject&ServerRequestInterface $request;
 
     /**
      * @throws MockObjectException
@@ -42,7 +43,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
         $this->router       = $this->createMock(RouterInterface::class);
         $this->template     = $this->createMock(TemplateRendererInterface::class);
         $this->messenger    = $this->createMock(FlashMessengerInterface::class);
-        $this->form         = $this->createMock(AdminDeleteForm::class);
+        $this->form         = $this->createMock(DeleteAdminForm::class);
         $this->request      = $this->createMock(ServerRequestInterface::class);
         $this->logger       = new Logger([
             'writers' => [
@@ -56,9 +57,8 @@ class PostAdminDeleteHandlerTest extends UnitTest
 
     public function testDeleteAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getParsedBody')->willReturn(['test']);
-        $this->form->method('isValid')->willReturn(true);
-        $this->form->method('getData')->willReturn([]);
+        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
             ->messenger
@@ -85,26 +85,25 @@ class PostAdminDeleteHandlerTest extends UnitTest
      */
     public function testDeleteAdminValidFormDataProvidedWillFlashSuccessMessage(): void
     {
-        $adminRepository = $this->createMock(AdminRepository::class);
-        $uuid            = $this->createMock(Uuid::class);
-        $admin           = $this->createMock(Admin::class);
+        $uuid  = $this->createMock(Uuid::class);
+        $admin = $this->createMock(Admin::class);
 
         $uuid->method('toString')->willReturn('0x123');
         $admin->method('getUuid')->willReturn($uuid);
-        $adminRepository->method('findOneBy')->willReturn($admin);
 
-        $this->adminService->method('getAdminRepository')->willReturn($adminRepository);
-        $this->request->method('getParsedBody')->willReturn(['test']);
+        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
+        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+
+        $this->request->method('getParsedBody')->willReturn([]);
         $this->form->method('isValid')->willReturn(true);
-        $this->form->method('getData')->willReturn([]);
 
         $this
             ->messenger
             ->expects($this->once())
             ->method('addSuccess')
-            ->with(Message::ADMIN_DELETED_SUCCESSFULLY);
+            ->with(Message::ADMIN_DELETED);
 
-        $adminRepository->expects($this->once())->method('deleteAdmin')->with($admin);
+        $this->adminService->expects($this->once())->method('deleteAdmin')->with($admin);
 
         $handler = new PostAdminDeleteHandler(
             $this->adminService,
@@ -125,15 +124,15 @@ class PostAdminDeleteHandlerTest extends UnitTest
      */
     public function testDeleteAdminInvalidFormDataProvidedWillReturnHtmlResponse(): void
     {
-        $adminRepository = $this->createMock(AdminRepository::class);
-        $uuid            = $this->createMock(Uuid::class);
-        $admin           = $this->createMock(Admin::class);
+        $uuid  = $this->createMock(Uuid::class);
+        $admin = $this->createMock(Admin::class);
 
         $uuid->method('toString')->willReturn('0x123');
         $admin->method('getUuid')->willReturn($uuid);
-        $adminRepository->method('findOneBy')->willReturn($admin);
 
-        $this->adminService->method('getAdminRepository')->willReturn($adminRepository);
+        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
+        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
         $this->form->method('getData')->willReturn([]);
@@ -152,11 +151,18 @@ class PostAdminDeleteHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testDeleteAdminThrowsErrorWillReturnEmptyResponse(): void
     {
+        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->adminService->method('find')->willReturn(new Admin());
+        $this->form->method('setData')->willThrowException(new Exception('test'));
+
         $this
             ->messenger
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 

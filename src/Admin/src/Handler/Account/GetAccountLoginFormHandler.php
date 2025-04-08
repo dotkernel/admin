@@ -33,7 +33,7 @@ class GetAccountLoginFormHandler implements RequestHandlerInterface
         protected AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
-        protected LoginForm $form,
+        protected LoginForm $loginForm,
     ) {
     }
 
@@ -45,12 +45,12 @@ class GetAccountLoginFormHandler implements RequestHandlerInterface
 
         $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
         if ($shouldRebind) {
-            $this->forms->restoreState($this->form);
+            $this->forms->restoreState($this->loginForm);
         }
 
         return new HtmlResponse(
             $this->template->render('admin::login-form', [
-                'form' => $this->form->prepare(),
+                'form' => $this->loginForm->prepare(),
             ])
         );
     }

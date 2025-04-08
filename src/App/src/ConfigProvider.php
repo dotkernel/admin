@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Admin\App;
 
-use Admin\App\Factory\FormsPluginFactory;
 use Admin\App\Handler\GetIndexRedirectHandler;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\Twig\Extension\RouteExtension;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Dot\Controller\Factory\PluginManagerFactory;
 use Dot\Controller\Plugin\PluginManager;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Mezzio\Application;
-use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 class ConfigProvider
 {
@@ -30,20 +26,13 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                Application::class => [
-                    RoutesDelegator::class,
-                ],
+                Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
-                'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
-                GetIndexRedirectHandler::class        => AttributedServiceFactory::class,
-                PluginManager::class                  => PluginManagerFactory::class,
-                FormsPlugin::class                    => FormsPluginFactory::class,
-                RouteExtension::class                 => AttributedServiceFactory::class,
-            ],
-            'aliases'    => [
-                EntityManager::class          => 'doctrine.entity_manager.orm_default',
-                EntityManagerInterface::class => 'doctrine.entity_manager.orm_default',
+                GetIndexRedirectHandler::class => AttributedServiceFactory::class,
+                PluginManager::class           => PluginManagerFactory::class,
+                FormsPlugin::class             => AttributedServiceFactory::class,
+                RouteExtension::class          => AttributedServiceFactory::class,
             ],
         ];
     }

@@ -6,18 +6,17 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Form\LoginForm;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminLoginServiceInterface;
+use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Enum\AdminStatusEnum;
-use Core\Admin\Enum\SuccessFailureEnum;
-use Core\Admin\Service\AdminServiceInterface;
-use Core\App\Common\ServerRequestAwareTrait;
+use Core\App\Message;
+use Core\App\Service\AuthenticationServiceInterface;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Fig\Http\Message\StatusCodeInterface;
-use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\AuthenticationServiceInterface as LaminasAuthenticationServiceInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -27,100 +26,90 @@ use Throwable;
 
 class PostAccountLoginHandler implements RequestHandlerInterface
 {
-    use ServerRequestAwareTrait;
-
     #[Inject(
         AdminServiceInterface::class,
+        AdminLoginServiceInterface::class,
         RouterInterface::class,
-        AuthenticationServiceInterface::class,
+        LaminasAuthenticationServiceInterface::class,
         FlashMessengerInterface::class,
         FormsPlugin::class,
         LoginForm::class,
-        "dot-log.default_logger",
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
+        protected AdminLoginServiceInterface $adminLoginService,
         protected RouterInterface $router,
-        protected AuthenticationServiceInterface $authenticationService,
+        protected LaminasAuthenticationServiceInterface|AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
-        protected LoginForm $form,
+        protected LoginForm $loginForm,
         protected Logger $logger,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        try {
-            if ($this->authenticationService->hasIdentity()) {
-                return new RedirectResponse($this->router->generateUri('app::index-redirect'));
-            }
+        if ($this->authenticationService->hasIdentity()) {
+            return new RedirectResponse($this->router->generateUri('app::index-redirect'));
+        }
 
+        try {
             $shouldRebind = $this->messenger->getData('shouldRebind') ?? true;
             if ($shouldRebind) {
-                $this->forms->restoreState($this->form);
+                $this->forms->restoreState($this->loginForm);
             }
 
-            $this->form->setData($this->getPostParams($request));
+            $this->loginForm->setData($request->getParsedBody());
 
-            if (! $this->form->isValid()) {
+            if (! $this->loginForm->isValid()) {
                 $this->messenger->addData('shouldRebind', true);
-                $this->forms->saveState($this->form);
-                $this->messenger->addError($this->forms->getMessages($this->form));
+                $this->forms->saveState($this->loginForm);
+                $this->messenger->addError($this->forms->getMessages($this->loginForm));
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             }
+
+            /** @var array $data */
+            $data = $this->loginForm->getData();
 
             /** @var AuthenticationAdapter $adapter */
             $adapter = $this->authenticationService->getAdapter();
-
-            /** @var array $data */
-            $data = $this->form->getData();
-            $adapter->setIdentity($data['username']);
+            $adapter->setIdentity($data['identity']);
             $adapter->setCredential($data['password']);
             $authResult = $this->authenticationService->authenticate();
             if (! $authResult->isValid()) {
-                $this->adminService->logAdminVisit(
-                    $this->getServerParams($request),
-                    $data['username'],
-                    SuccessFailureEnum::Fail,
-                );
-
+                $this->adminLoginService->logFailedLogin($request->getServerParams(), $data['identity']);
                 $this->messenger->addData('shouldRebind', true);
-                $this->forms->saveState($this->form);
+                $this->forms->saveState($this->loginForm);
                 $this->messenger->addError($authResult->getMessages());
 
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
-            } else {
-                /** @var AdminIdentity $identity */
-                $identity = $authResult->getIdentity();
-                if ($identity->getStatus()->value === AdminStatusEnum::Inactive->value) {
-                    $this->authenticationService->clearIdentity();
-                    $this->messenger->addError(Message::ADMIN_INACTIVE);
-                    $this->messenger->addData('shouldRebind', true);
-                    $this->forms->saveState($this->form);
-                    return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
-                }
-
-                $this->adminService->logAdminVisit(
-                    $this->getServerParams($request),
-                    $data['username'],
-                    SuccessFailureEnum::Success,
-                );
-
-                $this->authenticationService->getStorage()->write($identity);
-
-                return new RedirectResponse($this->router->generateUri('app::index-redirect'));
             }
-        } catch (Throwable $e) {
-            $this->messenger->addData('shouldRebind', true);
-            $this->forms->saveState($this->form);
-            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
 
-            $this->logger->err(Message::LOGIN_FAILED, [
-                'error' => $e->getMessage(),
-                'file'  => $e->getFile(),
-                'line'  => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
+            /** @var AdminIdentity $identity */
+            $identity = $authResult->getIdentity();
+            if (! $identity->isActive()) {
+                $this->authenticationService->clearIdentity();
+                $this->messenger->addError(Message::ADMIN_INACTIVE);
+                $this->messenger->addData('shouldRebind', true);
+                $this->forms->saveState($this->loginForm);
+
+                return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
+            }
+
+            $this->adminLoginService->logSuccessfulLogin($request->getServerParams(), $data['identity']);
+            $this->authenticationService->getStorage()->write($identity);
+
+            return new RedirectResponse($this->router->generateUri('app::index-redirect'));
+        } catch (Throwable $exception) {
+            $this->messenger->addData('shouldRebind', true);
+            $this->forms->saveState($this->loginForm);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+            $this->logger->err('Login failed', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
             ]);
 
             return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);

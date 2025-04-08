@@ -2,60 +2,47 @@
 
 {% extends '@layout/default.html.twig' %}
 
-{% block title %}Admin logins{% endblock %}
+{% block title %}Manage admin login attempts{% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-        <h4 class="c-grey-900 mT-10 mB-30">Admin logins</h4>
+        <h4 class="c-grey-900 mT-10 mB-30">Manage admin login attempts</h4>
         <div class="row">
             <div class="col-md-12">
-                <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                <div class="bgc-white bd bdrs-3 pL-20 pR-20 pT-20 pB-3 mB-20">
                     <form class="row g-3" method="get" action="{{ path('admin::admin-login-list') }}">
                         <input type="hidden" name="offset" value="0" />
-                        <input type="hidden" name="limit" value="{{ params.limit }}" />
-                        <input type="hidden" name="sort" value="{{ params.sort }}" />
-                        <input type="hidden" name="order" value="{{ params.order }}" />
+                        <input type="hidden" name="limit" value="{{ pagination.limit }}" />
+                        <input type="hidden" name="sort" value="{{ pagination.sort }}" />
+                        <input type="hidden" name="order" value="{{ pagination.dir }}" />
                         <div class="col-sm-auto">
-                            <select class="form-select form-select-sm"
-                                    aria-label="Identity selector"
-                                    id="identitySelector"
-                                    name="identity">
+                            <select class="form-select form-select-sm" aria-label="Identity selector" name="filters[identity]">
                                 <option value="">Select identity ({{ identities|length }})</option>
                                 {% for identity in identities %}
-                                <option value="{{ identity }}" {{ identity == params.identity ? 'selected' : '' }}>{{ identity }}</option>
+                                <option value="{{ identity }}" {{ identity == (pagination.filters.identity ?? '') ? 'selected' : '' }}>{{ identity }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="col-sm-auto">
-                            <select class="form-select form-select-sm"
-                                    aria-label="Status selector"
-                                    id="statusSelector"
-                                    name="status">
+                            <select class="form-select form-select-sm" aria-label="Status selector" name="filters[status]">
                                 <option value="">Select status</option>
                                 {% for status in statuses %}
-                                    <option value="{{ status }}" {{ status == params.status ? 'selected' : '' }}>{{ status }}</option>
+                                <option value="{{ status.value }}" {{ status.value == (pagination.filters.status ?? '') ? 'selected' : '' }}>{{ status.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="col-sm-auto">
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
-                                <i class="ti-search"></i> Filter
+                                <i class="fa fa-search"></i> Filter
                             </button>
                             <a href="{{ path('admin::admin-login-list') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
                         <div class="col-sm-auto ms-auto">
-                            <div class="dropdown"
-                                 data-bs-toggle="tooltip"
-                                 data-bs-placement="top"
-                                 data-bs-custom-class="custom-tooltip"
-                                 data-bs-title="Toggle columns">
-                                <button class="btn btn-light btn-sm dropdown-toggle"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <i class="ti-view-list-alt"></i>
+                            <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Toggle columns">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-columns"></i>
                                 </button>
                                 <ul class="dropdown-menu" id="column-selector"></ul>
                             </div>
@@ -68,110 +55,110 @@
                     <table id="admin-logins-table" class="table table-bordered table-hover table-striped table-light">
                         <thead>
                             <tr>
-                                <th class="column-identity">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'identity', 'Identity') }}
+                                <th class="column-login-identity">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.identity', 'Identity') }}
                                 </th>
-                                <th class="column-adminIp text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'adminIp', 'Ip Address') }}
+                                <th class="column-login-adminIp text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.adminIp', 'Ip Address') }}
                                 </th>
-                                <th class="column-loginStatus">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'loginStatus', 'Status') }}
+                                <th class="column-login-loginStatus">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.loginStatus', 'Status') }}
                                 </th>
-                                <th class="column-country">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'country', 'Country') }}
+                                <th class="column-login-country">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.country', 'Country') }}
                                 </th>
-                                <th class="column-continent">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'continent', 'Continent') }}
+                                <th class="column-login-continent">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.continent', 'Continent') }}
                                 </th>
-                                <th class="column-organization">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'organization', 'Organization') }}
+                                <th class="column-login-organization">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.organization', 'Organization') }}
                                 </th>
-                                <th class="column-deviceType text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'deviceType', 'Device Type') }}
+                                <th class="column-login-deviceType text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceType', 'Device Type') }}
                                 </th>
-                                <th class="column-deviceBrand text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'deviceBrand', 'Device Brand') }}
+                                <th class="column-login-deviceBrand text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceBrand', 'Device Brand') }}
                                 </th>
-                                <th class="column-deviceModel text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'deviceModel', 'Device Model') }}
+                                <th class="column-login-deviceModel text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceModel', 'Device Model') }}
                                 </th>
-                                <th class="column-isMobile text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'isMobile', 'Is Mobile') }}
+                                <th class="column-login-isMobile text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.isMobile', 'Is Mobile') }}
                                 </th>
-                                <th class="column-osName text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'osName', 'Os Name') }}
+                                <th class="column-login-osName text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osName', 'Os Name') }}
                                 </th>
-                                <th class="column-osVersion text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'osVersion', 'Os Version') }}
+                                <th class="column-login-osVersion text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osVersion', 'Os Version') }}
                                 </th>
-                                <th class="column-osPlatform text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'osPlatform', 'Os Platform') }}
+                                <th class="column-login-osPlatform text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osPlatform', 'Os Platform') }}
                                 </th>
-                                <th class="column-clientType text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'clientType', 'Client Type') }}
+                                <th class="column-login-clientType text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientType', 'Client Type') }}
                                 </th>
-                                <th class="column-clientName text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'clientName', 'Client Name') }}
+                                <th class="column-login-clientName text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientName', 'Client Name') }}
                                 </th>
-                                <th class="column-clientEngine text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'clientEngine', 'Client Engine') }}
+                                <th class="column-login-clientEngine text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientEngine', 'Client Engine') }}
                                 </th>
-                                <th class="column-clientVersion text-nowrap">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'clientVersion', 'Client Version') }}
+                                <th class="column-login-clientVersion text-nowrap">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientVersion', 'Client Version') }}
                                 </th>
-                                <th class="column-created">
-                                    {{ sortableColumn('admin::admin-login-list', {}, params, 'created', 'Created') }}
+                                <th class="column-login-created">
+                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.created', 'Created') }}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for login in logins %}
+                            {% for login in pagination.items %}
                             <tr class="table-row">
-                                <td class="column-identity">{{ login.identity }}</td>
-                                <td class="column-adminIp">{{ login.adminIp }}</td>
-                                <td class="column-loginStatus">
+                                <td class="column-login-identity">{{ login.identity }}</td>
+                                <td class="column-login-adminIp">{{ login.adminIp }}</td>
+                                <td class="column-login-loginStatus">
                                     {% if login.loginStatus.value == 'success' %}
                                     <span class="badge text-bg-success">Success</span>
                                     {% else %}
                                     <span class="badge text-bg-danger">Failed</span>
                                     {% endif %}
                                 </td>
-                                <td class="column-country">{{ login.country }}</td>
-                                <td class="column-continent">{{ login.continent }}</td>
-                                <td class="column-organization">{{ login.organization }}</td>
-                                <td class="column-deviceType">{{ login.deviceType }}</td>
-                                <td class="column-deviceBrand">{{ login.deviceBrand }}</td>
-                                <td class="column-deviceModel">{{ login.deviceModel }}</td>
-                                <td class="column-isMobile">
+                                <td class="column-login-country">{{ login.country }}</td>
+                                <td class="column-login-continent">{{ login.continent }}</td>
+                                <td class="column-login-organization">{{ login.organization }}</td>
+                                <td class="column-login-deviceType">{{ login.deviceType }}</td>
+                                <td class="column-login-deviceBrand">{{ login.deviceBrand }}</td>
+                                <td class="column-login-deviceModel">{{ login.deviceModel }}</td>
+                                <td class="column-login-isMobile">
                                     {% if login.isMobile.value == 'yes' %}
                                     <span class="badge text-bg-primary">Yes</span>
                                     {% else %}
                                     <span class="badge text-bg-secondary">No</span>
                                     {% endif %}
                                 </td>
-                                <td class="column-osName">{{ login.osName }}</td>
-                                <td class="column-osVersion">{{ login.osVersion }}</td>
-                                <td class="column-osPlatform">{{ login.osPlatform }}</td>
-                                <td class="column-clientType">{{ login.clientType }}</td>
-                                <td class="column-clientName">{{ login.clientName }}</td>
-                                <td class="column-clientEngine">{{ login.clientEngine }}</td>
-                                <td class="column-clientVersion">{{ login.clientVersion }}</td>
-                                <td class="column-created">{{ login.created }}</td>
+                                <td class="column-login-osName">{{ login.osName }}</td>
+                                <td class="column-login-osVersion">{{ login.osVersion }}</td>
+                                <td class="column-login-osPlatform">{{ login.osPlatform }}</td>
+                                <td class="column-login-clientType">{{ login.clientType }}</td>
+                                <td class="column-login-clientName">{{ login.clientName }}</td>
+                                <td class="column-login-clientEngine">{{ login.clientEngine }}</td>
+                                <td class="column-login-clientVersion">{{ login.clientVersion }}</td>
+                                <td class="column-login-created">{{ login.getCreated()|date('Y-m-d H:i:s') }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% if pagination.isOutOfBounds() %}
-                    <div class="alert alert-warning text-center text-black fw-bold" role="alert">
-                        Out of bounds! Return to
-                        <a href="{{ path('admin::admin-login-list', {}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
-                    </div>
+                    {% if pagination.isOutOfBounds %}
+                        <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                            Out of bounds! Return to
+                            <a href="{{ path('admin::admin-login-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::admin-login-list', params: params}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::admin-login-list'}, false) }}
                 </div>
             </div>
         </div>

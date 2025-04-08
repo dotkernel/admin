@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\App\Service;
 
-use Admin\App\Service\IpService;
 use AdminTest\Unit\UnitTest;
+use Core\App\Service\IpService;
 
 use function putenv;
 use function sprintf;
@@ -16,7 +16,7 @@ class IpServiceTest extends UnitTest
 
     public function testWillCreate(): void
     {
-        $this->assertInstanceOf(IpService::class, new IpService());
+        $this->assertSame(IpService::class, (new IpService())::class);
     }
 
     public function testWillGetUserIpFromServerParams(): void

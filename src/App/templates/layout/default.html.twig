@@ -10,13 +10,10 @@
     <link rel="manifest" href="{{ asset('images/app/favicon/site.webmanifest') }}">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
-
     <title>{% block title %}{% endblock %} - Dotkernel</title>
-
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="app">
-
     {{ include('@partial/left-menu.html.twig') }}
     <div class="page-container">
         {{ include('@partial/nav-bar.html.twig') }}
@@ -30,10 +27,8 @@
 
         <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"></footer>
     </div>
-
-{% block javascript %}
-<script src="{{ asset('js/app.js') }}"></script>
-{% endblock %}
-
+    {% block javascript %}
+    <script src="{{ asset('js/app.js') }}"></script>
+    {% endblock %}
 </body>
 </html>

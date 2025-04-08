@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core\Admin\Enum;
 
 use function array_column;
+use function array_reduce;
 
 enum AdminStatusEnum: string
 {
@@ -14,5 +15,14 @@ enum AdminStatusEnum: string
     public static function values(): array
     {
         return array_column(self::cases(), 'value');
+    }
+
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function (array $collector, self $enum): array {
+            $collector[$enum->value] = $enum->name;
+
+            return $collector;
+        }, []);
     }
 }

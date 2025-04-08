@@ -8,21 +8,15 @@ parameters:
         - test
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
-        - '/Parameter #1 \$inputFilter of method .*::setInputFilter\(\) expects Laminas\\InputFilter\\InputFilterInterface<[^>]+>, [^ ]+ given\./'
-        - '/Parameter #1 \$expected of method PHPUnit\\Framework\\Assert::assertSame\(\) contains unresolvable type\./'
         -
-            message: '#Call to method PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .* will always evaluate to true.#'
-            path: test
+            message: '#Parameter \#1 \$inputFilter of method Admin\\Admin\\Form\\CreateAdminForm::setInputFilter\(\) expects Laminas\\InputFilter\\InputFilterInterface<Laminas\\Form\\FormInterface>, Admin\\Admin\\InputFilter\\EditAdminInputFilter given.#'
+            path: test/Unit/Admin/Form/AdminFormTest.php
+        -
+            message: '#Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert::assertSame\(\) contains unresolvable type.#'
+            path: test/Unit/App/Plugin/FormsPluginTest.php
         -
             message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface::getInputs\(\)#'
             path: test
         -
             message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface<Laminas\\Form\\FormInterface>::init\(\)#'
             path: src
-        -
-            message: '#Call to an undefined method Laminas\\Authentication\\AuthenticationServiceInterface::getAdapter\(\)#'
-            path: src/Admin/src/Handler/Account/PostAccountLoginHandler.php
-        -
-            message: '#Call to an undefined method Laminas\\Authentication\\AuthenticationServiceInterface::getStorage\(\)#'
-            path: src/Admin/src/Handler/Account/PostAccountLoginHandler.php
-

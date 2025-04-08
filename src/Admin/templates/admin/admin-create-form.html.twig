@@ -1,3 +1,5 @@
+{% from '@partial/macros.html.twig' import inputElement, multiCheckboxElement, submitElement %}
+
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title" id="add-admin-modal-content">Create admin</h5>
@@ -5,7 +7,15 @@
     </div>
     <div class="modal-body">
         {{ form().openTag(form)|raw }}
-            {{ include('@partial/form-display-elements.html.twig', {form: form, showLabels: true}, false) }}
+        {{ inputElement(form.get('identity')) }}
+        {{ inputElement(form.get('password')) }}
+        {{ inputElement(form.get('passwordConfirm')) }}
+        {{ inputElement(form.get('firstName')) }}
+        {{ inputElement(form.get('lastName')) }}
+        {{ inputElement(form.get('status')) }}
+        {{ multiCheckboxElement(form.get('roles')) }}
+        {{ inputElement(form.get('adminCreateCsrf')) }}
+        {{ submitElement(form.get('submit')) }}
         {{ form().closeTag()|raw }}
 
         {% if messages is defined and messages is iterable %}

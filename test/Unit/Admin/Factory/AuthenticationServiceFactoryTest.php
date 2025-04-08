@@ -31,6 +31,7 @@ class AuthenticationServiceFactoryTest extends UnitTest
             ->willReturn($authenticationAdapter);
 
         $service = (new AuthenticationServiceFactory())($container);
-        $this->assertInstanceOf(AuthenticationService::class, $service);
+
+        $this->assertContainsOnlyInstancesOf(AuthenticationService::class, [$service]);
     }
 }

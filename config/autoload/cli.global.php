@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use Dot\Cli\Command\DemoCommand;
+use Core\App\Command\RouteListCommand;
 use Dot\Cli\FileLockerInterface;
+use Dot\GeoIP\Command\GeoIpCommand;
 
 return [
     /**
@@ -13,8 +14,8 @@ return [
         'version'  => '1.0.0',
         'name'     => 'Dotkernel CLI',
         'commands' => [
-            DemoCommand::getDefaultName()                    => DemoCommand::class,
-            Dot\GeoIP\Command\GeoIpCommand::getDefaultName() => Dot\GeoIP\Command\GeoIpCommand::class,
+            RouteListCommand::getDefaultName() => RouteListCommand::class,
+            GeoIpCommand::getDefaultName()     => GeoIpCommand::class,
         ],
     ],
     FileLockerInterface::class => [

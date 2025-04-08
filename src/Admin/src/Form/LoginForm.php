@@ -14,7 +14,9 @@ use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/** @template-extends Form<FormInterface> */
+/**
+ * @template-extends Form<FormInterface>
+ */
 class LoginForm extends Form
 {
     protected InputFilterInterface $inputFilter;
@@ -35,48 +37,31 @@ class LoginForm extends Form
 
     public function init(): void
     {
-        $this->add([
-            'name'       => 'username',
-            'options'    => [
-                'label' => 'Username',
-            ],
-            'attributes' => [
-                'placeholder' => 'Username',
-                'class'       => 'form-control form-control-sm',
-                'required'    => 'required',
-            ],
-            'type'       => Text::class,
-        ]);
-
-        $this->add([
-            'name'       => 'password',
-            'options'    => [
-                'label' => 'Password',
-            ],
-            'attributes' => [
-                'placeholder' => 'Password',
-                'class'       => 'form-control form-control-sm',
-                'required'    => 'required',
-            ],
-            'type'       => Password::class,
-        ]);
-
-        $this->add([
-            'name'       => 'submit',
-            'attributes' => [
-                'type'  => 'submit',
-                'value' => 'Log in',
-                'class' => 'btn btn-primary btn-block btn-sm login-button',
-            ],
-            'type'       => Submit::class,
-        ]);
-
-        $this->add(new Csrf('loginCsrf', [
-            'csrf_options' => [
-                'timeout' => 3600,
-                'session' => new Container(),
-            ],
-        ]));
+        $this->add(
+            (new Text('identity'))
+                ->setLabel('Identity')
+                ->setAttribute('class', 'form-control form-control-sm')
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Password('password'))
+                ->setLabel('Password')
+                ->setAttribute('class', 'form-control form-control-sm')
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Csrf('loginCsrf'))
+                ->setOptions([
+                    'csrf_options' => ['timeout' => 3600, 'session' => new Container()],
+                ])
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Submit('submit'))
+                ->setAttribute('type', 'submit')
+                ->setAttribute('value', 'Log in')
+                ->setAttribute('class', 'btn btn-primary btn-sm')
+        );
     }
 
     public function getInputFilter(): InputFilterInterface

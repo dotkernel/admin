@@ -8,7 +8,7 @@
         <div class="toast-container top-0 end-0 p-10">
         {% for namespace in messages|keys %}
             {% if classes[namespace] is defined %}
-                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-animation="true" data-bs-delay="3000">
+                <div class="toast mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-animation="true" data-bs-delay="3000">
                     <div class="toast-header">
                         <div class="rounded-1 me-2 p-5 bg-{{ classes[namespace] }}"></div>
                         <strong class="me-auto">Dotkernel</strong>

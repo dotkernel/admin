@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
-use Admin\App\Message;
-use Core\Admin\Service\AdminServiceInterface;
+use Admin\Admin\Form\CreateAdminForm;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\ConflictException;
 use Core\App\Exception\IdentityException;
+use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -28,60 +29,61 @@ class PostAdminCreateHandler implements RequestHandlerInterface
         RouterInterface::class,
         TemplateRendererInterface::class,
         FlashMessengerInterface::class,
-        AdminForm::class,
-        "dot-log.default_logger",
+        CreateAdminForm::class,
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected FlashMessengerInterface $messenger,
-        protected AdminForm $form,
+        protected CreateAdminForm $createAdminForm,
         protected Logger $logger,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::admin-create'));
+
         try {
-            $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
-            $this->form->setData($request->getParsedBody());
-            if ($this->form->isValid()) {
+            $this->createAdminForm->setData($request->getParsedBody());
+            if ($this->createAdminForm->isValid()) {
                 /** @var array $result */
-                $result = $this->form->getData();
+                $result = $this->createAdminForm->getData();
                 $this->adminService->createAdmin($result);
-                $this->messenger->addSuccess(Message::ADMIN_CREATED_SUCCESSFULLY);
+                $this->messenger->addSuccess(Message::ADMIN_CREATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
-            } else {
-                return new HtmlResponse(
-                    $this->template->render('admin::admin-create-form', [
-                        'form' => $this->form->prepare(),
-                    ]),
-                    StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
-                );
             }
-        } catch (IdentityException $e) {
+
             return new HtmlResponse(
                 $this->template->render('admin::admin-create-form', [
-                    'form'     => $this->form->prepare(),
+                    'form' => $this->createAdminForm->prepare(),
+                ]),
+                StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
+            );
+        } catch (ConflictException | IdentityException $exception) {
+            return new HtmlResponse(
+                $this->template->render('admin::admin-create-form', [
+                    'form'     => $this->createAdminForm->prepare(),
                     'messages' => [
-                        'error' => $e->getMessage(),
+                        'error' => $exception->getMessage(),
                     ],
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
-        } catch (Throwable $e) {
-            $this->logger->err(Message::CREATE_ADMIN, [
-                'error' => $e->getMessage(),
-                'file'  => $e->getFile(),
-                'line'  => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
+        } catch (Throwable $exception) {
+            $this->logger->err('Create admin', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
             ]);
 
             return new HtmlResponse(
                 $this->template->render('admin::admin-create-form', [
-                    'form'     => $this->form->prepare(),
+                    'form'     => $this->createAdminForm->prepare(),
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,
                     ],

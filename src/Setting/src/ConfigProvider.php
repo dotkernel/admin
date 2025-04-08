@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\DBAL\Types\SettingEnumType;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Handler\PostSettingStoreHandler;
-use Admin\Setting\Repository\SettingRepository;
 use Admin\Setting\Service\SettingService;
-use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Dot\DependencyInjection\Factory\AttributedRepositoryFactory;
+use Admin\Setting\Service\SettingServiceInterface;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Mezzio\Application;
 
@@ -20,7 +17,6 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'doctrine'     => $this->getDoctrineConfig(),
         ];
     }
 
@@ -28,36 +24,15 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                Application::class => [
-                    RoutesDelegator::class,
-                ],
+                Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
                 PostSettingStoreHandler::class => AttributedServiceFactory::class,
                 GetSettingViewHandler::class   => AttributedServiceFactory::class,
                 SettingService::class          => AttributedServiceFactory::class,
-                SettingRepository::class       => AttributedRepositoryFactory::class,
             ],
-        ];
-    }
-
-    public function getDoctrineConfig(): array
-    {
-        return [
-            'driver' => [
-                'orm_default'     => [
-                    'drivers' => [
-                        'Admin\Setting\Entity' => 'SettingEntities',
-                    ],
-                ],
-                'SettingEntities' => [
-                    'class' => AttributeDriver::class,
-                    'cache' => 'array',
-                    'paths' => [__DIR__ . '/Entity'],
-                ],
-            ],
-            'types'  => [
-                SettingEnumType::NAME => SettingEnumType::class,
+            'aliases'    => [
+                SettingServiceInterface::class => SettingService::class,
             ],
         ];
     }

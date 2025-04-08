@@ -1,8 +1,8 @@
 $(document).ready(() => {
-    const request = async (url, options = {}) => {
+    const request = async(url, options = {}) => {
         try {
             const response = await fetch(url, options);
-            const body = await response.text();
+            const body     = await response.text();
             if (! response.ok) {
                 throw {
                     data: body,
@@ -18,15 +18,16 @@ $(document).ready(() => {
 
     $("#add-admin-modal").on('show.bs.modal', function () {
         const modal = $(this);
-        const url = modal.data('add-url');
-
-        request(url, {
+        request(modal.data('add-url'), {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
         }).catch(error => {
             console.error('Error', error)
         });
+    }).on('hidden.bs.modal', function () {
+        const modal = $(this);
+        modal.find('.modal-dialog').find('.modal-body').html('Loading...');
     });
 
     $("#edit-admin-modal").on('show.bs.modal', function () {
@@ -36,15 +37,16 @@ $(document).ready(() => {
         }
 
         const modal = $(this);
-        const url = selectedElement.data('edit-url');
-
-        request(url, {
+        request(selectedElement.data('edit-url'), {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
         }).catch(() => {
             location.reload();
         });
+    }).on('hidden.bs.modal', function () {
+        const modal = $(this);
+        modal.find('.modal-dialog').find('.modal-body').html('Loading...');
     });
 
     $("#delete-admin-modal").on('show.bs.modal', function () {
@@ -54,15 +56,16 @@ $(document).ready(() => {
         }
 
         const modal = $(this);
-        const url = selectedElement.data('delete-url');
-
-        request(url, {
+        request(selectedElement.data('delete-url'), {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
         }).catch(() => {
             location.reload();
         });
+    }).on('hidden.bs.modal', function () {
+        const modal = $(this);
+        modal.find('.modal-dialog').find('.modal-body').html('Loading...');
     });
 
     $(document).on("submit", "#admin-form", (event) => {
@@ -75,10 +78,8 @@ $(document).ready(() => {
             return;
         }
 
-        const url = form.getAttribute('action');
         const modal = $(form.closest('.modal'));
-
-        request(url, {
+        request(form.getAttribute('action'), {
             method: 'POST',
             body: new FormData(form),
         }).then(data => {
@@ -99,10 +100,8 @@ $(document).ready(() => {
             return;
         }
 
-        const url = form.getAttribute('action');
         const modal = $(form.closest('.modal'));
-
-        request(url, {
+        request(form.getAttribute('action'), {
             method: 'POST',
             body: new FormData(form),
         }).then(() => {

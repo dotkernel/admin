@@ -7,12 +7,13 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Form\LoginForm;
 use Admin\Admin\Handler\Account\PostAccountLoginHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminLoginServiceInterface;
+use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Enum\AdminStatusEnum;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
@@ -28,18 +29,19 @@ use Psr\Http\Message\UriInterface;
 
 class PostAccountLoginHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|RouterInterface $router;
-    private MockObject|AuthenticationService $authenticationService;
-    private MockObject|FlashMessengerInterface $messenger;
-    private MockObject|FormsPlugin $formsPlugin;
-    private MockObject|LoginForm $loginForm;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&AdminLoginServiceInterface $adminLoginService;
+    private MockObject&RouterInterface $router;
+    private MockObject&AuthenticationService $authenticationService;
+    private MockObject&FlashMessengerInterface $messenger;
+    private MockObject&FormsPlugin $formsPlugin;
+    private MockObject&LoginForm $loginForm;
     private Logger $logger;
-    private MockObject|ServerRequestInterface $request;
-    private MockObject|Result $authenticationResult;
-    private MockObject|AuthenticationAdapter $authenticationAdapter;
-    private MockObject|AdminIdentity $identity;
-    private MockObject|StorageInterface $storage;
+    private MockObject&ServerRequestInterface $request;
+    private MockObject&Result $authenticationResult;
+    private MockObject&AuthenticationAdapter $authenticationAdapter;
+    private MockObject&AdminIdentity $identity;
+    private MockObject&StorageInterface $storage;
 
     /**
      * @throws MockObjectException
@@ -49,6 +51,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         parent::setUp();
 
         $this->adminService          = $this->createMock(AdminServiceInterface::class);
+        $this->adminLoginService     = $this->createMock(AdminLoginServiceInterface::class);
         $this->router                = $this->createMock(RouterInterface::class);
         $this->authenticationService = $this->createMock(AuthenticationService::class);
         $this->messenger             = $this->createMock(FlashMessengerInterface::class);
@@ -75,6 +78,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,
@@ -111,6 +115,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,
@@ -137,16 +142,17 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->request->method('getServerParams')->willReturn([]);
         $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->loginForm->method('isValid')->willReturn(true);
-        $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
+        $this->loginForm->method('getData')->willReturn(['identity' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
         $this->messenger->expects($this->atLeastOnce())->method('addError');
-        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
+        $this->adminLoginService->expects($this->atLeastOnce())->method('logFailedLogin');
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,
@@ -175,7 +181,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->request->method('getServerParams')->willReturn([]);
         $this->request->method('getUri')->willReturn($this->createMock(UriInterface::class));
         $this->loginForm->method('isValid')->willReturn(true);
-        $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
+        $this->loginForm->method('getData')->willReturn(['identity' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
@@ -193,6 +199,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,
@@ -222,6 +229,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,
@@ -237,7 +245,7 @@ class PostAccountLoginHandlerTest extends UnitTest
 
     public function testAdminLoginSuccessfulWillReturnRedirectResponse(): void
     {
-        $this->identity->method('getStatus')->willReturn(AdminStatusEnum::Active);
+        $this->identity->method('isActive')->willReturn(true);
         $this->authenticationResult->method('isValid')->willReturn(true);
         $this->authenticationResult->method('getMessages')->willReturn([]);
         $this->authenticationResult->method('getIdentity')->willReturn($this->identity);
@@ -246,17 +254,19 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('getStorage')->willReturn($this->storage);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getServerParams')->willReturn([]);
+        $this->request->method('getUri')->willReturn('/test');
         $this->loginForm->method('isValid')->willReturn(true);
-        $this->loginForm->method('getData')->willReturn(['username' => 'test', 'password' => 'test']);
+        $this->loginForm->method('getData')->willReturn(['identity' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
         $this->authenticationAdapter->method('setCredential')->willReturn($this->authenticationAdapter);
         $this->authenticationService->method('getAdapter')->willReturn($this->authenticationAdapter);
 
-        $this->adminService->expects($this->atLeastOnce())->method('logAdminVisit');
+        $this->adminLoginService->expects($this->atLeastOnce())->method('logSuccessfulLogin');
         $this->storage->expects($this->atLeastOnce())->method('write')->with($this->identity);
 
         $handler = new PostAccountLoginHandler(
             $this->adminService,
+            $this->adminLoginService,
             $this->router,
             $this->authenticationService,
             $this->messenger,

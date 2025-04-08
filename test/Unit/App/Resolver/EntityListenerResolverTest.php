@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\App\Resolver;
 
 use AdminTest\Unit\UnitTest;
-use Core\App\Entity\EntityListenerResolver;
+use Core\App\Resolver\EntityListenerResolver;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -22,7 +22,8 @@ class EntityListenerResolverTest extends UnitTest
         $resolver = new EntityListenerResolver(
             $this->createMock(ContainerInterface::class)
         );
-        $this->assertInstanceOf(EntityListenerResolver::class, $resolver);
+
+        $this->assertSame(EntityListenerResolver::class, $resolver::class);
     }
 
     /**

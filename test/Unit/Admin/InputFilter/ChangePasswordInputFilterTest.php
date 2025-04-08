@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\InputFilter;
 
 use Admin\Admin\InputFilter\ChangePasswordInputFilter;
+use Admin\App\InputFilter\Input\PasswordInput;
 use AdminTest\Unit\UnitTest;
+use Core\App\Message;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 
@@ -25,10 +27,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('currentPassword', $messages);
         $this->assertIsArray($messages['currentPassword']);
         $this->assertArrayHasKey('isEmpty', $messages['currentPassword']);
-        $this->assertSame(
-            '<b>Current Password</b> is required and cannot be empty',
-            $messages['currentPassword']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['currentPassword']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => null,
@@ -39,10 +38,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('currentPassword', $messages);
         $this->assertIsArray($messages['currentPassword']);
         $this->assertArrayHasKey('isEmpty', $messages['currentPassword']);
-        $this->assertSame(
-            '<b>Current Password</b> is required and cannot be empty',
-            $messages['currentPassword']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['currentPassword']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => '',
@@ -53,10 +49,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('currentPassword', $messages);
         $this->assertIsArray($messages['currentPassword']);
         $this->assertArrayHasKey('isEmpty', $messages['currentPassword']);
-        $this->assertSame(
-            '<b>Current Password</b> is required and cannot be empty',
-            $messages['currentPassword']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['currentPassword']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => '   ',
@@ -67,10 +60,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('currentPassword', $messages);
         $this->assertIsArray($messages['currentPassword']);
         $this->assertArrayHasKey('isEmpty', $messages['currentPassword']);
-        $this->assertSame(
-            '<b>Current Password</b> is required and cannot be empty',
-            $messages['currentPassword']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['currentPassword']['isEmpty']);
     }
 
     public function testWillValidatePassword(): void
@@ -87,10 +77,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame(
-            '<b>Password</b> is required and cannot be empty',
-            $messages['password']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -102,10 +89,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame(
-            '<b>Password</b> is required and cannot be empty',
-            $messages['password']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -117,10 +101,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame(
-            '<b>Password</b> is required and cannot be empty',
-            $messages['password']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -132,10 +113,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame(
-            '<b>Password</b> is required and cannot be empty',
-            $messages['password']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -148,7 +126,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['password']);
         $this->assertSame(
-            '<b>Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['password']['stringLengthTooShort']
         );
 
@@ -163,7 +141,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['password']);
         $this->assertSame(
-            '<b>Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['password']['stringLengthTooLong']
         );
     }
@@ -183,10 +161,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('passwordConfirm', $messages);
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('isEmpty', $messages['passwordConfirm']);
-        $this->assertSame(
-            '<b>Confirm Password</b> is required and cannot be empty',
-            $messages['passwordConfirm']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['passwordConfirm']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -199,10 +174,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('passwordConfirm', $messages);
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('isEmpty', $messages['passwordConfirm']);
-        $this->assertSame(
-            '<b>Confirm Password</b> is required and cannot be empty',
-            $messages['passwordConfirm']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['passwordConfirm']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -215,10 +187,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('passwordConfirm', $messages);
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('isEmpty', $messages['passwordConfirm']);
-        $this->assertSame(
-            '<b>Confirm Password</b> is required and cannot be empty',
-            $messages['passwordConfirm']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['passwordConfirm']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -231,10 +200,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertArrayHasKey('passwordConfirm', $messages);
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('isEmpty', $messages['passwordConfirm']);
-        $this->assertSame(
-            '<b>Confirm Password</b> is required and cannot be empty',
-            $messages['passwordConfirm']['isEmpty']
-        );
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['passwordConfirm']['isEmpty']);
 
         $inputFilter->setData([
             'currentPassword' => 'password',
@@ -248,7 +214,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Confirm Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['passwordConfirm']['stringLengthTooShort']
         );
 
@@ -264,7 +230,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Confirm Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['passwordConfirm']['stringLengthTooLong']
         );
 
@@ -280,7 +246,7 @@ class ChangePasswordInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('notSame', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Password</b> and <b>Confirm Password</b> do not match',
+            Message::validatorMismatch('Password', 'Confirm password'),
             $messages['passwordConfirm']['notSame']
         );
     }

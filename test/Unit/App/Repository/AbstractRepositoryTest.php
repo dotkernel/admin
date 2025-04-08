@@ -26,8 +26,8 @@ class AbstractRepositoryTest extends UnitTest
         $repository = new class ($entityManager, $classMetadata) extends AbstractRepository {
         };
 
-        $this->assertInstanceOf(AbstractRepository::class, $repository);
-        $this->assertInstanceOf(EntityRepository::class, $repository);
-        $this->assertInstanceOf(QueryBuilder::class, $repository->getQueryBuilder());
+        $this->assertContainsOnlyInstancesOf(AbstractRepository::class, [$repository]);
+        $this->assertContainsOnlyInstancesOf(EntityRepository::class, [$repository]);
+        $this->assertSame(QueryBuilder::class, $repository->getQueryBuilder()::class);
     }
 }

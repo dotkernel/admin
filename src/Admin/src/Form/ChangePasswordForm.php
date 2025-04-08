@@ -6,12 +6,16 @@ namespace Admin\Admin\Form;
 
 use Admin\Admin\InputFilter\ChangePasswordInputFilter;
 use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Password;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/** @template-extends Form<FormInterface> */
+/**
+ * @template-extends Form<FormInterface>
+ */
 class ChangePasswordForm extends Form
 {
     protected InputFilterInterface $inputFilter;
@@ -23,7 +27,7 @@ class ChangePasswordForm extends Form
         $this->init();
 
         $this->setAttribute('id', 'change-password-form');
-        $this->setAttribute('class', 'needs-validation');
+        $this->setAttribute('class', 'row g-3 needs-validation');
         $this->setAttribute('novalidate', 'novalidate');
 
         $this->inputFilter = new ChangePasswordInputFilter();
@@ -32,58 +36,34 @@ class ChangePasswordForm extends Form
 
     public function init(): void
     {
-        $this->add([
-            'name'       => 'currentPassword',
-            'type'       => 'Password',
-            'options'    => [
-                'label' => 'Your current password',
-            ],
-            'attributes' => [
-                'class'    => 'form-control form-control-sm',
-                'required' => 'required',
-            ],
-        ]);
-
-        $this->add([
-            'name'       => 'password',
-            'type'       => 'Password',
-            'options'    => [
-                'label' => 'New password',
-            ],
-            'attributes' => [
-                'class'    => 'form-control form-control-sm',
-                'required' => 'required',
-            ],
-        ]);
-
-        $this->add([
-            'name'       => 'passwordConfirm',
-            'type'       => 'Password',
-            'options'    => [
-                'label' => 'New password confirm',
-            ],
-            'attributes' => [
-                'class'    => 'form-control form-control-sm',
-                'required' => 'required',
-            ],
-        ]);
-
-        $this->add([
-            'name'       => 'submit',
-            'type'       => 'submit',
-            'attributes' => [
-                'type'  => 'submit',
-                'value' => 'Change Password',
-                'class' => 'btn btn-primary btn-color btn-sm',
-            ],
-        ], ['priority' => -100]);
-
-        $this->add(new Csrf('changePasswordCsrf', [
-            'csrf_options' => [
-                'timeout' => 3600,
-                'session' => new Container(),
-            ],
-        ]));
+        $this->add(
+            (new Password('currentPassword'))
+                ->setLabel('Your current password')
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Password('password'))
+                ->setLabel('New password')
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Password('passwordConfirm'))
+                ->setLabel('New password confirmation')
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Csrf('changePasswordCsrf'))
+                ->setOptions([
+                    'csrf_options' => ['timeout' => 3600, 'session' => new Container()],
+                ])
+                ->setAttribute('required', true)
+        );
+        $this->add(
+            (new Submit('submit'))
+                ->setAttribute('type', 'submit')
+                ->setAttribute('value', 'Change Password')
+                ->setAttribute('class', 'btn btn-sm btn-primary')
+        );
     }
 
     public function getInputFilter(): InputFilterInterface

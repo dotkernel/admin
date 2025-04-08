@@ -10,11 +10,11 @@ use Mezzio\Authentication\UserInterface;
 class AdminIdentity implements UserInterface
 {
     public function __construct(
-        protected string $uuid,
-        protected string $identity,
-        protected AdminStatusEnum $status,
-        protected array $roles = [],
-        protected array $details = []
+        public string $uuid,
+        public string $identity,
+        public AdminStatusEnum $status,
+        public array $roles = [],
+        public array $details = []
     ) {
     }
 
@@ -31,6 +31,11 @@ class AdminIdentity implements UserInterface
     public function getStatus(): AdminStatusEnum
     {
         return $this->status;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->getStatus() === AdminStatusEnum::Active;
     }
 
     public function getRoles(): iterable

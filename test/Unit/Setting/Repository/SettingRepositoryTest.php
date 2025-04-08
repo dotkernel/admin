@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Repository;
 
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Repository\SettingRepository;
 use AdminTest\Unit\UnitTest;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Repository\SettingRepository;
 use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -27,6 +27,6 @@ class SettingRepositoryTest extends UnitTest
             $entityManager->getClassMetadata(Setting::class)
         );
 
-        $this->assertInstanceOf(SettingRepository::class, $repository);
+        $this->assertSame(SettingRepository::class, $repository::class);
     }
 }

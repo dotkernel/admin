@@ -27,7 +27,7 @@ trait FormTrait
 
         foreach ($elements as $element) {
             $this->assertTrue($form->has($element));
-            $this->assertInstanceOf(ElementInterface::class, $form->get($element));
+            $this->assertContainsOnlyInstancesOf(ElementInterface::class, [$form->get($element)]);
         }
     }
 

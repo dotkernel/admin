@@ -6,14 +6,17 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\App\Message;
-use Core\Admin\Service\AdminServiceInterface;
-use Core\App\Common\ServerRequestAwareTrait;
-use Core\App\Exception\IdentityException;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\BadRequestException;
+use Core\App\Exception\ConflictException;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
+use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
@@ -25,8 +28,6 @@ use Throwable;
 
 class PostAccountEditHandler implements RequestHandlerInterface
 {
-    use ServerRequestAwareTrait;
-
     #[Inject(
         AdminServiceInterface::class,
         RouterInterface::class,
@@ -35,7 +36,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
         AccountForm::class,
         ChangePasswordForm::class,
         FlashMessengerInterface::class,
-        "dot-log.default_logger",
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -51,16 +52,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
-        $this->changePasswordForm->setAttribute(
-            'action',
-            $this->router->generateUri('admin::account-change-password')
-        );
-
-        $identity = $this->authenticationService->getIdentity();
-        $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
-
-        $this->accountForm->setData($this->getPostParams($request));
+        $this->accountForm->setData($request->getParsedBody());
         if (! $this->accountForm->isValid()) {
             return new HtmlResponse(
                 $this->template->render('admin::account-view', [
@@ -71,19 +63,28 @@ class PostAccountEditHandler implements RequestHandlerInterface
         }
 
         try {
-            /** @var array $result */
-            $result = $this->accountForm->getData();
+            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
 
-            $this->adminService->updateAdmin($admin, $result);
-            $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
-        } catch (IdentityException $e) {
-            $this->messenger->addError($e->getMessage());
-        } catch (Throwable $e) {
-            $this->logger->err(Message::UPDATE_ADMIN, [
-                'error' => $e->getMessage(),
-                'file'  => $e->getFile(),
-                'line'  => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
+            return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+        }
+
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->changePasswordForm
+            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
+
+        try {
+            $this->adminService->updateAdmin($admin, (array) $this->accountForm->getData());
+            $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
+        } catch (BadRequestException | ConflictException | NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
+        } catch (Throwable $exception) {
+            $this->logger->err('Update admin', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
             ]);
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }

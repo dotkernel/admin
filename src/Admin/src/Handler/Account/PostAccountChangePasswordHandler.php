@@ -6,15 +6,15 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\App\Message;
-use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Service\AdminServiceInterface;
-use Core\App\Common\ServerRequestAwareTrait;
-use Core\App\Exception\IdentityException;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
+use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
@@ -26,8 +26,6 @@ use Throwable;
 
 class PostAccountChangePasswordHandler implements RequestHandlerInterface
 {
-    use ServerRequestAwareTrait;
-
     #[Inject(
         AdminServiceInterface::class,
         RouterInterface::class,
@@ -36,7 +34,7 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
         FlashMessengerInterface::class,
         AccountForm::class,
         ChangePasswordForm::class,
-        "dot-log.default_logger",
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -52,45 +50,43 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        try {
-            $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
-            $this->changePasswordForm->setAttribute(
-                'action',
-                $this->router->generateUri('admin::account-change-password')
+        $this->changePasswordForm->setData($request->getParsedBody());
+        if (! $this->changePasswordForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::account-view', [
+                    'accountForm'        => $this->accountForm->prepare(),
+                    'changePasswordForm' => $this->changePasswordForm->prepare(),
+                ])
             );
+        }
 
-            /** @var AdminIdentity $adminIdentity */
-            $adminIdentity = $this->authenticationService->getIdentity();
-            $admin         = $this->adminService->getAdminRepository()->findOneBy([
-                'identity' => $adminIdentity->getIdentity(),
-            ]);
+        try {
+            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
 
-            $this->changePasswordForm->setData($this->getPostParams($request));
-            if (! $this->changePasswordForm->isValid()) {
-                return new HtmlResponse(
-                    $this->template->render('admin::account-view', [
-                        'accountForm'        => $this->accountForm->prepare(),
-                        'changePasswordForm' => $this->changePasswordForm->prepare(),
-                    ])
-                );
-            }
+            return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+        }
 
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->changePasswordForm
+            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
+
+        try {
             /** @var array $result */
             $result = $this->changePasswordForm->getData();
             if ($admin->verifyPassword($result['currentPassword'])) {
                 $this->adminService->updateAdmin($admin, $result);
-                $this->messenger->addSuccess(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+                $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
             } else {
-                $this->messenger->addError(Message::CURRENT_PASSWORD_INCORRECT);
+                $this->messenger->addError(Message::INVALID_CURRENT_PASSWORD);
             }
-        } catch (IdentityException $e) {
-            $this->messenger->addError($e->getMessage());
-        } catch (Throwable $e) {
-            $this->logger->err(Message::CHANGE_PASSWORD, [
-                'error' => $e->getMessage(),
-                'file'  => $e->getFile(),
-                'line'  => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
+        } catch (Throwable $exception) {
+            $this->logger->err('Change password', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
             ]);
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }

@@ -4,35 +4,46 @@ declare(strict_types=1);
 
 namespace Core\Admin\Entity;
 
+use BackedEnum;
 use Core\Admin\Enum\AdminRoleEnum;
 use Core\Admin\Repository\AdminRoleRepository;
 use Core\App\Entity\AbstractEntity;
+use Core\App\Entity\RoleInterface;
 use Core\App\Entity\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdminRoleRepository::class)]
 #[ORM\Table(name: 'admin_role')]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE")]
-class AdminRole extends AbstractEntity
+class AdminRole extends AbstractEntity implements RoleInterface
 {
     use TimestampsTrait;
 
     #[ORM\Column(
+        name: 'name',
         type: 'admin_role_enum',
-        nullable: true,
+        unique: true,
         enumType: AdminRoleEnum::class,
         options: ['default' => AdminRoleEnum::Admin]
-    )
-    ]
+    )]
     protected AdminRoleEnum $name = AdminRoleEnum::Admin;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->created();
+    }
 
     public function getName(): AdminRoleEnum
     {
         return $this->name;
     }
 
-    public function setName(AdminRoleEnum $name): self
+    /**
+     * @param AdminRoleEnum $name
+     */
+    public function setName(BackedEnum $name): self
     {
         $this->name = $name;
 
@@ -42,10 +53,10 @@ class AdminRole extends AbstractEntity
     public function getArrayCopy(): array
     {
         return [
-            'uuid'    => $this->getUuid()->toString(),
-            'name'    => $this->getName()->value,
-            'created' => $this->getCreated(),
-            'updated' => $this->getUpdated(),
+            'uuid'    => $this->uuid->toString(),
+            'name'    => $this->name->value,
+            'created' => $this->created,
+            'updated' => $this->updated,
         ];
     }
 }
