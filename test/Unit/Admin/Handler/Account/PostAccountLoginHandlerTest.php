@@ -243,6 +243,9 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, $response->getStatusCode());
     }
 
+    /**
+     * @throws MockObjectException
+     */
     public function testAdminLoginSuccessfulWillReturnRedirectResponse(): void
     {
         $this->identity->method('isActive')->willReturn(true);
@@ -254,7 +257,9 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->authenticationService->method('getStorage')->willReturn($this->storage);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->request->method('getServerParams')->willReturn([]);
-        $this->request->method('getUri')->willReturn('/test');
+        $this->request->method('getUri')->willReturn(
+            $this->createMock(UriInterface::class),
+        );
         $this->loginForm->method('isValid')->willReturn(true);
         $this->loginForm->method('getData')->willReturn(['identity' => 'test', 'password' => 'test']);
         $this->authenticationAdapter->method('setIdentity')->willReturn($this->authenticationAdapter);
