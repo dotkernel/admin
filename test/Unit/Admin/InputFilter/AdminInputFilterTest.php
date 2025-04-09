@@ -481,10 +481,7 @@ class AdminInputFilterTest extends UnitTest
         $this->assertArrayHasKey('status', $messages);
         $this->assertIsArray($messages['status']);
         $this->assertArrayHasKey('notInArray', $messages['status']);
-        $this->assertSame(
-            'The input was not found in the haystack',
-            $messages['status']['notInArray']
-        );
+        $this->assertSame(Message::invalidValue('status'), $messages['status']['notInArray']);
     }
 
     public function testWillValidateRoles(): void

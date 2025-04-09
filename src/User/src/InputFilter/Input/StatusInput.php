@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\User\InputFilter\Input;
 
+use Core\App\Message;
 use Core\User\Enum\UserStatusEnum;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
@@ -25,6 +26,7 @@ class StatusInput extends Input
         $this->getValidatorChain()
             ->attachByName(InArray::class, [
                 'haystack' => UserStatusEnum::values(),
+                'message'  => Message::invalidValue('status'),
             ], true);
     }
 }

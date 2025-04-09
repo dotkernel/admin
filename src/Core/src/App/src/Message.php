@@ -87,6 +87,11 @@ class Message
         return sprintf(self::MAIL_NOT_SENT_TO, $email);
     }
 
+    public static function mailSentUserActivation(string $email): string
+    {
+        return sprintf(self::MAIL_SENT_USER_ACTIVATION, $email);
+    }
+
     public static function restrictionDeprecation(string $first, string $second): string
     {
         return sprintf(self::RESTRICTION_DEPRECATION, $first, $second);

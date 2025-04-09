@@ -16,6 +16,9 @@ class UserRoleLoader implements FixtureInterface
         $manager->persist(
             (new UserRole())->setName(UserRoleEnum::User)
         );
+        $manager->persist(
+            (new UserRole())->setName(UserRoleEnum::Guest)
+        );
 
         $manager->flush();
     }
