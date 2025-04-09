@@ -102,7 +102,7 @@ class StoreSettingHandlerTest extends UnitTest
     {
         $this->identity->method('getUuid')->willReturn('test');
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
         $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => 'test',
             'value'      => 'test',
@@ -147,7 +147,7 @@ class StoreSettingHandlerTest extends UnitTest
             $this->createMock(Setting::class)
         );
         $this->settingService->expects($this->once())->method('updateSetting');
-        $this->adminService->method('find')->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value,
             'value'      => ['test'],

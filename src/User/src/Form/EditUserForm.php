@@ -53,7 +53,9 @@ class EditUserForm extends Form
             ->add(
                 (new Text('identity'))
                     ->setLabel('Identity')
+                    ->setAttribute('readonly', true)
                     ->setAttribute('required', true)
+                    ->setAttribute('class', 'form-control form-control-sm bgc-grey-200')
             )->add(
                 (new Password('password'))
                     ->setLabel('Password')

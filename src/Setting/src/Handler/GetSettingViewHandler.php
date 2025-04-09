@@ -50,7 +50,7 @@ class GetSettingViewHandler implements RequestHandlerInterface
         }
 
         try {
-            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
             return new JsonResponse([
                 'error' => [

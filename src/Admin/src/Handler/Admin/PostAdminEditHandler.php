@@ -52,7 +52,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->find($request->getAttribute('uuid'));
+            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -75,7 +75,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
         try {
             $this->editAdminForm->setData($request->getParsedBody());
             if ($this->editAdminForm->isValid()) {
-                $this->adminService->updateAdmin($admin, (array) $this->editAdminForm->getData());
+                $this->adminService->saveAdmin((array) $this->editAdminForm->getData(), $admin);
                 $this->messenger->addSuccess(Message::ADMIN_UPDATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

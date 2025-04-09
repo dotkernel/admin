@@ -63,7 +63,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
         }
 
         try {
-            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -75,7 +75,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
             ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
 
         try {
-            $this->adminService->updateAdmin($admin, (array) $this->accountForm->getData());
+            $this->adminService->saveAdmin((array) $this->accountForm->getData(), $admin);
             $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());

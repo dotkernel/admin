@@ -14,23 +14,12 @@ interface UserServiceInterface
 {
     public function getUserRepository(): UserRepository;
 
-    public function activateUser(User $user): User;
-
-    /**
-     * @throws BadRequestException
-     * @throws ConflictException
-     * @throws NotFoundException
-     */
-    public function createUser(array $data = []): User;
-
-    public function deactivateUser(User $user): User;
-
     public function deleteUser(User $user): User;
 
     /**
      * @throws NotFoundException
      */
-    public function find(string $id): User;
+    public function findUser(string $id): User;
 
     /**
      * @throws NotFoundException
@@ -54,5 +43,5 @@ interface UserServiceInterface
      * @throws ConflictException
      * @throws NotFoundException
      */
-    public function updateUser(User $user, array $data = []): User;
+    public function saveUser(array $data, ?User $user = null): User;
 }

@@ -19,6 +19,7 @@ use Dot\DependencyInjection\Attribute\Inject;
 use Ramsey\Uuid\UuidInterface;
 
 use function array_key_exists;
+use function count;
 use function in_array;
 
 class AdminService implements AdminServiceInterface
@@ -38,47 +39,6 @@ class AdminService implements AdminServiceInterface
         return $this->adminRepository;
     }
 
-    /**
-     * @throws BadRequestException
-     * @throws ConflictException
-     * @throws NotFoundException
-     */
-    public function createAdmin(array $data): Admin
-    {
-        $status = $data['status'];
-        if (! $status instanceof AdminStatusEnum) {
-            $status = AdminStatusEnum::tryFrom($data['status']);
-        }
-        if (! $status instanceof AdminStatusEnum) {
-            throw new BadRequestException(Message::invalidValue('status'));
-        }
-
-        $admin = (new Admin())
-            ->setIdentity($data['identity'])
-            ->usePassword($data['password'])
-            ->setFirstname($data['firstName'])
-            ->setLastname($data['lastName'])
-            ->setStatus($status);
-
-        $this->validateUniqueAdmin($admin->getIdentity());
-
-        foreach ($data['roles'] as $roleUuid) {
-            $adminRole = $this->adminRoleRepository->find($roleUuid);
-            if (! $adminRole instanceof AdminRole) {
-                throw new NotFoundException(Message::ROLE_NOT_FOUND);
-            }
-            $admin->addRole($adminRole);
-        }
-
-        if (! $admin->hasRoles()) {
-            throw (new BadRequestException())->setMessages([Message::RESTRICTION_ROLES]);
-        }
-
-        $this->adminRepository->saveResource($admin);
-
-        return $admin;
-    }
-
     public function deleteAdmin(Admin $admin): void
     {
         $this->adminRepository->deleteResource($admin);
@@ -87,7 +47,7 @@ class AdminService implements AdminServiceInterface
     /**
      * @throws NotFoundException
      */
-    public function find(string $uuid): Admin
+    public function findAdmin(string $uuid): Admin
     {
         $admin = $this->adminRepository->find($uuid);
         if (! $admin instanceof Admin) {
@@ -128,21 +88,25 @@ class AdminService implements AdminServiceInterface
      * @throws ConflictException
      * @throws NotFoundException
      */
-    public function updateAdmin(Admin $admin, array $data): Admin
+    public function saveAdmin(array $data, ?Admin $admin = null): Admin
     {
-        if (array_key_exists('identity', $data)) {
+        if (! $admin instanceof Admin) {
+            $admin = new Admin();
+        }
+
+        if (array_key_exists('identity', $data) && $data['identity'] !== null && ! $admin->hasIdentity()) {
             $admin->setIdentity($data['identity']);
         }
-        if (array_key_exists('password', $data)) {
+        if (array_key_exists('password', $data) && $data['password'] !== null) {
             $admin->usePassword($data['password']);
         }
-        if (array_key_exists('firstName', $data)) {
-            $admin->setFirstname($data['firstName']);
+        if (array_key_exists('firstName', $data) && $data['firstName'] !== null) {
+            $admin->setFirstName($data['firstName']);
         }
-        if (array_key_exists('lastName', $data)) {
-            $admin->setLastname($data['lastName']);
+        if (array_key_exists('lastName', $data) && $data['lastName'] !== null) {
+            $admin->setLastName($data['lastName']);
         }
-        if (array_key_exists('status', $data)) {
+        if (array_key_exists('status', $data) && $data['status'] !== null) {
             $status = $data['status'];
             if (! $status instanceof AdminStatusEnum) {
                 $status = AdminStatusEnum::tryFrom($status);
@@ -155,7 +119,7 @@ class AdminService implements AdminServiceInterface
 
         $this->validateUniqueAdmin($admin->getIdentity(), $admin->getUuid());
 
-        if (array_key_exists('roles', $data)) {
+        if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $admin->resetRoles();
             foreach ($data['roles'] as $roleUuid) {
                 $adminRole = $this->adminRoleRepository->find($roleUuid);

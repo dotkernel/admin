@@ -99,6 +99,11 @@ class User extends AbstractEntity implements UserEntityInterface
         return $this->detail;
     }
 
+    public function hasDetail(): bool
+    {
+        return $this->detail !== null;
+    }
+
     public function setDetail(UserDetail $detail): self
     {
         $this->detail = $detail;
@@ -184,6 +189,11 @@ class User extends AbstractEntity implements UserEntityInterface
     public function getIdentity(): ?string
     {
         return $this->identity;
+    }
+
+    public function hasIdentity(): bool
+    {
+        return $this->identity !== null;
     }
 
     public function setIdentity(string $identity): self

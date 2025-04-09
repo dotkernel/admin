@@ -14,19 +14,12 @@ interface AdminServiceInterface
 {
     public function getAdminRepository(): AdminRepository;
 
-    /**
-     * @throws BadRequestException
-     * @throws ConflictException
-     * @throws NotFoundException
-     */
-    public function createAdmin(array $data): Admin;
-
     public function deleteAdmin(Admin $admin): void;
 
     /**
      * @throws NotFoundException
      */
-    public function find(string $uuid): Admin;
+    public function findAdmin(string $uuid): Admin;
 
     /**
      * @param array<string, mixed> $params
@@ -38,5 +31,5 @@ interface AdminServiceInterface
      * @throws ConflictException
      * @throws NotFoundException
      */
-    public function updateAdmin(Admin $admin, array $data): Admin;
+    public function saveAdmin(array $data, ?Admin $admin = null): Admin;
 }

@@ -49,9 +49,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
         try {
             $this->createAdminForm->setData($request->getParsedBody());
             if ($this->createAdminForm->isValid()) {
-                /** @var array $result */
-                $result = $this->createAdminForm->getData();
-                $this->adminService->createAdmin($result);
+                $this->adminService->saveAdmin((array) $this->createAdminForm->getData());
                 $this->messenger->addSuccess(Message::ADMIN_CREATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

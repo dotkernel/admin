@@ -103,7 +103,7 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->accountForm->method('getData')->willReturn(['test' => 'test']);
-        $this->adminService->method('updateAdmin')->willThrowException(new ConflictException());
+        $this->adminService->method('saveAdmin')->willThrowException(new ConflictException());
 
         $this
             ->messenger
@@ -111,7 +111,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $this->adminService->method('updateAdmin')->willThrowException(new IdentityException());
+        $this->adminService->method('saveAdmin')->willThrowException(new IdentityException());
 
         $handler = new PostAccountEditHandler(
             $this->adminService,
@@ -138,7 +138,7 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->accountForm->method('getData')->willReturn(['test' => 'test']);
-        $this->adminService->method('updateAdmin')->willThrowException(new Exception());
+        $this->adminService->method('saveAdmin')->willThrowException(new Exception());
 
         $this
             ->messenger

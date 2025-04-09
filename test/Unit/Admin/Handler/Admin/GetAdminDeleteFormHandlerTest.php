@@ -47,7 +47,7 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
         $this->request->method('getAttribute')->with('uuid')->willReturn('test');
-        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this->messenger->expects($this->once())->method('addError')->with(Message::ADMIN_NOT_FOUND);
 
@@ -76,7 +76,7 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
         $admin->method('getUuid')->willReturn($uuid);
 
         $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
 
         $this->form->method('setAttribute')->willReturn(null);
         $this->router->method('generateUri')->willReturn('/');

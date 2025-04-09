@@ -85,7 +85,7 @@ class GetSettingHandlerTest extends UnitTest
 
         $identity->method('getUuid')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $request
             ->method('getAttribute')
@@ -125,7 +125,7 @@ class GetSettingHandlerTest extends UnitTest
 
         $identity->method('getUuid')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminService->method('find')->willReturn($admin);
+        $adminService->method('findAdmin')->willReturn($admin);
 
         $request
             ->method('getAttribute')

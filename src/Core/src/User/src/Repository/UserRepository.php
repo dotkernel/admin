@@ -76,7 +76,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $queryBuilder
             ->orderBy($params['sort'], $params['dir'])
             ->setFirstResult($params['offset'])
-            ->setMaxResults($params['limit']);
+            ->setMaxResults($params['limit'])
+            ->groupBy('user.uuid');
         $queryBuilder->getQuery()->useQueryCache(true);
 
         return $queryBuilder;

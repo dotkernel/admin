@@ -45,7 +45,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 

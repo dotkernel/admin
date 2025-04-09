@@ -71,7 +71,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('find')->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(false);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -97,7 +97,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('find')->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -130,13 +130,13 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('find')->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('getData')->willReturn(['currentPassword' => 'test']);
         $this->admin->method('verifyPassword')->willReturn(true);
-        $this->adminService->method('updateAdmin')->willThrowException(new Exception());
+        $this->adminService->method('saveAdmin')->willThrowException(new Exception());
 
         $this
             ->messenger
@@ -164,7 +164,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('find')->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');

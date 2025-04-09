@@ -55,7 +55,7 @@ class PostUserEditHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $user = $this->userService->find($request->getAttribute('uuid'));
+            $user = $this->userService->findUser($request->getAttribute('uuid'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -84,7 +84,7 @@ class PostUserEditHandler implements RequestHandlerInterface
         try {
             $this->editUserForm->setData($request->getParsedBody());
             if ($this->editUserForm->isValid()) {
-                $this->userService->updateUser($user, (array) $this->editUserForm->getData());
+                $this->userService->saveUser((array) $this->editUserForm->getData(), $user);
                 $this->messenger->addSuccess(Message::USER_UPDATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

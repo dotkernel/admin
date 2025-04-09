@@ -61,7 +61,7 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
         }
 
         try {
-            $admin = $this->adminService->find($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -73,10 +73,9 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
             ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
 
         try {
-            /** @var array $result */
-            $result = $this->changePasswordForm->getData();
-            if ($admin->verifyPassword($result['currentPassword'])) {
-                $this->adminService->updateAdmin($admin, $result);
+            $data = (array) $this->changePasswordForm->getData();
+            if ($admin->verifyPassword($data['currentPassword'])) {
+                $this->adminService->saveAdmin($data, $admin);
                 $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
             } else {
                 $this->messenger->addError(Message::INVALID_CURRENT_PASSWORD);

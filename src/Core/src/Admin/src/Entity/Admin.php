@@ -68,6 +68,11 @@ class Admin extends AbstractEntity implements UserEntityInterface
         return $this->identity;
     }
 
+    public function hasIdentity(): bool
+    {
+        return $this->identity !== null;
+    }
+
     public function setIdentity(string $identity): self
     {
         $this->identity = $identity;

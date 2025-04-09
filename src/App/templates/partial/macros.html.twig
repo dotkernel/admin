@@ -27,7 +27,12 @@
 
 {% macro inputElement(element, showLabels = true, hidden = false) %}
     <div class="col-md-12">
-    {% set element = element.setAttribute('class', hidden ? 'd-none' : 'form-control form-control-sm') %}
+    {% if hidden %}
+        {% set element = element.setAttribute('class', 'd-none') %}
+    {% elseif element.getAttribute('class') is null %}
+        {% set element = element.setAttribute('class', 'form-control form-control-sm') %}
+    {% endif %}
+
     {% set element = element.setLabelAttributes([]|merge({class: 'form-label'})) %}
 
     {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}

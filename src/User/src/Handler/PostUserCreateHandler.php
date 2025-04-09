@@ -55,7 +55,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
         try {
             $this->createUserForm->setData($request->getParsedBody());
             if ($this->createUserForm->isValid()) {
-                $user = $this->userService->createUser((array) $this->createUserForm->getData());
+                $user = $this->userService->saveUser((array) $this->createUserForm->getData());
                 $this->messenger->addSuccess(Message::USER_CREATED);
                 if ($user->getDetail()->hasEmail()) {
                     $this->mailService->sendWelcomeMail($user);

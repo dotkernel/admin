@@ -23,6 +23,7 @@ use Dot\DependencyInjection\Attribute\Inject;
 use Ramsey\Uuid\UuidInterface;
 
 use function array_key_exists;
+use function count;
 use function date;
 use function in_array;
 use function is_array;
@@ -52,66 +53,6 @@ class UserService implements UserServiceInterface
         return $this->userRepository;
     }
 
-    public function activateUser(User $user): User
-    {
-        $this->userRepository->saveResource($user->activate());
-
-        return $user;
-    }
-
-    public function deactivateUser(User $user): User
-    {
-        $this->userRepository->saveResource($user->deactivate());
-
-        return $user;
-    }
-
-    /**
-     * @throws BadRequestException
-     * @throws ConflictException
-     * @throws NotFoundException
-     */
-    public function createUser(array $data = []): User
-    {
-        $status = $data['status'] ?? null;
-        if (! $status instanceof UserStatusEnum) {
-            $status = UserStatusEnum::tryFrom($status);
-        }
-        if (! $status instanceof UserStatusEnum) {
-            throw new BadRequestException(Message::invalidValue('status'));
-        }
-
-        $detail = (new UserDetail())
-            ->setFirstName($data['detail']['firstName'] ?? null)
-            ->setLastName($data['detail']['lastName'] ?? null)
-            ->setEmail($data['detail']['email'] ?? null);
-
-        $user = (new User())
-            ->setDetail($detail)
-            ->setIdentity($data['identity'])
-            ->usePassword($data['password'])
-            ->setStatus($status);
-        $detail->setUser($user);
-
-        $this->validateUniqueUser($user->getIdentity(), $user->getDetail()->getEmail());
-
-        foreach ($data['roles'] as $roleUuid) {
-            $userRole = $this->userRoleRepository->find($roleUuid);
-            if (! $userRole instanceof UserRole) {
-                throw new NotFoundException(Message::ROLE_NOT_FOUND);
-            }
-            $user->addRole($userRole);
-        }
-
-        if (! $user->hasRoles()) {
-            throw (new BadRequestException())->setMessages([Message::RESTRICTION_ROLES]);
-        }
-
-        $this->userRepository->saveResource($user);
-
-        return $user;
-    }
-
     public function deleteUser(User $user): User
     {
         $this->revokeTokens($user);
@@ -120,93 +61,9 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param array<string, mixed> $params
-     */
-    public function getUsers(array $params): array
-    {
-        $filters = $params['filters'] ?? [];
-        $params  = Paginator::getParams($params, 'user.created');
-
-        $sortableColumns = [
-            'user.identity',
-            'user.status',
-            'user.created',
-            'user.updated',
-            'detail.firstName',
-            'detail.lastName',
-            'detail.email',
-            'role.name',
-        ];
-        if (! in_array($params['sort'], $sortableColumns, true)) {
-            $params['sort'] = 'user.created';
-        }
-
-        $paginator = new DoctrinePaginator($this->userRepository->getUsers($params, $filters)->getQuery());
-
-        return Paginator::wrapper($paginator, $params, $filters);
-    }
-
-    private function anonymizeUser(User $user): User
-    {
-        $placeholder = $this->getAnonymousPlaceholder();
-
-        $user
-            ->setStatus(UserStatusEnum::Deleted)
-            ->setIdentity($placeholder . $this->config['userAnonymizeAppend'])
-            ->getDetail()
-                ->setFirstName($placeholder)
-                ->setLastName($placeholder)
-                ->setEmail($placeholder);
-
-        $this->userRepository->saveResource($user);
-
-        return $user;
-    }
-
-    private function getAnonymousPlaceholder(): string
-    {
-        return 'anonymous' . date('dmYHis');
-    }
-
-    /**
-     * @throws ConflictException
-     */
-    private function validateUniqueUser(string $identity, string $email, ?UuidInterface $uuid = null): void
-    {
-        $user = $this->userRepository->findOneBy(['identity' => $identity]);
-        if ($user instanceof User) {
-            if ($uuid === null) {
-                throw new ConflictException(Message::DUPLICATE_IDENTITY);
-            }
-            if ($user->getUuid()->toString() !== $uuid->toString()) {
-                throw new ConflictException(Message::DUPLICATE_IDENTITY);
-            }
-        }
-
-        $userDetail = $this->userDetailRepository->findOneBy(['email' => $email]);
-        if ($userDetail instanceof UserDetail) {
-            if ($uuid === null) {
-                throw new ConflictException(Message::DUPLICATE_EMAIL);
-            }
-            if ($userDetail->getUser()->getUuid()->toString() !== $uuid->toString()) {
-                throw new ConflictException(Message::DUPLICATE_EMAIL);
-            }
-        }
-    }
-
-    private function revokeTokens(User $user): void
-    {
-        $accessTokens = $this->oAuthAccessTokenRepository->findAccessTokens($user->getIdentity());
-        foreach ($accessTokens as $accessToken) {
-            $this->oAuthAccessTokenRepository->revokeAccessToken($accessToken->getToken());
-            $this->oAuthRefreshTokenRepository->revokeRefreshToken($accessToken->getToken());
-        }
-    }
-
-    /**
      * @throws NotFoundException
      */
-    public function find(string $id): User
+    public function findUser(string $id): User
     {
         $user = $this->userRepository->find($id);
         if (! $user instanceof User || $user->isDeleted()) {
@@ -256,21 +113,53 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * @param array<string, mixed> $params
+     */
+    public function getUsers(array $params): array
+    {
+        $filters = $params['filters'] ?? [];
+        $params  = Paginator::getParams($params, 'user.created');
+
+        $sortableColumns = [
+            'user.identity',
+            'user.status',
+            'user.created',
+            'user.updated',
+            'detail.firstName',
+            'detail.lastName',
+            'detail.email',
+            'role.name',
+        ];
+        if (! in_array($params['sort'], $sortableColumns, true)) {
+            $params['sort'] = 'user.created';
+        }
+
+        $paginator = new DoctrinePaginator($this->userRepository->getUsers($params, $filters)->getQuery());
+
+        return Paginator::wrapper($paginator, $params, $filters);
+    }
+
+    /**
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException
      */
-    public function updateUser(User $user, array $data = []): User
+    public function saveUser(array $data, ?User $user = null): User
     {
-        if (array_key_exists('identity', $data)) {
+        if (! $user instanceof User) {
+            $user = new User();
+        }
+
+        if (array_key_exists('identity', $data) && $data['identity'] !== null && ! $user->hasIdentity()) {
             $user->setIdentity($data['identity']);
         }
-
-        if (array_key_exists('password', $data)) {
+        if (array_key_exists('password', $data) && $data['password'] !== null) {
             $user->usePassword($data['password']);
         }
-
-        if (array_key_exists('status', $data)) {
+        if (array_key_exists('hash', $data) && $data['hash'] !== null) {
+            $user->setHash($data['hash']);
+        }
+        if (array_key_exists('status', $data) && $data['status'] !== null) {
             $status = $data['status'];
             if (! $status instanceof UserStatusEnum) {
                 $status = UserStatusEnum::tryFrom($status);
@@ -280,28 +169,24 @@ class UserService implements UserServiceInterface
             }
             $user->setStatus($status);
         }
-
-        if (array_key_exists('hash', $data)) {
-            $user->setHash($data['hash']);
-        }
-
         if (array_key_exists('detail', $data) && is_array($data['detail'])) {
-            if (array_key_exists('firstName', $data['detail'])) {
+            if (! $user->hasDetail()) {
+                $user->setDetail((new UserDetail())->setUser($user));
+            }
+            if (array_key_exists('firstName', $data['detail']) && $data['detail']['firstName'] !== null) {
                 $user->getDetail()->setFirstname($data['detail']['firstName']);
             }
-
-            if (array_key_exists('lastName', $data['detail'])) {
+            if (array_key_exists('lastName', $data['detail']) && $data['detail']['lastName'] !== null) {
                 $user->getDetail()->setLastName($data['detail']['lastName']);
             }
-
-            if (array_key_exists('email', $data['detail'])) {
+            if (array_key_exists('email', $data['detail']) && $data['detail']['email'] !== null) {
                 $user->getDetail()->setEmail($data['detail']['email']);
             }
         }
 
         $this->validateUniqueUser($user->getIdentity(), $user->getDetail()->getEmail(), $user->getUuid());
 
-        if (array_key_exists('roles', $data)) {
+        if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $user->resetRoles();
             foreach ($data['roles'] as $roleUuid) {
                 $userRole = $this->userRoleRepository->find($roleUuid);
@@ -319,5 +204,62 @@ class UserService implements UserServiceInterface
         $this->userRepository->saveResource($user);
 
         return $user;
+    }
+
+    private function anonymizeUser(User $user): User
+    {
+        $placeholder = $this->getAnonymousPlaceholder();
+
+        $user
+            ->setStatus(UserStatusEnum::Deleted)
+            ->setIdentity($placeholder . $this->config['userAnonymizeAppend'])
+            ->getDetail()
+            ->setFirstName($placeholder)
+            ->setLastName($placeholder)
+            ->setEmail($placeholder);
+
+        $this->userRepository->saveResource($user);
+
+        return $user;
+    }
+
+    private function getAnonymousPlaceholder(): string
+    {
+        return 'anonymous' . date('dmYHis');
+    }
+
+    private function revokeTokens(User $user): void
+    {
+        $accessTokens = $this->oAuthAccessTokenRepository->findAccessTokens($user->getIdentity());
+        foreach ($accessTokens as $accessToken) {
+            $this->oAuthAccessTokenRepository->revokeAccessToken($accessToken->getToken());
+            $this->oAuthRefreshTokenRepository->revokeRefreshToken($accessToken->getToken());
+        }
+    }
+
+    /**
+     * @throws ConflictException
+     */
+    private function validateUniqueUser(string $identity, string $email, ?UuidInterface $uuid = null): void
+    {
+        $user = $this->userRepository->findOneBy(['identity' => $identity]);
+        if ($user instanceof User) {
+            if ($uuid === null) {
+                throw new ConflictException(Message::DUPLICATE_IDENTITY);
+            }
+            if ($user->getUuid()->toString() !== $uuid->toString()) {
+                throw new ConflictException(Message::DUPLICATE_IDENTITY);
+            }
+        }
+
+        $userDetail = $this->userDetailRepository->findOneBy(['email' => $email]);
+        if ($userDetail instanceof UserDetail) {
+            if ($uuid === null) {
+                throw new ConflictException(Message::DUPLICATE_EMAIL);
+            }
+            if ($userDetail->getUser()->getUuid()->toString() !== $uuid->toString()) {
+                throw new ConflictException(Message::DUPLICATE_EMAIL);
+            }
+        }
     }
 }

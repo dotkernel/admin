@@ -39,7 +39,7 @@ class GetAdminDeleteFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->find($request->getAttribute('uuid'));
+            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 

@@ -51,7 +51,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
         $this->request->method('getAttribute')->with('uuid')->willReturn('test');
-        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
             ->messenger
@@ -88,7 +88,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->form->method('bind')->willReturn($this->form);
         $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
 
         $this->template->method('render')->willReturn('<p></p>');
 

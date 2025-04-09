@@ -48,7 +48,7 @@ class GetUserEditFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $user = $this->userService->find($request->getAttribute('uuid'));
+            $user = $this->userService->findUser($request->getAttribute('uuid'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 

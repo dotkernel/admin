@@ -58,7 +58,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
     public function testDeleteAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
         $this->request->method('getAttribute')->with('uuid')->willReturn('test');
-        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
             ->messenger
@@ -92,7 +92,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
         $admin->method('getUuid')->willReturn($uuid);
 
         $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
 
         $this->request->method('getParsedBody')->willReturn([]);
         $this->form->method('isValid')->willReturn(true);
@@ -131,7 +131,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
         $admin->method('getUuid')->willReturn($uuid);
 
         $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('find')->with($uuid->toString())->willReturn($admin);
+        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
 
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -157,7 +157,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
     public function testDeleteAdminThrowsErrorWillReturnEmptyResponse(): void
     {
         $this->request->method('getAttribute')->with('uuid')->willReturn('test');
-        $this->adminService->method('find')->willReturn(new Admin());
+        $this->adminService->method('findAdmin')->willReturn(new Admin());
         $this->form->method('setData')->willThrowException(new Exception('test'));
 
         $this

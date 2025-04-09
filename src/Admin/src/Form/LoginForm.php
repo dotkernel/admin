@@ -40,13 +40,13 @@ class LoginForm extends Form
         $this->add(
             (new Text('identity'))
                 ->setLabel('Identity')
-                ->setAttribute('class', 'form-control form-control-sm')
+                ->setAttribute('class', 'form-control')
                 ->setAttribute('required', true)
         );
         $this->add(
             (new Password('password'))
                 ->setLabel('Password')
-                ->setAttribute('class', 'form-control form-control-sm')
+                ->setAttribute('class', 'form-control')
                 ->setAttribute('required', true)
         );
         $this->add(
@@ -60,7 +60,7 @@ class LoginForm extends Form
             (new Submit('submit'))
                 ->setAttribute('type', 'submit')
                 ->setAttribute('value', 'Log in')
-                ->setAttribute('class', 'btn btn-primary btn-sm')
+                ->setAttribute('class', 'btn btn-primary')
         );
     }
 

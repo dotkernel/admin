@@ -66,7 +66,7 @@ class PostAdminEditHandlerTest extends UnitTest
     public function testEditAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
         $this->request->method('getAttribute')->with('uuid')->willReturn('test');
-        $this->adminService->method('find')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
         $this->form->method('isValid')->willReturn(true);
         $this->form->method('getData')->willReturn([]);
 
@@ -99,7 +99,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->uuid->method('toString')->willReturn('0x123');
         $this->admin->method('getUuid')->willReturn($this->uuid);
         $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('find')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn([]);
         $this->form->method('isValid')->willReturn(true);
@@ -111,7 +111,7 @@ class PostAdminEditHandlerTest extends UnitTest
             ->method('addSuccess')
             ->with(Message::ADMIN_UPDATED);
 
-        $this->adminService->expects($this->once())->method('updateAdmin');
+        $this->adminService->expects($this->once())->method('saveAdmin');
 
         $handler = new PostAdminEditHandler(
             $this->adminService,
@@ -136,7 +136,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->uuid->method('toString')->willReturn('0x123');
         $this->admin->method('getUuid')->willReturn($this->uuid);
         $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('find')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -162,7 +162,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->uuid->method('toString')->willReturn('0x123');
         $this->admin->method('getUuid')->willReturn($this->uuid);
         $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('find')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -190,7 +190,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->uuid->method('toString')->willReturn('0x123');
         $this->admin->method('getUuid')->willReturn($this->uuid);
         $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('find')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);

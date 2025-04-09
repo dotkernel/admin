@@ -39,18 +39,17 @@ class AccountForm extends Form
         $this->add(
             (new Text('identity'))
                 ->setLabel('Identity')
-                ->setAttribute('class', 'form-control form-control-sm')
+                ->setAttribute('readonly', true)
                 ->setAttribute('required', true)
+                ->setAttribute('class', 'form-control form-control-sm bgc-grey-200')
         );
         $this->add(
             (new Text('firstName'))
                 ->setLabel('Firstname')
-                ->setAttribute('class', 'form-control form-control-sm')
         );
         $this->add(
             (new Text('lastName'))
                 ->setLabel('Lastname')
-                ->setAttribute('class', 'form-control form-control-sm')
         );
         $this->add(
             (new Csrf('accountCsrf'))
