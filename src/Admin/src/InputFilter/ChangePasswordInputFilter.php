@@ -8,12 +8,9 @@ use Admin\Admin\InputFilter\Input\CurrentPasswordInput;
 use Admin\App\InputFilter\Input\CsrfInput;
 use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class ChangePasswordInputFilter extends InputFilter
+class ChangePasswordInputFilter extends AbstractInputFilter
 {
     public function init(): void
     {

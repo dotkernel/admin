@@ -7,12 +7,9 @@ namespace Admin\User\InputFilter;
 use Admin\App\InputFilter\Input\EmailInput;
 use Admin\App\InputFilter\Input\FirstNameInput;
 use Admin\App\InputFilter\Input\LastNameInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class UserDetailInputFilter extends InputFilter
+class UserDetailInputFilter extends AbstractInputFilter
 {
     public function init(): self
     {

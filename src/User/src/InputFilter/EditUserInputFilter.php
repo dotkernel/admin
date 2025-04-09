@@ -10,12 +10,9 @@ use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
 use Admin\User\InputFilter\Input\RolesInput;
 use Admin\User\InputFilter\Input\StatusInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class EditUserInputFilter extends InputFilter
+class EditUserInputFilter extends AbstractInputFilter
 {
     public function init(): self
     {

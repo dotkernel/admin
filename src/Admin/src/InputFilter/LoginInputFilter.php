@@ -7,12 +7,9 @@ namespace Admin\Admin\InputFilter;
 use Admin\App\InputFilter\Input\CsrfInput;
 use Admin\App\InputFilter\Input\IdentityInput;
 use Admin\App\InputFilter\Input\PasswordInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class LoginInputFilter extends InputFilter
+class LoginInputFilter extends AbstractInputFilter
 {
     public function init(): void
     {

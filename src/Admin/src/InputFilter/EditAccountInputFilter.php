@@ -8,12 +8,9 @@ use Admin\App\InputFilter\Input\CsrfInput;
 use Admin\App\InputFilter\Input\FirstNameInput;
 use Admin\App\InputFilter\Input\IdentityInput;
 use Admin\App\InputFilter\Input\LastNameInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class EditAccountInputFilter extends InputFilter
+class EditAccountInputFilter extends AbstractInputFilter
 {
     public function init(): void
     {

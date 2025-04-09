@@ -6,12 +6,9 @@ namespace Admin\Admin\InputFilter;
 
 use Admin\Admin\InputFilter\Input\ConfirmationInput;
 use Admin\App\InputFilter\Input\CsrfInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class DeleteAdminInputFilter extends InputFilter
+class DeleteAdminInputFilter extends AbstractInputFilter
 {
     public function init(): void
     {

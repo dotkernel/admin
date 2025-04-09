@@ -6,12 +6,9 @@ namespace Admin\Setting\InputFilter;
 
 use Admin\Setting\InputFilter\Input\IdentifierInput;
 use Admin\Setting\InputFilter\Input\ValueInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class CreateSettingInputFilter extends InputFilter
+class CreateSettingInputFilter extends AbstractInputFilter
 {
     public function __construct()
     {

@@ -6,12 +6,9 @@ namespace Admin\User\InputFilter;
 
 use Admin\App\InputFilter\Input\CsrfInput;
 use Admin\App\InputFilter\Input\ImageInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class EditUserAvatarInputFilter extends InputFilter
+class EditUserAvatarInputFilter extends AbstractInputFilter
 {
     public function init(): self
     {

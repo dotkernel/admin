@@ -12,12 +12,9 @@ use Admin\App\InputFilter\Input\IdentityInput;
 use Admin\App\InputFilter\Input\LastNameInput;
 use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
-use Laminas\InputFilter\InputFilter;
+use Core\App\InputFilter\AbstractInputFilter;
 
-/**
- * @extends InputFilter<object>
- */
-class EditAdminInputFilter extends InputFilter
+class EditAdminInputFilter extends AbstractInputFilter
 {
     public function init(): void
     {
