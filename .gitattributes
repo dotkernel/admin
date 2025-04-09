@@ -4,6 +4,5 @@
 *.jpeg binary
 *.svg binary
 *.md diff=markdown
-*.ttf export-ignore
 *.woff export-ignore
 *.woff2 export-ignore
