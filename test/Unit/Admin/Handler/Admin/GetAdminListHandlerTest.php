@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
 use Admin\Admin\Handler\Admin\GetAdminListHandler;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
-use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminServiceInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Laminas\Authentication\AuthenticationServiceInterface;
-use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,13 +21,10 @@ class GetAdminListHandlerTest extends UnitTest
      */
     public function testListAdminWillReturnHtmlResponse(): void
     {
-        $adminService          = $this->createMock(AdminServiceInterface::class);
-        $router                = $this->createMock(RouterInterface::class);
-        $template              = $this->createMock(TemplateRendererInterface::class);
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $form                  = $this->createMock(AdminForm::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $adminService    = $this->createMock(AdminServiceInterface::class);
+        $template        = $this->createMock(TemplateRendererInterface::class);
+        $adminRepository = $this->createMock(AdminRepository::class);
+        $request         = $this->createMock(ServerRequestInterface::class);
 
         $request->method('getQueryParams')->willReturn([]);
         $adminRepository->method('findOneBy')->willReturn($this->createMock(Admin::class));
@@ -43,19 +36,8 @@ class GetAdminListHandlerTest extends UnitTest
         ]);
 
         $adminService->method('getAdminRepository')->willReturn($adminRepository);
-        $authenticationService
-            ->method('getIdentity')
-            ->willReturn(
-                $this->createMock(AdminIdentity::class)
-            );
 
-        $handler = new GetAdminListHandler(
-            $adminService,
-            $router,
-            $template,
-            $authenticationService,
-            $form,
-        );
+        $handler = new GetAdminListHandler($adminService, $template);
 
         $response = $handler->handle($request);
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\CreateAdminForm;
 use Dot\DependencyInjection\Attribute\Inject;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Router\RouterInterface;
@@ -18,22 +18,22 @@ class GetAdminCreateFormHandler implements RequestHandlerInterface
     #[Inject(
         RouterInterface::class,
         TemplateRendererInterface::class,
-        AdminForm::class,
+        CreateAdminForm::class,
     )]
     public function __construct(
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
-        protected AdminForm $form,
+        protected CreateAdminForm $createAdminForm,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->form->setAttribute('action', $this->router->generateUri('admin::admin-create'));
+        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::admin-create'));
 
         return new HtmlResponse(
             $this->template->render('admin::admin-create-form', [
-                'form' => $this->form->prepare(),
+                'form' => $this->createAdminForm->prepare(),
             ])
         );
     }

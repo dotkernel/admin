@@ -1,0 +1,60 @@
+{% from '@partial/macros.html.twig' import inputElement, multiCheckboxElement, submitElement %}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="edit-user-modal-content">Edit user</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs" id="tabBar" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link{{ activeTab == 'account' ? ' active' : '' }}" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">Account</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link{{ activeTab == 'avatar' ? ' active' : '' }}" id="avatar-tab" data-bs-toggle="tab" data-bs-target="#avatar" type="button" role="tab" aria-controls="avatar" aria-selected="false">Avatar</button>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="tabContent">
+            <div class="tab-pane fade{{ activeTab == 'account' ? ' show active' : '' }}" id="account" role="tabpanel" aria-labelledby="account-tab">
+                {{ form().openTag(userEditForm)|raw }}
+                {% set fieldsets = userEditForm.getFieldsets() %}
+
+                {{ inputElement(userEditForm.get('identity')) }}
+                {{ inputElement(userEditForm.get('password')) }}
+                {{ inputElement(userEditForm.get('passwordConfirm')) }}
+
+                {{ inputElement(fieldsets['detail'].get('firstName')) }}
+                {{ inputElement(fieldsets['detail'].get('lastName')) }}
+                {{ inputElement(fieldsets['detail'].get('email')) }}
+
+                {{ inputElement(userEditForm.get('status')) }}
+                {{ multiCheckboxElement(userEditForm.get('roles')) }}
+                {{ inputElement(userEditForm.get('userEditCsrf')) }}
+                {{ submitElement(userEditForm.get('submit')) }}
+                {{ form().closeTag()|raw }}
+            </div>
+            <div class="tab-pane fade{{ activeTab == 'avatar' ? ' show active' : '' }}" id="avatar" role="tabpanel" aria-labelledby="avatar-tab">
+                <div class="w-100 text-center">
+                {% if user.hasAvatar() %}
+                    <img class="img-thumbnail cur-p" alt="User avatar" src="{{ user.avatar.getUrl() }}" id="user-avatar-preview" />
+                {% else %}
+                    <img class="img-thumbnail cur-p" alt="User avatar" src="{{ asset('images/no-image.svg') }}" id="user-avatar-preview" />
+                    <span class="d-block">No image</span>
+                {% endif %}
+                    <span class="small d-block">(click the preview image to select an avatar)</span>
+                </div>
+                {{ form().openTag(userAvatarEditForm)|raw }}
+                {{ inputElement(userAvatarEditForm.get('name'), false, true) }}
+                {{ submitElement(userAvatarEditForm.get('submit')) }}
+                {{ inputElement(userAvatarEditForm.get('userAvatarEditCsrf')) }}
+                {{ form().closeTag()|raw }}
+            </div>
+        </div>
+        {% if messages is defined and messages is iterable %}
+            {% for type, message in messages %}
+                <div class="mt-3 alert alert-{% if type == 'success' %}success{% elseif type == 'warning' %}warning{% else %}danger{% endif %}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

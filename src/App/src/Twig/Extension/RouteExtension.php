@@ -12,7 +12,9 @@ use Twig\TwigFunction;
 
 class RouteExtension extends AbstractExtension
 {
-    #[Inject(UrlHelper::class)]
+    #[Inject(
+        UrlHelper::class,
+    )]
     public function __construct(
         private readonly UrlHelper $urlHelper,
     ) {

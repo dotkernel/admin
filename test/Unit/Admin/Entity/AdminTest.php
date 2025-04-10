@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;
-use ReflectionAttribute;
 use ReflectionClass;
 
 class AdminTest extends UnitTest
@@ -45,8 +44,6 @@ class AdminTest extends UnitTest
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
@@ -62,47 +59,46 @@ class AdminTest extends UnitTest
     public function testAccessors(): void
     {
         $admin = new Admin();
-        $this->assertInstanceOf(Admin::class, $admin);
 
-        $this->assertInstanceOf(UuidInterface::class, $admin->getUuid());
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$admin->getUuid()]);
 
         $admin = $admin->setIdentity($this->default['identity']);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertSame($this->default['identity'], $admin->getIdentity());
 
         $this->assertNull($admin->getFirstName());
         $admin = $admin->setFirstName($this->default['firstName']);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertSame($this->default['firstName'], $admin->getFirstName());
 
         $this->assertNull($admin->getLastName());
         $admin = $admin->setLastName($this->default['lastName']);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertSame($this->default['lastName'], $admin->getLastName());
 
         $admin = $admin->setPassword($this->default['password']);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertSame($this->default['password'], $admin->getPassword());
 
         $this->assertSame(AdminStatusEnum::Active, $admin->getStatus());
         $admin = $admin->setStatus($this->default['status']);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertSame($this->default['status'], $admin->getStatus());
 
         $this->assertIsArray($admin->getRoles());
         $this->assertEmpty($admin->getRoles());
         $admin = $admin->addRole($this->default['roles'][0]);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertIsArray($admin->getRoles());
         $this->assertCount(1, $admin->getRoles());
         $admin = $admin->removeRole($admin->getRoles()[0]);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertIsArray($admin->getRoles());
         $this->assertEmpty($admin->getRoles());
         $roles = new ArrayCollection();
         $roles->add($this->default['roles'][0]);
         $admin = $admin->setRoles($roles);
-        $this->assertInstanceOf(Admin::class, $admin);
+        $this->assertSame(Admin::class, $admin::class);
         $this->assertIsArray($admin->getRoles());
         $this->assertCount(1, $admin->getRoles());
     }

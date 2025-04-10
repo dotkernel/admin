@@ -5,9 +5,14 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\InputFilter;
 
 use Admin\Admin\InputFilter\EditAdminInputFilter;
+use Admin\App\InputFilter\Input\FirstNameInput;
+use Admin\App\InputFilter\Input\IdentityInput;
+use Admin\App\InputFilter\Input\LastNameInput;
+use Admin\App\InputFilter\Input\PasswordInput;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Enum\AdminRoleEnum;
 use Core\Admin\Enum\AdminStatusEnum;
+use Core\App\Message;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 
@@ -32,7 +37,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -85,7 +90,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['identity']);
         $this->assertSame(
-            '<b>Identity</b> must have between 3 and 100 characters',
+            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
             $messages['identity']['stringLengthTooShort']
         );
 
@@ -99,7 +104,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['identity']);
         $this->assertSame(
-            '<b>Identity</b> must have between 3 and 100 characters',
+            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
             $messages['identity']['stringLengthTooLong']
         );
 
@@ -113,7 +118,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('regexNotMatch', $messages['identity']);
         $this->assertSame(
-            '<b>Identity</b> contains invalid characters',
+            Message::VALIDATOR_INVALID_CHARACTERS,
             $messages['identity']['regexNotMatch']
         );
     }
@@ -134,7 +139,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -148,7 +153,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -162,7 +167,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -176,7 +181,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -198,7 +203,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['password']);
         $this->assertSame(
-            '<b>Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['password']['stringLengthTooShort']
         );
 
@@ -220,7 +225,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['password']);
         $this->assertSame(
-            '<b>Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['password']['stringLengthTooLong']
         );
     }
@@ -233,15 +238,15 @@ class EditAdminInputFilterTest extends UnitTest
         $inputFilter->init();
 
         $inputFilter->setData([
-            'identity'        => 'identity',
-            'password'        => 'password',
-            'firstName'       => 'firstName',
-            'lastName'        => 'lastName',
-            'status'          => AdminStatusEnum::Active->value,
-            'roles'           => [
+            'identity'      => 'identity',
+            'password'      => 'password',
+            'firstName'     => 'firstName',
+            'lastName'      => 'lastName',
+            'status'        => AdminStatusEnum::Active->value,
+            'roles'         => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf' => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -255,7 +260,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -269,7 +274,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -283,7 +288,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -305,7 +310,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Confirm Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['passwordConfirm']['stringLengthTooShort']
         );
 
@@ -327,7 +332,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Confirm Password</b> must have between 8 and 150 characters',
+            Message::validatorLengthMinMax(PasswordInput::PASSWORD_MIN_LENGTH, PasswordInput::PASSWORD_MAX_LENGTH),
             $messages['passwordConfirm']['stringLengthTooLong']
         );
 
@@ -349,7 +354,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['passwordConfirm']);
         $this->assertArrayHasKey('notSame', $messages['passwordConfirm']);
         $this->assertSame(
-            '<b>Password</b> and <b>Confirm Password</b> do not match',
+            Message::validatorMismatch('Password', 'Confirm password'),
             $messages['passwordConfirm']['notSame']
         );
     }
@@ -370,7 +375,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -384,7 +389,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -398,7 +403,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -406,7 +411,7 @@ class EditAdminInputFilterTest extends UnitTest
             'identity'        => 'identity',
             'password'        => 'password',
             'passwordConfirm' => 'password',
-            'firstName'       => str_repeat('a', 151),
+            'firstName'       => str_repeat('a', 200),
             'lastName'        => 'lastName',
             'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
@@ -420,7 +425,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['firstName']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['firstName']);
         $this->assertSame(
-            '<b>First name</b> must be max 150 characters long.',
+            Message::validatorLengthMax(FirstNameInput::FIRSTNAME_MAX_LENGTH),
             $messages['firstName']['stringLengthTooLong']
         );
     }
@@ -441,7 +446,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -455,7 +460,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -469,7 +474,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
 
@@ -478,7 +483,7 @@ class EditAdminInputFilterTest extends UnitTest
             'password'        => 'password',
             'passwordConfirm' => 'password',
             'firstName'       => 'firstName',
-            'lastName'        => str_repeat('a', 151),
+            'lastName'        => str_repeat('a', 200),
             'status'          => AdminStatusEnum::Active->value,
             'roles'           => [
                 AdminRoleEnum::Admin->value,
@@ -491,7 +496,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertIsArray($messages['lastName']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['lastName']);
         $this->assertSame(
-            '<b>Last name</b> must be max 150 characters long.',
+            Message::validatorLengthMax(LastNameInput::LASTNAME_MAX_LENGTH),
             $messages['lastName']['stringLengthTooLong']
         );
     }
@@ -539,10 +544,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertArrayHasKey('status', $messages);
         $this->assertIsArray($messages['status']);
         $this->assertArrayHasKey('notInArray', $messages['status']);
-        $this->assertSame(
-            'The input was not found in the haystack',
-            $messages['status']['notInArray']
-        );
+        $this->assertSame(Message::invalidValue('status'), $messages['status']['notInArray']);
     }
 
     public function testWillValidateRoles(): void
@@ -564,10 +566,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertArrayHasKey('roles', $messages);
         $this->assertIsArray($messages['roles']);
         $this->assertArrayHasKey('isEmpty', $messages['roles']);
-        $this->assertSame(
-            'Please select at least one role',
-            $messages['roles']['isEmpty']
-        );
+        $this->assertSame(Message::RESTRICTION_ROLES, $messages['roles']['isEmpty']);
 
         $inputFilter->setData([
             'identity'        => 'identity',
@@ -584,10 +583,7 @@ class EditAdminInputFilterTest extends UnitTest
         $this->assertArrayHasKey('roles', $messages);
         $this->assertIsArray($messages['roles']);
         $this->assertArrayHasKey('isEmpty', $messages['roles']);
-        $this->assertSame(
-            'Please select at least one role',
-            $messages['roles']['isEmpty']
-        );
+        $this->assertSame(Message::RESTRICTION_ROLES, $messages['roles']['isEmpty']);
     }
 
     public function testWillAcceptValidData(): void
@@ -606,7 +602,7 @@ class EditAdminInputFilterTest extends UnitTest
             'roles'           => [
                 AdminRoleEnum::Admin->value,
             ],
-            'adminManageCsrf' => $hash,
+            'adminEditCsrf'   => $hash,
         ]);
         $this->assertTrue($inputFilter->isValid());
     }

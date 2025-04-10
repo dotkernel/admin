@@ -49,6 +49,7 @@
         "laminas/laminas-i18n": "^2.26.0",
         "laminas/laminas-math": "^3.7.0",
         "mezzio/mezzio": "^3.18.0",
+        "mezzio/mezzio-authentication-oauth2": "^2.11",
         "mezzio/mezzio-authorization-rbac": "^1.7.0",
         "mezzio/mezzio-cors": "^1.11.1",
         "mezzio/mezzio-fastroute": "^3.11.0",
@@ -70,13 +71,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Admin\\App\\": "src/App/src/",
             "Admin\\Admin\\": "src/Admin/src/",
-            "Admin\\Page\\": "src/Page/src/",
+            "Admin\\App\\": "src/App/src/",
             "Admin\\Dashboard\\": "src/Dashboard/src/",
+            "Admin\\Page\\": "src/Page/src/",
             "Admin\\Setting\\": "src/Setting/src/",
+            "Admin\\User\\": "src/User/src/",
+            "Core\\Admin\\": "src/Core/src/Admin/src",
             "Core\\App\\": "src/Core/src/App/src",
-            "Core\\Admin\\": "src/Core/src/Admin/src"
+            "Core\\Security\\": "src/Core/src/Security/src",
+            "Core\\Setting\\": "src/Core/src/Setting/src",
+            "Core\\User\\": "src/Core/src/User/src"
         }
     },
     "autoload-dev": {

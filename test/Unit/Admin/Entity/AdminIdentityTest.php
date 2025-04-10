@@ -42,7 +42,6 @@ class AdminIdentityTest extends UnitTest
             $this->default['roles'],
             $this->default['details'],
         );
-        $this->assertInstanceOf(AdminIdentity::class, $adminIdentity);
         $this->assertSame($this->default['uuid'], $adminIdentity->getUuid());
         $this->assertSame($this->default['identity'], $adminIdentity->getIdentity());
         $this->assertSame($this->default['status'], $adminIdentity->getStatus());

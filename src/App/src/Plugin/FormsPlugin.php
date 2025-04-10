@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\App\Plugin;
 
 use Dot\Controller\Plugin\PluginInterface;
+use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Laminas\Form\Form;
 use Laminas\Form\FormElementManager;
@@ -16,35 +17,35 @@ use function is_string;
 
 class FormsPlugin implements PluginInterface
 {
+    #[Inject(
+        FormElementManager::class,
+        FlashMessengerInterface::class,
+    )]
     public function __construct(
         protected FormElementManager $formElementManager,
-        protected ?FlashMessengerInterface $flashMessenger = null
+        protected FlashMessengerInterface $flashMessenger,
     ) {
     }
 
     public function restoreState(Form $form): void
     {
-        if ($this->flashMessenger instanceof FlashMessengerInterface) {
-            $dataKey     = $form->getName() . '_data';
-            $messagesKey = $form->getName() . '_messages';
+        $dataKey     = $form->getName() . '_data';
+        $messagesKey = $form->getName() . '_messages';
 
-            $data     = $this->flashMessenger->getData($dataKey) ?: [];
-            $messages = $this->flashMessenger->getData($messagesKey) ?: [];
+        $data     = $this->flashMessenger->getData($dataKey) ?: [];
+        $messages = $this->flashMessenger->getData($messagesKey) ?: [];
 
-            $form->setData($data);
-            $form->setMessages($messages);
-        }
+        $form->setData($data);
+        $form->setMessages($messages);
     }
 
     public function saveState(Form $form): void
     {
-        if ($this->flashMessenger instanceof FlashMessengerInterface) {
-            $dataKey     = $form->getName() . '_data';
-            $messagesKey = $form->getName() . '_messages';
+        $dataKey     = $form->getName() . '_data';
+        $messagesKey = $form->getName() . '_messages';
 
-            $this->flashMessenger->addData($dataKey, $form->getData(FormInterface::VALUES_AS_ARRAY));
-            $this->flashMessenger->addData($messagesKey, $form->getMessages());
-        }
+        $this->flashMessenger->addData($dataKey, $form->getData(FormInterface::VALUES_AS_ARRAY));
+        $this->flashMessenger->addData($messagesKey, $form->getMessages());
     }
 
     public function getMessages(Form $form): array

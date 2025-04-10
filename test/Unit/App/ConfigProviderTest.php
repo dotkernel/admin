@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace AdminTest\Unit\App;
 
 use Admin\App\ConfigProvider;
+use Admin\App\Handler\GetIndexRedirectHandler;
 use Admin\App\Plugin\FormsPlugin;
 use Admin\App\RoutesDelegator as AppDelegator;
+use Admin\App\Twig\Extension\RouteExtension;
 use AdminTest\Unit\UnitTest;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Dot\Controller\Plugin\PluginManager;
 use Mezzio\Application;
 
@@ -50,16 +50,10 @@ class ConfigProviderTest extends UnitTest
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
         $this->assertIsArray($this->config['dependencies']['factories']);
+        $this->assertArrayHasKey(GetIndexRedirectHandler::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(PluginManager::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(FormsPlugin::class, $this->config['dependencies']['factories']);
-    }
-
-    public function testDependenciesHasAliases(): void
-    {
-        $this->assertArrayHasKey('aliases', $this->config['dependencies']);
-        $this->assertIsArray($this->config['dependencies']['aliases']);
-        $this->assertArrayHasKey(EntityManager::class, $this->config['dependencies']['aliases']);
-        $this->assertArrayHasKey(EntityManagerInterface::class, $this->config['dependencies']['aliases']);
+        $this->assertArrayHasKey(RouteExtension::class, $this->config['dependencies']['factories']);
     }
 
     public function testGetTemplates(): void

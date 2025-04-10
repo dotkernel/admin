@@ -14,7 +14,7 @@ $baseUrl = 'http://localhost:8080';
 $databases = [
     'default' => [
         'host'     => 'localhost',
-        'dbname'   => '',
+        'dbname'   => 'dotkernel',
         'user'     => '',
         'password' => '',
         'port'     => 3306,
@@ -26,21 +26,28 @@ $databases = [
 ];
 
 return [
-    'application' => [
+    'application'         => [
         'name' => $app['name'] ?? '',
         'url'  => $baseUrl,
     ],
-    'routes'      => [
+    'routes'              => [
         'page' => [
             'component' => 'components',
         ],
     ],
-    'databases'   => $databases,
-    'doctrine'    => [
+    'databases'           => $databases,
+    'doctrine'            => [
         'connection' => [
             'orm_default' => [
                 'params' => $databases['default'],
             ],
         ],
     ],
+    'uploads'             => [
+        'user' => [
+            'url'  => $baseUrl . '/uploads/user',
+            'path' => realpath(__DIR__ . '/../../public/uploads/user'),
+        ],
+    ],
+    'userAnonymizeAppend' => '',
 ];

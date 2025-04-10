@@ -15,12 +15,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 class GetIndexRedirectHandler implements RequestHandlerInterface
 {
     #[Inject(
-        RouterInterface::class,
         AuthenticationServiceInterface::class,
+        RouterInterface::class,
     )]
     public function __construct(
-        protected RouterInterface $router,
         protected AuthenticationServiceInterface $authenticationService,
+        protected RouterInterface $router,
     ) {
     }
 

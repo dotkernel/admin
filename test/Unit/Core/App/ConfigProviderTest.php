@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Core\App;
 
 use AdminTest\Unit\UnitTest;
 use Core\App\ConfigProvider;
-use Core\App\Entity\EntityListenerResolver;
+use Core\App\Resolver\EntityListenerResolver;
 
 class ConfigProviderTest extends UnitTest
 {

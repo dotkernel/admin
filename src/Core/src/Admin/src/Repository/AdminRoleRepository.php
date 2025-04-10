@@ -6,42 +6,39 @@ namespace Core\Admin\Repository;
 
 use Core\Admin\Entity\AdminRole;
 use Core\App\Repository\AbstractRepository;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Dot\DependencyInjection\Attribute\Entity;
 
-#[Entity(AdminRole::class)]
+use function array_key_exists;
+use function is_string;
+use function strlen;
+
+#[Entity(name: AdminRole::class)]
 class AdminRoleRepository extends AbstractRepository
 {
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function getRole(string $uuid): ?AdminRole
+    public function getAdminRoles(array $params = [], array $filters = []): QueryBuilder
     {
-        /** @var AdminRole $role */
-        $role = $this->findOneBy(['uuid' => $uuid]);
-        return $role;
-    }
+        $queryBuilder = $this
+            ->getQueryBuilder()
+            ->select(['role'])
+            ->from(AdminRole::class, 'role');
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findByName(string $name): ?AdminRole
-    {
-        return $this->getQueryBuilder()
-            ->select('role')
-            ->from(AdminRole::class, 'role')
-            ->andWhere('role.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()
-            ->setCacheable(true)
-            ->getOneOrNullResult();
-    }
+        if (
+            array_key_exists('name', $filters)
+            && is_string($filters['name'])
+            && strlen($filters['name']) > 0
+        ) {
+            $queryBuilder
+                ->andWhere('role.name = :name')
+                ->setParameter('name', $filters['name']);
+        }
 
-    /**
-     * @return AdminRole[]
-     */
-    public function getRoles(): array
-    {
-        return $this->findAll();
+        $queryBuilder
+            ->orderBy($params['sort'], $params['dir'])
+            ->setFirstResult($params['offset'])
+            ->setMaxResults($params['limit']);
+        $queryBuilder->getQuery()->useQueryCache(true);
+
+        return $queryBuilder;
     }
 }

@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Handler;
 
-use Admin\App\Message;
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Enum\SettingEnum;
+use Admin\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Service\SettingService;
+use Admin\Setting\Service\SettingServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminService;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Enum\SettingIdentifierEnum;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -35,7 +38,7 @@ class GetSettingHandlerTest extends UnitTest
             $this->createMock(SettingService::class),
         );
 
-        $this->assertInstanceOf(GetSettingViewHandler::class, $handler);
+        $this->assertSame(GetSettingViewHandler::class, $handler::class);
     }
 
     /**
@@ -75,21 +78,19 @@ class GetSettingHandlerTest extends UnitTest
     public function testInvalidAdminProvided(): void
     {
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
+        $adminService          = $this->createMock(AdminServiceInterface::class);
+        $settingService        = $this->createMock(SettingServiceInterface::class);
         $request               = $this->createMock(ServerRequestInterface::class);
         $identity              = $this->createMock(AdminIdentity::class);
 
         $identity->method('getUuid')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn(null);
-        $adminService->method('getAdminRepository')->willReturn($adminRepository);
+        $adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
+            ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,
@@ -116,22 +117,20 @@ class GetSettingHandlerTest extends UnitTest
     public function testInvalidSettingProvided(): void
     {
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
+        $adminService          = $this->createMock(AdminServiceInterface::class);
+        $settingService        = $this->createMock(SettingServiceInterface::class);
         $request               = $this->createMock(ServerRequestInterface::class);
         $identity              = $this->createMock(AdminIdentity::class);
         $admin                 = $this->createMock(Admin::class);
 
         $identity->method('getUuid')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($admin);
-        $adminService->method('getAdminRepository')->willReturn($adminRepository);
+        $adminService->method('findAdmin')->willReturn($admin);
 
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
+            ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,
@@ -147,7 +146,7 @@ class GetSettingHandlerTest extends UnitTest
         $this->assertIsArray($data);
         $this->assertNotEmpty($data['error']['messages'][0]);
         $this->assertSame(
-            Message::SETTING_NOT_FOUND,
+            Message::settingNotFound(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value),
             $data['error']['messages'][0]
         );
     }
@@ -179,7 +178,7 @@ class GetSettingHandlerTest extends UnitTest
         $request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
+            ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetSettingViewHandler(
             $authenticationService,

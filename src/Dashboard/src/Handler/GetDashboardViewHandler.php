@@ -16,8 +16,9 @@ class GetDashboardViewHandler implements RequestHandlerInterface
     #[Inject(
         TemplateRendererInterface::class,
     )]
-    public function __construct(protected TemplateRendererInterface $template)
-    {
+    public function __construct(
+        protected TemplateRendererInterface $template,
+    ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

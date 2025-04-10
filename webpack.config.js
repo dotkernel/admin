@@ -10,7 +10,6 @@
 
 "use strict";
 
-
 // Every module that publishes assets should
 // be registered below
 const appModules = [{
@@ -20,7 +19,6 @@ const appModules = [{
     js: true,
     images: true
 }];
-
 
 // These paths will be completely
 // rebuilt before every commit.
@@ -32,7 +30,6 @@ const pathsToNuke = [
     './public/fonts',
     './public/images'
 ];
-
 
 /*
  *
@@ -47,29 +44,29 @@ const pathsToNuke = [
 // Include npm modules
 const path = require('path');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin      = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
-
-
+const MiniCssExtractPlugin   = require("mini-css-extract-plugin");
+const TerserPlugin           = require('terser-webpack-plugin');
 
 // Prepare plugin to extract styles into a css file
 // instead of a javascript file
 
 // dynamically build webpack entries based on registered app modules
-let entries = {
+let entries    = {
     app: [],
     admin: [
         './App/assets/js/components/_admin.js'
     ],
     table_settings: [
         './App/assets/js/components/_table_settings.js'
-    ]
+    ],
+    user: [
+        './App/assets/js/components/_user.js'
+    ],
 };
 let copyImages = [];
-let rules = generateBaseRules();
-
+let rules      = generateBaseRules();
 
 /*
  * Run the setup to prepare

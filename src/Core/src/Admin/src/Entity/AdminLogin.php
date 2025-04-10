@@ -4,37 +4,39 @@ declare(strict_types=1);
 
 namespace Core\Admin\Entity;
 
-use Core\Admin\Enum\SuccessFailureEnum;
-use Core\Admin\Enum\YesNoEnum;
 use Core\Admin\Repository\AdminLoginRepository;
 use Core\App\Entity\AbstractEntity;
 use Core\App\Entity\TimestampsTrait;
+use Core\App\Enum\SuccessFailureEnum;
+use Core\App\Enum\YesNoEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdminLoginRepository::class)]
 #[ORM\Table(name: 'admin_login')]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class AdminLogin extends AbstractEntity
 {
     use TimestampsTrait;
 
-    #[ORM\Column(name: 'adminIp', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'identity', type: 'string', length: 191, nullable: true)]
+    protected ?string $identity = null;
+
+    #[ORM\Column(name: 'adminIp', type: 'string', length: 191, nullable: true)]
     protected ?string $adminIp = null;
 
-    #[ORM\Column(name: 'country', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'country', type: 'string', length: 191, nullable: true)]
     protected ?string $country = null;
 
-    #[ORM\Column(name: 'continent', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'continent', type: 'string', length: 191, nullable: true)]
     protected ?string $continent = null;
 
-    #[ORM\Column(name: 'organization', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'organization', type: 'string', length: 191, nullable: true)]
     protected ?string $organization = null;
 
-    #[ORM\Column(name: 'deviceType', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'deviceType', type: 'string', length: 191, nullable: true)]
     protected ?string $deviceType = null;
 
-    #[ORM\Column(name: 'deviceBrand', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'deviceBrand', type: 'string', length: 191, nullable: true)]
     protected ?string $deviceBrand = null;
 
     #[ORM\Column(name: 'deviceModel', type: 'string', length: 40, nullable: true)]
@@ -43,32 +45,41 @@ class AdminLogin extends AbstractEntity
     #[ORM\Column(type: 'yes_no_enum', nullable: true, enumType: YesNoEnum::class)]
     protected ?YesNoEnum $isMobile = null;
 
-    #[ORM\Column(name: 'osName', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'osName', type: 'string', length: 191, nullable: true)]
     protected ?string $osName = null;
 
-    #[ORM\Column(name: 'osVersion', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'osVersion', type: 'string', length: 191, nullable: true)]
     protected ?string $osVersion = null;
 
-    #[ORM\Column(name: 'osPlatform', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'osPlatform', type: 'string', length: 191, nullable: true)]
     protected ?string $osPlatform = null;
 
-    #[ORM\Column(name: 'clientType', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientType', type: 'string', length: 191, nullable: true)]
     protected ?string $clientType = null;
 
-    #[ORM\Column(name: 'clientName', type: 'string', length: 40, nullable: true)]
+    #[ORM\Column(name: 'clientName', type: 'string', length: 191, nullable: true)]
     protected ?string $clientName = null;
 
-    #[ORM\Column(name: 'clientEngine', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientEngine', type: 'string', length: 191, nullable: true)]
     protected ?string $clientEngine = null;
 
-    #[ORM\Column(name: 'clientVersion', type: 'string', length: 20, nullable: true)]
+    #[ORM\Column(name: 'clientVersion', type: 'string', length: 191, nullable: true)]
     protected ?string $clientVersion = null;
 
     #[ORM\Column(type: 'success_failure_enum', nullable: true, enumType: SuccessFailureEnum::class)]
     protected ?SuccessFailureEnum $loginStatus = null;
 
-    #[ORM\Column(name: 'identity', type: 'string', length: 100, nullable: true)]
-    protected ?string $identity = null;
+    public function getIdentity(): ?string
+    {
+        return $this->identity;
+    }
+
+    public function setIdentity(string $identity): self
+    {
+        $this->identity = $identity;
+
+        return $this;
+    }
 
     public function getAdminIp(): ?string
     {
@@ -262,15 +273,29 @@ class AdminLogin extends AbstractEntity
         return $this;
     }
 
-    public function getIdentity(): ?string
+    public function getArrayCopy(): array
     {
-        return $this->identity;
-    }
-
-    public function setIdentity(string $identity): self
-    {
-        $this->identity = $identity;
-
-        return $this;
+        return [
+            'uuid'          => $this->uuid->toString(),
+            'identity'      => $this->identity,
+            'adminIp'       => $this->adminIp,
+            'country'       => $this->country,
+            'continent'     => $this->continent,
+            'organization'  => $this->organization,
+            'deviceType'    => $this->deviceType,
+            'deviceBrand'   => $this->deviceBrand,
+            'deviceModel'   => $this->deviceModel,
+            'isMobile'      => $this->isMobile->value,
+            'osName'        => $this->osName,
+            'osVersion'     => $this->osVersion,
+            'osPlatform'    => $this->osPlatform,
+            'clientType'    => $this->clientType,
+            'clientName'    => $this->clientName,
+            'clientEngine'  => $this->clientEngine,
+            'clientVersion' => $this->clientVersion,
+            'loginStatus'   => $this->loginStatus->value,
+            'created'       => $this->created,
+            'updated'       => $this->updated,
+        ];
     }
 }

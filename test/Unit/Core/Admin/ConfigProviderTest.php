@@ -6,9 +6,11 @@ namespace AdminTest\Unit\Core\Admin;
 
 use AdminTest\Unit\UnitTest;
 use Core\Admin\ConfigProvider;
-use Core\Admin\Entity\AdminInterface;
-use Core\Admin\Service\AdminService;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\Admin\DBAL\Types\AdminRoleEnumType;
+use Core\Admin\DBAL\Types\AdminStatusEnumType;
+use Core\Admin\Repository\AdminLoginRepository;
+use Core\Admin\Repository\AdminRepository;
+use Core\Admin\Repository\AdminRoleRepository;
 
 class ConfigProviderTest extends UnitTest
 {
@@ -29,14 +31,9 @@ class ConfigProviderTest extends UnitTest
     public function testDependenciesHasFactories(): void
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
-        $this->assertArrayHasKey(AdminService::class, $this->config['dependencies']['factories']);
-    }
-
-    public function testDependenciesHasAliases(): void
-    {
-        $this->assertArrayHasKey('aliases', $this->config['dependencies']);
-        $this->assertArrayHasKey(AdminInterface::class, $this->config['dependencies']['aliases']);
-        $this->assertArrayHasKey(AdminServiceInterface::class, $this->config['dependencies']['aliases']);
+        $this->assertArrayHasKey(AdminRepository::class, $this->config['dependencies']['factories']);
+        $this->assertArrayHasKey(AdminLoginRepository::class, $this->config['dependencies']['factories']);
+        $this->assertArrayHasKey(AdminRoleRepository::class, $this->config['dependencies']['factories']);
     }
 
     public function testGetDoctrineConfig(): void
@@ -61,5 +58,11 @@ class ConfigProviderTest extends UnitTest
         $this->assertArrayHasKey('paths', $this->config['doctrine']['driver']['AdminEntities']);
         $this->assertIsArray($this->config['doctrine']['driver']['AdminEntities']['paths']);
         $this->assertNotEmpty($this->config['doctrine']['driver']['AdminEntities']['paths']);
+        $this->assertArrayHasKey('types', $this->config['doctrine']);
+        $this->assertIsArray($this->config['doctrine']['types']);
+        $this->assertArrayHasKey(AdminRoleEnumType::NAME, $this->config['doctrine']['types']);
+        $this->assertSame(AdminRoleEnumType::class, $this->config['doctrine']['types'][AdminRoleEnumType::NAME]);
+        $this->assertArrayHasKey(AdminStatusEnumType::NAME, $this->config['doctrine']['types']);
+        $this->assertSame(AdminStatusEnumType::class, $this->config['doctrine']['types'][AdminStatusEnumType::NAME]);
     }
 }

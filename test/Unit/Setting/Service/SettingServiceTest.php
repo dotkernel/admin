@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Service;
 
-use Admin\Setting\Repository\SettingRepository;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
+use Core\Setting\Repository\SettingRepository;
 use PHPUnit\Framework\MockObject\Exception;
 
 class SettingServiceTest extends UnitTest
@@ -20,6 +20,6 @@ class SettingServiceTest extends UnitTest
 
         $service = new SettingService($settingRepository);
 
-        $this->assertInstanceOf(SettingService::class, $service);
+        $this->assertSame(SettingService::class, $service::class);
     }
 }

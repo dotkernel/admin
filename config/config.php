@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-use Laminas\ConfigAggregator\ArrayProvider;
-use Laminas\ConfigAggregator\ConfigAggregator;
-use Laminas\ConfigAggregator\PhpFileProvider;
-
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
@@ -13,7 +9,7 @@ $cacheConfig = [
 ];
 
 // @codingStandardsIgnoreStart
-$aggregator = new ConfigAggregator([
+$aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
     // Laminas packages
     Laminas\Diactoros\ConfigProvider::class,
     Laminas\Form\ConfigProvider::class,
@@ -26,6 +22,11 @@ $aggregator = new ConfigAggregator([
     Mezzio\Router\ConfigProvider::class,
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     Mezzio\Twig\ConfigProvider::class,
+    class_exists(Mezzio\Tooling\ConfigProvider::class)
+        ? Mezzio\Tooling\ConfigProvider::class
+        : function () {
+        return [];
+    },
 
     // Dotkernel packages
     Dot\Cache\ConfigProvider::class,
@@ -46,27 +47,36 @@ $aggregator = new ConfigAggregator([
     Dot\Twig\ConfigProvider::class,
 
     // Include cache configuration
-    new ArrayProvider($cacheConfig),
+    new Laminas\ConfigAggregator\ArrayProvider($cacheConfig),
 
     // Dotkernel modules
-    Admin\App\ConfigProvider::class,
     Admin\Admin\ConfigProvider::class,
-    Admin\Setting\ConfigProvider::class,
-    Admin\Page\ConfigProvider::class,
+    Admin\App\ConfigProvider::class,
     Admin\Dashboard\ConfigProvider::class,
-
-    Core\App\ConfigProvider::class,
+    Admin\Page\ConfigProvider::class,
+    Admin\Setting\ConfigProvider::class,
+    Admin\User\ConfigProvider::class,
     Core\Admin\ConfigProvider::class,
+    Core\App\ConfigProvider::class,
+    Core\Security\ConfigProvider::class,
+    Core\Setting\ConfigProvider::class,
+    Core\User\ConfigProvider::class,
+
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
     //   - `global.php`
     //   - `*.global.php`
     //   - `local.php`
     //   - `*.local.php`
-    new PhpFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local,{,*.}test}.php'),
+    //   - `local.test.php`
+    new Laminas\ConfigAggregator\PhpFileProvider(
+        realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local,{,*.}test}.php'
+    ),
 
     // Load development config if it exists
-    new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),
+    new Laminas\ConfigAggregator\PhpFileProvider(
+        realpath(__DIR__) . '/development.config.php'
+    ),
 ], $cacheConfig['config_cache_path']);
 // @codingStandardsIgnoreEnd
 

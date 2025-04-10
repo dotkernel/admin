@@ -7,7 +7,7 @@ namespace Admin\Admin\Adapter;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Entity\AdminRole;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Exception;
@@ -24,32 +24,33 @@ use function ucfirst;
 
 class AuthenticationAdapter implements AdapterInterface
 {
-    private const METHOD_NOT_EXISTS         = "Method %s not found in %s.";
-    private const OPTION_VALUE_NOT_PROVIDED = "Option '%s' not provided for '%s' option.";
+    private const METHOD_NOT_EXISTS         = 'Method %s not found in %s.';
+    private const OPTION_VALUE_NOT_PROVIDED = 'Option "%s" not provided for "%s" option.';
+
     private string $identity;
     private string $credential;
-    private array $config;
 
     #[Inject(
-        EntityManager::class,
-        "config.doctrine.authentication"
+        EntityManagerInterface::class,
+        'config.doctrine.authentication',
     )]
     public function __construct(
-        private readonly EntityManager $entityManager,
-        array $config
+        private readonly EntityManagerInterface $entityManager,
+        private readonly array $config,
     ) {
-        $this->config = $config;
     }
 
     public function setIdentity(string $identity): self
     {
         $this->identity = $identity;
+
         return $this;
     }
 
     public function setCredential(string $credential): self
     {
         $this->credential = $credential;
+
         return $this;
     }
 
@@ -89,10 +90,8 @@ class AuthenticationAdapter implements AdapterInterface
         }
         $this->entityManager->refresh($identityClass);
 
-        $getCredential = "get" . ucfirst($this->config['orm_default']['credential_property']);
-
         /** Check if the get credential method exists in the provided identity class */
-        $this->checkMethod($identityClass, $getCredential);
+        $getCredential = $this->validateMethod($identityClass, $this->config['orm_default']['credential_property']);
 
         /** If passwords don't match, return failure response */
         if (false === password_verify($this->getCredential(), $identityClass->$getCredential())) {
@@ -106,11 +105,6 @@ class AuthenticationAdapter implements AdapterInterface
         /** Check for extra validation options */
         if (! empty($this->config['orm_default']['options'])) {
             foreach ($this->config['orm_default']['options'] as $property => $option) {
-                $methodName = "get" . ucfirst($property);
-
-                /** Check if the method exists in the provided identity class */
-                $this->checkMethod($identityClass, $methodName);
-
                 /** Check if value for the current option is provided */
                 if (! array_key_exists('value', $option)) {
                     throw new Exception(sprintf(
@@ -129,6 +123,8 @@ class AuthenticationAdapter implements AdapterInterface
                     ));
                 }
 
+                /** Check if the method exists in the provided identity class */
+                $methodName = $this->validateMethod($identityClass, $property);
                 if ($identityClass->$methodName()->value !== $option['value']) {
                     return new Result(
                         Result::FAILURE,
@@ -143,9 +139,7 @@ class AuthenticationAdapter implements AdapterInterface
             $identityClass->getUuid()->toString(),
             $identityClass->getIdentity(),
             $identityClass->getStatus(),
-            array_map(function (AdminRole $role) {
-                return $role->getName();
-            }, $identityClass->getRoles()),
+            array_map(fn (AdminRole $role): string => $role->getName()->value, $identityClass->getRoles()),
             [
                 'firstName' => $identityClass->getFirstName(),
                 'lastName'  => $identityClass->getLastName(),
@@ -165,18 +159,18 @@ class AuthenticationAdapter implements AdapterInterface
     private function validateConfig(): void
     {
         if (
-            ! isset($this->config['orm_default']['identity_class']) ||
-            ! class_exists($this->config['orm_default']['identity_class'])
+            ! isset($this->config['orm_default']['identity_class'])
+            || ! class_exists($this->config['orm_default']['identity_class'])
         ) {
-            throw new Exception("No or invalid param 'identity_class' provided.");
+            throw new Exception('No or invalid param "identity_class" provided.');
         }
 
         if (! isset($this->config['orm_default']['identity_property'])) {
-            throw new Exception("No or invalid param 'identity_property' provided.");
+            throw new Exception('No or invalid param "identity_property" provided.');
         }
 
         if (! isset($this->config['orm_default']['credential_property'])) {
-            throw new Exception("No or invalid param 'credential_property' provided.");
+            throw new Exception('No or invalid param "credential_property" provided.');
         }
 
         if (empty($this->identity) || empty($this->credential)) {
@@ -187,8 +181,9 @@ class AuthenticationAdapter implements AdapterInterface
     /**
      * @throws Exception
      */
-    private function checkMethod(Admin $identityClass, string $methodName): void
+    private function validateMethod(Admin $identityClass, string $property): string
     {
+        $methodName = sprintf('get%s', ucfirst($property));
         if (! method_exists($identityClass, $methodName)) {
             throw new Exception(sprintf(
                 self::METHOD_NOT_EXISTS,
@@ -196,5 +191,7 @@ class AuthenticationAdapter implements AdapterInterface
                 $identityClass::class
             ));
         }
+
+        return $methodName;
     }
 }

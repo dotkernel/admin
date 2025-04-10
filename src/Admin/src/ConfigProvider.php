@@ -7,10 +7,10 @@ namespace Admin\Admin;
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Delegator\AdminRoleDelegator;
 use Admin\Admin\Factory\AuthenticationServiceFactory;
-use Admin\Admin\Form\AdminDeleteForm;
-use Admin\Admin\Form\AdminForm;
-use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Form\LoginForm;
+use Admin\Admin\Form\AccountForm;
+use Admin\Admin\Form\CreateAdminForm;
+use Admin\Admin\Form\DeleteAdminForm;
+use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
 use Admin\Admin\Handler\Account\GetAccountLoginFormHandler;
 use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
@@ -25,6 +25,12 @@ use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
 use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
 use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
 use Admin\Admin\Handler\Admin\PostAdminEditHandler;
+use Admin\Admin\Service\AdminLoginService;
+use Admin\Admin\Service\AdminLoginServiceInterface;
+use Admin\Admin\Service\AdminRoleService;
+use Admin\Admin\Service\AdminRoleServiceInterface;
+use Admin\Admin\Service\AdminService;
+use Admin\Admin\Service\AdminServiceInterface;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
@@ -37,7 +43,6 @@ class ConfigProvider
         return [
             'dependencies' => $this->getDependencies(),
             'templates'    => $this->getTemplates(),
-            'form'         => $this->getForms(),
         ];
     }
 
@@ -45,12 +50,8 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                Application::class => [
-                    RoutesDelegator::class,
-                ],
-                AdminForm::class   => [
-                    AdminRoleDelegator::class,
-                ],
+                Application::class     => [RoutesDelegator::class],
+                CreateAdminForm::class => [AdminRoleDelegator::class],
             ],
             'factories'  => [
                 GetAdminCreateFormHandler::class        => AttributedServiceFactory::class,
@@ -67,9 +68,20 @@ class ConfigProvider
                 GetAccountLoginFormHandler::class       => AttributedServiceFactory::class,
                 PostAccountLoginHandler::class          => AttributedServiceFactory::class,
                 GetAccountLogoutHandler::class          => AttributedServiceFactory::class,
-                AdminForm::class                        => ElementFactory::class,
-                AuthenticationService::class            => AuthenticationServiceFactory::class,
                 AuthenticationAdapter::class            => AttributedServiceFactory::class,
+                AdminService::class                     => AttributedServiceFactory::class,
+                AdminRoleService::class                 => AttributedServiceFactory::class,
+                AdminLoginService::class                => AttributedServiceFactory::class,
+                AuthenticationService::class            => AuthenticationServiceFactory::class,
+                AccountForm::class                      => ElementFactory::class,
+                CreateAdminForm::class                  => ElementFactory::class,
+                DeleteAdminForm::class                  => ElementFactory::class,
+                EditAdminForm::class                    => ElementFactory::class,
+            ],
+            'aliases'    => [
+                AdminServiceInterface::class      => AdminService::class,
+                AdminRoleServiceInterface::class  => AdminRoleService::class,
+                AdminLoginServiceInterface::class => AdminLoginService::class,
             ],
         ];
     }
@@ -79,22 +91,6 @@ class ConfigProvider
         return [
             'paths' => [
                 'admin' => [__DIR__ . '/../templates/admin'],
-            ],
-        ];
-    }
-
-    public function getForms(): array
-    {
-        return [
-            'form_manager' => [
-                'factories'  => [
-                    AdminForm::class          => ElementFactory::class,
-                    LoginForm::class          => ElementFactory::class,
-                    ChangePasswordForm::class => ElementFactory::class,
-                    AdminDeleteForm::class    => ElementFactory::class,
-                ],
-                'aliases'    => [],
-                'delegators' => [],
             ],
         ];
     }

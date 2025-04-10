@@ -1,0 +1,23 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="delete-user-modal-content">Delete user</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {{ form().openTag(form)|raw }}
+        <div class="row">
+            <div class="col-md-12">
+                <p>Are you sure you want to delete user account with identity <span id="userIdentity" class="fw-bold">{{ user.identity }}</span>?</p>
+                <div class="form-check">
+                    {{ formElement(form.get('confirmation')) }}
+                    <label class="form-check-label" for="confirmation">Yes, I want to delete <span class="fw-bold">{{ user.identity }}</span></label>
+                </div>
+                <div class="d-flex justify-content-end">
+                    {{ formElement(form.get('submit')) }}
+                    {{ formElement(form.get('userDeleteCsrf')) }}
+                </div>
+            </div>
+        </div>
+        {{ form().closeTag()|raw }}
+    </div>
+</div>

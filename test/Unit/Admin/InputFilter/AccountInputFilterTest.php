@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\InputFilter;
 
-use Admin\Admin\InputFilter\AccountInputFilter;
+use Admin\Admin\InputFilter\EditAccountInputFilter;
+use Admin\App\InputFilter\Input\FirstNameInput;
+use Admin\App\InputFilter\Input\IdentityInput;
+use Admin\App\InputFilter\Input\LastNameInput;
 use AdminTest\Unit\UnitTest;
+use Core\App\Message;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 
@@ -15,7 +19,7 @@ class AccountInputFilterTest extends UnitTest
 {
     public function testWillValidateIdentity(): void
     {
-        $inputFilter = new AccountInputFilter();
+        $inputFilter = new EditAccountInputFilter();
         $inputFilter->init();
 
         $inputFilter->setData([]);
@@ -25,7 +29,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertArrayHasKey('identity', $messages);
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('isEmpty', $messages['identity']);
-        $this->assertSame('<b>Identity</b> is required and cannot be empty', $messages['identity']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
             'identity' => null,
@@ -36,7 +40,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertArrayHasKey('identity', $messages);
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('isEmpty', $messages['identity']);
-        $this->assertSame('<b>Identity</b> is required and cannot be empty', $messages['identity']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
             'identity' => '',
@@ -47,7 +51,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertArrayHasKey('identity', $messages);
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('isEmpty', $messages['identity']);
-        $this->assertSame('<b>Identity</b> is required and cannot be empty', $messages['identity']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
             'identity' => '   ',
@@ -58,7 +62,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertArrayHasKey('identity', $messages);
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('isEmpty', $messages['identity']);
-        $this->assertSame('<b>Identity</b> is required and cannot be empty', $messages['identity']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
             'identity' => 'id',
@@ -70,7 +74,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('stringLengthTooShort', $messages['identity']);
         $this->assertSame(
-            '<b>Identity</b> must have between 3 and 100 characters',
+            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
             $messages['identity']['stringLengthTooShort']
         );
 
@@ -84,7 +88,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['identity']);
         $this->assertSame(
-            '<b>Identity</b> must have between 3 and 100 characters',
+            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
             $messages['identity']['stringLengthTooLong']
         );
 
@@ -97,17 +101,14 @@ class AccountInputFilterTest extends UnitTest
         $this->assertArrayHasKey('identity', $messages);
         $this->assertIsArray($messages['identity']);
         $this->assertArrayHasKey('regexNotMatch', $messages['identity']);
-        $this->assertSame(
-            '<b>Identity</b> contains invalid characters',
-            $messages['identity']['regexNotMatch']
-        );
+        $this->assertSame(Message::VALIDATOR_INVALID_CHARACTERS, $messages['identity']['regexNotMatch']);
     }
 
     public function testWillValidateFirstName(): void
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
-        $inputFilter = new AccountInputFilter();
+        $inputFilter = new EditAccountInputFilter();
         $inputFilter->init();
 
         $inputFilter->setData([
@@ -132,7 +133,7 @@ class AccountInputFilterTest extends UnitTest
 
         $inputFilter->setData([
             'identity'  => 'test',
-            'firstName' => str_repeat('a', 151),
+            'firstName' => str_repeat('a', 200),
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -141,7 +142,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertIsArray($messages['firstName']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['firstName']);
         $this->assertSame(
-            '<b>First name</b> must be max 150 characters long.',
+            Message::validatorLengthMax(FirstNameInput::FIRSTNAME_MAX_LENGTH),
             $messages['firstName']['stringLengthTooLong']
         );
     }
@@ -150,7 +151,7 @@ class AccountInputFilterTest extends UnitTest
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
-        $inputFilter = new AccountInputFilter();
+        $inputFilter = new EditAccountInputFilter();
         $inputFilter->init();
 
         $inputFilter->setData([
@@ -175,7 +176,7 @@ class AccountInputFilterTest extends UnitTest
 
         $inputFilter->setData([
             'identity'    => 'test',
-            'lastName'    => str_repeat('a', 151),
+            'lastName'    => str_repeat('a', 200),
             'accountCsrf' => $hash,
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -185,7 +186,7 @@ class AccountInputFilterTest extends UnitTest
         $this->assertIsArray($messages['lastName']);
         $this->assertArrayHasKey('stringLengthTooLong', $messages['lastName']);
         $this->assertSame(
-            '<b>Last name</b> must be max 150 characters long.',
+            Message::validatorLengthMax(LastNameInput::LASTNAME_MAX_LENGTH),
             $messages['lastName']['stringLengthTooLong']
         );
     }
@@ -194,7 +195,7 @@ class AccountInputFilterTest extends UnitTest
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
-        $inputFilter = new AccountInputFilter();
+        $inputFilter = new EditAccountInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
             'identity'    => 'identity',

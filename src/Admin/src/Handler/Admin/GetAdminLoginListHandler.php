@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\App\Pagination;
-use Admin\Setting\Enum\SettingEnum;
-use Core\Admin\Enum\SuccessFailureEnum;
-use Core\Admin\Service\AdminServiceInterface;
-use Core\App\Common\ServerRequestAwareTrait;
+use Admin\Admin\Service\AdminLoginServiceInterface;
+use Core\App\Enum\SuccessFailureEnum;
+use Core\Setting\Enum\SettingIdentifierEnum;
 use Dot\DependencyInjection\Attribute\Inject;
-use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -19,50 +16,24 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class GetAdminLoginListHandler implements RequestHandlerInterface
 {
-    use ServerRequestAwareTrait;
-
     #[Inject(
-        AdminServiceInterface::class,
+        AdminLoginServiceInterface::class,
         TemplateRendererInterface::class,
-        AuthenticationServiceInterface::class,
     )]
     public function __construct(
-        protected AdminServiceInterface $adminService,
+        protected AdminLoginServiceInterface $adminLoginService,
         protected TemplateRendererInterface $template,
-        protected AuthenticationServiceInterface $authenticationService,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $params = [
-            'offset'   => $this->getQueryParam($request, 'offset', 0, 'int'),
-            'limit'    => $this->getQueryParam($request, 'limit', 10, 'int'),
-            'sort'     => $this->getQueryParam($request, 'sort', 'created'),
-            'order'    => $this->getQueryParam($request, 'order', 'desc'),
-            'identity' => $this->getQueryParam($request, 'identity'),
-            'status'   => $this->getQueryParam($request, 'status'),
-        ];
-
-        $logins = $this->adminService->getAdminLogins(
-            $params['offset'],
-            $params['limit'],
-            $params['sort'],
-            $params['order'],
-            [
-                'identity' => $params['identity'],
-                'status'   => $params['status'],
-            ]
-        );
-
         return new HtmlResponse(
             $this->template->render('admin::admin-login-list', [
-                'params'     => $params,
-                'logins'     => $logins['rows'],
-                'statuses'   => SuccessFailureEnum::values(),
-                'identities' => $this->adminService->getAdminLoginIdentities(),
-                'identifier' => SettingEnum::IdentifierTableAdminListLoginsSelectedColumns->value,
-                'pagination' => new Pagination($logins['total'], $params['offset'], $params['limit']),
+                'pagination' => $this->adminLoginService->getAdminLogins($request->getQueryParams()),
+                'statuses'   => SuccessFailureEnum::cases(),
+                'identities' => $this->adminLoginService->getAdminLoginRepository()->getAdminLoginIdentities(),
+                'identifier' => SettingIdentifierEnum::IdentifierTableAdminListLoginsSelectedColumns->value,
             ])
         );
     }

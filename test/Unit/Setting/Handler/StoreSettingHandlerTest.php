@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Handler;
 
-use Admin\App\Message;
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Enum\SettingEnum;
+use Admin\Admin\Service\AdminService;
 use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminService;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Enum\SettingIdentifierEnum;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -27,14 +27,13 @@ use function sprintf;
 
 class StoreSettingHandlerTest extends UnitTest
 {
-    private MockObject|AuthenticationServiceInterface $authenticationService;
-    private MockObject|AdminService $adminService;
-    private MockObject|SettingService $settingService;
-    private MockObject|ServerRequestInterface $request;
-    private MockObject|StreamInterface $stream;
-    private MockObject|AdminRepository $adminRepository;
-    private MockObject|AdminIdentity $identity;
-    private MockObject|Admin $admin;
+    private MockObject&AuthenticationServiceInterface $authenticationService;
+    private MockObject&AdminService $adminService;
+    private MockObject&SettingService $settingService;
+    private MockObject&ServerRequestInterface $request;
+    private MockObject&StreamInterface $stream;
+    private MockObject&AdminIdentity $identity;
+    private MockObject&Admin $admin;
 
     /**
      * @throws Exception
@@ -48,7 +47,6 @@ class StoreSettingHandlerTest extends UnitTest
         $this->settingService        = $this->createMock(SettingService::class);
         $this->request               = $this->createMock(ServerRequestInterface::class);
         $this->stream                = $this->createMock(StreamInterface::class);
-        $this->adminRepository       = $this->createMock(AdminRepository::class);
         $this->identity              = $this->createMock(AdminIdentity::class);
         $this->admin                 = $this->createMock(Admin::class);
     }
@@ -61,7 +59,7 @@ class StoreSettingHandlerTest extends UnitTest
             $this->settingService,
         );
 
-        $this->assertInstanceOf(PostSettingStoreHandler::class, $handler);
+        $this->assertSame(PostSettingStoreHandler::class, $handler::class);
     }
 
     /**
@@ -104,8 +102,7 @@ class StoreSettingHandlerTest extends UnitTest
     {
         $this->identity->method('getUuid')->willReturn('test');
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn(null);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
         $this->stream->method('getContents')->willReturn(json_encode([
             'identifier' => 'test',
             'value'      => 'test',
@@ -114,7 +111,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
+            ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $this->request->method('getAttribute')->with('identifier')->willReturn('test');
         $this->request->method('getBody')->willReturn($this->stream);
@@ -150,10 +147,9 @@ class StoreSettingHandlerTest extends UnitTest
             $this->createMock(Setting::class)
         );
         $this->settingService->expects($this->once())->method('updateSetting');
-        $this->adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->stream->method('getContents')->willReturn(json_encode([
-            'identifier' => SettingEnum::IdentifierTableAdminListSelectedColumns->value,
+            'identifier' => SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value,
             'value'      => ['test'],
         ]));
 
@@ -161,7 +157,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->request
             ->method('getAttribute')
             ->with('identifier')
-            ->willReturn(SettingEnum::IdentifierTableAdminListSelectedColumns->value);
+            ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new PostSettingStoreHandler(
             $this->authenticationService,

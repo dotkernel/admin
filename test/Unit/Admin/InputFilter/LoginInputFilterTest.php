@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\InputFilter;
 
 use Admin\Admin\InputFilter\LoginInputFilter;
 use AdminTest\Unit\UnitTest;
+use Core\App\Message;
 use Laminas\Session\Container;
 use Laminas\Session\Validator\Csrf;
 
@@ -20,43 +21,43 @@ class LoginInputFilterTest extends UnitTest
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
         $this->assertIsArray($messages);
-        $this->assertArrayHasKey('username', $messages);
-        $this->assertIsArray($messages['username']);
-        $this->assertArrayHasKey('isEmpty', $messages['username']);
-        $this->assertSame('<b>Username</b> is required and cannot be empty', $messages['username']['isEmpty']);
+        $this->assertArrayHasKey('identity', $messages);
+        $this->assertIsArray($messages['identity']);
+        $this->assertArrayHasKey('isEmpty', $messages['identity']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => null,
+            'identity' => null,
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
         $this->assertIsArray($messages);
-        $this->assertArrayHasKey('username', $messages);
-        $this->assertIsArray($messages['username']);
-        $this->assertArrayHasKey('isEmpty', $messages['username']);
-        $this->assertSame('<b>Username</b> is required and cannot be empty', $messages['username']['isEmpty']);
+        $this->assertArrayHasKey('identity', $messages);
+        $this->assertIsArray($messages['identity']);
+        $this->assertArrayHasKey('isEmpty', $messages['identity']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => '',
+            'identity' => '',
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
         $this->assertIsArray($messages);
-        $this->assertArrayHasKey('username', $messages);
-        $this->assertIsArray($messages['username']);
-        $this->assertArrayHasKey('isEmpty', $messages['username']);
-        $this->assertSame('<b>Username</b> is required and cannot be empty', $messages['username']['isEmpty']);
+        $this->assertArrayHasKey('identity', $messages);
+        $this->assertIsArray($messages['identity']);
+        $this->assertArrayHasKey('isEmpty', $messages['identity']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => '   ',
+            'identity' => '   ',
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
         $this->assertIsArray($messages);
-        $this->assertArrayHasKey('username', $messages);
-        $this->assertIsArray($messages['username']);
-        $this->assertArrayHasKey('isEmpty', $messages['username']);
-        $this->assertSame('<b>Username</b> is required and cannot be empty', $messages['username']['isEmpty']);
+        $this->assertArrayHasKey('identity', $messages);
+        $this->assertIsArray($messages['identity']);
+        $this->assertArrayHasKey('isEmpty', $messages['identity']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['identity']['isEmpty']);
     }
 
     public function testWillValidatePassword(): void
@@ -65,7 +66,7 @@ class LoginInputFilterTest extends UnitTest
         $inputFilter->init();
 
         $inputFilter->setData([
-            'username' => 'username',
+            'identity' => 'identity',
         ]);
         $this->assertFalse($inputFilter->isValid());
         $messages = $inputFilter->getMessages();
@@ -73,10 +74,10 @@ class LoginInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame('<b>Password</b> is required and cannot be empty', $messages['password']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => 'username',
+            'identity' => 'identity',
             'password' => null,
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -85,10 +86,10 @@ class LoginInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame('<b>Password</b> is required and cannot be empty', $messages['password']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => 'username',
+            'identity' => 'identity',
             'password' => '',
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -97,10 +98,10 @@ class LoginInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame('<b>Password</b> is required and cannot be empty', $messages['password']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
 
         $inputFilter->setData([
-            'username' => 'username',
+            'identity' => 'identity',
             'password' => '   ',
         ]);
         $this->assertFalse($inputFilter->isValid());
@@ -109,7 +110,7 @@ class LoginInputFilterTest extends UnitTest
         $this->assertArrayHasKey('password', $messages);
         $this->assertIsArray($messages['password']);
         $this->assertArrayHasKey('isEmpty', $messages['password']);
-        $this->assertSame('<b>Password</b> is required and cannot be empty', $messages['password']['isEmpty']);
+        $this->assertSame(Message::VALIDATOR_REQUIRED_FIELD, $messages['password']['isEmpty']);
     }
 
     public function testWillAcceptValidData(): void
@@ -119,7 +120,7 @@ class LoginInputFilterTest extends UnitTest
         $inputFilter = new LoginInputFilter();
         $inputFilter->init();
         $inputFilter->setData([
-            'username'  => 'username',
+            'identity'  => 'identity',
             'password'  => 'password',
             'loginCsrf' => $hash,
         ]);

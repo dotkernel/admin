@@ -12,9 +12,19 @@
                     {{ formElement(form.get('confirmation')) }}
                     <label class="form-check-label" for="confirmation">Yes, I want to delete <span class="fw-bold">{{ admin.identity }}</span></label>
                 </div>
+
+                {% set csrf = form.get('adminDeleteCsrf') %}
+                {% if csrf.getMessages() is not empty and csrf.getMessages() is iterable %}
+                    <div class="invalid-feedback d-block">
+                        {% for message in csrf.getMessages() %}
+                            {{ message|raw }} <br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div class="d-flex justify-content-end">
                     {{ formElement(form.get('submit')) }}
-                    {{ formElement(form.get('adminDeleteCsrf')) }}
+                    {{ formElement(csrf) }}
                 </div>
             </div>
         </div>

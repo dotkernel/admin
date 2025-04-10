@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminRoleServiceInterface;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Enum\AdminStatusEnum;
-use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminRoleServiceInterface;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouterInterface;
@@ -24,14 +24,13 @@ use Ramsey\Uuid\Uuid;
 
 class GetAdminEditFormHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|AdminRoleServiceInterface $adminRoleService;
-    private MockObject|RouterInterface $router;
-    private MockObject|TemplateRendererInterface $template;
-    private MockObject|FlashMessengerInterface $messenger;
-    private MockObject|AdminForm $form;
-    private MockObject|AdminRepository $repository;
-    private MockObject|ServerRequestInterface $request;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&AdminRoleServiceInterface $adminRoleService;
+    private MockObject&RouterInterface $router;
+    private MockObject&TemplateRendererInterface $template;
+    private MockObject&FlashMessengerInterface $messenger;
+    private MockObject&EditAdminForm $form;
+    private MockObject&ServerRequestInterface $request;
 
     /**
      * @throws Exception
@@ -45,15 +44,14 @@ class GetAdminEditFormHandlerTest extends UnitTest
         $this->router           = $this->createMock(RouterInterface::class);
         $this->template         = $this->createMock(TemplateRendererInterface::class);
         $this->messenger        = $this->createMock(FlashMessengerInterface::class);
-        $this->form             = $this->createMock(AdminForm::class);
-        $this->repository       = $this->createMock(AdminRepository::class);
+        $this->form             = $this->createMock(EditAdminForm::class);
         $this->request          = $this->createMock(ServerRequestInterface::class);
     }
 
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->repository->method('findOneBy')->willReturn(null);
-        $this->adminService->method('getAdminRepository')->willReturn($this->repository);
+        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
             ->messenger
@@ -87,8 +85,10 @@ class GetAdminEditFormHandlerTest extends UnitTest
         $admin->method('getUuid')->willReturn($uuid);
         $admin->method('getStatus')->willReturn(AdminStatusEnum::Active);
 
-        $this->repository->method('findOneBy')->willReturn($admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->repository);
+        $this->form->method('setAttribute')->willReturn($this->form);
+        $this->form->method('bind')->willReturn($this->form);
+        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
+        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
 
         $this->template->method('render')->willReturn('<p></p>');
 

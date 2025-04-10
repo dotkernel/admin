@@ -1,16 +1,117 @@
+{% macro roleBadge(role) %}
+    {% if role.value == 'superuser' %}
+    <span class="badge text-bg-danger">{{ role.name }}</span>
+    {% elseif role.value == 'admin' %}
+    <span class="badge text-bg-warning">{{ role.name }}</span>
+    {% elseif role.value == 'user' %}
+    <span class="badge text-bg-primary">{{ role.name }}</span>
+    {% endif %}
+{% endmacro %}
+
 {% macro sortableColumn(route, routeParams, queryParams, columnName, columnTitle) %}
     {% if queryParams.sort == columnName %}
-        <a href="{{ path(route, routeParams, queryParams|merge({order: queryParams.order == 'asc' ? 'desc' : 'asc'})) }}"
+        <a href="{{ path(route, routeParams, queryParams|merge({dir: queryParams.dir == 'asc' ? 'desc' : 'asc'})) }}"
            class="table-column text-nowrap text-primary"
-           data-column="{{ columnName }}">
-            <i class="ti-angle-{{ queryParams.order == 'desc' ? 'down' : 'up' }}"></i>
+           data-column="{{ columnName|replace({'.': '-'}) }}">
+            <i class="ti-angle-{{ queryParams.dir == 'desc' ? 'down' : 'up' }}"></i>
             {{ columnTitle }}
         </a>
     {% else %}
-        <a href="{{ path(route, routeParams, queryParams|merge({sort: columnName, order: 'desc'})) }}"
+        <a href="{{ path(route, routeParams, queryParams|merge({sort: columnName, dir: 'desc'})) }}"
            class="table-column text-nowrap text-black"
-           data-column="{{ columnName }}">
+           data-column="{{ columnName|replace({'.': '-'}) }}">
             {{ columnTitle }}
         </a>
     {% endif %}
+{% endmacro %}
+
+{% macro inputElement(element, showLabels = true, hidden = false) %}
+    <div class="col-md-12">
+    {% if hidden %}
+        {% set element = element.setAttribute('class', 'd-none') %}
+    {% elseif element.getAttribute('class') is null %}
+        {% set element = element.setAttribute('class', 'form-control form-control-sm') %}
+    {% endif %}
+
+    {% set element = element.setLabelAttributes([]|merge({class: 'form-label'})) %}
+
+    {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+        {{ formLabel(element) }}
+    {% endif %}
+
+    {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+        {% set element = element.setAttributes([]|merge({class: 'form-control form-control-sm is-invalid'})) %}
+    {% endif %}
+
+    {{ formElement(element) }}
+
+    {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+        <div class="invalid-feedback">
+            {% for message in element.getMessages() %}
+                {{ message|raw }} <br>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro buttonElement(element) %}
+    {{ formButton(element) }}
+{% endmacro %}
+
+{% macro submitElement(element) %}
+    <div class="col-md-12">
+        <div class="d-flex justify-content-end">
+            {{ formSubmit(element) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro hiddenElement(element) %}
+    {{ formHidden(element) }}
+{% endmacro %}
+
+{% macro checkboxElement(element) %}
+    {% set element = element.setAttribute('class', 'form-check-input') %}
+    <div class="form-check form-check-inline">
+        <label class="form-label">
+            {{ element.getLabel() }} {{ formCheckbox(element) }}
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro multiCheckboxElement(element) %}
+    {% set element = element.setAttribute('class', 'form-check-input') %}
+    {% set element = element.setLabelAttributes([]|merge({class: 'form-label mR-25'})) %}
+    {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+        {% set element = element.setAttributes([]|merge({class: 'form-check-input is-invalid'})) %}
+    {% endif %}
+
+    <div class="col-md-12">
+        {{ formLabel(element) }}
+        <br>
+        <div class="form-check form-check-inline">
+            {{ formElement(element) }}
+        </div>
+
+        {% if element.getMessages() is not empty and element.getMessages() is iterable %}
+        <div class="invalid-feedback d-block">
+            {% for message in element.getMessages() %}
+                {{ message|raw }} <br>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro captchaElement(element) %}
+    <div class="col-md-12">
+    {% set element = element.setAttribute('class', 'form-control-sm') %}
+
+    {% if showLabels and element.getLabel() is defined and element.getLabel() is not empty %}
+        {{ formLabel(element) }}
+    {% endif %}
+
+    {{ formCaptcha(element) }}
+    </div>
 {% endmacro %}

@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Setting\Entity;
 
-use Admin\Setting\Entity\Setting;
-use Admin\Setting\Enum\SettingEnum;
-use Admin\Setting\Repository\SettingRepository;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
+use Core\Setting\Entity\Setting;
+use Core\Setting\Enum\SettingIdentifierEnum;
+use Core\Setting\Repository\SettingRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use PHPUnit\Framework\MockObject\Exception;
-use ReflectionAttribute;
 use ReflectionClass;
 
 class SettingEntityTest extends UnitTest
 {
     private Admin $admin;
-    private SettingEnum $identifier = SettingEnum::IdentifierTableAdminListSelectedColumns;
-    private array $values           = [1, 2, 3];
+    private SettingIdentifierEnum $identifier = SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns;
+    private array $values                     = [1, 2, 3];
 
     /**
      * @throws Exception
@@ -39,8 +38,6 @@ class SettingEntityTest extends UnitTest
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
@@ -56,7 +53,6 @@ class SettingEntityTest extends UnitTest
     public function testAccessors(): void
     {
         $setting = new Setting($this->admin, $this->identifier, $this->values);
-        $this->assertInstanceOf(Setting::class, $setting);
 
         $this->assertSame($this->admin, $setting->getAdmin());
         $this->assertSame($this->identifier, $setting->getIdentifier());

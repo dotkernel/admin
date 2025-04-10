@@ -1,0 +1,198 @@
+{% from '@partial/macros.html.twig' import roleBadge, sortableColumn %}
+
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Manage user accounts{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h4 class="c-grey-900 mT-10 mB-30">Manage user accounts</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 pL-10 pR-20 pT-20 pB-3 mB-20">
+                    <form class="row g-3" method="get" action="{{ path('user::user-list') }}">
+                        <input type="hidden" name="offset" value="0" />
+                        <input type="hidden" name="limit" value="{{ pagination.limit }}" />
+                        <input type="hidden" name="sort" value="{{ pagination.sort }}" />
+                        <input type="hidden" name="order" value="{{ pagination.dir }}" />
+                        <div class="col-sm-auto btn-group-sm">
+                            <button type="button" class="btn btn-default btn-sm" id="btn-add-resource" data-bs-toggle="modal" data-bs-target="#add-user-modal">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" id="btn-edit-resource" data-bs-toggle="modal" data-bs-target="#edit-user-modal" disabled>
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" id="btn-delete-resource" data-bs-toggle="modal" data-bs-target="#delete-user-modal" disabled>
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-auto">
+                            <label>
+                                <input type="text" class="form-control form-control-sm" name="filters[identity]" value="{{ pagination.filters.identity ?? '' }}" placeholder="Filter by identity" />
+                            </label>
+                        </div>
+                        <div class="col-sm-auto">
+                            <label>
+                                <input type="text" class="form-control form-control-sm" name="filters[email]" value="{{ pagination.filters.email ?? '' }}" placeholder="Filter by email" />
+                            </label>
+                        </div>
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm" aria-label="Role selector" name="filters[role]">
+                                <option value="">Select role</option>
+                                {% for role in roles %}
+                                    <option value="{{ role.value }}" {{ role.value == (pagination.filters.role ?? '') ? 'selected' : '' }}>{{ role.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm" aria-label="Status selector" name="filters[status]">
+                                <option value="">Select status</option>
+                                {% for status in statuses %}
+                                <option value="{{ status.value }}" {{ status.value == (pagination.filters.status ?? '') ? 'selected' : '' }}>{{ status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-auto">
+                            <button type="submit" class="btn btn-primary btn-sm mb-3">
+                                <i class="fa fa-search"></i> Filter
+                            </button>
+                            <a href="{{ path('user::user-list') }}" class="btn btn-secondary btn-sm mb-3">
+                                <i class="fa fa-undo"></i> Reset
+                            </a>
+                        </div>
+                        <div class="col-sm-auto ms-auto">
+                            <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Toggle columns">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-columns"></i>
+                                </button>
+                                <ul class="dropdown-menu" id="column-selector"></ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="user-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
+                        <thead>
+                        <tr>
+                            <th class="column-user-uuid"></th>
+                            <th class="column-user-identity">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.identity', 'Identity') }}
+                            </th>
+                            <th class="column-detail-firstName text-nowrap">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.firstName', 'Firstname') }}
+                            </th>
+                            <th class="column-detail-lastName">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.lastName', 'Lastname') }}
+                            </th>
+                            <th class="column-detail-email">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.email', 'Email') }}
+                            </th>
+                            <th class="column-role-name">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
+                            </th>
+                            <th class="column-user-status">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.status', 'Status') }}
+                            </th>
+                            <th class="column-user-created">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.created', 'Created') }}
+                            </th>
+                            <th class="column-user-updated">
+                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.updated', 'Updated') }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in pagination.items %}
+                            <tr class="table-row">
+                                <td class="column-user-uuid" style="width: 1vw;">
+                                    <label>
+                                        <input type="checkbox"
+                                           class="checkbox ui-checkbox"
+                                           value="{{ user.uuid }}"
+                                           data-edit-url="{{ path('user::user-edit', {uuid: user.uuid}) }}"
+                                           data-delete-url="{{ path('user::user-delete', {uuid: user.uuid}) }}">
+                                    </label>
+                                </td>
+                                <td class="column-user-identity">{{ user.identity }}</td>
+                                <td class="column-detail-firstName">{{ user.detail.firstName }}</td>
+                                <td class="column-detail-lastName">{{ user.detail.lastName }}</td>
+                                <td class="column-detail-email">{{ user.detail.email }}</td>
+                                <td class="column-role-name">
+                                    {% for role in user.roles %}
+                                        {{ roleBadge(role.name) }}
+                                    {% endfor %}
+                                </td>
+                                <td class="column-user-status">
+                                    <span class="badge {% if user.status.value == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ user.status.name }}</span>
+                                </td>
+                                <td class="column-user-created">{{ user.getCreated()|date('Y-m-d H:i:s') }}</td>
+                                <td class="column-user-updated">{{ user.getUpdated() is not null ? user.getUpdated()|date('Y-m-d H:i:s') : '' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if pagination.isOutOfBounds %}
+                    <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                        Out of bounds! Return to
+                        <a href="{{ path('user::user-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'user::user-list'}, false) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="add-user-modal-content" aria-hidden="true" data-add-url="{{ path('user::user-create') }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="add-user-modal-content">Create user</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-modal-content" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit-user-modal-content">Edit user</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="delete-user-modal" tabindex="-1" aria-labelledby="delete-user-modal-content" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-user-modal-content">Delete user</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    const tableId = '#user-table';
+    const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
+    const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
+</script>
+<script src="{{ asset('js/table_settings.js') }}" defer></script>
+<script src="{{ asset('js/user.js') }}" defer></script>
+{% endblock %}

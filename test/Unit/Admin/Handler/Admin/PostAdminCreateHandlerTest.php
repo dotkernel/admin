@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\CreateAdminForm;
 use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
-use Core\Admin\Service\AdminServiceInterface;
 use Core\App\Exception\IdentityException;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
@@ -22,13 +22,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PostAdminCreateHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|RouterInterface $router;
-    private MockObject|TemplateRendererInterface $template;
-    private MockObject|FlashMessengerInterface $messenger;
-    private MockObject|AdminForm $adminForm;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&RouterInterface $router;
+    private MockObject&TemplateRendererInterface $template;
+    private MockObject&FlashMessengerInterface $messenger;
+    private MockObject&CreateAdminForm $adminForm;
     private Logger $logger;
-    private MockObject|ServerRequestInterface $request;
+    private MockObject&ServerRequestInterface $request;
 
     /**
      * @throws MockObjectException
@@ -41,7 +41,7 @@ class PostAdminCreateHandlerTest extends UnitTest
         $this->router       = $this->createMock(RouterInterface::class);
         $this->template     = $this->createMock(TemplateRendererInterface::class);
         $this->messenger    = $this->createMock(FlashMessengerInterface::class);
-        $this->adminForm    = $this->createMock(AdminForm::class);
+        $this->adminForm    = $this->createMock(CreateAdminForm::class);
         $this->request      = $this->createMock(ServerRequestInterface::class);
         $this->logger       = new Logger([
             'writers' => [
@@ -63,7 +63,7 @@ class PostAdminCreateHandlerTest extends UnitTest
             ->messenger
             ->expects($this->once())
             ->method('addSuccess')
-            ->with(Message::ADMIN_CREATED_SUCCESSFULLY);
+            ->with(Message::ADMIN_CREATED);
 
         $handler = new PostAdminCreateHandler(
             $this->adminService,

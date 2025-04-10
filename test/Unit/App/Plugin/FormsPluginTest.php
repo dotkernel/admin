@@ -23,11 +23,8 @@ class FormsPluginTest extends UnitTest
         $formElementManager      = $this->createMock(FormElementManager::class);
         $flashMessengerInterface = $this->createMock(FlashMessengerInterface::class);
 
-        $formsPlugin = new FormsPlugin($formElementManager);
-        $this->assertInstanceOf(FormsPlugin::class, $formsPlugin);
-
         $formsPlugin = new FormsPlugin($formElementManager, $flashMessengerInterface);
-        $this->assertInstanceOf(FormsPlugin::class, $formsPlugin);
+        $this->assertSame(FormsPlugin::class, $formsPlugin::class);
     }
 
     /**
@@ -38,16 +35,15 @@ class FormsPluginTest extends UnitTest
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
         /** @var array<string, string> $oldData */
-        $oldData = [
-            'username'  => 'old-username',
+        $oldData     = [
+            'identity'  => 'old-username',
             'password'  => 'old-password',
             'loginCsrf' => $hash,
         ];
-
         $oldMessages = [];
 
         $newData     = [
-            'username'  => 'new-username',
+            'identity'  => 'new-username',
             'password'  => 'new-password',
             'loginCsrf' => $hash,
         ];
@@ -61,38 +57,34 @@ class FormsPluginTest extends UnitTest
             ->expects($this->exactly(2))
             ->method('getData')
             ->willReturnCallback(
-                function (string $key) use ($newData, $newMessages) {
-                    return match ($key) {
-                        'loginForm_data' => $newData,
-                        'loginForm_messages' => $newMessages,
-                        default => null,
-                    };
+                fn (string $key) => match ($key) {
+                    'loginForm_data' => $oldData,
+                    'loginForm_messages' => $oldMessages,
+                    default => null,
                 }
             );
 
-        $form = new LoginForm('loginForm');
-        $form->setData($oldData);
-        $this->assertTrue($form->isValid());
-        $this->assertSame($oldData, $form->getData());
-        $this->assertIsArray($form->getMessages());
-        $this->assertSame($oldMessages, $form->getMessages());
-        (new FormsPlugin($formElementManager))->restoreState($form);
-        $this->assertTrue($form->isValid());
-        $this->assertSame($oldData, $form->getData());
-        $this->assertIsArray($form->getMessages());
-        $this->assertSame($oldMessages, $form->getMessages());
+        $formsPlugin = new FormsPlugin($formElementManager, $flashMessengerInterface);
 
         $form = new LoginForm('loginForm');
         $form->setData($oldData);
         $this->assertTrue($form->isValid());
+        $formsPlugin->saveState($form);
         $this->assertSame($oldData, $form->getData());
         $this->assertIsArray($form->getMessages());
         $this->assertSame($oldMessages, $form->getMessages());
-        (new FormsPlugin($formElementManager, $flashMessengerInterface))->restoreState($form);
+
+        $form->setData($newData);
         $this->assertTrue($form->isValid());
         $this->assertSame($newData, $form->getData());
         $this->assertIsArray($form->getMessages());
-        $this->assertSame($newMessages, $form->getMessages());
+        $this->assertSame($oldMessages, $form->getMessages());
+
+        $formsPlugin->restoreState($form);
+        $this->assertTrue($form->isValid());
+        $this->assertSame($oldData, $form->getData());
+        $this->assertIsArray($form->getMessages());
+        $this->assertSame($oldMessages, $form->getMessages());
     }
 
     /**
@@ -103,7 +95,7 @@ class FormsPluginTest extends UnitTest
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
         $data     = [
-            'username'  => 'username',
+            'identity'  => 'username',
             'password'  => 'password',
             'loginCsrf' => $hash,
         ];

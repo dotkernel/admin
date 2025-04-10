@@ -6,13 +6,12 @@ namespace AdminTest\Unit\Admin\Entity;
 
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\AdminLogin;
-use Core\Admin\Enum\SuccessFailureEnum;
-use Core\Admin\Enum\YesNoEnum;
 use Core\Admin\Repository\AdminLoginRepository;
+use Core\App\Enum\SuccessFailureEnum;
+use Core\App\Enum\YesNoEnum;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;
-use ReflectionAttribute;
 use ReflectionClass;
 
 class AdminLoginTest extends UnitTest
@@ -25,8 +24,6 @@ class AdminLoginTest extends UnitTest
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
@@ -42,93 +39,92 @@ class AdminLoginTest extends UnitTest
     public function testAccessors(): void
     {
         $adminLogin = new AdminLogin();
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
 
-        $this->assertInstanceOf(UuidInterface::class, $adminLogin->getUuid());
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminLogin->getUuid()]);
 
         $this->assertNull($adminLogin->getAdminIp());
         $adminLogin = $adminLogin->setAdminIp('0.0.0.0');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('0.0.0.0', $adminLogin->getAdminIp());
 
         $this->assertNull($adminLogin->getCountry());
         $adminLogin = $adminLogin->setCountry('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getCountry());
 
         $this->assertNull($adminLogin->getContinent());
         $adminLogin = $adminLogin->setContinent('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getContinent());
 
         $this->assertNull($adminLogin->getOrganization());
         $adminLogin = $adminLogin->setOrganization('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getOrganization());
 
         $this->assertNull($adminLogin->getDeviceType());
         $adminLogin = $adminLogin->setDeviceType('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getDeviceType());
 
         $this->assertNull($adminLogin->getDeviceBrand());
         $adminLogin = $adminLogin->setDeviceBrand('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getDeviceBrand());
 
         $this->assertNull($adminLogin->getDeviceModel());
         $adminLogin = $adminLogin->setDeviceModel('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getDeviceModel());
 
         $this->assertNull($adminLogin->getIsMobile());
         $adminLogin = $adminLogin->setIsMobile(YesNoEnum::Yes);
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('yes', $adminLogin->getIsMobile()->value);
 
         $this->assertNull($adminLogin->getOsName());
         $adminLogin = $adminLogin->setOsName('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getOsName());
 
         $this->assertNull($adminLogin->getOsVersion());
         $adminLogin = $adminLogin->setOsVersion('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getOsVersion());
 
         $this->assertNull($adminLogin->getOsPlatform());
         $adminLogin = $adminLogin->setOsPlatform('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getOsPlatform());
 
         $this->assertNull($adminLogin->getClientType());
         $adminLogin = $adminLogin->setClientType('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getClientType());
 
         $this->assertNull($adminLogin->getClientName());
         $adminLogin = $adminLogin->setClientName('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getClientName());
 
         $this->assertNull($adminLogin->getClientEngine());
         $adminLogin = $adminLogin->setClientEngine('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getClientEngine());
 
         $this->assertNull($adminLogin->getClientVersion());
         $adminLogin = $adminLogin->setClientVersion('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getClientVersion());
 
         $this->assertNull($adminLogin->getLoginStatus());
         $adminLogin = $adminLogin->setLoginStatus(SuccessFailureEnum::Success);
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('success', $adminLogin->getLoginStatus()->value);
 
         $this->assertNull($adminLogin->getIdentity());
         $adminLogin = $adminLogin->setIdentity('test');
-        $this->assertInstanceOf(AdminLogin::class, $adminLogin);
+        $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getIdentity());
     }
 }

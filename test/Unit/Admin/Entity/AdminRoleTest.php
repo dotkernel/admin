@@ -11,7 +11,6 @@ use Core\Admin\Repository\AdminRoleRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;
-use ReflectionAttribute;
 use ReflectionClass;
 
 class AdminRoleTest extends UnitTest
@@ -24,8 +23,6 @@ class AdminRoleTest extends UnitTest
 
         $this->assertNotEmpty($entity[0]);
         $this->assertNotEmpty($table[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $entity[0]);
-        $this->assertInstanceOf(ReflectionAttribute::class, $table[0]);
 
         $entityArguments = $entity[0]->getArguments();
         $tableArguments  = $table[0]->getArguments();
@@ -41,13 +38,12 @@ class AdminRoleTest extends UnitTest
     public function testAccessors(): void
     {
         $adminRole = new AdminRole();
-        $this->assertInstanceOf(AdminRole::class, $adminRole);
 
-        $this->assertInstanceOf(UuidInterface::class, $adminRole->getUuid());
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminRole->getUuid()]);
 
         $this->assertSame(AdminRoleEnum::Admin, $adminRole->getName());
         $adminRole = $adminRole->setName(AdminRoleEnum::Admin);
-        $this->assertInstanceOf(AdminRole::class, $adminRole);
+        $this->assertSame(AdminRole::class, $adminRole::class);
         $this->assertSame(AdminRoleEnum::Admin, $adminRole->getName());
     }
 

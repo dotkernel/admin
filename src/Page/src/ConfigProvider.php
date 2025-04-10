@@ -22,9 +22,7 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                Application::class => [
-                    RoutesDelegator::class,
-                ],
+                Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
                 GetPageViewHandler::class => AttributedServiceFactory::class,

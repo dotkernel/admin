@@ -5,161 +5,60 @@ declare(strict_types=1);
 namespace Core\Admin\Repository;
 
 use Core\Admin\Entity\Admin;
-use Core\Admin\Entity\AdminLogin;
 use Core\App\Repository\AbstractRepository;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Dot\DependencyInjection\Attribute\Entity;
-use Throwable;
 
-#[Entity(Admin::class)]
+use function array_key_exists;
+use function is_string;
+use function strlen;
+
+#[Entity(name: Admin::class)]
 class AdminRepository extends AbstractRepository
 {
-    protected int $cacheLifetime = 0;
-
-    public function saveAdmin(Admin $admin): Admin
+    public function getAdmins(array $params = [], array $filters = []): QueryBuilder
     {
-        $this->getEntityManager()->persist($admin);
-        $this->getEntityManager()->flush();
-
-        return $admin;
-    }
-
-    public function saveAdminVisit(AdminLogin $adminLogin): AdminLogin
-    {
-        $this->getEntityManager()->persist($adminLogin);
-        $this->getEntityManager()->flush();
-
-        return $adminLogin;
-    }
-
-    public function deleteAdmin(Admin $admin): void
-    {
-        $this->getEntityManager()->remove($admin);
-        $this->getEntityManager()->flush();
-    }
-
-    public function exists(string $identity): bool
-    {
-        if (empty($identity)) {
-            return false;
-        }
-
-        try {
-            $result = $this->findOneBy(['identity' => $identity]);
-        } catch (Throwable) {
-            $result = null;
-        }
-
-        return $result instanceof Admin;
-    }
-
-    public function getAdmins(
-        int $offset = 0,
-        int $limit = 30,
-        ?string $search = null,
-        string $sort = 'created',
-        string $order = 'desc'
-    ): mixed {
-        $qb = $this->getQueryBuilder();
-
-        $qb->select('admin')
+        $queryBuilder = $this
+            ->getQueryBuilder()
+            ->select(['admin'])
             ->from(Admin::class, 'admin')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->orderBy('admin.' . $sort, $order);
+            ->leftJoin('admin.roles', 'role');
 
-        if (! empty($search)) {
-            $qb->andWhere($qb->expr()->like('admin.identity', ':search'))
-                ->setParameter('search', '%' . $search . '%');
+        if (
+            array_key_exists('identity', $filters)
+            && is_string($filters['identity'])
+            && strlen($filters['identity']) > 0
+        ) {
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->like('admin.identity', ':identity'))
+                ->setParameter('identity', '%' . $filters['identity'] . '%');
         }
-
-        return $qb->getQuery()->setCacheable(true)->getResult();
-    }
-
-    /**
-     * @return AdminLogin[]
-     */
-    public function getAdminLogins(
-        int $offset = 0,
-        int $limit = 30,
-        string $sort = 'created',
-        string $order = 'desc',
-        array $filters = []
-    ): array {
-        $qb = $this->getQueryBuilder()
-            ->select('adminLogin')
-            ->from(AdminLogin::class, 'adminLogin');
-
-        if (! empty($filters['identity'])) {
-            $qb->andWhere($qb->expr()->like('adminLogin.identity', ':identity'))
-                ->setParameter('identity', $filters['identity']);
-        }
-
-        if (! empty($filters['status'])) {
-            $qb->andWhere($qb->expr()->like('adminLogin.loginStatus', ':status'))
+        if (
+            array_key_exists('status', $filters)
+            && is_string($filters['status'])
+            && strlen($filters['status']) > 0
+        ) {
+            $queryBuilder
+                ->andWhere('admin.status = :status')
                 ->setParameter('status', $filters['status']);
         }
-
-        return $qb
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->setCacheable(true)
-            ->orderBy('adminLogin.' . $sort, $order)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function countAdmins(?string $search = null): mixed
-    {
-        if (empty($search)) {
-            return $this->countAllAdmins();
+        if (
+            array_key_exists('role', $filters)
+            && is_string($filters['role'])
+            && strlen($filters['role']) > 0
+        ) {
+            $queryBuilder
+                ->andWhere('role.name = :role')
+                ->setParameter('role', $filters['role']);
         }
 
-        return $this->getQueryBuilder()
-            ->select('count(admin)')
-            ->from(Admin::class, 'admin')
-            ->andWhere('admin.identity = :search')
-            ->setParameter('search', '%' . $search . '%')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
+        $queryBuilder
+            ->orderBy($params['sort'], $params['dir'])
+            ->setFirstResult($params['offset'])
+            ->setMaxResults($params['limit'])
+            ->groupBy('admin.uuid');
+        $queryBuilder->getQuery()->useQueryCache(true);
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    protected function countAllAdmins(): mixed
-    {
-        return $this->getQueryBuilder()
-            ->select('count(admin)')
-            ->from(Admin::class, 'admin')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function countAdminLogins(array $filters = []): mixed
-    {
-        $qb = $this->getQueryBuilder()
-            ->select('count(adminLogin)')
-            ->from(AdminLogin::class, 'adminLogin');
-
-        if (! empty($filters['identity'])) {
-            $qb->andWhere($qb->expr()->like('adminLogin.identity', ':identity'))
-                ->setParameter('identity', $filters['identity']);
-        }
-
-        if (! empty($filters['status'])) {
-            $qb->andWhere($qb->expr()->like('adminLogin.loginStatus', ':status'))
-                ->setParameter('status', $filters['status']);
-        }
-
-        return $qb
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $queryBuilder;
     }
 }

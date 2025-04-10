@@ -38,17 +38,17 @@ class RoutesDelegator
         $routeCollector->group('/admin')
             ->get('/create-admin', GetAdminCreateFormHandler::class, 'admin::admin-create-form')
             ->post('/create-admin', PostAdminCreateHandler::class, 'admin::admin-create')
-            ->get('/edit-admin/{uuid}', GetAdminEditFormHandler::class, 'admin::admin-edit-form')
-            ->post('/edit-admin/{uuid}', PostAdminEditHandler::class, 'admin::admin-edit')
             ->get('/delete-admin/{uuid}', GetAdminDeleteFormHandler::class, 'admin::admin-delete-form')
             ->post('/delete-admin/{uuid}', PostAdminDeleteHandler::class, 'admin::admin-delete')
+            ->get('/edit-admin/{uuid}', GetAdminEditFormHandler::class, 'admin::admin-edit-form')
+            ->post('/edit-admin/{uuid}', PostAdminEditHandler::class, 'admin::admin-edit')
             ->get('/list-admin', GetAdminListHandler::class, 'admin::admin-list')
             ->get('/list-admin-login', GetAdminLoginListHandler::class, 'admin::admin-login-list');
 
         $routeCollector->group('/admin')
+            ->post('/change-password', PostAccountChangePasswordHandler::class, 'admin::account-change-password')
             ->get('/edit-account', GetAccountEditFormHandler::class, 'admin::account-edit-form')
-            ->post('/edit-account', PostAccountEditHandler::class, 'admin::account-edit')
-            ->post('/edit-password', PostAccountChangePasswordHandler::class, 'admin::account-change-password');
+            ->post('/edit-account', PostAccountEditHandler::class, 'admin::account-edit');
 
         $routeCollector->get('/admin/login', GetAccountLoginFormHandler::class, 'admin::admin-login-form');
         $routeCollector->post('/admin/login', PostAccountLoginHandler::class, 'admin::admin-login');

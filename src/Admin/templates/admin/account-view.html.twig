@@ -1,3 +1,5 @@
+{% from '@partial/macros.html.twig' import inputElement, submitElement %}
+
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}Account{% endblock %}
@@ -9,53 +11,11 @@
                 <h6 class="c-grey-900">Update personal data</h6>
                 <div class="mT-30">
                     {{ form().openTag(accountForm)|raw }}
-
-                    {% set identity = accountForm.get('identity') %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(identity) }}
-                        {{ formElement(identity) }}
-
-                        {% if identity.getMessages() is not empty and identity.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in identity.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {% set firstName = accountForm.get('firstName') %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(firstName) }}
-                        {{ formElement(firstName) }}
-
-                        {% if firstName.getMessages() is not empty and firstName.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in firstName.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {% set lastName = accountForm.get('lastName') %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(lastName) }}
-                        {{ formElement(lastName) }}
-
-                        {% if lastName.getMessages() is not empty and lastName.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in lastName.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {{ formElement(accountForm.get('accountCsrf')) }}
-
-                    {{ formSubmit(accountForm.get('submit')) }}
-
+                    {{ inputElement(accountForm.get('identity')) }}
+                    {{ inputElement(accountForm.get('firstName')) }}
+                    {{ inputElement(accountForm.get('lastName')) }}
+                    {{ inputElement(accountForm.get('accountCsrf')) }}
+                    {{ submitElement(accountForm.get('submit')) }}
                     {{ form().closeTag()|raw }}
                 </div>
             </div>
@@ -65,53 +25,11 @@
                 <h6 class="c-grey-900">Change password</h6>
                 <div class="mT-30">
                     {{ form().openTag(changePasswordForm)|raw }}
-
-                    {% set currentPassword = changePasswordForm.get('currentPassword') %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(currentPassword) }}
-                        {{ formElement(currentPassword) }}
-
-                        {% if currentPassword.getMessages() is not empty and currentPassword.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in currentPassword.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {% set password = changePasswordForm.getElements().password %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(password) }}
-                        {{ formElement(password) }}
-
-                        {% if password.getMessages() is not empty and password.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in password.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {% set passwordConfirm = changePasswordForm.getElements().passwordConfirm %}
-                    <div class="mb-3 form-group">
-                        {{ formLabel(passwordConfirm) }}
-                        {{ formElement(passwordConfirm) }}
-
-                        {% if passwordConfirm.getMessages() is not empty and passwordConfirm.getMessages() is iterable %}
-                            <div class="invalid-feedback d-block">
-                                {% for message in passwordConfirm.getMessages() %}
-                                    {{ message|raw }} <br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {{ formElement(changePasswordForm.get('changePasswordCsrf')) }}
-
-                    {{ formSubmit(changePasswordForm.get('submit')) }}
-
+                    {{ inputElement(changePasswordForm.get('currentPassword')) }}
+                    {{ inputElement(changePasswordForm.get('password')) }}
+                    {{ inputElement(changePasswordForm.get('passwordConfirm')) }}
+                    {{ inputElement(changePasswordForm.get('changePasswordCsrf')) }}
+                    {{ submitElement(changePasswordForm.get('submit')) }}
                     {{ form().closeTag()|raw }}
                 </div>
             </div>

@@ -7,13 +7,11 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminServiceInterface;
-use Core\App\Exception\IdentityException;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
@@ -27,17 +25,16 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PostAccountChangePasswordHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|RouterInterface $router;
-    private MockObject|TemplateRendererInterface $template;
-    private MockObject|AuthenticationServiceInterface $authenticationService;
-    private MockObject|FlashMessengerInterface $messenger;
-    private MockObject|AccountForm $accountForm;
-    private MockObject|ChangePasswordForm $changePasswordForm;
-    private MockObject|ServerRequestInterface $request;
-    private MockObject|AdminIdentity $identity;
-    private MockObject|AdminRepository $adminRepository;
-    private MockObject|Admin $admin;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&RouterInterface $router;
+    private MockObject&TemplateRendererInterface $template;
+    private MockObject&AuthenticationServiceInterface $authenticationService;
+    private MockObject&FlashMessengerInterface $messenger;
+    private MockObject&AccountForm $accountForm;
+    private MockObject&ChangePasswordForm $changePasswordForm;
+    private MockObject&ServerRequestInterface $request;
+    private MockObject&AdminIdentity $identity;
+    private MockObject&Admin $admin;
     private Logger $logger;
 
     /**
@@ -56,7 +53,6 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
         $this->changePasswordForm    = $this->createMock(ChangePasswordForm::class);
         $this->request               = $this->createMock(ServerRequestInterface::class);
         $this->identity              = $this->createMock(AdminIdentity::class);
-        $this->adminRepository       = $this->createMock(AdminRepository::class);
         $this->admin                 = $this->createMock(Admin::class);
         $this->logger                = new Logger([
             'writers' => [
@@ -75,8 +71,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(false);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -102,8 +97,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -114,47 +108,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
             ->messenger
             ->expects($this->once())
             ->method('addError')
-            ->with(Message::CURRENT_PASSWORD_INCORRECT);
-
-        $handler = new PostAccountChangePasswordHandler(
-            $this->adminService,
-            $this->router,
-            $this->template,
-            $this->authenticationService,
-            $this->messenger,
-            $this->accountForm,
-            $this->changePasswordForm,
-            $this->logger,
-        );
-
-        $response = $handler->handle($this->request);
-
-        $this->assertSame(StatusCodeInterface::STATUS_FOUND, $response->getStatusCode());
-    }
-
-    public function testThrowIdentityExceptionWillReturnRedirectResponse(): void
-    {
-        $this->request->method('getParsedBody')->willReturn(['test']);
-        $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
-        $this->changePasswordForm->method('isValid')->willReturn(true);
-        $this->accountForm->method('prepare')->willReturn('<form></form>');
-        $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
-        $this->changePasswordForm->method('getData')->willReturn(['currentPassword' => 'test']);
-        $this->admin->method('verifyPassword')->willReturn(true);
-        $this->adminService->method('updateAdmin')->willThrowException(new IdentityException());
-
-        $this
-            ->messenger
-            ->expects($this->once())
-            ->method('addError')
-            ->with((new IdentityException())->getMessage());
-
-        $this
-            ->adminService
-            ->expects($this->once())
-            ->method('updateAdmin');
+            ->with(Message::INVALID_CURRENT_PASSWORD);
 
         $handler = new PostAccountChangePasswordHandler(
             $this->adminService,
@@ -176,14 +130,13 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('getData')->willReturn(['currentPassword' => 'test']);
         $this->admin->method('verifyPassword')->willReturn(true);
-        $this->adminService->method('updateAdmin')->willThrowException(new Exception());
+        $this->adminService->method('saveAdmin')->willThrowException(new Exception());
 
         $this
             ->messenger
@@ -211,8 +164,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
+        $this->adminService->method('findAdmin')->willReturn($this->admin);
         $this->changePasswordForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -223,7 +175,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
             ->messenger
             ->expects($this->once())
             ->method('addSuccess')
-            ->with(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+            ->with(Message::ACCOUNT_UPDATED);
 
         $handler = new PostAccountChangePasswordHandler(
             $this->adminService,

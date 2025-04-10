@@ -7,13 +7,14 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\PostAccountEditHandler;
-use Admin\App\Message;
+use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Repository\AdminRepository;
-use Core\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\ConflictException;
 use Core\App\Exception\IdentityException;
+use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
@@ -102,7 +103,7 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->accountForm->method('getData')->willReturn(['test' => 'test']);
-        $this->adminService->method('updateAdmin')->willThrowException(new IdentityException());
+        $this->adminService->method('saveAdmin')->willThrowException(new ConflictException());
 
         $this
             ->messenger
@@ -110,7 +111,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $this->adminService->method('updateAdmin')->willThrowException(new IdentityException());
+        $this->adminService->method('saveAdmin')->willThrowException(new IdentityException());
 
         $handler = new PostAccountEditHandler(
             $this->adminService,
@@ -137,7 +138,7 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->accountForm->method('getData')->willReturn(['test' => 'test']);
-        $this->adminService->method('updateAdmin')->willThrowException(new Exception());
+        $this->adminService->method('saveAdmin')->willThrowException(new Exception());
 
         $this
             ->messenger
@@ -177,7 +178,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->messenger
             ->expects($this->once())
             ->method('addSuccess')
-            ->with(Message::ACCOUNT_UPDATE_SUCCESSFULLY);
+            ->with(Message::ACCOUNT_UPDATED);
 
         $handler = new PostAccountEditHandler(
             $this->adminService,

@@ -1,49 +1,64 @@
-{% from '@partial/macros.html.twig' import sortableColumn %}
+{% from '@partial/macros.html.twig' import roleBadge, sortableColumn %}
 
 {% extends '@layout/default.html.twig' %}
 
-{% block title %}Manage admins{% endblock %}
+{% block title %}Manage admin accounts{% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-        <h4 class="c-grey-900 mT-10 mB-30">Manage admins</h4>
+        <h4 class="c-grey-900 mT-10 mB-30">Manage admin accounts</h4>
         <div class="row">
             <div class="col-md-12">
-                <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                <div class="bgc-white bd bdrs-3 pL-10 pR-20 pT-20 pB-3 mB-20">
                     <form class="row g-3" method="get" action="{{ path('admin::admin-list') }}">
                         <input type="hidden" name="offset" value="0" />
-                        <input type="hidden" name="limit" value="{{ params.limit }}" />
-                        <input type="hidden" name="sort" value="{{ params.sort }}" />
-                        <input type="hidden" name="order" value="{{ params.order }}" />
+                        <input type="hidden" name="limit" value="{{ pagination.limit }}" />
+                        <input type="hidden" name="sort" value="{{ pagination.sort }}" />
+                        <input type="hidden" name="order" value="{{ pagination.dir }}" />
                         <div class="col-sm-auto btn-group-sm">
-                            <button type="button" class="btn btn-default btn-sm" id="btn-add-admin" data-bs-toggle="modal" data-bs-target="#add-admin-modal">
-                                <i class="ti-plus"></i>
+                            <button type="button" class="btn btn-default btn-sm" id="btn-add-resource" data-bs-toggle="modal" data-bs-target="#add-admin-modal">
+                                <i class="fa fa-plus"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" id="btn-edit-admin" data-bs-toggle="modal" data-bs-target="#edit-admin-modal" disabled>
-                                <i class="ti-pencil"></i>
+                            <button type="button" class="btn btn-default btn-sm" id="btn-edit-resource" data-bs-toggle="modal" data-bs-target="#edit-admin-modal" disabled>
+                                <i class="fa fa-pencil"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" id="btn-delete-admin" data-bs-toggle="modal" data-bs-target="#delete-admin-modal" disabled>
-                                <i class="ti-trash"></i>
+                            <button type="button" class="btn btn-default btn-sm" id="btn-delete-resource" data-bs-toggle="modal" data-bs-target="#delete-admin-modal" disabled>
+                                <i class="fa fa-trash-o"></i>
                             </button>
                         </div>
                         <div class="col-sm-auto">
-                            <input type="text" class="form-control form-control-sm btn-sm" id="search" name="search" value="{{ params.search }}" placeholder="Search">
+                            <label>
+                                <input type="text" class="form-control form-control-sm" name="filters[identity]" value="{{ pagination.filters.identity ?? '' }}" placeholder="Filter by identity" />
+                            </label>
+                        </div>
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm" aria-label="Role selector" name="filters[role]">
+                                <option value="">Select role</option>
+                                {% for role in roles %}
+                                <option value="{{ role.value }}" {{ role.value == (pagination.filters.role ?? '') ? 'selected' : '' }}>{{ role.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-auto">
+                            <select class="form-select form-select-sm" aria-label="Status selector" name="filters[status]">
+                                <option value="">Select status</option>
+                                {% for status in statuses %}
+                                <option value="{{ status.value }}" {{ status.value == (pagination.filters.status ?? '') ? 'selected' : '' }}>{{ status.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="col-sm-auto">
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
-                                <i class="ti-search"></i> Filter
+                                <i class="fa fa-search"></i> Filter
                             </button>
                             <a href="{{ path('admin::admin-list') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
                         <div class="col-sm-auto ms-auto">
-                            <div class="dropdown">
-                                <button class="btn btn-light btn-sm dropdown-toggle"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <i class="ti-view-list-alt"></i>
+                            <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Toggle columns">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-columns"></i>
                                 </button>
                                 <ul class="dropdown-menu" id="column-selector"></ul>
                             </div>
@@ -56,64 +71,70 @@
                     <table id="admin-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
                         <thead>
                         <tr>
-                            <th class="column-uuid"></th>
-                            <th class="column-identity">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'identity', 'Identity') }}
+                            <th class="column-admin-uuid"></th>
+                            <th class="column-admin-identity">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.identity', 'Identity') }}
                             </th>
-                            <th class="column-firstName text-nowrap">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'firstName', 'First Name') }}
+                            <th class="column-admin-firstName text-nowrap">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.firstName', 'Firstname') }}
                             </th>
-                            <th class="column-lastName">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'lastName', 'Last Name') }}
+                            <th class="column-admin-lastName">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.lastName', 'Lastname') }}
                             </th>
-                            <th class="column-roles">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'roles', 'Roles') }}
+                            <th class="column-role-name">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
                             </th>
-                            <th class="column-status">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'status', 'Status') }}
+                            <th class="column-admin-status">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.status', 'Status') }}
                             </th>
-                            <th class="column-created">
-                                {{ sortableColumn('admin::admin-list', {}, params, 'created', 'Created') }}
+                            <th class="column-admin-created">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.created', 'Created') }}
+                            </th>
+                            <th class="column-admin-updated">
+                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.updated', 'Updated') }}
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for admin in admins %}
+                        {% for admin in pagination.items %}
                             <tr class="table-row">
-                                <td class="column-uuid" style="width: 1vw;">
+                                <td class="column-admin-uuid" style="width: 1vw;">
                                     <label>
                                         <input type="checkbox"
-                                               class="checkbox ui-checkbox"
-                                               value="{{ admin.uuid }}"
-                                               data-edit-url="{{ path('admin::admin-edit', {uuid: admin.uuid}) }}"
-                                               data-delete-url="{{ path('admin::admin-delete', {uuid: admin.uuid}) }}"
-                                        >
-                                        <span></span>
+                                           class="checkbox ui-checkbox"
+                                           value="{{ admin.uuid }}"
+                                           data-edit-url="{{ path('admin::admin-edit', {uuid: admin.uuid}) }}"
+                                           data-delete-url="{{ path('admin::admin-delete', {uuid: admin.uuid}) }}">
                                     </label>
                                 </td>
-                                <td class="column-identity">{{ admin.identity }}</td>
-                                <td class="column-firstName">{{ admin.firstName }}</td>
-                                <td class="column-lastName">{{ admin.lastName }}</td>
-                                <td class="column-roles">{{ admin.roles }}</td>
-                                <td class="column-status">
-                                    <span class="badge {% if admin.status.value == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ admin.status.name|capitalize }}</span>
+                                <td class="column-admin-identity">{{ admin.identity }}</td>
+                                <td class="column-admin-firstName">{{ admin.firstName }}</td>
+                                <td class="column-admin-lastName">{{ admin.lastName }}</td>
+                                <td class="column-role-name">
+                                    {% for role in admin.roles %}
+                                    {{ roleBadge(role.name) }}
+                                    {% endfor %}
                                 </td>
-                                <td class="column-created">{{ admin.created }}</td>
+                                <td class="column-admin-status">
+                                    <span class="badge {% if admin.status.value == 'active' %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ admin.status.name }}</span>
+                                </td>
+                                <td class="column-admin-created">{{ admin.getCreated()|date('Y-m-d H:i:s') }}</td>
+                                <td class="column-admin-updated">{{ admin.getUpdated() is not null ? admin.getUpdated()|date('Y-m-d H:i:s') : '' }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
-                    {% if pagination.isOutOfBounds() %}
-                        <div class="alert alert-warning text-center text-black fw-bold" role="alert">
-                            Out of bounds! Return to
-                            <a href="{{ path('admin::admin-list', {}, params|merge({offset: pagination.getLastOffset()})) }}">page {{ pagination.getLastPage() }}</a>
-                        </div>
+                    {% if pagination.isOutOfBounds %}
+                    <div class="alert alert-warning text-center text-black fw-bold" role="alert">
+                        Out of bounds! Return to
+                        <a href="{{ path('admin::admin-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                    </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, params: params, path: 'admin::admin-list'}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::admin-list'}, false) }}
                 </div>
             </div>
         </div>

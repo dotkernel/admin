@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminDeleteForm;
-use Admin\App\Message;
-use Core\Admin\Entity\Admin;
-use Core\Admin\Service\AdminServiceInterface;
+use Admin\Admin\Form\DeleteAdminForm;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -28,15 +28,15 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
         RouterInterface::class,
         TemplateRendererInterface::class,
         FlashMessengerInterface::class,
-        AdminDeleteForm::class,
-        "dot-log.default_logger",
+        DeleteAdminForm::class,
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected FlashMessengerInterface $messenger,
-        protected AdminDeleteForm $form,
+        protected DeleteAdminForm $deleteAdminForm,
         protected Logger $logger,
     ) {
     }
@@ -44,44 +44,41 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->getAdminRepository()->findOneBy([
-                'uuid' => $request->getAttribute('uuid'),
-            ]);
+            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
 
-            if (! $admin instanceof Admin) {
-                $this->messenger->addError(Message::ADMIN_NOT_FOUND);
-                return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
-            }
+            return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+        }
 
-            $this->form->setAttribute(
-                'action',
-                $this->router->generateUri('admin::admin-delete', [
-                    'uuid' => $admin->getUuid()->toString(),
-                ])
-            );
+        $this->deleteAdminForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin::admin-delete', ['uuid' => $admin->getUuid()->toString()])
+        );
 
-            $this->form->setData($request->getParsedBody());
-            if ($this->form->isValid()) {
-                $this->adminService->getAdminRepository()->deleteAdmin($admin);
-                $this->messenger->addSuccess(Message::ADMIN_DELETED_SUCCESSFULLY);
+        try {
+            $this->deleteAdminForm->setData($request->getParsedBody());
+            if ($this->deleteAdminForm->isValid()) {
+                $this->adminService->deleteAdmin($admin);
+                $this->messenger->addSuccess(Message::ADMIN_DELETED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
-            } else {
-                return new HtmlResponse(
-                    $this->template->render('admin::admin-delete-form', [
-                        'form'  => $this->form->prepare(),
-                        'admin' => $admin,
-                    ]),
-                    StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
-                );
             }
-        } catch (Throwable $e) {
+
+            return new HtmlResponse(
+                $this->template->render('admin::admin-delete-form', [
+                    'form'  => $this->deleteAdminForm->prepare(),
+                    'admin' => $admin,
+                ]),
+                StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
+            );
+        } catch (Throwable $exception) {
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-            $this->logger->err(Message::DELETE_ADMIN, [
-                'error' => $e->getMessage(),
-                'file'  => $e->getFile(),
-                'line'  => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
+            $this->logger->err('Delete admin', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
             ]);
 
             return new EmptyResponse(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);

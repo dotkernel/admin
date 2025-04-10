@@ -6,9 +6,13 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Core\Admin\Service\AdminServiceInterface;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
+use Dot\FlashMessenger\FlashMessengerInterface;
+use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -25,6 +29,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         AuthenticationServiceInterface::class,
         AccountForm::class,
         ChangePasswordForm::class,
+        FlashMessengerInterface::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -33,19 +38,23 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         protected AuthenticationServiceInterface $authenticationService,
         protected AccountForm $accountForm,
         protected ChangePasswordForm $changePasswordForm,
+        protected FlashMessengerInterface $messenger,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
-        $this->changePasswordForm->setAttribute(
-            'action',
-            $this->router->generateUri('admin::account-change-password')
-        );
+        try {
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
 
-        $identity = $this->authenticationService->getIdentity();
-        $admin    = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $identity->getUuid()]);
+            return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
+        }
+
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->changePasswordForm
+            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
 
         $this->accountForm->bind($admin);
 

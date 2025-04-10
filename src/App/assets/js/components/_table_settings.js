@@ -84,8 +84,8 @@ $(function() {
     });
 
     const toggleUiButtons = () => {
-        const btnEdit = $('#btn-edit-admin');
-        const btnDelete = $('#btn-delete-admin');
+        const btnEdit = $('#btn-edit-resource');
+        const btnDelete = $('#btn-delete-resource');
         if (! btnEdit || ! btnDelete) {
             return;
         }

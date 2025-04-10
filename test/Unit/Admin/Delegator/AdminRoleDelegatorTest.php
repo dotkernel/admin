@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Delegator;
 
 use Admin\Admin\Delegator\AdminRoleDelegator;
-use Admin\Admin\Form\AdminForm;
+use Admin\Admin\Form\CreateAdminForm;
 use AdminTest\Unit\UnitTest;
-use Core\Admin\Service\AdminRoleServiceInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -28,9 +28,7 @@ class AdminRoleDelegatorTest extends UnitTest
         $delegator = (new AdminRoleDelegator())(
             $container,
             '',
-            function () {
-                return new stdClass();
-            }
+            fn () => new stdClass()
         );
 
         $this->assertIsObject($delegator);
@@ -43,23 +41,21 @@ class AdminRoleDelegatorTest extends UnitTest
      */
     public function testInvokeWillSucceedWithAdminForm(): void
     {
-        $adminRoleService = $this->createMock(AdminRoleServiceInterface::class);
-
         $container = $this->createMock(ContainerInterface::class);
         $container
             ->expects($this->once())
             ->method('get')
-            ->with(AdminRoleServiceInterface::class)
-            ->willReturn($adminRoleService);
+            ->with(EntityManagerInterface::class)
+            ->willReturn(
+                $this->createMock(EntityManagerInterface::class)
+            );
 
         $delegator = (new AdminRoleDelegator())(
             $container,
             '',
-            function () {
-                return new AdminForm();
-            }
+            fn () => new CreateAdminForm()
         );
 
-        $this->assertInstanceOf(AdminForm::class, $delegator);
+        $this->assertInstanceOf(CreateAdminForm::class, $delegator);
     }
 }

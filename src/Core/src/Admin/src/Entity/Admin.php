@@ -4,37 +4,39 @@ declare(strict_types=1);
 
 namespace Core\Admin\Entity;
 
-use Admin\Setting\Entity\Setting;
 use Core\Admin\Enum\AdminStatusEnum;
 use Core\Admin\Repository\AdminRepository;
 use Core\App\Entity\AbstractEntity;
+use Core\App\Entity\PasswordTrait;
+use Core\App\Entity\RoleInterface;
 use Core\App\Entity\TimestampsTrait;
+use Core\Setting\Entity\Setting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use League\OAuth2\Server\Entities\UserEntityInterface;
 
 use function array_map;
-use function password_verify;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: 'admin')]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
-class Admin extends AbstractEntity implements AdminInterface
+class Admin extends AbstractEntity implements UserEntityInterface
 {
+    use PasswordTrait;
     use TimestampsTrait;
 
-    #[ORM\Column(name: 'identity', type: 'string', length: 100, unique: true)]
-    protected string $identity;
+    #[ORM\Column(name: 'identity', type: 'string', length: 191, unique: true)]
+    protected ?string $identity = null;
 
-    #[ORM\Column(name: 'firstName', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'firstName', type: 'string', length: 191, nullable: true)]
     protected ?string $firstName = null;
 
-    #[ORM\Column(name: 'lastName', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'lastName', type: 'string', length: 191, nullable: true)]
     protected ?string $lastName = null;
 
-    #[ORM\Column(name: 'password', type: 'string', length: 100)]
-    protected string $password;
+    #[ORM\Column(name: 'password', type: 'string', length: 191)]
+    protected ?string $password = null;
 
     #[ORM\Column(
         type: 'admin_status_enum',
@@ -43,7 +45,7 @@ class Admin extends AbstractEntity implements AdminInterface
     )]
     protected AdminStatusEnum $status = AdminStatusEnum::Active;
 
-    #[ORM\ManyToMany(targetEntity: AdminRole::class, fetch: 'EAGER')]
+    #[ORM\ManyToMany(targetEntity: AdminRole::class)]
     #[ORM\JoinTable(name: 'admin_roles')]
     #[ORM\JoinColumn(name: 'userUuid', referencedColumnName: 'uuid')]
     #[ORM\InverseJoinColumn(name: 'roleUuid', referencedColumnName: 'uuid')]
@@ -56,29 +58,19 @@ class Admin extends AbstractEntity implements AdminInterface
     {
         parent::__construct();
 
+        $this->created();
         $this->roles    = new ArrayCollection();
         $this->settings = new ArrayCollection();
     }
 
-    public function getArrayCopy(): array
-    {
-        return [
-            'uuid'      => $this->getUuid()->toString(),
-            'identity'  => $this->getIdentity(),
-            'firstName' => $this->getfirstName(),
-            'lastName'  => $this->getlastName(),
-            'status'    => $this->getStatus()->value,
-            'roles'     => array_map(function (AdminRole $role) {
-                return $role->getArrayCopy();
-            }, $this->getRoles()),
-            'created'   => $this->getCreated(),
-            'updated'   => $this->getUpdated(),
-        ];
-    }
-
-    public function getIdentity(): string
+    public function getIdentity(): ?string
     {
         return $this->identity;
+    }
+
+    public function hasIdentity(): bool
+    {
+        return $this->identity !== null;
     }
 
     public function setIdentity(string $identity): self
@@ -112,7 +104,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -122,11 +114,6 @@ class Admin extends AbstractEntity implements AdminInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    public function verifyPassword(string $password): bool
-    {
-        return password_verify($password, $this->getPassword());
     }
 
     public function getStatus(): AdminStatusEnum
@@ -153,12 +140,7 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function hasRole(AdminRole $role): bool
-    {
-        return $this->roles->contains($role);
-    }
-
-    public function addRole(AdminRole $role): self
+    public function addRole(RoleInterface $role): self
     {
         if (! $this->roles->contains($role)) {
             $this->roles->add($role);
@@ -167,7 +149,17 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
-    public function removeRole(AdminRole $role): AdminInterface
+    public function hasRole(RoleInterface $role): bool
+    {
+        return $this->roles->contains($role);
+    }
+
+    public function hasRoles(): bool
+    {
+        return $this->roles->count() > 0;
+    }
+
+    public function removeRole(RoleInterface $role): self
     {
         if ($this->roles->contains($role)) {
             $this->roles->removeElement($role);
@@ -176,8 +168,48 @@ class Admin extends AbstractEntity implements AdminInterface
         return $this;
     }
 
+    public function resetRoles(): self
+    {
+        $this->roles = new ArrayCollection();
+
+        return $this;
+    }
+
+    public function activate(): self
+    {
+        $this->status = AdminStatusEnum::Active;
+
+        return $this;
+    }
+
+    public function deactivate(): self
+    {
+        $this->status = AdminStatusEnum::Inactive;
+
+        return $this;
+    }
+
     public function isActive(): bool
     {
-        return $this->getStatus() === AdminStatusEnum::Active;
+        return $this->status === AdminStatusEnum::Active;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identity;
+    }
+
+    public function getArrayCopy(): array
+    {
+        return [
+            'uuid'      => $this->uuid->toString(),
+            'identity'  => $this->identity,
+            'firstName' => $this->firstName,
+            'lastName'  => $this->lastName,
+            'status'    => $this->status->value,
+            'roles'     => array_map(fn (AdminRole $role): array => $role->getArrayCopy(), $this->roles->toArray()),
+            'created'   => $this->created,
+            'updated'   => $this->updated,
+        ];
     }
 }

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Handler\Admin;
 
-use Admin\Admin\Form\AdminDeleteForm;
-use Admin\App\Message;
-use Core\Admin\Entity\Admin;
-use Core\Admin\Service\AdminServiceInterface;
+use Admin\Admin\Form\DeleteAdminForm;
+use Admin\Admin\Service\AdminServiceInterface;
+use Core\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -26,35 +25,35 @@ class GetAdminDeleteFormHandler implements RequestHandlerInterface
         RouterInterface::class,
         TemplateRendererInterface::class,
         FlashMessengerInterface::class,
-        AdminDeleteForm::class,
+        DeleteAdminForm::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected FlashMessengerInterface $messenger,
-        protected AdminDeleteForm $form,
+        protected DeleteAdminForm $deleteAdminForm,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $admin = $this->adminService->getAdminRepository()->findOneBy(['uuid' => $request->getAttribute('uuid')]);
-        if (! $admin instanceof Admin) {
-            $this->messenger->addError(Message::ADMIN_NOT_FOUND);
+        try {
+            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
+        } catch (NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
+
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->form->setAttribute(
+        $this->deleteAdminForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::admin-delete', [
-                'uuid' => $admin->getUuid()->toString(),
-            ])
+            $this->router->generateUri('admin::admin-delete', ['uuid' => $admin->getUuid()->toString()])
         );
 
         return new HtmlResponse(
             $this->template->render('admin::admin-delete-form', [
-                'form'  => $this->form->prepare(),
+                'form'  => $this->deleteAdminForm->prepare(),
                 'admin' => $admin,
             ]),
         );
