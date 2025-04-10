@@ -79,9 +79,11 @@ class UserAvatarService implements UserAvatarServiceInterface
         $this->userAvatarRepository->deleteResource($avatar);
         $this->deleteAvatarFile($path . $avatar->getName());
 
-        $fsIterator = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS);
-        if (! $fsIterator->valid()) {
-            rmdir($path);
+        if (file_exists($path)) {
+            $fsIterator = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS);
+            if (! $fsIterator->valid()) {
+                rmdir($path);
+            }
         }
     }
 
