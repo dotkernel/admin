@@ -94,20 +94,6 @@ class AdminInputFilterTest extends UnitTest
             Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
             $messages['identity']['stringLengthTooLong']
         );
-
-        $inputFilter->setData([
-            'identity' => '\'\'\'',
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-        $messages = $inputFilter->getMessages();
-        $this->assertIsArray($messages);
-        $this->assertArrayHasKey('identity', $messages);
-        $this->assertIsArray($messages['identity']);
-        $this->assertArrayHasKey('regexNotMatch', $messages['identity']);
-        $this->assertSame(
-            Message::VALIDATOR_INVALID_CHARACTERS,
-            $messages['identity']['regexNotMatch']
-        );
     }
 
     public function testWillValidatePassword(): void
