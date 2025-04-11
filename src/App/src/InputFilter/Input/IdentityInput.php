@@ -9,7 +9,6 @@ use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\InputFilter\Input;
 use Laminas\Validator\NotEmpty;
-use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
 class IdentityInput extends Input
@@ -35,10 +34,6 @@ class IdentityInput extends Input
                 'min'     => self::IDENTITY_MIN_LENGTH,
                 'max'     => self::IDENTITY_MAX_LENGTH,
                 'message' => Message::validatorLengthMinMax(self::IDENTITY_MIN_LENGTH, self::IDENTITY_MAX_LENGTH),
-            ], true)
-            ->attachByName(Regex::class, [
-                'pattern' => '/^[a-zA-Z0-9-_.]+$/',
-                'message' => Message::VALIDATOR_INVALID_CHARACTERS,
             ], true);
     }
 }

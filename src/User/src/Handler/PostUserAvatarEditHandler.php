@@ -8,7 +8,6 @@ use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
 use Admin\User\Service\UserAvatarServiceInterface;
 use Admin\User\Service\UserServiceInterface;
-use Core\App\Exception\IdentityException;
 use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -89,18 +88,6 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
                     'userAvatarEditForm' => $this->editUserAvatarForm->prepare(),
                     'userEditForm'       => $this->editUserForm->prepare(),
                     'activeTab'          => 'avatar',
-                ]),
-                StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
-            );
-        } catch (IdentityException $exception) {
-            return new HtmlResponse(
-                $this->template->render('user::user-edit-form', [
-                    'userAvatarEditForm' => $this->editUserAvatarForm->prepare(),
-                    'userEditForm'       => $this->editUserForm->prepare(),
-                    'activeTab'          => 'avatar',
-                    'messages'           => [
-                        'error' => $exception->getMessage(),
-                    ],
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
