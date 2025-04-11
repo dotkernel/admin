@@ -13,6 +13,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+use function array_filter;
 use function array_map;
 
 class UserRoleDelegator implements DelegatorFactoryInterface
@@ -28,13 +29,14 @@ class UserRoleDelegator implements DelegatorFactoryInterface
     {
         $userForm = $callback();
         if ($userForm instanceof CreateUserForm) {
-            $userForm->setRoles(
-                array_map(fn (UserRole $role): array => [
-                    'label'    => $role->getName()->value,
-                    'value'    => $role->getUuid()->toString(),
-                    'selected' => $role->getName() === self::DEFAULT_ROLE,
-                ], $container->get(EntityManagerInterface::class)->getRepository(UserRole::class)->findAll())
-            );
+            $userRoles = array_map(fn (UserRole $role): array => [
+                'label'    => $role->getName()->value,
+                'value'    => $role->getUuid()->toString(),
+                'selected' => $role->getName() === self::DEFAULT_ROLE,
+            ], $container->get(EntityManagerInterface::class)->getRepository(UserRole::class)->findAll());
+            $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
+
+            $userForm->setRoles($userRoles);
         }
 
         return $userForm;

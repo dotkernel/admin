@@ -23,7 +23,8 @@ $(document).ready(() => {
         }).then(data => {
             modal.find('.modal-dialog').html(data);
         }).catch(error => {
-            console.error('Error', error)
+            console.error(error);
+            location.reload();
         });
     }).on('hidden.bs.modal', function () {
         const modal = $(this);
@@ -41,7 +42,8 @@ $(document).ready(() => {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
-        }).catch(() => {
+        }).catch(error => {
+            console.error(error);
             location.reload();
         });
     }).on('hidden.bs.modal', function () {
@@ -60,7 +62,8 @@ $(document).ready(() => {
             method: 'GET'
         }).then(data => {
             modal.find('.modal-dialog').html(data);
-        }).catch(() => {
+        }).catch(error => {
+            console.error(error);
             location.reload();
         });
     }).on('hidden.bs.modal', function () {
@@ -82,10 +85,9 @@ $(document).ready(() => {
         request(form.getAttribute('action'), {
             method: 'POST',
             body: new FormData(form),
-        }).then(data => {
+        }).then(() => {
             location.reload();
         }).catch(error => {
-            console.error('Error', error);
             modal.find('.modal-dialog').html(error.data);
         });
     });

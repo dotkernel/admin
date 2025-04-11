@@ -70,30 +70,30 @@
                 <div class="table-responsive">
                     <table id="admin-table" class="table table-bordered table-hover table-striped table-light" style="display: none;">
                         <thead>
-                        <tr>
-                            <th class="column-admin-uuid"></th>
-                            <th class="column-admin-identity">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.identity', 'Identity') }}
-                            </th>
-                            <th class="column-admin-firstName text-nowrap">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.firstName', 'Firstname') }}
-                            </th>
-                            <th class="column-admin-lastName">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.lastName', 'Lastname') }}
-                            </th>
-                            <th class="column-role-name">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
-                            </th>
-                            <th class="column-admin-status">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.status', 'Status') }}
-                            </th>
-                            <th class="column-admin-created">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.created', 'Created') }}
-                            </th>
-                            <th class="column-admin-updated">
-                                {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.updated', 'Updated') }}
-                            </th>
-                        </tr>
+                            <tr>
+                                <th class="column-admin-uuid text-nowrap"></th>
+                                <th class="column-admin-identity">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.identity', 'Identity') }}
+                                </th>
+                                <th class="column-admin-firstName text-nowrap">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.firstName', 'Firstname') }}
+                                </th>
+                                <th class="column-admin-lastName">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.lastName', 'Lastname') }}
+                                </th>
+                                <th class="column-role-name">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
+                                </th>
+                                <th class="column-admin-status">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.status', 'Status') }}
+                                </th>
+                                <th class="column-admin-created">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.created', 'Created') }}
+                                </th>
+                                <th class="column-admin-updated">
+                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.updated', 'Updated') }}
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                         {% for admin in pagination.items %}
