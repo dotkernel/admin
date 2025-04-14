@@ -47,6 +47,8 @@ composer install
 
 ### Development mode
 
+> **Do not enable development mode in production!**
+
 If you're installing the project for development, you should **enable** development mode, by running:
 
 ```shell
@@ -88,13 +90,13 @@ php ./bin/doctrine-migrations migrate
 
 This command will prompt you to confirm that you want to run it:
 
-> WARNING! You are about to execute a migration in database "_<database-name>_" that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:
+> WARNING! You are about to execute a migration in database "`<database>`" that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:
 
 Hit `Enter` to confirm the operation.
 
 #### Executing fixtures
 
-> Fixtures are used to seed the database with initial values and must be executed after migrating the database.
+Fixtures are used to seed the database with initial values and must be executed after migrating the database.
 
 To list all the fixtures, run:
 
@@ -132,7 +134,7 @@ You can download/update all GeoLite2 databases at once, by running the following
 php ./bin/cli.php geoip:synchronize
 ```
 
-The output should be similar to the below, displaying per row:
+The output should be similar to the below:
 
 ```shell
 asn: n/a -> 2015-10-21 04:29:00
@@ -169,7 +171,7 @@ npm install
 If the above command fails, it could be caused by user permissions of `npm`.
 Recommendation is to install npm through `Node Version Manager`.
 
-The watch command looks for JavaScript/CSS file changes and recompiles the assets under the public assets:
+The **watch** command looks for JavaScript/CSS file changes and recompiles the assets under the public assets:
 
 ```shell
 npm run watch
@@ -183,32 +185,30 @@ npm run prod
 
 ### Test the installation
 
-> **Do not enable dev mode in production**
-
-- Run the following command in your project's directory to start PHPs built-in server:
+Run the following command in your project's directory to start PHPs built-in server:
 
 ```shell
 php -S 0.0.0.0:8080 -t public
 ```
 
-> Running command `composer serve` will do the same thing, but the server might get closed after a couple of minutes.
+> Running command `composer serve` will do the same thing, but the server will time out after a couple of minutes.
 
-> If you are still getting exceptions or errors regarding some missing services, try running the following command:
+If you are still getting exceptions or errors regarding some missing services, try running the following command:
 
 ```shell
 php ./bin/clear-config-cache.php
 ```
 
-- Open a web browser and visit `http://localhost:8080/`
+Open a web browser and visit `http://localhost:8080/`.
 
 You should see the **Dotkernel Admin** login page.
 If you ran the migrations you will have an admin user in the database with the following credentials:
 
-- **User**: `admin`
+- **Identity**: `admin`
 - **Password**: `dotadmin`
 
 > **Production only**: Make sure you modify the default admin credentials.
->
+
 > **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
 
 ```php
@@ -219,4 +219,4 @@ If you ran the migrations you will have an admin user in the database with the f
     ];
 ```
 
-> Do not change this in `local.php.dist` as well because this value should remain `true` on production.
+> Do not change this in `local.php.dist` as well because this value must remain `true` on production.
