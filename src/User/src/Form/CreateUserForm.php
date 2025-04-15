@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\User\Form;
 
+use Admin\App\Form\AbstractForm;
 use Admin\User\InputFilter\CreateUserInputFilter;
 use Core\User\Enum\UserStatusEnum;
 use Laminas\Form\Element\Csrf;
@@ -14,16 +15,11 @@ use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
-use Laminas\Form\Form;
-use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/** @template-extends Form<FormInterface> */
-class CreateUserForm extends Form
+class CreateUserForm extends AbstractForm
 {
-    protected InputFilterInterface $inputFilter;
-
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -99,13 +95,5 @@ class CreateUserForm extends Form
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter): FormInterface
-    {
-        $this->inputFilter = $inputFilter;
-        $this->inputFilter->init();
-
-        return $this;
     }
 }

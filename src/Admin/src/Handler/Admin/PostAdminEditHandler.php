@@ -7,10 +7,10 @@ namespace Admin\Admin\Handler\Admin;
 use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\BadRequestException;
+use Admin\App\Exception\ConflictException;
+use Admin\App\Exception\NotFoundException;
 use Core\Admin\Entity\AdminRole;
-use Core\App\Exception\BadRequestException;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -83,7 +83,8 @@ class PostAdminEditHandler implements RequestHandlerInterface
 
             return new HtmlResponse(
                 $this->template->render('admin::admin-edit-form', [
-                    'form' => $this->editAdminForm->prepare(),
+                    'form'  => $this->editAdminForm->prepare(),
+                    'admin' => $admin,
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
@@ -91,6 +92,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
             return new HtmlResponse(
                 $this->template->render('admin::admin-edit-form', [
                     'form'     => $this->editAdminForm->prepare(),
+                    'admin'    => $admin,
                     'messages' => [
                         'error' => $exception->getMessage(),
                     ],

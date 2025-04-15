@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\User\Handler;
 
+use Admin\App\Exception\NotFoundException;
 use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
 use Admin\User\Service\UserAvatarServiceInterface;
 use Admin\User\Service\UserServiceInterface;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -88,6 +88,7 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
                     'userAvatarEditForm' => $this->editUserAvatarForm->prepare(),
                     'userEditForm'       => $this->editUserForm->prepare(),
                     'activeTab'          => 'avatar',
+                    'user'               => $user,
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );

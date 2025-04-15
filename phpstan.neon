@@ -9,14 +9,5 @@ parameters:
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
-            message: '#Parameter \#1 \$inputFilter of method Admin\\Admin\\Form\\CreateAdminForm::setInputFilter\(\) expects Laminas\\InputFilter\\InputFilterInterface<Laminas\\Form\\FormInterface>, Admin\\Admin\\InputFilter\\EditAdminInputFilter given.#'
-            path: test/Unit/Admin/Form/AdminFormTest.php
-        -
             message: '#Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert::assertSame\(\) contains unresolvable type.#'
             path: test/Unit/App/Plugin/FormsPluginTest.php
-        -
-            message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface::getInputs\(\)#'
-            path: test
-        -
-            message: '#Call to an undefined method Laminas\\InputFilter\\InputFilterInterface<Laminas\\Form\\FormInterface>::init\(\)#'
-            path: src

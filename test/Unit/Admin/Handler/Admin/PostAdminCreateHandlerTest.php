@@ -7,8 +7,8 @@ namespace AdminTest\Unit\Admin\Handler\Admin;
 use Admin\Admin\Form\CreateAdminForm;
 use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\ConflictException;
 use AdminTest\Unit\UnitTest;
-use Core\App\Exception\IdentityException;
 use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -104,7 +104,7 @@ class PostAdminCreateHandlerTest extends UnitTest
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->adminForm->method('getData')->willReturn([]);
 
-        $this->throwException(new IdentityException());
+        $this->throwException(new ConflictException());
 
         $handler = new PostAdminCreateHandler(
             $this->adminService,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\User\Service;
 
-use Core\App\Exception\NotFoundException;
+use Admin\App\Exception\NotFoundException;
 use Core\User\Entity\UserResetPassword;
 use Core\User\Repository\UserResetPasswordRepository;
 

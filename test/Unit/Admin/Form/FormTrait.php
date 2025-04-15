@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Admin\Form;
 
 use Laminas\Form\ElementInterface;
 use Laminas\Form\FormInterface;
+use Laminas\InputFilter\BaseInputFilter;
 use Laminas\InputFilter\Input;
 use Laminas\InputFilter\InputFilterInterface;
 
@@ -33,6 +34,7 @@ trait FormTrait
 
     public function formHasInputFilter(InputFilterInterface $inputFilter, array $inputs = []): void
     {
+        $this->assertInstanceOf(BaseInputFilter::class, $inputFilter);
         $this->assertCount(count($inputs), $inputFilter->getInputs());
 
         foreach ($inputs as $input) {

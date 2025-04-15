@@ -7,7 +7,7 @@ namespace Admin\Admin\Handler\Account;
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Service\AdminServiceInterface;
-use Core\App\Exception\NotFoundException;
+use Admin\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;

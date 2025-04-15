@@ -5,21 +5,15 @@ declare(strict_types=1);
 namespace Admin\Admin\Form;
 
 use Admin\Admin\InputFilter\ChangePasswordInputFilter;
+use Admin\App\Form\AbstractForm;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
-use Laminas\Form\Form;
-use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/**
- * @template-extends Form<FormInterface>
- */
-class ChangePasswordForm extends Form
+class ChangePasswordForm extends AbstractForm
 {
-    protected InputFilterInterface $inputFilter;
-
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);

@@ -2,7 +2,7 @@
 
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="edit-user-modal-content">Edit user</h5>
+        <h5 class="modal-title" id="edit-user-modal-content">Edit user: <strong>{{ user.identity }}</strong></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
@@ -20,7 +20,6 @@
                 {{ form().openTag(userEditForm)|raw }}
                 {% set fieldsets = userEditForm.getFieldsets() %}
 
-                {{ inputElement(userEditForm.get('identity')) }}
                 {{ inputElement(userEditForm.get('password')) }}
                 {{ inputElement(userEditForm.get('passwordConfirm')) }}
 

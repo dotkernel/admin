@@ -8,12 +8,10 @@ use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
 use Admin\Admin\Handler\Account\PostAccountEditHandler;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\ConflictException;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Repository\AdminRepository;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\IdentityException;
 use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -37,7 +35,6 @@ class PostAccountEditHandlerTest extends UnitTest
     private MockObject|FlashMessengerInterface $messenger;
     private Logger $logger;
     private MockObject|AdminIdentity $identity;
-    private MockObject|AdminRepository $adminRepository;
     private MockObject|ServerRequestInterface $request;
 
     private MockObject|Admin $admin;
@@ -57,7 +54,6 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->changePasswordForm    = $this->createMock(ChangePasswordForm::class);
         $this->messenger             = $this->createMock(FlashMessengerInterface::class);
         $this->identity              = $this->createMock(AdminIdentity::class);
-        $this->adminRepository       = $this->createMock(AdminRepository::class);
         $this->request               = $this->createMock(ServerRequestInterface::class);
         $this->admin                 = $this->createMock(Admin::class);
         $this->logger                = new Logger([
@@ -74,7 +70,6 @@ class PostAccountEditHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->accountForm->method('isValid')->willReturn(false);
 
         $handler = new PostAccountEditHandler(
@@ -94,24 +89,23 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
     }
 
-    public function testThrowIdentityExceptionWillReturnRedirectResponse(): void
+    public function testThrowConflictExceptionWillReturnRedirectResponse(): void
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->accountForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
         $this->accountForm->method('getData')->willReturn(['test' => 'test']);
-        $this->adminService->method('saveAdmin')->willThrowException(new ConflictException());
+        $this->adminService->method('saveAdmin')->willThrowException(
+            new ConflictException(Message::DUPLICATE_IDENTITY)
+        );
 
         $this
             ->messenger
             ->expects($this->once())
             ->method('addError')
-            ->with(Message::AN_ERROR_OCCURRED);
-
-        $this->adminService->method('saveAdmin')->willThrowException(new IdentityException());
+            ->with(Message::DUPLICATE_IDENTITY);
 
         $handler = new PostAccountEditHandler(
             $this->adminService,
@@ -133,7 +127,6 @@ class PostAccountEditHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->accountForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
@@ -166,8 +159,6 @@ class PostAccountEditHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
-        $this->adminRepository->method('findOneBy')->willReturn($this->admin);
-        $this->adminService->method('getAdminRepository')->willReturn($this->adminRepository);
         $this->accountForm->method('isValid')->willReturn(true);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');

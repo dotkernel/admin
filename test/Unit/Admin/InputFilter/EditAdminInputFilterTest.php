@@ -6,7 +6,6 @@ namespace AdminTest\Unit\Admin\InputFilter;
 
 use Admin\Admin\InputFilter\EditAdminInputFilter;
 use Admin\App\InputFilter\Input\FirstNameInput;
-use Admin\App\InputFilter\Input\IdentityInput;
 use Admin\App\InputFilter\Input\LastNameInput;
 use Admin\App\InputFilter\Input\PasswordInput;
 use AdminTest\Unit\UnitTest;
@@ -20,95 +19,6 @@ use function str_repeat;
 
 class EditAdminInputFilterTest extends UnitTest
 {
-    public function testWillValidateIdentity(): void
-    {
-        $hash = (new Csrf(['session' => new Container()]))->getHash();
-
-        $inputFilter = new EditAdminInputFilter();
-        $inputFilter->init();
-
-        $inputFilter->setData([
-            'identity'        => 'testIdentity',
-            'password'        => 'password',
-            'passwordConfirm' => 'password',
-            'firstName'       => 'firstName',
-            'lastName'        => 'lastName',
-            'status'          => AdminStatusEnum::Active->value,
-            'roles'           => [
-                AdminRoleEnum::Admin->value,
-            ],
-            'adminEditCsrf'   => $hash,
-        ]);
-        $this->assertTrue($inputFilter->isValid());
-
-        $inputFilter->setData([
-            'identity'        => null,
-            'password'        => 'password',
-            'passwordConfirm' => 'password',
-            'firstName'       => 'firstName',
-            'lastName'        => 'lastName',
-            'status'          => AdminStatusEnum::Active->value,
-            'roles'           => [
-                AdminRoleEnum::Admin->value,
-            ],
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-
-        $inputFilter->setData([
-            'identity'        => '',
-            'password'        => 'password',
-            'passwordConfirm' => 'password',
-            'firstName'       => 'firstName',
-            'lastName'        => 'lastName',
-            'status'          => AdminStatusEnum::Active->value,
-            'roles'           => [
-                AdminRoleEnum::Admin->value,
-            ],
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-
-        $inputFilter->setData([
-            'identity'        => '   ',
-            'password'        => 'password',
-            'passwordConfirm' => 'password',
-            'firstName'       => 'firstName',
-            'lastName'        => 'lastName',
-            'status'          => AdminStatusEnum::Active->value,
-            'roles'           => [
-                AdminRoleEnum::Admin->value,
-            ],
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-
-        $inputFilter->setData([
-            'identity' => 'id',
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-        $messages = $inputFilter->getMessages();
-        $this->assertIsArray($messages);
-        $this->assertArrayHasKey('identity', $messages);
-        $this->assertIsArray($messages['identity']);
-        $this->assertArrayHasKey('stringLengthTooShort', $messages['identity']);
-        $this->assertSame(
-            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
-            $messages['identity']['stringLengthTooShort']
-        );
-
-        $inputFilter->setData([
-            'identity' => str_repeat('a', 101),
-        ]);
-        $this->assertFalse($inputFilter->isValid());
-        $messages = $inputFilter->getMessages();
-        $this->assertIsArray($messages);
-        $this->assertArrayHasKey('identity', $messages);
-        $this->assertIsArray($messages['identity']);
-        $this->assertArrayHasKey('stringLengthTooLong', $messages['identity']);
-        $this->assertSame(
-            Message::validatorLengthMinMax(IdentityInput::IDENTITY_MIN_LENGTH, IdentityInput::IDENTITY_MAX_LENGTH),
-            $messages['identity']['stringLengthTooLong']
-        );
-    }
-
     public function testWillValidatePassword(): void
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();

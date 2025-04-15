@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace Admin\User\Form;
 
+use Admin\App\Form\AbstractForm;
 use Admin\App\InputFilter\Input\ImageInput;
 use Admin\User\InputFilter\EditUserAvatarInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\File;
 use Laminas\Form\Element\Submit;
-use Laminas\Form\Form;
-use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
 use function implode;
 
-/** @template-extends Form<FormInterface> */
-class EditUserAvatarForm extends Form
+class EditUserAvatarForm extends AbstractForm
 {
-    protected InputFilterInterface $inputFilter;
-
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -62,13 +58,5 @@ class EditUserAvatarForm extends Form
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter): FormInterface
-    {
-        $this->inputFilter = $inputFilter;
-        $this->inputFilter->init();
-
-        return $this;
     }
 }

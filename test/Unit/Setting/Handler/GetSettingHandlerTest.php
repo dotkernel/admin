@@ -6,6 +6,7 @@ namespace AdminTest\Unit\Setting\Handler;
 
 use Admin\Admin\Service\AdminService;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\NotFoundException;
 use Admin\Setting\Handler\GetSettingViewHandler;
 use Admin\Setting\Service\SettingService;
 use Admin\Setting\Service\SettingServiceInterface;
@@ -13,7 +14,6 @@ use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Repository\AdminRepository;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Core\Setting\Entity\Setting;
 use Core\Setting\Enum\SettingIdentifierEnum;
