@@ -45,6 +45,20 @@ git clone https://github.com/dotkernel/admin.git .
 composer install
 ```
 
+You will get a prompt like this:
+```shell
+ Please select which config file you wish to inject 'Laminas\Validator\ConfigProvider' into:
+  [0] Do not inject
+  [1] config/config.php
+  Make your selection (default is 1):
+```
+
+Type 0 to select **[0] Do not inject**.
+No other Config Providers need to be injected.
+
+We choose 0 because Dotkernel includes its own ConfigProvider which already contains the prompted configurations.
+If you choose **[1] config/config.php**, an extra ConfigProvider will be injected.
+
 ### Development mode
 
 > **Do not enable development mode in production!**
@@ -69,8 +83,6 @@ composer development-status
 
 ### Prepare config files
 
-* duplicate `config/autoload/cors.local.php.dist` as `config/autoload/cors.local.php` <- if another application will send requests to this application, make sure configure the `allowed_origins`
-* duplicate `config/autoload/local.php.dist` as `config/autoload/local.php`
 * **optional**: in order to run/create tests, duplicate `config/autoload/local.test.php.dist` as `config/autoload/local.test.php` <- this creates a new in-memory database that your tests will run on
 
 ### Setup database
@@ -184,6 +196,14 @@ npm run prod
 ```
 
 ### Test the installation
+
+If you are using virtual hosts as described in the [Dotkernel documentation] (https://docs.dotkernel.org/development/) you need you modify the permissions of the **data** and **log** folders:
+
+```shell
+chmod 777 data/
+chmod 777 log/
+chmod 777 data/cache/
+```
 
 Run the following command in your project's directory to start PHPs built-in server:
 
