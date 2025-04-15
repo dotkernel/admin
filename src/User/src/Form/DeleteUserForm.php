@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Admin\User\Form;
 
+use Admin\App\Form\AbstractForm;
 use Admin\User\InputFilter\DeleteUserInputFilter;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Submit;
-use Laminas\Form\Form;
-use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/** @template-extends Form<FormInterface> */
-class DeleteUserForm extends Form
+class DeleteUserForm extends AbstractForm
 {
-    protected InputFilterInterface $inputFilter;
-
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -61,13 +57,5 @@ class DeleteUserForm extends Form
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter): FormInterface
-    {
-        $this->inputFilter = $inputFilter;
-        $this->inputFilter->init();
-
-        return $this;
     }
 }

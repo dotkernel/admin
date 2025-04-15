@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\User\Service;
 
-use Core\App\Exception\BadRequestException;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\NotFoundException;
+use Admin\App\Exception\BadRequestException;
+use Admin\App\Exception\ConflictException;
+use Admin\App\Exception\NotFoundException;
 use Core\App\Helper\Paginator;
 use Core\App\Message;
 use Core\Security\Repository\OAuthAccessTokenRepository;

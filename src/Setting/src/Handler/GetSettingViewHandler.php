@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Admin\Setting\Handler;
 
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\NotFoundException;
 use Admin\Setting\InputFilter\CreateSettingInputFilter;
 use Admin\Setting\Service\SettingServiceInterface;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Core\Setting\Entity\Setting;
 use Core\Setting\Enum\SettingIdentifierEnum;

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Setting\Handler;
 
 use Admin\Admin\Service\AdminService;
+use Admin\App\Exception\NotFoundException;
 use Admin\Setting\Handler\PostSettingStoreHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Core\Setting\Entity\Setting;
 use Core\Setting\Enum\SettingIdentifierEnum;

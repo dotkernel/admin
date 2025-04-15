@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\User\Handler;
 
+use Admin\App\Exception\NotFoundException;
 use Admin\User\Form\DeleteUserForm;
 use Admin\User\Service\UserServiceInterface;
-use Core\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;

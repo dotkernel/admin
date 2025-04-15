@@ -7,8 +7,8 @@ namespace Admin\Admin\Handler\Admin;
 use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\NotFoundException;
 use Core\Admin\Entity\AdminRole;
-use Core\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -68,7 +68,8 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
 
         return new HtmlResponse(
             $this->template->render('admin::admin-edit-form', [
-                'form' => $this->editAdminForm->prepare(),
+                'form'  => $this->editAdminForm->prepare(),
+                'admin' => $admin,
             ])
         );
     }

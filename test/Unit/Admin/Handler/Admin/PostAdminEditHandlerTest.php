@@ -8,10 +8,10 @@ use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Handler\Admin\PostAdminEditHandler;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\ConflictException;
+use Admin\App\Exception\NotFoundException;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
-use Core\App\Exception\IdentityException;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -157,7 +157,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
-    public function testEditAdminThrowIdentityExceptionWillReturnHtmlResponse(): void
+    public function testEditAdminThrowConflictExceptionWillReturnHtmlResponse(): void
     {
         $this->uuid->method('toString')->willReturn('0x123');
         $this->admin->method('getUuid')->willReturn($this->uuid);
@@ -178,7 +178,7 @@ class PostAdminEditHandlerTest extends UnitTest
             $this->logger
         );
 
-        $this->throwException(new IdentityException());
+        $this->throwException(new ConflictException());
 
         $response = $handler->handle($this->request);
 

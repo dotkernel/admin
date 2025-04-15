@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\App\Exception;
+namespace Admin\App\Exception;
 
 use Exception;
 

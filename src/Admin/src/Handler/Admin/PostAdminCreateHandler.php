@@ -6,8 +6,7 @@ namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Form\CreateAdminForm;
 use Admin\Admin\Service\AdminServiceInterface;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\IdentityException;
+use Admin\App\Exception\ConflictException;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -61,7 +60,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
-        } catch (ConflictException | IdentityException $exception) {
+        } catch (ConflictException $exception) {
             return new HtmlResponse(
                 $this->template->render('admin::admin-create-form', [
                     'form'     => $this->createAdminForm->prepare(),

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Admin\Setting\Handler;
 
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\NotFoundException;
 use Admin\Setting\InputFilter\CreateSettingInputFilter;
 use Admin\Setting\InputFilter\Input\ValueInput;
 use Admin\Setting\Service\SettingServiceInterface;
-use Core\App\Exception\NotFoundException;
 use Core\Setting\Entity\Setting;
 use Core\Setting\Enum\SettingIdentifierEnum;
 use Dot\DependencyInjection\Attribute\Inject;

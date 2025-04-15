@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\User\Handler;
 
+use Admin\App\Exception\NotFoundException;
 use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
 use Admin\User\Service\UserRoleServiceInterface;
 use Admin\User\Service\UserServiceInterface;
-use Core\App\Exception\NotFoundException;
 use Core\User\Entity\UserRole;
 use Core\User\Enum\UserRoleEnum;
 use Dot\DependencyInjection\Attribute\Inject;

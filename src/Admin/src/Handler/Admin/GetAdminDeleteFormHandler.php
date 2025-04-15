@@ -6,7 +6,7 @@ namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Form\DeleteAdminForm;
 use Admin\Admin\Service\AdminServiceInterface;
-use Core\App\Exception\NotFoundException;
+use Admin\App\Exception\NotFoundException;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;

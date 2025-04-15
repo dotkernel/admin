@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\User\Handler;
 
+use Admin\App\Exception\BadRequestException;
+use Admin\App\Exception\ConflictException;
+use Admin\App\Exception\NotFoundException;
 use Admin\User\Form\CreateUserForm;
 use Admin\User\Service\UserServiceInterface;
-use Core\App\Exception\BadRequestException;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\NotFoundException;
 use Core\App\Message;
 use Core\App\Service\MailService;
 use Dot\DependencyInjection\Attribute\Inject;

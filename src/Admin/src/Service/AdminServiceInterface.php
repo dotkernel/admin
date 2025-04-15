@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Service;
 
+use Admin\App\Exception\BadRequestException;
+use Admin\App\Exception\ConflictException;
+use Admin\App\Exception\NotFoundException;
 use Core\Admin\Entity\Admin;
 use Core\Admin\Repository\AdminRepository;
-use Core\App\Exception\BadRequestException;
-use Core\App\Exception\ConflictException;
-use Core\App\Exception\NotFoundException;
 
 interface AdminServiceInterface
 {

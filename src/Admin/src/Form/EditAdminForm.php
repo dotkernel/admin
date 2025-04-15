@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\Admin\Form;
 
 use Admin\Admin\InputFilter\EditAdminInputFilter;
+use Admin\App\Form\AbstractForm;
 use Core\Admin\Enum\AdminStatusEnum;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\MultiCheckbox;
@@ -12,15 +13,10 @@ use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
-use Laminas\Form\Form;
-use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
-/**
- * @template-extends Form<FormInterface>
- */
-class EditAdminForm extends Form
+class EditAdminForm extends AbstractForm
 {
     protected InputFilterInterface $inputFilter;
 
@@ -49,11 +45,6 @@ class EditAdminForm extends Form
 
     public function init(): void
     {
-        $this->add(
-            (new Text('identity'))
-                ->setLabel('Identity')
-                ->setAttribute('required', true)
-        );
         $this->add(
             (new Password('password'))
                 ->setLabel('Password')
@@ -94,13 +85,5 @@ class EditAdminForm extends Form
     public function getInputFilter(): InputFilterInterface
     {
         return $this->inputFilter;
-    }
-
-    public function setInputFilter(InputFilterInterface $inputFilter): FormInterface
-    {
-        $this->inputFilter = $inputFilter;
-        $this->inputFilter->init();
-
-        return $this;
     }
 }
