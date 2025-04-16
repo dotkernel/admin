@@ -46,6 +46,7 @@ composer install
 ```
 
 You will be prompted with the below message to choose whether you want to inject ConfigProviders:
+
 ```shell
  Please select which config file you wish to inject 'Laminas\Validator\ConfigProvider' into:
   [0] Do not inject
