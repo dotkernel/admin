@@ -45,7 +45,7 @@ git clone https://github.com/dotkernel/admin.git .
 composer install
 ```
 
-You will get a prompt like this:
+You will be prompted with the below message to choose whether you want to inject ConfigProviders:
 ```shell
  Please select which config file you wish to inject 'Laminas\Validator\ConfigProvider' into:
   [0] Do not inject
@@ -53,11 +53,10 @@ You will get a prompt like this:
   Make your selection (default is 1):
 ```
 
-Type 0 to select **[0] Do not inject**.
-No other Config Providers need to be injected.
+Type `0` to select **[0] Do not inject** and hit `Enter`.
 
-We choose 0 because Dotkernel includes its own ConfigProvider which already contains the prompted configurations.
-If you choose **[1] config/config.php**, an extra ConfigProvider will be injected.
+We choose not to inject any ConfigProvider because Dotkernel Admin comes with all the required ConfigProviders already injected in `config/config.php`.
+Choosing to inject any extra ConfigProvider would cause having duplicates which are not allowed and would crash the application.
 
 ### Development mode
 
@@ -197,12 +196,13 @@ npm run prod
 
 ### Test the installation
 
-If you are using virtual hosts as described in the [Dotkernel documentation] (https://docs.dotkernel.org/development/) you need you modify the permissions of the **data** and **log** folders:
+If you are using virtual hosts as described in the [Dotkernel documentation] (https://docs.dotkernel.org/development/) you need you modify the permissions of the `data`, `public/uploads` and `log` folders:
 
 ```shell
-chmod 777 data/
-chmod 777 log/
-chmod 777 data/cache/
+chmod -R 777 data
+chmod -R 777 public/uploads
+chmod -R 777 log
+chmod -R 777 data/cache
 ```
 
 Run the following command in your project's directory to start PHPs built-in server:
