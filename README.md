@@ -227,16 +227,26 @@ If you ran the migrations you will have an admin user in the database with the f
 - **Identity**: `admin`
 - **Password**: `dotadmin`
 
-> **Production only**: Make sure you modify the default admin credentials.
+---
 
-> **Development only**: `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
+> [!WARNING]
+> **Production only**
+>
+> Make sure you modify the default admin credentials.
+
+---
+
+> [!WARNING]
+> **Development only**
+>
+> `session.cookie_secure` does not work locally so make sure you modify your `local.php`, as per the following:
 
 ```php
-    return [
-      'session_config' => [
-          'cookie_secure' => false,
-      ]
-    ];
+return [
+  'session_config' => [
+    'cookie_secure' => false,
+  ],
+];
 ```
 
-> Do not change this in `local.php.dist` as well because this value must remain `true` on production.
+Do not change this in `local.php.dist` as well because this value must remain `true` on production.
