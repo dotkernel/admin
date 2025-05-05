@@ -35,6 +35,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
         CreateUserForm::class,
         MailService::class,
         'dot-log.default_logger',
+        'config',
     )]
     public function __construct(
         protected UserServiceInterface $userService,
@@ -44,6 +45,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
         protected CreateUserForm $createUserForm,
         protected MailService $mailService,
         protected Logger $logger,
+        protected array $config,
     ) {
     }
 
@@ -58,7 +60,11 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 $user = $this->userService->saveUser((array) $this->createUserForm->getData());
                 $this->messenger->addSuccess(Message::USER_CREATED);
                 if ($user->getDetail()->hasEmail()) {
-                    $this->mailService->sendWelcomeMail($user);
+                    $body = $this->template->render('user::welcome', [
+                        'config' => $this->config,
+                        'user'   => $user,
+                    ]);
+                    $this->mailService->sendWelcomeMail($user, $body);
                 }
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
