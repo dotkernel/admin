@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\App;
 
+use function count;
 use function implode;
 use function sprintf;
 
@@ -34,18 +35,23 @@ class Message
     . 'you will receive an email with further instructions on resetting your account\'s password.';
     public const MAIL_SENT_USER_ACTIVATION    = 'User activation mail has been successfully sent to "%s"';
     public const MISSING_CONFIG               = 'Missing configuration value: "%s".';
+    public const NOT_ACCEPTABLE               = 'Not acceptable.';
     public const RESET_PASSWORD_EXPIRED       = 'Reset password hash is invalid (expired).';
     public const RESET_PASSWORD_NOT_FOUND     = 'Reset password request not found.';
     public const RESET_PASSWORD_OK            = 'Password successfully modified.';
     public const RESET_PASSWORD_USED          = 'Reset password hash is invalid (used).';
     public const RESET_PASSWORD_VALID         = 'Reset password hash is valid.';
+    public const RESOURCE_ALREADY_REGISTERED  = 'Resource "%s" is already registered.';
     public const RESOURCE_NOT_ALLOWED         = 'You are not allowed to access this resource.';
+    public const RESOURCE_NOT_FOUND           = '%s not found.';
     public const RESTRICTION_DEPRECATION      = 'Cannot use both "%s" and "%s" attributes on the same object.';
     public const RESTRICTION_IMAGE            = 'File must be an image> Accepted mim type(s): %s';
     public const RESTRICTION_ROLES            = 'At least one role is required.';
     public const ROLE_NOT_FOUND               = 'Role not found.';
     public const SERVICE_NOT_FOUND            = 'Service %s not found in the container.';
     public const SETTING_NOT_FOUND            = 'Setting "%s" not found.';
+    public const TEMPLATE_NOT_FOUND           = 'Template "%s" not found.';
+    public const UNSUPPORTED_MEDIA_TYPE       = 'Unsupported Media Type.';
     public const USER_ACTIVATED               = 'User account has been activated.';
     public const USER_ALREADY_ACTIVATED       = 'User account is already active.';
     public const USER_ALREADY_DEACTIVATED     = 'User account is already inactive.';
@@ -93,6 +99,25 @@ class Message
         return sprintf(self::MAIL_SENT_USER_ACTIVATION, $email);
     }
 
+    public static function notAcceptable(array $types = []): string
+    {
+        if (count($types) === 0) {
+            return self::NOT_ACCEPTABLE;
+        }
+
+        return sprintf('%s Supported types: %s', self::NOT_ACCEPTABLE, implode(', ', $types));
+    }
+
+    public static function resourceAlreadyRegistered(string $resource): string
+    {
+        return sprintf(self::RESOURCE_ALREADY_REGISTERED, $resource);
+    }
+
+    public static function resourceNotFound(string $resource = 'Resource'): string
+    {
+        return sprintf(self::RESOURCE_NOT_FOUND, $resource);
+    }
+
     public static function restrictionDeprecation(string $first, string $second): string
     {
         return sprintf(self::RESTRICTION_DEPRECATION, $first, $second);
@@ -111,6 +136,20 @@ class Message
     public static function settingNotFound(string $identifier): string
     {
         return sprintf(self::SETTING_NOT_FOUND, $identifier);
+    }
+
+    public static function templateNotFound(string $template): string
+    {
+        return sprintf(self::TEMPLATE_NOT_FOUND, $template);
+    }
+
+    public static function unsupportedMediaType(array $types = []): string
+    {
+        if (count($types) === 0) {
+            return self::UNSUPPORTED_MEDIA_TYPE;
+        }
+
+        return sprintf('%s Supported types: %s', self::UNSUPPORTED_MEDIA_TYPE, implode(', ', $types));
     }
 
     public static function validatorLengthMax(int $max): string
