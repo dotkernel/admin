@@ -10,7 +10,6 @@ use Core\Admin\Entity\AdminRole;
 use Core\Admin\Enum\AdminRoleEnum;
 use Core\Admin\Enum\AdminStatusEnum;
 use Core\Admin\Repository\AdminRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\UuidInterface;
@@ -95,9 +94,7 @@ class AdminTest extends UnitTest
         $this->assertSame(Admin::class, $admin::class);
         $this->assertIsArray($admin->getRoles());
         $this->assertEmpty($admin->getRoles());
-        $roles = new ArrayCollection();
-        $roles->add($this->default['roles'][0]);
-        $admin = $admin->setRoles($roles);
+        $admin = $admin->setRoles($this->default['roles']);
         $this->assertSame(Admin::class, $admin::class);
         $this->assertIsArray($admin->getRoles());
         $this->assertCount(1, $admin->getRoles());
