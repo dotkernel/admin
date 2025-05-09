@@ -6,7 +6,7 @@ namespace Admin\Admin\Adapter;
 
 use Core\Admin\Entity\Admin;
 use Core\Admin\Entity\AdminIdentity;
-use Core\Admin\Entity\AdminRole;
+use Core\App\Entity\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -139,7 +139,7 @@ class AuthenticationAdapter implements AdapterInterface
             $identityClass->getUuid()->toString(),
             $identityClass->getIdentity(),
             $identityClass->getStatus(),
-            array_map(fn (AdminRole $role): string => $role->getName()->value, $identityClass->getRoles()),
+            array_map(fn (RoleInterface $role): string => $role->getName()->value, $identityClass->getRoles()),
             [
                 'firstName' => $identityClass->getFirstName(),
                 'lastName'  => $identityClass->getLastName(),
