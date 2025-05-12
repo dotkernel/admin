@@ -1,6 +1,6 @@
-@import 'bootstrap/scss/bootstrap';
-@import "settings";
-@import "tools";
-@import "utils";
-@import "components";
-@import "main";
+@forward 'bootstrap/scss/bootstrap';
+@forward "settings";
+@forward "tools";
+@forward "utils";
+@forward "components";
+@forward "main";

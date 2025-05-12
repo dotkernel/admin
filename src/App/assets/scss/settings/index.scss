@@ -1,5 +1,5 @@
-@import 'breakpoints';
-@import 'fonts';
-@import 'materialColors';
-@import 'baseColors';
-@import 'borders';
+@forward 'breakpoints';
+@forward 'fonts';
+@forward 'materialColors';
+@forward 'baseColors';
+@forward 'borders';

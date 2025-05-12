@@ -3,10 +3,10 @@
   "version": "2.0.0",
   "description": "Web starter package suitable for admin applications.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack -d --progress --hide-modules",
-    "watch": "cross-env NODE_ENV=development webpack --watch --mode development --progress",
-    "prod": "cross-env NODE_ENV=production node_modules/.bin/webpack --mode=production --progress"
+    "preview": "php -S 0.0.0.0:8080 -t public",
+    "build": "vite build --watch"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/dotkernel/admin#readme",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@rollup/plugin-alias": "^5.1.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
@@ -32,48 +33,45 @@
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "perfect-scrollbar": "^1.5.5",
-    "skycons": "^1.0.0"
+    "skycons": "^1.0.0",
+    "typescript": "^5.5.4",
+    "vite": "^6.3.1",
+    "vite-plugin-static-copy": "^2.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/eslint-parser": "^7.24.7",
+    "@babel/core": "^7.27.1",
+    "@babel/eslint-parser": "^7.27.1",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-    "@babel/plugin-transform-runtime": "^7.24.7",
-    "@babel/runtime": "^7.24.7",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^9.1.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "case-sensitive-paths-webpack-plugin": "^2.4.0",
-    "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^12.0.2",
+    "@babel/plugin-transform-runtime": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
+    "@babel/traverse": "^7.27.1",
     "cross-env": "^7.0.3",
     "css-loader": "5.2.7",
-    "css-minimizer-webpack-plugin": "^7.0.0",
-    "eslint": "^8.56.0",
+    "eslint": "^9.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "expose-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
-    "imagemin-webpack-plugin": "^2.4.2",
+    "file-loader": "^6.2.0",
+    "less": "^4.3.0",
     "mini-css-extract-plugin": "^2.9.0",
     "postcss": "^8.4.39",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^9.6.0",
-    "sass": "^1.77.1",
+    "sass": "^1.87.0",
     "sass-loader": "^14.2.1",
     "shx": "^0.3.4",
     "style-loader": "^4.0.0",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dashboard": "^3.3.8",
-    "webpack-dev-server": "^5.0.4",
-    "file-loader": "^6.2.0"
+    "vite-jsconfig-paths": "^2.0.1",
+    "vite-plugin-bundle-css": "^0.1.1",
+    "vite-plugin-commonjs": "^0.10.4",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-minify": "^2.1.0"
   },
   "overrides": {
-    "graceful-fs": "^4.2.11"
+    "graceful-fs": "^4.2.11",
+    "rimraf": "^5.0.5"
   }
 }
