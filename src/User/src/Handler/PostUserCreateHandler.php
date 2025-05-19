@@ -70,7 +70,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 $data = $this->createUserForm->getData();
                 $user = $this->userService->saveUser($data);
                 $this->messenger->addSuccess(Message::USER_CREATED);
-                if ($user->getDetail()->hasEmail()) {
+                if ($user->hasEmail()) {
                     $body = $this->template->render('user::welcome', [
                         'config' => $this->config,
                         'user'   => $user,
@@ -94,7 +94,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 'line'  => $exception->getLine(),
                 'trace' => $exception->getTraceAsString(),
             ]);
-            $this->messenger->addError(Message::mailNotSentTo($user->getDetail()->getEmail()));
+            $this->messenger->addError(Message::mailNotSentTo($user->getEmail()));
             return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             return new HtmlResponse(

@@ -127,7 +127,7 @@ class AdminService implements AdminServiceInterface
             $admin->setStatus($status);
         }
 
-        $this->validateUniqueAdmin($admin->getIdentity(), $admin->getUuid());
+        $this->validateUniqueAdmin((string) $admin->getIdentity(), $admin->getUuid());
 
         if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $admin->resetRoles();

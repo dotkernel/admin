@@ -146,7 +146,7 @@ class AuthenticationAdapter implements AdapterInterface
 
         $adminIdentity = new AdminIdentity(
             $identityClass->getUuid()->toString(),
-            $identityClass->getIdentity(),
+            (string) $identityClass->getIdentity(),
             $identityClass->getStatus(),
             $roles,
             [

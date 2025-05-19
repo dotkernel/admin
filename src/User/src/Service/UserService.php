@@ -24,6 +24,7 @@ use Dot\DependencyInjection\Attribute\Inject;
 use Ramsey\Uuid\UuidInterface;
 
 use function array_key_exists;
+use function assert;
 use function count;
 use function date;
 use function in_array;
@@ -91,6 +92,9 @@ class UserService implements UserServiceInterface
         }
 
         $user = $userDetail->getUser();
+        if (! $user instanceof User) {
+            throw new NotFoundException(Message::USER_NOT_FOUND);
+        }
         if ($user->isDeleted()) {
             throw new NotFoundException(Message::USER_NOT_FOUND);
         }
@@ -183,6 +187,7 @@ class UserService implements UserServiceInterface
             if (! $user->hasDetail()) {
                 $user->setDetail((new UserDetail())->setUser($user));
             }
+            assert($user->getDetail() instanceof UserDetail);
             if (array_key_exists('firstName', $data['detail']) && $data['detail']['firstName'] !== null) {
                 $user->getDetail()->setFirstname($data['detail']['firstName']);
             }
@@ -194,7 +199,7 @@ class UserService implements UserServiceInterface
             }
         }
 
-        $this->validateUniqueUser($user->getIdentity(), $user->getDetail()->getEmail(), $user->getUuid());
+        $this->validateUniqueUser((string) $user->getIdentity(), $user->getEmail(), $user->getUuid());
 
         if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $user->resetRoles();
@@ -222,11 +227,15 @@ class UserService implements UserServiceInterface
 
         $user
             ->setStatus(UserStatusEnum::Deleted)
-            ->setIdentity($placeholder . $this->config['userAnonymizeAppend'])
-            ->getDetail()
-            ->setFirstName($placeholder)
-            ->setLastName($placeholder)
-            ->setEmail($placeholder);
+            ->setIdentity($placeholder . $this->config['userAnonymizeAppend']);
+        if ($user->hasDetail()) {
+            assert($user->getDetail() instanceof UserDetail);
+            $user
+                ->getDetail()
+                ->setFirstName($placeholder)
+                ->setLastName($placeholder)
+                ->setEmail($placeholder);
+        }
 
         $this->userRepository->saveResource($user);
 
@@ -243,7 +252,7 @@ class UserService implements UserServiceInterface
 
     private function revokeTokens(User $user): void
     {
-        $accessTokens = $this->oAuthAccessTokenRepository->findAccessTokens($user->getIdentity());
+        $accessTokens = $this->oAuthAccessTokenRepository->findAccessTokens((string) $user->getIdentity());
         foreach ($accessTokens as $accessToken) {
             $this->oAuthAccessTokenRepository->revokeAccessToken($accessToken->getToken());
             $this->oAuthRefreshTokenRepository->revokeRefreshToken($accessToken->getToken());
@@ -270,6 +279,7 @@ class UserService implements UserServiceInterface
             if ($uuid === null) {
                 throw new ConflictException(Message::DUPLICATE_EMAIL);
             }
+            assert($userDetail->getUser() instanceof User);
             if ($userDetail->getUser()->getUuid()->toString() !== $uuid->toString()) {
                 throw new ConflictException(Message::DUPLICATE_EMAIL);
             }

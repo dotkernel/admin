@@ -80,6 +80,7 @@ class AdminLoginTest extends UnitTest
         $this->assertSame(YesNoEnum::No, $adminLogin->getIsMobile());
         $adminLogin = $adminLogin->setIsMobile(YesNoEnum::Yes);
         $this->assertSame(AdminLogin::class, $adminLogin::class);
+        $this->assertNotNull($adminLogin->getIsMobile());
         $this->assertSame('yes', $adminLogin->getIsMobile()->value);
 
         $this->assertNull($adminLogin->getOsName());
@@ -120,6 +121,7 @@ class AdminLoginTest extends UnitTest
         $this->assertSame(SuccessFailureEnum::Fail, $adminLogin->getLoginStatus());
         $adminLogin = $adminLogin->setLoginStatus(SuccessFailureEnum::Success);
         $this->assertSame(AdminLogin::class, $adminLogin::class);
+        $this->assertNotNull($adminLogin->getLoginStatus());
         $this->assertSame('success', $adminLogin->getLoginStatus()->value);
 
         $this->assertNull($adminLogin->getIdentity());
