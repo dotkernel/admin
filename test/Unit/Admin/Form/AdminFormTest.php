@@ -6,19 +6,27 @@ namespace AdminTest\Unit\Admin\Form;
 
 use Admin\Admin\Form\CreateAdminForm;
 use AdminTest\Unit\UnitTest;
+use Laminas\Form\ElementInterface;
+use Laminas\InputFilter\BaseInputFilter;
+use Laminas\InputFilter\Input;
+
+use function count;
 
 class AdminFormTest extends UnitTest
 {
-    use FormTrait;
-
     public function testFormWillInstantiate(): void
     {
-        $this->formWillInstantiate(CreateAdminForm::class);
+        $this->assertSame(CreateAdminForm::class, (new CreateAdminForm())::class);
+        $this->assertSame(CreateAdminForm::class, (new CreateAdminForm(null, []))::class);
+        $this->assertSame(CreateAdminForm::class, (new CreateAdminForm('form'))::class);
+        $this->assertSame(CreateAdminForm::class, (new CreateAdminForm('form', []))::class);
     }
 
     public function testFormHasElements(): void
     {
-        $this->formHasElements(new CreateAdminForm(), [
+        $form = new CreateAdminForm();
+
+        $elements = [
             'identity',
             'password',
             'passwordConfirm',
@@ -27,12 +35,18 @@ class AdminFormTest extends UnitTest
             'status',
             'adminCreateCsrf',
             'submit',
-        ]);
+        ];
+        foreach ($elements as $element) {
+            $this->assertTrue($form->has($element));
+            $this->assertContainsOnlyInstancesOf(ElementInterface::class, [$form->get($element)]);
+        }
     }
 
     public function testFormHasInputFilter(): void
     {
-        $this->formHasInputFilter((new CreateAdminForm())->getInputFilter(), [
+        $inputFilter = (new CreateAdminForm())->getInputFilter();
+
+        $inputs = [
             'identity',
             'password',
             'passwordConfirm',
@@ -41,6 +55,14 @@ class AdminFormTest extends UnitTest
             'status',
             'roles',
             'adminCreateCsrf',
-        ]);
+        ];
+
+        $this->assertInstanceOf(BaseInputFilter::class, $inputFilter);
+        $this->assertCount(count($inputs), $inputFilter->getInputs());
+
+        foreach ($inputs as $input) {
+            $this->assertTrue($inputFilter->has($input));
+            $this->assertInstanceOf(Input::class, $inputFilter->get($input));
+        }
     }
 }

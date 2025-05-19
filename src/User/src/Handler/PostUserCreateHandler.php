@@ -27,6 +27,9 @@ use Throwable;
 
 class PostUserCreateHandler implements RequestHandlerInterface
 {
+    /**
+     * @param array<non-empty-string, mixed> $config
+     */
     #[Inject(
         UserServiceInterface::class,
         RouterInterface::class,

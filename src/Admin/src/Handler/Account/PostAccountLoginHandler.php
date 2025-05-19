@@ -69,7 +69,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             }
 
-            /** @var array $data */
+            /** @var array<non-empty-string, mixed> $data */
             $data = $this->loginForm->getData();
 
             /** @var AuthenticationAdapter $adapter */

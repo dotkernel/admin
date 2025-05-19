@@ -26,19 +26,25 @@ interface UserServiceInterface
      */
     public function findByEmail(string $email): User;
 
-    public function findByIdentity(string $identity): ?User;
+    /**
+     * @throws NotFoundException
+     */
+    public function findByIdentity(string $identity): User;
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $params
      * @throws NotFoundException
      */
     public function findOneBy(array $params): User;
 
     /**
-     * @param array<string, mixed> $params
+     * @param non-empty-array<non-empty-string, mixed> $params
+     * @return array<non-empty-string, mixed>
      */
     public function getUsers(array $params): array;
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $data
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException

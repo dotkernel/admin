@@ -15,11 +15,17 @@ use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
+ * @extends AbstractForm<CreateUserDataType>
+ */
 class CreateUserForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -34,6 +40,13 @@ class CreateUserForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @phpstan-param non-empty-array{
+     *     label: non-empty-string,
+     *     value: non-empty-string,
+     *     selected: bool,
+     * }[] $roles
+     */
     public function setRoles(array $roles): self
     {
         return $this->add(
@@ -90,10 +103,5 @@ class CreateUserForm extends AbstractForm
                             ->setAttribute('required', true)
                     )
             );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

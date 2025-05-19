@@ -10,6 +10,15 @@ use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-type ChangePasswordDataType array{
+ *     currentPassword: non-empty-string,
+ *     password: non-empty-string,
+ *     passwordConfirm: non-empty-string,
+ *     changePasswordCsrf: non-empty-string,
+ * }
+ * @extends AbstractInputFilter<ChangePasswordDataType>
+ */
 class ChangePasswordInputFilter extends AbstractInputFilter
 {
     public function init(): void

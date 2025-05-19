@@ -13,6 +13,7 @@ interface UserResetPasswordServiceInterface
     public function getUserResetPasswordRepository(): UserResetPasswordRepository;
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $params
      * @throws NotFoundException
      */
     public function findOneBy(array $params): UserResetPassword;

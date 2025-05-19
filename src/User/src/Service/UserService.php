@@ -30,6 +30,9 @@ use function is_array;
 
 class UserService implements UserServiceInterface
 {
+    /**
+     * @param array<non-empty-string, mixed> $config
+     */
     #[Inject(
         OAuthAccessTokenRepository::class,
         OAuthRefreshTokenRepository::class,
@@ -94,12 +97,13 @@ class UserService implements UserServiceInterface
     /**
      * @throws NotFoundException
      */
-    public function findByIdentity(string $identity): ?User
+    public function findByIdentity(string $identity): User
     {
         return $this->findOneBy(['identity' => $identity]);
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $params
      * @throws NotFoundException
      */
     public function findOneBy(array $params): User
@@ -113,7 +117,8 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param array<string, mixed> $params
+     * @param non-empty-array<non-empty-string, mixed> $params
+     * @return array<non-empty-string, mixed>
      */
     public function getUsers(array $params): array
     {
@@ -140,6 +145,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $data
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException
@@ -198,7 +204,7 @@ class UserService implements UserServiceInterface
         }
 
         if (! $user->hasRoles()) {
-            throw (new BadRequestException())->setMessages([Message::RESTRICTION_ROLES]);
+            throw new BadRequestException(Message::RESTRICTION_ROLES);
         }
 
         $this->userRepository->saveResource($user);

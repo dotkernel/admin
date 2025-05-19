@@ -11,6 +11,19 @@ use Admin\User\InputFilter\Input\RolesInput;
 use Admin\User\InputFilter\Input\StatusInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-import-type UserDetailDataType from UserDetailInputFilter
+ * @phpstan-type EditUserDataType array{
+ *     password?: non-empty-string,
+ *     passwordConfirm?: non-empty-string,
+ *     status: non-empty-string,
+ *     userEditCsrf: non-empty-string,
+ *     submit?: non-empty-string,
+ *     detail: UserDetailDataType,
+ *     roles: non-empty-string[],
+ * }
+ * @extends AbstractInputFilter<EditUserDataType>
+ */
 class EditUserInputFilter extends AbstractInputFilter
 {
     public function init(): self

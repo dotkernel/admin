@@ -15,6 +15,7 @@ use Laminas\Validator\NotEmpty;
 
 class ImageInput extends Input
 {
+    /** @var non-empty-string[] $mimeTypes */
     public static array $mimeTypes = ['image/jpeg', 'image/png'];
 
     public function __construct(?string $name = null, bool $isRequired = true)

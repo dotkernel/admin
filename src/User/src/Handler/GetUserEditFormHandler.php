@@ -62,6 +62,11 @@ class GetUserEditFormHandler implements RequestHandlerInterface
             'value'    => $userRole->getUuid()->toString(),
             'selected' => $user->hasRole($userRole),
         ], $this->userRoleService->getUserRoleRepository()->findAll());
+        /** @phpstan-var non-empty-array{
+         *      label: non-empty-string,
+         *      value: non-empty-string,
+         *      selected: bool,
+         * }[] $userRoles */
         $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
 
         $this->editUserAvatarForm

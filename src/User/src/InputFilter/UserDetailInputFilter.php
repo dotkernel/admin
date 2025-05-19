@@ -9,6 +9,14 @@ use Admin\App\InputFilter\Input\FirstNameInput;
 use Admin\App\InputFilter\Input\LastNameInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-type UserDetailDataType array{
+ *     firstName?: non-empty-string,
+ *     lastName?: non-empty-string,
+ *     email: non-empty-string,
+ * }
+ * @extends AbstractInputFilter<UserDetailDataType>
+ */
 class UserDetailInputFilter extends AbstractInputFilter
 {
     public function init(): self

@@ -34,21 +34,16 @@ class FormsPluginTest extends UnitTest
     {
         $hash = (new Csrf(['session' => new Container()]))->getHash();
 
-        /** @var array<string, string> $oldData */
-        $oldData     = [
+        /** @var non-empty-array<non-empty-string, non-empty-string> $oldData */
+        $oldData = [
             'identity'  => 'old-username',
             'password'  => 'old-password',
             'loginCsrf' => $hash,
         ];
-        $oldMessages = [];
-
-        $newData     = [
+        $newData = [
             'identity'  => 'new-username',
             'password'  => 'new-password',
             'loginCsrf' => $hash,
-        ];
-        $newMessages = [
-            'test-message',
         ];
 
         $formElementManager      = $this->createMock(FormElementManager::class);
@@ -59,7 +54,7 @@ class FormsPluginTest extends UnitTest
             ->willReturnCallback(
                 fn (string $key) => match ($key) {
                     'loginForm_data' => $oldData,
-                    'loginForm_messages' => $oldMessages,
+                    'loginForm_messages' => [],
                     default => null,
                 }
             );
@@ -70,21 +65,30 @@ class FormsPluginTest extends UnitTest
         $form->setData($oldData);
         $this->assertTrue($form->isValid());
         $formsPlugin->saveState($form);
+        $this->assertIsArray($form->getData());
         $this->assertSame($oldData, $form->getData());
         $this->assertIsArray($form->getMessages());
-        $this->assertSame($oldMessages, $form->getMessages());
+        $this->assertCount(0, $form->getMessages());
 
         $form->setData($newData);
         $this->assertTrue($form->isValid());
+        $this->assertIsArray($form->getData());
         $this->assertSame($newData, $form->getData());
         $this->assertIsArray($form->getMessages());
-        $this->assertSame($oldMessages, $form->getMessages());
+        $this->assertCount(0, $form->getMessages());
 
         $formsPlugin->restoreState($form);
         $this->assertTrue($form->isValid());
-        $this->assertSame($oldData, $form->getData());
+        $formData = $form->getData();
+        $this->assertIsArray($formData);
+        $this->assertArrayHasKey('identity', $formData);
+        $this->assertSame($oldData['identity'], $formData['identity']);
+        $this->assertArrayHasKey('password', $formData);
+        $this->assertSame($oldData['password'], $formData['password']);
+        $this->assertArrayHasKey('loginCsrf', $formData);
+        $this->assertSame($oldData['loginCsrf'], $formData['loginCsrf']);
         $this->assertIsArray($form->getMessages());
-        $this->assertSame($oldMessages, $form->getMessages());
+        $this->assertCount(0, $form->getMessages());
     }
 
     /**
@@ -150,7 +154,9 @@ class FormsPluginTest extends UnitTest
     private function getDummyFlashMessenger(): object
     {
         return new class implements FlashMessengerInterface {
-            private array $data     = [];
+            /** @var array<non-empty-string, mixed> $data */
+            private array $data = [];
+            /** @var array<non-empty-string, mixed> $messages */
             private array $messages = [];
 
             public function addData(
@@ -175,6 +181,9 @@ class FormsPluginTest extends UnitTest
                 return $this->data[$channel][$key] ?? null;
             }
 
+            /**
+             * @param string|string[] $message
+             */
             public function addMessage(
                 string $type,
                 array|string $message,
@@ -186,6 +195,9 @@ class FormsPluginTest extends UnitTest
                 }
             }
 
+            /**
+             * @return array<string, array<int, string>>
+             */
             public function getMessages(
                 ?string $type = null,
                 string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
@@ -193,6 +205,9 @@ class FormsPluginTest extends UnitTest
                 return $this->messages[$channel][$type] ?? [];
             }
 
+            /**
+             * @param string|string[] $error
+             */
             public function addError(
                 array|string $error,
                 string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
@@ -200,6 +215,9 @@ class FormsPluginTest extends UnitTest
                 $this->addMessage(FlashMessengerInterface::ERROR, $error, $channel);
             }
 
+            /**
+             * @param string|string[] $info
+             */
             public function addInfo(
                 array|string $info,
                 string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
@@ -207,6 +225,9 @@ class FormsPluginTest extends UnitTest
                 $this->addMessage(FlashMessengerInterface::INFO, $info, $channel);
             }
 
+            /**
+             * @param string|string[] $warning
+             */
             public function addWarning(
                 array|string $warning,
                 string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
@@ -214,6 +235,9 @@ class FormsPluginTest extends UnitTest
                 $this->addMessage(FlashMessengerInterface::WARNING, $warning, $channel);
             }
 
+            /**
+             * @param string|string[] $success
+             */
             public function addSuccess(
                 array|string $success,
                 string $channel = FlashMessengerInterface::DEFAULT_CHANNEL

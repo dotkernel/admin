@@ -11,8 +11,21 @@ use Admin\Setting\Service\SettingServiceInterface;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Mezzio\Application;
 
+/**
+ * @phpstan-type ConfigType array{
+ *      dependencies: DependenciesType,
+ * }
+ * @phpstan-type DependenciesType array{
+ *      delegators: non-empty-array<class-string, array<class-string>>,
+ *      factories: non-empty-array<class-string, class-string>,
+ *      aliases: non-empty-array<class-string, class-string>,
+ * }
+ */
 class ConfigProvider
 {
+    /**
+     * @return ConfigType
+     */
     public function __invoke(): array
     {
         return [
@@ -20,6 +33,9 @@ class ConfigProvider
         ];
     }
 
+    /**
+     * @return DependenciesType
+     */
     public function getDependencies(): array
     {
         return [

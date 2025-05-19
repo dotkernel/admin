@@ -8,6 +8,13 @@ use Admin\App\InputFilter\Input\CsrfInput;
 use Admin\User\InputFilter\Input\ConfirmationInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-type DeleteUserDataType array{
+ *     confirmation: non-empty-string,
+ *     userDeleteCsrf: non-empty-string,
+ * }
+ * @extends AbstractInputFilter<DeleteUserDataType>
+ */
 class DeleteUserInputFilter extends AbstractInputFilter
 {
     public function init(): self
