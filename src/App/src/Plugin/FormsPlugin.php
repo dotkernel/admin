@@ -78,7 +78,7 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param non-empty-array<int, non-empty-string[]|non-empty-array> $formMessages
+     * @param array<int, non-empty-string[]|non-empty-array<int, non-empty-string>> $formMessages
      */
     private function formMessagesToString(array $formMessages): string
     {
@@ -102,13 +102,14 @@ class FormsPlugin implements PluginInterface
     }
 
     /**
-     * @param non-empty-array<int, non-empty-string[]|non-empty-array> $formMessages
+     * @param array<int, non-empty-string[]|non-empty-array<int, non-empty-string>> $formMessages
      * @return non-empty-string[]
      */
     protected function processFormMessages(array $formMessages): array
     {
         $messages = [];
 
+        /** @var non-empty-string $message */
         foreach ($formMessages as $message) {
             if (is_array($message)) {
                 foreach ($message as $m) {

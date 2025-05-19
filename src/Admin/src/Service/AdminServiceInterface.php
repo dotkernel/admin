@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Service;
 
+use Admin\Admin\InputFilter\ChangePasswordInputFilter;
 use Admin\Admin\InputFilter\CreateAdminInputFilter;
+use Admin\Admin\InputFilter\EditAccountInputFilter;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
@@ -13,6 +15,8 @@ use Core\Admin\Repository\AdminRepository;
 
 /**
  * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
+ * @phpstan-import-type EditAccountDataType from EditAccountInputFilter
+ * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
  */
 interface AdminServiceInterface
 {
@@ -32,7 +36,7 @@ interface AdminServiceInterface
     public function getAdmins(array $params): array;
 
     /**
-     * @phpstan-param CreateAdminDataType $data
+     * @phpstan-param CreateAdminDataType|EditAccountDataType|ChangePasswordDataType $data
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException

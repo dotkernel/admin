@@ -6,6 +6,7 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\InputFilter\EditAccountInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
@@ -26,6 +27,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+/**
+ * @phpstan-import-type EditAccountDataType from EditAccountInputFilter
+ */
 class PostAccountEditHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -52,7 +56,9 @@ class PostAccountEditHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->accountForm->setData($request->getParsedBody());
+        /** @var iterable<array<string, string|string[]>> $data */
+        $data = $request->getParsedBody();
+        $this->accountForm->setData($data);
         if (! $this->accountForm->isValid()) {
             return new HtmlResponse(
                 $this->template->render('admin::account-view', [
@@ -75,7 +81,9 @@ class PostAccountEditHandler implements RequestHandlerInterface
             ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
 
         try {
-            $this->adminService->saveAdmin((array) $this->accountForm->getData(), $admin);
+            /** @var EditAccountDataType $data */
+            $data = $this->accountForm->getData();
+            $this->adminService->saveAdmin($data, $admin);
             $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());

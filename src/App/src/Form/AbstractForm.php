@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Admin\App\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterInterface;
 
 /**
+ * @phpstan-type SelectDataType array{
+ *     label: non-empty-string,
+ *     value: non-empty-string,
+ *     selected: bool,
+ * }
  * @template TFilteredValues
  * @extends Form<TFilteredValues>
  */
@@ -18,7 +22,7 @@ abstract class AbstractForm extends Form
     protected InputFilterInterface $inputFilter;
 
     /**
-     * @return InputFilterInterface&InputFilter<TFilteredValues>
+     * @return InputFilterInterface<TFilteredValues>
      */
     public function getInputFilter(): InputFilterInterface
     {

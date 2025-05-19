@@ -6,6 +6,7 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\InputFilter\ChangePasswordInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
 use Core\App\Message;
@@ -24,6 +25,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+/**
+ * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
+ */
 class PostAccountChangePasswordHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -50,7 +54,9 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->changePasswordForm->setData($request->getParsedBody());
+        /** @var iterable<array<string, string|string[]>> $data */
+        $data = $request->getParsedBody();
+        $this->changePasswordForm->setData($data);
         if (! $this->changePasswordForm->isValid()) {
             return new HtmlResponse(
                 $this->template->render('admin::account-view', [
@@ -73,7 +79,8 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
             ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
 
         try {
-            $data = (array) $this->changePasswordForm->getData();
+            /** @var ChangePasswordDataType $data */
+            $data = $this->changePasswordForm->getData();
             if ($admin->verifyPassword($data['currentPassword'])) {
                 $this->adminService->saveAdmin($data, $admin);
                 $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);

@@ -17,6 +17,7 @@ use Laminas\Session\Container;
 
 /**
  * @phpstan-import-type EditAdminDataType from EditAdminInputFilter
+ * @phpstan-import-type SelectDataType from AbstractForm
  * @extends AbstractForm<EditAdminDataType>
  */
 class EditAdminForm extends AbstractForm
@@ -39,11 +40,7 @@ class EditAdminForm extends AbstractForm
     }
 
     /**
-     * @phpstan-param non-empty-array{
-     *     label: non-empty-string,
-     *     value: non-empty-string,
-     *     selected: bool,
-     * }[] $roles
+     * @phpstan-param SelectDataType[] $roles
      */
     public function setRoles(array $roles): self
     {

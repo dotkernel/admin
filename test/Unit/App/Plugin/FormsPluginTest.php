@@ -114,8 +114,6 @@ class FormsPluginTest extends UnitTest
         $form->setData($data);
         $this->assertTrue($form->isValid());
 
-        $this->assertIsArray($flashMessengerInterface->getAllData());
-        $this->assertEmpty($flashMessengerInterface->getAllData());
         $this->assertIsArray($flashMessengerInterface->getMessages());
         $this->assertEmpty($flashMessengerInterface->getMessages());
 
@@ -151,7 +149,7 @@ class FormsPluginTest extends UnitTest
         $this->assertNotEmpty($messagesAsString);
     }
 
-    private function getDummyFlashMessenger(): object
+    private function getDummyFlashMessenger(): FlashMessengerInterface
     {
         return new class implements FlashMessengerInterface {
             /** @var array<non-empty-string, mixed> $data */
@@ -159,21 +157,19 @@ class FormsPluginTest extends UnitTest
             /** @var array<non-empty-string, mixed> $messages */
             private array $messages = [];
 
+            /**
+             * @param non-empty-string $channel
+             */
             public function addData(
                 string $key,
                 mixed $value,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 if (! isset($this->data[$channel])) {
                     $this->data[$channel] = [];
                 }
 
                 $this->data[$channel][$key] = $value;
-            }
-
-            public function getAllData(string $channel = FlashMessengerInterface::DEFAULT_CHANNEL): mixed
-            {
-                return $this->data[$channel] ?? [];
             }
 
             public function getData(string $key, string $channel = FlashMessengerInterface::DEFAULT_CHANNEL): mixed
@@ -183,11 +179,12 @@ class FormsPluginTest extends UnitTest
 
             /**
              * @param string|string[] $message
+             * @param non-empty-string $channel
              */
             public function addMessage(
                 string $type,
                 array|string $message,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 $message = (array) $message;
                 foreach ($message as $msg) {
@@ -200,47 +197,51 @@ class FormsPluginTest extends UnitTest
              */
             public function getMessages(
                 ?string $type = null,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): array {
                 return $this->messages[$channel][$type] ?? [];
             }
 
             /**
              * @param string|string[] $error
+             * @param non-empty-string $channel
              */
             public function addError(
                 array|string $error,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 $this->addMessage(FlashMessengerInterface::ERROR, $error, $channel);
             }
 
             /**
              * @param string|string[] $info
+             * @param non-empty-string $channel
              */
             public function addInfo(
                 array|string $info,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 $this->addMessage(FlashMessengerInterface::INFO, $info, $channel);
             }
 
             /**
              * @param string|string[] $warning
+             * @param non-empty-string $channel
              */
             public function addWarning(
                 array|string $warning,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 $this->addMessage(FlashMessengerInterface::WARNING, $warning, $channel);
             }
 
             /**
              * @param string|string[] $success
+             * @param non-empty-string $channel
              */
             public function addSuccess(
                 array|string $success,
-                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL
+                string $channel = FlashMessengerInterface::DEFAULT_CHANNEL,
             ): void {
                 $this->addMessage(FlashMessengerInterface::SUCCESS, $success, $channel);
             }

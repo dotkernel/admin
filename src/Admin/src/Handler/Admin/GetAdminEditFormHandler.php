@@ -8,6 +8,7 @@ use Admin\Admin\Form\EditAdminForm;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
+use Admin\App\Form\AbstractForm;
 use Core\Admin\Entity\AdminRole;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -22,6 +23,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function array_map;
 
+/**
+ * @phpstan-import-type SelectDataType from AbstractForm
+ */
 class GetAdminEditFormHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -52,11 +56,17 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $adminRoles = array_map(fn (AdminRole $adminRole): array => [
-            'label'    => $adminRole->getName()->value,
-            'value'    => $adminRole->getUuid()->toString(),
-            'selected' => $admin->hasRole($adminRole),
-        ], $this->adminRoleService->getAdminRoleRepository()->findAll());
+        /** @var AdminRole[] $adminRoles */
+        $adminRoles = $this->adminRoleService->getAdminRoleRepository()->findAll();
+        $adminRoles = array_map(
+            /** @return SelectDataType */
+            fn (AdminRole $adminRole): array => [
+                'label'    => $adminRole->getName()->value,
+                'value'    => $adminRole->getUuid()->toString(),
+                'selected' => $admin->hasRole($adminRole),
+            ],
+            $adminRoles
+        );
 
         $this->editAdminForm
             ->setAttribute(

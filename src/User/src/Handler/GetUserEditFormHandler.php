@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\User\Handler;
 
 use Admin\App\Exception\NotFoundException;
+use Admin\App\Form\AbstractForm;
 use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
 use Admin\User\Service\UserRoleServiceInterface;
@@ -25,6 +26,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function array_filter;
 use function array_map;
 
+/**
+ * @phpstan-import-type SelectDataType from AbstractForm
+ */
 class GetUserEditFormHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -57,16 +61,17 @@ class GetUserEditFormHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $userRoles = array_map(fn (UserRole $userRole): array => [
-            'label'    => $userRole->getName()->value,
-            'value'    => $userRole->getUuid()->toString(),
-            'selected' => $user->hasRole($userRole),
-        ], $this->userRoleService->getUserRoleRepository()->findAll());
-        /** @phpstan-var non-empty-array{
-         *      label: non-empty-string,
-         *      value: non-empty-string,
-         *      selected: bool,
-         * }[] $userRoles */
+        /** @var UserRole[] $userRoles */
+        $userRoles = $this->userRoleService->getUserRoleRepository()->findAll();
+        $userRoles = array_map(
+            /** @return SelectDataType */
+            fn (UserRole $userRole): array => [
+                'label'    => $userRole->getName()->value,
+                'value'    => $userRole->getUuid()->toString(),
+                'selected' => $user->hasRole($userRole),
+            ],
+            $userRoles
+        );
         $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
 
         $this->editUserAvatarForm

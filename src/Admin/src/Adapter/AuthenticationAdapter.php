@@ -138,14 +138,20 @@ class AuthenticationAdapter implements AdapterInterface
             }
         }
 
+        /** @var non-empty-string[] $roles */
+        $roles = array_map(
+            fn (RoleInterface $role): string => (string) $role->getName()->value,
+            $identityClass->getRoles()
+        );
+
         $adminIdentity = new AdminIdentity(
             $identityClass->getUuid()->toString(),
             $identityClass->getIdentity(),
             $identityClass->getStatus(),
-            array_map(fn (RoleInterface $role): string => $role->getName()->value, $identityClass->getRoles()),
+            $roles,
             [
-                'firstName' => $identityClass->getFirstName(),
-                'lastName'  => $identityClass->getLastName(),
+                'firstName' => (string) $identityClass->getFirstName(),
+                'lastName'  => (string) $identityClass->getLastName(),
             ]
         );
 

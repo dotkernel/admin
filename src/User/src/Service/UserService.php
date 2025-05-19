@@ -7,6 +7,7 @@ namespace Admin\User\Service;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
+use Admin\User\InputFilter\CreateUserInputFilter;
 use Core\App\Helper\Paginator;
 use Core\App\Message;
 use Core\Security\Repository\OAuthAccessTokenRepository;
@@ -28,6 +29,9 @@ use function date;
 use function in_array;
 use function is_array;
 
+/**
+ * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
+ */
 class UserService implements UserServiceInterface
 {
     /**
@@ -117,7 +121,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $params
+     * @param array<non-empty-string, mixed> $params
      * @return array<non-empty-string, mixed>
      */
     public function getUsers(array $params): array
@@ -145,7 +149,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $data
+     * @phpstan-param CreateUserDataType $data
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException
@@ -229,6 +233,9 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
+    /**
+     * @return non-empty-string
+     */
     private function getAnonymousPlaceholder(): string
     {
         return 'anonymous' . date('dmYHis');

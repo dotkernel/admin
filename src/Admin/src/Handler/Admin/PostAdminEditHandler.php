@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Form\EditAdminForm;
+use Admin\Admin\InputFilter\CreateAdminInputFilter;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
+use Admin\App\Form\AbstractForm;
 use Core\Admin\Entity\AdminRole;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -27,6 +29,10 @@ use Throwable;
 
 use function array_map;
 
+/**
+ * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
+ * @phpstan-import-type SelectDataType from AbstractForm
+ */
 class PostAdminEditHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -59,11 +65,17 @@ class PostAdminEditHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $adminRoles = array_map(fn (AdminRole $adminRole): array => [
-            'label'    => $adminRole->getName()->value,
-            'value'    => $adminRole->getUuid()->toString(),
-            'selected' => $admin->hasRole($adminRole),
-        ], $this->adminRoleService->getAdminRoleRepository()->findAll());
+        /** @var AdminRole[] $adminRoles */
+        $adminRoles = $this->adminRoleService->getAdminRoleRepository()->findAll();
+        $adminRoles = array_map(
+            /** @return SelectDataType */
+            fn (AdminRole $adminRole): array => [
+                'label'    => $adminRole->getName()->value,
+                'value'    => $adminRole->getUuid()->toString(),
+                'selected' => $admin->hasRole($adminRole),
+            ],
+            $adminRoles
+        );
 
         $this->editAdminForm
             ->setAttribute(
@@ -73,9 +85,13 @@ class PostAdminEditHandler implements RequestHandlerInterface
             ->setRoles($adminRoles);
 
         try {
-            $this->editAdminForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->editAdminForm->setData($data);
             if ($this->editAdminForm->isValid()) {
-                $this->adminService->saveAdmin((array) $this->editAdminForm->getData(), $admin);
+                /** @var CreateAdminDataType $data */
+                $data = $this->editAdminForm->getData();
+                $this->adminService->saveAdmin($data, $admin);
                 $this->messenger->addSuccess(Message::ADMIN_UPDATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
