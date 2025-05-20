@@ -60,8 +60,8 @@ class PostUserDeleteHandler implements RequestHandlerInterface
         );
 
         try {
-            /** @var non-empty-array<non-empty-string, mixed> $data */
-            $data = $this->deleteUserForm->getData();
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
             $this->deleteUserForm->setData($data);
             if ($this->deleteUserForm->isValid()) {
                 $this->userService->deleteUser($user);
