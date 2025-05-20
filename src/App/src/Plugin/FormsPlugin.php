@@ -27,6 +27,10 @@ class FormsPlugin implements PluginInterface
     ) {
     }
 
+    /**
+     * @template TFilteredValues
+     * @param Form<TFilteredValues> $form
+     */
     public function restoreState(Form $form): void
     {
         $dataKey     = $form->getName() . '_data';
@@ -39,6 +43,10 @@ class FormsPlugin implements PluginInterface
         $form->setMessages($messages);
     }
 
+    /**
+     * @template TFilteredValues
+     * @param Form<TFilteredValues> $form
+     */
     public function saveState(Form $form): void
     {
         $dataKey     = $form->getName() . '_data';
@@ -48,6 +56,11 @@ class FormsPlugin implements PluginInterface
         $this->flashMessenger->addData($messagesKey, $form->getMessages());
     }
 
+    /**
+     * @template TFilteredValues
+     * @param Form<TFilteredValues> $form
+     * @return non-empty-string[]
+     */
     public function getMessages(Form $form): array
     {
         return $this->processFormMessages(
@@ -55,11 +68,18 @@ class FormsPlugin implements PluginInterface
         );
     }
 
+    /**
+     * @template TFilteredValues
+     * @param Form<TFilteredValues> $form
+     */
     public function getMessagesAsString(Form $form): string
     {
         return $this->formMessagesToString($form->getMessages());
     }
 
+    /**
+     * @param array<int, non-empty-string[]|non-empty-array<int, non-empty-string>> $formMessages
+     */
     private function formMessagesToString(array $formMessages): string
     {
         $messages = '';
@@ -81,10 +101,15 @@ class FormsPlugin implements PluginInterface
         return $messages;
     }
 
+    /**
+     * @param array<int, non-empty-string[]|non-empty-array<int, non-empty-string>> $formMessages
+     * @return non-empty-string[]
+     */
     protected function processFormMessages(array $formMessages): array
     {
         $messages = [];
 
+        /** @var non-empty-string $message */
         foreach ($formMessages as $message) {
             if (is_array($message)) {
                 foreach ($message as $m) {

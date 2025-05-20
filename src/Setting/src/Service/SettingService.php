@@ -20,6 +20,9 @@ class SettingService implements SettingServiceInterface
     ) {
     }
 
+    /**
+     * @param non-empty-array<non-empty-string, mixed> $filters
+     */
     public function findOneBy(array $filters): ?Setting
     {
         $setting = $this->settingRepository->findOneBy($filters);
@@ -30,6 +33,9 @@ class SettingService implements SettingServiceInterface
         return null;
     }
 
+    /**
+     * @param non-empty-array<non-empty-string, mixed> $data
+     */
     public function createSetting(Admin $admin, SettingIdentifierEnum $identifier, array $data): Setting
     {
         $setting = new Setting($admin, $identifier, $data);
@@ -39,6 +45,9 @@ class SettingService implements SettingServiceInterface
         return $setting;
     }
 
+    /**
+     * @param non-empty-array<non-empty-string, mixed> $data
+     */
     public function updateSetting(Setting $setting, array $data): Setting
     {
         $setting->setValue($data);

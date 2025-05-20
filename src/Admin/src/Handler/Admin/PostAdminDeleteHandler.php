@@ -57,7 +57,9 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
         );
 
         try {
-            $this->deleteAdminForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->deleteAdminForm->setData($data);
             if ($this->deleteAdminForm->isValid()) {
                 $this->adminService->deleteAdmin($admin);
                 $this->messenger->addSuccess(Message::ADMIN_DELETED);

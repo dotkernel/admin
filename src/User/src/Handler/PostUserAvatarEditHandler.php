@@ -72,7 +72,9 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
             );
 
         try {
-            $this->editUserAvatarForm->setData(array_merge($request->getParsedBody(), $request->getUploadedFiles()));
+            $this->editUserAvatarForm->setData(
+                array_merge((array) $request->getParsedBody(), $request->getUploadedFiles())
+            );
             if ($this->editUserAvatarForm->isValid()) {
                 $this->userAvatarService->createAvatar(
                     $user,

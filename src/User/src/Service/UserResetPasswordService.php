@@ -26,6 +26,7 @@ class UserResetPasswordService implements UserResetPasswordServiceInterface
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $params
      * @throws NotFoundException
      */
     public function findOneBy(array $params): UserResetPassword

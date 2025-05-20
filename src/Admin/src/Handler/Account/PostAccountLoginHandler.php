@@ -40,7 +40,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
         protected AdminServiceInterface $adminService,
         protected AdminLoginServiceInterface $adminLoginService,
         protected RouterInterface $router,
-        protected LaminasAuthenticationServiceInterface|AuthenticationServiceInterface $authenticationService,
+        protected LaminasAuthenticationServiceInterface&AuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
         protected LoginForm $loginForm,
@@ -60,7 +60,9 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 $this->forms->restoreState($this->loginForm);
             }
 
-            $this->loginForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->loginForm->setData($data);
 
             if (! $this->loginForm->isValid()) {
                 $this->messenger->addData('shouldRebind', true);
@@ -69,8 +71,11 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             }
 
-            /** @var array $data */
+            /** @var non-empty-array<non-empty-string, non-empty-string> $data */
             $data = $this->loginForm->getData();
+
+            /** @var non-empty-array<non-empty-string, mixed> $serverParams */
+            $serverParams = $request->getServerParams();
 
             /** @var AuthenticationAdapter $adapter */
             $adapter = $this->authenticationService->getAdapter();
@@ -78,7 +83,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
             $adapter->setCredential($data['password']);
             $authResult = $this->authenticationService->authenticate();
             if (! $authResult->isValid()) {
-                $this->adminLoginService->logFailedLogin($request->getServerParams(), $data['identity']);
+                $this->adminLoginService->logFailedLogin($serverParams, $data['identity']);
                 $this->messenger->addData('shouldRebind', true);
                 $this->forms->saveState($this->loginForm);
                 $this->messenger->addError($authResult->getMessages());
@@ -97,7 +102,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
                 return new RedirectResponse($request->getUri(), StatusCodeInterface::STATUS_SEE_OTHER);
             }
 
-            $this->adminLoginService->logSuccessfulLogin($request->getServerParams(), $data['identity']);
+            $this->adminLoginService->logSuccessfulLogin($serverParams, $data['identity']);
             $this->authenticationService->getStorage()->write($identity);
 
             return new RedirectResponse($this->router->generateUri('app::index-redirect'));

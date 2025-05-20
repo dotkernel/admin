@@ -13,13 +13,18 @@ use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type EditAdminDataType from EditAdminInputFilter
+ * @phpstan-import-type SelectDataType from AbstractForm
+ * @extends AbstractForm<EditAdminDataType>
+ */
 class EditAdminForm extends AbstractForm
 {
-    protected InputFilterInterface $inputFilter;
-
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -34,6 +39,9 @@ class EditAdminForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @phpstan-param SelectDataType[] $roles
+     */
     public function setRoles(array $roles): self
     {
         return $this->add(
@@ -80,10 +88,5 @@ class EditAdminForm extends AbstractForm
                 ->setAttribute('value', 'Save')
                 ->setAttribute('class', 'btn btn-sm btn-primary')
         );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

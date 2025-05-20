@@ -18,7 +18,8 @@ class SettingEntityTest extends UnitTest
 {
     private Admin $admin;
     private SettingIdentifierEnum $identifier = SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns;
-    private array $values                     = [1, 2, 3];
+    /** @var non-empty-string[] $values */
+    private array $values = ['foo', 'bar', 'baz'];
 
     /**
      * @throws Exception

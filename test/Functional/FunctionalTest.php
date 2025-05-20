@@ -40,6 +40,7 @@ class FunctionalTest extends TestCase
         if (! $this->app instanceof Application) {
             $this->app = $this->getContainer()->get(Application::class);
         }
+        $this->assertInstanceOf(Application::class, $this->app);
 
         return $this->app;
     }

@@ -9,11 +9,17 @@ use Admin\App\Form\AbstractForm;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Submit;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type DeleteAdminDataType from DeleteAdminInputFilter
+ * @extends AbstractForm<DeleteAdminDataType>
+ */
 class DeleteAdminForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -52,10 +58,5 @@ class DeleteAdminForm extends AbstractForm
                 ->setAttribute('value', 'Delete')
                 ->setAttribute('class', 'btn btn-sm btn-danger')
         );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

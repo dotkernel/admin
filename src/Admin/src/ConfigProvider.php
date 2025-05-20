@@ -36,8 +36,25 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
 use Mezzio\Application;
 
+/**
+ * @phpstan-type ConfigType array{
+ *      dependencies: DependenciesType,
+ *      templates: TemplatesType,
+ * }
+ * @phpstan-type DependenciesType array{
+ *      delegators: non-empty-array<class-string, array<class-string>>,
+ *      factories: non-empty-array<class-string, class-string>,
+ *      aliases: non-empty-array<class-string, class-string>,
+ * }
+ * @phpstan-type TemplatesType array{
+ *      paths: non-empty-array<non-empty-string, non-empty-string[]>,
+ * }
+ */
 class ConfigProvider
 {
+    /**
+     * @return ConfigType
+     */
     public function __invoke(): array
     {
         return [
@@ -46,6 +63,9 @@ class ConfigProvider
         ];
     }
 
+    /**
+     * @return DependenciesType
+     */
     public function getDependencies(): array
     {
         return [
@@ -86,6 +106,9 @@ class ConfigProvider
         ];
     }
 
+    /**
+     * @return TemplatesType
+     */
     public function getTemplates(): array
     {
         return [

@@ -10,10 +10,16 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
 trait HttpRequestTrait
 {
     /**
+     * @param non-empty-string $uri
+     * @param array<non-empty-string, mixed> $queryParams
+     * @param array<non-empty-string, UploadedFileInterface> $uploadedFiles
+     * @param array<non-empty-string, mixed> $headers
+     * @param array<non-empty-string, mixed> $cookies
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -37,6 +43,18 @@ trait HttpRequestTrait
         return $this->getResponse($request);
     }
 
+    /**
+     * @param non-empty-string $uri
+     * @param non-empty-string $method
+     * @param array<non-empty-string, mixed> $parsedBody
+     * @param array<non-empty-string, mixed> $queryParams
+     * @param array<non-empty-string, UploadedFileInterface> $uploadedFiles
+     * @param array<non-empty-string, mixed> $headers
+     * @param array<non-empty-string, mixed> $cookies
+     * @param array<non-empty-string, mixed> $serverParams
+     * @param non-empty-string $body
+     * @param non-empty-string $protocol
+     */
     private function createRequest(
         string $uri,
         string $method,

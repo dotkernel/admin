@@ -8,6 +8,7 @@ use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
 use Admin\User\Form\CreateUserForm;
+use Admin\User\InputFilter\CreateUserInputFilter;
 use Admin\User\Service\UserServiceInterface;
 use Core\App\Message;
 use Core\App\Service\MailService;
@@ -25,8 +26,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+/**
+ * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
+ */
 class PostUserCreateHandler implements RequestHandlerInterface
 {
+    /**
+     * @param array<non-empty-string, mixed> $config
+     */
     #[Inject(
         UserServiceInterface::class,
         RouterInterface::class,
@@ -55,11 +62,15 @@ class PostUserCreateHandler implements RequestHandlerInterface
 
         $user = null;
         try {
-            $this->createUserForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->createUserForm->setData($data);
             if ($this->createUserForm->isValid()) {
-                $user = $this->userService->saveUser((array) $this->createUserForm->getData());
+                /** @var CreateUserDataType $data */
+                $data = $this->createUserForm->getData();
+                $user = $this->userService->saveUser($data);
                 $this->messenger->addSuccess(Message::USER_CREATED);
-                if ($user->getDetail()->hasEmail()) {
+                if ($user->hasEmail()) {
                     $body = $this->template->render('user::welcome', [
                         'config' => $this->config,
                         'user'   => $user,
@@ -83,7 +94,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 'line'  => $exception->getLine(),
                 'trace' => $exception->getTraceAsString(),
             ]);
-            $this->messenger->addError(Message::mailNotSentTo($user->getDetail()->getEmail()));
+            $this->messenger->addError(Message::mailNotSentTo($user->getEmail()));
             return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             return new HtmlResponse(

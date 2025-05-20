@@ -15,11 +15,18 @@ use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type EditUserDataType from EditUserInputFilter
+ * @phpstan-import-type SelectDataType from AbstractForm
+ * @extends AbstractForm<EditUserDataType>
+ */
 class EditUserForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -34,6 +41,9 @@ class EditUserForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @phpstan-param SelectDataType[] $roles
+     */
     public function setRoles(array $roles): self
     {
         return $this->add(
@@ -83,10 +93,5 @@ class EditUserForm extends AbstractForm
                             ->setLabel('Email')
                     )
             );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

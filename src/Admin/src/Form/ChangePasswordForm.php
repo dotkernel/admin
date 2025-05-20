@@ -12,8 +12,15 @@ use Laminas\Form\Element\Submit;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
+ * @extends AbstractForm<ChangePasswordDataType>
+ */
 class ChangePasswordForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);

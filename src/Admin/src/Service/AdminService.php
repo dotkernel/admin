@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Admin\Admin\Service;
 
+use Admin\Admin\InputFilter\ChangePasswordInputFilter;
+use Admin\Admin\InputFilter\CreateAdminInputFilter;
+use Admin\Admin\InputFilter\EditAccountInputFilter;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
@@ -22,6 +25,11 @@ use function array_key_exists;
 use function count;
 use function in_array;
 
+/**
+ * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
+ * @phpstan-import-type EditAccountDataType from EditAccountInputFilter
+ * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
+ */
 class AdminService implements AdminServiceInterface
 {
     #[Inject(
@@ -58,7 +66,8 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
-     * @param array<string, mixed> $params
+     * @param array<non-empty-string, mixed> $params
+     * @return array<non-empty-string, mixed>
      */
     public function getAdmins(array $params): array
     {
@@ -84,6 +93,7 @@ class AdminService implements AdminServiceInterface
     }
 
     /**
+     * @phpstan-param CreateAdminDataType|EditAccountDataType|ChangePasswordDataType $data
      * @throws BadRequestException
      * @throws ConflictException
      * @throws NotFoundException
@@ -117,7 +127,7 @@ class AdminService implements AdminServiceInterface
             $admin->setStatus($status);
         }
 
-        $this->validateUniqueAdmin($admin->getIdentity(), $admin->getUuid());
+        $this->validateUniqueAdmin((string) $admin->getIdentity(), $admin->getUuid());
 
         if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $admin->resetRoles();
@@ -131,7 +141,7 @@ class AdminService implements AdminServiceInterface
         }
 
         if (! $admin->hasRoles()) {
-            throw (new BadRequestException())->setMessages([Message::RESTRICTION_ROLES]);
+            throw new BadRequestException(Message::RESTRICTION_ROLES);
         }
 
         $this->adminRepository->saveResource($admin);

@@ -26,18 +26,18 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PostAccountEditHandlerTest extends UnitTest
 {
-    private MockObject|AdminServiceInterface $adminService;
-    private MockObject|RouterInterface $router;
-    private MockObject|TemplateRendererInterface $template;
-    private MockObject|AuthenticationServiceInterface $authenticationService;
-    private MockObject|AccountForm $accountForm;
-    private MockObject|ChangePasswordForm $changePasswordForm;
-    private MockObject|FlashMessengerInterface $messenger;
+    private MockObject&AdminServiceInterface $adminService;
+    private MockObject&RouterInterface $router;
+    private MockObject&TemplateRendererInterface $template;
+    private MockObject&AuthenticationServiceInterface $authenticationService;
+    private MockObject&AccountForm $accountForm;
+    private MockObject&ChangePasswordForm $changePasswordForm;
+    private MockObject&FlashMessengerInterface $messenger;
     private Logger $logger;
-    private MockObject|AdminIdentity $identity;
-    private MockObject|ServerRequestInterface $request;
+    private MockObject&AdminIdentity $identity;
+    private MockObject&ServerRequestInterface $request;
 
-    private MockObject|Admin $admin;
+    private MockObject&Admin $admin;
 
     /**
      * @throws MockObjectException

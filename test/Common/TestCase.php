@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AdminTest\Common;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -49,6 +48,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         if (! $this->container instanceof ContainerInterface) {
             $this->container = require realpath(__DIR__ . '/../../config/container.php');
         }
+        $this->assertInstanceOf(ContainerInterface::class, $this->container);
 
         return $this->container;
     }
@@ -60,8 +60,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function getEntityManager(): EntityManagerInterface
     {
         if (! $this->entityManager instanceof EntityManagerInterface) {
-            $this->entityManager = $this->getContainer()->get(EntityManager::class);
+            $this->entityManager = $this->getContainer()->get(EntityManagerInterface::class);
         }
+        $this->assertInstanceOf(EntityManagerInterface::class, $this->entityManager);
 
         return $this->entityManager;
     }

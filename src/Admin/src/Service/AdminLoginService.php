@@ -35,7 +35,8 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param array<string, mixed> $params
+     * @param array<non-empty-string, mixed> $params
+     * @return array<non-empty-string, mixed>
      */
     public function getAdminLogins(array $params): array
     {
@@ -75,6 +76,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $serverParams
      * @throws Exception
      */
     public function logFailedLogin(array $serverParams, string $name): AdminLogin
@@ -83,6 +85,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $serverParams
      * @throws Exception
      */
     public function logSuccessfulLogin(array $serverParams, string $name): AdminLogin
@@ -91,6 +94,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
+     * @param non-empty-array<non-empty-string, mixed> $serverParams
      * @throws Exception
      */
     private function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin

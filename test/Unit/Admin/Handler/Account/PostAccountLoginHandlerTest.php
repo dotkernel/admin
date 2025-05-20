@@ -14,11 +14,12 @@ use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\AdminIdentity;
 use Core\Admin\Enum\AdminStatusEnum;
 use Core\App\Message;
+use Core\App\Service\AuthenticationServiceInterface;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
-use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationServiceInterface as LaminasAuthenticationServiceInterface;
 use Laminas\Authentication\Result;
 use Laminas\Authentication\Storage\StorageInterface;
 use Mezzio\Router\RouterInterface;
@@ -32,7 +33,7 @@ class PostAccountLoginHandlerTest extends UnitTest
     private MockObject&AdminServiceInterface $adminService;
     private MockObject&AdminLoginServiceInterface $adminLoginService;
     private MockObject&RouterInterface $router;
-    private MockObject&AuthenticationService $authenticationService;
+    private MockObject&LaminasAuthenticationServiceInterface&AuthenticationServiceInterface $authenticationService;
     private MockObject&FlashMessengerInterface $messenger;
     private MockObject&FormsPlugin $formsPlugin;
     private MockObject&LoginForm $loginForm;
@@ -50,10 +51,16 @@ class PostAccountLoginHandlerTest extends UnitTest
     {
         parent::setUp();
 
+        /** @var MockObject&LaminasAuthenticationServiceInterface&AuthenticationServiceInterface $authenticationService */
+        $authenticationService = $this->createMockForIntersectionOfInterfaces([
+            LaminasAuthenticationServiceInterface::class,
+            AuthenticationServiceInterface::class,
+        ]);
+
+        $this->authenticationService = $authenticationService;
         $this->adminService          = $this->createMock(AdminServiceInterface::class);
         $this->adminLoginService     = $this->createMock(AdminLoginServiceInterface::class);
         $this->router                = $this->createMock(RouterInterface::class);
-        $this->authenticationService = $this->createMock(AuthenticationService::class);
         $this->messenger             = $this->createMock(FlashMessengerInterface::class);
         $this->formsPlugin           = $this->createMock(FormsPlugin::class);
         $this->loginForm             = $this->createMock(LoginForm::class);

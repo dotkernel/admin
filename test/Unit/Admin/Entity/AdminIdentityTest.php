@@ -12,6 +12,7 @@ use Core\Admin\Enum\AdminStatusEnum;
 
 class AdminIdentityTest extends UnitTest
 {
+    /** @var array<non-empty-string, mixed> $default */
     private array $default;
 
     protected function setUp(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Admin\Admin\Handler\Admin;
 
 use Admin\Admin\Form\CreateAdminForm;
+use Admin\Admin\InputFilter\CreateAdminInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\ConflictException;
 use Core\App\Message;
@@ -21,6 +22,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+/**
+ * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
+ */
 class PostAdminCreateHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -46,9 +50,13 @@ class PostAdminCreateHandler implements RequestHandlerInterface
         $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::admin-create'));
 
         try {
-            $this->createAdminForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->createAdminForm->setData($data);
             if ($this->createAdminForm->isValid()) {
-                $this->adminService->saveAdmin((array) $this->createAdminForm->getData());
+                /** @var CreateAdminDataType $data */
+                $data = $this->createAdminForm->getData();
+                $this->adminService->saveAdmin($data);
                 $this->messenger->addSuccess(Message::ADMIN_CREATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

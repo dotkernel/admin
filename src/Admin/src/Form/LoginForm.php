@@ -10,11 +10,17 @@ use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
+/**
+ * @phpstan-import-type LoginDataType from LoginInputFilter
+ * @extends AbstractForm<LoginDataType>
+ */
 class LoginForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -56,10 +62,5 @@ class LoginForm extends AbstractForm
                 ->setAttribute('value', 'Log in')
                 ->setAttribute('class', 'btn btn-primary')
         );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

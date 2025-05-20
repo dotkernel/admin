@@ -60,7 +60,9 @@ class PostUserDeleteHandler implements RequestHandlerInterface
         );
 
         try {
-            $this->deleteUserForm->setData($request->getParsedBody());
+            /** @var non-empty-array<non-empty-string, mixed> $data */
+            $data = $this->deleteUserForm->getData();
+            $this->deleteUserForm->setData($data);
             if ($this->deleteUserForm->isValid()) {
                 $this->userService->deleteUser($user);
                 $this->userAvatarService->deleteAvatar($user);

@@ -17,6 +17,7 @@ use ReflectionClass;
 
 class AdminTest extends UnitTest
 {
+    /** @var array<non-empty-string, mixed> $default */
     private array $default;
 
     protected function setUp(): void

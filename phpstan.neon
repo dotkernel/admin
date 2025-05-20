@@ -2,12 +2,11 @@ includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
 parameters:
-    level: 5
+    level: 8
     paths:
+        - bin
+        - config
+        - public
         - src
         - test
     treatPhpDocTypesAsCertain: false
-    ignoreErrors:
-        -
-            message: '#Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert::assertSame\(\) contains unresolvable type.#'
-            path: test/Unit/App/Plugin/FormsPluginTest.php

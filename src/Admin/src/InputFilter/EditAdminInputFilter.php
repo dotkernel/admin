@@ -13,6 +13,19 @@ use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-type EditAdminDataType array{
+ *     password?: non-empty-string,
+ *     passwordConfirm?: non-empty-string,
+ *     firstName?: non-empty-string,
+ *     lastName?: non-empty-string,
+ *     status: non-empty-string,
+ *     adminEditCsrf: non-empty-string,
+ *     submit?: non-empty-string,
+ *     roles: non-empty-string[],
+ * }
+ * @extends AbstractInputFilter<EditAdminDataType>
+ */
 class EditAdminInputFilter extends AbstractInputFilter
 {
     public function init(): void

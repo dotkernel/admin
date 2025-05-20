@@ -11,9 +11,13 @@ use Admin\Admin\Form\CreateAdminForm;
 use AdminTest\Unit\UnitTest;
 use Laminas\Authentication\AuthenticationService;
 
+/**
+ * @phpstan-import-type ConfigType from ConfigProvider
+ */
 class ConfigProviderTest extends UnitTest
 {
-    protected array $config = [];
+    /** @phpstan-var ConfigType $config */
+    protected array $config;
 
     protected function setup(): void
     {

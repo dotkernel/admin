@@ -10,13 +10,19 @@ use Admin\User\InputFilter\EditUserAvatarInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\File;
 use Laminas\Form\Element\Submit;
-use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
 use function implode;
 
+/**
+ * @phpstan-import-type EditUserAvatarDataType from EditUserAvatarInputFilter
+ * @extends AbstractForm<EditUserAvatarDataType>
+ */
 class EditUserAvatarForm extends AbstractForm
 {
+    /**
+     * @param array<non-empty-string, mixed> $options
+     */
     public function __construct(?string $name = null, array $options = [])
     {
         parent::__construct($name, $options);
@@ -53,10 +59,5 @@ class EditUserAvatarForm extends AbstractForm
                     ->setAttribute('value', 'Save')
                     ->setAttribute('class', 'btn btn-sm btn-primary')
             );
-    }
-
-    public function getInputFilter(): InputFilterInterface
-    {
-        return $this->inputFilter;
     }
 }

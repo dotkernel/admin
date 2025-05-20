@@ -14,6 +14,20 @@ use Admin\App\InputFilter\Input\PasswordConfirmInput;
 use Admin\App\InputFilter\Input\PasswordInput;
 use Core\App\InputFilter\AbstractInputFilter;
 
+/**
+ * @phpstan-type CreateAdminDataType array{
+ *     identity?: non-empty-string,
+ *     password?: non-empty-string,
+ *     passwordConfirm?: non-empty-string,
+ *     firstName?: non-empty-string,
+ *     lastName?: non-empty-string,
+ *     status: non-empty-string,
+ *     adminCreateCsrf: non-empty-string,
+ *     submit?: non-empty-string,
+ *     roles: non-empty-string[],
+ * }
+ * @extends AbstractInputFilter<CreateAdminDataType>
+ */
 class CreateAdminInputFilter extends AbstractInputFilter
 {
     public function init(): self

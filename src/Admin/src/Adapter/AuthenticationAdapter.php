@@ -30,6 +30,9 @@ class AuthenticationAdapter implements AdapterInterface
     private string $identity;
     private string $credential;
 
+    /**
+     * @param array<non-empty-string, mixed> $config
+     */
     #[Inject(
         EntityManagerInterface::class,
         'config.doctrine.authentication',
@@ -93,7 +96,7 @@ class AuthenticationAdapter implements AdapterInterface
         /** Check if the get credential method exists in the provided identity class */
         $getCredential = $this->validateMethod($identityClass, $this->config['orm_default']['credential_property']);
 
-        /** If passwords don't match, return failure response */
+        /** If passwords don't match, return a failure response */
         if (false === password_verify($this->getCredential(), $identityClass->$getCredential())) {
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
@@ -105,7 +108,7 @@ class AuthenticationAdapter implements AdapterInterface
         /** Check for extra validation options */
         if (! empty($this->config['orm_default']['options'])) {
             foreach ($this->config['orm_default']['options'] as $property => $option) {
-                /** Check if value for the current option is provided */
+                /** Check if the value for the current option is provided */
                 if (! array_key_exists('value', $option)) {
                     throw new Exception(sprintf(
                         self::OPTION_VALUE_NOT_PROVIDED,
@@ -114,7 +117,7 @@ class AuthenticationAdapter implements AdapterInterface
                     ));
                 }
 
-                /** Check if message for the current option is provided */
+                /** Check if a message for the current option is provided */
                 if (! array_key_exists('message', $option)) {
                     throw new Exception(sprintf(
                         self::OPTION_VALUE_NOT_PROVIDED,
@@ -135,14 +138,20 @@ class AuthenticationAdapter implements AdapterInterface
             }
         }
 
+        /** @var non-empty-string[] $roles */
+        $roles = array_map(
+            fn (RoleInterface $role): string => (string) $role->getName()->value,
+            $identityClass->getRoles()
+        );
+
         $adminIdentity = new AdminIdentity(
             $identityClass->getUuid()->toString(),
-            $identityClass->getIdentity(),
+            (string) $identityClass->getIdentity(),
             $identityClass->getStatus(),
-            array_map(fn (RoleInterface $role): string => $role->getName()->value, $identityClass->getRoles()),
+            $roles,
             [
-                'firstName' => $identityClass->getFirstName(),
-                'lastName'  => $identityClass->getLastName(),
+                'firstName' => (string) $identityClass->getFirstName(),
+                'lastName'  => (string) $identityClass->getLastName(),
             ]
         );
 

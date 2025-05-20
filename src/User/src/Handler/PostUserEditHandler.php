@@ -7,8 +7,10 @@ namespace Admin\User\Handler;
 use Admin\App\Exception\BadRequestException;
 use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
+use Admin\App\Form\AbstractForm;
 use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
+use Admin\User\InputFilter\CreateUserInputFilter;
 use Admin\User\Service\UserRoleServiceInterface;
 use Admin\User\Service\UserServiceInterface;
 use Core\App\Message;
@@ -30,6 +32,10 @@ use Throwable;
 use function array_filter;
 use function array_map;
 
+/**
+ * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
+ * @phpstan-import-type SelectDataType from AbstractForm
+ */
 class PostUserEditHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -64,11 +70,17 @@ class PostUserEditHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $userRoles = array_map(fn (UserRole $userRole): array => [
-            'label'    => $userRole->getName()->value,
-            'value'    => $userRole->getUuid()->toString(),
-            'selected' => $user->hasRole($userRole),
-        ], $this->userRoleService->getUserRoleRepository()->findAll());
+        /** @var UserRole[] $userRoles */
+        $userRoles = $this->userRoleService->getUserRoleRepository()->findAll();
+        $userRoles = array_map(
+            /** @return SelectDataType */
+            fn (UserRole $userRole): array => [
+                'label'    => $userRole->getName()->value,
+                'value'    => $userRole->getUuid()->toString(),
+                'selected' => $user->hasRole($userRole),
+            ],
+            $userRoles
+        );
         $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
 
         $this->editUserAvatarForm
@@ -85,9 +97,13 @@ class PostUserEditHandler implements RequestHandlerInterface
             ->setRoles($userRoles);
 
         try {
-            $this->editUserForm->setData($request->getParsedBody());
+            /** @var iterable<array<string, string|string[]>> $data */
+            $data = $request->getParsedBody();
+            $this->editUserForm->setData($data);
             if ($this->editUserForm->isValid()) {
-                $this->userService->saveUser((array) $this->editUserForm->getData(), $user);
+                /** @var CreateUserDataType $data */
+                $data = $this->editUserForm->getData();
+                $this->userService->saveUser($data, $user);
                 $this->messenger->addSuccess(Message::USER_UPDATED);
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

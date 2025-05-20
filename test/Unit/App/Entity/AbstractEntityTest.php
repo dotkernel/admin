@@ -15,6 +15,9 @@ class AbstractEntityTest extends UnitTest
     public function testWillInstantiate(): void
     {
         $entity = new class extends AbstractEntity {
+            /**
+             * @return array<string, mixed>
+             */
             public function getArrayCopy(): array
             {
                 return [];
