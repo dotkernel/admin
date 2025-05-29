@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Admin\User\Handler;
 
 use Admin\App\Exception\NotFoundException;
+use Admin\App\Form\AbstractForm;
 use Admin\User\Form\EditUserAvatarForm;
 use Admin\User\Form\EditUserForm;
 use Admin\User\Service\UserAvatarServiceInterface;
+use Admin\User\Service\UserRoleServiceInterface;
 use Admin\User\Service\UserServiceInterface;
 use Core\App\Message;
+use Core\User\Entity\UserRole;
+use Core\User\Enum\UserRoleEnum;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -23,12 +27,18 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+use function array_filter;
+use function array_map;
 use function array_merge;
 
+/**
+ * @phpstan-import-type SelectDataType from AbstractForm
+ */
 class PostUserAvatarEditHandler implements RequestHandlerInterface
 {
     #[Inject(
         UserServiceInterface::class,
+        UserRoleServiceInterface::class,
         UserAvatarServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
@@ -39,6 +49,7 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
     )]
     public function __construct(
         protected UserServiceInterface $userService,
+        protected UserRoleServiceInterface $userRoleService,
         protected UserAvatarServiceInterface $userAvatarService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
@@ -59,6 +70,19 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
+        /** @var UserRole[] $userRoles */
+        $userRoles = $this->userRoleService->getUserRoleRepository()->findAll();
+        $userRoles = array_map(
+        /** @return SelectDataType */
+            fn (UserRole $userRole): array => [
+                'label'    => $userRole->getName()->value,
+                'value'    => $userRole->getUuid()->toString(),
+                'selected' => $user->hasRole($userRole),
+            ],
+            $userRoles
+        );
+        $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
+
         $this->editUserAvatarForm
             ->setAttribute(
                 'action',
@@ -69,7 +93,8 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
             ->setAttribute(
                 'action',
                 $this->router->generateUri('user::user-edit', ['uuid' => $user->getUuid()->toString()])
-            );
+            )
+            ->setRoles($userRoles);
 
         try {
             $this->editUserAvatarForm->setData(

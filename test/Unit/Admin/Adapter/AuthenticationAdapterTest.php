@@ -100,7 +100,6 @@ class AuthenticationAdapterTest extends UnitTest
     /**
      * @throws MockObjectException
      * @throws ORMException
-     * @group testing
      */
     public function testWillNotAuthenticateWithInvalidIdentityClassConfig(): void
     {

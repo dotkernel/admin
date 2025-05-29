@@ -8,6 +8,16 @@ $cacheConfig = [
     'config_cache_path' => 'data/cache/config-cache.php',
 ];
 
+if (! class_exists('\Laminas\I18n\View\Helper\AbstractTranslatorHelper')) {
+    class_alias(
+        Admin\App\Laminas\I18n\View\Helper\AbstractTranslatorHelper::class,
+        '\Laminas\I18n\View\Helper\AbstractTranslatorHelper'
+    );
+}
+if (! class_exists('\Laminas\I18n\Validator\IsFloat')) {
+    class_alias(Admin\App\Laminas\I18n\Validator\IsFloat::class, '\Laminas\I18n\Validator\IsFloat');
+}
+
 // @codingStandardsIgnoreStart
 $aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
     // Laminas packages
