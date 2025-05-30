@@ -8,6 +8,9 @@ $cacheConfig = [
     'config_cache_path' => 'data/cache/config-cache.php',
 ];
 
+/**
+ * @see https://github.com/dotkernel/admin/issues/365
+ */
 if (! class_exists('\Laminas\I18n\View\Helper\AbstractTranslatorHelper')) {
     class_alias(
         Admin\App\Laminas\I18n\View\Helper\AbstractTranslatorHelper::class,
