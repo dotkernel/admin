@@ -24,6 +24,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+use function assert;
+
 class PostAccountLoginHandler implements RequestHandlerInterface
 {
     #[Inject(
@@ -40,7 +42,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
         protected AdminServiceInterface $adminService,
         protected AdminLoginServiceInterface $adminLoginService,
         protected RouterInterface $router,
-        protected LaminasAuthenticationServiceInterface&AuthenticationServiceInterface $authenticationService,
+        protected LaminasAuthenticationServiceInterface $authenticationService,
         protected FlashMessengerInterface $messenger,
         protected FormsPlugin $forms,
         protected LoginForm $loginForm,
@@ -50,6 +52,7 @@ class PostAccountLoginHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        assert($this->authenticationService instanceof AuthenticationServiceInterface);
         if ($this->authenticationService->hasIdentity()) {
             return new RedirectResponse($this->router->generateUri('app::index-redirect'));
         }

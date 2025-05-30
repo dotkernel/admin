@@ -28,7 +28,6 @@
     },
     "require": {
         "php": "~8.2.0 || ~8.3.0",
-        "ext-gettext": "*",
         "dotkernel/dot-cache": "^4.3.0",
         "dotkernel/dot-cli": "^3.9.0",
         "dotkernel/dot-data-fixtures": "^1.4.0",
@@ -46,28 +45,26 @@
         "friendsofphp/proxy-manager-lts": "^1.0.18",
         "laminas/laminas-component-installer": "^3.5.0",
         "laminas/laminas-config-aggregator": "^1.18.0",
-        "laminas/laminas-i18n": "^2.29.0",
-        "laminas/laminas-math": "^3.8.1",
-        "mezzio/mezzio": "^3.20.1",
+        "mezzio/mezzio": "^3.21.0",
         "mezzio/mezzio-authentication-oauth2": "^2.11.0",
-        "mezzio/mezzio-authorization-rbac": "^1.8.0",
-        "mezzio/mezzio-cors": "^1.13.0",
-        "mezzio/mezzio-fastroute": "^3.12.0",
+        "mezzio/mezzio-authorization-rbac": "^1.9.0",
+        "mezzio/mezzio-cors": "^1.14.0",
+        "mezzio/mezzio-fastroute": "^3.13.0",
         "ramsey/uuid-doctrine": "^2.1.0",
         "roave/psr-container-doctrine": "^5.2.2"
     },
     "require-dev": {
         "filp/whoops": "^2.18.0",
-        "laminas/laminas-coding-standard": "^3.0.1",
+        "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-development-mode": "^3.13.0",
         "mezzio/mezzio-tooling": "^2.10.1",
-        "phpunit/phpunit": "^10.5.45",
-        "roave/security-advisories": "dev-latest",
-        "vincentlanglet/twig-cs-fixer": "^3.5.1",
-        "phpstan/phpstan": "^2.1.11",
-        "phpstan/phpstan-doctrine": "^2.0.2",
+        "phpstan/phpstan": "^2.1.17",
+        "phpstan/phpstan-doctrine": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.6",
-        "symfony/var-dumper": "^7.2.3"
+        "phpunit/phpunit": "^10.5.46",
+        "roave/security-advisories": "dev-latest",
+        "symfony/var-dumper": "^7.3.0",
+        "vincentlanglet/twig-cs-fixer": "^3.7.1"
     },
     "autoload": {
         "psr-4": {
