@@ -224,8 +224,8 @@ Open a web browser and visit `http://localhost:8080/`.
 You should see the **Dotkernel Admin** login page.
 If you ran the migrations you will have an admin user in the database with the following credentials:
 
-- **Identity**: `admin`
-- **Password**: `dotadmin`
+* **Identity**: `admin`
+* **Password**: `dotadmin`
 
 ---
 
