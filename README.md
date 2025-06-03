@@ -63,7 +63,7 @@ Choosing to inject any extra ConfigProvider would cause having duplicates which 
 
 > **Do not enable development mode in production!**
 
-If you're installing the project for development, you should **enable** development mode, by running:
+If you're installing the project for development, you should **enable** development mode by running:
 
 ```shell
 composer development-enable
@@ -75,7 +75,7 @@ You can **disable** development mode by running:
 composer development-disable
 ```
 
-You can **check** development status by running:
+You can **check** the development status by running:
 
 ```shell
 composer development-status
@@ -83,7 +83,7 @@ composer development-status
 
 ### Prepare config files
 
-* **optional**: in order to run/create tests, duplicate `config/autoload/local.test.php.dist` as `config/autoload/local.test.php` <- this creates a new in-memory database that your tests will run on
+* **optional**: to run/create tests, duplicate `config/autoload/local.test.php.dist` as `config/autoload/local.test.php` <- this creates a new in-memory database that your tests will run on
 
 ### Setup database
 
@@ -134,13 +134,13 @@ More details on how fixtures work can be found in `dotkernel/dot-data-fixtures` 
 
 ### Mail configuration
 
-If your application will send emails, you must configure an outgoing mail server under `config/autoload/mail.global.php`.
+If your application sends emails, you must configure an outgoing mail server under `config/autoload/mail.global.php`.
 
 ### Sync GeoLite2 databases
 
 #### Full sync
 
-You can download/update all GeoLite2 databases at once, by running the following command:
+You can download/update all GeoLite2 databases at once by running the following command:
 
 ```shell
 php ./bin/cli.php geoip:synchronize
@@ -156,7 +156,7 @@ country: n/a -> 2015-10-21 04:29:00
 
 #### Selective sync
 
-You can download/update a specific GeoLite2 database, by running the following command:
+You can download/update a specific GeoLite2 database by running the following command:
 
 ```shell
 php ./bin/cli.php geoip:synchronize -d <database>
@@ -197,7 +197,7 @@ npm run prod
 
 ### Test the installation
 
-If you are using virtual hosts as described in the [Dotkernel documentation] (https://docs.dotkernel.org/development/) you need you modify the permissions of the `data`, `public/uploads` and `log` folders:
+If you are using virtual hosts as described in the [Dotkernel documentation] (https://docs.dotkernel.org/development/), you need to modify the permissions of the `data`, `public/uploads` and `log` folders:
 
 ```shell
 chmod -R 777 data
@@ -224,8 +224,8 @@ Open a web browser and visit `http://localhost:8080/`.
 You should see the **Dotkernel Admin** login page.
 If you ran the migrations you will have an admin user in the database with the following credentials:
 
-- **Identity**: `admin`
-- **Password**: `dotadmin`
+* **Identity**: `admin`
+* **Password**: `dotadmin`
 
 ---
 
