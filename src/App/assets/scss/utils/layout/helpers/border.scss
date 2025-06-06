@@ -10,12 +10,15 @@
 // ---------------------------------------------------------
 // @Quick Border Helpers
 // ---------------------------------------------------------
+@use "./../../../settings/borders";
+@use "./../../../settings/baseColors";
 
-.bd  { border: #{$border-width} solid #{$border-color} !important; }
-.bdT { border-top: #{$border-width} solid #{$border-color} !important; }
-.bdR { border-right: #{$border-width} solid #{$border-color} !important; }
-.bdB { border-bottom: #{$border-width} solid #{$border-color} !important; }
-.bdL { border-left: #{$border-width} solid #{$border-color} !important; }
+
+.bd  { border: #{borders.$border-width} solid #{baseColors.$border-color} !important; }
+.bdT { border-top: #{borders.$border-width} solid #{baseColors.$border-color} !important; }
+.bdR { border-right: #{borders.$border-width} solid #{baseColors.$border-color} !important; }
+.bdB { border-bottom: #{borders.$border-width} solid #{baseColors.$border-color} !important; }
+.bdL { border-left: #{borders.$border-width} solid #{baseColors.$border-color} !important; }
 
 // ---------------------------------------------------------
 // @Border Width

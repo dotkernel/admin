@@ -2,11 +2,12 @@
   "name": "admin",
   "version": "2.0.0",
   "description": "Web starter package suitable for admin applications.",
-  "main": "index.js",
+  "main": "public/index.js",
   "type": "module",
   "scripts": {
     "preview": "php -S 0.0.0.0:8080 -t public",
-    "build": "vite build --watch"
+    "start": "parcel ",
+    "build": "parcel build src/App/assets/js/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,11 +33,10 @@
     "jquery-sparkline": "^2.4.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
+    "parcel": "^2.15.2",
     "perfect-scrollbar": "^1.5.5",
     "skycons": "^1.0.0",
-    "typescript": "^5.5.4",
-    "vite": "^6.3.1",
-    "vite-plugin-static-copy": "^2.3.1"
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
@@ -46,6 +46,8 @@
     "@babel/plugin-transform-runtime": "^7.27.1",
     "@babel/runtime": "^7.27.1",
     "@babel/traverse": "^7.27.1",
+    "@parcel/transformer-sass": "^2.15.2",
+    "bootstrap-sass": "^3.4.3",
     "cross-env": "^7.0.3",
     "css-loader": "5.2.7",
     "eslint": "^9.26.0",
@@ -63,12 +65,7 @@
     "shx": "^0.3.4",
     "style-loader": "^4.0.0",
     "stylelint": "^16.6.1",
-    "stylelint-config-standard": "^36.0.1",
-    "vite-jsconfig-paths": "^2.0.1",
-    "vite-plugin-bundle-css": "^0.1.1",
-    "vite-plugin-commonjs": "^0.10.4",
-    "vite-plugin-css-injected-by-js": "^3.5.2",
-    "vite-plugin-minify": "^2.1.0"
+    "stylelint-config-standard": "^36.0.1"
   },
   "overrides": {
     "graceful-fs": "^4.2.11",

@@ -11,7 +11,7 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
     <title>{% block title %}{% endblock %} - Dotkernel</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('index.css') }}" rel="stylesheet">
 </head>
 <body class="app">
     {{ include('@partial/left-menu.html.twig') }}
@@ -28,7 +28,7 @@
         <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"></footer>
     </div>
     {% block javascript %}
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('index.js') }}"></script>
     {% endblock %}
 </body>
 </html>

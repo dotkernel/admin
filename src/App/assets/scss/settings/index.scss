@@ -1,5 +1,5 @@
-@forward 'breakpoints';
-@forward 'fonts';
-@forward 'materialColors';
-@forward 'baseColors';
-@forward 'borders';
+@use 'breakpoints';
+@use 'fonts';
+@use 'materialColors';
+@use 'borders';
+@use 'baseColors';

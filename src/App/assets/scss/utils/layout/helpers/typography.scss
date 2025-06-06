@@ -21,6 +21,7 @@
 // ---------------------------------------------------------
 
 $responsive: true;
+@use "./../mixins/generateResponsive";
 
 // ---------------------------------------------------------
 // @Text Align
@@ -31,10 +32,10 @@ $responsive: true;
 .ta-r { text-align: right !important; }
 
 @if ($responsive == true) {
-  @include generateResponsive() {
-    .ta-c\@#{$breakpointAlias} { text-align: center !important; }
-    .ta-l\@#{$breakpointAlias} { text-align: left !important; }
-    .ta-r\@#{$breakpointAlias} { text-align: right !important; }
+  @include generateResponsive.generateResponsive() {
+    .ta-c\@#{generateResponsive.$breakpointAlias} { text-align: center !important; }
+    .ta-l\@#{generateResponsive.$breakpointAlias} { text-align: left !important; }
+    .ta-r\@#{generateResponsive.$breakpointAlias} { text-align: right !important; }
   }
 }
 

@@ -1,6 +1,6 @@
-@forward 'bootstrap/scss/bootstrap';
 @forward "settings";
 @forward "tools";
 @forward "utils";
 @forward "components";
 @forward "main";
+@use '/node_modules/bootstrap/scss/bootstrap';

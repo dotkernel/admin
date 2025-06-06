@@ -15,6 +15,7 @@
 // ---------------------------------------------------------
 
 // Colors below are ordered from lightest to darkest
+@use "../../scss/settings/materialColors";
 
 $grey-100             : #f9fafb;
 $grey-200             : #f2f3f5;
@@ -42,16 +43,16 @@ $grey-colors-alt: (
 // @Bootstrap Color System
 // ---------------------------------------------------------
 
-$blue   : $md-blue-500;
-$indigo : $md-indigo-500;
-$purple : $md-purple-500;
-$pink   : $md-pink-500;
-$red    : $md-red-500;
-$orange : $md-orange-500;
-$yellow : $md-yellow-500;
-$green  : $md-green-500;
-$teal   : $md-teal-500;
-$cyan   : $md-cyan-500;
+$blue   : materialColors.$md-blue-500;
+$indigo : materialColors.$md-indigo-500;
+$purple : materialColors.$md-purple-500;
+$pink   : materialColors.$md-pink-500;
+$red    : materialColors.$md-red-500;
+$orange : materialColors.$md-orange-500;
+$yellow : materialColors.$md-yellow-500;
+$green  : materialColors.$md-green-500;
+$teal   : materialColors.$md-teal-500;
+$cyan   : materialColors.$md-cyan-500;
 
 // ---------------------------------------------------------
 // @Default Colors
@@ -70,12 +71,13 @@ $default-white        : #fff;
 // ---------------------------------------------------------
 // @Inverted Colors
 // ---------------------------------------------------------
+@use "sass:color";
 
-$inverse-danger       : lighten($default-danger, 35%);
-$inverse-info         : lighten($default-info, 45%);
-$inverse-primary      : lighten($default-primary, 30%);
-$inverse-success      : lighten($default-success, 45%);
-$inverse-warning      : lighten($default-warning, 45%);
+$inverse-danger       : color.scale($default-danger, $lightness: 35%);
+$inverse-info         : color.scale($default-info, $lightness: 45%);
+$inverse-primary      : color.scale($default-primary, $lightness: 30%);
+$inverse-success      : color.scale($default-success, $lightness: 45%);
+$inverse-warning      : color.scale($default-warning, $lightness: 45%);
 
 // ---------------------------------------------------------
 // @Others
@@ -94,7 +96,7 @@ $side-nav-dark-font   : #99abb4;
 // ---------------------------------------------------------
 
 $theme-danger         : #f53f61;
-$theme-dark           : lighten($side-nav-dark, 10%);
+$theme-dark           : color.scale($side-nav-dark, $lightness: 10%);
 $theme-info           : $default-info;
 $theme-primary        : $default-primary;
-$theme-success        : desaturate($default-success, 5%);
+$theme-success        : color.adjust($default-success, $saturation: -5%);

@@ -3,13 +3,14 @@
 // ---------------------------------------------------------
 
 // Mixin used to generate responsive versions of css rules.
-
+@use "./../../../settings/breakpoints" as *;
+@use "sass:list";
 @mixin mediaQueryCondition($mq) {
   $breakpointFound: false;
 
   @each $breakpoint in $breakpoints {
-    $alias: nth($breakpoint, 1);
-    $condition: nth($breakpoint, 2);
+    $alias: list.nth($breakpoint, 1);
+    $condition: list.nth($breakpoint, 2);
 
     @if $mq == $alias and $condition {
       $breakpointFound: true;

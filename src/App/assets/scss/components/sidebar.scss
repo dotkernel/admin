@@ -11,15 +11,20 @@
 // ---------------------------------------------------------
 // @Sidebar
 // ---------------------------------------------------------
+@use "./../settings/baseColors";
+@use "./../settings/breakpoints";
+@use "./../settings/materialColors";
+@use "./../tools/mixins/mediaQueriesRanges";
+@use "./../tools/mixins/clearfix";
 
 .sidebar {
-  background-color: $default-white;
+  background-color: baseColors.$default-white;
   bottom: 0;
   overflow: hidden;
   position: fixed;
   top: 0;
   transition: all 0.2s ease;
-  width: $offscreen-size;
+  width: baseColors.$offscreen-size;
   z-index: 1000;
 
   ul {
@@ -34,8 +39,8 @@
     display: none;
   }
 
-  @include between($breakpoint-md, $breakpoint-xl) {
-    width: $collapsed-size;
+  @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+    width: baseColors.$collapsed-size;
 
     .sidebar-inner {
       .sidebar-logo {
@@ -45,7 +50,7 @@
         a {
           .logo {
             background-position: center center;
-            width: $collapsed-size;
+            width: baseColors.$collapsed-size;
           }
         }
       }
@@ -78,11 +83,11 @@
     }
 
     &:hover {
-      width: $offscreen-size;
+      width: baseColors.$offscreen-size;
 
       .sidebar-inner {
         .sidebar-logo {
-          border-bottom: 1px solid $border-color;
+          border-bottom: 1px solid baseColors.$border-color;
           padding: 0 20px;
         }
 
@@ -113,9 +118,9 @@
     }
   }
 
-  @include to($breakpoint-md) {
-    left: -$offscreen-size;
-    width: calc(#{$offscreen-size} - 30px);
+  @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
+    left: baseColors.$offscreen-size;
+    width: calc(#{baseColors.$offscreen-size} - 30px);
   }
 }
 
@@ -133,8 +138,8 @@
 // ---------------------------------------------------------
 
 .sidebar-logo {
-  border-bottom: 1px solid $border-color;
-  border-right: 1px solid $border-color;
+  border-bottom: 1px solid baseColors.$border-color;
+  border-right: 1px solid baseColors.$border-color;
   line-height: 0;
   padding: 0 20px;
   transition: all 0.2s ease;
@@ -147,12 +152,12 @@
       background-position: center left;
       background-repeat: no-repeat;
       display: inline-block;
-      min-height: calc(#{$header-height} - 1px);
+      min-height: calc(#{baseColors.$header-height} - 1px);
       width: fit-content;
     }
 
     .logo-text {
-      color: $grey-900;
+      color: baseColors.$grey-900;
     }
   }
 
@@ -160,17 +165,17 @@
     display: none;
     float: right;
     font-size: 18px;
-    line-height: calc(#{$header-height} - 1px);
+    line-height: calc(#{baseColors.$header-height} - 1px);
 
     a {
-      color: $default-text-color;
+      color: baseColors.$default-text-color;
     }
 
-    @include to($breakpoint-md) {
+    @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
       display: inline-block;
     }
 
-    @include between($breakpoint-md, $breakpoint-xl) {
+    @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
       display: none;
     }
   }
@@ -181,9 +186,9 @@
 // ---------------------------------------------------------
 
 .sidebar-menu {
-  @include clearfix;
-  border-right: 1px solid $border-color;
-  height: calc(100vh - #{$header-height});
+  @include clearfix.clearfix;
+  border-right: 1px solid baseColors.$border-color;
+  height: calc(100vh - #{baseColors.$header-height});
   list-style: none;
   margin: 0;
   overflow: auto;
@@ -196,7 +201,7 @@
 
   .sidebar-link {
     &.actived::before {
-      background: $md-blue-500;
+      background: materialColors.$md-blue-500;
       border-radius: 50%;
       content: '';
       display: block;
@@ -219,17 +224,17 @@
         right: 30px;
         transition: all 0.05s ease-in;
 
-        @include to($breakpoint-md) {
+        @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
           right: 25px;
         }
       }
 
       &.open {
         > a {
-          color: $default-dark;
+          color: baseColors.$default-dark;
 
           .icon-holder {
-            color: $default-info;
+            color: baseColors.$default-info;
           }
 
           > .arrow {
@@ -252,16 +257,16 @@
     }
 
     a {
-      color: $default-text-color;
+      color: baseColors.$default-text-color;
       transition: all 0.3s ease;
 
       &:hover,
       &:focus {
-        color: $default-dark;
+        color: baseColors.$default-dark;
         text-decoration: none;
 
         .icon-holder {
-          color: $default-info;
+          color: baseColors.$default-info;
         }
       }
     }
@@ -289,13 +294,13 @@
               &:hover,
               &:focus {
                 background-color: transparent;
-                color: $default-dark;
+                color: baseColors.$default-dark;
               }
             }
 
             &.actived {
               a {
-                color: $default-dark;
+                color: baseColors.$default-dark;
               }
             }
           }
@@ -342,8 +347,8 @@
     margin: 0 auto;
   }
   .sidebar {
-    @include from($breakpoint-xl) {
-      width: $collapsed-size;
+    @include mediaQueriesRanges.from(breakpoints.$breakpoint-xl) {
+      width: baseColors.$collapsed-size;
 
       .sidebar-inner {
         .sidebar-logo {
@@ -379,11 +384,11 @@
       }
 
       &:hover {
-        width: $offscreen-size;
+        width: baseColors.$offscreen-size;
 
         .sidebar-inner {
           .sidebar-logo {
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid baseColors.$border-color;
             padding: 0 20px;
           }
 
@@ -414,12 +419,12 @@
       }
     }
 
-    @include between($breakpoint-md, $breakpoint-xl) {
-      width: $offscreen-size;
+    @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+      width: baseColors.$offscreen-size;
 
       .sidebar-inner {
         .sidebar-logo {
-          border-bottom: 1px solid $border-color;
+          border-bottom: 1px solid baseColors.$border-color;
           padding: 0 20px;
 
           > a {
@@ -456,7 +461,7 @@
       }
     }
 
-    @include to($breakpoint-md) {
+    @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
       left: 0;
     }
   }

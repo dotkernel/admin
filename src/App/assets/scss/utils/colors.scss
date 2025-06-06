@@ -9,7 +9,11 @@
 // @Material Color
 // ---------------------------------------------------------
 
-@each $item, $color in $md-colors {
+@use "./../settings/materialColors";
+@use "./../settings/baseColors";
+
+
+@each $item, $color in materialColors.$md-colors {
   .c-#{"" + $item},     .cH-#{"" + $item}:hover      { color: $color !important; }
   .bgc-#{"" + $item},   .bgcH-#{"" + $item}:hover    { background-color: $color !important; }
   .bdc-#{"" + $item},   .bdcH-#{"" + $item}:hover    { border-color: $color !important; }
@@ -21,7 +25,7 @@
 // @Grey Colors
 // ---------------------------------------------------------
 
-@each $item, $color in $grey-colors-alt {
+@each $item, $color in baseColors.$grey-colors-alt {
   .c-#{"" + $item},     .cH-#{"" + $item}:hover      { color: $color !important; }
   .bgc-#{"" + $item},   .bgcH-#{"" + $item}:hover    { background-color: $color !important; }
   .bdc-#{"" + $item},   .bdcH-#{"" + $item}:hover    { border-color: $color !important; }
