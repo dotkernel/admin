@@ -1,4 +1,6 @@
-@import 'center';
-@import 'gap';
-@import 'peers';
-@import 'layers';
+@use "./../mixins/generateResponsive";
+
+@forward './center';
+@forward './gap';
+@forward './peers';
+@forward './layers';

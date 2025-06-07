@@ -3,17 +3,19 @@
 // ---------------------------------------------------------
 
 // Mixin used to generate responsive suffixes for classes (i.e. m-10@sm+).
-
+@use "sass:list";
+@use "./../../../settings/breakpoints" as *;
+@use "./../mixins/mediaQueryCondition";
+$breakpointAlias: null;
 
 @mixin generateResponsive() {
   @each $breakpoint in $breakpoints {
-    $breakpointAlias     : nth($breakpoint, 1) !global;
-    $breakpointCondition : nth($breakpoint, 2);
+    $breakpointAlias     : list.nth($breakpoint, 1);
+    $breakpointCondition : list.nth($breakpoint, 2);
 
-    @include mediaQueryCondition($breakpointAlias) {
+    @include mediaQueryCondition.mediaQueryCondition($breakpointAlias) {
       @content;
     }
-
-    $breakpointAlias: null !global;
+    $breakpointAlias: null;
   }
 }

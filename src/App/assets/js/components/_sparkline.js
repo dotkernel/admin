@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import $ from 'jquery';
 import 'jquery-sparkline';
 import { debounce } from 'lodash';
 import { COLORS } from './_colors.js';

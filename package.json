@@ -2,7 +2,7 @@
   "name": "admin",
   "version": "2.0.0",
   "description": "Web starter package suitable for admin applications.",
-  "main": "index.js",
+  "main": "public/index.js",
   "type": "module",
   "scripts": {
     "preview": "php -S 0.0.0.0:8080 -t public",
@@ -52,6 +52,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "expose-loader": "^5.0.0",
+    "bootstrap-sass": "^3.4.3",
     "file-loader": "^6.2.0",
     "less": "^4.3.0",
     "mini-css-extract-plugin": "^2.9.0",

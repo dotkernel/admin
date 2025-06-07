@@ -160,6 +160,7 @@
     const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
     const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
 </script>
-<script src="{{ asset('js/table_settings.js') }}" defer></script>
-<script src="{{ asset('js/admin.js') }}" defer></script>
+{#<script src="{{ asset('js/table_settings.js') }}" defer></script>#}
+{#<script src="{{ asset('js/admin.js') }}" defer></script>#}
+<script src="{{ asset('index.js') }}" defer></script>
 {% endblock %}

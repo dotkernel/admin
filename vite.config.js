@@ -33,12 +33,16 @@ export default defineConfig({
             },
             output: {
                 manualChunks: undefined,
-                entryFileNames: "js/app.js",
-                assetFileNames: "css/app.css",
+                entryFileNames: "index.js",
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name === 'style.css')
+                        return 'index.css';
+                    return '[name].[ext]';
+                },
             },
         },
     },
-    optimizeDeps: { force: true, },
+    optimizeDeps: { force: false, },
     resolve: {
         alias: [
             {

@@ -12,6 +12,7 @@
 // ---------------------------------------------------------
 
 $responsive: true;
+@use "./../mixins/generateResponsive";
 
 // ---------------------------------------------------------
 // @Position (0 > 4 Step 1)
@@ -24,11 +25,11 @@ $responsive: true;
   .l-#{$i} { left: #{$i}px; }
 
   @if ($responsive == true) {
-    @include generateResponsive() {
-      .t-#{$i}\@#{$breakpointAlias} { top: #{$i}px; }
-      .r-#{$i}\@#{$breakpointAlias} { right: #{$i}px; }
-      .b-#{$i}\@#{$breakpointAlias} { bottom: #{$i}px; }
-      .l-#{$i}\@#{$breakpointAlias} { left: #{$i}px; }
+    @include generateResponsive.generateResponsive() {
+      .t-#{$i}\@#{generateResponsive.$breakpointAlias} { top: #{$i}px; }
+      .r-#{$i}\@#{generateResponsive.$breakpointAlias} { right: #{$i}px; }
+      .b-#{$i}\@#{generateResponsive.$breakpointAlias} { bottom: #{$i}px; }
+      .l-#{$i}\@#{generateResponsive.$breakpointAlias} { left: #{$i}px; }
     }
   }
 }
@@ -45,11 +46,11 @@ $responsive: true;
     .l-#{$i} { left: #{$i}px; }
 
     @if ($responsive == true) {
-      @include generateResponsive() {
-        .t-#{$i}\@#{$breakpointAlias} { top: #{$i}px; }
-        .r-#{$i}\@#{$breakpointAlias} { right: #{$i}px; }
-        .b-#{$i}\@#{$breakpointAlias} { bottom: #{$i}px; }
-        .l-#{$i}\@#{$breakpointAlias} { left: #{$i}px; }
+      @include generateResponsive.generateResponsive() {
+        .t-#{$i}\@#{generateResponsive.$breakpointAlias} { top: #{$i}px; }
+        .r-#{$i}\@#{generateResponsive.$breakpointAlias} { right: #{$i}px; }
+        .b-#{$i}\@#{generateResponsive.$breakpointAlias} { bottom: #{$i}px; }
+        .l-#{$i}\@#{generateResponsive.$breakpointAlias} { left: #{$i}px; }
       }
     }
   }
@@ -67,11 +68,11 @@ $responsive: true;
     .l-#{$i} { left: #{$i}px; }
 
     @if ($responsive == true) {
-      @include generateResponsive() {
-        .t-#{$i}\@#{$breakpointAlias} { top: #{$i}px; }
-        .r-#{$i}\@#{$breakpointAlias} { right: #{$i}px; }
-        .b-#{$i}\@#{$breakpointAlias} { bottom: #{$i}px; }
-        .l-#{$i}\@#{$breakpointAlias} { left: #{$i}px; }
+      @include generateResponsive.generateResponsive() {
+        .t-#{$i}\@#{generateResponsive.$breakpointAlias} { top: #{$i}px; }
+        .r-#{$i}\@#{generateResponsive.$breakpointAlias} { right: #{$i}px; }
+        .b-#{$i}\@#{generateResponsive.$breakpointAlias} { bottom: #{$i}px; }
+        .l-#{$i}\@#{generateResponsive.$breakpointAlias} { left: #{$i}px; }
       }
     }
   }
@@ -97,20 +98,20 @@ $responsive: true;
 .l-50p { left: 50%; }
 
 @if ($responsive == true) {
-  @include generateResponsive() {
-    .tl-50p\@#{$breakpointAlias} {
+  @include generateResponsive.generateResponsive() {
+    .tl-50p\@#{generateResponsive.$breakpointAlias} {
       top: 50%;
       left: 50%;
     }
 
-    .tr-50p\@#{$breakpointAlias} {
+    .tr-50p\@#{generateResponsive.$breakpointAlias} {
       top: 50%;
       right: 50%;
     }
 
-    .t-50p\@#{$breakpointAlias} { top: 50%; }
-    .r-50p\@#{$breakpointAlias} { right: 50%; }
-    .b-50p\@#{$breakpointAlias} { bottom: 50%; }
-    .l-50p\@#{$breakpointAlias} { left: 50%; }
+    .t-50p\@#{generateResponsive.$breakpointAlias} { top: 50%; }
+    .r-50p\@#{generateResponsive.$breakpointAlias} { right: 50%; }
+    .b-50p\@#{generateResponsive.$breakpointAlias} { bottom: 50%; }
+    .l-50p\@#{generateResponsive.$breakpointAlias} { left: 50%; }
   }
 }
