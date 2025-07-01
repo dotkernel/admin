@@ -18,8 +18,8 @@ return [
                         'type'    => 'RoutePermission',
                         'options' => [
                             'rules' => [
-                                'admin::admin-login-form'        => ['unauthenticated'],
-                                'admin::admin-login'             => ['unauthenticated'],
+                                'admin::admin-login-form'        => [],
+                                'admin::admin-login'             => [],
                                 'admin::admin-create-form'       => ['authenticated'],
                                 'admin::admin-create'            => ['authenticated'],
                                 'admin::admin-delete-form'       => ['authenticated'],
