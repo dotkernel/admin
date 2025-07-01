@@ -28,6 +28,8 @@
     },
     "require": {
         "php": "~8.2.0 || ~8.3.0",
+        "ext-sockets": "*",
+        "clue/socket-raw": "^v1.6.0",
         "dotkernel/dot-cache": "^4.3.0",
         "dotkernel/dot-cli": "^3.9.0",
         "dotkernel/dot-data-fixtures": "^1.4.0",
@@ -79,7 +81,8 @@
             "Core\\App\\": "src/Core/src/App/src",
             "Core\\Security\\": "src/Core/src/Security/src",
             "Core\\Setting\\": "src/Core/src/Setting/src",
-            "Core\\User\\": "src/Core/src/User/src"
+            "Core\\User\\": "src/Core/src/User/src",
+            "Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"
         }
     },
     "autoload-dev": {

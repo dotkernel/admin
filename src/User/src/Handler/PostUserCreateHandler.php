@@ -12,6 +12,7 @@ use Admin\User\InputFilter\CreateUserInputFilter;
 use Admin\User\Service\UserServiceInterface;
 use Core\App\Message;
 use Core\App\Service\MailService;
+use Core\NotificationSystem\Service\NotificationService;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -41,6 +42,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
         FlashMessengerInterface::class,
         CreateUserForm::class,
         MailService::class,
+        NotificationService::class,
         'dot-log.default_logger',
         'config',
     )]
@@ -51,6 +53,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
         protected FlashMessengerInterface $messenger,
         protected CreateUserForm $createUserForm,
         protected MailService $mailService,
+        protected NotificationService $notificationService,
         protected Logger $logger,
         protected array $config,
     ) {
@@ -71,11 +74,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 $user = $this->userService->saveUser($data);
                 $this->messenger->addSuccess(Message::USER_CREATED);
                 if ($user->hasEmail()) {
-                    $body = $this->template->render('user::welcome', [
-                        'config' => $this->config,
-                        'user'   => $user,
-                    ]);
-                    $this->mailService->sendWelcomeMail($user, $body);
+                    $this->notificationService->sendNewAccountNotification($user);
                 }
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
