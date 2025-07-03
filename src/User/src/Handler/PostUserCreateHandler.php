@@ -12,7 +12,6 @@ use Admin\User\InputFilter\CreateUserInputFilter;
 use Admin\User\Service\UserServiceInterface;
 use Core\App\Message;
 use Core\App\Service\MailService;
-use Core\NotificationSystem\Service\NotificationService;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
@@ -26,6 +25,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
+
+use function fclose;
+use function fwrite;
+use function json_encode;
+use function stream_socket_client;
 
 /**
  * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
@@ -42,7 +46,6 @@ class PostUserCreateHandler implements RequestHandlerInterface
         FlashMessengerInterface::class,
         CreateUserForm::class,
         MailService::class,
-        NotificationService::class,
         'dot-log.default_logger',
         'config',
     )]
@@ -53,7 +56,6 @@ class PostUserCreateHandler implements RequestHandlerInterface
         protected FlashMessengerInterface $messenger,
         protected CreateUserForm $createUserForm,
         protected MailService $mailService,
-        protected NotificationService $notificationService,
         protected Logger $logger,
         protected array $config,
     ) {
@@ -74,7 +76,16 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 $user = $this->userService->saveUser($data);
                 $this->messenger->addSuccess(Message::USER_CREATED);
                 if ($user->hasEmail()) {
-                    $this->notificationService->sendNewAccountNotification($user);
+                    $client = stream_socket_client("tcp://localhost:8556", $errno, $errstr, 30);
+
+                    if (! $client) {
+                        echo "Error: $errstr ($errno)\n";
+                    } else {
+                        $data['userUuid'] = $user->getUuid()->toString();
+                        fwrite($client, json_encode($data) . "\n");
+
+                        fclose($client);
+                    }
                 }
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);

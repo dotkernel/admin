@@ -74,7 +74,6 @@ $aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
     Core\Security\ConfigProvider::class,
     Core\Setting\ConfigProvider::class,
     Core\User\ConfigProvider::class,
-    Core\NotificationSystem\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
