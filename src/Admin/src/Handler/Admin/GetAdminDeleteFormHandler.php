@@ -48,11 +48,11 @@ class GetAdminDeleteFormHandler implements RequestHandlerInterface
 
         $this->deleteAdminForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::admin-delete', ['uuid' => $admin->getUuid()->toString()])
+            $this->router->generateUri('admin::delete-admin', ['uuid' => $admin->getUuid()->toString()])
         );
 
         return new HtmlResponse(
-            $this->template->render('admin::admin-delete-form', [
+            $this->template->render('admin::delete-admin-form', [
                 'form'  => $this->deleteAdminForm->prepare(),
                 'admin' => $admin,
             ]),

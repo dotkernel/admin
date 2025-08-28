@@ -59,7 +59,7 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
         $this->changePasswordForm->setData($data);
         if (! $this->changePasswordForm->isValid()) {
             return new HtmlResponse(
-                $this->template->render('admin::account-view', [
+                $this->template->render('admin::view-account', [
                     'accountForm'        => $this->accountForm->prepare(),
                     'changePasswordForm' => $this->changePasswordForm->prepare(),
                 ])
@@ -74,9 +74,9 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
         $this->changePasswordForm
-            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
+            ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
         try {
             /** @var ChangePasswordDataType $data */
@@ -97,6 +97,6 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::account-edit-form'));
+        return new RedirectResponse($this->router->generateUri('admin::edit-account-form'));
     }
 }

@@ -30,7 +30,7 @@ class GetUserListHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('user::user-list', [
+            $this->template->render('user::list-user', [
                 'pagination' => $this->userService->getUsers($request->getQueryParams()),
                 'statuses'   => UserStatusEnum::validCases(),
                 'roles'      => UserRoleEnum::validCases(),

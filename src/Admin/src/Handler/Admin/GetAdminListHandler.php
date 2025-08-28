@@ -30,7 +30,7 @@ class GetAdminListHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('admin::admin-list', [
+            $this->template->render('admin::list-admin', [
                 'pagination' => $this->adminService->getAdmins($request->getQueryParams()),
                 'statuses'   => AdminStatusEnum::cases(),
                 'roles'      => AdminRoleEnum::cases(),

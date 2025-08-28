@@ -29,7 +29,7 @@ class GetAccountLogoutHandler implements RequestHandlerInterface
         $this->authenticationService->clearIdentity();
 
         return new RedirectResponse(
-            $this->router->generateUri('admin::admin-login-form')
+            $this->router->generateUri('admin::login-admin-form')
         );
     }
 }

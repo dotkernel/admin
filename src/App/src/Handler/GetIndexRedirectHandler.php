@@ -27,9 +27,9 @@ class GetIndexRedirectHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->authenticationService->hasIdentity()) {
-            return new RedirectResponse($this->router->generateUri('dashboard::dashboard-view'));
+            return new RedirectResponse($this->router->generateUri('dashboard::view-dashboard'));
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::admin-login-form'));
+        return new RedirectResponse($this->router->generateUri('admin::login-admin-form'));
     }
 }

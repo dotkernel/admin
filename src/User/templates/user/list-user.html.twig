@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 pL-10 pR-20 pT-20 pB-3 mB-20">
-                    <form class="row g-3" method="get" action="{{ path('user::user-list') }}">
+                    <form class="row g-3" method="get" action="{{ path('user::list-user') }}">
                         <input type="hidden" name="offset" value="0" />
                         <input type="hidden" name="limit" value="{{ pagination.limit }}" />
                         <input type="hidden" name="sort" value="{{ pagination.sort }}" />
@@ -56,7 +56,7 @@
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
                                 <i class="fa fa-search"></i> Filter
                             </button>
-                            <a href="{{ path('user::user-list') }}" class="btn btn-secondary btn-sm mb-3">
+                            <a href="{{ path('user::list-user') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
@@ -78,28 +78,28 @@
                         <tr>
                             <th class="column-user-uuid"></th>
                             <th class="column-user-identity">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.identity', 'Identity') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'user.identity', 'Identity') }}
                             </th>
                             <th class="column-detail-firstName">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.firstName', 'Firstname') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'detail.firstName', 'Firstname') }}
                             </th>
                             <th class="column-detail-lastName">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.lastName', 'Lastname') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'detail.lastName', 'Lastname') }}
                             </th>
                             <th class="column-detail-email">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'detail.email', 'Email') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'detail.email', 'Email') }}
                             </th>
                             <th class="column-role-name">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'role.name', 'Roles') }}
                             </th>
                             <th class="column-user-status">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.status', 'Status') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'user.status', 'Status') }}
                             </th>
                             <th class="column-user-created">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.created', 'Created') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'user.created', 'Created') }}
                             </th>
                             <th class="column-user-updated">
-                                {{ sortableColumn('user::user-list', {}, pagination.queryParams, 'user.updated', 'Updated') }}
+                                {{ sortableColumn('user::list-user', {}, pagination.queryParams, 'user.updated', 'Updated') }}
                             </th>
                         </tr>
                         </thead>
@@ -111,8 +111,8 @@
                                         <input type="checkbox"
                                            class="checkbox ui-checkbox"
                                            value="{{ user.uuid }}"
-                                           data-edit-url="{{ path('user::user-edit', {uuid: user.uuid}) }}"
-                                           data-delete-url="{{ path('user::user-delete', {uuid: user.uuid}) }}">
+                                           data-edit-url="{{ path('user::edit-user', {uuid: user.uuid}) }}"
+                                           data-delete-url="{{ path('user::delete-user', {uuid: user.uuid}) }}">
                                     </label>
                                 </td>
                                 <td class="column-user-identity">{{ user.identity }}</td>
@@ -136,19 +136,19 @@
                     {% if pagination.isOutOfBounds %}
                     <div class="alert alert-warning text-center text-black fw-bold" role="alert">
                         Out of bounds! Return to
-                        <a href="{{ path('user::user-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                        <a href="{{ path('user::list-user', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
                     </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'user::user-list'}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'user::list-user'}, false) }}
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="add-user-modal-content" aria-hidden="true" data-add-url="{{ path('user::user-create') }}">
+        <div class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="add-user-modal-content" aria-hidden="true" data-add-url="{{ path('user::create-user') }}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -190,8 +190,8 @@
 {{ parent() }}
 <script>
     const tableId = '#user-table';
-    const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
-    const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
+    const storeSettingsUrl = '{{ path('setting::store-setting', {identifier: identifier}) }}';
+    const getSettingsUrl = '{{ path('setting::view-setting', {identifier: identifier}) }}';
 </script>
 <script src="{{ asset('js/table_settings.js') }}" defer></script>
 <script src="{{ asset('js/user.js') }}" defer></script>

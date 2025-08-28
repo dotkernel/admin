@@ -56,7 +56,7 @@ class PostUserDeleteHandler implements RequestHandlerInterface
 
         $this->deleteUserForm->setAttribute(
             'action',
-            $this->router->generateUri('user::user-delete', ['uuid' => $user->getUuid()->toString()])
+            $this->router->generateUri('user::delete-user', ['uuid' => $user->getUuid()->toString()])
         );
 
         try {
@@ -72,7 +72,7 @@ class PostUserDeleteHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('user::user-delete-form', [
+                $this->template->render('user::delete-user-form', [
                     'form' => $this->deleteUserForm->prepare(),
                     'user' => $user,
                 ]),

@@ -80,7 +80,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
         $this->editAdminForm
             ->setAttribute(
                 'action',
-                $this->router->generateUri('admin::admin-edit', ['uuid' => $admin->getUuid()->toString()])
+                $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
             )
             ->setRoles($adminRoles);
 
@@ -98,7 +98,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('admin::admin-edit-form', [
+                $this->template->render('admin::edit-admin-form', [
                     'form'  => $this->editAdminForm->prepare(),
                     'admin' => $admin,
                 ]),
@@ -106,7 +106,7 @@ class PostAdminEditHandler implements RequestHandlerInterface
             );
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             return new HtmlResponse(
-                $this->template->render('admin::admin-edit-form', [
+                $this->template->render('admin::edit-admin-form', [
                     'form'     => $this->editAdminForm->prepare(),
                     'admin'    => $admin,
                     'messages' => [

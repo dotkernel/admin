@@ -53,7 +53,7 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
 
         $this->deleteAdminForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::admin-delete', ['uuid' => $admin->getUuid()->toString()])
+            $this->router->generateUri('admin::delete-admin', ['uuid' => $admin->getUuid()->toString()])
         );
 
         try {
@@ -68,7 +68,7 @@ class PostAdminDeleteHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('admin::admin-delete-form', [
+                $this->template->render('admin::delete-admin-form', [
                     'form'  => $this->deleteAdminForm->prepare(),
                     'admin' => $admin,
                 ]),

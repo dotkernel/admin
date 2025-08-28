@@ -86,16 +86,15 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
         $this->editUserAvatarForm
             ->setAttribute(
                 'action',
-                $this->router->generateUri('user::user-avatar-edit', ['uuid' => $user->getUuid()->toString()])
+                $this->router->generateUri('user::edit-user-avatar', ['uuid' => $user->getUuid()->toString()])
             );
 
         $this->editUserForm
             ->setAttribute(
                 'action',
-                $this->router->generateUri('user::user-edit', ['uuid' => $user->getUuid()->toString()])
+                $this->router->generateUri('user::edit-user', ['uuid' => $user->getUuid()->toString()])
             )
             ->setRoles($userRoles);
-
         try {
             $this->editUserAvatarForm->setData(
                 array_merge((array) $request->getParsedBody(), $request->getUploadedFiles())
@@ -111,7 +110,7 @@ class PostUserAvatarEditHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('user::user-edit-form', [
+                $this->template->render('user::edit-user-form', [
                     'userAvatarEditForm' => $this->editUserAvatarForm->prepare(),
                     'userEditForm'       => $this->editUserForm->prepare(),
                     'activeTab'          => 'avatar',

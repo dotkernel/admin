@@ -24,8 +24,8 @@ class RoutesDelegator
         $routeCollector = $container->get(RouteCollectorInterface::class);
 
         $routeCollector->group('/setting')
-            ->get('/{identifier}', GetSettingViewHandler::class, 'setting::setting-view')
-            ->post('/{identifier}', PostSettingStoreHandler::class, 'setting::setting-store');
+            ->get('/{identifier}', GetSettingViewHandler::class, 'setting::view-setting')
+            ->post('/{identifier}', PostSettingStoreHandler::class, 'setting::store-setting');
 
         return $callback();
     }

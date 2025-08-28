@@ -52,14 +52,14 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
         $this->changePasswordForm
-            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
+            ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
         $this->accountForm->bind($admin);
 
         return new HtmlResponse(
-            $this->template->render('admin::account-view', [
+            $this->template->render('admin::view-account', [
                 'accountForm'        => $this->accountForm->prepare(),
                 'changePasswordForm' => $this->changePasswordForm->prepare(),
             ])

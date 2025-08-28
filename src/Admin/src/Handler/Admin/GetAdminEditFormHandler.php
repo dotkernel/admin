@@ -71,13 +71,13 @@ class GetAdminEditFormHandler implements RequestHandlerInterface
         $this->editAdminForm
             ->setAttribute(
                 'action',
-                $this->router->generateUri('admin::admin-edit', ['uuid' => $admin->getUuid()->toString()])
+                $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
             )
             ->bind($admin)
             ->setRoles($adminRoles);
 
         return new HtmlResponse(
-            $this->template->render('admin::admin-edit-form', [
+            $this->template->render('admin::edit-admin-form', [
                 'form'  => $this->editAdminForm->prepare(),
                 'admin' => $admin,
             ])

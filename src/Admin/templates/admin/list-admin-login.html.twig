@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 pL-20 pR-20 pT-20 pB-3 mB-20">
-                    <form class="row g-3" method="get" action="{{ path('admin::admin-login-list') }}">
+                    <form class="row g-3" method="get" action="{{ path('admin::list-admin-login') }}">
                         <input type="hidden" name="offset" value="0" />
                         <input type="hidden" name="limit" value="{{ pagination.limit }}" />
                         <input type="hidden" name="sort" value="{{ pagination.sort }}" />
@@ -35,7 +35,7 @@
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
                                 <i class="fa fa-search"></i> Filter
                             </button>
-                            <a href="{{ path('admin::admin-login-list') }}" class="btn btn-secondary btn-sm mb-3">
+                            <a href="{{ path('admin::list-admin-login') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
@@ -56,58 +56,58 @@
                         <thead>
                             <tr>
                                 <th class="column-login-identity">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.identity', 'Identity') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.identity', 'Identity') }}
                                 </th>
                                 <th class="column-login-adminIp">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.adminIp', 'Ip Address') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.adminIp', 'Ip Address') }}
                                 </th>
                                 <th class="column-login-loginStatus">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.loginStatus', 'Status') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.loginStatus', 'Status') }}
                                 </th>
                                 <th class="column-login-country">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.country', 'Country') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.country', 'Country') }}
                                 </th>
                                 <th class="column-login-continent">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.continent', 'Continent') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.continent', 'Continent') }}
                                 </th>
                                 <th class="column-login-organization">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.organization', 'Organization') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.organization', 'Organization') }}
                                 </th>
                                 <th class="column-login-deviceType">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceType', 'Device Type') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.deviceType', 'Device Type') }}
                                 </th>
                                 <th class="column-login-deviceBrand">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceBrand', 'Device Brand') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.deviceBrand', 'Device Brand') }}
                                 </th>
                                 <th class="column-login-deviceModel">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.deviceModel', 'Device Model') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.deviceModel', 'Device Model') }}
                                 </th>
                                 <th class="column-login-isMobile">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.isMobile', 'Is Mobile') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.isMobile', 'Is Mobile') }}
                                 </th>
                                 <th class="column-login-osName">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osName', 'Os Name') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.osName', 'Os Name') }}
                                 </th>
                                 <th class="column-login-osVersion">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osVersion', 'Os Version') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.osVersion', 'Os Version') }}
                                 </th>
                                 <th class="column-login-osPlatform">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.osPlatform', 'Os Platform') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.osPlatform', 'Os Platform') }}
                                 </th>
                                 <th class="column-login-clientType">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientType', 'Client Type') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientType', 'Client Type') }}
                                 </th>
                                 <th class="column-login-clientName">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientName', 'Client Name') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientName', 'Client Name') }}
                                 </th>
                                 <th class="column-login-clientEngine">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientEngine', 'Client Engine') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientEngine', 'Client Engine') }}
                                 </th>
                                 <th class="column-login-clientVersion">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.clientVersion', 'Client Version') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientVersion', 'Client Version') }}
                                 </th>
                                 <th class="column-login-created">
-                                    {{ sortableColumn('admin::admin-login-list', {}, pagination.queryParams, 'login.created', 'Created') }}
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.created', 'Created') }}
                                 </th>
                             </tr>
                         </thead>
@@ -151,14 +151,14 @@
                     {% if pagination.isOutOfBounds %}
                         <div class="alert alert-warning text-center text-black fw-bold" role="alert">
                             Out of bounds! Return to
-                            <a href="{{ path('admin::admin-login-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                            <a href="{{ path('admin::list-admin-login', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
                         </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::admin-login-list'}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::list-admin-login'}, false) }}
                 </div>
             </div>
         </div>
@@ -169,8 +169,8 @@
 {{ parent() }}
 <script>
     const tableId = '#admin-logins-table';
-    const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
-    const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
+    const storeSettingsUrl = '{{ path('setting::store-setting', {identifier: identifier}) }}';
+    const getSettingsUrl = '{{ path('setting::view-setting', {identifier: identifier}) }}';
 </script>
 <script src="{{ asset('js/table_settings.js') }}" defer></script>
 {% endblock %}
