@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Handler\Admin\GetAdminListHandler;
+use Admin\Admin\Handler\Admin\GetListAdminHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
@@ -37,7 +37,7 @@ class GetAdminListHandlerTest extends UnitTest
 
         $adminService->method('getAdminRepository')->willReturn($adminRepository);
 
-        $handler = new GetAdminListHandler($adminService, $template);
+        $handler = new GetListAdminHandler($adminService, $template);
 
         $response = $handler->handle($request);
 

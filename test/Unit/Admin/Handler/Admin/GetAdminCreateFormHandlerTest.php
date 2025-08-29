@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\CreateAdminForm;
-use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
+use Admin\Admin\Handler\Admin\GetCreateAdminFormHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouterInterface;
@@ -25,7 +25,7 @@ class GetAdminCreateFormHandlerTest extends UnitTest
         $form     = $this->createMock(CreateAdminForm::class);
         $request  = $this->createMock(ServerRequestInterface::class);
 
-        $handler = new GetAdminCreateFormHandler(
+        $handler = new GetCreateAdminFormHandler(
             $router,
             $template,
             $form,

@@ -29,7 +29,7 @@ use Throwable;
 /**
  * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
  */
-class PostUserCreateHandler implements RequestHandlerInterface
+class PostCreateUserHandler implements RequestHandlerInterface
 {
     /**
      * @param array<non-empty-string, mixed> $config

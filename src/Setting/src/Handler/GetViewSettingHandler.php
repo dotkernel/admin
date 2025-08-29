@@ -22,7 +22,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function assert;
 use function is_array;
 
-class GetSettingViewHandler implements RequestHandlerInterface
+class GetViewSettingHandler implements RequestHandlerInterface
 {
     #[Inject(
         AuthenticationServiceInterface::class,

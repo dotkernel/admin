@@ -26,7 +26,7 @@ use Throwable;
 
 use function assert;
 
-class PostAccountLoginHandler implements RequestHandlerInterface
+class PostLoginAccountHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

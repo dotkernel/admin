@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Handler\Account\PostAccountEditHandler;
+use Admin\Admin\Handler\Account\PostEditAccountHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\ConflictException;
 use AdminTest\Unit\UnitTest;
@@ -72,7 +72,7 @@ class PostAccountEditHandlerTest extends UnitTest
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
         $this->accountForm->method('isValid')->willReturn(false);
 
-        $handler = new PostAccountEditHandler(
+        $handler = new PostEditAccountHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -107,7 +107,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::DUPLICATE_IDENTITY);
 
-        $handler = new PostAccountEditHandler(
+        $handler = new PostEditAccountHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -139,7 +139,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $handler = new PostAccountEditHandler(
+        $handler = new PostEditAccountHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -171,7 +171,7 @@ class PostAccountEditHandlerTest extends UnitTest
             ->method('addSuccess')
             ->with(Message::ACCOUNT_UPDATED);
 
-        $handler = new PostAccountEditHandler(
+        $handler = new PostEditAccountHandler(
             $this->adminService,
             $this->router,
             $this->template,

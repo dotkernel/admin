@@ -36,7 +36,7 @@ use function array_map;
  * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
  * @phpstan-import-type SelectDataType from AbstractForm
  */
-class PostUserEditHandler implements RequestHandlerInterface
+class PostEditUserHandler implements RequestHandlerInterface
 {
     #[Inject(
         UserServiceInterface::class,

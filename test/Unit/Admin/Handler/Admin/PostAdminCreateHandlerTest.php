@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\CreateAdminForm;
-use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
+use Admin\Admin\Handler\Admin\PostCreateAdminHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\ConflictException;
 use AdminTest\Unit\UnitTest;
@@ -65,7 +65,7 @@ class PostAdminCreateHandlerTest extends UnitTest
             ->method('addSuccess')
             ->with(Message::ADMIN_CREATED);
 
-        $handler = new PostAdminCreateHandler(
+        $handler = new PostCreateAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -85,7 +85,7 @@ class PostAdminCreateHandlerTest extends UnitTest
         $this->adminForm->method('isValid')->willReturn(false);
         $this->adminForm->method('getData')->willReturn([]);
 
-        $handler = new PostAdminCreateHandler(
+        $handler = new PostCreateAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -106,7 +106,7 @@ class PostAdminCreateHandlerTest extends UnitTest
 
         $this->throwException(new ConflictException());
 
-        $handler = new PostAdminCreateHandler(
+        $handler = new PostCreateAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -127,7 +127,7 @@ class PostAdminCreateHandlerTest extends UnitTest
 
         $this->throwException(new Exception());
 
-        $handler = new PostAdminCreateHandler(
+        $handler = new PostCreateAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,

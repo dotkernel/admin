@@ -8,14 +8,14 @@ use Admin\User\Delegator\UserRoleDelegator;
 use Admin\User\Form\CreateUserForm;
 use Admin\User\Form\DeleteUserForm;
 use Admin\User\Form\EditUserForm;
-use Admin\User\Handler\GetUserCreateFormHandler;
-use Admin\User\Handler\GetUserDeleteFormHandler;
-use Admin\User\Handler\GetUserEditFormHandler;
-use Admin\User\Handler\GetUserListHandler;
-use Admin\User\Handler\PostUserAvatarEditHandler;
-use Admin\User\Handler\PostUserCreateHandler;
-use Admin\User\Handler\PostUserDeleteHandler;
-use Admin\User\Handler\PostUserEditHandler;
+use Admin\User\Handler\GetCreateUserFormHandler;
+use Admin\User\Handler\GetDeleteUserFormHandler;
+use Admin\User\Handler\GetEditUserFormHandler;
+use Admin\User\Handler\GetListUserHandler;
+use Admin\User\Handler\PostCreateUserHandler;
+use Admin\User\Handler\PostDeleteUserHandler;
+use Admin\User\Handler\PostEditUserAvatarHandler;
+use Admin\User\Handler\PostEditUserHandler;
 use Admin\User\Service\UserAvatarService;
 use Admin\User\Service\UserAvatarServiceInterface;
 use Admin\User\Service\UserRoleService;
@@ -64,14 +64,14 @@ class ConfigProvider
                 CreateUserForm::class => [UserRoleDelegator::class],
             ],
             'factories'  => [
-                GetUserCreateFormHandler::class  => AttributedServiceFactory::class,
-                GetUserDeleteFormHandler::class  => AttributedServiceFactory::class,
-                GetUserEditFormHandler::class    => AttributedServiceFactory::class,
-                GetUserListHandler::class        => AttributedServiceFactory::class,
-                PostUserAvatarEditHandler::class => AttributedServiceFactory::class,
-                PostUserCreateHandler::class     => AttributedServiceFactory::class,
-                PostUserDeleteHandler::class     => AttributedServiceFactory::class,
-                PostUserEditHandler::class       => AttributedServiceFactory::class,
+                GetCreateUserFormHandler::class  => AttributedServiceFactory::class,
+                GetDeleteUserFormHandler::class  => AttributedServiceFactory::class,
+                GetEditUserFormHandler::class    => AttributedServiceFactory::class,
+                GetListUserHandler::class        => AttributedServiceFactory::class,
+                PostEditUserAvatarHandler::class => AttributedServiceFactory::class,
+                PostCreateUserHandler::class     => AttributedServiceFactory::class,
+                PostDeleteUserHandler::class     => AttributedServiceFactory::class,
+                PostEditUserHandler::class       => AttributedServiceFactory::class,
                 UserAvatarService::class         => AttributedServiceFactory::class,
                 UserRoleService::class           => AttributedServiceFactory::class,
                 UserService::class               => AttributedServiceFactory::class,

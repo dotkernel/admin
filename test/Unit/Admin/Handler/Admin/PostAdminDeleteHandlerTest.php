@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\DeleteAdminForm;
-use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
+use Admin\Admin\Handler\Admin\PostDeleteAdminHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
 use AdminTest\Unit\UnitTest;
@@ -66,7 +66,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::ADMIN_NOT_FOUND);
 
-        $handler = new PostAdminDeleteHandler(
+        $handler = new PostDeleteAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -105,7 +105,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
 
         $this->adminService->expects($this->once())->method('deleteAdmin')->with($admin);
 
-        $handler = new PostAdminDeleteHandler(
+        $handler = new PostDeleteAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -137,7 +137,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
         $this->form->method('isValid')->willReturn(false);
         $this->form->method('getData')->willReturn([]);
 
-        $handler = new PostAdminDeleteHandler(
+        $handler = new PostDeleteAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -166,7 +166,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $handler = new PostAdminDeleteHandler(
+        $handler = new PostDeleteAdminHandler(
             $this->adminService,
             $this->router,
             $this->template,

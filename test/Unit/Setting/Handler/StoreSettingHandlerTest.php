@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Setting\Handler;
 
 use Admin\Admin\Service\AdminService;
 use Admin\App\Exception\NotFoundException;
-use Admin\Setting\Handler\PostSettingStoreHandler;
+use Admin\Setting\Handler\PostStoreSettingHandler;
 use Admin\Setting\Service\SettingService;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
@@ -53,13 +53,13 @@ class StoreSettingHandlerTest extends UnitTest
 
     public function testWillCreate(): void
     {
-        $handler = new PostSettingStoreHandler(
+        $handler = new PostStoreSettingHandler(
             $this->authenticationService,
             $this->adminService,
             $this->settingService,
         );
 
-        $this->assertSame(PostSettingStoreHandler::class, $handler::class);
+        $this->assertSame(PostStoreSettingHandler::class, $handler::class);
     }
 
     /**
@@ -67,7 +67,7 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testInvalidIdentifierProvided(): void
     {
-        $handler = new PostSettingStoreHandler(
+        $handler = new PostStoreSettingHandler(
             $this->authenticationService,
             $this->adminService,
             $this->settingService,
@@ -116,7 +116,7 @@ class StoreSettingHandlerTest extends UnitTest
         $this->request->method('getAttribute')->with('identifier')->willReturn('test');
         $this->request->method('getBody')->willReturn($this->stream);
 
-        $handler = new PostSettingStoreHandler(
+        $handler = new PostStoreSettingHandler(
             $this->authenticationService,
             $this->adminService,
             $this->settingService,
@@ -159,7 +159,7 @@ class StoreSettingHandlerTest extends UnitTest
             ->with('identifier')
             ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
-        $handler = new PostSettingStoreHandler(
+        $handler = new PostStoreSettingHandler(
             $this->authenticationService,
             $this->adminService,
             $this->settingService,

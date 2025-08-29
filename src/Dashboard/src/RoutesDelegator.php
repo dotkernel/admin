@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Dashboard;
 
-use Admin\Dashboard\Handler\GetDashboardViewHandler;
+use Admin\Dashboard\Handler\GetViewDashboardHandler;
 use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
 use Psr\Container\ContainerExceptionInterface;
@@ -22,7 +22,7 @@ class RoutesDelegator
         /** @var RouteCollectorInterface $routeCollector */
         $routeCollector = $container->get(RouteCollectorInterface::class);
 
-        $routeCollector->get('/dashboard', GetDashboardViewHandler::class, 'dashboard::view-dashboard');
+        $routeCollector->get('/dashboard', GetViewDashboardHandler::class, 'dashboard::view-dashboard');
 
         return $callback();
     }

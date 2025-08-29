@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Page;
 
-use Admin\Page\Handler\GetPageViewHandler;
+use Admin\Page\Handler\GetViewPageHandler;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Mezzio\Application;
 
@@ -44,7 +44,7 @@ class ConfigProvider
                 Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
-                GetPageViewHandler::class => AttributedServiceFactory::class,
+                GetViewPageHandler::class => AttributedServiceFactory::class,
             ],
         ];
     }

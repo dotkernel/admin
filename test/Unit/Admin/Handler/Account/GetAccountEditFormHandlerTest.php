@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
+use Admin\Admin\Handler\Account\GetEditAccountFormHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
@@ -45,7 +45,7 @@ class GetAccountEditFormHandlerTest extends UnitTest
 
         $adminService->method('getAdminRepository')->willReturn($adminRepository);
 
-        $handler = new GetAccountEditFormHandler(
+        $handler = new GetEditAccountFormHandler(
             $adminService,
             $router,
             $template,

@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetAccountLoginFormHandler implements RequestHandlerInterface
+class GetLoginAccountFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         RouterInterface::class,

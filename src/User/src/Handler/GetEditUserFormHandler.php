@@ -29,7 +29,7 @@ use function array_map;
 /**
  * @phpstan-import-type SelectDataType from AbstractForm
  */
-class GetUserEditFormHandler implements RequestHandlerInterface
+class GetEditUserFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         UserServiceInterface::class,

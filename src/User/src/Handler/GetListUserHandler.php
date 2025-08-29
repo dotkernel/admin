@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetUserListHandler implements RequestHandlerInterface
+class GetListUserHandler implements RequestHandlerInterface
 {
     #[Inject(
         UserServiceInterface::class,

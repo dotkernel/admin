@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\EditAdminForm;
-use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
+use Admin\Admin\Handler\Admin\GetEditAdminFormHandler;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
@@ -59,7 +59,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::ADMIN_NOT_FOUND);
 
-        $handler = new GetAdminEditFormHandler(
+        $handler = new GetEditAdminFormHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,
@@ -92,7 +92,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
 
         $this->template->method('render')->willReturn('<p></p>');
 
-        $handler = new GetAdminEditFormHandler(
+        $handler = new GetEditAdminFormHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,

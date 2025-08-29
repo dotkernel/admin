@@ -26,7 +26,7 @@ use function array_map;
 /**
  * @phpstan-import-type SelectDataType from AbstractForm
  */
-class GetAdminEditFormHandler implements RequestHandlerInterface
+class GetEditAdminFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

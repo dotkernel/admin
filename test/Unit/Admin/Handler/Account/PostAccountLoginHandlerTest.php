@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Adapter\AuthenticationAdapter;
 use Admin\Admin\Form\LoginForm;
-use Admin\Admin\Handler\Account\PostAccountLoginHandler;
+use Admin\Admin\Handler\Account\PostLoginAccountHandler;
 use Admin\Admin\Service\AdminLoginServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Plugin\FormsPlugin;
@@ -83,7 +83,7 @@ class PostAccountLoginHandlerTest extends UnitTest
     {
         $this->authenticationService->method('hasIdentity')->willReturn(true);
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,
@@ -120,7 +120,7 @@ class PostAccountLoginHandlerTest extends UnitTest
             ->expects($this->atLeastOnce())
             ->method('addError');
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,
@@ -157,7 +157,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->messenger->expects($this->atLeastOnce())->method('addError');
         $this->adminLoginService->expects($this->atLeastOnce())->method('logFailedLogin');
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,
@@ -204,7 +204,7 @@ class PostAccountLoginHandlerTest extends UnitTest
             ->expects($this->atLeastOnce())
             ->method('clearIdentity');
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,
@@ -234,7 +234,7 @@ class PostAccountLoginHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,
@@ -276,7 +276,7 @@ class PostAccountLoginHandlerTest extends UnitTest
         $this->adminLoginService->expects($this->atLeastOnce())->method('logSuccessfulLogin');
         $this->storage->expects($this->atLeastOnce())->method('write')->with($this->identity);
 
-        $handler = new PostAccountLoginHandler(
+        $handler = new PostLoginAccountHandler(
             $this->adminService,
             $this->adminLoginService,
             $this->router,

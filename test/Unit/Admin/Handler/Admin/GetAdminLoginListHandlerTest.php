@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
-use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
+use Admin\Admin\Handler\Admin\GetListAdminLoginHandler;
 use Admin\Admin\Service\AdminLoginServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
@@ -26,7 +26,7 @@ class GetAdminLoginListHandlerTest extends UnitTest
         $request->method('getQueryParams')->willReturn([]);
         $adminLoginService->method('getAdminLogins')->willReturn([]);
 
-        $handler  = new GetAdminLoginListHandler($adminLoginService, $template);
+        $handler  = new GetListAdminLoginHandler($adminLoginService, $template);
         $response = $handler->handle($request);
 
         $this->assertSame($response->getHeaderLine('content-type'), 'text/html; charset=utf-8');
