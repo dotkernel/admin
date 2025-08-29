@@ -26,6 +26,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+use function fclose;
+use function fwrite;
+use function json_encode;
+use function stream_socket_client;
+
 /**
  * @phpstan-import-type CreateUserDataType from CreateUserInputFilter
  */
@@ -71,11 +76,16 @@ class PostUserCreateHandler implements RequestHandlerInterface
                 $user = $this->userService->saveUser($data);
                 $this->messenger->addSuccess(Message::USER_CREATED);
                 if ($user->hasEmail()) {
-                    $body = $this->template->render('user::welcome', [
-                        'config' => $this->config,
-                        'user'   => $user,
-                    ]);
-                    $this->mailService->sendWelcomeMail($user, $body);
+                    $client = stream_socket_client("tcp://localhost:8556", $errno, $errstr, 30);
+
+                    if (! $client) {
+                        echo "Error: $errstr ($errno)\n";
+                    } else {
+                        $data['userUuid'] = $user->getUuid()->toString();
+                        fwrite($client, json_encode($data) . "\n");
+
+                        fclose($client);
+                    }
                 }
 
                 return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
