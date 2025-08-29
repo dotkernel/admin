@@ -61,7 +61,7 @@ class PostAccountEditHandler implements RequestHandlerInterface
         $this->accountForm->setData($data);
         if (! $this->accountForm->isValid()) {
             return new HtmlResponse(
-                $this->template->render('admin::account-view', [
+                $this->template->render('admin::view-account', [
                     'accountForm'        => $this->accountForm->prepare(),
                     'changePasswordForm' => $this->changePasswordForm->prepare(),
                 ])
@@ -76,9 +76,9 @@ class PostAccountEditHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::account-edit'));
+        $this->accountForm->setAttribute('action', $this->router->generateUri('admin::edit-account'));
         $this->changePasswordForm
-            ->setAttribute('action', $this->router->generateUri('admin::account-change-password'));
+            ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
         try {
             /** @var EditAccountDataType $data */
@@ -97,6 +97,6 @@ class PostAccountEditHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::account-edit'));
+        return new RedirectResponse($this->router->generateUri('admin::edit-account'));
     }
 }

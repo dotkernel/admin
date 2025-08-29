@@ -58,7 +58,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->createUserForm->setAttribute('action', $this->router->generateUri('user::user-create'));
+        $this->createUserForm->setAttribute('action', $this->router->generateUri('user::create-user'));
 
         $user = null;
         try {
@@ -82,7 +82,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('user::user-create-form', [
+                $this->template->render('user::create-user-form', [
                     'form' => $this->createUserForm->prepare(),
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
@@ -98,7 +98,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
             return new EmptyResponse(StatusCodeInterface::STATUS_CREATED);
         } catch (BadRequestException | ConflictException | NotFoundException $exception) {
             return new HtmlResponse(
-                $this->template->render('user::user-create-form', [
+                $this->template->render('user::create-user-form', [
                     'form'     => $this->createUserForm->prepare(),
                     'messages' => [
                         'error' => $exception->getMessage(),
@@ -115,7 +115,7 @@ class PostUserCreateHandler implements RequestHandlerInterface
             ]);
 
             return new HtmlResponse(
-                $this->template->render('user::user-create-form', [
+                $this->template->render('user::create-user-form', [
                     'form'     => $this->createUserForm->prepare(),
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,

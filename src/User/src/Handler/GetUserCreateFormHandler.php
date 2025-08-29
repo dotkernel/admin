@@ -29,10 +29,10 @@ class GetUserCreateFormHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->createUserForm->setAttribute('action', $this->router->generateUri('user::user-create'));
+        $this->createUserForm->setAttribute('action', $this->router->generateUri('user::create-user'));
 
         return new HtmlResponse(
-            $this->template->render('user::user-create-form', [
+            $this->template->render('user::create-user-form', [
                 'form' => $this->createUserForm->prepare(),
             ])
         );

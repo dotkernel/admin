@@ -22,7 +22,7 @@ class RoutesDelegator
         /** @var RouteCollectorInterface $routeCollector */
         $routeCollector = $container->get(RouteCollectorInterface::class);
 
-        $routeCollector->get('/dashboard', GetDashboardViewHandler::class, 'dashboard::dashboard-view');
+        $routeCollector->get('/dashboard', GetDashboardViewHandler::class, 'dashboard::view-dashboard');
 
         return $callback();
     }

@@ -15,7 +15,7 @@ return [
                             'options' => [
                                 'label' => 'Dashboard',
                                 'route' => [
-                                    'route_name' => 'dashboard::dashboard-view',
+                                    'route_name' => 'dashboard::view-dashboard',
                                 ],
                                 'icon'  => 'c-blue-500 fa fa-home',
                             ],
@@ -31,7 +31,7 @@ return [
                                     'options' => [
                                         'label' => 'Admin accounts',
                                         'route' => [
-                                            'route_name' => 'admin::admin-list',
+                                            'route_name' => 'admin::list-admin',
                                         ],
                                     ],
                                 ],
@@ -39,7 +39,7 @@ return [
                                     'options' => [
                                         'label' => 'Login attempts',
                                         'route' => [
-                                            'route_name' => 'admin::admin-login-list',
+                                            'route_name' => 'admin::list-admin-login',
                                         ],
                                     ],
                                 ],
@@ -56,7 +56,7 @@ return [
                                     'options' => [
                                         'label' => 'User accounts',
                                         'route' => [
-                                            'route_name' => 'user::user-list',
+                                            'route_name' => 'user::list-user',
                                         ],
                                     ],
                                 ],
@@ -82,7 +82,7 @@ return [
                             'options' => [
                                 'label' => 'Profile',
                                 'route' => [
-                                    'route_name' => 'admin::account-edit-form',
+                                    'route_name' => 'admin::edit-account-form',
                                 ],
                                 'icon'  => 'ti-user',
                             ],
@@ -91,7 +91,7 @@ return [
                             'options' => [
                                 'label' => 'Logout',
                                 'route' => [
-                                    'route_name' => 'admin::admin-logout',
+                                    'route_name' => 'admin::logout-admin',
                                 ],
                                 'icon'  => 'ti-power-off',
                             ],

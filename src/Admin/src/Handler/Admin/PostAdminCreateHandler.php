@@ -47,7 +47,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::admin-create'));
+        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::create-admin'));
 
         try {
             /** @var iterable<array<string, string|string[]>> $data */
@@ -63,14 +63,14 @@ class PostAdminCreateHandler implements RequestHandlerInterface
             }
 
             return new HtmlResponse(
-                $this->template->render('admin::admin-create-form', [
+                $this->template->render('admin::create-admin-form', [
                     'form' => $this->createAdminForm->prepare(),
                 ]),
                 StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY
             );
         } catch (ConflictException $exception) {
             return new HtmlResponse(
-                $this->template->render('admin::admin-create-form', [
+                $this->template->render('admin::create-admin-form', [
                     'form'     => $this->createAdminForm->prepare(),
                     'messages' => [
                         'error' => $exception->getMessage(),
@@ -87,7 +87,7 @@ class PostAdminCreateHandler implements RequestHandlerInterface
             ]);
 
             return new HtmlResponse(
-                $this->template->render('admin::admin-create-form', [
+                $this->template->render('admin::create-admin-form', [
                     'form'     => $this->createAdminForm->prepare(),
                     'messages' => [
                         'error' => Message::AN_ERROR_OCCURRED,

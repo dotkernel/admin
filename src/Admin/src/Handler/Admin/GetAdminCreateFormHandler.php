@@ -29,10 +29,10 @@ class GetAdminCreateFormHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::admin-create'));
+        $this->createAdminForm->setAttribute('action', $this->router->generateUri('admin::create-admin'));
 
         return new HtmlResponse(
-            $this->template->render('admin::admin-create-form', [
+            $this->template->render('admin::create-admin-form', [
                 'form' => $this->createAdminForm->prepare(),
             ])
         );

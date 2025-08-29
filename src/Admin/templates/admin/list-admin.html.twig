@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 pL-10 pR-20 pT-20 pB-3 mB-20">
-                    <form class="row g-3" method="get" action="{{ path('admin::admin-list') }}">
+                    <form class="row g-3" method="get" action="{{ path('admin::list-admin') }}">
                         <input type="hidden" name="offset" value="0" />
                         <input type="hidden" name="limit" value="{{ pagination.limit }}" />
                         <input type="hidden" name="sort" value="{{ pagination.sort }}" />
@@ -51,7 +51,7 @@
                             <button type="submit" class="btn btn-primary btn-sm mb-3">
                                 <i class="fa fa-search"></i> Filter
                             </button>
-                            <a href="{{ path('admin::admin-list') }}" class="btn btn-secondary btn-sm mb-3">
+                            <a href="{{ path('admin::list-admin') }}" class="btn btn-secondary btn-sm mb-3">
                                 <i class="fa fa-undo"></i> Reset
                             </a>
                         </div>
@@ -73,25 +73,25 @@
                             <tr>
                                 <th class="column-admin-uuid"></th>
                                 <th class="column-admin-identity">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.identity', 'Identity') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.identity', 'Identity') }}
                                 </th>
                                 <th class="column-admin-firstName">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.firstName', 'Firstname') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.firstName', 'Firstname') }}
                                 </th>
                                 <th class="column-admin-lastName">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.lastName', 'Lastname') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.lastName', 'Lastname') }}
                                 </th>
                                 <th class="column-role-name">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'role.name', 'Roles') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'role.name', 'Roles') }}
                                 </th>
                                 <th class="column-admin-status">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.status', 'Status') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.status', 'Status') }}
                                 </th>
                                 <th class="column-admin-created">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.created', 'Created') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.created', 'Created') }}
                                 </th>
                                 <th class="column-admin-updated">
-                                    {{ sortableColumn('admin::admin-list', {}, pagination.queryParams, 'admin.updated', 'Updated') }}
+                                    {{ sortableColumn('admin::list-admin', {}, pagination.queryParams, 'admin.updated', 'Updated') }}
                                 </th>
                             </tr>
                         </thead>
@@ -103,8 +103,8 @@
                                         <input type="checkbox"
                                            class="checkbox ui-checkbox"
                                            value="{{ admin.uuid }}"
-                                           data-edit-url="{{ path('admin::admin-edit', {uuid: admin.uuid}) }}"
-                                           data-delete-url="{{ path('admin::admin-delete', {uuid: admin.uuid}) }}">
+                                           data-edit-url="{{ path('admin::edit-admin', {uuid: admin.uuid}) }}"
+                                           data-delete-url="{{ path('admin::delete-admin', {uuid: admin.uuid}) }}">
                                     </label>
                                 </td>
                                 <td class="column-admin-identity">{{ admin.identity }}</td>
@@ -127,19 +127,19 @@
                     {% if pagination.isOutOfBounds %}
                     <div class="alert alert-warning text-center text-black fw-bold" role="alert">
                         Out of bounds! Return to
-                        <a href="{{ path('admin::admin-list', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
+                        <a href="{{ path('admin::list-admin', {}, pagination.queryParams|merge({offset: pagination.lastOffset})) }}">page {{ pagination.lastPage }}</a>
                     </div>
                     {% endif %}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::admin-list'}, false) }}
+                    {{ include('@partial/pagination.html.twig', {pagination: pagination, path: 'admin::list-admin'}, false) }}
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="add-admin-modal" tabindex="-1" aria-labelledby="add-admin-modal-content" aria-hidden="true" data-add-url="{{ path('admin::admin-create') }}">
+        <div class="modal fade" id="add-admin-modal" tabindex="-1" aria-labelledby="add-admin-modal-content" aria-hidden="true" data-add-url="{{ path('admin::create-admin') }}">
             <div class="modal-dialog"></div>
         </div>
 
@@ -157,8 +157,8 @@
 {{ parent() }}
 <script>
     const tableId = '#admin-table';
-    const storeSettingsUrl = '{{ path('setting::setting-store', {identifier: identifier}) }}';
-    const getSettingsUrl = '{{ path('setting::setting-view', {identifier: identifier}) }}';
+    const storeSettingsUrl = '{{ path('setting::store-setting', {identifier: identifier}) }}';
+    const getSettingsUrl = '{{ path('setting::view-setting', {identifier: identifier}) }}';
 </script>
 <script src="{{ asset('js/table_settings.js') }}" defer></script>
 <script src="{{ asset('js/admin.js') }}" defer></script>

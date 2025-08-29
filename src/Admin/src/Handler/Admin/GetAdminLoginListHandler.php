@@ -29,7 +29,7 @@ class GetAdminLoginListHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(
-            $this->template->render('admin::admin-login-list', [
+            $this->template->render('admin::list-admin-login', [
                 'pagination' => $this->adminLoginService->getAdminLogins($request->getQueryParams()),
                 'statuses'   => SuccessFailureEnum::cases(),
                 'identities' => $this->adminLoginService->getAdminLoginRepository()->getAdminLoginIdentities(),

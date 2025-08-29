@@ -30,14 +30,14 @@ class RoutesDelegator
         $routeCollector = $container->get(RouteCollectorInterface::class);
 
         $routeCollector->group('/user')
-            ->get('/create-user', GetUserCreateFormHandler::class, 'user::user-create-form')
-            ->post('/create-user', PostUserCreateHandler::class, 'user::user-create')
-            ->get('/delete-user/{uuid}', GetUserDeleteFormHandler::class, 'user::user-delete-form')
-            ->post('/delete-user/{uuid}', PostUserDeleteHandler::class, 'user::user-delete')
-            ->get('/edit-user/{uuid}', GetUserEditFormHandler::class, 'user::user-edit-form')
-            ->post('/edit-user/{uuid}', PostUserEditHandler::class, 'user::user-edit')
-            ->post('/edit-user-avatar/{uuid}', PostUserAvatarEditHandler::class, 'user::user-avatar-edit')
-            ->get('/list-user', GetUserListHandler::class, 'user::user-list');
+            ->get('/create-user', GetUserCreateFormHandler::class, 'user::create-user-form')
+            ->post('/create-user', PostUserCreateHandler::class, 'user::create-user')
+            ->get('/delete-user/{uuid}', GetUserDeleteFormHandler::class, 'user::delete-user-form')
+            ->post('/delete-user/{uuid}', PostUserDeleteHandler::class, 'user::delete-user')
+            ->get('/edit-user/{uuid}', GetUserEditFormHandler::class, 'user::edit-user-form')
+            ->post('/edit-user/{uuid}', PostUserEditHandler::class, 'user::edit-user')
+            ->post('/edit-user-avatar/{uuid}', PostUserAvatarEditHandler::class, 'user::edit-user-avatar')
+            ->get('/list-user', GetUserListHandler::class, 'user::list-user');
 
         return $callback();
     }
