@@ -34,7 +34,7 @@ use function array_merge;
 /**
  * @phpstan-import-type SelectDataType from AbstractForm
  */
-class PostUserAvatarEditHandler implements RequestHandlerInterface
+class PostEditUserAvatarHandler implements RequestHandlerInterface
 {
     #[Inject(
         UserServiceInterface::class,

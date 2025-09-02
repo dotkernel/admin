@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Dashboard\Handler;
 
-use Admin\Dashboard\Handler\GetDashboardViewHandler;
+use Admin\Dashboard\Handler\GetViewDashboardHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouteResult;
@@ -31,7 +31,7 @@ class GetDashboardViewHandlerTest extends UnitTest
             ->with(RouteResult::class)
             ->willReturn($routeResult);
 
-        $handler = new GetDashboardViewHandler($template);
+        $handler = new GetViewDashboardHandler($template);
 
         $response = $handler->handle($request);
 

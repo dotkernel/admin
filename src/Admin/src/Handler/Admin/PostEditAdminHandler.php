@@ -33,7 +33,7 @@ use function array_map;
  * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
  * @phpstan-import-type SelectDataType from AbstractForm
  */
-class PostAdminEditHandler implements RequestHandlerInterface
+class PostEditAdminHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

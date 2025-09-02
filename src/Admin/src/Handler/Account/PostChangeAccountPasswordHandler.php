@@ -6,10 +6,8 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\InputFilter\EditAccountInputFilter;
+use Admin\Admin\InputFilter\ChangePasswordInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
-use Admin\App\Exception\BadRequestException;
-use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
 use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -28,18 +26,18 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
 /**
- * @phpstan-import-type EditAccountDataType from EditAccountInputFilter
+ * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
  */
-class PostAccountEditHandler implements RequestHandlerInterface
+class PostChangeAccountPasswordHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
+        FlashMessengerInterface::class,
         AccountForm::class,
         ChangePasswordForm::class,
-        FlashMessengerInterface::class,
         'dot-log.default_logger',
     )]
     public function __construct(
@@ -47,9 +45,9 @@ class PostAccountEditHandler implements RequestHandlerInterface
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
+        protected FlashMessengerInterface $messenger,
         protected AccountForm $accountForm,
         protected ChangePasswordForm $changePasswordForm,
-        protected FlashMessengerInterface $messenger,
         protected Logger $logger,
     ) {
     }
@@ -58,8 +56,8 @@ class PostAccountEditHandler implements RequestHandlerInterface
     {
         /** @var iterable<array<string, string|string[]>> $data */
         $data = $request->getParsedBody();
-        $this->accountForm->setData($data);
-        if (! $this->accountForm->isValid()) {
+        $this->changePasswordForm->setData($data);
+        if (! $this->changePasswordForm->isValid()) {
             return new HtmlResponse(
                 $this->template->render('admin::view-account', [
                     'accountForm'        => $this->accountForm->prepare(),
@@ -81,14 +79,16 @@ class PostAccountEditHandler implements RequestHandlerInterface
             ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
         try {
-            /** @var EditAccountDataType $data */
-            $data = $this->accountForm->getData();
-            $this->adminService->saveAdmin($data, $admin);
-            $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
-        } catch (BadRequestException | ConflictException | NotFoundException $exception) {
-            $this->messenger->addError($exception->getMessage());
+            /** @var ChangePasswordDataType $data */
+            $data = $this->changePasswordForm->getData();
+            if ($admin->verifyPassword($data['currentPassword'])) {
+                $this->adminService->saveAdmin($data, $admin);
+                $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
+            } else {
+                $this->messenger->addError(Message::INVALID_CURRENT_PASSWORD);
+            }
         } catch (Throwable $exception) {
-            $this->logger->err('Update admin', [
+            $this->logger->err('Change password', [
                 'error' => $exception->getMessage(),
                 'file'  => $exception->getFile(),
                 'line'  => $exception->getLine(),
@@ -97,6 +97,6 @@ class PostAccountEditHandler implements RequestHandlerInterface
             $this->messenger->addError(Message::AN_ERROR_OCCURRED);
         }
 
-        return new RedirectResponse($this->router->generateUri('admin::edit-account'));
+        return new RedirectResponse($this->router->generateUri('admin::edit-account-form'));
     }
 }

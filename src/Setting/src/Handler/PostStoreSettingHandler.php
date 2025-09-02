@@ -23,7 +23,7 @@ use function assert;
 use function is_array;
 use function json_decode;
 
-class PostSettingStoreHandler implements RequestHandlerInterface
+class PostStoreSettingHandler implements RequestHandlerInterface
 {
     #[Inject(
         AuthenticationServiceInterface::class,

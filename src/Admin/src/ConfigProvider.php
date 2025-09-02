@@ -11,20 +11,20 @@ use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\CreateAdminForm;
 use Admin\Admin\Form\DeleteAdminForm;
 use Admin\Admin\Form\EditAdminForm;
-use Admin\Admin\Handler\Account\GetAccountEditFormHandler;
-use Admin\Admin\Handler\Account\GetAccountLoginFormHandler;
-use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
-use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
-use Admin\Admin\Handler\Account\PostAccountEditHandler;
-use Admin\Admin\Handler\Account\PostAccountLoginHandler;
-use Admin\Admin\Handler\Admin\GetAdminCreateFormHandler;
-use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
-use Admin\Admin\Handler\Admin\GetAdminEditFormHandler;
-use Admin\Admin\Handler\Admin\GetAdminListHandler;
-use Admin\Admin\Handler\Admin\GetAdminLoginListHandler;
-use Admin\Admin\Handler\Admin\PostAdminCreateHandler;
-use Admin\Admin\Handler\Admin\PostAdminDeleteHandler;
-use Admin\Admin\Handler\Admin\PostAdminEditHandler;
+use Admin\Admin\Handler\Account\GetEditAccountFormHandler;
+use Admin\Admin\Handler\Account\GetLoginAccountFormHandler;
+use Admin\Admin\Handler\Account\GetLogoutAccountHandler;
+use Admin\Admin\Handler\Account\PostChangeAccountPasswordHandler;
+use Admin\Admin\Handler\Account\PostEditAccountHandler;
+use Admin\Admin\Handler\Account\PostLoginAccountHandler;
+use Admin\Admin\Handler\Admin\GetCreateAdminFormHandler;
+use Admin\Admin\Handler\Admin\GetDeleteAdminFormHandler;
+use Admin\Admin\Handler\Admin\GetEditAdminFormHandler;
+use Admin\Admin\Handler\Admin\GetListAdminHandler;
+use Admin\Admin\Handler\Admin\GetListAdminLoginHandler;
+use Admin\Admin\Handler\Admin\PostCreateAdminHandler;
+use Admin\Admin\Handler\Admin\PostDeleteAdminHandler;
+use Admin\Admin\Handler\Admin\PostEditAdminHandler;
 use Admin\Admin\Service\AdminLoginService;
 use Admin\Admin\Service\AdminLoginServiceInterface;
 use Admin\Admin\Service\AdminRoleService;
@@ -74,20 +74,20 @@ class ConfigProvider
                 CreateAdminForm::class => [AdminRoleDelegator::class],
             ],
             'factories'  => [
-                GetAdminCreateFormHandler::class        => AttributedServiceFactory::class,
-                PostAdminCreateHandler::class           => AttributedServiceFactory::class,
-                GetAdminEditFormHandler::class          => AttributedServiceFactory::class,
-                PostAdminEditHandler::class             => AttributedServiceFactory::class,
-                GetAdminDeleteFormHandler::class        => AttributedServiceFactory::class,
-                PostAdminDeleteHandler::class           => AttributedServiceFactory::class,
-                GetAdminListHandler::class              => AttributedServiceFactory::class,
-                GetAdminLoginListHandler::class         => AttributedServiceFactory::class,
-                GetAccountEditFormHandler::class        => AttributedServiceFactory::class,
-                PostAccountEditHandler::class           => AttributedServiceFactory::class,
-                PostAccountChangePasswordHandler::class => AttributedServiceFactory::class,
-                GetAccountLoginFormHandler::class       => AttributedServiceFactory::class,
-                PostAccountLoginHandler::class          => AttributedServiceFactory::class,
-                GetAccountLogoutHandler::class          => AttributedServiceFactory::class,
+                GetCreateAdminFormHandler::class        => AttributedServiceFactory::class,
+                PostCreateAdminHandler::class           => AttributedServiceFactory::class,
+                GetEditAdminFormHandler::class          => AttributedServiceFactory::class,
+                PostEditAdminHandler::class             => AttributedServiceFactory::class,
+                GetDeleteAdminFormHandler::class        => AttributedServiceFactory::class,
+                PostDeleteAdminHandler::class           => AttributedServiceFactory::class,
+                GetListAdminHandler::class              => AttributedServiceFactory::class,
+                GetListAdminLoginHandler::class         => AttributedServiceFactory::class,
+                GetEditAccountFormHandler::class        => AttributedServiceFactory::class,
+                PostEditAccountHandler::class           => AttributedServiceFactory::class,
+                PostChangeAccountPasswordHandler::class => AttributedServiceFactory::class,
+                GetLoginAccountFormHandler::class       => AttributedServiceFactory::class,
+                PostLoginAccountHandler::class          => AttributedServiceFactory::class,
+                GetLogoutAccountHandler::class          => AttributedServiceFactory::class,
                 AuthenticationAdapter::class            => AttributedServiceFactory::class,
                 AdminService::class                     => AttributedServiceFactory::class,
                 AdminRoleService::class                 => AttributedServiceFactory::class,

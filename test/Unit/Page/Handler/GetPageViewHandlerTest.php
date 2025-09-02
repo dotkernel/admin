@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Page\Handler;
 
-use Admin\Page\Handler\GetPageViewHandler;
+use Admin\Page\Handler\GetViewPageHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Router\RouteResult;
@@ -31,7 +31,7 @@ class GetPageViewHandlerTest extends UnitTest
             ->with(RouteResult::class)
             ->willReturn($routeResult);
 
-        $handler = new GetPageViewHandler($template);
+        $handler = new GetViewPageHandler($template);
 
         $response = $handler->handle($request);
 

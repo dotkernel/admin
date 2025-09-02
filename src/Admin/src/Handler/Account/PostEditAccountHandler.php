@@ -6,21 +6,31 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
+use Admin\Admin\InputFilter\EditAccountInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
+use Admin\App\Exception\BadRequestException;
+use Admin\App\Exception\ConflictException;
 use Admin\App\Exception\NotFoundException;
+use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
+use Dot\Log\Logger;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
-class GetAccountEditFormHandler implements RequestHandlerInterface
+/**
+ * @phpstan-import-type EditAccountDataType from EditAccountInputFilter
+ */
+class PostEditAccountHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,
@@ -30,6 +40,7 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         AccountForm::class,
         ChangePasswordForm::class,
         FlashMessengerInterface::class,
+        'dot-log.default_logger',
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
@@ -39,11 +50,24 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         protected AccountForm $accountForm,
         protected ChangePasswordForm $changePasswordForm,
         protected FlashMessengerInterface $messenger,
+        protected Logger $logger,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var iterable<array<string, string|string[]>> $data */
+        $data = $request->getParsedBody();
+        $this->accountForm->setData($data);
+        if (! $this->accountForm->isValid()) {
+            return new HtmlResponse(
+                $this->template->render('admin::view-account', [
+                    'accountForm'        => $this->accountForm->prepare(),
+                    'changePasswordForm' => $this->changePasswordForm->prepare(),
+                ])
+            );
+        }
+
         try {
             $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
@@ -56,13 +80,23 @@ class GetAccountEditFormHandler implements RequestHandlerInterface
         $this->changePasswordForm
             ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
-        $this->accountForm->bind($admin);
+        try {
+            /** @var EditAccountDataType $data */
+            $data = $this->accountForm->getData();
+            $this->adminService->saveAdmin($data, $admin);
+            $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
+        } catch (BadRequestException | ConflictException | NotFoundException $exception) {
+            $this->messenger->addError($exception->getMessage());
+        } catch (Throwable $exception) {
+            $this->logger->err('Update admin', [
+                'error' => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
+            ]);
+            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
+        }
 
-        return new HtmlResponse(
-            $this->template->render('admin::view-account', [
-                'accountForm'        => $this->accountForm->prepare(),
-                'changePasswordForm' => $this->changePasswordForm->prepare(),
-            ])
-        );
+        return new RedirectResponse($this->router->generateUri('admin::edit-account'));
     }
 }

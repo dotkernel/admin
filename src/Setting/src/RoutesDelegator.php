@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\Handler\GetSettingViewHandler;
-use Admin\Setting\Handler\PostSettingStoreHandler;
+use Admin\Setting\Handler\GetViewSettingHandler;
+use Admin\Setting\Handler\PostStoreSettingHandler;
 use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
 use Psr\Container\ContainerExceptionInterface;
@@ -24,8 +24,8 @@ class RoutesDelegator
         $routeCollector = $container->get(RouteCollectorInterface::class);
 
         $routeCollector->group('/setting')
-            ->get('/{identifier}', GetSettingViewHandler::class, 'setting::view-setting')
-            ->post('/{identifier}', PostSettingStoreHandler::class, 'setting::store-setting');
+            ->get('/{identifier}', GetViewSettingHandler::class, 'setting::view-setting')
+            ->post('/{identifier}', PostStoreSettingHandler::class, 'setting::store-setting');
 
         return $callback();
     }

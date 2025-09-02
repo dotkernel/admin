@@ -6,66 +6,44 @@ namespace Admin\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\InputFilter\ChangePasswordInputFilter;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
-use Core\App\Message;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
-use Dot\Log\Logger;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Throwable;
 
-/**
- * @phpstan-import-type ChangePasswordDataType from ChangePasswordInputFilter
- */
-class PostAccountChangePasswordHandler implements RequestHandlerInterface
+class GetEditAccountFormHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
         AuthenticationServiceInterface::class,
-        FlashMessengerInterface::class,
         AccountForm::class,
         ChangePasswordForm::class,
-        'dot-log.default_logger',
+        FlashMessengerInterface::class,
     )]
     public function __construct(
         protected AdminServiceInterface $adminService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected AuthenticationServiceInterface $authenticationService,
-        protected FlashMessengerInterface $messenger,
         protected AccountForm $accountForm,
         protected ChangePasswordForm $changePasswordForm,
-        protected Logger $logger,
+        protected FlashMessengerInterface $messenger,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        /** @var iterable<array<string, string|string[]>> $data */
-        $data = $request->getParsedBody();
-        $this->changePasswordForm->setData($data);
-        if (! $this->changePasswordForm->isValid()) {
-            return new HtmlResponse(
-                $this->template->render('admin::view-account', [
-                    'accountForm'        => $this->accountForm->prepare(),
-                    'changePasswordForm' => $this->changePasswordForm->prepare(),
-                ])
-            );
-        }
-
         try {
             $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
         } catch (NotFoundException $exception) {
@@ -78,25 +56,13 @@ class PostAccountChangePasswordHandler implements RequestHandlerInterface
         $this->changePasswordForm
             ->setAttribute('action', $this->router->generateUri('admin::change-account-password'));
 
-        try {
-            /** @var ChangePasswordDataType $data */
-            $data = $this->changePasswordForm->getData();
-            if ($admin->verifyPassword($data['currentPassword'])) {
-                $this->adminService->saveAdmin($data, $admin);
-                $this->messenger->addSuccess(Message::ACCOUNT_UPDATED);
-            } else {
-                $this->messenger->addError(Message::INVALID_CURRENT_PASSWORD);
-            }
-        } catch (Throwable $exception) {
-            $this->logger->err('Change password', [
-                'error' => $exception->getMessage(),
-                'file'  => $exception->getFile(),
-                'line'  => $exception->getLine(),
-                'trace' => $exception->getTraceAsString(),
-            ]);
-            $this->messenger->addError(Message::AN_ERROR_OCCURRED);
-        }
+        $this->accountForm->bind($admin);
 
-        return new RedirectResponse($this->router->generateUri('admin::edit-account-form'));
+        return new HtmlResponse(
+            $this->template->render('admin::view-account', [
+                'accountForm'        => $this->accountForm->prepare(),
+                'changePasswordForm' => $this->changePasswordForm->prepare(),
+            ])
+        );
     }
 }

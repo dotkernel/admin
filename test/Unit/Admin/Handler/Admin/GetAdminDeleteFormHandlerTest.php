@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\DeleteAdminForm;
-use Admin\Admin\Handler\Admin\GetAdminDeleteFormHandler;
+use Admin\Admin\Handler\Admin\GetDeleteAdminFormHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
 use AdminTest\Unit\UnitTest;
@@ -51,7 +51,7 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
 
         $this->messenger->expects($this->once())->method('addError')->with(Message::ADMIN_NOT_FOUND);
 
-        $handler = new GetAdminDeleteFormHandler(
+        $handler = new GetDeleteAdminFormHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -82,7 +82,7 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
         $this->router->method('generateUri')->willReturn('/');
         $this->template->method('render')->willReturn('<p></p>');
 
-        $handler = new GetAdminDeleteFormHandler(
+        $handler = new GetDeleteAdminFormHandler(
             $this->adminService,
             $this->router,
             $this->template,

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Admin\Setting;
 
-use Admin\Setting\Handler\GetSettingViewHandler;
-use Admin\Setting\Handler\PostSettingStoreHandler;
+use Admin\Setting\Handler\GetViewSettingHandler;
+use Admin\Setting\Handler\PostStoreSettingHandler;
 use Admin\Setting\Service\SettingService;
 use Admin\Setting\Service\SettingServiceInterface;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
@@ -43,8 +43,8 @@ class ConfigProvider
                 Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
-                PostSettingStoreHandler::class => AttributedServiceFactory::class,
-                GetSettingViewHandler::class   => AttributedServiceFactory::class,
+                PostStoreSettingHandler::class => AttributedServiceFactory::class,
+                GetViewSettingHandler::class   => AttributedServiceFactory::class,
                 SettingService::class          => AttributedServiceFactory::class,
             ],
             'aliases'    => [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AdminTest\Unit\Admin\Handler\Account;
 
-use Admin\Admin\Handler\Account\GetAccountLogoutHandler;
+use Admin\Admin\Handler\Account\GetLogoutAccountHandler;
 use AdminTest\Unit\UnitTest;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
@@ -23,7 +23,7 @@ class GetAccountLogoutHandlerTest extends UnitTest
         $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
         $request               = $this->createMock(ServerRequestInterface::class);
 
-        $handler = new GetAccountLogoutHandler(
+        $handler = new GetLogoutAccountHandler(
             $router,
             $authenticationService,
         );

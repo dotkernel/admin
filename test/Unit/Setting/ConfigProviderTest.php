@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Setting;
 
 use Admin\Setting\ConfigProvider;
-use Admin\Setting\Handler\GetSettingViewHandler;
-use Admin\Setting\Handler\PostSettingStoreHandler;
+use Admin\Setting\Handler\GetViewSettingHandler;
+use Admin\Setting\Handler\PostStoreSettingHandler;
 use Admin\Setting\RoutesDelegator;
 use Admin\Setting\Service\SettingService;
 use Admin\Setting\Service\SettingServiceInterface;
@@ -44,8 +44,8 @@ class ConfigProviderTest extends UnitTest
     public function testDependenciesHasFactories(): void
     {
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
-        $this->assertArrayHasKey(PostSettingStoreHandler::class, $this->config['dependencies']['factories']);
-        $this->assertArrayHasKey(GetSettingViewHandler::class, $this->config['dependencies']['factories']);
+        $this->assertArrayHasKey(PostStoreSettingHandler::class, $this->config['dependencies']['factories']);
+        $this->assertArrayHasKey(GetViewSettingHandler::class, $this->config['dependencies']['factories']);
         $this->assertArrayHasKey(SettingService::class, $this->config['dependencies']['factories']);
     }
 

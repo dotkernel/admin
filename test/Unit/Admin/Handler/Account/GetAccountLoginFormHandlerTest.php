@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Form\LoginForm;
-use Admin\Admin\Handler\Account\GetAccountLoginFormHandler;
+use Admin\Admin\Handler\Account\GetLoginAccountFormHandler;
 use Admin\App\Plugin\FormsPlugin;
 use AdminTest\Unit\UnitTest;
 use Dot\FlashMessenger\FlashMessengerInterface;
@@ -33,7 +33,7 @@ class GetAccountLoginFormHandlerTest extends UnitTest
 
         $authenticationService->method('hasIdentity')->willReturn(true);
 
-        $handler = new GetAccountLoginFormHandler(
+        $handler = new GetLoginAccountFormHandler(
             $router,
             $template,
             $authenticationService,
@@ -62,7 +62,7 @@ class GetAccountLoginFormHandlerTest extends UnitTest
 
         $authenticationService->method('hasIdentity')->willReturn(false);
 
-        $handler = new GetAccountLoginFormHandler(
+        $handler = new GetLoginAccountFormHandler(
             $router,
             $template,
             $authenticationService,

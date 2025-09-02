@@ -25,7 +25,7 @@ use Throwable;
 /**
  * @phpstan-import-type CreateAdminDataType from CreateAdminInputFilter
  */
-class PostAdminCreateHandler implements RequestHandlerInterface
+class PostCreateAdminHandler implements RequestHandlerInterface
 {
     #[Inject(
         AdminServiceInterface::class,

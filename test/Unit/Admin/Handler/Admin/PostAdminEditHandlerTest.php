@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdminTest\Unit\Admin\Handler\Admin;
 
 use Admin\Admin\Form\EditAdminForm;
-use Admin\Admin\Handler\Admin\PostAdminEditHandler;
+use Admin\Admin\Handler\Admin\PostEditAdminHandler;
 use Admin\Admin\Service\AdminRoleServiceInterface;
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\ConflictException;
@@ -76,7 +76,7 @@ class PostAdminEditHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::ADMIN_NOT_FOUND);
 
-        $handler = new PostAdminEditHandler(
+        $handler = new PostEditAdminHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,
@@ -113,7 +113,7 @@ class PostAdminEditHandlerTest extends UnitTest
 
         $this->adminService->expects($this->once())->method('saveAdmin');
 
-        $handler = new PostAdminEditHandler(
+        $handler = new PostEditAdminHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,
@@ -142,7 +142,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->form->method('isValid')->willReturn(false);
         $this->form->method('getData')->willReturn([]);
 
-        $handler = new PostAdminEditHandler(
+        $handler = new PostEditAdminHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,
@@ -168,7 +168,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->form->method('isValid')->willReturn(false);
         $this->form->method('getData')->willReturn([]);
 
-        $handler = new PostAdminEditHandler(
+        $handler = new PostEditAdminHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,
@@ -196,7 +196,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->form->method('isValid')->willReturn(false);
         $this->form->method('getData')->willReturn([]);
 
-        $handler = new PostAdminEditHandler(
+        $handler = new PostEditAdminHandler(
             $this->adminService,
             $this->adminRoleService,
             $this->router,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Dashboard;
 
-use Admin\Dashboard\Handler\GetDashboardViewHandler;
+use Admin\Dashboard\Handler\GetViewDashboardHandler;
 use Dot\DependencyInjection\Factory\AttributedServiceFactory;
 use Mezzio\Application;
 
@@ -44,7 +44,7 @@ class ConfigProvider
                 Application::class => [RoutesDelegator::class],
             ],
             'factories'  => [
-                GetDashboardViewHandler::class => AttributedServiceFactory::class,
+                GetViewDashboardHandler::class => AttributedServiceFactory::class,
             ],
         ];
     }

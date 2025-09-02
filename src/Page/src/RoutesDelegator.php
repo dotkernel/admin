@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Page;
 
-use Admin\Page\Handler\GetPageViewHandler;
+use Admin\Page\Handler\GetViewPageHandler;
 use Dot\Router\RouteCollectorInterface;
 use Mezzio\Application;
 use Psr\Container\ContainerExceptionInterface;
@@ -29,7 +29,7 @@ class RoutesDelegator
             foreach ($moduleRoutes as $routeUri => $templateName) {
                 $routeCollector->get(
                     sprintf('/%s/%s', $prefix, $routeUri),
-                    [GetPageViewHandler::class],
+                    [GetViewPageHandler::class],
                     sprintf('%s::%s', $prefix, $templateName)
                 );
             }

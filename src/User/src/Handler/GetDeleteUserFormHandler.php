@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Admin\Admin\Handler\Admin;
+namespace Admin\User\Handler;
 
-use Admin\Admin\Form\DeleteAdminForm;
-use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
+use Admin\User\Form\DeleteUserForm;
+use Admin\User\Service\UserServiceInterface;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -18,43 +18,43 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetAdminDeleteFormHandler implements RequestHandlerInterface
+class GetDeleteUserFormHandler implements RequestHandlerInterface
 {
     #[Inject(
-        AdminServiceInterface::class,
+        UserServiceInterface::class,
         RouterInterface::class,
         TemplateRendererInterface::class,
         FlashMessengerInterface::class,
-        DeleteAdminForm::class,
+        DeleteUserForm::class,
     )]
     public function __construct(
-        protected AdminServiceInterface $adminService,
+        protected UserServiceInterface $userService,
         protected RouterInterface $router,
         protected TemplateRendererInterface $template,
         protected FlashMessengerInterface $messenger,
-        protected DeleteAdminForm $deleteAdminForm,
+        protected DeleteUserForm $deleteUserForm,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
+            $user = $this->userService->findUser($request->getAttribute('uuid'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
             return new EmptyResponse(StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        $this->deleteAdminForm->setAttribute(
+        $this->deleteUserForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::delete-admin', ['uuid' => $admin->getUuid()->toString()])
+            $this->router->generateUri('user::delete-user', ['uuid' => $user->getUuid()->toString()])
         );
 
         return new HtmlResponse(
-            $this->template->render('admin::delete-admin-form', [
-                'form'  => $this->deleteAdminForm->prepare(),
-                'admin' => $admin,
+            $this->template->render('user::delete-user-form', [
+                'form' => $this->deleteUserForm->prepare(),
+                'user' => $user,
             ]),
         );
     }

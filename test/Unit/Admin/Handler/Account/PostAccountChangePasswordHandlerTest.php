@@ -6,7 +6,7 @@ namespace AdminTest\Unit\Admin\Handler\Account;
 
 use Admin\Admin\Form\AccountForm;
 use Admin\Admin\Form\ChangePasswordForm;
-use Admin\Admin\Handler\Account\PostAccountChangePasswordHandler;
+use Admin\Admin\Handler\Account\PostChangeAccountPasswordHandler;
 use Admin\Admin\Service\AdminServiceInterface;
 use AdminTest\Unit\UnitTest;
 use Core\Admin\Entity\Admin;
@@ -76,7 +76,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
 
-        $handler = new PostAccountChangePasswordHandler(
+        $handler = new PostChangeAccountPasswordHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -110,7 +110,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::INVALID_CURRENT_PASSWORD);
 
-        $handler = new PostAccountChangePasswordHandler(
+        $handler = new PostChangeAccountPasswordHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -144,7 +144,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
             ->method('addError')
             ->with(Message::AN_ERROR_OCCURRED);
 
-        $handler = new PostAccountChangePasswordHandler(
+        $handler = new PostChangeAccountPasswordHandler(
             $this->adminService,
             $this->router,
             $this->template,
@@ -177,7 +177,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
             ->method('addSuccess')
             ->with(Message::ACCOUNT_UPDATED);
 
-        $handler = new PostAccountChangePasswordHandler(
+        $handler = new PostChangeAccountPasswordHandler(
             $this->adminService,
             $this->router,
             $this->template,
