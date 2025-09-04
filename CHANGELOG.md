@@ -1,5 +1,29 @@
 # Changelog
 
+## 6.1.0 - 2025-09-04
+
+### Changed
+
+* Issue [#374](https://github.com/dotkernel/admin/issues/374): Changed route names to be in line with the Dotkernel API naming scheme by [@Jurj-Bogdan](https://github.com/Jurj-Bogdan) in [#375](https://github.com/dotkernel/admin/pull/375)
+* Issue [#377](https://github.com/dotkernel/admin/issues/377): Updated all handler names to match route names by [@Jurj-Bogdan](https://github.com/Jurj-Bogdan) in [#376](https://github.com/dotkernel/admin/pull/376)
+
+### Added
+
+* Issue [#332](https://github.com/dotkernel/admin/issues/332): Added `.laminas-ci.json` config file by [@alexmerlin](https://github.com/alexmerlin) in [#378](https://github.com/dotkernel/admin/pull/378)
+* Issue [#379](https://github.com/dotkernel/admin/issues/379): Implement `dotkernel/dot-maker` in dev mode by [@alexmerlin](https://github.com/alexmerlin) in [#380](https://github.com/dotkernel/admin/pull/380)
+
+### Deprecated
+
+* Nothing
+
+### Removed
+
+* Issue [#332](https://github.com/dotkernel/admin/issues/332): Removed `.laminas-ci/pre-run.sh` script by [@alexmerlin](https://github.com/alexmerlin) in [#378](https://github.com/dotkernel/admin/pull/378)
+
+### Fixed
+
+* Issue [#370](https://github.com/dotkernel/admin/issues/370): Infinite redirect after login by [@bidi47](https://github.com/bidi47) in [#371](https://github.com/dotkernel/admin/pull/371) and [#372](https://github.com/dotkernel/admin/pull/371)
+
 ## 6.0.0 - 2025-06-05
 
 ### Changed
