@@ -91,13 +91,24 @@ Use an existing empty one or create a new **MariaDB**/**MySQL** database.
 
 > Recommended collation: `utf8mb4_general_ci`.
 
-#### Running migrations
+With a database created, fill out the database connection params in `config/autoload/local.php` under `$databases['default']`.
 
-* fill out the database connection params in `config/autoload/local.php` under `$databases['default']`
-* run the database migrations by using the following command:
+#### Creating migrations
+
+Create a new migration by running:
 
 ```shell
-php ./bin/doctrine-migrations migrate
+php ./vendor/bin/doctrine-migrations diff
+```
+
+The new migration file will be placed in `src/Core/src/App/src/Migration/`.
+
+#### Running migrations
+
+Execute a new migration by running:
+
+```shell
+php ./vendor/bin/doctrine-migrations migrate
 ```
 
 This command will prompt you to confirm that you want to run it:
