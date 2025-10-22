@@ -20,6 +20,7 @@ use Dot\Log\Logger;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Form\Exception\ExceptionInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -55,6 +56,9 @@ class PostEditAdminHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
@@ -77,12 +81,11 @@ class PostEditAdminHandler implements RequestHandlerInterface
             $adminRoles
         );
 
-        $this->editAdminForm
-            ->setAttribute(
-                'action',
-                $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
-            )
-            ->setRoles($adminRoles);
+        $this->editAdminForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
+        );
+        $this->editAdminForm->setRoles($adminRoles);
 
         try {
             /** @var iterable<array<string, string|string[]>> $data */

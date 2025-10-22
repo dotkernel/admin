@@ -49,7 +49,7 @@ return [
                         ],
                     ],
                     /*
-                    // Using version ^3.6.1 or ^4.1.1 of dot-rbac-guard now allows using placeholders (*) for route names
+                    // Using version ^3.6.1 or ^4.1.1 of dot-rbac-guard allows using placeholders (*) for route names
                     // Here are a few ways the above configuration could be written instead:
                     [
                         'type'    => 'RoutePermission',

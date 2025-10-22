@@ -167,7 +167,7 @@ class UserService implements UserServiceInterface
         if (array_key_exists('identity', $data) && $data['identity'] !== null && ! $user->hasIdentity()) {
             $user->setIdentity($data['identity']);
         }
-        if (array_key_exists('password', $data) && $data['password'] !== null) {
+        if (array_key_exists('password', $data) && $data['password'] !== null && $data['password'] !== '') {
             $user->usePassword($data['password']);
         }
         if (array_key_exists('hash', $data) && $data['hash'] !== null) {

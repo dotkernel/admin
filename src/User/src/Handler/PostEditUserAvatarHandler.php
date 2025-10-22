@@ -20,6 +20,7 @@ use Dot\Log\Logger;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Form\Exception\ExceptionInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -60,6 +61,9 @@ class PostEditUserAvatarHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
@@ -93,8 +97,8 @@ class PostEditUserAvatarHandler implements RequestHandlerInterface
             ->setAttribute(
                 'action',
                 $this->router->generateUri('user::edit-user', ['uuid' => $user->getUuid()->toString()])
-            )
-            ->setRoles($userRoles);
+            );
+        $this->editUserForm->setRoles($userRoles);
         try {
             $this->editUserAvatarForm->setData(
                 array_merge((array) $request->getParsedBody(), $request->getUploadedFiles())
