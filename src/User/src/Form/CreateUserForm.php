@@ -14,6 +14,7 @@ use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Session\Container;
 
@@ -26,6 +27,7 @@ class CreateUserForm extends AbstractForm
 {
     /**
      * @param array<non-empty-string, mixed> $options
+     * @throws ExceptionInterface
      */
     public function __construct(?string $name = null, array $options = [])
     {
@@ -43,16 +45,20 @@ class CreateUserForm extends AbstractForm
 
     /**
      * @phpstan-param SelectDataType[] $roles
+     * @throws ExceptionInterface
      */
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): static
     {
-        return $this->add(
-            (new MultiCheckbox('roles'))
-                ->setLabel('Select at least one role')
-                ->setValueOptions($roles)
-        );
+        $checkbox = new MultiCheckbox('roles');
+        $checkbox->setLabel('Select at least one role');
+        $checkbox->setValueOptions($roles);
+        $this->add($checkbox);
+        return $this;
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function init(): void
     {
         $this
@@ -67,11 +73,6 @@ class CreateUserForm extends AbstractForm
             )->add(
                 (new Password('passwordConfirm'))
                     ->setLabel('Password confirm')
-                    ->setAttribute('required', true)
-            )->add(
-                (new Select('status'))
-                    ->setLabel('Account status')
-                    ->setValueOptions(UserStatusEnum::toArray())
                     ->setAttribute('required', true)
             )->add(
                 (new Csrf('userCreateCsrf'))
@@ -100,5 +101,11 @@ class CreateUserForm extends AbstractForm
                             ->setAttribute('required', true)
                     )
             );
+
+        $select = new Select('status');
+        $select->setLabel('Account status');
+        $select->setValueOptions(UserStatusEnum::toArray());
+        $select->setAttribute('required', true);
+        $this->add($select);
     }
 }

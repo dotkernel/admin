@@ -15,6 +15,7 @@ use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Form\Exception\ExceptionInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -46,6 +47,9 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
     ) {
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
@@ -59,7 +63,7 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
         /** @var AdminRole[] $adminRoles */
         $adminRoles = $this->adminRoleService->getAdminRoleRepository()->findAll();
         $adminRoles = array_map(
-            /** @return SelectDataType */
+        /** @return SelectDataType */
             fn (AdminRole $adminRole): array => [
                 'label'    => $adminRole->getName()->value,
                 'value'    => $adminRole->getUuid()->toString(),
@@ -68,12 +72,11 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
             $adminRoles
         );
 
-        $this->editAdminForm
-            ->setAttribute(
-                'action',
-                $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
-            )
-            ->bind($admin)
+        $this->editAdminForm->setAttribute(
+            'action',
+            $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
+        );
+        $this->editAdminForm->bind($admin)
             ->setRoles($adminRoles);
 
         return new HtmlResponse(
