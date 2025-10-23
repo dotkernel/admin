@@ -72,7 +72,7 @@ class PostEditAdminHandler implements RequestHandlerInterface
         /** @var AdminRole[] $adminRoles */
         $adminRoles = $this->adminRoleService->getAdminRoleRepository()->findAll();
         $adminRoles = array_map(
-            /** @return SelectDataType */
+        /** @return SelectDataType */
             fn (AdminRole $adminRole): array => [
                 'label'    => $adminRole->getName()->value,
                 'value'    => $adminRole->getUuid()->toString(),

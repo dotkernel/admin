@@ -77,7 +77,7 @@ class PostEditUserHandler implements RequestHandlerInterface
         /** @var UserRole[] $userRoles */
         $userRoles = $this->userRoleService->getUserRoleRepository()->findAll();
         $userRoles = array_map(
-            /** @return SelectDataType */
+        /** @return SelectDataType */
             fn (UserRole $userRole): array => [
                 'label'    => $userRole->getName()->value,
                 'value'    => $userRole->getUuid()->toString(),
