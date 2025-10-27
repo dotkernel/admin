@@ -13,6 +13,7 @@ use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\Session\Container;
 
 /**
@@ -24,6 +25,7 @@ class EditAdminForm extends AbstractForm
 {
     /**
      * @param array<non-empty-string, mixed> $options
+     * @throws ExceptionInterface
      */
     public function __construct(?string $name = null, array $options = [])
     {
@@ -41,16 +43,20 @@ class EditAdminForm extends AbstractForm
 
     /**
      * @phpstan-param SelectDataType[] $roles
+     * @throws ExceptionInterface
      */
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): static
     {
-        return $this->add(
-            (new MultiCheckbox('roles'))
-                ->setLabel('Select at least one role')
-                ->setValueOptions($roles)
-        );
+        $checkbox = new MultiCheckbox('roles');
+        $checkbox->setLabel('Select at least one role');
+        $checkbox->setValueOptions($roles);
+        $this->add($checkbox);
+        return $this;
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function init(): void
     {
         $this->add(
@@ -69,12 +75,13 @@ class EditAdminForm extends AbstractForm
             (new Text('lastName'))
                 ->setLabel('Lastname')
         );
-        $this->add(
-            (new Select('status'))
-                ->setLabel('Account status')
-                ->setValueOptions(AdminStatusEnum::toArray())
-                ->setAttribute('required', true)
-        );
+
+        $select = new Select('status');
+        $select->setLabel('Account status');
+        $select->setValueOptions(AdminStatusEnum::toArray());
+        $select->setAttribute('required', true);
+        $this->add($select);
+
         $this->add(
             (new Csrf('adminEditCsrf'))
                 ->setOptions([
