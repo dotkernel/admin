@@ -18,8 +18,8 @@ return [
                         'type'    => 'RoutePermission',
                         'options' => [
                             'rules' => [
-                                'admin::login-admin-form'        => [],
-                                'admin::login-admin'             => [],
+                                'admin::login-admin-form'        => ['unauthenticated'],
+                                'admin::login-admin'             => ['unauthenticated'],
                                 'admin::create-admin-form'       => ['authenticated'],
                                 'admin::create-admin'            => ['authenticated'],
                                 'admin::delete-admin-form'       => ['authenticated'],
@@ -48,6 +48,34 @@ return [
                             ],
                         ],
                     ],
+                    /*
+                    // Using version ^3.6.1 or ^4.1.1 of dot-rbac-guard allows using placeholders (*) for route names
+                    // Here are a few ways the above configuration could be written instead:
+                    [
+                        'type'    => 'RoutePermission',
+                        'options' => [
+                            'rules' => [
+                                // you can use placeholders for specific actions
+                                'admin::login-*'  => ['unauthenticated'],
+                                'admin::create-*' => ['authenticated'],
+                                'admin::delete-*' => ['authenticated'],
+                                'admin::edit-*'   => ['authenticated'],
+                                'admin::list-*'   => ['authenticated'],
+                                // you may still use full route names
+                                'admin::change-account-password' => ['authenticated'],
+                                'admin::logout-admin'            => ['authenticated'],
+                                'app::index-redirect'            => ['authenticated'],
+                                'dashboard::view-dashboard'      => ['authenticated'],
+                                'page::components'               => ['authenticated'],
+                                // or even more permissive
+                                'setting::*' => ['authenticated'],
+                                'user::*'    => ['authenticated'],
+                            ],
+                        ],
+                    ],
+                    */
+                    // You can find more details in the dot-rbac-guard documentation
+                    // https://docs.dotkernel.org/dot-rbac-guard/v4/configuration/
                 ],
             ],
         ],
