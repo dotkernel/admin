@@ -40,7 +40,7 @@ return [
         /**
          * Marks the cookie as accessible only through the HTTP protocol.
          */
-        'cookie_httponly' => false,
+        'cookie_httponly' => true,
 
         /**
          * Specifies the lifetime of the cookie in seconds which is sent to the browser.
