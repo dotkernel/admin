@@ -35,11 +35,6 @@ $aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
     Mezzio\Router\ConfigProvider::class,
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     Mezzio\Twig\ConfigProvider::class,
-    class_exists(Mezzio\Tooling\ConfigProvider::class)
-        ? Mezzio\Tooling\ConfigProvider::class
-        : function () {
-        return [];
-    },
 
     // Dotkernel packages
     Dot\Cache\ConfigProvider::class,
