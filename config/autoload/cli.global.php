@@ -14,8 +14,8 @@ return [
         'version'  => '1.0.0',
         'name'     => 'Dotkernel CLI',
         'commands' => [
-            RouteListCommand::getDefaultName() => RouteListCommand::class,
-            GeoIpCommand::getDefaultName()     => GeoIpCommand::class,
+            GeoIpCommand::$defaultName     => GeoIpCommand::class,
+            RouteListCommand::$defaultName => RouteListCommand::class,
         ],
     ],
     FileLockerInterface::class => [
