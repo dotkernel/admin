@@ -28,14 +28,14 @@
         "process-timeout": 0
     },
     "require": {
-        "php": "~8.2.0 || ~8.3.0",
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
         "dotkernel/dot-cache": "^4.3.0",
         "dotkernel/dot-cli": "^3.9.0",
         "dotkernel/dot-data-fixtures": "^1.4.0",
         "dotkernel/dot-dependency-injection": "^1.2.0",
         "dotkernel/dot-errorhandler": "^4.0.0",
         "dotkernel/dot-flashmessenger": "^3.6.1",
-        "dotkernel/dot-geoip": "^3.9.0",
+        "dotkernel/dot-geoip": "^3.10.1",
         "dotkernel/dot-helpers": "^3.8.0",
         "dotkernel/dot-mail": "^5.1.5",
         "dotkernel/dot-navigation": "^3.5.1",
@@ -53,7 +53,7 @@
         "mezzio/mezzio-fastroute": "^3.13.0",
         "ramsey/uuid": "^4.5.0",
         "ramsey/uuid-doctrine": "^2.1.0",
-        "roave/psr-container-doctrine": "^5.2.2"
+        "roave/psr-container-doctrine": "^5.2.2 || ^6.0.0"
     },
     "require-dev": {
         "dotkernel/dot-maker": "^1.0.2",
