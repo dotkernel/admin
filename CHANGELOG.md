@@ -1,5 +1,32 @@
 # Changelog
 
+## 6.2.0 - 2025-11-19
+
+### Changed
+
+* Core sync by [@alexmerlin](https://github.com/alexmerlin) in [#381](https://github.com/dotkernel/admin/pull/381)
+* Update badge for Packagist dependency version by [@arhimede](https://github.com/arhimede) in [#387](https://github.com/dotkernel/admin/pull/387)
+* Form updates by [@Jurj-Bogdan](https://github.com/Jurj-Bogdan) in [#388](https://github.com/dotkernel/admin/pull/388)
+* Issue [#298](https://github.com/dotkernel/admin/issues/298): Bump to PHP 8.4 by [@alexmerlin](https://github.com/alexmerlin) in [#393](https://github.com/dotkernel/admin/pull/393)
+
+### Added
+
+* Added comment with new possible rbac guard config by [@Jurj-Bogdan](https://github.com/Jurj-Bogdan) in [#386](https://github.com/dotkernel/admin/pull/386)
+* Issue [#391](https://github.com/dotkernel/admin/issues/391): Implemented Doctrine table prefixes by [@alexmerlin](https://github.com/alexmerlin) in [#392](https://github.com/dotkernel/admin/pull/392)
+
+### Deprecated
+
+* Nothing
+
+### Removed
+
+* Issue [#382](https://github.com/dotkernel/admin/issues/382): Removed migration file by [@alexmerlin](https://github.com/alexmerlin) in [#383](https://github.com/dotkernel/admin/pull/383)
+* Removed mezzio/mezzio-tooling dependency by [@Jurj-Bogdan](https://github.com/Jurj-Bogdan) in [#390](https://github.com/dotkernel/admin/pull/390)
+
+### Fixed
+
+* Nothing
+
 ## 6.1.0 - 2025-09-04
 
 ### Changed
