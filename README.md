@@ -2,14 +2,23 @@
 
 Dotkernel web starter package suitable for admin applications.
 
-![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/admin)
+## Version History
 
+| Branch | Release  | PSR-11 | OSS Lifecycle                                                                                                                          | PHP Version                                                                                           |
+|--------|----------|--------|----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| 6.0    | `>= 6.0` | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F6.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/6.2.0) |
+| 5.0    | `< 6.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F5.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/5.0.3) |
+| 4.0    | `< 5.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F4.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.3.1) |
+| 3.0    | `< 4.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F3.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.2.1) |
+
+## Badges
+
+![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/admin)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/admin)](https://github.com/dotkernel/admin/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/admin)](https://github.com/dotkernel/admin/network)
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/admin)](https://github.com/dotkernel/admin/stargazers)
 [![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/3.0/LICENSE.md)
-
 
 ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.0.x-dev)
 
