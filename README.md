@@ -2,6 +2,17 @@
 
 DotKernel web starter package suitable for admin applications.
 
+## Version History
+
+| Branch | Release  | PSR-11 | OSS Lifecycle                                                                                                                          | PHP Version                                                                                           |
+|--------|----------|--------|----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| 6.0    | `>= 6.0` | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F6.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/6.2.0) |
+| 5.0    | `< 6.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F5.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/5.0.3) |
+| 4.0    | `< 5.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F4.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.3.1) |
+| 3.0    | `< 4.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F3.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.2.1) |
+
+## Badges
+
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/admin)
 ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.3.1)
 
