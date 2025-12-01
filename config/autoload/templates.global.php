@@ -35,11 +35,9 @@ return [
             RouteExtension::class,
             TranslationExtension::class,
         ],
-        'globals'         => [
-            'appName' => $app['name'] ?? '',
-        ],
+        'globals'         => [],
         'optimizations'   => -1,
         'runtime_loaders' => [],
-//        'timezone'        => '',
+        'timezone'        => 'UTC',
     ],
 ];

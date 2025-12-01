@@ -55,9 +55,9 @@ class AdminService implements AdminServiceInterface
     /**
      * @throws NotFoundException
      */
-    public function findAdmin(string $uuid): Admin
+    public function findAdmin(string $id): Admin
     {
-        $admin = $this->adminRepository->find($uuid);
+        $admin = $this->adminRepository->find($id);
         if (! $admin instanceof Admin) {
             throw new NotFoundException(Message::ADMIN_NOT_FOUND);
         }
@@ -127,7 +127,7 @@ class AdminService implements AdminServiceInterface
             $admin->setStatus($status);
         }
 
-        $this->validateUniqueAdmin((string) $admin->getIdentity(), $admin->getUuid());
+        $this->validateUniqueAdmin((string) $admin->getIdentity(), $admin->getId());
 
         if (array_key_exists('roles', $data) && count($data['roles']) > 0) {
             $admin->resetRoles();
@@ -152,14 +152,14 @@ class AdminService implements AdminServiceInterface
     /**
      * @throws ConflictException
      */
-    private function validateUniqueAdmin(string $identity, ?UuidInterface $uuid = null): void
+    private function validateUniqueAdmin(string $identity, ?UuidInterface $id = null): void
     {
         $admin = $this->adminRepository->findOneBy(['identity' => $identity]);
         if ($admin instanceof Admin) {
-            if ($uuid === null) {
+            if ($id === null) {
                 throw new ConflictException(Message::DUPLICATE_IDENTITY);
             }
-            if ($admin->getUuid()->toString() !== $uuid->toString()) {
+            if (! $admin->getId()->equals($id)) {
                 throw new ConflictException(Message::DUPLICATE_IDENTITY);
             }
         }

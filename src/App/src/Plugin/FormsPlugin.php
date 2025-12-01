@@ -7,6 +7,7 @@ namespace Admin\App\Plugin;
 use Dot\Controller\Plugin\PluginInterface;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\FlashMessenger\FlashMessengerInterface;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\Form\Form;
 use Laminas\Form\FormElementManager;
 use Laminas\Form\FormInterface;
@@ -46,6 +47,7 @@ class FormsPlugin implements PluginInterface
     /**
      * @template TFilteredValues
      * @param Form<TFilteredValues> $form
+     * @throws ExceptionInterface
      */
     public function saveState(Form $form): void
     {
@@ -60,6 +62,7 @@ class FormsPlugin implements PluginInterface
      * @template TFilteredValues
      * @param Form<TFilteredValues> $form
      * @return non-empty-string[]
+     * @throws ExceptionInterface
      */
     public function getMessages(Form $form): array
     {
@@ -71,6 +74,7 @@ class FormsPlugin implements PluginInterface
     /**
      * @template TFilteredValues
      * @param Form<TFilteredValues> $form
+     * @throws ExceptionInterface
      */
     public function getMessagesAsString(Form $form): string
     {

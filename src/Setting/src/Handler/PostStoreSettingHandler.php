@@ -9,6 +9,7 @@ use Admin\App\Exception\NotFoundException;
 use Admin\Setting\InputFilter\CreateSettingInputFilter;
 use Admin\Setting\InputFilter\Input\ValueInput;
 use Admin\Setting\Service\SettingServiceInterface;
+use Core\App\Message;
 use Core\Setting\Entity\Setting;
 use Core\Setting\Enum\SettingIdentifierEnum;
 use Dot\DependencyInjection\Attribute\Inject;
@@ -19,7 +20,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-use function assert;
 use function is_array;
 use function json_decode;
 
@@ -59,8 +59,19 @@ class PostStoreSettingHandler implements RequestHandlerInterface
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
 
+        $identifier = SettingIdentifierEnum::tryFrom($identifier);
+        if (! $identifier instanceof SettingIdentifierEnum) {
+            return new JsonResponse([
+                'error' => [
+                    'messages' => [
+                        Message::settingNotFound($request->getAttribute('identifier')),
+                    ],
+                ],
+            ], StatusCodeInterface::STATUS_NOT_FOUND);
+        }
+
         try {
-            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getId());
         } catch (NotFoundException $exception) {
             return new JsonResponse([
                 'error' => [
@@ -70,9 +81,6 @@ class PostStoreSettingHandler implements RequestHandlerInterface
                 ],
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
-
-        $identifier = SettingIdentifierEnum::tryFrom($identifier);
-        assert($identifier instanceof SettingIdentifierEnum);
 
         $setting = $this->settingService->findOneBy(['admin' => $admin, 'identifier' => $identifier]);
         if ($setting instanceof Setting) {

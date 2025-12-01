@@ -10,6 +10,7 @@ use Admin\User\InputFilter\EditUserAvatarInputFilter;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\File;
 use Laminas\Form\Element\Submit;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\Session\Container;
 
 use function implode;
@@ -22,6 +23,7 @@ class EditUserAvatarForm extends AbstractForm
 {
     /**
      * @param array<non-empty-string, mixed> $options
+     * @throws ExceptionInterface
      */
     public function __construct(?string $name = null, array $options = [])
     {
@@ -37,6 +39,9 @@ class EditUserAvatarForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function init(): void
     {
         $this

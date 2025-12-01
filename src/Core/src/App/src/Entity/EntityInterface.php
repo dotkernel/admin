@@ -9,11 +9,11 @@ use Ramsey\Uuid\UuidInterface;
 
 interface EntityInterface
 {
-    public function getUuid(): UuidInterface;
+    public function getId(): UuidInterface;
 
     public function getCreated(): ?DateTimeImmutable;
 
-    public function getCreatedFormatted(string $dateFormat = 'Y-m-d H:i:s'): string;
+    public function getCreatedFormatted(string $dateFormat = 'Y-m-d H:i:s'): ?string;
 
     public function getUpdated(): ?DateTimeImmutable;
 

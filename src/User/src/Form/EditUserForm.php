@@ -53,6 +53,7 @@ class EditUserForm extends AbstractForm
         $checkbox->setLabel('Select at least one role');
         $checkbox->setValueOptions($roles);
         $this->add($checkbox);
+
         return $this;
     }
 

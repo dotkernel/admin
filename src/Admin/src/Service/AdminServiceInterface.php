@@ -27,7 +27,7 @@ interface AdminServiceInterface
     /**
      * @throws NotFoundException
      */
-    public function findAdmin(string $uuid): Admin;
+    public function findAdmin(string $id): Admin;
 
     /**
      * @param array<string, mixed> $params

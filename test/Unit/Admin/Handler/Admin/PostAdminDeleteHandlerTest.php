@@ -57,7 +57,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
 
     public function testDeleteAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->request->method('getAttribute')->with('id')->willReturn('test');
         $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
@@ -85,14 +85,14 @@ class PostAdminDeleteHandlerTest extends UnitTest
      */
     public function testDeleteAdminValidFormDataProvidedWillFlashSuccessMessage(): void
     {
-        $uuid  = $this->createMock(Uuid::class);
+        $id    = $this->createMock(Uuid::class);
         $admin = $this->createMock(Admin::class);
 
-        $uuid->method('toString')->willReturn('0x123');
-        $admin->method('getUuid')->willReturn($uuid);
+        $id->method('toString')->willReturn('0x123');
+        $admin->method('getId')->willReturn($id);
 
-        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
+        $this->request->method('getAttribute')->with('id')->willReturn($id->toString());
+        $this->adminService->method('findAdmin')->with($id->toString())->willReturn($admin);
 
         $this->request->method('getParsedBody')->willReturn([]);
         $this->form->method('isValid')->willReturn(true);
@@ -124,14 +124,14 @@ class PostAdminDeleteHandlerTest extends UnitTest
      */
     public function testDeleteAdminInvalidFormDataProvidedWillReturnHtmlResponse(): void
     {
-        $uuid  = $this->createMock(Uuid::class);
+        $id    = $this->createMock(Uuid::class);
         $admin = $this->createMock(Admin::class);
 
-        $uuid->method('toString')->willReturn('0x123');
-        $admin->method('getUuid')->willReturn($uuid);
+        $id->method('toString')->willReturn('0x123');
+        $admin->method('getId')->willReturn($id);
 
-        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
+        $this->request->method('getAttribute')->with('id')->willReturn($id->toString());
+        $this->adminService->method('findAdmin')->with($id->toString())->willReturn($admin);
 
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -156,7 +156,7 @@ class PostAdminDeleteHandlerTest extends UnitTest
      */
     public function testDeleteAdminThrowsErrorWillReturnEmptyResponse(): void
     {
-        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->request->method('getAttribute')->with('id')->willReturn('test');
         $this->adminService->method('findAdmin')->willReturn(new Admin());
         $this->form->method('setData')->willThrowException(new Exception('test'));
 

@@ -60,7 +60,7 @@ class AdminTest extends UnitTest
     {
         $admin = new Admin();
 
-        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$admin->getUuid()]);
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$admin->getId()]);
 
         $admin = $admin->setIdentity($this->default['identity']);
         $this->assertSame(Admin::class, $admin::class);
@@ -116,9 +116,9 @@ class AdminTest extends UnitTest
         $copy = $admin->getArrayCopy();
         $this->assertIsArray($copy);
 
-        $this->assertArrayHasKey('uuid', $copy);
-        $this->assertIsString($copy['uuid']);
-        $this->assertNotEmpty($copy['uuid']);
+        $this->assertArrayHasKey('id', $copy);
+        $this->assertIsString($copy['id']);
+        $this->assertNotEmpty($copy['id']);
 
         $this->assertArrayHasKey('identity', $copy);
         $this->assertSame($this->default['identity'], $copy['identity']);

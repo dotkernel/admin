@@ -110,9 +110,9 @@
                                     <label>
                                         <input type="checkbox"
                                            class="checkbox ui-checkbox"
-                                           value="{{ user.uuid }}"
-                                           data-edit-url="{{ path('user::edit-user', {uuid: user.uuid}) }}"
-                                           data-delete-url="{{ path('user::delete-user', {uuid: user.uuid}) }}">
+                                           value="{{ user.id }}"
+                                           data-edit-url="{{ path('user::edit-user', {id: user.id}) }}"
+                                           data-delete-url="{{ path('user::delete-user', {id: user.id}) }}">
                                     </label>
                                 </td>
                                 <td class="column-user-identity">{{ user.identity }}</td>

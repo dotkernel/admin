@@ -23,7 +23,6 @@ use PHPUnit\Framework\MockObject\Exception;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function json_decode;
-use function sprintf;
 
 class GetSettingHandlerTest extends UnitTest
 {
@@ -63,13 +62,10 @@ class GetSettingHandlerTest extends UnitTest
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->assertSame(StatusCodeInterface::STATUS_BAD_REQUEST, $response->getStatusCode());
+        $this->assertSame(StatusCodeInterface::STATUS_NOT_FOUND, $response->getStatusCode());
         $this->assertIsArray($data);
-        $this->assertNotEmpty($data['error']['messages']['identifier']['notInArray']);
-        $this->assertSame(
-            sprintf(Message::INVALID_VALUE, 'identifier'),
-            $data['error']['messages']['identifier']['notInArray']
-        );
+        $this->assertCount(1, $data['error']['messages']);
+        $this->assertSame(Message::settingNotFound('test'), $data['error']['messages'][0]);
     }
 
     /**
@@ -83,7 +79,7 @@ class GetSettingHandlerTest extends UnitTest
         $request               = $this->createMock(ServerRequestInterface::class);
         $identity              = $this->createMock(AdminIdentity::class);
 
-        $identity->method('getUuid')->willReturn('test');
+        $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
         $adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
@@ -123,7 +119,7 @@ class GetSettingHandlerTest extends UnitTest
         $identity              = $this->createMock(AdminIdentity::class);
         $admin                 = $this->createMock(Admin::class);
 
-        $identity->method('getUuid')->willReturn('test');
+        $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
         $adminService->method('findAdmin')->willReturn($admin);
 
@@ -165,9 +161,9 @@ class GetSettingHandlerTest extends UnitTest
         $admin                 = $this->createMock(Admin::class);
         $setting               = $this->createMock(Setting::class);
 
-        $identity->method('getUuid')->willReturn('test');
+        $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminRepository->method('findOneBy')->with(['uuid' => 'test'])->willReturn($admin);
+        $adminRepository->method('findOneBy')->with(['id' => 'test'])->willReturn($admin);
         $adminService->method('getAdminRepository')->willReturn($adminRepository);
         $setting->method('getArrayCopy')->willReturn([
             'identifier' => 'test',

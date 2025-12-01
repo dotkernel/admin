@@ -40,7 +40,7 @@ class AdminLoginTest extends UnitTest
     {
         $adminLogin = new AdminLogin();
 
-        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminLogin->getUuid()]);
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminLogin->getId()]);
 
         $this->assertNull($adminLogin->getAdminIp());
         $adminLogin = $adminLogin->setAdminIp('0.0.0.0');

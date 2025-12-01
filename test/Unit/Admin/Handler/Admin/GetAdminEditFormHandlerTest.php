@@ -15,6 +15,7 @@ use Core\Admin\Enum\AdminStatusEnum;
 use Core\App\Message;
 use Dot\FlashMessenger\FlashMessengerInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use Laminas\Form\Exception\ExceptionInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
@@ -50,7 +51,7 @@ class GetAdminEditFormHandlerTest extends UnitTest
 
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->request->method('getAttribute')->with('id')->willReturn('test');
         $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
         $this
@@ -75,20 +76,21 @@ class GetAdminEditFormHandlerTest extends UnitTest
 
     /**
      * @throws Exception
+     * @throws ExceptionInterface
      */
     public function testValidAdminWillReturnHtmlTemplate(): void
     {
-        $uuid  = $this->createMock(Uuid::class);
+        $id    = $this->createMock(Uuid::class);
         $admin = $this->createMock(Admin::class);
 
-        $uuid->method('toString')->willReturn('0x123');
-        $admin->method('getUuid')->willReturn($uuid);
+        $id->method('toString')->willReturn('0x123');
+        $admin->method('getId')->willReturn($id);
         $admin->method('getStatus')->willReturn(AdminStatusEnum::Active);
 
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->form->method('bind')->willReturn($this->form);
-        $this->request->method('getAttribute')->with('uuid')->willReturn($uuid->toString());
-        $this->adminService->method('findAdmin')->with($uuid->toString())->willReturn($admin);
+        $this->request->method('getAttribute')->with('id')->willReturn($id->toString());
+        $this->adminService->method('findAdmin')->with($id->toString())->willReturn($admin);
 
         $this->template->method('render')->willReturn('<p></p>');
 

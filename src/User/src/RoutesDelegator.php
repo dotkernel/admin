@@ -32,11 +32,11 @@ class RoutesDelegator
         $routeCollector->group('/user')
             ->get('/create-user', GetCreateUserFormHandler::class, 'user::create-user-form')
             ->post('/create-user', PostCreateUserHandler::class, 'user::create-user')
-            ->get('/delete-user/{uuid}', GetDeleteUserFormHandler::class, 'user::delete-user-form')
-            ->post('/delete-user/{uuid}', PostDeleteUserHandler::class, 'user::delete-user')
-            ->get('/edit-user/{uuid}', GetEditUserFormHandler::class, 'user::edit-user-form')
-            ->post('/edit-user/{uuid}', PostEditUserHandler::class, 'user::edit-user')
-            ->post('/edit-user-avatar/{uuid}', PostEditUserAvatarHandler::class, 'user::edit-user-avatar')
+            ->get('/delete-user/{id}', GetDeleteUserFormHandler::class, 'user::delete-user-form')
+            ->post('/delete-user/{id}', PostDeleteUserHandler::class, 'user::delete-user')
+            ->get('/edit-user/{id}', GetEditUserFormHandler::class, 'user::edit-user-form')
+            ->post('/edit-user/{id}', PostEditUserHandler::class, 'user::edit-user')
+            ->post('/edit-user-avatar/{id}', PostEditUserAvatarHandler::class, 'user::edit-user-avatar')
             ->get('/list-user', GetListUserHandler::class, 'user::list-user');
 
         return $callback();

@@ -8,6 +8,7 @@ use AdminTest\Unit\UnitTest;
 use Core\App\Entity\AbstractEntity;
 use Core\App\Entity\EntityInterface;
 use DateTimeImmutable;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 class AbstractEntityTest extends UnitTest
@@ -15,6 +16,11 @@ class AbstractEntityTest extends UnitTest
     public function testWillInstantiate(): void
     {
         $entity = new class extends AbstractEntity {
+            public function getId(): UuidInterface
+            {
+                return Uuid::uuid7();
+            }
+
             /**
              * @return array<string, mixed>
              */
@@ -45,6 +51,6 @@ class AbstractEntityTest extends UnitTest
         };
 
         $this->assertContainsOnlyInstancesOf(EntityInterface::class, [$entity]);
-        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$entity->getUuid()]);
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$entity->getId()]);
     }
 }

@@ -100,7 +100,7 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testInvalidAdminProvided(): void
     {
-        $this->identity->method('getUuid')->willReturn('test');
+        $this->identity->method('getId')->willReturn('test');
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
         $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
         $this->stream->method('getContents')->willReturn(json_encode([
@@ -141,7 +141,7 @@ class StoreSettingHandlerTest extends UnitTest
      */
     public function testUpdateSetting(): void
     {
-        $this->identity->method('getUuid')->willReturn('test');
+        $this->identity->method('getId')->willReturn('test');
         $this->authenticationService->method('getIdentity')->willReturn($this->identity);
         $this->settingService->method('findOneBy')->willReturn(
             $this->createMock(Setting::class)

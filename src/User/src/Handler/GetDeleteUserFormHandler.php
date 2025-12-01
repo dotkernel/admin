@@ -39,7 +39,7 @@ class GetDeleteUserFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $user = $this->userService->findUser($request->getAttribute('uuid'));
+            $user = $this->userService->findUser($request->getAttribute('id'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -48,7 +48,7 @@ class GetDeleteUserFormHandler implements RequestHandlerInterface
 
         $this->deleteUserForm->setAttribute(
             'action',
-            $this->router->generateUri('user::delete-user', ['uuid' => $user->getUuid()->toString()])
+            $this->router->generateUri('user::delete-user', ['id' => $user->getId()->toString()])
         );
 
         return new HtmlResponse(

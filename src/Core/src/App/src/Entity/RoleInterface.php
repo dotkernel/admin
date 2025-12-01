@@ -9,9 +9,9 @@ use DateTimeImmutable;
 
 /**
  * @phpstan-type RoleType array{
- *     uuid: non-empty-string,
+ *     id: non-empty-string,
  *     name: non-empty-string,
- *     created: DateTimeImmutable,
+ *     created: DateTimeImmutable|null,
  *     updated: DateTimeImmutable|null
  * }
  */

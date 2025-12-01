@@ -22,6 +22,6 @@ return [
         ], // Custom headers
         'allowed_max_age'     => '600', // 10 minutes
         'credentials_allowed' => true, // Allow cookies
-        'exposed_headers'     => [], // Tell client that the API will always return this header
+        'exposed_headers'     => [], // Tell the client that the API will always return this header
     ],
 ];

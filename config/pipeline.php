@@ -39,7 +39,7 @@ return function (Application $app): void {
     // applications under a common domain.  The handlers in each middleware
     // attached this way will see a URI with the matched path segment removed.
     //
-    // i.e., path of "/api/member/profile" only passes "/member/profile" to $apiMiddleware
+    // i.e., a path of "/api/member/profile" only passes "/member/profile" to $apiMiddleware
     // - $app->pipe('/api', $apiMiddleware);
     // - $app->pipe('/docs', $apiDocMiddleware);
     // - $app->pipe('/files', $filesMiddleware);

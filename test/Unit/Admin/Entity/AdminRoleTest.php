@@ -39,7 +39,7 @@ class AdminRoleTest extends UnitTest
     {
         $adminRole = new AdminRole();
 
-        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminRole->getUuid()]);
+        $this->assertContainsOnlyInstancesOf(UuidInterface::class, [$adminRole->getId()]);
 
         $this->assertSame(AdminRoleEnum::Admin, $adminRole->getName());
         $adminRole = $adminRole->setName(AdminRoleEnum::Admin);
@@ -54,9 +54,9 @@ class AdminRoleTest extends UnitTest
         $copy = $adminRole->getArrayCopy();
         $this->assertIsArray($copy);
 
-        $this->assertArrayHasKey('uuid', $copy);
-        $this->assertIsString($copy['uuid']);
-        $this->assertNotEmpty($copy['uuid']);
+        $this->assertArrayHasKey('id', $copy);
+        $this->assertIsString($copy['id']);
+        $this->assertNotEmpty($copy['id']);
 
         $this->assertArrayHasKey('name', $copy);
         $this->assertSame(AdminRoleEnum::Admin->value, $copy['name']);
