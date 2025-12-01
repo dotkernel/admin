@@ -9,6 +9,7 @@ use Admin\User\InputFilter\DeleteUserInputFilter;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Submit;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Session\Container;
 
@@ -20,6 +21,7 @@ class DeleteUserForm extends AbstractForm
 {
     /**
      * @param array<non-empty-string, mixed> $options
+     * @throws ExceptionInterface
      */
     public function __construct(?string $name = null, array $options = [])
     {
@@ -35,6 +37,9 @@ class DeleteUserForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function init(): void
     {
         $this->add(

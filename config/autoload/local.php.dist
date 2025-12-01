@@ -9,39 +9,61 @@
 
 declare(strict_types=1);
 
+$appName = 'Dotkernel Admin v7';
 $baseUrl = 'http://localhost:8080';
 
 $databases = [
-    'default' => [
+    /**
+     * You can add more database connections to this array.
+     * Only one active connection is allowed at a time.
+     * By default, the application uses the 'mariadb' connection.
+     * You can switch to another connection by activating it under doctrine->connection->orm_default-->params.
+     */
+    'mariadb'    => [
         'host'         => 'localhost',
         'dbname'       => 'dotkernel',
         'user'         => '',
         'password'     => '',
         'port'         => 3306,
         'driver'       => 'pdo_mysql',
-        'charset'      => 'utf8mb4',
-        'collate'      => 'utf8mb4_general_ci',
+        'collation'    => 'utf8mb4_general_ci',
         'table_prefix' => '',
     ],
-    // you can add more database connections to this array
+    'postgresql' => [
+        'host'         => 'localhost',
+        'dbname'       => 'dotkernel',
+        'user'         => '',
+        'password'     => '',
+        'port'         => 5432,
+        'driver'       => 'pdo_pgsql',
+        'collation'    => 'utf8mb4_general_ci',
+        'table_prefix' => '',
+    ],
 ];
 
 return [
     'application'         => [
-        'name' => $app['name'] ?? '',
-        'url'  => $baseUrl,
+        'name'    => $appName,
+        'version' => 7.0,
+        'url'     => $baseUrl,
+    ],
+    'databases'           => $databases,
+    'doctrine'            => [
+        'connection' => [
+            'orm_default' => [
+                'params' => $databases['mariadb'],
+//                'params' => $databases['postgresql'],
+            ],
+        ],
     ],
     'routes'              => [
         'page' => [
             'component' => 'components',
         ],
     ],
-    'databases'           => $databases,
-    'doctrine'            => [
-        'connection' => [
-            'orm_default' => [
-                'params' => $databases['default'],
-            ],
+    'twig'                => [
+        'globals' => [
+            'appName' => $appName,
         ],
     ],
     'uploads'             => [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'dot_navigation' => [
-        //enable menu item active if any child is active
+        // enable menu item active if any child is active
         'active_recursion' => true,
         'containers'       => [
             'main_menu'    => [
@@ -100,7 +100,7 @@ return [
                 ],
             ],
         ],
-        //register custom providers here
+        // register custom providers here
         'provider_manager' => [],
     ],
 ];

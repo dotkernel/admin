@@ -10,6 +10,7 @@ use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
+use Laminas\Form\Exception\ExceptionInterface;
 use Laminas\Session\Container;
 
 /**
@@ -20,6 +21,7 @@ class LoginForm extends AbstractForm
 {
     /**
      * @param array<non-empty-string, mixed> $options
+     * @throws ExceptionInterface
      */
     public function __construct(?string $name = null, array $options = [])
     {
@@ -35,6 +37,9 @@ class LoginForm extends AbstractForm
         $this->inputFilter->init();
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function init(): void
     {
         $this->add(

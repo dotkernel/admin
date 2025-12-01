@@ -67,7 +67,7 @@ class PostChangeAccountPasswordHandler implements RequestHandlerInterface
         }
 
         try {
-            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getId());
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 

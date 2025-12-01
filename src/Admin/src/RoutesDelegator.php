@@ -38,10 +38,10 @@ class RoutesDelegator
         $routeCollector->group('/admin')
             ->get('/create-admin', GetCreateAdminFormHandler::class, 'admin::create-admin-form')
             ->post('/create-admin', PostCreateAdminHandler::class, 'admin::create-admin')
-            ->get('/delete-admin/{uuid}', GetDeleteAdminFormHandler::class, 'admin::delete-admin-form')
-            ->post('/delete-admin/{uuid}', PostDeleteAdminHandler::class, 'admin::delete-admin')
-            ->get('/edit-admin/{uuid}', GetEditAdminFormHandler::class, 'admin::edit-admin-form')
-            ->post('/edit-admin/{uuid}', PostEditAdminHandler::class, 'admin::edit-admin')
+            ->get('/delete-admin/{id}', GetDeleteAdminFormHandler::class, 'admin::delete-admin-form')
+            ->post('/delete-admin/{id}', PostDeleteAdminHandler::class, 'admin::delete-admin')
+            ->get('/edit-admin/{id}', GetEditAdminFormHandler::class, 'admin::edit-admin-form')
+            ->post('/edit-admin/{id}', PostEditAdminHandler::class, 'admin::edit-admin')
             ->get('/list-admin', GetListAdminHandler::class, 'admin::list-admin')
             ->get('/list-admin-login', GetListAdminLoginHandler::class, 'admin::list-admin-login');
 

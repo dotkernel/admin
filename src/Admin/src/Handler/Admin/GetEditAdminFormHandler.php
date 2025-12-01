@@ -53,7 +53,7 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $admin = $this->adminService->findAdmin($request->getAttribute('uuid'));
+            $admin = $this->adminService->findAdmin($request->getAttribute('id'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -66,7 +66,7 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
         /** @return SelectDataType */
             fn (AdminRole $adminRole): array => [
                 'label'    => $adminRole->getName()->value,
-                'value'    => $adminRole->getUuid()->toString(),
+                'value'    => $adminRole->getId()->toString(),
                 'selected' => $admin->hasRole($adminRole),
             ],
             $adminRoles
@@ -74,7 +74,7 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
 
         $this->editAdminForm->setAttribute(
             'action',
-            $this->router->generateUri('admin::edit-admin', ['uuid' => $admin->getUuid()->toString()])
+            $this->router->generateUri('admin::edit-admin', ['id' => $admin->getId()->toString()])
         );
         $this->editAdminForm->bind($admin)
             ->setRoles($adminRoles);

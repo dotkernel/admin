@@ -20,7 +20,7 @@ class AdminIdentityTest extends UnitTest
         parent::setUp();
 
         $this->default = [
-            'uuid'     => '00000000-0000-0000-0000-000000000000',
+            'id'       => '00000000-0000-0000-0000-000000000000',
             'identity' => 'test@example.com',
             'status'   => AdminStatusEnum::Inactive,
             'roles'    => [
@@ -37,13 +37,13 @@ class AdminIdentityTest extends UnitTest
     public function testAll(): void
     {
         $adminIdentity = new AdminIdentity(
-            $this->default['uuid'],
+            $this->default['id'],
             $this->default['identity'],
             $this->default['status'],
             $this->default['roles'],
             $this->default['details'],
         );
-        $this->assertSame($this->default['uuid'], $adminIdentity->getUuid());
+        $this->assertSame($this->default['id'], $adminIdentity->getId());
         $this->assertSame($this->default['identity'], $adminIdentity->getIdentity());
         $this->assertSame($this->default['status'], $adminIdentity->getStatus());
         $this->assertSame($this->default['roles'], $adminIdentity->getRoles());

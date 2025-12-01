@@ -6,7 +6,6 @@ namespace Admin\Setting\Handler;
 
 use Admin\Admin\Service\AdminServiceInterface;
 use Admin\App\Exception\NotFoundException;
-use Admin\Setting\InputFilter\CreateSettingInputFilter;
 use Admin\Setting\Service\SettingServiceInterface;
 use Core\App\Message;
 use Core\Setting\Entity\Setting;
@@ -18,9 +17,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
-use function assert;
-use function is_array;
 
 class GetViewSettingHandler implements RequestHandlerInterface
 {
@@ -38,19 +34,19 @@ class GetViewSettingHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $identifier  = $request->getAttribute('identifier');
-        $inputFilter = (new CreateSettingInputFilter())->setData(['identifier' => $identifier]);
-        if (! $inputFilter->isValid()) {
-            $messages = $inputFilter->getMessages();
+        $identifier = SettingIdentifierEnum::tryFrom($request->getAttribute('identifier'));
+        if (! $identifier instanceof SettingIdentifierEnum) {
             return new JsonResponse([
                 'error' => [
-                    'messages' => is_array($messages) ? $messages : [$messages],
+                    'messages' => [
+                        Message::settingNotFound($request->getAttribute('identifier')),
+                    ],
                 ],
-            ], StatusCodeInterface::STATUS_BAD_REQUEST);
+            ], StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
         try {
-            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getUuid());
+            $admin = $this->adminService->findAdmin($this->authenticationService->getIdentity()->getId());
         } catch (NotFoundException $exception) {
             return new JsonResponse([
                 'error' => [
@@ -60,9 +56,6 @@ class GetViewSettingHandler implements RequestHandlerInterface
                 ],
             ], StatusCodeInterface::STATUS_BAD_REQUEST);
         }
-
-        $identifier = SettingIdentifierEnum::tryFrom($identifier);
-        assert($identifier instanceof SettingIdentifierEnum);
 
         $setting = $this->settingService->findOneBy(['admin' => $admin, 'identifier' => $identifier]);
         if (! $setting instanceof Setting) {

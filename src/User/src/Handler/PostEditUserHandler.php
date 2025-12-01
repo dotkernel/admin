@@ -67,7 +67,7 @@ class PostEditUserHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $user = $this->userService->findUser($request->getAttribute('uuid'));
+            $user = $this->userService->findUser($request->getAttribute('id'));
         } catch (NotFoundException $exception) {
             $this->messenger->addError($exception->getMessage());
 
@@ -80,7 +80,7 @@ class PostEditUserHandler implements RequestHandlerInterface
         /** @return SelectDataType */
             fn (UserRole $userRole): array => [
                 'label'    => $userRole->getName()->value,
-                'value'    => $userRole->getUuid()->toString(),
+                'value'    => $userRole->getId()->toString(),
                 'selected' => $user->hasRole($userRole),
             ],
             $userRoles
@@ -90,12 +90,12 @@ class PostEditUserHandler implements RequestHandlerInterface
         $this->editUserAvatarForm
             ->setAttribute(
                 'action',
-                $this->router->generateUri('user::edit-user-avatar', ['uuid' => $user->getUuid()->toString()])
+                $this->router->generateUri('user::edit-user-avatar', ['id' => $user->getId()->toString()])
             );
 
         $this->editUserForm->setAttribute(
             'action',
-            $this->router->generateUri('user::edit-user', ['uuid' => $user->getUuid()->toString()])
+            $this->router->generateUri('user::edit-user', ['id' => $user->getId()->toString()])
         );
         $this->editUserForm->setRoles($userRoles);
 

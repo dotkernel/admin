@@ -39,7 +39,7 @@ class GetAccountEditFormHandlerTest extends UnitTest
         $adminRepository       = $this->createMock(AdminRepository::class);
         $admin                 = $this->createMock(Admin::class);
 
-        $identity->method('getUuid')->willReturn('test');
+        $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
         $adminRepository->method('findOneBy')->willReturn($admin);
 

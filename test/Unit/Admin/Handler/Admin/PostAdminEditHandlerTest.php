@@ -17,6 +17,7 @@ use Dot\FlashMessenger\FlashMessengerInterface;
 use Dot\Log\Logger;
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;
+use Laminas\Form\Exception\ExceptionInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
@@ -35,7 +36,7 @@ class PostAdminEditHandlerTest extends UnitTest
     private Logger $logger;
     private MockObject&ServerRequestInterface $request;
     private MockObject&Admin $admin;
-    private MockObject&Uuid $uuid;
+    private MockObject&Uuid $id;
 
     /**
      * @throws MockObjectException
@@ -52,7 +53,7 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->form             = $this->createMock(EditAdminForm::class);
         $this->request          = $this->createMock(ServerRequestInterface::class);
         $this->admin            = $this->createMock(Admin::class);
-        $this->uuid             = $this->createMock(Uuid::class);
+        $this->id               = $this->createMock(Uuid::class);
         $this->logger           = new Logger([
             'writers' => [
                 'FileWriter' => [
@@ -63,9 +64,12 @@ class PostAdminEditHandlerTest extends UnitTest
         ]);
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function testEditAdminInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getAttribute')->with('uuid')->willReturn('test');
+        $this->request->method('getAttribute')->with('id')->willReturn('test');
         $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
         $this->form->method('isValid')->willReturn(true);
         $this->form->method('getData')->willReturn([]);
@@ -92,14 +96,15 @@ class PostAdminEditHandlerTest extends UnitTest
     }
 
     /**
+     * @throws ExceptionInterface
      * @throws MockObjectException
      */
     public function testEditAdminValidFormDataProvidedWillFlashSuccessMessage(): void
     {
-        $this->uuid->method('toString')->willReturn('0x123');
-        $this->admin->method('getUuid')->willReturn($this->uuid);
-        $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->id->method('toString')->willReturn('0x123');
+        $this->admin->method('getId')->willReturn($this->id);
+        $this->request->method('getAttribute')->with('id')->willReturn($this->id->toString());
+        $this->adminService->method('findAdmin')->with($this->id->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn([]);
         $this->form->method('isValid')->willReturn(true);
@@ -129,14 +134,15 @@ class PostAdminEditHandlerTest extends UnitTest
     }
 
     /**
+     * @throws ExceptionInterface
      * @throws MockObjectException
      */
     public function testEditAdminInvalidFormDataProvidedWillReturnHtmlResponse(): void
     {
-        $this->uuid->method('toString')->willReturn('0x123');
-        $this->admin->method('getUuid')->willReturn($this->uuid);
-        $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->id->method('toString')->willReturn('0x123');
+        $this->admin->method('getId')->willReturn($this->id);
+        $this->request->method('getAttribute')->with('id')->willReturn($this->id->toString());
+        $this->adminService->method('findAdmin')->with($this->id->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -157,12 +163,15 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function testEditAdminThrowConflictExceptionWillReturnHtmlResponse(): void
     {
-        $this->uuid->method('toString')->willReturn('0x123');
-        $this->admin->method('getUuid')->willReturn($this->uuid);
-        $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->id->method('toString')->willReturn('0x123');
+        $this->admin->method('getId')->willReturn($this->id);
+        $this->request->method('getAttribute')->with('id')->willReturn($this->id->toString());
+        $this->adminService->method('findAdmin')->with($this->id->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);
@@ -185,12 +194,15 @@ class PostAdminEditHandlerTest extends UnitTest
         $this->assertSame(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function testEditAdminThrowExceptionWillReturnHtmlResponse(): void
     {
-        $this->uuid->method('toString')->willReturn('0x123');
-        $this->admin->method('getUuid')->willReturn($this->uuid);
-        $this->request->method('getAttribute')->with('uuid')->willReturn($this->uuid->toString());
-        $this->adminService->method('findAdmin')->with($this->uuid->toString())->willReturn($this->admin);
+        $this->id->method('toString')->willReturn('0x123');
+        $this->admin->method('getId')->willReturn($this->id);
+        $this->request->method('getAttribute')->with('id')->willReturn($this->id->toString());
+        $this->adminService->method('findAdmin')->with($this->id->toString())->willReturn($this->admin);
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->form->method('isValid')->willReturn(false);

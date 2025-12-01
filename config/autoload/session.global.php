@@ -20,7 +20,7 @@ return [
      */
     'dot_session' => [
         /**
-         * Amount of seconds of inactivity for which the system will extend session.
+         * Number of seconds of inactivity for which the system will extend the session.
          *
          * While the difference between now and LAST_ACTIVITY stored in session is less than rememberMeInactive,
          * the session will be extended => user will not be logged out due to inactivity.
@@ -48,7 +48,7 @@ return [
         'cookie_lifetime' => 3600 * 24 * 30,
 
         /**
-         * Specifies path to set in the session cookie.
+         * Specifies a path to set in the session cookie.
          */
         'cookie_path' => '/',
 
@@ -63,7 +63,7 @@ return [
         'cookie_secure' => false,
 
         /**
-         * Specifies the name of the session which is used as cookie name.
+         * Specifies the name of the session which is used as a cookie name.
          */
         'name' => 'ADMIN_SESSID',
 

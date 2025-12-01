@@ -4,7 +4,7 @@ Dotkernel Admin is an application (skeleton) intended for quickly setting up an 
 It's a fast and reliable way to manage records in your database with a simple table-based approach, and also to build reports and graphs to monitor your platform.
 The many graphical components at your disposal ensure an intuitive user experience.
 
-> Check out our [demo](https://admin6.dotkernel.net/).
+> Check out our [demo](https://admin7.dotkernel.net/).
 >
 > Submit user `admin` and password `dotadmin` to authenticate yourself.
 
@@ -16,7 +16,8 @@ Documentation is available at: https://docs.dotkernel.org/admin-documentation/
 
 | Branch | Release  | PSR-11 | OSS Lifecycle                                                                                                                          | PHP Version                                                                                           |
 |--------|----------|--------|----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| 6.0    | `>= 6.0` | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F6.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/6.2.0) |
+| 7.0    | `>= 7.0` | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F7.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/7.0.0) |
+| 6.0    | `< 7.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F6.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/6.2.0) |
 | 5.0    | `< 6.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F5.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/5.0.3) |
 | 4.0    | `< 5.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F4.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/4.3.1) |
 | 3.0    | `< 4.0`  | 1      | ![OSS Lifecycle](https://img.shields.io/osslifecycle?file_url=https%3A%2F%2Fgithub.com%2Fdotkernel%2Fadmin%2Fblob%2F3.0%2FOSSMETADATA) | ![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/admin/3.2.1) |
@@ -29,12 +30,12 @@ Documentation is available at: https://docs.dotkernel.org/admin-documentation/
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/admin)](https://github.com/dotkernel/admin/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/admin)](https://github.com/dotkernel/admin/network)
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/admin)](https://github.com/dotkernel/admin/stargazers)
-[![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/6.0/LICENSE.md)
+[![GitHub license](https://img.shields.io/github/license/dotkernel/admin)](https://github.com/dotkernel/admin/blob/7.0/LICENSE.md)
 
-[![Build Static](https://github.com/dotkernel/admin/actions/workflows/continuous-integration.yml/badge.svg?branch=6.0)](https://github.com/dotkernel/admin/actions/workflows/continuous-integration.yml)
+[![Build Static](https://github.com/dotkernel/admin/actions/workflows/continuous-integration.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/continuous-integration.yml)
 [![codecov](https://codecov.io/gh/dotkernel/admin/graph/badge.svg?token=BQS43UWAM4)](https://codecov.io/gh/dotkernel/admin)
-[![Qodana](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml/badge.svg?branch=6.0)](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml)
-[![PHPStan](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml/badge.svg?branch=6.0)](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml)
+[![Qodana](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml)
+[![PHPStan](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml)
 
 ## Getting Started
 
@@ -242,7 +243,7 @@ php ./bin/clear-config-cache.php
 Open a web browser and visit `http://localhost:8080/`.
 
 You should see the **Dotkernel Admin** login page.
-If you ran the migrations you will have an admin user in the database with the following credentials:
+If you ran the migrations, you will have an admin user in the database with the following credentials:
 
 * **Identity**: `admin`
 * **Password**: `dotadmin`
