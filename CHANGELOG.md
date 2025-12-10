@@ -1,5 +1,38 @@
 # Changelog
 
+## 7.0.0 - 2025-12-10
+
+Main features:
+
+- Added PostgreSQL support
+- Replaced usage of binary UUIDs with string UUIDs (still using the `ramsey/uuid` package)
+- Entities can choose between using a [numeric](https://github.com/dotkernel/admin/blob/7.0/src/Core/src/App/src/Entity/NumericIdentifierTrait.php) or [UUID](https://github.com/dotkernel/admin/blob/7.0/src/Core/src/App/src/Entity/UuidIdentifierTrait.php) identifier
+- UUID identifiers are now stored in a native `uuid` column
+- Renamed entity identifier field from `$uuid` to `$id`
+
+### Changed
+
+* Issue [#400](https://github.com/dotkernel/admin/issues/400): Bumped dependencies by [@alexmerlin](https://github.com/alexmerlin) in [#401](https://github.com/dotkernel/admin/pull/401)
+* Issue [#402](https://github.com/dotkernel/admin/issues/402): Core Sync and update codebase by [@alexmerlin](https://github.com/alexmerlin) in [#403](https://github.com/dotkernel/admin/pull/403)
+* updated readme, oss by [@bidi47](https://github.com/bidi47) in [#397](https://github.com/dotkernel/admin/pull/397)
+* Core sync by [@alexmerlin](https://github.com/alexmerlin) in [#398](https://github.com/dotkernel/admin/pull/398)
+
+### Added
+
+* Nothing
+
+### Deprecated
+
+* Nothing
+
+### Removed
+
+* Nothing
+
+### Fixed
+
+* Nothing
+
 ## 6.2.0 - 2025-11-19
 
 ### Changed
