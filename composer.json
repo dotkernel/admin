@@ -57,7 +57,7 @@
         "symfony/var-exporter": "^6.4 || ^7.4"
     },
     "require-dev": {
-        "dotkernel/dot-maker": "^1.1.0",
+        "dotkernel/dot-maker": "^2.0.0",
         "filp/whoops": "^2.18.4",
         "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-development-mode": "^3.15.0",
@@ -90,6 +90,9 @@
             "AdminTest\\Functional\\": "test/Functional/",
             "AdminTest\\Unit\\": "test/Unit"
         }
+    },
+    "conflict": {
+        "dotkernel/dot-maker": "<2.0"
     },
     "scripts": {
         "post-create-project-cmd": [
