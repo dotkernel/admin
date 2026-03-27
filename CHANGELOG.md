@@ -1,5 +1,28 @@
 # Changelog
 
+## 7.1.0 - 2026-03-27
+
+### Changed
+
+* Issue [#405](https://github.com/dotkernel/admin/issues/405): Bump `dotkernel/dot-maker` to version `2.x` by [@alexmerlin](https://github.com/alexmerlin) in [#406](https://github.com/dotkernel/admin/pull/406)
+* Update Qodana action version to v2025.3 by [@arhimede](https://github.com/arhimede) in [#411](https://github.com/dotkernel/admin/pull/411)
+
+### Added
+
+* Issue [#413](https://github.com/dotkernel/admin/issues/413): Add PHP `8.5` support by [@alexmerlin](https://github.com/alexmerlin) in [#414](https://github.com/dotkernel/admin/pull/414)
+
+### Deprecated
+
+* Nothing
+
+### Removed
+
+* Nothing
+
+### Fixed
+
+* Nothing
+
 ## 7.0.0 - 2025-12-10
 
 Main features:
