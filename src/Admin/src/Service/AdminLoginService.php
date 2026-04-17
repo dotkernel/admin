@@ -118,7 +118,6 @@ class AdminLoginService implements AdminLoginServiceInterface
          *
          * @see https://www.php.net/manual/en/function.get-browser.php
          */
-        
         if (ini_get('browscap')) {
             $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
         }
