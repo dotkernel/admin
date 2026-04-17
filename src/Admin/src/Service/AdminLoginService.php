@@ -15,7 +15,9 @@ use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationService;
 use Exception;
 
+use function get_browser;
 use function in_array;
+use function ini_get;
 
 class AdminLoginService implements AdminLoginServiceInterface
 {
@@ -114,7 +116,7 @@ class AdminLoginService implements AdminLoginServiceInterface
         //check browscap availability
         if (ini_get('browscap')) {
             //call browscap
-            $browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
+            $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
 
             //map browscap to AdminLogin
             $adminLogin = (new AdminLogin())
@@ -122,16 +124,18 @@ class AdminLoginService implements AdminLoginServiceInterface
                 ->setContinent($continent)
                 ->setCountry($country)
                 ->setOrganization($organization)
-                ->setDeviceType($browser['device_type'])
-                ->setDeviceBrand($browser['device_name'])
+                ->setDeviceType($browser->device_type ?? null)
+                ->setDeviceBrand($browser->device_name ?? null)
                 ->setDeviceModel(null)
-                ->setIsMobile($browser['ismobiledevice'] ? YesNoEnum::Yes : YesNoEnum::No)
-                ->setOsName($browser['platform_description'])
-                ->setOsVersion($browser['platform_version'])
-                ->setOsPlatform($browser['platform'])
-                ->setClientType($browser['browser_type'])
-                ->setClientName($browser['browser'])
-                ->setClientEngine($browser['renderingengine_name'])
+                ->setIsMobile(
+                    isset($browser->ismobiledevice) && $browser->ismobiledevice ? YesNoEnum::Yes : YesNoEnum::No
+                )
+                ->setOsName($browser->platform_description ?? null)
+                ->setOsVersion($browser->platform_version ?? null)
+                ->setOsPlatform($browser->platform ?? null)
+                ->setClientType($browser->browser_type ?? null)
+                ->setClientName($browser->browser ?? null)
+                ->setClientEngine($browser->renderingengine_name ?? null)
                 ->setClientVersion(null)
                 ->setLoginStatus($status)
                 ->setIdentity($name);
