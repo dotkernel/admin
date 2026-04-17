@@ -113,13 +113,16 @@ class AdminLoginService implements AdminLoginServiceInterface
         $continent    = $this->locationService->getContinent($ipAddress)->getName();
         $organization = $this->locationService->getOrganization($ipAddress)->getName();
 
-        //check browscap availability
+        /**
+         * For browscap information
+         *
+         * @see https://www.php.net/manual/en/function.get-browser.php
+         */
+        
         if (ini_get('browscap')) {
-            //call browscap
             $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
         }
 
-        //map browscap to AdminLogin
         $adminLogin = (new AdminLogin())
             ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
             ->setContinent($continent)
