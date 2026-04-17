@@ -111,24 +111,50 @@ class AdminLoginService implements AdminLoginServiceInterface
         $continent    = $this->locationService->getContinent($ipAddress)->getName();
         $organization = $this->locationService->getOrganization($ipAddress)->getName();
 
-        $adminLogin = (new AdminLogin())
-            ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
-            ->setContinent($continent)
-            ->setCountry($country)
-            ->setOrganization($organization)
-            ->setDeviceType(null)
-            ->setDeviceBrand(null)
-            ->setDeviceModel(null)
-            ->setIsMobile(YesNoEnum::No)
-            ->setOsName(null)
-            ->setOsVersion(null)
-            ->setOsPlatform(null)
-            ->setClientType(null)
-            ->setClientName(null)
-            ->setClientEngine(null)
-            ->setClientVersion(null)
-            ->setLoginStatus($status)
-            ->setIdentity($name);
+        //check browscap availability
+        if (ini_get('browscap')) {
+            //call browscap
+            $browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
+
+            //map browscap to AdminLogin
+            $adminLogin = (new AdminLogin())
+                ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
+                ->setContinent($continent)
+                ->setCountry($country)
+                ->setOrganization($organization)
+                ->setDeviceType($browser['device_type'])
+                ->setDeviceBrand($browser['device_name'])
+                ->setDeviceModel(null)
+                ->setIsMobile($browser['ismobiledevice'] ? YesNoEnum::Yes : YesNoEnum::No)
+                ->setOsName($browser['platform_description'])
+                ->setOsVersion($browser['platform_version'])
+                ->setOsPlatform($browser['platform'])
+                ->setClientType($browser['browser_type'])
+                ->setClientName($browser['browser'])
+                ->setClientEngine($browser['renderingengine_name'])
+                ->setClientVersion(null)
+                ->setLoginStatus($status)
+                ->setIdentity($name);
+        } else {
+            $adminLogin = (new AdminLogin())
+                ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
+                ->setContinent($continent)
+                ->setCountry($country)
+                ->setOrganization($organization)
+                ->setDeviceType(null)
+                ->setDeviceBrand(null)
+                ->setDeviceModel(null)
+                ->setIsMobile(YesNoEnum::No)
+                ->setOsName(null)
+                ->setOsVersion(null)
+                ->setOsPlatform(null)
+                ->setClientType(null)
+                ->setClientName(null)
+                ->setClientEngine(null)
+                ->setClientVersion(null)
+                ->setLoginStatus($status)
+                ->setIdentity($name);
+        }
 
         $this->adminLoginRepository->saveResource($adminLogin);
 
