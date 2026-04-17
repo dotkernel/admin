@@ -117,48 +117,29 @@ class AdminLoginService implements AdminLoginServiceInterface
         if (ini_get('browscap')) {
             //call browscap
             $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
-
-            //map browscap to AdminLogin
-            $adminLogin = (new AdminLogin())
-                ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
-                ->setContinent($continent)
-                ->setCountry($country)
-                ->setOrganization($organization)
-                ->setDeviceType($browser->device_type ?? null)
-                ->setDeviceBrand($browser->device_name ?? null)
-                ->setDeviceModel(null)
-                ->setIsMobile(
-                    isset($browser->ismobiledevice) && $browser->ismobiledevice ? YesNoEnum::Yes : YesNoEnum::No
-                )
-                ->setOsName($browser->platform_description ?? null)
-                ->setOsVersion($browser->platform_version ?? null)
-                ->setOsPlatform($browser->platform ?? null)
-                ->setClientType($browser->browser_type ?? null)
-                ->setClientName($browser->browser ?? null)
-                ->setClientEngine($browser->renderingengine_name ?? null)
-                ->setClientVersion(null)
-                ->setLoginStatus($status)
-                ->setIdentity($name);
-        } else {
-            $adminLogin = (new AdminLogin())
-                ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
-                ->setContinent($continent)
-                ->setCountry($country)
-                ->setOrganization($organization)
-                ->setDeviceType(null)
-                ->setDeviceBrand(null)
-                ->setDeviceModel(null)
-                ->setIsMobile(YesNoEnum::No)
-                ->setOsName(null)
-                ->setOsVersion(null)
-                ->setOsPlatform(null)
-                ->setClientType(null)
-                ->setClientName(null)
-                ->setClientEngine(null)
-                ->setClientVersion(null)
-                ->setLoginStatus($status)
-                ->setIdentity($name);
         }
+
+        //map browscap to AdminLogin
+        $adminLogin = (new AdminLogin())
+            ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
+            ->setContinent($continent)
+            ->setCountry($country)
+            ->setOrganization($organization)
+            ->setDeviceType($browser->device_type ?? null)
+            ->setDeviceBrand($browser->device_name ?? null)
+            ->setDeviceModel(null)
+            ->setIsMobile(
+                isset($browser->ismobiledevice) && $browser->ismobiledevice ? YesNoEnum::Yes : YesNoEnum::No
+            )
+            ->setOsName($browser->platform_description ?? null)
+            ->setOsVersion($browser->platform_version ?? null)
+            ->setOsPlatform($browser->platform ?? null)
+            ->setClientType($browser->browser_type ?? null)
+            ->setClientName($browser->browser ?? null)
+            ->setClientEngine($browser->renderingengine_name ?? null)
+            ->setClientVersion(null)
+            ->setLoginStatus($status)
+            ->setIdentity($name);
 
         $this->adminLoginRepository->saveResource($adminLogin);
 
