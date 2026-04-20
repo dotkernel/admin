@@ -14,6 +14,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationService;
 use Exception;
+use stdClass;
 
 use function get_browser;
 use function in_array;
@@ -51,16 +52,12 @@ class AdminLoginService implements AdminLoginServiceInterface
             'login.continent',
             'login.organization',
             'login.deviceType',
-            'login.deviceBrand',
-            'login.deviceModel',
             'login.isMobile',
             'login.osName',
             'login.osVersion',
-            'login.osPlatform',
             'login.clientType',
             'login.clientName',
-            'login.clientEngine',
-            'login.clientVersion',
+            'login.isCrawler',
             'login.loginStatus',
             'login.identity',
             'login.created',
@@ -101,12 +98,6 @@ class AdminLoginService implements AdminLoginServiceInterface
      */
     private function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin
     {
-        /**
-         * For device information
-         *
-         * @see https://github.com/dotkernel/dot-user-agent-sniffer
-         */
-
         $ipAddress = IpService::getUserIp($serverParams);
 
         $country      = $this->locationService->getCountry($ipAddress)->getName();
@@ -118,6 +109,7 @@ class AdminLoginService implements AdminLoginServiceInterface
          *
          * @see https://www.php.net/manual/en/function.get-browser.php
          */
+        $browser = new stdClass();
         if (ini_get('browscap')) {
             $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
         }
@@ -127,20 +119,16 @@ class AdminLoginService implements AdminLoginServiceInterface
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
-            ->setDeviceType($browser->device_type ?? null)
-            ->setDeviceBrand($browser->device_name ?? null)
-            ->setDeviceModel(null)
+            ->setDeviceType(! empty($browser->device_type) ? $browser->device_type : null)
             ->setIsMobile(
-                isset($browser->ismobiledevice) && $browser->ismobiledevice ? YesNoEnum::Yes : YesNoEnum::No
+                ! empty($browser->ismobiledevice) ? YesNoEnum::Yes : YesNoEnum::No
             )
-            ->setOsName($browser->platform_description ?? null)
-            ->setOsVersion($browser->platform_version ?? null)
-            ->setOsPlatform($browser->platform ?? null)
-            ->setClientType($browser->browser_type ?? null)
-            ->setClientName($browser->browser ?? null)
-            ->setClientEngine($browser->renderingengine_name ?? null)
-            ->setClientVersion(null)
+            ->setOsName(! empty($browser->platform) ? $browser->platform : null)
+            ->setOsVersion(! empty($browser->platform_version) ? $browser->platform_version : null)
+            ->setClientType(! empty($browser->browser_type) ? $browser->browser_type : null)
+            ->setClientName(! empty($browser->browser) ? $browser->browser : null)
             ->setLoginStatus($status)
+            ->setIsCrawler(! empty($browser->crawler) ? YesNoEnum::Yes : YesNoEnum::No)
             ->setIdentity($name);
 
         $this->adminLoginRepository->saveResource($adminLogin);
