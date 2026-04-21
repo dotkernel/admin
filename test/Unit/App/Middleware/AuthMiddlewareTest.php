@@ -29,9 +29,9 @@ class AuthMiddlewareTest extends UnitTest
     public function testWillCreate(): void
     {
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
-            $this->createMock(GuardsProviderInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
+            $this->createStub(GuardsProviderInterface::class),
             new RbacGuardOptions([])
         );
 
@@ -47,15 +47,15 @@ class AuthMiddlewareTest extends UnitTest
         $rbacGuardOptions->setProtectionPolicy(GuardInterface::POLICY_DENY);
 
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
-            $this->createMock(GuardsProviderInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
+            $this->createStub(GuardsProviderInterface::class),
             $rbacGuardOptions
         );
 
         $response = $authMiddleware->process(
-            $this->createMock(ServerRequestInterface::class),
-            $this->createMock(RequestHandlerInterface::class)
+            $this->createStub(ServerRequestInterface::class),
+            $this->createStub(RequestHandlerInterface::class)
         );
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->hasHeader('location'));
@@ -68,15 +68,15 @@ class AuthMiddlewareTest extends UnitTest
     public function testWillProcessWithoutGuards(): void
     {
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
-            $this->createMock(GuardsProviderInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
+            $this->createStub(GuardsProviderInterface::class),
             new RbacGuardOptions([])
         );
 
         $response = $authMiddleware->process(
-            $this->createMock(ServerRequestInterface::class),
-            $this->createMock(RequestHandlerInterface::class)
+            $this->createStub(ServerRequestInterface::class),
+            $this->createStub(RequestHandlerInterface::class)
         );
 
         $this->assertContainsOnlyInstancesOf(ResponseInterface::class, [$response]);
@@ -94,8 +94,8 @@ class AuthMiddlewareTest extends UnitTest
             ->willReturn(['test']);
 
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
             $guardsProvider,
             new RbacGuardOptions([])
         );
@@ -105,8 +105,8 @@ class AuthMiddlewareTest extends UnitTest
             sprintf('Guard is not an instance of %s', GuardInterface::class)
         );
         $authMiddleware->process(
-            $this->createMock(ServerRequestInterface::class),
-            $this->createMock(RequestHandlerInterface::class)
+            $this->createStub(ServerRequestInterface::class),
+            $this->createStub(RequestHandlerInterface::class)
         );
     }
 
@@ -134,15 +134,15 @@ class AuthMiddlewareTest extends UnitTest
             ]);
 
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
             $guardsProvider,
             new RbacGuardOptions([])
         );
 
         $response = $authMiddleware->process(
-            $this->createMock(ServerRequestInterface::class),
-            $this->createMock(RequestHandlerInterface::class)
+            $this->createStub(ServerRequestInterface::class),
+            $this->createStub(RequestHandlerInterface::class)
         );
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->hasHeader('location'));
@@ -173,15 +173,15 @@ class AuthMiddlewareTest extends UnitTest
             ]);
 
         $authMiddleware = new AuthMiddleware(
-            $this->createMock(RouterInterface::class),
-            $this->createMock(FlashMessengerInterface::class),
+            $this->createStub(RouterInterface::class),
+            $this->createStub(FlashMessengerInterface::class),
             $guardsProvider,
             new RbacGuardOptions([])
         );
 
         $response = $authMiddleware->process(
-            $this->createMock(ServerRequestInterface::class),
-            $this->createMock(RequestHandlerInterface::class)
+            $this->createStub(ServerRequestInterface::class),
+            $this->createStub(RequestHandlerInterface::class)
         );
 
         $this->assertContainsOnlyInstancesOf(ResponseInterface::class, [$response]);

@@ -18,17 +18,18 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PostAdminCreateHandlerTest extends UnitTest
 {
-    private MockObject&AdminServiceInterface $adminService;
-    private MockObject&RouterInterface $router;
-    private MockObject&TemplateRendererInterface $template;
+    private Stub&AdminServiceInterface $adminService;
+    private Stub&RouterInterface $router;
+    private Stub&TemplateRendererInterface $template;
     private MockObject&FlashMessengerInterface $messenger;
-    private MockObject&CreateAdminForm $adminForm;
+    private Stub&CreateAdminForm $adminForm;
     private Logger $logger;
-    private MockObject&ServerRequestInterface $request;
+    private Stub&ServerRequestInterface $request;
 
     /**
      * @throws MockObjectException
@@ -37,12 +38,12 @@ class PostAdminCreateHandlerTest extends UnitTest
     {
         parent::setUp();
 
-        $this->adminService = $this->createMock(AdminServiceInterface::class);
-        $this->router       = $this->createMock(RouterInterface::class);
-        $this->template     = $this->createMock(TemplateRendererInterface::class);
+        $this->adminService = $this->createStub(AdminServiceInterface::class);
+        $this->router       = $this->createStub(RouterInterface::class);
+        $this->template     = $this->createStub(TemplateRendererInterface::class);
         $this->messenger    = $this->createMock(FlashMessengerInterface::class);
-        $this->adminForm    = $this->createMock(CreateAdminForm::class);
-        $this->request      = $this->createMock(ServerRequestInterface::class);
+        $this->adminForm    = $this->createStub(CreateAdminForm::class);
+        $this->request      = $this->createStub(ServerRequestInterface::class);
         $this->logger       = new Logger([
             'writers' => [
                 'FileWriter' => [
@@ -84,6 +85,8 @@ class PostAdminCreateHandlerTest extends UnitTest
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->adminForm->method('isValid')->willReturn(false);
         $this->adminForm->method('getData')->willReturn([]);
+        $this->messenger->expects($this->never())->method('addError');
+        $this->messenger->expects($this->never())->method('addSuccess');
 
         $handler = new PostCreateAdminHandler(
             $this->adminService,
@@ -103,6 +106,8 @@ class PostAdminCreateHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->adminForm->method('getData')->willReturn([]);
+        $this->messenger->expects($this->never())->method('addError');
+        $this->messenger->expects($this->never())->method('addSuccess');
 
         $this->throwException(new ConflictException());
 
@@ -124,6 +129,8 @@ class PostAdminCreateHandlerTest extends UnitTest
     {
         $this->request->method('getParsedBody')->willReturn(['test']);
         $this->adminForm->method('getData')->willReturn([]);
+        $this->messenger->expects($this->never())->method('addError');
+        $this->messenger->expects($this->never())->method('addSuccess');
 
         $this->throwException(new Exception());
 

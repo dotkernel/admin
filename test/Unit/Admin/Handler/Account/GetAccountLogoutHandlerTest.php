@@ -19,9 +19,9 @@ class GetAccountLogoutHandlerTest extends UnitTest
      */
     public function testLogoutWillReturnRedirectResponse(): void
     {
-        $router                = $this->createMock(RouterInterface::class);
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $router                = $this->createStub(RouterInterface::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
 
         $handler = new GetLogoutAccountHandler(
             $router,

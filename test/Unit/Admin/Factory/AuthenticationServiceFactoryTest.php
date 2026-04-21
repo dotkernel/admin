@@ -22,7 +22,7 @@ class AuthenticationServiceFactoryTest extends UnitTest
      */
     public function testWillInvoke(): void
     {
-        $authenticationAdapter = $this->createMock(AuthenticationAdapter::class);
+        $authenticationAdapter = $this->createStub(AuthenticationAdapter::class);
 
         $container = $this->createMock(ContainerInterface::class);
         $container->expects($this->once())

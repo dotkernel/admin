@@ -24,8 +24,8 @@ class GetIndexRedirectHandlerTest extends UnitTest
     {
         parent::setUp();
 
-        $this->router                = $this->createMock(RouterInterface::class);
-        $this->authenticationService = $this->createMock(AuthenticationServiceInterface::class);
+        $this->router                = $this->createStub(RouterInterface::class);
+        $this->authenticationService = $this->createStub(AuthenticationServiceInterface::class);
     }
 
     public function testWillCreate(): void
@@ -40,7 +40,7 @@ class GetIndexRedirectHandlerTest extends UnitTest
      */
     public function testWillReturnRedirectResponse(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request = $this->createStub(ServerRequestInterface::class);
 
         $handler = new GetIndexRedirectHandler($this->authenticationService, $this->router);
 

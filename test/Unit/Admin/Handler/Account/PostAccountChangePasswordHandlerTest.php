@@ -21,20 +21,21 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PostAccountChangePasswordHandlerTest extends UnitTest
 {
-    private MockObject&AdminServiceInterface $adminService;
-    private MockObject&RouterInterface $router;
-    private MockObject&TemplateRendererInterface $template;
-    private MockObject&AuthenticationServiceInterface $authenticationService;
+    private Stub&AdminServiceInterface $adminService;
+    private Stub&RouterInterface $router;
+    private Stub&TemplateRendererInterface $template;
+    private Stub&AuthenticationServiceInterface $authenticationService;
     private MockObject&FlashMessengerInterface $messenger;
-    private MockObject&AccountForm $accountForm;
-    private MockObject&ChangePasswordForm $changePasswordForm;
-    private MockObject&ServerRequestInterface $request;
-    private MockObject&AdminIdentity $identity;
-    private MockObject&Admin $admin;
+    private Stub&AccountForm $accountForm;
+    private Stub&ChangePasswordForm $changePasswordForm;
+    private Stub&ServerRequestInterface $request;
+    private Stub&AdminIdentity $identity;
+    private Stub&Admin $admin;
     private Logger $logger;
 
     /**
@@ -44,16 +45,16 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
     {
         parent::setUp();
 
-        $this->adminService          = $this->createMock(AdminServiceInterface::class);
-        $this->router                = $this->createMock(RouterInterface::class);
-        $this->template              = $this->createMock(TemplateRendererInterface::class);
-        $this->authenticationService = $this->createMock(AuthenticationServiceInterface::class);
+        $this->adminService          = $this->createStub(AdminServiceInterface::class);
+        $this->router                = $this->createStub(RouterInterface::class);
+        $this->template              = $this->createStub(TemplateRendererInterface::class);
+        $this->authenticationService = $this->createStub(AuthenticationServiceInterface::class);
         $this->messenger             = $this->createMock(FlashMessengerInterface::class);
-        $this->accountForm           = $this->createMock(AccountForm::class);
-        $this->changePasswordForm    = $this->createMock(ChangePasswordForm::class);
-        $this->request               = $this->createMock(ServerRequestInterface::class);
-        $this->identity              = $this->createMock(AdminIdentity::class);
-        $this->admin                 = $this->createMock(Admin::class);
+        $this->accountForm           = $this->createStub(AccountForm::class);
+        $this->changePasswordForm    = $this->createStub(ChangePasswordForm::class);
+        $this->request               = $this->createStub(ServerRequestInterface::class);
+        $this->identity              = $this->createStub(AdminIdentity::class);
+        $this->admin                 = $this->createStub(Admin::class);
         $this->logger                = new Logger([
             'writers' => [
                 'FileWriter' => [
@@ -75,6 +76,7 @@ class PostAccountChangePasswordHandlerTest extends UnitTest
         $this->changePasswordForm->method('isValid')->willReturn(false);
         $this->accountForm->method('prepare')->willReturn('<form></form>');
         $this->changePasswordForm->method('prepare')->willReturn('<form></form>');
+        $this->messenger->expects($this->never())->method('addError');
 
         $handler = new PostChangeAccountPasswordHandler(
             $this->adminService,

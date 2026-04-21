@@ -16,7 +16,7 @@ class SettingServiceTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $settingRepository = $this->createMock(SettingRepository::class);
+        $settingRepository = $this->createStub(SettingRepository::class);
 
         $service = new SettingService($settingRepository);
 

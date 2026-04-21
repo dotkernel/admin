@@ -20,18 +20,19 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
 class GetAdminEditFormHandlerTest extends UnitTest
 {
-    private MockObject&AdminServiceInterface $adminService;
-    private MockObject&AdminRoleServiceInterface $adminRoleService;
-    private MockObject&RouterInterface $router;
-    private MockObject&TemplateRendererInterface $template;
+    private Stub&AdminServiceInterface $adminService;
+    private Stub&AdminRoleServiceInterface $adminRoleService;
+    private Stub&RouterInterface $router;
+    private Stub&TemplateRendererInterface $template;
     private MockObject&FlashMessengerInterface $messenger;
-    private MockObject&EditAdminForm $form;
-    private MockObject&ServerRequestInterface $request;
+    private Stub&EditAdminForm $form;
+    private Stub&ServerRequestInterface $request;
 
     /**
      * @throws Exception
@@ -40,19 +41,21 @@ class GetAdminEditFormHandlerTest extends UnitTest
     {
         parent::setUp();
 
-        $this->adminService     = $this->createMock(AdminServiceInterface::class);
-        $this->adminRoleService = $this->createMock(AdminRoleServiceInterface::class);
-        $this->router           = $this->createMock(RouterInterface::class);
-        $this->template         = $this->createMock(TemplateRendererInterface::class);
+        $this->adminService     = $this->createStub(AdminServiceInterface::class);
+        $this->adminRoleService = $this->createStub(AdminRoleServiceInterface::class);
+        $this->router           = $this->createStub(RouterInterface::class);
+        $this->template         = $this->createStub(TemplateRendererInterface::class);
         $this->messenger        = $this->createMock(FlashMessengerInterface::class);
-        $this->form             = $this->createMock(EditAdminForm::class);
-        $this->request          = $this->createMock(ServerRequestInterface::class);
+        $this->form             = $this->createStub(EditAdminForm::class);
+        $this->request          = $this->createStub(ServerRequestInterface::class);
     }
 
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getAttribute')->with('id')->willReturn('test');
-        $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->request->method('getAttribute')->willReturn('test');
+        $this->adminService->method('findAdmin')
+            ->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
+        $this->messenger->expects($this->once())->method('addError')->with(Message::ADMIN_NOT_FOUND);
 
         $this
             ->messenger
@@ -80,8 +83,8 @@ class GetAdminEditFormHandlerTest extends UnitTest
      */
     public function testValidAdminWillReturnHtmlTemplate(): void
     {
-        $id    = $this->createMock(Uuid::class);
-        $admin = $this->createMock(Admin::class);
+        $id    = $this->createStub(Uuid::class);
+        $admin = $this->createStub(Admin::class);
 
         $id->method('toString')->willReturn('0x123');
         $admin->method('getId')->willReturn($id);
@@ -89,10 +92,11 @@ class GetAdminEditFormHandlerTest extends UnitTest
 
         $this->form->method('setAttribute')->willReturn($this->form);
         $this->form->method('bind')->willReturn($this->form);
-        $this->request->method('getAttribute')->with('id')->willReturn($id->toString());
-        $this->adminService->method('findAdmin')->with($id->toString())->willReturn($admin);
+        $this->request->method('getAttribute')->willReturn($id->toString());
+        $this->adminService->method('findAdmin')->willReturn($admin);
 
         $this->template->method('render')->willReturn('<p></p>');
+        $this->messenger->expects($this->never())->method('addError');
 
         $handler = new GetEditAdminFormHandler(
             $this->adminService,

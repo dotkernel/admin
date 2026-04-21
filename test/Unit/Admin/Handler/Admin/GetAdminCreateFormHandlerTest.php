@@ -20,10 +20,10 @@ class GetAdminCreateFormHandlerTest extends UnitTest
      */
     public function testWillReturnHtmlTemplate(): void
     {
-        $router   = $this->createMock(RouterInterface::class);
-        $template = $this->createMock(TemplateRendererInterface::class);
-        $form     = $this->createMock(CreateAdminForm::class);
-        $request  = $this->createMock(ServerRequestInterface::class);
+        $router   = $this->createStub(RouterInterface::class);
+        $template = $this->createStub(TemplateRendererInterface::class);
+        $form     = $this->createStub(CreateAdminForm::class);
+        $request  = $this->createStub(ServerRequestInterface::class);
 
         $handler = new GetCreateAdminFormHandler(
             $router,

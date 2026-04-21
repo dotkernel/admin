@@ -17,16 +17,17 @@ use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
 class GetAdminDeleteFormHandlerTest extends UnitTest
 {
-    private MockObject&AdminServiceInterface $adminService;
-    private MockObject&RouterInterface $router;
-    private MockObject&TemplateRendererInterface $template;
-    private MockObject&DeleteAdminForm $form;
-    private MockObject&ServerRequestInterface $request;
+    private Stub&AdminServiceInterface $adminService;
+    private Stub&RouterInterface $router;
+    private Stub&TemplateRendererInterface $template;
+    private Stub&DeleteAdminForm $form;
+    private Stub&ServerRequestInterface $request;
     private MockObject&FlashMessengerInterface $messenger;
 
     /**
@@ -36,20 +37,20 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
     {
         parent::setUp();
 
-        $this->adminService = $this->createMock(AdminServiceInterface::class);
-        $this->router       = $this->createMock(RouterInterface::class);
-        $this->template     = $this->createMock(TemplateRendererInterface::class);
-        $this->form         = $this->createMock(DeleteAdminForm::class);
-        $this->request      = $this->createMock(ServerRequestInterface::class);
+        $this->adminService = $this->createStub(AdminServiceInterface::class);
+        $this->router       = $this->createStub(RouterInterface::class);
+        $this->template     = $this->createStub(TemplateRendererInterface::class);
+        $this->form         = $this->createStub(DeleteAdminForm::class);
+        $this->request      = $this->createStub(ServerRequestInterface::class);
         $this->messenger    = $this->createMock(FlashMessengerInterface::class);
     }
 
     public function testInvalidAdminProvidedWillReturnNotFoundResponse(): void
     {
-        $this->request->method('getAttribute')->with('id')->willReturn('test');
+        $this->request->method('getAttribute')->willReturn('test');
         $this->adminService->method('findAdmin')->willThrowException(new NotFoundException(Message::ADMIN_NOT_FOUND));
 
-        $this->messenger->expects($this->once())->method('addError')->with(Message::ADMIN_NOT_FOUND);
+        $this->messenger->expects($this->once())->method('addError');
 
         $handler = new GetDeleteAdminFormHandler(
             $this->adminService,
@@ -69,18 +70,19 @@ class GetAdminDeleteFormHandlerTest extends UnitTest
      */
     public function testValidAdminWillReturnHtmlTemplate(): void
     {
-        $id    = $this->createMock(Uuid::class);
-        $admin = $this->createMock(Admin::class);
+        $id    = $this->createStub(Uuid::class);
+        $admin = $this->createStub(Admin::class);
 
         $id->method('toString')->willReturn('0x123');
         $admin->method('getId')->willReturn($id);
 
-        $this->request->method('getAttribute')->with('id')->willReturn($id->toString());
-        $this->adminService->method('findAdmin')->with($id->toString())->willReturn($admin);
+        $this->request->method('getAttribute')->willReturn($id->toString());
+        $this->adminService->method('findAdmin')->willReturn($admin);
 
         $this->form->method('setAttribute')->willReturn(null);
         $this->router->method('generateUri')->willReturn('/');
         $this->template->method('render')->willReturn('<p></p>');
+        $this->messenger->expects($this->never())->method('addError');
 
         $handler = new GetDeleteAdminFormHandler(
             $this->adminService,

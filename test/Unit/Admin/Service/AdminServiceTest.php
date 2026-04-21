@@ -20,8 +20,8 @@ class AdminServiceTest extends UnitTest
      */
     public function testWillCreate(): void
     {
-        $adminRepository     = $this->createMock(AdminRepository::class);
-        $adminRoleRepository = $this->createMock(AdminRoleRepository::class);
+        $adminRepository     = $this->createStub(AdminRepository::class);
+        $adminRoleRepository = $this->createStub(AdminRoleRepository::class);
 
         $service = new AdminService($adminRepository, $adminRoleRepository);
 

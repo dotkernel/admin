@@ -19,9 +19,9 @@ class GetAdminLoginListHandlerTest extends UnitTest
      */
     public function testListAdminLoginsWillReturnHtmlResponse(): void
     {
-        $adminLoginService = $this->createMock(AdminLoginServiceInterface::class);
-        $template          = $this->createMock(TemplateRendererInterface::class);
-        $request           = $this->createMock(ServerRequestInterface::class);
+        $adminLoginService = $this->createStub(AdminLoginServiceInterface::class);
+        $template          = $this->createStub(TemplateRendererInterface::class);
+        $request           = $this->createStub(ServerRequestInterface::class);
 
         $request->method('getQueryParams')->willReturn([]);
         $adminLoginService->method('getAdminLogins')->willReturn([]);

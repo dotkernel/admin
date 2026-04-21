@@ -38,9 +38,9 @@ class AuthMiddlewareFactoryTest extends UnitTest
                 }
             });
 
-        $routerInterface = $this->createMock(RouterInterface::class);
-        $flashMessenger  = $this->createMock(FlashMessenger::class);
-        $container       = $this->createMock(ContainerInterface::class);
+        $routerInterface = $this->createStub(RouterInterface::class);
+        $flashMessenger  = $this->createStub(FlashMessenger::class);
+        $container       = $this->createStub(ContainerInterface::class);
 
         $rbacGuardOptions = new RbacGuardOptions([]);
         $rbacGuardOptions->setGuardsProvider([

@@ -22,11 +22,11 @@ class RoutesDelegatorTest extends UnitTest
      */
     public function testWillInvoke(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
         $container
             ->method('get')
             ->willReturnMap([
-                [RouteCollectorInterface::class, $this->createMock(RouteCollectorInterface::class)],
+                [RouteCollectorInterface::class, $this->createStub(RouteCollectorInterface::class)],
                 ['config', []],
             ]);
 
@@ -34,7 +34,7 @@ class RoutesDelegatorTest extends UnitTest
             $container,
             '',
             function () {
-                return $this->createMock(Application::class);
+                return $this->createStub(Application::class);
             }
         );
 

@@ -32,9 +32,9 @@ class GetSettingHandlerTest extends UnitTest
     public function testWillCreate(): void
     {
         $handler = new GetViewSettingHandler(
-            $this->createMock(AuthenticationServiceInterface::class),
-            $this->createMock(AdminService::class),
-            $this->createMock(SettingService::class),
+            $this->createStub(AuthenticationServiceInterface::class),
+            $this->createStub(AdminService::class),
+            $this->createStub(SettingService::class),
         );
 
         $this->assertSame(GetViewSettingHandler::class, $handler::class);
@@ -45,10 +45,10 @@ class GetSettingHandlerTest extends UnitTest
      */
     public function testInvalidIdentifierProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $adminService          = $this->createStub(AdminService::class);
+        $settingService        = $this->createStub(SettingService::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
 
         $handler = new GetViewSettingHandler(
             $authenticationService,
@@ -56,7 +56,7 @@ class GetSettingHandlerTest extends UnitTest
             $settingService,
         );
 
-        $request->method('getAttribute')->with('identifier')->willReturn('test');
+        $request->method('getAttribute')->willReturn('test');
 
         $response = $handler->handle($request);
 
@@ -73,11 +73,11 @@ class GetSettingHandlerTest extends UnitTest
      */
     public function testInvalidAdminProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminServiceInterface::class);
-        $settingService        = $this->createMock(SettingServiceInterface::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $adminService          = $this->createStub(AdminServiceInterface::class);
+        $settingService        = $this->createStub(SettingServiceInterface::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
+        $identity              = $this->createStub(AdminIdentity::class);
 
         $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
@@ -85,7 +85,6 @@ class GetSettingHandlerTest extends UnitTest
 
         $request
             ->method('getAttribute')
-            ->with('identifier')
             ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetViewSettingHandler(
@@ -112,12 +111,12 @@ class GetSettingHandlerTest extends UnitTest
      */
     public function testInvalidSettingProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminServiceInterface::class);
-        $settingService        = $this->createMock(SettingServiceInterface::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
-        $admin                 = $this->createMock(Admin::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $adminService          = $this->createStub(AdminServiceInterface::class);
+        $settingService        = $this->createStub(SettingServiceInterface::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
+        $identity              = $this->createStub(AdminIdentity::class);
+        $admin                 = $this->createStub(Admin::class);
 
         $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
@@ -125,7 +124,6 @@ class GetSettingHandlerTest extends UnitTest
 
         $request
             ->method('getAttribute')
-            ->with('identifier')
             ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetViewSettingHandler(
@@ -152,18 +150,18 @@ class GetSettingHandlerTest extends UnitTest
      */
     public function testValidDataProvided(): void
     {
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $adminService          = $this->createMock(AdminService::class);
-        $settingService        = $this->createMock(SettingService::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
-        $admin                 = $this->createMock(Admin::class);
-        $setting               = $this->createMock(Setting::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $adminService          = $this->createStub(AdminService::class);
+        $settingService        = $this->createStub(SettingService::class);
+        $adminRepository       = $this->createStub(AdminRepository::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
+        $identity              = $this->createStub(AdminIdentity::class);
+        $admin                 = $this->createStub(Admin::class);
+        $setting               = $this->createStub(Setting::class);
 
         $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);
-        $adminRepository->method('findOneBy')->with(['id' => 'test'])->willReturn($admin);
+        $adminRepository->method('findOneBy')->willReturn($admin);
         $adminService->method('getAdminRepository')->willReturn($adminRepository);
         $setting->method('getArrayCopy')->willReturn([
             'identifier' => 'test',
@@ -173,7 +171,6 @@ class GetSettingHandlerTest extends UnitTest
 
         $request
             ->method('getAttribute')
-            ->with('identifier')
             ->willReturn(SettingIdentifierEnum::IdentifierTableAdminListSelectedColumns->value);
 
         $handler = new GetViewSettingHandler(

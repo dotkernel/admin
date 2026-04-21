@@ -19,16 +19,15 @@ class GetDashboardViewHandlerTest extends UnitTest
      */
     public function testPageWillReturnHtmlTemplate(): void
     {
-        $request     = $this->createMock(ServerRequestInterface::class);
-        $routeResult = $this->createMock(RouteResult::class);
-        $template    = $this->createMock(TemplateRendererInterface::class);
+        $request     = $this->createStub(ServerRequestInterface::class);
+        $routeResult = $this->createStub(RouteResult::class);
+        $template    = $this->createStub(TemplateRendererInterface::class);
 
         $routeResult->method('getMatchedRouteName')->willReturn('test');
         $template->method('render')->willReturn('<p></p>');
 
         $request
             ->method('getAttribute')
-            ->with(RouteResult::class)
             ->willReturn($routeResult);
 
         $handler = new GetViewDashboardHandler($template);

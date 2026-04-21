@@ -20,8 +20,8 @@ class FormsPluginTest extends UnitTest
      */
     public function testWillInstantiate(): void
     {
-        $formElementManager      = $this->createMock(FormElementManager::class);
-        $flashMessengerInterface = $this->createMock(FlashMessengerInterface::class);
+        $formElementManager      = $this->createStub(FormElementManager::class);
+        $flashMessengerInterface = $this->createStub(FlashMessengerInterface::class);
 
         $formsPlugin = new FormsPlugin($formElementManager, $flashMessengerInterface);
         $this->assertSame(FormsPlugin::class, $formsPlugin::class);
@@ -46,7 +46,7 @@ class FormsPluginTest extends UnitTest
             'loginCsrf' => $hash,
         ];
 
-        $formElementManager      = $this->createMock(FormElementManager::class);
+        $formElementManager      = $this->createStub(FormElementManager::class);
         $flashMessengerInterface = $this->createMock(FlashMessengerInterface::class);
         $flashMessengerInterface
             ->expects($this->exactly(2))
@@ -107,7 +107,7 @@ class FormsPluginTest extends UnitTest
             'test-message',
         ];
 
-        $formElementManager      = $this->createMock(FormElementManager::class);
+        $formElementManager      = $this->createStub(FormElementManager::class);
         $flashMessengerInterface = $this->getDummyFlashMessenger();
 
         $form = new LoginForm('loginForm');
@@ -135,8 +135,8 @@ class FormsPluginTest extends UnitTest
         $form->setData([]);
         $this->assertFalse($form->isValid());
 
-        $formElementManager      = $this->createMock(FormElementManager::class);
-        $flashMessengerInterface = $this->createMock(FlashMessengerInterface::class);
+        $formElementManager      = $this->createStub(FormElementManager::class);
+        $flashMessengerInterface = $this->createStub(FlashMessengerInterface::class);
 
         $formsPlugin = new FormsPlugin($formElementManager, $flashMessengerInterface);
 
