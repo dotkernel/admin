@@ -21,13 +21,13 @@ class GetAdminListHandlerTest extends UnitTest
      */
     public function testListAdminWillReturnHtmlResponse(): void
     {
-        $adminService    = $this->createMock(AdminServiceInterface::class);
-        $template        = $this->createMock(TemplateRendererInterface::class);
-        $adminRepository = $this->createMock(AdminRepository::class);
-        $request         = $this->createMock(ServerRequestInterface::class);
+        $adminService    = $this->createStub(AdminServiceInterface::class);
+        $template        = $this->createStub(TemplateRendererInterface::class);
+        $adminRepository = $this->createStub(AdminRepository::class);
+        $request         = $this->createStub(ServerRequestInterface::class);
 
         $request->method('getQueryParams')->willReturn([]);
-        $adminRepository->method('findOneBy')->willReturn($this->createMock(Admin::class));
+        $adminRepository->method('findOneBy')->willReturn($this->createStub(Admin::class));
         $adminService->method('getAdmins')->willReturn([
             'rows'   => [],
             'total'  => 1,

@@ -20,7 +20,7 @@ class EntityListenerResolverTest extends UnitTest
     public function testWillCreate(): void
     {
         $resolver = new EntityListenerResolver(
-            $this->createMock(ContainerInterface::class)
+            $this->createStub(ContainerInterface::class)
         );
 
         $this->assertSame(EntityListenerResolver::class, $resolver::class);
@@ -61,7 +61,7 @@ class EntityListenerResolverTest extends UnitTest
             ->method('get')
             ->with(EntityListenerResolver::class)
             ->willReturn(
-                $this->createMock(EntityListenerResolver::class)
+                $this->createStub(EntityListenerResolver::class)
             );
 
         $resolver = new EntityListenerResolver($container);

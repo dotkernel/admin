@@ -23,13 +23,13 @@ class GetAccountLoginFormHandlerTest extends UnitTest
      */
     public function testAdminLoggedWillReturnRedirectResponse(): void
     {
-        $router                = $this->createMock(RouterInterface::class);
-        $template              = $this->createMock(TemplateRendererInterface::class);
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $messenger             = $this->createMock(FlashMessengerInterface::class);
-        $formsPlugin           = $this->createMock(FormsPlugin::class);
-        $loginForm             = $this->createMock(LoginForm::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $router                = $this->createStub(RouterInterface::class);
+        $template              = $this->createStub(TemplateRendererInterface::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $messenger             = $this->createStub(FlashMessengerInterface::class);
+        $formsPlugin           = $this->createStub(FormsPlugin::class);
+        $loginForm             = $this->createStub(LoginForm::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
 
         $authenticationService->method('hasIdentity')->willReturn(true);
 
@@ -52,13 +52,13 @@ class GetAccountLoginFormHandlerTest extends UnitTest
      */
     public function testWillReturnHtmlResponse(): void
     {
-        $router                = $this->createMock(RouterInterface::class);
-        $template              = $this->createMock(TemplateRendererInterface::class);
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $messenger             = $this->createMock(FlashMessengerInterface::class);
-        $formsPlugin           = $this->createMock(FormsPlugin::class);
-        $loginForm             = $this->createMock(LoginForm::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $router                = $this->createStub(RouterInterface::class);
+        $template              = $this->createStub(TemplateRendererInterface::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $messenger             = $this->createStub(FlashMessengerInterface::class);
+        $formsPlugin           = $this->createStub(FormsPlugin::class);
+        $loginForm             = $this->createStub(LoginForm::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
 
         $authenticationService->method('hasIdentity')->willReturn(false);
 

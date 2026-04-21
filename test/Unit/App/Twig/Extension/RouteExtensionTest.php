@@ -22,7 +22,7 @@ class RouteExtensionTest extends UnitTest
     public function testWillInstantiate(): void
     {
         $routeExtension = new RouteExtension(
-            $this->createMock(UrlHelper::class)
+            $this->createStub(UrlHelper::class)
         );
 
         $this->assertSame(RouteExtension::class, $routeExtension::class);
@@ -34,7 +34,7 @@ class RouteExtensionTest extends UnitTest
     public function testWillAddExistingFunctions(): void
     {
         $routeExtension = new RouteExtension(
-            $this->createMock(UrlHelper::class)
+            $this->createStub(UrlHelper::class)
         );
 
         $functions = $routeExtension->getFunctions();
@@ -56,9 +56,9 @@ class RouteExtensionTest extends UnitTest
      */
     public function testIsRoute(): void
     {
-        $request     = $this->createMock(ServerRequestInterface::class);
-        $urlHelper   = $this->createMock(UrlHelper::class);
-        $routeResult = $this->createMock(RouteResult::class);
+        $request     = $this->createStub(ServerRequestInterface::class);
+        $urlHelper   = $this->createStub(UrlHelper::class);
+        $routeResult = $this->createStub(RouteResult::class);
 
         $routeResult->method('getMatchedRouteName')->willReturn('test');
         $urlHelper->method('getRouteResult')->willReturn($routeResult);

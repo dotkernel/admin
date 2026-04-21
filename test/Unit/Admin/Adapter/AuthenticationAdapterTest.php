@@ -30,7 +30,7 @@ class AuthenticationAdapterTest extends UnitTest
     public function testAccessors(): void
     {
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             []
         );
 
@@ -54,14 +54,14 @@ class AuthenticationAdapterTest extends UnitTest
     public function testWillNotAuthenticateWithoutValidConfig(): void
     {
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             []
         );
         $this->expectExceptionMessage('No or invalid param "identity_class" provided.');
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class' => Admin::class,
@@ -72,7 +72,7 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class'    => Admin::class,
@@ -84,7 +84,7 @@ class AuthenticationAdapterTest extends UnitTest
         $adapter->authenticate();
 
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class'      => Admin::class,
@@ -104,7 +104,7 @@ class AuthenticationAdapterTest extends UnitTest
     public function testWillNotAuthenticateWithInvalidIdentityClassConfig(): void
     {
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class'      => Exception::class,
@@ -133,7 +133,7 @@ class AuthenticationAdapterTest extends UnitTest
     public function testWillNotAuthenticateWithInvalidIdentityPropertyConfig(): void
     {
         $adapter = new AuthenticationAdapter(
-            $this->createMock(EntityManager::class),
+            $this->createStub(EntityManager::class),
             [
                 'orm_default' => [
                     'identity_class'      => Admin::class,

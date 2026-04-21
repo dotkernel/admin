@@ -27,17 +27,17 @@ class GetAccountEditFormHandlerTest extends UnitTest
      */
     public function testWillReturnHtmlTemplate(): void
     {
-        $adminService          = $this->createMock(AdminServiceInterface::class);
-        $router                = $this->createMock(RouterInterface::class);
-        $template              = $this->createMock(TemplateRendererInterface::class);
-        $authenticationService = $this->createMock(AuthenticationServiceInterface::class);
-        $accountForm           = $this->createMock(AccountForm::class);
-        $changePasswordForm    = $this->createMock(ChangePasswordForm::class);
-        $messenger             = $this->createMock(FlashMessengerInterface::class);
-        $request               = $this->createMock(ServerRequestInterface::class);
-        $identity              = $this->createMock(AdminIdentity::class);
-        $adminRepository       = $this->createMock(AdminRepository::class);
-        $admin                 = $this->createMock(Admin::class);
+        $adminService          = $this->createStub(AdminServiceInterface::class);
+        $router                = $this->createStub(RouterInterface::class);
+        $template              = $this->createStub(TemplateRendererInterface::class);
+        $authenticationService = $this->createStub(AuthenticationServiceInterface::class);
+        $accountForm           = $this->createStub(AccountForm::class);
+        $changePasswordForm    = $this->createStub(ChangePasswordForm::class);
+        $messenger             = $this->createStub(FlashMessengerInterface::class);
+        $request               = $this->createStub(ServerRequestInterface::class);
+        $identity              = $this->createStub(AdminIdentity::class);
+        $adminRepository       = $this->createStub(AdminRepository::class);
+        $admin                 = $this->createStub(Admin::class);
 
         $identity->method('getId')->willReturn('test');
         $authenticationService->method('getIdentity')->willReturn($identity);

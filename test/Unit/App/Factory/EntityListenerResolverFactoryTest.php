@@ -18,7 +18,7 @@ class EntityListenerResolverFactoryTest extends UnitTest
     public function testWillInvoke(): void
     {
         $service = (new EntityListenerResolverFactory())(
-            $this->createMock(ContainerInterface::class)
+            $this->createStub(ContainerInterface::class)
         );
 
         $this->assertSame(EntityListenerResolver::class, $service::class);

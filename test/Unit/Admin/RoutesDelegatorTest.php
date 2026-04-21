@@ -28,14 +28,14 @@ class RoutesDelegatorTest extends UnitTest
             ->method('get')
             ->with(RouteCollectorInterface::class)
             ->willReturn(
-                $this->createMock(RouteCollectorInterface::class)
+                $this->createStub(RouteCollectorInterface::class)
             );
 
         $application = (new RoutesDelegator())(
             $container,
             '',
             function () {
-                return $this->createMock(Application::class);
+                return $this->createStub(Application::class);
             }
         );
 

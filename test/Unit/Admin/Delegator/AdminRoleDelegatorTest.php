@@ -23,7 +23,7 @@ class AdminRoleDelegatorTest extends UnitTest
      */
     public function testInvokeWillSucceedWithoutAdminForm(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
 
         $delegator = (new AdminRoleDelegator())(
             $container,
@@ -47,7 +47,7 @@ class AdminRoleDelegatorTest extends UnitTest
             ->method('get')
             ->with(EntityManagerInterface::class)
             ->willReturn(
-                $this->createMock(EntityManagerInterface::class)
+                $this->createStub(EntityManagerInterface::class)
             );
 
         $delegator = (new AdminRoleDelegator())(

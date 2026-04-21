@@ -28,7 +28,7 @@ class SettingEntityTest extends UnitTest
     {
         parent::setUp();
 
-        $this->admin = $this->createMock(Admin::class);
+        $this->admin = $this->createStub(Admin::class);
     }
 
     public function testAttributes(): void
