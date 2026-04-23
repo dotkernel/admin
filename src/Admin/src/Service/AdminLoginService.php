@@ -14,8 +14,11 @@ use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use Dot\DependencyInjection\Attribute\Inject;
 use Dot\GeoIP\Service\LocationService;
 use Exception;
+use stdClass;
 
+use function get_browser;
 use function in_array;
+use function ini_get;
 
 class AdminLoginService implements AdminLoginServiceInterface
 {
@@ -49,16 +52,12 @@ class AdminLoginService implements AdminLoginServiceInterface
             'login.continent',
             'login.organization',
             'login.deviceType',
-            'login.deviceBrand',
-            'login.deviceModel',
             'login.isMobile',
             'login.osName',
             'login.osVersion',
-            'login.osPlatform',
             'login.clientType',
             'login.clientName',
-            'login.clientEngine',
-            'login.clientVersion',
+            'login.isCrawler',
             'login.loginStatus',
             'login.identity',
             'login.created',
@@ -99,35 +98,37 @@ class AdminLoginService implements AdminLoginServiceInterface
      */
     private function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin
     {
-        /**
-         * For device information
-         *
-         * @see https://github.com/dotkernel/dot-user-agent-sniffer
-         */
-
         $ipAddress = IpService::getUserIp($serverParams);
 
         $country      = $this->locationService->getCountry($ipAddress)->getName();
         $continent    = $this->locationService->getContinent($ipAddress)->getName();
         $organization = $this->locationService->getOrganization($ipAddress)->getName();
 
+        /**
+         * For browscap information
+         *
+         * @see https://www.php.net/manual/en/function.get-browser.php
+         */
+        $browser = new stdClass();
+        if (ini_get('browscap')) {
+            $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
+        }
+
         $adminLogin = (new AdminLogin())
             ->setAdminIp($this->locationService->obfuscateIpAddress($ipAddress))
             ->setContinent($continent)
             ->setCountry($country)
             ->setOrganization($organization)
-            ->setDeviceType(null)
-            ->setDeviceBrand(null)
-            ->setDeviceModel(null)
-            ->setIsMobile(YesNoEnum::No)
-            ->setOsName(null)
-            ->setOsVersion(null)
-            ->setOsPlatform(null)
-            ->setClientType(null)
-            ->setClientName(null)
-            ->setClientEngine(null)
-            ->setClientVersion(null)
+            ->setDeviceType(! empty($browser->device_type) ? $browser->device_type : null)
+            ->setIsMobile(
+                ! empty($browser->ismobiledevice) ? YesNoEnum::Yes : YesNoEnum::No
+            )
+            ->setOsName(! empty($browser->platform) ? $browser->platform : null)
+            ->setOsVersion(! empty($browser->platform_version) ? $browser->platform_version : null)
+            ->setClientType(! empty($browser->browser_type) ? $browser->browser_type : null)
+            ->setClientName(! empty($browser->browser) ? $browser->browser : null)
             ->setLoginStatus($status)
+            ->setIsCrawler(! empty($browser->crawler) ? YesNoEnum::Yes : YesNoEnum::No)
             ->setIdentity($name);
 
         $this->adminLoginRepository->saveResource($adminLogin);
