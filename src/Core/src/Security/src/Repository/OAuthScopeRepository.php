@@ -14,10 +14,7 @@ use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 #[Entity(name: OAuthScope::class)]
 class OAuthScopeRepository extends AbstractRepository implements ScopeRepositoryInterface
 {
-    /**
-     * @param string $identifier
-     */
-    public function getScopeEntityByIdentifier($identifier): ?ScopeEntityInterface
+    public function getScopeEntityByIdentifier(string $identifier): ?ScopeEntityInterface
     {
         $scope = $this->findOneBy(['scope' => $identifier]);
         if ($scope instanceof OAuthScope) {
@@ -27,16 +24,12 @@ class OAuthScopeRepository extends AbstractRepository implements ScopeRepository
         return null;
     }
 
-    /**
-     * @param string $grantType
-     * @param null|string $userIdentifier
-     * @return ScopeEntityInterface[]
-     */
     public function finalizeScopes(
         array $scopes,
-        $grantType,
+        string $grantType,
         ClientEntityInterface $clientEntity,
-        $userIdentifier = null
+        string|null $userIdentifier = null,
+        ?string $authCodeId = null
     ): array {
         return $scopes;
     }
