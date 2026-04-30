@@ -205,11 +205,6 @@ class User extends AbstractEntity implements UserEntityInterface
         return $this->identity;
     }
 
-    public function hasIdentity(): bool
-    {
-        return ! empty($this->identity);
-    }
-
     /**
      * @param non-empty-string $identity
      */
@@ -218,6 +213,11 @@ class User extends AbstractEntity implements UserEntityInterface
         $this->identity = $identity;
 
         return $this;
+    }
+
+    public function hasIdentity(): bool
+    {
+        return ! empty($this->identity);
     }
 
     public function getPassword(): string

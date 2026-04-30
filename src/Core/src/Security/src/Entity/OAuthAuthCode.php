@@ -76,7 +76,7 @@ class OAuthAuthCode implements AuthCodeEntityInterface
      */
     public function setUserIdentifier($identifier): void
     {
-        $this->setUserIdentifier($identifier);
+        $this->setIdentifier($identifier);
     }
 
     public function getUserIdentifier(): ?string
