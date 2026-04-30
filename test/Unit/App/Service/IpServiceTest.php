@@ -23,10 +23,12 @@ class IpServiceTest extends UnitTest
     {
         $this->assertSame($this->ipAddress, IpService::getUserIp([
             'HTTP_X_FORWARDED_FOR' => $this->ipAddress,
+            'REMOTE_ADDR'          => '',
         ]));
 
         $this->assertSame($this->ipAddress, IpService::getUserIp([
             'HTTP_CLIENT_IP' => $this->ipAddress,
+            'REMOTE_ADDR'    => '',
         ]));
 
         $this->assertSame($this->ipAddress, IpService::getUserIp([
@@ -36,16 +38,19 @@ class IpServiceTest extends UnitTest
 
     public function testWillGetUserIpFromEnv(): void
     {
+        /** @var array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $emptyServer */
+        $emptyServer = [];
+
         putenv(sprintf('HTTP_X_FORWARDED_FOR=%s', $this->ipAddress));
-        $this->assertSame($this->ipAddress, IpService::getUserIp([]));
+        $this->assertSame($this->ipAddress, IpService::getUserIp($emptyServer));
         putenv('HTTP_X_FORWARDED_FOR');
 
         putenv(sprintf('HTTP_CLIENT_IP=%s', $this->ipAddress));
-        $this->assertSame($this->ipAddress, IpService::getUserIp([]));
+        $this->assertSame($this->ipAddress, IpService::getUserIp($emptyServer));
         putenv('HTTP_CLIENT_IP');
 
         putenv(sprintf('REMOTE_ADDR=%s', $this->ipAddress));
-        $this->assertSame($this->ipAddress, IpService::getUserIp([]));
+        $this->assertSame($this->ipAddress, IpService::getUserIp($emptyServer));
         putenv('REMOTE_ADDR');
     }
 
@@ -56,7 +61,7 @@ class IpServiceTest extends UnitTest
         $this->assertFalse(IpService::isPublicIp("::1"));
         $this->assertFalse(IpService::isPublicIp("fd12:3456:789a:1::1"));
 
-        $this->assertTrue(IpService::isPublicIp("8.8.8.8")); // google
-        $this->assertTrue(IpService::isPublicIp("2607:f8b0:4003:c00::6a")); //google
+        $this->assertTrue(IpService::isPublicIp("8.8.8.8"));
+        $this->assertTrue(IpService::isPublicIp("2607:f8b0:4003:c00::6a"));
     }
 }

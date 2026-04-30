@@ -79,7 +79,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     public function logFailedLogin(array $serverParams, string $name): AdminLogin
@@ -88,7 +88,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     public function logSuccessfulLogin(array $serverParams, string $name): AdminLogin
@@ -97,7 +97,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     private function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin
