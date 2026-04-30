@@ -14,7 +14,10 @@ use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 #[Entity(name: OAuthScope::class)]
 class OAuthScopeRepository extends AbstractRepository implements ScopeRepositoryInterface
 {
-    public function getScopeEntityByIdentifier(string $identifier): ?ScopeEntityInterface
+    /**
+     * @param string $identifier
+     */
+    public function getScopeEntityByIdentifier($identifier): ?ScopeEntityInterface
     {
         $scope = $this->findOneBy(['scope' => $identifier]);
         if ($scope instanceof OAuthScope) {
