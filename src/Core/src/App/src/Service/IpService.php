@@ -19,7 +19,7 @@ class IpService
      * @phpstan-param array{
      *     HTTP_X_FORWARDED_FOR?: string,
      *     HTTP_CLIENT_IP?: string,
-     *     REMOTE_ADDR: string,
+     *     REMOTE_ADDR?: string,
      * } $server
      */
     public static function getUserIp(array $server): mixed
@@ -32,7 +32,7 @@ class IpService
             } elseif (isset($server['HTTP_CLIENT_IP']) && self::isPublicIp($server['HTTP_CLIENT_IP'])) {
                 $realIp = $server['HTTP_CLIENT_IP'];
             } else {
-                $realIp = $server['REMOTE_ADDR'];
+                $realIp = $server['REMOTE_ADDR'] ?? null;
             }
         } else {
             // check if HTTP_X_FORWARDED_FOR is public network IP
@@ -52,12 +52,12 @@ class IpService
     public static function isPublicIp(string $ipAddress): bool
     {
         return filter_var(
-                $ipAddress,
-                FILTER_VALIDATE_IP,
-                FILTER_FLAG_IPV4 |
+            $ipAddress,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV4 |
                 FILTER_FLAG_IPV6 |
                 FILTER_FLAG_NO_PRIV_RANGE |
                 FILTER_FLAG_NO_RES_RANGE
-            ) === $ipAddress;
+        ) === $ipAddress;
     }
 }
