@@ -57,7 +57,11 @@ class AdminLoginService implements AdminLoginServiceInterface
             'login.osVersion',
             'login.clientType',
             'login.clientName',
-            'login.isCrawler',
+            'login.deviceBrand',
+            'login.deviceModel',
+            'login.osPlatform',
+            'login.clientEngine',
+            'login.clientVersion',
             'login.loginStatus',
             'login.identity',
             'login.created',
@@ -75,7 +79,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     public function logFailedLogin(array $serverParams, string $name): AdminLogin
@@ -84,7 +88,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     public function logSuccessfulLogin(array $serverParams, string $name): AdminLogin
@@ -93,7 +97,7 @@ class AdminLoginService implements AdminLoginServiceInterface
     }
 
     /**
-     * @param non-empty-array<non-empty-string, mixed> $serverParams
+     * @param array{HTTP_X_FORWARDED_FOR?: string, HTTP_CLIENT_IP?: string, REMOTE_ADDR: string} $serverParams
      * @throws Exception
      */
     private function logAdminVisit(array $serverParams, string $name, SuccessFailureEnum $status): AdminLogin
@@ -111,7 +115,8 @@ class AdminLoginService implements AdminLoginServiceInterface
          */
         $browser = new stdClass();
         if (ini_get('browscap')) {
-            $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
+            $result  = get_browser($_SERVER['HTTP_USER_AGENT']);
+            $browser = $result instanceof stdClass ? $result : $browser;
         }
 
         $adminLogin = (new AdminLogin())
@@ -128,7 +133,11 @@ class AdminLoginService implements AdminLoginServiceInterface
             ->setClientType(! empty($browser->browser_type) ? $browser->browser_type : null)
             ->setClientName(! empty($browser->browser) ? $browser->browser : null)
             ->setLoginStatus($status)
-            ->setIsCrawler(! empty($browser->crawler) ? YesNoEnum::Yes : YesNoEnum::No)
+            ->setDeviceBrand(! empty($browser->device_brand) ? $browser->device_brand : null)
+            ->setDeviceBrand(! empty($browser->device_model) ? $browser->device_model : null)
+            ->setDeviceBrand(! empty($browser->platform_version) ? $browser->platform_version : null)
+            ->setDeviceBrand(! empty($browser->browser_engine) ? $browser->browser_engine : null)
+            ->setDeviceBrand(! empty($browser->browser_version) ? $browser->browser_version : null)
             ->setIdentity($name);
 
         $this->adminLoginRepository->saveResource($adminLogin);
