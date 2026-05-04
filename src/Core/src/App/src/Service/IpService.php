@@ -28,7 +28,7 @@ class IpService
             // check if HTTP_X_FORWARDED_FOR is public network IP
             if (isset($server['HTTP_X_FORWARDED_FOR']) && self::isPublicIp($server['HTTP_X_FORWARDED_FOR'])) {
                 $realIp = $server['HTTP_X_FORWARDED_FOR'];
-                // check if HTTP_CLIENT_IP is public network IP
+            // check if HTTP_CLIENT_IP is public network IP
             } elseif (isset($server['HTTP_CLIENT_IP']) && self::isPublicIp($server['HTTP_CLIENT_IP'])) {
                 $realIp = $server['HTTP_CLIENT_IP'];
             } else {
@@ -38,7 +38,7 @@ class IpService
             // check if HTTP_X_FORWARDED_FOR is public network IP
             if (getenv('HTTP_X_FORWARDED_FOR') && self::isPublicIp((string) getenv('HTTP_X_FORWARDED_FOR'))) {
                 $realIp = getenv('HTTP_X_FORWARDED_FOR');
-                // check if HTTP_CLIENT_IP is public network IP
+            // check if HTTP_CLIENT_IP is public network IP
             } elseif (getenv('HTTP_CLIENT_IP') && self::isPublicIp((string) getenv('HTTP_CLIENT_IP'))) {
                 $realIp = getenv('HTTP_CLIENT_IP');
             } else {
