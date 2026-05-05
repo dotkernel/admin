@@ -57,11 +57,7 @@ class AdminLoginService implements AdminLoginServiceInterface
             'login.osVersion',
             'login.clientType',
             'login.clientName',
-            'login.deviceBrand',
-            'login.deviceModel',
-            'login.osPlatform',
-            'login.clientEngine',
-            'login.clientVersion',
+            'login.isCrawler',
             'login.loginStatus',
             'login.identity',
             'login.created',
@@ -115,8 +111,7 @@ class AdminLoginService implements AdminLoginServiceInterface
          */
         $browser = new stdClass();
         if (ini_get('browscap')) {
-            $result  = get_browser($_SERVER['HTTP_USER_AGENT']);
-            $browser = $result instanceof stdClass ? $result : $browser;
+            $browser = get_browser($_SERVER['HTTP_USER_AGENT']);
         }
 
         $adminLogin = (new AdminLogin())
@@ -133,11 +128,7 @@ class AdminLoginService implements AdminLoginServiceInterface
             ->setClientType(! empty($browser->browser_type) ? $browser->browser_type : null)
             ->setClientName(! empty($browser->browser) ? $browser->browser : null)
             ->setLoginStatus($status)
-            ->setDeviceBrand(! empty($browser->device_brand) ? $browser->device_brand : null)
-            ->setDeviceBrand(! empty($browser->device_model) ? $browser->device_model : null)
-            ->setDeviceBrand(! empty($browser->platform_version) ? $browser->platform_version : null)
-            ->setDeviceBrand(! empty($browser->browser_engine) ? $browser->browser_engine : null)
-            ->setDeviceBrand(! empty($browser->browser_version) ? $browser->browser_version : null)
+            ->setIsCrawler(! empty($browser->crawler) ? YesNoEnum::Yes : YesNoEnum::No)
             ->setIdentity($name);
 
         $this->adminLoginRepository->saveResource($adminLogin);
