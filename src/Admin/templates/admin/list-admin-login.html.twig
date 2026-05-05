@@ -91,20 +91,8 @@
                                 <th class="column-login-clientName">
                                     {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientName', 'Client Name') }}
                                 </th>
-                                <th class="column-login-deviceBrand">
-                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.deviceBrand', 'Device Brand') }}
-                                </th>
-                                <th class="column-login-deviceModel">
-                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.deviceModel', 'Device Model') }}
-                                </th>
-                                <th class="column-login-osPlatform">
-                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.osPlatform', 'Os Platform') }}
-                                </th>
-                                <th class="column-login-clientEngine">
-                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientEngine', 'Client Engine') }}
-                                </th>
-                                <th class="column-login-clientVersion">
-                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.clientVersion', 'Client Version') }}
+                                <th class="column-login-isCrawler">
+                                    {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.isCrawler', 'Is Crawler') }}
                                 </th>
                                 <th class="column-login-created">
                                     {{ sortableColumn('admin::list-admin-login', {}, pagination.queryParams, 'login.created', 'Created') }}
@@ -138,11 +126,13 @@
                                 <td class="column-login-osVersion">{{ login.osVersion }}</td>
                                 <td class="column-login-clientType">{{ login.clientType }}</td>
                                 <td class="column-login-clientName">{{ login.clientName }}</td>
-                                <td class="column-login-deviceBrand">{{ login.deviceBrand }}</td>
-                                <td class="column-login-deviceModel">{{ login.deviceModel }}</td>
-                                <td class="column-login-osPlatform">{{ login.osPlatform }}</td>
-                                <td class="column-login-clientEngine">{{ login.clientEngine }}</td>
-                                <td class="column-login-clientVersion">{{ login.clientVersion }}</td>
+                                <td class="column-login-isCrawler">
+                                    {% if login.isCrawler.value == 'yes' %}
+                                        <span class="badge text-bg-primary">Yes</span>
+                                    {% else %}
+                                        <span class="badge text-bg-secondary">No</span>
+                                    {% endif %}
+                                </td>
                                 <td class="column-login-created">{{ login.getCreated()|date('Y-m-d H:i:s') }}</td>
                             </tr>
                             {% endfor %}
