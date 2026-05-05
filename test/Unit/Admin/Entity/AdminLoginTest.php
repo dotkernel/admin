@@ -93,30 +93,11 @@ class AdminLoginTest extends UnitTest
         $this->assertSame(AdminLogin::class, $adminLogin::class);
         $this->assertSame('test', $adminLogin->getClientName());
 
-        $this->assertNull($adminLogin->getDeviceBrand());
-        $adminLogin = $adminLogin->setDeviceBrand('test');
+        $this->assertSame(YesNoEnum::No, $adminLogin->getIsCrawler());
+        $adminLogin = $adminLogin->setIsCrawler(YesNoEnum::Yes);
         $this->assertSame(AdminLogin::class, $adminLogin::class);
-        $this->assertSame('test', $adminLogin->getDeviceBrand());
-
-        $this->assertNull($adminLogin->getDeviceModel());
-        $adminLogin = $adminLogin->setDeviceModel('test');
-        $this->assertSame(AdminLogin::class, $adminLogin::class);
-        $this->assertSame('test', $adminLogin->getDeviceModel());
-
-        $this->assertNull($adminLogin->getOsPlatform());
-        $adminLogin = $adminLogin->setOsPlatform('test');
-        $this->assertSame(AdminLogin::class, $adminLogin::class);
-        $this->assertSame('test', $adminLogin->getOsPlatform());
-
-        $this->assertNull($adminLogin->getClientEngine());
-        $adminLogin = $adminLogin->setClientEngine('test');
-        $this->assertSame(AdminLogin::class, $adminLogin::class);
-        $this->assertSame('test', $adminLogin->getClientEngine());
-
-        $this->assertNull($adminLogin->getClientVersion());
-        $adminLogin = $adminLogin->setClientVersion('test');
-        $this->assertSame(AdminLogin::class, $adminLogin::class);
-        $this->assertSame('test', $adminLogin->getClientVersion());
+        $this->assertNotNull($adminLogin->getIsCrawler());
+        $this->assertSame('yes', $adminLogin->getIsCrawler()->value);
 
         $this->assertSame(SuccessFailureEnum::Fail, $adminLogin->getLoginStatus());
         $adminLogin = $adminLogin->setLoginStatus(SuccessFailureEnum::Success);
