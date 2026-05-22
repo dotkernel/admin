@@ -76,8 +76,10 @@ class AuthenticationAdapter implements AdapterInterface
         /** Check for the authentication configuration */
         $this->validateConfig();
 
+        /** @var class-string $classString */
+        $classString = $this->config['orm_default']['identity_class'];
         /** Get the identity class object */
-        $repository = $this->entityManager->getRepository($this->config['orm_default']['identity_class']);
+        $repository = $this->entityManager->getRepository($classString);
 
         /** @var Admin $identityClass */
         $identityClass = $repository->findOneBy([
