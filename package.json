@@ -51,7 +51,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "5.2.7",
     "css-minimizer-webpack-plugin": "^7.0.0",
-    "eslint": "^8.56.0",
+    "eslint": "^10.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "expose-loader": "^5.0.0",
