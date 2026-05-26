@@ -27,7 +27,7 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "jquery-sparkline": "^2.4.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
