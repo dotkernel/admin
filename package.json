@@ -45,7 +45,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^14.0.0",
     "cross-env": "^7.0.3",
-    "css-loader": "5.2.7",
+    "css-loader": "7.1.4",
     "expose-loader": "^5.0.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.9.0",
