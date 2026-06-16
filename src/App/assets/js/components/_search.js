@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 export default (function () {
   $('.search-toggle').on('click', e => {
