@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import $ from 'jquery';
 import 'jquery-sparkline';
 import { debounce } from 'lodash';
 import { COLORS } from './_colors.js';
@@ -57,7 +57,7 @@ export default (function () {
   drawSparklines();
 
   // Redraw sparklines on resize
-  $(window).resize(debounce(drawSparklines, 150));
+  $(window).on('resize', debounce(drawSparklines, 150));
 
   // ------------------------------------------------------
   // @Other Sparklines

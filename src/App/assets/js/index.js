@@ -1,3 +1,4 @@
+import 'jquery-migrate';
 import './components/_chart';
 import './components/_sparkline';
 import './components/_popover';
