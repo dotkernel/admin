@@ -1,4 +1,6 @@
-$(function() {
+import $ from 'jquery';
+
+$(function () {
     if (! storeSettingsUrl) {
         console.error("Invalid or no storeSettingsUrl provided.")
         return;
@@ -21,7 +23,7 @@ $(function() {
     };
 
     const hideColumns = (tableId, visibleColumns) => {
-        const table = $(tableId);
+        const table   = $(tableId);
         if (visibleColumns.length === 0) {
             table.show();
             return;
@@ -53,7 +55,7 @@ $(function() {
     };
 
     const populateColumnSelector = (columnSelectorId, columnsSettings) => {
-        const columnSelector = $(columnSelectorId);
+        const columnSelector     = $(columnSelectorId);
         $('.table-column').map((_, element) => {
             return {
                 text: $(element).text().trim(),
@@ -84,8 +86,8 @@ $(function() {
     });
 
     const toggleUiButtons = () => {
-        const btnEdit = $('#btn-edit-resource');
-        const btnDelete = $('#btn-delete-resource');
+        const btnEdit     = $('#btn-edit-resource');
+        const btnDelete   = $('#btn-delete-resource');
         if (! btnEdit || ! btnDelete) {
             return;
         }
@@ -121,12 +123,12 @@ $(function() {
             return;
         }
 
-        checkbox.prop('checked', !checkbox.prop('checked'));
+        checkbox.prop('checked', ! checkbox.prop('checked'));
         toggleUiButtons();
     });
 
     $(document).on('click', '.ui-checkbox', function (e) {
-        $(e.currentTarget).prop('checked', !$(e.currentTarget).prop('checked'));
+        $(e.currentTarget).prop('checked', ! $(e.currentTarget).prop('checked'));
     });
 
     getSettings()
