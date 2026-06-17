@@ -67,7 +67,7 @@
         "phpunit/phpunit": "^12.5.23",
         "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^7.4.0",
-        "vincentlanglet/twig-cs-fixer": "^3.11.0"
+        "vincentlanglet/twig-cs-fixer": "^4.0.0"
     },
     "autoload": {
         "psr-4": {
