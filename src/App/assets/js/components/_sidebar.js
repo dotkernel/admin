@@ -65,7 +65,7 @@ import $ from 'jquery';
      * then trigger window resize event to recalculate
      * masonry layout widths and gutters.
      */
-    $('#sidebar-toggle').click(e => {
+    $('#sidebar-toggle').on('click', e => {
         e.preventDefault();
         setTimeout(() => {
             window.dispatchEvent(window.EVENT);

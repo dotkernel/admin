@@ -42,7 +42,8 @@ const pathsToNuke = [
  */
 
 // Include npm modules
-const path = require('path');
+const path    = require('path');
+const webpack = require('webpack');
 
 const CopyWebpackPlugin      = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -122,6 +123,13 @@ module.exports = {
         path: path.resolve(__dirname, './public/') // Save-file root
     },
 
+    // Force the CJS build so require.resolve() and expose-loader match the same file
+    resolve: {
+        alias: {
+            jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
+        },
+    },
+
     // This is all the available file-loaders, feel free to append your own.
     // IMPORTANT NOTE: loaders are evaluated in REVERSE-ARRAY ORDER,
     // that means that they move from the end and towards the start.
@@ -134,6 +142,10 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+        }),
         new MiniCssExtractPlugin({
             filename: './css/[name].css'
         }),
@@ -169,7 +181,10 @@ function generateBaseRules()
             test: require.resolve("jquery"),
             loader: "expose-loader",
             options: {
-                exposes: ["$", "jQuery"],
+                exposes: [
+                    { globalName: "$", override: true },
+                    { globalName: "jQuery", override: true },
+                ],
             },
         },
         {

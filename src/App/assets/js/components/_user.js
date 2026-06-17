@@ -73,7 +73,7 @@ $(document).ready(() => {
         modal.find('.modal-dialog').find('.modal-body').html('Loading...');
     });
 
-    $(document).on('click', '#user-avatar-preview', () => $('#user-avatar-selector').click());
+    $(document).on('click', '#user-avatar-preview', () => $('#user-avatar-selector').trigger('click'));
 
     $(document).on("submit", "#user-avatar-form", (event) => {
         event.preventDefault();
