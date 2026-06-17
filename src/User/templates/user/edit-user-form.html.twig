@@ -38,7 +38,7 @@
                 {% if user.hasAvatar() %}
                     <img class="img-thumbnail cur-p" alt="User avatar" src="{{ user.avatar.getUrl() }}" id="user-avatar-preview" />
                 {% else %}
-                    <img class="img-thumbnail cur-p" alt="User avatar" src="{{ asset('images/no-image.svg') }}" id="user-avatar-preview" />
+                    <img class="img-thumbnail cur-p" alt="User avatar" src="{{ asset('images/app/no-image.svg') }}" id="user-avatar-preview" />
                     <span class="d-block">No image</span>
                 {% endif %}
                     <span class="small d-block">(click the preview image to select an avatar)</span>
