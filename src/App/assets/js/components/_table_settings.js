@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(function() {
     if (! storeSettingsUrl) {
         console.error("Invalid or no storeSettingsUrl provided.")

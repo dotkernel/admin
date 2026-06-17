@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(document).ready(() => {
     const request = async(url, options = {}) => {
         try {

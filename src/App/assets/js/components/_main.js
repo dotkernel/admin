@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import * as bootstrap from 'bootstrap'
 
 $(document).ready(function () {
