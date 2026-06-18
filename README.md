@@ -37,6 +37,7 @@ Documentation is available at: https://docs.dotkernel.org/admin-documentation/
 [![codecov](https://codecov.io/gh/dotkernel/admin/graph/badge.svg?token=BQS43UWAM4)](https://codecov.io/gh/dotkernel/admin)
 [![Qodana](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/qodana_code_quality.yml)
 [![PHPStan](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/static-analysis.yml)
+[![Build Assets](https://github.com/dotkernel/admin/actions/workflows/build-assets.yml/badge.svg?branch=7.0)](https://github.com/dotkernel/admin/actions/workflows/build-assets.yml)
 
 ## Getting Started
 
