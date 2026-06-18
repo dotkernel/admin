@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build assets
-        run: npm run build
+        run: npm run prod
 
       - name: Audit dependencies
         run: npm audit --audit-level=critical
