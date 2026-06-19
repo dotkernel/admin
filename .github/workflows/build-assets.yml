@@ -1,0 +1,33 @@
+name: Build Assets
+
+on: push
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build assets (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ["20", "22", "24", "26"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build assets
+        run: npm run prod
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=critical
