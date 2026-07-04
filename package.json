@@ -51,7 +51,7 @@
     "sass": "^1.77.1",
     "sass-loader": "^14.2.1",
     "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^7.0.0"
   },
   "overrides": {
     "graceful-fs": "^4.2.11"
