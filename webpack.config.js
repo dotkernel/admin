@@ -246,12 +246,13 @@ function generateBaseRules()
         {
             test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
             exclude: [/images?|img/],
-            use: [
-                // As SVG may count as both font or image,
-                // we will not treat any file in a folder
-                // with the name image(s) or img as a font
-                'file-loader?name=fonts/[name].[ext]'
-            ]
+            // As SVG may count as both font or image
+            // we will not treat any file in a folder
+            // with the name image(s) or img as a font
+            type: 'asset/resource',
+            generator: {
+                filename: 'fonts/[name][ext]'
+            }
         }
     ];
 }
