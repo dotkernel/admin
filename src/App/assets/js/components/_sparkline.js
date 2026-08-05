@@ -3,7 +3,7 @@ import 'jquery-sparkline';
 import { debounce } from 'lodash';
 import { COLORS } from './_colors.js';
 
-export default (function () {
+(function () {
   // ------------------------------------------------------
   // @Dashboard Sparklines
   // ------------------------------------------------------
@@ -200,9 +200,7 @@ export default (function () {
     tooltipSuffix: 'Celsius',
     width: 100,
     barColor: '9f0',
-
     negBarColor: 'f90',
-
     stackedBarColor: ['ff0', '9f0', '999', 'f60'],
     sliceColors: ['ff0', '9f0', '000', 'f60'],
     offset: '30',

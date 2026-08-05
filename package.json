@@ -4,7 +4,7 @@
   "description": "Web starter package suitable for admin applications.",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack -d --progress --hide-modules",
+    "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack --mode development --progress",
     "watch": "cross-env NODE_ENV=development webpack --watch --mode development --progress",
     "prod": "cross-env NODE_ENV=production node_modules/.bin/webpack --mode=production --progress"
   },
@@ -31,29 +31,28 @@
     "jquery-migrate": "^4.0.2",
     "jquery-sparkline": "^2.4.0",
     "lodash": "^4.18.1",
-    "moment": "^2.30.1",
-    "perfect-scrollbar": "^1.5.6",
-    "skycons": "^1.0.0"
+    "moment": "^2.30.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-    "@babel/plugin-transform-runtime": "^7.24.7",
-    "@babel/runtime": "^7.24.7",
+    "@babel/core": "^8.0.0",
+    "@babel/plugin-transform-class-properties": "^8.0.0",
+    "@babel/plugin-transform-object-rest-spread": "^8.0.0",
+    "@babel/plugin-transform-runtime": "^8.0.0",
+    "@babel/runtime": "^8.0.0",
     "ajv": "^8.18.0",
     "babel-loader": "^10.1.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^14.0.0",
-    "cross-env": "^7.0.3",
-    "css-loader": "5.2.7",
+    "cross-env": "^10.0.0",
+    "css-loader": "7.1.4",
     "expose-loader": "^5.0.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.9.0",
     "sass": "^1.77.1",
-    "sass-loader": "^14.2.1",
+    "sass-loader": "^17.0.0",
+    "terser-webpack-plugin": "^5.6.1",
     "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^7.0.0"
   },
   "overrides": {
     "graceful-fs": "^4.2.11"

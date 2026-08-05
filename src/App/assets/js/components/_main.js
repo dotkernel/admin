@@ -1,5 +1,5 @@
+import * as bootstrap from 'bootstrap';
 import $ from 'jquery';
-import * as bootstrap from 'bootstrap'
 
 $(document).ready(function () {
     let toasts = [].slice.call(document.querySelectorAll('.toast'))
@@ -7,14 +7,14 @@ $(document).ready(function () {
         (new bootstrap.Toast(toastEl)).show();
     });
 
-    const forms = document.querySelectorAll('.needs-validation')
+    const forms = document.querySelectorAll('.needs-validation');
 
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
+            if (! form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
             }
 
             form.classList.add('was-validated')
