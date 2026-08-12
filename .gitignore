@@ -50,3 +50,7 @@ package-lock.json
 
 public/uploads/user/*
 !public/uploads/user/.gitkeep
+
+# Source maps, written only by the development build (npm run dev / watch)
+public/js/*.map
+public/css/*.map

@@ -12,6 +12,7 @@
 
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import fs from 'fs';
 import path from 'path';
 
 const projectRoot = import.meta.dirname;
@@ -20,9 +21,32 @@ const assetsPath = 'App/assets';
 const imagesPath = `${assetsPath}/images`;
 
 /*
+ * The public directory is never emptied, so a production build has to clear out
+ * the source maps a previous development build left behind. Without this they
+ * would linger next to the minified assets they no longer describe.
+ */
+const removeStaleSourceMaps = () => ({
+    name: 'remove-stale-source-maps',
+    closeBundle() {
+        for (const directory of ['js', 'css']) {
+            const directoryPath = path.resolve(projectRoot, 'public', directory);
+            if (! fs.existsSync(directoryPath)) {
+                continue;
+            }
+
+            for (const file of fs.readdirSync(directoryPath)) {
+                if (file.endsWith('.map')) {
+                    fs.unlinkSync(path.join(directoryPath, file));
+                }
+            }
+        }
+    },
+});
+
+/*
  * Each entry becomes public/js/<name>.js and is loaded by a template as
  * <script type="module">. Code shared between them (jQuery, Bootstrap,
- * Chart.js, ...) is emitted once as public/js/vendor.js.
+ * Chart.js, ...) is emitted once as a shared chunk.
  */
 const entries = {
     app: `${assetsPath}/js/index.js`,
@@ -51,6 +75,7 @@ export default defineConfig(({ mode }) => {
                     },
                 ],
             }),
+            ! isDevelopment && removeStaleSourceMaps(),
         ],
 
         build: {
@@ -61,9 +86,15 @@ export default defineConfig(({ mode }) => {
             // place instead.
             emptyOutDir: false,
 
-            // Inlined so that watching for changes does not leave .map files
-            // behind in the public directory.
-            sourcemap: isDevelopment ? 'inline' : false,
+            /*
+             * Development builds are readable and mapped, production builds are
+             * minified with no map. The maps are written as separate .map files
+             * (ignored by git) rather than inlined, so that the committed
+             * bundles never carry a base64 copy of their own sources.
+             *
+             * Only `npm run prod` produces assets meant to be committed.
+             */
+            sourcemap: isDevelopment,
             minify: ! isDevelopment,
 
             rollupOptions: {
