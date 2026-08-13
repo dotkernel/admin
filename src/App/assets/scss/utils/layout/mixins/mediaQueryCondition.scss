@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "../../../settings/breakpoints";
+
 // ---------------------------------------------------------
 // @Media Queries Generator
 // ---------------------------------------------------------
@@ -7,9 +10,9 @@
 @mixin mediaQueryCondition($mq) {
   $breakpointFound: false;
 
-  @each $breakpoint in $breakpoints {
-    $alias: nth($breakpoint, 1);
-    $condition: nth($breakpoint, 2);
+  @each $breakpoint in breakpoints.$breakpoints {
+    $alias: list.nth($breakpoint, 1);
+    $condition: list.nth($breakpoint, 2);
 
     @if $mq == $alias and $condition {
       $breakpointFound: true;

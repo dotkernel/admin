@@ -1,16 +1,23 @@
+@use "sass:list";
+@use "../../../settings/breakpoints";
+@use "mediaQueryCondition";
+
 // ---------------------------------------------------------
 // @Responsive Suffix Generator
 // ---------------------------------------------------------
 
 // Mixin used to generate responsive suffixes for classes (i.e. m-10@sm+).
 
+// Declared here so that the !global assignments below update an existing
+// variable: from Dart Sass 2.0.0 they will no longer be able to create one.
+$breakpointAlias: null;
 
 @mixin generateResponsive() {
-  @each $breakpoint in $breakpoints {
-    $breakpointAlias     : nth($breakpoint, 1) !global;
-    $breakpointCondition : nth($breakpoint, 2);
+  @each $breakpoint in breakpoints.$breakpoints {
+    $breakpointAlias     : list.nth($breakpoint, 1) !global;
+    $breakpointCondition : list.nth($breakpoint, 2);
 
-    @include mediaQueryCondition($breakpointAlias) {
+    @include mediaQueryCondition.mediaQueryCondition($breakpointAlias) {
       @content;
     }
 

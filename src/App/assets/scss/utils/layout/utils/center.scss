@@ -1,3 +1,5 @@
+@use "../mixins/generateResponsive";
+
 // ---------------------------------------------------------
 // @TOC
 // ---------------------------------------------------------
@@ -32,18 +34,18 @@ $responsive: true;
 }
 
 @if ($responsive == true) {
-  @include generateResponsive() {
-    .centerY\@#{$breakpointAlias} {
+  @include generateResponsive.generateResponsive() {
+    .centerY\@#{generateResponsive.$breakpointAlias} {
       top: 50%;
       transform: translateY(-50%);
     }
 
-    .centerX\@#{$breakpointAlias} {
+    .centerX\@#{generateResponsive.$breakpointAlias} {
       left: 50%;
       transform: translateX(-50%);
     }
 
-    .centerXY\@#{$breakpointAlias} {
+    .centerXY\@#{generateResponsive.$breakpointAlias} {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
