@@ -1,3 +1,10 @@
+@use "sass:color";
+@use "../settings/baseColors";
+@use "../settings/breakpoints";
+@use "../tools/mixins/clearfix";
+@use "../tools/mixins/mediaQueriesRanges";
+@use "../tools/mixins/placeholder";
+
 // ---------------------------------------------------------
 // @TOC
 
@@ -9,28 +16,28 @@
 // ---------------------------------------------------------
 
 .header {
-  background-color: $default-white;
-  border-bottom: 1px solid $border-color;
+  background-color: baseColors.$default-white;
+  border-bottom: 1px solid baseColors.$border-color;
   display: block;
   margin-bottom: 0;
   padding: 0;
   position: fixed;
   transition: all 0.2s ease;
-  width: calc(100% - #{$offscreen-size});
+  width: calc(100% - #{baseColors.$offscreen-size});
   z-index: 800;
 
-  @include to($breakpoint-md) {
+  @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
     width: 100%;
   }
 
-  @include between($breakpoint-md, $breakpoint-xl) {
-    width: calc(100% - #{$collapsed-size});
+  @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+    width: calc(100% - #{baseColors.$collapsed-size});
   }
 
   .header-container {
-    @include clearfix;
+    @include clearfix.clearfix;
 
-    height: $header-height;
+    height: baseColors.$header-height;
 
     .nav-left,
     .nav-right {
@@ -43,10 +50,10 @@
         float: left;
 
         > a {
-          color: $default-text-color;
+          color: baseColors.$default-text-color;
           display: block;
-          line-height: $header-height;
-          min-height: $header-height;
+          line-height: baseColors.$header-height;
+          min-height: baseColors.$header-height;
           padding: 0 15px;
           transition: all 0.2s ease-in-out;
 
@@ -56,11 +63,11 @@
 
           &:hover,
           &:focus {
-            color: $default-dark;
+            color: baseColors.$default-dark;
             text-decoration: none;
           }
 
-          @include to($breakpoint-md) {
+          @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
             padding: 0 15px;
           }
         }
@@ -70,9 +77,9 @@
         position: relative;
 
         .counter {
-          background-color: $default-danger;
+          background-color: baseColors.$default-danger;
           border-radius: 50px;
-          color: $default-white;
+          color: baseColors.$default-white;
           font-size: 10px;
           line-height: 1;
           padding: 3px 5.5px;
@@ -85,7 +92,7 @@
           min-width: 350px;
           padding: 0;
 
-          @include to($breakpoint-sm) {
+          @include mediaQueriesRanges.to(breakpoints.$breakpoint-sm) {
             max-width: 300px;
           }
         }
@@ -100,7 +107,7 @@
       transition: transform 0.15s ease-out;
 
       .divider {
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid baseColors.$border-color;
         height: 1px;
         overflow: hidden;
       }
@@ -176,12 +183,12 @@
       outline: none;
       padding: 5px;
 
-      @include to($breakpoint-sm) {
+      @include mediaQueriesRanges.to(breakpoints.$breakpoint-sm) {
         width: 85px;
       }
 
-      @include placeholder {
-        color: lighten($default-text-color, 20%);
+      @include placeholder.placeholder {
+        color: color.adjust(baseColors.$default-text-color, $lightness: 20%);
         font-style: italic;
       }
     }
@@ -194,14 +201,14 @@
 
 .is-collapsed {
   .header {
-    width: calc(100% - #{$collapsed-size});
+    width: calc(100% - #{baseColors.$collapsed-size});
 
-    @include to($breakpoint-md) {
+    @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
       width: 100%;
     }
 
-    @include between($breakpoint-md, $breakpoint-xl) {
-      width: calc(100% - #{$offscreen-size});
+    @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+      width: calc(100% - #{baseColors.$offscreen-size});
     }
   }
 }

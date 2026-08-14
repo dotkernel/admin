@@ -1,3 +1,3 @@
-@import 'mixins/index';
-@import 'utils/index';
-@import 'helpers/index';
+@use 'mixins/index';
+@use 'utils/index' as index2;
+@use 'helpers/index' as index3;

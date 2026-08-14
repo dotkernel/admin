@@ -1,3 +1,7 @@
+@use "../settings/baseColors";
+@use "../settings/breakpoints";
+@use "../tools/mixins/mediaQueriesRanges";
+
 // ---------------------------------------------------------
 // @TOC
 // ---------------------------------------------------------
@@ -13,14 +17,14 @@
 
 .page-container {
   min-height: 100vh;
-  padding-left: $offscreen-size;
+  padding-left: baseColors.$offscreen-size;
   transition: all 0.2s ease;
 
-  @include between($breakpoint-md, $breakpoint-xl) {
-    padding-left: $collapsed-size;
+  @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+    padding-left: baseColors.$collapsed-size;
   }
 
-  @include to($breakpoint-md) {
+  @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
     padding-left: 0;
   }
 }
@@ -33,7 +37,7 @@
   padding: 85px 20px 20px;
   min-height: calc(100vh - 61px);
 
-  @include to($breakpoint-md) {
+  @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
     padding: 85px 5px 5px;
   }
 }
@@ -47,19 +51,19 @@
 // ---------------------------------------------------------
 
 .full-container {
-  left: $offscreen-size;
-  min-height: calc(100vh - #{$header-height});
+  left: baseColors.$offscreen-size;
+  min-height: calc(100vh - #{baseColors.$header-height});
   position: absolute;
   right: 0;
-  top: $header-height;
+  top: baseColors.$header-height;
   transition: all 0.2s ease;
 
-  @include between($breakpoint-md, $breakpoint-xl) {
+  @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
     left: 0;
-    padding-left: $collapsed-size;
+    padding-left: baseColors.$collapsed-size;
   }
 
-  @include to($breakpoint-md) {
+  @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
     left: 0;
   }
 }
@@ -70,26 +74,26 @@
 
 .is-collapsed {
   .page-container {
-    padding-left: $collapsed-size;
+    padding-left: baseColors.$collapsed-size;
 
-    @include to($breakpoint-md) {
+    @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
       padding-left: 0;
     }
 
-    @include between($breakpoint-md, $breakpoint-xl) {
-      padding-left: $offscreen-size;
+    @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+      padding-left: baseColors.$offscreen-size;
     }
   }
 
   .full-container {
-    left: $collapsed-size;
+    left: baseColors.$collapsed-size;
 
-    @include to($breakpoint-md) {
+    @include mediaQueriesRanges.to(breakpoints.$breakpoint-md) {
       left: 0;
     }
 
-    @include between($breakpoint-md, $breakpoint-xl) {
-      left: $offscreen-size;
+    @include mediaQueriesRanges.between(breakpoints.$breakpoint-md, breakpoints.$breakpoint-xl) {
+      left: baseColors.$offscreen-size;
       padding-left: 0;
     }
   }

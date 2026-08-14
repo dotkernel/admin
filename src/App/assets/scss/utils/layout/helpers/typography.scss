@@ -1,3 +1,6 @@
+@use "../mixins/generateResponsive";
+@use "../utils/center";
+
 
 // ---------------------------------------------------------
 // @TOC
@@ -20,7 +23,7 @@
 // @Variables
 // ---------------------------------------------------------
 
-$responsive: true;
+center.$responsive: true;
 
 // ---------------------------------------------------------
 // @Text Align
@@ -30,11 +33,11 @@ $responsive: true;
 .ta-l { text-align: left !important; }
 .ta-r { text-align: right !important; }
 
-@if ($responsive == true) {
-  @include generateResponsive() {
-    .ta-c\@#{$breakpointAlias} { text-align: center !important; }
-    .ta-l\@#{$breakpointAlias} { text-align: left !important; }
-    .ta-r\@#{$breakpointAlias} { text-align: right !important; }
+@if (center.$responsive == true) {
+  @include generateResponsive.generateResponsive() {
+    .ta-c\@#{generateResponsive.$breakpointAlias} { text-align: center !important; }
+    .ta-l\@#{generateResponsive.$breakpointAlias} { text-align: left !important; }
+    .ta-r\@#{generateResponsive.$breakpointAlias} { text-align: right !important; }
   }
 }
 

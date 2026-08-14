@@ -1,4 +1,7 @@
 import $ from 'jquery';
+// jquery-sparkline reads the global jQuery rather than importing it, so the
+// setup that exposes it has to be imported first.
+import '../_jquery-setup';
 import 'jquery-sparkline';
 import { debounce } from 'lodash';
 import { COLORS } from './_colors.js';

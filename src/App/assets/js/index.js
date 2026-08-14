@@ -1,3 +1,4 @@
+import '../scss/index.scss';
 import './_jquery-setup';
 import 'jquery-migrate';
 import './components/_chart';
