@@ -31,12 +31,12 @@ class UserRoleDelegator implements DelegatorFactoryInterface
     {
         $userForm = $callback();
         if ($userForm instanceof CreateUserForm) {
-            $userRoles = array_map(fn (UserRole $role): array => [
+            $userRoles = array_map(static fn (UserRole $role): array => [
                 'label'    => $role->getName()->value,
                 'value'    => $role->getId()->toString(),
                 'selected' => $role->getName() === self::DEFAULT_ROLE,
             ], $container->get(EntityManagerInterface::class)->getRepository(UserRole::class)->findAll());
-            $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
+            $userRoles = array_filter($userRoles, static fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
 
             $userForm->setRoles($userRoles);
         }

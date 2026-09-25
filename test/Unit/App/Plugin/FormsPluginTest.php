@@ -52,7 +52,7 @@ class FormsPluginTest extends UnitTest
             ->expects($this->exactly(2))
             ->method('getData')
             ->willReturnCallback(
-                fn (string $key) => match ($key) {
+                static fn (string $key) => match ($key) {
                     'loginForm_data' => $oldData,
                     'loginForm_messages' => [],
                     default => null,

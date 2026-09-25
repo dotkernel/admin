@@ -142,7 +142,7 @@ class AuthenticationAdapter implements AdapterInterface
 
         /** @var non-empty-string[] $roles */
         $roles = array_map(
-            fn (RoleInterface $role): string => (string) $role->getName()->value,
+            static fn (RoleInterface $role): string => (string) $role->getName()->value,
             $identityClass->getRoles()
         );
 

@@ -64,7 +64,7 @@ class GetEditAdminFormHandler implements RequestHandlerInterface
         $adminRoles = $this->adminRoleService->getAdminRoleRepository()->findAll();
         $adminRoles = array_map(
         /** @return SelectDataType */
-            fn (AdminRole $adminRole): array => [
+            static fn (AdminRole $adminRole): array => [
                 'label'    => $adminRole->getName()->value,
                 'value'    => $adminRole->getId()->toString(),
                 'selected' => $admin->hasRole($adminRole),

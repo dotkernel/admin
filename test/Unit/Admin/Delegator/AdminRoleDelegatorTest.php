@@ -28,7 +28,7 @@ class AdminRoleDelegatorTest extends UnitTest
         $delegator = (new AdminRoleDelegator())(
             $container,
             '',
-            fn () => new stdClass()
+            static fn () => new stdClass()
         );
 
         $this->assertIsObject($delegator);
@@ -53,7 +53,7 @@ class AdminRoleDelegatorTest extends UnitTest
         $delegator = (new AdminRoleDelegator())(
             $container,
             '',
-            fn () => new CreateAdminForm()
+            static fn () => new CreateAdminForm()
         );
 
         $this->assertInstanceOf(CreateAdminForm::class, $delegator);
