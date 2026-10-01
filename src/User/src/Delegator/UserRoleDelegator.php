@@ -36,7 +36,10 @@ class UserRoleDelegator implements DelegatorFactoryInterface
                 'value'    => $role->getId()->toString(),
                 'selected' => $role->getName() === self::DEFAULT_ROLE,
             ], $container->get(EntityManagerInterface::class)->getRepository(UserRole::class)->findAll());
-            $userRoles = array_filter($userRoles, static fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
+            $userRoles = array_filter(
+                $userRoles,
+                static fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value
+            );
 
             $userForm->setRoles($userRoles);
         }
