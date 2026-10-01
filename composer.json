@@ -38,7 +38,7 @@
         "dotkernel/dot-geoip": "^3.10.1",
         "dotkernel/dot-helpers": "^3.9.0",
         "dotkernel/dot-mail": "^5.1.6",
-        "dotkernel/dot-navigation": "^3.6.0",
+        "dotkernel/dot-navigation": "^4.0.0",
         "dotkernel/dot-rbac-guard": "^3.7.0",
         "dotkernel/dot-router": "^1.1.0",
         "dotkernel/dot-session": "^5.8.0",
