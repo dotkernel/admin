@@ -78,14 +78,14 @@ class PostEditUserAvatarHandler implements RequestHandlerInterface
         $userRoles = $this->userRoleService->getUserRoleRepository()->findAll();
         $userRoles = array_map(
         /** @return SelectDataType */
-            fn (UserRole $userRole): array => [
+            static fn (UserRole $userRole): array => [
                 'label'    => $userRole->getName()->value,
                 'value'    => $userRole->getId()->toString(),
                 'selected' => $user->hasRole($userRole),
             ],
             $userRoles
         );
-        $userRoles = array_filter($userRoles, fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
+        $userRoles = array_filter($userRoles, static fn (array $role) => $role['label'] !== UserRoleEnum::Guest->value);
 
         $this->editUserAvatarForm
             ->setAttribute(

@@ -28,7 +28,7 @@ class AdminRoleDelegator implements DelegatorFactoryInterface
         $adminForm = $callback();
         if ($adminForm instanceof CreateAdminForm) {
             $adminForm->setRoles(
-                array_map(fn (AdminRole $role): array => [
+                array_map(static fn (AdminRole $role): array => [
                     'label'    => $role->getName()->value,
                     'value'    => $role->getId()->toString(),
                     'selected' => false,
