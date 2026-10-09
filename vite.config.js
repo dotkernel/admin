@@ -4,8 +4,8 @@
  * Assets are compiled from src/App/assets into the public directory:
  *   js/*.js     - one file per entry below, plus the shared js/vendor.js
  *   css/app.css - compiled from scss/index.scss (imported by js/index.js)
- *   fonts/*     - emitted for every font referenced by the stylesheets
- *   images/app/ - copied verbatim from App/assets/images
+ *   fonts/*     - copied from App/assets/fonts, keeping nested folders
+ *   images/app/ - copied from App/assets/images, keeping nested folders
  *
  * So please, DO NOT MANUALLY ADD ASSETS TO THE PUBLIC DIRECTORY!
  */
@@ -18,6 +18,7 @@ import path from 'path';
 const projectRoot = import.meta.dirname;
 
 const assetsPath = 'App/assets';
+const fontsPath = `${assetsPath}/fonts`;
 const imagesPath = `${assetsPath}/images`;
 
 /*
@@ -66,12 +67,18 @@ export default defineConfig(({ mode }) => {
             viteStaticCopy({
                 targets: [
                     {
+                        src: `${fontsPath}/**/*`,
+                        dest: 'fonts',
+                        // **/* matches nested files. stripBase: 3 drops
+                        // App/assets/fonts so icons/fontawesome/... stays intact.
+                        rename: { stripBase: 3 },
+                    },
+                    {
                         src: `${imagesPath}/**/*`,
-                        dest: 'images/app',
-                        // Globs only match files, so the images directory has to
-                        // be walked recursively and its leading path segments
-                        // dropped to keep the nested directories intact.
-                        rename: { stripBase: imagesPath.split('/').length },
+                        dest: 'images/app/',
+                        // Same idea for images: drop App/assets/images, keep
+                        // favicon/, flags/, icon/, and the rest of the tree.
+                        rename: { stripBase: 3 },
                     },
                 ],
             }),
