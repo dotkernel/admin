@@ -52,7 +52,7 @@ class PostLoginAccountHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        assert($this->authenticationService instanceof AuthenticationServiceInterface);
+        assert($this->authenticationService instanceof LaminasAuthenticationServiceInterface);
         if ($this->authenticationService->hasIdentity()) {
             return new RedirectResponse($this->router->generateUri('app::index-redirect'));
         }
