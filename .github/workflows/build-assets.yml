@@ -23,6 +23,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Node 20 ships npm 10, which crashes on Vite 8's peer graph:
+      # "Cannot read properties of null (reading 'edgesOut')".
+      - name: Upgrade npm
+        if: matrix.node-version == '20'
+        run: npm install -g npm@11
+
       - name: Install dependencies
         run: npm install
 
