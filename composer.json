@@ -29,7 +29,7 @@
     },
     "require": {
         "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-        "dotkernel/dot-cache": "^4.4.0",
+        "dotkernel/dot-cache": "^5.0.0",
         "dotkernel/dot-cli": "^3.10.0",
         "dotkernel/dot-data-fixtures": "^1.5.0",
         "dotkernel/dot-dependency-injection": "^1.3.0",
